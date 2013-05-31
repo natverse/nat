@@ -58,16 +58,19 @@ as.neuronlist.neuronlistfh<-function(x,df,...){
   attr(x,'db')[[i,...]]
 }
 
-#' extract a sublist from a neuronlistfh
+#' extract a sublist from a neuronlistfh, converting to regular in memory list
 #'
-#' Hmm should I be keeping the same backing database - fine for read only
-#' but not such a good idea if I'm going to write!
+#' Note that if i is a numeric or logical indexing vector, it will be converted
+#' internally to a vector of names by using the (sorted) names of the objects
+#' in x (i.e. names(x)[i])
+#' @param x A neuronlistfh object
+#' @param i Indices of items to extract from neuronlistfh object
+#' @param ... Additional arguments passed to neuronlistfh [] function
+#' @return A new neuronlist object (i.e. in memory)
+#' @export
 "[.neuronlistfh" <- function(x,i,...) {
-  nl=structure(NextMethod("["), class = class(x))
-  db=attr(x,'db')
-  if(!is.character(i)) i=names(db)[i]
-  attr(nl,'db')=attr(x,'db')[i,...]
-  nl
+  if(!is.character(i)) i=names(x)[i]
+  as.neuronlist(attr(x,'db')[i,...],df=attr(x,'df'))
 }
 
 #' plot neurons stored in a neuronlistfh
