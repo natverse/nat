@@ -46,10 +46,14 @@ as.neuronlistfh.filehash<-function(x,df,...){
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
 as.neuronlist.neuronlistfh<-function(x,df,...){
-  db=attr(x,'db')
-  if(missing(df)) df=attr(x,'df')
-  nl=as.neuronlist(dbMultiFetch(db,names(db)),df,...)
-  nl
+  if(!missing(df)) {
+    # check compatibility
+    if(nrow(df)!=length(x)) stop("df must have the same number of rows as",
+                                 " there are elements in x")
+    attr(x,'df')=df
+  }
+  # get the overloaded subscripting operator to do the work
+  x[names(x)]
 }
 
 #' extract an element from a neuronlistfh
