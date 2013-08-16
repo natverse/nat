@@ -63,6 +63,16 @@ as.neuronlist.neuronlistfh<-function(x,df,...){
   attr(x,'db')[[i,...]]
 }
 
+lapply.neuronlistfh<-function(X, FUN, ...){
+	db=attr(X,'db')
+	lapply(db,FUN,...)
+}
+
+sapply.neuronlistfh<-function(X, FUN, ...){
+	db=attr(X,'db')
+	sapply(db,FUN,...)
+}
+
 #' extract a sublist from a neuronlistfh, converting to regular in memory list
 #'
 #' Note that if i is a numeric or logical indexing vector, it will be converted
