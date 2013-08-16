@@ -30,6 +30,7 @@ as.neuronlistfh.neuronlist<-function(l,df,...,dbName='nldb',type='RDS'){
     warning("giving default names to elements of nl")
     names(l)=seq(l)
   }
+  if(!missing(df)) df=attr(l,'df')
   db=dumpList(l,dbName=dbName,type=type)
   as.neuronlistfh.filehash(db,df,...)
 }
