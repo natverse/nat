@@ -74,7 +74,7 @@ as.neuronlist.neuronlistfh<-function(x,df,...){
 #' @export
 "[.neuronlistfh" <- function(x,i,...) {
   if(!is.character(i)) i=names(x)[i]
-  as.neuronlist(attr(x,'db')[i,...],df=attr(x,'df'))
+  as.neuronlist(attr(x,'db')[i,...],df=attr(x,'df')[i,])
 }
 
 #' plot neurons stored in a neuronlistfh
