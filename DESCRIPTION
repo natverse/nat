@@ -38,3 +38,4 @@ Collate:
     'cmtkreg.R'
     'xformpoints.R'
     'cmtk.R'
+    'cmtk_io.R'

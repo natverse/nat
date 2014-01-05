@@ -1,0 +1,248 @@
+# Functions for input/outpot of CMTK's TYPEDSTREAM format
+# which is used for registrations etc
+
+#' Read a CMTK format registration
+#' 
+#' @param filename Path to a CMTK registration file
+#' @param ReturnRegistrationOnly When FALSE (default) will not attempt to 
+#'   extract the registration element from the registration file.
+#' @param ... Additional arguments passed to read.cmtk
+#' @export
+#' @family cmtk-io
+read.cmtkreg <- function(filename, ReturnRegistrationOnly=FALSE, ...){
+  filename=cmtkreg(filename,returnDir=FALSE)
+  r=ReadIGSTypedStream(filename)
+  if(!is.null(r$registration) && ReturnRegistrationOnly) {
+    rval=r$registration
+    attr.r=attributes(r)
+    attr.rval=attributes(rval)
+    extra_attributes=setdiff(names(attr.r),names(attr.rval))
+    attributes(rval)[extra_attributes]<-attributes(r)[extra_attributes]
+    return(rval)
+  }
+  else return(r)
+}
+
+#' Read CMTK TypedStream file to a list in memory
+#' 
+#' This function is primarily of developer interest. End users will typically 
+#' want to use more specialised functions for reading registrations and 
+#' landmarks.
+#' @details This is the default format used by CMTK for registration, studylist,
+#'   landmarks and image files. Although this is largely a generic function, 
+#'   there is special handling of the coefficients and active members of the 
+#'   spline warp component of a CMTK nonrigid registrartion.
+#' @details Note that if an open connection is passed to read.cmtk the version 
+#'   number of the CMTK TypedStream will not be checked or recorded.
+#' @param con Path to (optionally gzipped) file or (open) connection.
+#' @param CheckLabel Check, fix and warn for invalid or duplicate labels 
+#'   (default TRUE)
+#' @export
+#' @family cmtk-io
+read.cmtk<-function(con, CheckLabel=TRUE){
+    
+  l=list()
+  
+  if(is.character(con)) {
+    filename=con
+    con=file(filename,'rb')
+    
+    t=readLines(con,1)
+    if( !any(grep("! TYPEDSTREAM",t[1],fixed=TRUE)) ) 
+      stop(paste("This doesn't appear to be an IGS TypedStream:",filename))
+    typedStreamVersion=numeric_version(sub("! TYPEDSTREAM ","",t[1],
+                                           fixed=TRUE,useBytes=TRUE))
+    attr(l,"version")<-typedStreamVersion
+  }
+  
+  checkLabel=function(label) 	{
+    if( any(names(l)==label)  ){
+      newlabel=make.unique(c(names(l),label))[length(l)+1]
+      warning(paste("Duplicate item",label,"renamed",newlabel))
+      label=newlabel
+    }
+    label
+  }
+  # Should this check to see if the connection still exists?
+  # in case we want to bail out sooner
+  while ( isTRUE(isOpen(con)) ){
+    thisLine<-readLines(con,1)
+    # no lines returned - ie end of file
+    if(length(thisLine)==0) break
+    
+    # trim and split it up by white space
+    thisLine=trim(thisLine)
+    
+    # skip if this is a blank line
+    if(nchar(thisLine)==0) next
+    
+    items=strsplit(thisLine," ",fixed=TRUE)[[1]]
+    
+    if(length(items)==0) next
+    # get the label and items
+    label=items[1]; items=items[-1]
+    #cat("\nlabel=",label)
+    #cat("; items=",items)
+    
+    # return list if this is the end of a section
+    if(label=="}") {
+      #cat("end of section - leaving this recursion\n")
+      return (l)
+    }		
+    if(items[1]=="{"){
+      # parse new subsection
+      #cat("new subsection -> recursion\n")
+      # set the list element!
+      if(CheckLabel)
+        label=checkLabel(label)
+      
+      l[[length(l)+1]]=read.cmtk(con,CheckLabel=CheckLabel)
+      names(l)[length(l)]<-label
+      next
+    }
+    
+    if(label == "coefficients"){
+      # process coefficients
+      numItems=prod(l[["dims"]])*3
+      #cat("numItemsToRead =",numItems)
+      remainingItems=scan(con,n=numItems-3,quiet=TRUE)
+      l[[label]]=matrix(c(as.numeric(items),remainingItems),ncol=3,byrow=T)
+      
+    } else if (label == "active"){
+      # process active flags
+      numItems=prod(l[["dims"]])*3
+      #cat("numItemsToRead =",numItems)
+      # nb floor since we have read one line of 30 already
+      numLinesToRead=floor(numItems/30)
+      #cat("numLinesToRead=",numLinesToRead)
+      x=c(items,trim(readLines(con,numLinesToRead,ok=FALSE)))
+      #x=paste(x,collapse="")
+      bits=strsplit(x,"")
+      bits=as.raw(unlist(bits))
+      l[[label]]=bits
+    } else {
+      # ordinary item
+      # Check first item
+      firstItemFirstChar=substr(items[1],1,1)		
+      if(any(firstItemFirstChar==c("-",as.character(0:9)) )){
+        # convert to numeric if not a string
+        items=as.numeric(items)
+      } else if (firstItemFirstChar=="\""){
+        # dequote quoted string
+        # can do this by using a textConnection
+        tc=textConnection(thisLine)
+        items=scan(tc,what="",quiet=TRUE)[-1]
+        close(tc)
+        attr(items,"quoted")=TRUE
+      }
+      # check if the list already has one of these
+      
+      # set the list element!
+      if(CheckLabel)
+        label=checkLabel(label)
+      
+      l[[length(l)+1]]=items
+      names(l)[length(l)]<-label
+    }
+  }
+  # we should only get here once if we parse a valid hierarchy
+  close(con)
+  if(isTRUE(try(file.exists(filename)))){
+    attr(l,"file.info")=file.info(filename)
+  }		
+  return(l)
+}
+
+#' Write out CMTK registration list to folder
+#' 
+#' @details Note that transformation in the forward direction (i.e. sample->ref)
+#'   e.g. as calculated from a set of landmarks where set 1 is the sample is 
+#'   considered an inverse transformation by the IGS software. So in order to
+#'   use such a transformation as an initial affine with the registration
+#'   command the switch --initial-inverse must be used specifying the folder
+#'   name created by this function.
+#' @details CMTK v2.4 fixed a long-standing bug in affine (de)composition to
+#'   CMTK params. This resulted in a non-backwards compatible change marked by
+#'   writing the TYPEDSTREAM as version 2.4. The R code in this package
+#'   implements both the new and old compose/decompose functions, using the new
+#'   by default.
+#' @param reglist List specifying CMTK registration parameters
+#' @param foldername Path to registration folder (usually ending in .list)
+#' @param version CMTK version for registration (default 2.4)
+#' @export
+#' @family cmtk-io
+write.cmtkreg<-function(reglist, foldername, version="2.4"){
+  dir.create(foldername, showWarnings=FALSE, recursive=TRUE)
+  if(!is.list(reglist)) reglist=CMTKParamsToCMTKRegistration(reglist)
+  write.cmtk(reglist,file.path(foldername, "registration"),
+                      version=version)
+  
+  studysublist=list(studyname=reglist$registration$reference_study)
+  attr(studysublist$studyname, "quoted")=TRUE
+  studysublist2=studysublist
+  if ('model_study' %in% names(reglist$registration)) {
+    studysublist2$studyname=reglist$registration$model_study
+  } else {
+    studysublist2$studyname=reglist$registration$floating_study
+  }
+  studylist=list(studylist=list(num_sources=2),
+                 source=studysublist, source=studysublist2)
+  
+  write.cmtk(studylist, file.path(foldername,"studylist"),
+                      version=version)
+}
+
+#' Write a suitable list to a CMTK TypedStream file on disk
+#' 
+#' @description This is probaly only of interest to developers. End users will 
+#'   probably wish to use more specific functions such as write.cmtkreg for
+#'   writing out registrations.
+#' @details NB a version specified on the command line overrides one encoded as 
+#'   an attribute in the input list.
+#' @param l Appropriately formatted list
+#' @param con A character string specifying a path or a connection
+#' @param gzip Whether to gzip output file (default FALSE)
+#' @param version TYPEDSTREAM version number, defaults to \code{"1.1"} if not 
+#'   specified in the version attribute of \code{l}.
+#' @export
+#' @family cmtk-io
+write.cmtk<-function(l, con, gzip=FALSE, version=NA_character_){
+  if (is.character(con)) {
+    con <- if(gzip) gzfile(con, "w") else file(con, "w")
+    on.exit(close(con))
+  }
+
+  if(is.na(version)){
+    version=as.character(attr(l,'version'))
+    if(!length(version)) version='1.1'
+  }
+  
+  cat("! TYPEDSTREAM ", version, "\n\n", file=con, sep="")
+  write.cmtk.list(l,con)
+}
+
+# function for internal use by write.cmtk
+write.cmtk.list<-function(x,con,tablevel=0){
+  nn <- names(x)
+  ll <- length(x)
+  tabs=""
+  for(i in seq(len=tablevel)) tabs=paste(tabs,sep="","\t")
+  if (length(nn) != ll) 
+    nn <- paste("Component", seq(ll))
+  for (i in seq(length = ll)) {
+    # cat("i=",i,"name=",nn[i],"mode=",mode(x[[i]]),"\n")
+    if (is.list(x[[i]])) {
+      cat(sep="",tabs,nn[i]," {\n",file=con,append=TRUE)
+      write.cmtk.list(x[[i]],con,tablevel+1)
+      cat(sep="",tabs,"}\n",file=con,append=TRUE)
+    } else if(is.matrix(x[[i]])){
+      cat(sep="",tabs,nn[i]," ")
+      write(t(x[[i]]),file=con,append=TRUE,ncolumns=ncol(x[[i]]))
+    } else {
+      qsep=""
+      if(isTRUE(attr(x[[i]],"quoted"))) qsep="\""
+      thisline=paste(nn[i],sep=""," ",paste(qsep,x[[i]],qsep,sep="",collapse=" "),"\n")
+      cat(sep="",tabs,thisline,file=con,append=TRUE)
+    }
+  }
+}
