@@ -1,0 +1,3 @@
+export(as.cmtkreg)
+export(cmtkreg)
+export(is.cmtkreg)
