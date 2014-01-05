@@ -1,6 +1,5 @@
 context("Verify cmtkreg functions")
 require(testthat)
-require(nat.utils)
 
 test_that("is.cmtkreg works ok for objects", {
   reg='missingregistration.list'
