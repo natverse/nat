@@ -1,0 +1,38 @@
+Package: nat
+Type: Package
+Title: nat: NeuroAnatomy Toolbox
+Version: 0.1
+Date: 2013-0
+Author: Greg Jefferis
+Maintainer: Greg Jefferis <jefferis@gmail.com>
+Description: This package is a reboot of the AnalysisSuite
+    (https://github.com/jefferis/AnalysisSuite) bundle of R code that I have
+    been using for a number of years to analyse and visualise 3D biological
+    image data, especially traced neurons. AnalysisSuite provides functions to
+    read/write a variety of 3D image formats including Amira, NRRD and Biorad
+    PIC and can interact with the CMTK and IRTK image registration suites.
+    There is read/write functionality for neuron tracings including SWC,
+    Amiramesh (lineset and skeletonize), Neurolucida ASC. These data can then
+    be visualised (including in 3D via rgl) or analysed including applying
+    calculated registrations from image data to neuron tracings. There is also
+    some recent functionality for representing image data for neurons that have
+    been skeletonised but not formally traced. This representation also allows
+    morphological comparison with neurons including searches/clustering. The
+    plan is to clean up the core code and move it into the nat package. Then
+    additional functionality will be added over time to nat.* extension
+    packages. One package nat.as will be used solely to make it rather easier
+    to install the AnalysisSuite code bundle.
+Depends:
+    rgl,
+    nat.utils
+Imports:
+    RANN
+Suggests:
+    testthat
+License: GPL (>= 2)
+LazyLoad: yes
+Collate:
+    'nat-package.R'
+    'neuron.R'
+    'neuronlist.R'
+    'cmtkreg.R'
