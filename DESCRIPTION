@@ -36,3 +36,4 @@ Collate:
     'neuron.R'
     'neuronlist.R'
     'cmtkreg.R'
+    'xformpoints.R'
