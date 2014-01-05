@@ -11,7 +11,7 @@
 #' @family cmtk-io
 read.cmtkreg <- function(filename, ReturnRegistrationOnly=FALSE, ...){
   filename=cmtkreg(filename,returnDir=FALSE)
-  r=ReadIGSTypedStream(filename)
+  r=read.cmtk(filename, ...)
   if(!is.null(r$registration) && ReturnRegistrationOnly) {
     rval=r$registration
     attr.r=attributes(r)
