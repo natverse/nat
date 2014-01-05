@@ -1,5 +1,7 @@
 S3method(xformpoints,cmtkreg)
 export(as.cmtkreg)
+export(cmtk.dof2mat)
+export(cmtk.mat2dof)
 export(cmtkreg)
 export(is.cmtkreg)
 export(xformpoints)
