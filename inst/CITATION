@@ -1,0 +1,16 @@
+citHeader("To cite nat.as in publications, please use:")
+
+citEntry(entry = 'article',
+	Author = c(person("Cachero, Sebastian"), person("Ostrovsky, Aaron D"), person("Yu, Jai Y") ,person("Dickson, Barry J"), person("Jefferis, Gregory S X E")),
+	Doi = "10.1016/j.cub.2010.07.045",
+	Journal = "Curr Biol",
+	Month = "Sep",
+	Number = "18",
+	Pages = "1589-601",
+	Pmid = "20832311",
+	Pst = "ppublish",
+	Title = "Sexual dimorphism in the fly brain",
+	Volume = "20",
+	Year = "2010",
+	textVersion = "Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E. (2010). Sexual dimorphism in the fly brain. Curr Biol 20 (18), 1589-1601."
+)
