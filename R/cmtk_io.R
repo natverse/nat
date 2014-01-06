@@ -294,3 +294,54 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   attr(l,'version')=version
   l
 }
+
+#' Read and Write CMTK landmarks
+#' 
+#' @details CMTK landmarks are always unpaired i.e. only contain information for
+#'   one brain.
+#' @param con Character vector specifying path or a connection (passed straight
+#'   to \code{read.cmtk})
+#' @export
+#' @rdname cmtklandmarks
+read.cmtklandmarks<-function(con){
+  l=read.cmtk(con,CheckLabel=FALSE)
+  x=t(sapply(l,function(x) x[["location"]]))
+  rn=sapply(l,function(x) x[["name"]])
+  # nb this is necessary to avoid the names having names 
+  # of the form landmarks.1, landmarks.1 ...
+  names(rn)<-NULL
+  rownames(x)=rn
+  x
+}
+
+#' @description \code{cmtklandmarks} generates in memory list representation of
+#'   cmtk landmarks
+#' @param xyzs Nx3 matrix of landmarks
+#' @rdname cmtklandmarks
+#' @export
+#' @family cmtk-io
+cmtklandmarks<-function(xyzs){
+  # IGS Landmark lists are unpaired ie contain information for only 1 brain
+  xyzs=data.matrix(xyzs)
+  ns=rownames(xyzs)
+  ll=list()
+  for(i in 1:nrow(xyzs)){
+    ll[[i]]=list(name=paste("\"",ns[i],"\"",sep=""),location=xyzs[i,])		
+  }
+  names(ll)=rep('landmark',length(ll))
+  ll
+}
+
+#' @param filename Path to write out cmtklandmarks
+#' @param Force Whether to overwrite an existing landmarks file (default FALSE)
+#' @rdname cmtklandmarks
+#' @export
+write.cmtklandmarks<-function(xyzs,filename,Force=FALSE){
+  ll=cmtklandmarks(xyzs)
+  if(file.exists(filename) && file.info(filename)$isdir) filename=file.path(filename,"landmarks")
+  if(file.exists(filename) && !Force) {
+    stop(paste(filename,"already exists, use Force=TRUE to replace"))
+  }
+  write.cmtk(ll,filename)
+}
+

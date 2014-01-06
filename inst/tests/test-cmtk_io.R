@@ -25,3 +25,13 @@ test_that("read.cmtk and write.cmtk can round-trip a registration file", {
   # though this also removes version attribute which might be worth a thought
   expect_equivalent(read.cmtkreg(ctf),reglist)
 })
+
+test_that("read and write cmtk landmarks", {
+  testData=matrix(rnorm(15),ncol=3)
+  rownames(testData)=letters[1:5]
+  tmpfile=tempfile()
+  write.cmtklandmarks(testData,tmpfile)
+  testData.new=read.cmtklandmarks(tmpfile)
+  unlink(tmpfile)
+  expect_equal(testData,testData.new,tol=1e-6)  
+})

@@ -27,7 +27,10 @@
   used specifying the folder name created by this function.
 }
 \seealso{
-  Other cmtk-io: \code{\link{read.cmtk}},
-  \code{\link{read.cmtkreg}}, \code{\link{write.cmtk}}
+  Other cmtk-io: \code{\link{cmtklandmarks}},
+  \code{\link{read.cmtk}},
+  \code{\link{read.cmtklandmarks}},
+  \code{\link{read.cmtkreg}}, \code{\link{write.cmtk}},
+  \code{\link{write.cmtklandmarks}}
 }
 
