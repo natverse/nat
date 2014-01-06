@@ -1,0 +1,6 @@
+nat 0.2
+=======
+* Fairly complete implementation of CMTK registration I/O and geometry
+* All functionality is self-contained (i.e. independent of nat.as/AnalysisSuite)
+* passes check()
+* can be augmented by nat.as (0.6)
