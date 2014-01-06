@@ -10,10 +10,11 @@ xformpoints<-function(reg, points, ...) {
   UseMethod('xformpoints')
 }
 
-#' @details When passed a character vector, xformpoints will check to see if it
+#' @details When passed a character vector, xformpoints will check to see if it 
 #'   defines a path containing CMTK registration erroring out if this is not the
-#'   case. A future TODO would be to provide a mechanism for extending this
-#'   behaviour for other registration formats.
+#'   case. If the path does indeed point to a CMTK registration, this method
+#'   will hand off to xformpoints.cmtkreg. A future TODO would be to provide a
+#'   mechanism for extending this behaviour for other registration formats.
 #' @method xformpoints character
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
@@ -32,24 +33,26 @@ xformpoints.character<-function(reg, points, ...){
 #'   neuroanatomical work, one often has points in sample space that one would 
 #'   like to transform into template space. Here one needs the \emph{inverse} 
 #'   transformation.
-#' @param transformtype Which transformation to use when the CMTK file contains
+#' @param transformtype Which transformation to use when the CMTK file contains 
 #'   both warp (default) and affine
 #' @param direction Whether to transform points from sample space to reference 
 #'   space (called \strong{inverse} by CMTK) or from reference to sample space 
 #'   (called \strong{forward} by CMTK)
+#' @param FallBackToAffine Whether to use the affine transformation for points
+#'   that fail to transform under a warping transformation.
 #' @export
 #' @rdname xformpoints
 xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'), 
-                              direction=c("inverse",'forward'), ...){
+                              direction=c("inverse",'forward'), 
+                              FallBackToAffine=FALSE, ...){
   if(is.list(reg)){
     # we've been given an in memory list specifying registation parameters
     # we need to write this out to a temporary file
-    reg=tempfile(fileext=".list")
+    reg=as.cmtkreg(tempfile(fileext=".list"))
     on.exit(unlink(reg,recursive=TRUE))
     write.cmtkreg(reg)
-  } else {
-    # specifies warp directly
   }
+  
   transformtype=match.arg(transformtype)
   direction=match.arg(direction)
   pointsfile=tempfile(fileext=".txt")
@@ -58,9 +61,16 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   cmd=paste('gregxform',ifelse(direction=='forward','-f',''),
             ifelse(transformtype=='affine','-n',''),
             shQuote(reg),'<',shQuote(pointsfile))
-  matrix(scan(text=system(cmd,intern = TRUE),quiet=TRUE),
-         ncol=3,byrow=TRUE,
-         dimnames=dimnames(points))
+  pointst=matrix(scan(text=system(cmd, intern = TRUE), quiet=TRUE),
+                 ncol=3, byrow=TRUE, dimnames=dimnames(points))
+  if(FallBackToAffine && transformtype=='warp'){
+    naPoints = is.na(pointst[, 1])
+    if(any(naPoints)) {
+      affpoints = xformpoints(reg,points[naPoints,],transformtype='affine')
+      pointst[naPoints, ] = affpoints
+    }
+  }
+  pointst
 }
 
 #' @method xformpoints default

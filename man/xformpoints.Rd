@@ -11,7 +11,8 @@
 
   \method{xformpoints}{cmtkreg} (reg, points,
     transformtype = c("warp", "affine"),
-    direction = c("inverse", "forward"), ...)
+    direction = c("inverse", "forward"),
+    FallBackToAffine = FALSE, ...)
 
   \method{xformpoints}{default} (reg, points, ...)
 }
@@ -31,6 +32,10 @@
   space to reference space (called \strong{inverse} by
   CMTK) or from reference to sample space (called
   \strong{forward} by CMTK)}
+
+  \item{FallBackToAffine}{Whether to use the affine
+  transformation for points that fail to transform under a
+  warping transformation.}
 }
 \description{
   Transform 3d points using a registration, affine matrix
@@ -39,9 +44,11 @@
 \details{
   When passed a character vector, xformpoints will check to
   see if it defines a path containing CMTK registration
-  erroring out if this is not the case. A future TODO would
-  be to provide a mechanism for extending this behaviour
-  for other registration formats.
+  erroring out if this is not the case. If the path does
+  indeed point to a CMTK registration, this method will
+  hand off to xformpoints.cmtkreg. A future TODO would be
+  to provide a mechanism for extending this behaviour for
+  other registration formats.
 
   Note that the direction of CMTK registrations can be the
   source of much confusion. This is because CMTK defines
