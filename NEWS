@@ -1,3 +1,7 @@
+nat 0.2.1
+=========
+* fix install error due to missing neuron(*).R files that contain docs only so far
+
 nat 0.2
 =======
 * Fairly complete implementation of CMTK registration I/O and geometry
