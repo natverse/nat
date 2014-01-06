@@ -25,8 +25,8 @@ checkRoundTripFromMat=function(mat,
 }
 
 test_that("round trip works for challenging affine matrix", {
-  #ReCompositionAffineShear123NoCentreMirrorXYZ
-  params=c(100,50,10,3,4,5,-1.1,-0.9,-1,0.05,0.02,0.03,0,0,0)
+  #ReCompositionAffineShear123CentreMirrorXYZ
+  params=c(100,50,10,3,4,5,-1.1,-0.9,-1,0.05,0.02,0.03,5,10,20)
   mat=cmtkparams2affmat(params)
   checkRoundTripFromMat(mat)
 })
