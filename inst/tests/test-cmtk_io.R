@@ -1,6 +1,6 @@
 context("test CMTK input/output functions")
 
-test_that("can write.cmtk can write an empty CMTK TypedStream file", {
+test_that("write.cmtk can write an empty CMTK TypedStream file", {
   tf=tempfile('EmptyTypedStream')
   tf2=tempfile('EmptyTypedStream',fileext='.gz')
   tf3=tempfile('EmptyTypedStreamv2.4')
@@ -14,14 +14,14 @@ test_that("can write.cmtk can write an empty CMTK TypedStream file", {
   expect_equal(readLines(tf3),c("! TYPEDSTREAM 2.4", ""))
 })
 
-test_that("can read.cmtk and write.cmtk can round-trip a registration file", {
+test_that("read.cmtk and write.cmtk can round-trip a registration file", {
   reg="../testdata/cmtk/dofv1.1wshears.list"
   reglist=read.cmtkreg(reg)
   tf=tempfile('dofv1.1wshears_copy',fileext='.list')
   on.exit(unlink(tf,recursive=TRUE))
   write.cmtkreg(reglist,foldername=tf)
   ctf=cmtkreg(tf,returnDir=TRUE)
-  # equivalent because we are not interested in the file attributes
+  # equivalent because we are not interested in the file.info attributes
   # though this also removes version attribute which might be worth a thought
   expect_equivalent(read.cmtkreg(ctf),reglist)
 })
