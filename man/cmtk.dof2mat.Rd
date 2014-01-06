@@ -28,5 +28,9 @@
 }
 \seealso{
   Other cmtk-commandline: \code{\link{cmtk.mat2dof}}
+
+  Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
+  \code{\link{cmtk.mat2dof}},
+  \code{\link{cmtkparams2affmat}}
 }
 

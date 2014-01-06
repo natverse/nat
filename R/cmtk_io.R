@@ -179,7 +179,7 @@ read.cmtk<-function(con, CheckLabel=TRUE){
 #' @family cmtk-io
 write.cmtkreg<-function(reglist, foldername, version="2.4"){
   dir.create(foldername, showWarnings=FALSE, recursive=TRUE)
-  if(!is.list(reglist)) reglist=CMTKParamsToCMTKRegistration(reglist)
+  if(!is.list(reglist)) reglist=cmtkreglist(reglist)
   write.cmtk(reglist,file.path(foldername, "registration"),
                       version=version)
   
@@ -251,4 +251,46 @@ write.cmtk.list<-function(x,con,tablevel=0){
       cat(sep="",tabs,thisline,file=con,append=TRUE)
     }
   }
+}
+
+#' Make in-memory CMTK registration list from affine matrix or CMTK parameters
+#' 
+#' @details Note that this uses the modern CMTK notation of floating_study 
+#'   rather than model_study as used by IGSParamsToIGSRegistration (which 
+#'   results in an implicit inversion by CMTK tools).
+#' @details Note that the reference and floating fields have no impact on the 
+#'   transformation encoded in the resultant .list folder and can be overridden 
+#'   on the command line of CMTK tools.
+#' @param x 5x3 matrix of CMTK registration parameters OR 4x4 homogeneous affine
+#'   matrix
+#' @param centre Optional centre of rotation passed to \code{affmat2cmtkparams}
+#'   when decomposing 4x4 affine matrix
+#' @param reference,floating Path to refererence and floating images.
+#' @return list of registration parameters suitable for 
+#'   \code{\link{write.cmtkreg}}
+#' @export
+#' @seealso \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
+cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
+  
+  mat.ok=FALSE
+  if(is.matrix(x)){
+    if(isTRUE(all.equal(dim(x), c(4,4)))) x=affmat2cmtkparams(x,centre=centre)
+    if(isTRUE(all.equal(dim(x), c(5,3)))) mat.ok=TRUE
+  }
+  if(!mat.ok)
+    stop("Expects either a 5x3 (CMTK parameters) or ",
+         "4x4 (homogeneous affine) matrix")
+    
+  affine_xform=unlist(apply(x,1,list),recursive=F)
+  names(affine_xform)=c("xlate","rotate","scale","shear","center")
+  
+  l=list(registration=list(reference_study=reference,
+                           floating_study=floating,
+                           affine_xform=affine_xform))
+  attr(l$registration$reference_study,"quoted")=TRUE
+  attr(l$registration$floating_study,"quoted")=TRUE
+  version=attr(x,'version')
+  if(is.null(version)) version=numeric_version('2.4')
+  attr(l,'version')=version
+  l
 }

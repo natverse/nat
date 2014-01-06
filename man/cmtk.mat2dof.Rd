@@ -33,5 +33,9 @@
 }
 \seealso{
   Other cmtk-commandline: \code{\link{cmtk.dof2mat}}
+
+  Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
+  \code{\link{cmtk.dof2mat}},
+  \code{\link{cmtkparams2affmat}}
 }
 

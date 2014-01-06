@@ -39,3 +39,4 @@ Collate:
     'xformpoints.R'
     'cmtk.R'
     'cmtk_io.R'
+    'cmtk_geometry.R'

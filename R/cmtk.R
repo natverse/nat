@@ -10,6 +10,7 @@
 #' @param version Whether to return CMTK version string
 #' @return 4x4 transformation matrix
 #' @family cmtk-commandline
+#' @family cmtk-geometry
 #' @export
 cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
   cmd="dof2mat"
@@ -44,6 +45,7 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
 #'   tool
 #' @return 5x3 matrix of CMTK registration parameters or logical
 #' @family cmtk-commandline
+#' @family cmtk-geometry
 #' @export
 cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
   cmd="mat2dof"
