@@ -9,6 +9,10 @@
   onto the IS2 template brain (Cachero, Ostrovsky et al
   2010).
 }
+\examples{
+data(Cell07PNs)
+table(attr(Cell07PNs,'df')$Glomerulus)
+}
 \references{
   Jefferis G.S.X.E., Potter C.J., Chan A.M., Marin E.C.,
   Rohlfing T., Maurer C.R.J., and Luo L. (2007).
