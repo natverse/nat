@@ -23,6 +23,7 @@ Description: This package is a reboot of the AnalysisSuite
     packages. One package nat.as will be used solely to make it rather easier
     to install the AnalysisSuite code bundle.
 Depends:
+    R (>= 2.15.1),
     rgl,
     nat.utils
 Imports:
@@ -41,3 +42,4 @@ Collate:
     'cmtk_io.R'
     'cmtk_geometry.R'
     'xform.R'
+    'nat-data.R'
