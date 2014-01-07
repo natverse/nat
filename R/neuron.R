@@ -1,18 +1,19 @@
 #' neuron: class to represent traced neurons
-#'  
-#' neuron objects consist of a list containing multiple fields describing the
-#' 3D location and connectivity of points in a traced neuron. The critical fields
+#' 
+#' neuron objects consist of a list containing multiple fields describing the 3D
+#' location and connectivity of points in a traced neuron. The critical fields 
 #' of a neuron, n, are n$d which contains a dataframe in SWC format and 
-#' n$SegList which contains a representation of the neuron's topology used for
-#' most internal calculations.  
-#' Useful functions include
-#' plot.neuron
-#' plot3d.neuron
-#' write.neuron
-#' read.neuron 
-#' @name neuron
+#' n$SegList which contains a representation of the neuron's topology used for 
+#' most internal calculations. Useful functions include plot.neuron 
+#' plot3d.neuron write.neuron read.neuron
+#' @rdname neuron
 #' @family neuron
 #' @seealso neuronlist
+#' @param n A neuron
+#' @description \code{is.neuron} will check if an object looks like a neuron.
+#' @param Strict Whether to check class of neuron or use a more relaxed
+#'   definition based on object being a list with a SegList component.
+#' @export
 is.neuron<-function(n,Strict=FALSE) {
   # If Strict is FALSE will also return TRUE
   # if n is a list which looks like a neuron
@@ -20,22 +21,36 @@ is.neuron<-function(n,Strict=FALSE) {
     (!Strict && is.list(n) && !is.null(n$SegList))
 }
 
+#' @description \code{as.neuron} will add class "neuron" to a neuron-like
+#'   object.
+#' @export
+#' @rdname neuron
+as.neuron<-function(n){
+  if(is.null(n)) return (NULL)
+  if(!is.neuron(n,Strict=TRUE)) class(n)=c("neuron",class(n))
+  n
+}
+
 #' Arithmetic for neuron coordinates
 #'
-#' If x is one number or 4-vector, multiply xyz and diameter by that
-#' If x is a 3-vector, multiply xyz only
+#' If x is a 1-vector or a 3-vector, multiply xyz only
+#' If x is a 4-vector, multiply xyz and diameter by that
 #' TODO Figure out how to document arithemtic functions in one go
 #' @param n a neuron
 #' @param x (a numeric vector to multiply neuron coords in neuron)
 #' @return modified neuron
 #' @export
+#' @rdname neuron-arithmetic
+#' @seealso neuron
 #' @examples
-#' n1<-MyNeurons[[1]]*2
-#' n2<-MyNeurons[[1]]*c(2,2,2,2)
+#' data(Cell07PNs)
+#' n1<-Cell07PNs[[1]]*2
+#' n2<-Cell07PNs[[1]]*c(2,2,2,1)
 #' stopifnot(all.equal(n1,n2))
-#' n3<-MyNeurons[[1]]*c(2,2,4)
+#' n3<-Cell07PNs[[1]]*c(2,2,4)
+#' @method * neuron
 `*.neuron` <- function(n,x) {
-  # TODO look into S3 generics for this functionality
+  # TODO use xyzmatrix
   
   nd=n$d[,c("X","Y","Z","W")]
   stopifnot(is.numeric(x))
