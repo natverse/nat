@@ -23,7 +23,8 @@
   \item{x}{an object to transform}
 
   \item{reg}{an object describing a transformation in any
-  of the forms understood by \code{xformpoints}.}
+  of the forms understood by \code{\link{xformpoints}} (see
+  details).}
 
   \item{...}{additional arguments passed to methods}
 

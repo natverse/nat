@@ -19,7 +19,8 @@
 \arguments{
   \item{reg}{A registration defined by a matrix, a
   function, a \code{cmtkreg} object, or a character vector
-  specifying a path to a CMTK registration on disk}
+  specifying a path to a CMTK registration on disk (see
+  details).}
 
   \item{points}{Nx3 matrix of points}
 
