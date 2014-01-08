@@ -20,9 +20,11 @@
 \description{
   \code{neuronlist} objects consist of a list of neuron
   objects along with an optional attached dataframe
-  containing information about the neurons. Relevant
-  functions include plot3d.neuronlist write.neuronlist
-  subset.neuronlist read.neurons can generate a neuronlist
+  containing information about the neurons.
+  \code{neuronlist} objects can be indexed using their name
+  or the number of the neuron like a regular list. If the
+  \code{[} operator is used to index the list, the attached
+  dataframe will also be subsetted.
 
   It is perfectly acceptable not to pass any parameters,
   generating an empty neuronlist
@@ -35,5 +37,10 @@
 \examples{
 # generate an empty neuronlist
 nl=neuronlist()
+# slice an existing neuronlist with regular indexing
+kcs5=kcs20[1:5]
+}
+\seealso{
+  Other neuronlist: \code{\link{nlapply}}
 }
 

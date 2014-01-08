@@ -1,18 +1,16 @@
 #' Create and test objects of neuronlist class to store multiple neurons
-#'  
-#' @description \code{neuronlist} objects consist of a list of neuron objects along with an optional
-#' attached dataframe containing information about the neurons. Relevant
-#' functions include
-#' plot3d.neuronlist
-#' write.neuronlist
-#' subset.neuronlist
-#' read.neurons can generate a neuronlist 
+#' 
+#' @description \code{neuronlist} objects consist of a list of neuron objects 
+#'   along with an optional attached dataframe containing information about the 
+#'   neurons. \code{neuronlist} objects can be indexed using their name or the 
+#'   number of the neuron like a regular list. If the \code{[} operator is used
+#'   to index the list, the attached dataframe will also be subsetted.
 #' @rdname neuronlist
 #' @family neuronlist
 #' @description \code{is.neuronlist} Test if object is a neuronlist
-#'
-#' @details  \code{is.neuronlist} Uses a relaxed definition to cope with older lists of neurons that do not
-#' have a class attribute of neuronlist
+#'   
+#' @details  \code{is.neuronlist} Uses a relaxed definition to cope with older 
+#'   lists of neurons that do not have a class attribute of neuronlist
 #' @param x A neuronlist object
 #' @return return value
 #' @export
@@ -31,6 +29,8 @@ is.neuronlist<-function(x) {
 #' @examples
 #' # generate an empty neuronlist
 #' nl=neuronlist()
+#' # slice an existing neuronlist with regular indexing
+#' kcs5=kcs20[1:5]
 neuronlist <- function(...) as.neuronlist(list(...))
 
 #' Make a list of neurons that can be used for coordinate plotting/analysis
@@ -66,4 +66,147 @@ as.neuronlist<-function(l,df,AddClassToNeurons=TRUE){
       l[[i]]=as.neuron(l[[i]])
   }
   l
+}
+
+"[.neuronlist" <- function(x,i,...) {
+  nl2=structure(NextMethod("["), class = class(x))
+  df=attr(x,'df')
+  if(!is.null(df)){
+    attr(nl2,'df')=df[i,,...]
+  }
+  nl2
+}
+
+#' lapply for neuronlists
+#'
+#' Looks after class and any attached dataframe.
+#' @param X A neuronlist
+#' @param FUN Function to be applied to each element of X
+#' @param ... Additional arguments for FUN
+#' @return A neuronlist
+#' @export
+#' @seealso \code{\link{lapply}}
+#' @family neuronlist
+#' @examples
+#' kcs.flipped=nlapply(kcs20,xform,reg=function(x, ...) x*c(-1,1,1) )
+#' plot3d(kcs20,col='red')
+#' plot3d(kcs.flipped,col='green')
+nlapply<-function (X, FUN, ...){
+  cl=if(is.neuronlist(X)) class(X) else c("neuronlist",'list')
+  structure(lapply(X,FUN,...),class=cl,df=attr(X,'df'))
+}
+
+#' 3D plots of the elements in a neuronlist, optionally using a subset 
+#' expression
+#' 
+#' @details The col and subset parameters are evaluated in the context of the 
+#'   dataframe attribute of the neuronlist. If col evaluates to a factor and 
+#'   colpal is a named vector then colours will be assigned by matching factor 
+#'   levels against the named elements of colpal. If col evaluates to a factor 
+#'   and colpal is a function then it will be used to generate colours with the 
+#'   same number of levels as are used in col.
+#' @param x a neuron list (where omitted will use MyNeurons as default)
+#' @param subset Expression evaluating to logical mask for neurons. See details.
+#' @param col An expression specifying a colour evaluated in the context of the 
+#'   dataframe attached to nl (after any subsetting). See details.
+#' @param colpal A vector of colours or a function that generates colours
+#' @param skipRedraw When plotting more than this many (default 200) neurons 
+#'   skip redraw for individual neurons (this is much faster for large number of
+#'   neurons). Can also accept logical values TRUE (always skip) FALSE (never
+#'   skip).
+#' @param ... options passed on to plot3d (such as colours, line width etc)
+#' @return list of values of \code{plot3d} with subsetted dataframe as attribute
+#'   \code{'df'}
+#' @export
+#' @method plot3d neuronlist
+#' @examples
+#' open3d()
+#' plot3d(kcs20,type=='gamma',col='green')
+#' clear3d()
+#' plot3d(kcs20,col=type)
+#' \dontrun{
+#' plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
+#' plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
+#' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),
+#'   col=c("red","green")[factor(Glomerulus)])
+#' # the same but not specifying colours explicitly
+#' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),col=Glomerulus)
+#' plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
+#' plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
+#' }
+plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...){
+  if(!is.neuronlist(x)){
+    subset=x
+    x=MyNeurons
+  }
+  # Handle Subset
+  df=attr(x,'df')
+  if(!missing(subset)){
+    if(is.null(df)) stop("Can't use a subset unless neuronlist has an attached dataframe")
+    # convert subset (which may a language expression) into an expression that won't get
+    # evaluated until we say so
+    e <- substitute(subset)
+    # now evaluate it looking for variables first in the attached data frame and then 
+    # in the environment of the function
+    r <- eval(e, df, parent.frame())
+    # check we got something back
+    if((is.logical(r) && sum(r)==0) || length(r)==0){
+      # no neurons left, so just return
+      return()
+    }
+    # check that subset expression produced sensible result
+    if(!is.logical(r)) stop("Subset did not evaluate to logical vector")
+    if(length(r)!=length(x)) stop("Subset result does not have same length as neuronlist x")
+    # now just select the neurons we want
+    x=x[r]
+    df=df[r,]
+  }
+  # Handle Colours
+  col.sub <- substitute(col)
+  cols <- eval(col.sub, attr(x,'df'), parent.frame())
+  if(!is.character(cols)){
+    if(is.null(cols)) {
+      if(is.function(colpal)) colpal=colpal(length(x))
+      cols=colpal[seq(x)]
+    }
+    else if(is.function(cols)) cols=cols(length(x))
+    else if(is.numeric(cols)) {
+      if(is.function(colpal)) colpal=colpal(max(cols))
+      cols=colpal[cols]
+    }
+    else if (is.factor(cols)) {
+      # I think dropping missing levels is what we will always want
+      cols=droplevels(cols)
+      if(!is.null(names(colpal))) {
+        # we have a named palette
+        cols=colpal[as.character(cols)]
+        if(any(is.na(cols))){
+          # handle missing colours
+          # first check if there is an unnamed entry in palette
+          unnamed=which(names(colpal)=="")
+          cols[is.na(cols)] = if(length(unnamed)) unnamed[1] else 'black'
+        }
+      } else {
+        if(is.function(colpal)) colpal=colpal(nlevels(cols))
+        cols=colpal[cols]
+      }
+    }
+    else stop("Cannot evaluate col")
+  }
+  # Speed up drawing when there are lots of neurons
+  if(is.numeric(skipRedraw)) skipRedraw=ifelse(length(x)>skipRedraw,TRUE,FALSE)
+  if(is.logical(skipRedraw)) {
+    op=par3d(skipRedraw=skipRedraw)
+    on.exit(par3d(op))
+  }
+  rval=mapply(plot3d,x,col=cols,...)
+  df=attr(x,'df')
+  if(is.null(df)) {
+    keys=names(x)
+    if(is.null(keys)) keys=seq_along(x)
+    df=data.frame(key=keys,stringsAsFactors=FALSE)
+  }
+  df$col=cols
+  attr(rval,'df')=df
+  invisible(rval)
 }
