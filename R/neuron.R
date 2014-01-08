@@ -123,7 +123,7 @@ xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 #' @param y,z separate y and z coordinates
 #' @param Transpose Whether to transpose the coordinates to 3xN matrix
 #' @rdname xyzmatrix
-#' @export
+#' @S3method xyzmatrix default
 xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   # quick function that gives a generic way to extract coords from 
   # classes that we care about and returns a matrix
@@ -145,18 +145,15 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
 #' @export
 #' @seealso \code{\link{xyzmatrix}}
 #' @rdname xyzmatrix
-`xyzmatrix<-`<-function(x, value) UseMethod("xyzmatrix<-")
-
-#' @rdname xyzmatrix
-#' @method xyzmatrix<- default
-#' @usage xyzmatrix(x) <- value
-#' @export
 #' @examples
 #' n=Cell07PNs[[1]]
 #' xyzmatrix(n)<-xyzmatrix(n)
 #' stopifnot(isTRUE(
 #'   all.equal(xyzmatrix(n),xyzmatrix(Cell07PNs[[1]]))
 #' ))
+`xyzmatrix<-`<-function(x, value) UseMethod("xyzmatrix<-")
+
+#' @S3method xyzmatrix<- default
 `xyzmatrix<-.default`<-function(x, value){
   if(is.neuron(x)) x$d[,c("X","Y","Z")]=value
   else if(is.dotprops(x)) x$points[,c("X","Y","Z")]=value

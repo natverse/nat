@@ -2,15 +2,12 @@
 \alias{xyzmatrix}
 \alias{xyzmatrix.default}
 \alias{xyzmatrix<-}
-\alias{xyzmatrix<-.default}
 \title{Get and assign coordinates for classes containing 3d vertex data}
 \usage{
   xyzmatrix(x, ...)
 
   \method{xyzmatrix}{default} (x, y = NULL, z = NULL,
     Transpose = FALSE, ...)
-
-  xyzmatrix(x) <- value
 
   xyzmatrix(x) <- value
 }
