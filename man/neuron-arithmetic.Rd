@@ -1,0 +1,39 @@
+\name{*.neuron}
+\alias{*.neuron}
+\alias{+.neuron}
+\alias{-.neuron}
+\alias{/.neuron}
+\title{Arithmetic for neuron coordinates}
+\usage{
+  \method{*}{neuron} (n, x)
+
+  \method{+}{neuron} (n, x)
+
+  \method{-}{neuron} (n, x)
+
+  \method{/}{neuron} (n, x)
+}
+\arguments{
+  \item{n}{a neuron}
+
+  \item{x}{(a numeric vector to multiply neuron coords in
+  neuron)}
+}
+\value{
+  modified neuron
+}
+\description{
+  If x is a 1-vector or a 3-vector, multiply xyz only If x
+  is a 4-vector, multiply xyz and diameter by that TODO
+  Figure out how to document arithemtic functions in one go
+}
+\examples{
+n1<-Cell07PNs[[1]]*2
+n2<-Cell07PNs[[1]]*c(2,2,2,1)
+stopifnot(all.equal(n1,n2))
+n3<-Cell07PNs[[1]]*c(2,2,4)
+}
+\seealso{
+  neuron
+}
+

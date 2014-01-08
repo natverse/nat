@@ -10,7 +10,6 @@
   2010).
 }
 \examples{
-data(Cell07PNs)
 table(attr(Cell07PNs,'df')$Glomerulus)
 }
 \references{
