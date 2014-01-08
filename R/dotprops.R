@@ -123,6 +123,7 @@ dotprops.neuron<-function(x, Labels=NULL, ...) {
 }
 
 #' @method dotprops default
+#' @export
 #' @rdname dotprops
 #' @param k Number of nearest neighbours to use for tangent vector calculation
 #'   (set to k=20 when passed NULL)
