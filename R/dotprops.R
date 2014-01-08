@@ -217,3 +217,94 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
   }
   NextMethod(check.attributes=check.attributes, ...)
 }
+
+#' 3D plots of dotprops objects using rgl package
+#' 
+#' @details Tangent vectors are plotted by \code{segments3d} and centered on the
+#'   relevant point. Points are plotted by \code{points3d}.
+#'   
+#' @param x A dotprops object
+#' @param scalevecs Factor by which to scale unit vectors (numeric, default: 
+#'   1.0)
+#' @param alpharange Restrict plotting to points with \code{alpha} values in 
+#'   this range to plot (default: null => all points). See 
+#'   \code{\link{dotprops}} for definition of \code{alpha}.
+#' @param PlotPoints,PlotVectors Whether to plot points and/or tangent vectors 
+#'   (logical, default: tangent vectors only)
+#' @param UseAlpha Whether to scale tangent vector length by the value of 
+#'   \code{alpha}
+#' @param ... Additional arguments passed to \code{points3d} and/or 
+#'   \code{segments3d}
+#' @return invisible list of results of rgl plotting commands
+#' @method plot3d dotprops
+#' @export
+#' @importFrom rgl plot3d
+#' @seealso \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d}, 
+#'   \link[rgl]{segments3d}}
+#' @examples
+#' open3d()
+#' plot3d(kcs20[[1]])
+#' clear3d()
+#' plot3d(kcs20[[1]],col='red')
+#' clear3d()
+#' plot3d(kcs20[[1]],col='red',lwd=2)
+#' plot3d(kcs20[[2]],col='green',lwd=2)
+plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL,
+                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE,...){
+  # rgl's generic plot3d will dispatch on this
+  if (!is.null(alpharange))
+    x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
+  rlist=list()
+  if(PlotPoints)
+    rlist$points=points3d(x$points,...)
+  if(PlotVectors){
+    halfvect=x$vect/2*scalevecs
+    if(UseAlpha) halfvect=halfvect*x$alpha
+    starts=x$points-halfvect
+    stops=x$points+halfvect
+    interleaved=matrix(t(cbind(starts,stops)),ncol=3,byrow=T)
+    rlist$segments=segments3d(interleaved,...)
+  }
+  invisible(rlist)
+}
+
+#' Subset points in dotprops object that match given conditions
+#' 
+#' @details \code{subset} defines either logical or numeric indices, in which
+#'   case these are simply applied to the matrices that define the points, vect
+#'   etc OR a function (which is called with the 3d points array and returns T/F
+#'   vector).
+#' @param x A dotprops object
+#' @param subset A subset of points defined by indices or a function (see Details)
+#' @param ... Additional parameters (currently ignored)
+#' @return subsetted dotprops object
+#' @method subset dotprops
+#' @export
+#' @seealso \code{\link{prune.dotprops}}
+#' @examples
+#' \dontrun{
+#' s3d=select3d()
+#' dp1=subset(dp,s3d(points))
+#' # special case of previous version
+#' dp2=subset(dp,s3d)
+#' stopifnot(all.equal(dp1,dp2))
+#' dp2=subset(dp,alpha>0.5 & s3d(pointd))
+#' dp3=subset(dp,1:10)
+#' }
+subset.dotprops<-function(x, subset, ...){
+  e <- substitute(subset)
+  r <- eval(e, x, parent.frame())
+  if (!is.logical(r) && !is.numeric(r)) {
+    # a function that tells us whether a point is in or out
+    if(is.function(r)) r=subset(x$points)
+    else stop("Cannot evaluate subset")
+  }
+  if(is.logical(r)) r <- r & !is.na(r)
+  else if(!is.numeric(r)) stop("Subset must evaluate to a logical or numeric index")
+  
+  x$points=x$points[r,,drop=F]
+  x$alpha=x$alpha[r]
+  x$vect=x$vect[r,,drop=F]
+  if(!is.null(x$labels)) x$labels=x$labels[r]
+  x
+}
