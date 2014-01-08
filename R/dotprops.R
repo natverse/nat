@@ -86,6 +86,7 @@ scale.dotprops<-function(x,center=TRUE,scale=TRUE){
 }
 
 # Set up a private function that directly accesses internal LAPACK routine of eigen
+# TODO Replace this with a strategy that will be acceptable on CRAN
 if(R.version$major<3){
   .internal_lars<-function(x) .Call("La_rs", x, only.values=FALSE, PACKAGE = "base")
 } else {
@@ -131,6 +132,12 @@ dotprops.neuron<-function(x, Labels=NULL, ...) {
 #'   to use labels.
 #' @param na.rm Whether to remove \code{NA} points (default FALSE)
 #' @importFrom RANN nn2
+#' @references The dotprops format is essentially identical to that developed in:
+#' 
+#' Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). 
+#' A mutual information approach to automate identification of neuronal clusters 
+#' in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
+#' \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
 dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   # store labels from SWC format data if this is a neuron
   x=xyzmatrix(x)
