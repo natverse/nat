@@ -1,3 +1,16 @@
+nat 0.3
+=======
+* basic and self-contained implementation of neuron class
+* basic and self-contained implementation of dotprops
+* new xform generic + methods for clean transformation of objects including
+  neurons and dotprops objects
+* this includes improved interaction between dotprops and xform so that xform
+  can use the previously value of k when recalculating a dotprops object post
+  transformation
+* sample data (40 PNs from Jefferis, Potter et al. '07 and 20 KCs from Chiang 
+  et al. 2011)
+* 1 use of .Internal and missing nlapply remain to be fixed.
+
 nat 0.2.1
 =========
 * fix install error due to missing neuron(*).R files that contain docs only so far
