@@ -1,0 +1,43 @@
+\name{all.equal.neuron}
+\alias{all.equal.neuron}
+\title{Check equality on key fields of neuron object}
+\usage{
+  \method{all.equal}{neuron} (target, current,
+    tolerance = 1e-06, check.attributes = FALSE,
+    fieldsToCheck = c("NeuronName", "NumPoints", "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
+    fieldsToCheckIfPresent = "nTrees",
+    CheckSharedFieldsOnly = FALSE, ...)
+}
+\arguments{
+  \item{fieldsToCheck}{Which fields in the neuron are
+  always check}
+
+  \item{fieldsToCheckIfPresent}{These fields are only
+  checked if they are present}
+
+  \item{CheckSharedFieldsOnly}{Logical whether to check
+  shared fields only (default: FALSE)}
+
+  \item{...}{additional arguments passed to
+  \code{all.equal}}
+
+  \item{target}{\R object.}
+
+  \item{current}{other \R object, to be compared with
+  \code{target}.}
+
+  \item{tolerance}{numeric \eqn{\ge} 0.  Differences
+  smaller than \code{tolerance} are not considered.}
+
+  \item{check.attributes}{logical indicating if the
+  \code{\link{attributes}} of \code{target} and
+  \code{current} (other than the names) should be
+  compared.}
+}
+\description{
+  Check equality on key fields of neuron object
+}
+\seealso{
+  \code{\link{all.equal}}
+}
+

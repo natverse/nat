@@ -162,6 +162,18 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   x
 }
 
+#' Check equality on key fields of neuron object
+#' 
+#' @inheritParams base::all.equal.default
+#' @param fieldsToCheck Which fields in the neuron are always check
+#' @param fieldsToCheckIfPresent These fields are only checked if they are
+#'   present
+#' @param CheckSharedFieldsOnly Logical whether to check shared fields only 
+#'   (default: FALSE)
+#' @param ... additional arguments passed to \code{all.equal}
+#' @method all.equal neuron
+#' @export
+#' @seealso \code{\link{all.equal}}
 all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
                            fieldsToCheck=c("NeuronName", "NumPoints", "StartPoint", "BranchPoints",
                                            "EndPoints", "NumSegs", "SegList", "d"), fieldsToCheckIfPresent="nTrees",
