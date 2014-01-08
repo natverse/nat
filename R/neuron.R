@@ -108,6 +108,7 @@ as.neuron<-function(n){
 #' n1.scaleup=scale(Cell07PNs[[1]],scale=1/c(2,2,3))
 scale.neuron<-function(x,center=FALSE,scale=FALSE){
   xyzmatrix(x)<-scale(xyzmatrix(x),scale=scale,center=center)
+  x
 }
 
 #' Get and assign coordinates for classes containing 3d vertex data

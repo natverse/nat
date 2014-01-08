@@ -13,3 +13,12 @@ test_that("xform gives same result as xformpoints", {
   expect_equal(data.matrix(xform(n,reg=creg2)$d[,c("X","Y","Z")]),
                xformpoints(creg2,n$d[,c("X","Y","Z")]))
 })
+
+test_that("xform with affine matrix gives same result as neuron arithmetic", {
+  n=Cell07PNs[[1]]
+  scalefacs=c(1,1.1,1.2)
+  affmat=matrix(0,4,4)
+  diag(affmat)=c(scalefacs,1)
+  expect_equal(xform(n,reg=affmat),n*scalefacs)
+  expect_equal(xform(n,reg=affmat),scale(n,scale=1/scalefacs,center=FALSE))
+})
