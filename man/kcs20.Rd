@@ -3,10 +3,11 @@
 \alias{kcs20}
 \title{List of 20 Kenyon Cells from Chiang et al 2011 converted to dotprops objects}
 \description{
-  This R list (which has additional class neuronlist)
-  contain 20 skeletonized Drosophila Kenyon cells as
-  \code{dotprops} objects. Original data is due to Chiang
-  et al. 2011, who have generously shared their raw data at
+  This R list (which has additional class
+  \code{neuronlist}) contains 20 skeletonized
+  \emph{Drosophila} Kenyon cells as \code{dotprops}
+  objects. Original data is due to Chiang et al. 2011, who
+  have generously shared their raw data at
   \url{http://flycircuit.tw}. Image registration and
   further processing was carried out by Greg Jefferis.
 }
