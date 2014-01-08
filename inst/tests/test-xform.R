@@ -1,7 +1,5 @@
 context("Test xform")
 
-data(Cell07PNs)
-
 test_that("xform can use a function to define a registration", {
   n=Cell07PNs[[1]]
   expect_equal(xform(n,reg=function(x,...) -x),n*c(-1,-1,-1))

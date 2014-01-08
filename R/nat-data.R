@@ -5,7 +5,6 @@
 #' transformed onto the IS2 template brain (Cachero, Ostrovsky et al 2010).
 #' @name Cell07PNs
 #' @examples
-#' data(Cell07PNs)
 #' table(attr(Cell07PNs,'df')$Glomerulus)
 #' @docType data
 #' @references Jefferis G.S.X.E., Potter C.J., Chan A.M., Marin E.C., Rohlfing 

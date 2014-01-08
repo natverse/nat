@@ -43,7 +43,6 @@ as.neuron<-function(n){
 #' @rdname neuron-arithmetic
 #' @seealso neuron
 #' @examples
-#' data(Cell07PNs)
 #' n1<-Cell07PNs[[1]]*2
 #' n2<-Cell07PNs[[1]]*c(2,2,2,1)
 #' stopifnot(all.equal(n1,n2))
