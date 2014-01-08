@@ -192,9 +192,3 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
   all.equal(target[fieldsToCheck],current[fieldsToCheck],
             tolerance=tolerance, check.attributes=check.attributes, ...)
 }
-
-as.neuron<-function(n){
-  if(is.null(n)) return (NULL)
-  if(!is.neuron(n,Strict=TRUE)) class(n)=c("neuron",class(n))
-  n
-}
