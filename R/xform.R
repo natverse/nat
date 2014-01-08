@@ -81,5 +81,8 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 xform.neuronlist<-function(x, reg, ...){
   if(length(reg)>1) stop("xform.neuronlist is currently only able to apply",
                          " a single registration to multiple neurons")
+  # TODO if x is long there would be some performance benefits in chunking
+  # all points from multiple neurons together. I strongly suspect that doing 10
+  # at once would approach a 10x speedup.
   nlapply(x, xform, reg, ...)
 }
