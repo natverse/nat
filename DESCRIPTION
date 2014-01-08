@@ -32,6 +32,7 @@ Suggests:
     testthat
 License: GPL (>= 2)
 LazyLoad: yes
+LazyData: yes
 Collate:
     'nat-package.R'
     'neuron.R'
