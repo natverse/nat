@@ -43,6 +43,7 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
 }
 
 #' @method xform list
+#' @S3method xform list
 #' @rdname xform
 #' @param FallBackToAffine whether to use an affine transform when a cmtk
 #'   warping transformation fails.
@@ -55,6 +56,7 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
 }
 
 #' @method xform dotprops
+#' @S3method xform dotprops
 #' @rdname xform
 #' @details the dotprops tangent vectors will be recalculated
 #'   post-transformation (even though they could in theory be transformed more
