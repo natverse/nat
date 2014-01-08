@@ -14,8 +14,8 @@
   \method{xform}{list} (x, reg, FallBackToAffine = TRUE,
     na.action = "error", ...)
 
-  \method{xform}{dotprops} (x, FallBackToAffine = TRUE,
-    ..., k = 5)
+  \method{xform}{dotprops} (x, reg,
+    FallBackToAffine = TRUE, ...)
 
   \method{xform}{neuronlist} (x, reg, ...)
 }
@@ -33,9 +33,6 @@
 
   \item{FallBackToAffine}{whether to use an affine
   transform when a cmtk warping transformation fails.}
-
-  \item{k}{Number of nearest neighbours to use for dotprops
-  recalculation}
 }
 \description{
   \code{xform} is designed to operate on a variety of data
@@ -54,7 +51,18 @@
 
   the dotprops tangent vectors will be recalculated
   post-transformation (even though they could in theory be
-  transformed more or less correctly).
+  transformed more or less correctly). The dotrops
+}
+\examples{
+\dontrun{
+kc1=kcs20[[1]]
+kc1.default=xform(kc1,function(x,...) x)
+stopifnot(isTRUE(all.equal(kc1,kc1.default)))
+kc1.5=xform(kc1,function(x,...) x, k=5)
+stopifnot(isTRUE(all.equal(kc1.5,kc1.default)))
+kc1.20=xform(kc1,function(x,...) x, k=20)
+stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
+}
 }
 \seealso{
   xformpoints

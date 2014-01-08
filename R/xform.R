@@ -58,12 +58,22 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
 #' @rdname xform
 #' @details the dotprops tangent vectors will be recalculated
 #'   post-transformation (even though they could in theory be transformed more
-#'   or less correctly).
-#' @param k Number of nearest neighbours to use for dotprops recalculation
-xform.dotprops<-function(x, FallBackToAffine=TRUE, ..., k=5){
+#'   or less correctly). The dotrops
+#' @examples
+#' \dontrun{
+#' kc1=kcs20[[1]]
+#' kc1.default=xform(kc1,function(x,...) x)
+#' stopifnot(isTRUE(all.equal(kc1,kc1.default)))
+#' kc1.5=xform(kc1,function(x,...) x, k=5)
+#' stopifnot(isTRUE(all.equal(kc1.5,kc1.default)))
+#' kc1.20=xform(kc1,function(x,...) x, k=20)
+#' stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
+#' }
+xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
   points=xyzmatrix(x)
-  pointst=xform(points, FallBackToAffine=FallBackToAffine, ...)
-  DotProperties(pointst, k=k)
+  pointst=xform(points, reg=reg, FallBackToAffine=FallBackToAffine, ...)
+  xyzmatrix(x)=pointst
+  dotprops(x, ...)
 }
 
 #' @method xform neuronlist

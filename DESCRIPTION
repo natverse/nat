@@ -44,3 +44,4 @@ Collate:
     'cmtk_geometry.R'
     'xform.R'
     'nat-data.R'
+    'dotprops.R'
