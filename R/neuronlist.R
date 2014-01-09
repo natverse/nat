@@ -68,6 +68,8 @@ as.neuronlist<-function(l,df,AddClassToNeurons=TRUE){
   l
 }
 
+#' @method [ neuronlist
+#' @S3method [ neuronlist
 "[.neuronlist" <- function(x,i,...) {
   nl2=structure(NextMethod("["), class = class(x))
   df=attr(x,'df')
