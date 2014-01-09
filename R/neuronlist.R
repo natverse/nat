@@ -210,3 +210,36 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
   attr(rval,'df')=df
   invisible(rval)
 }
+
+#' Arithmetic for neuron coordinates applied to neuronlists
+#'
+#' If x is one number or 3-vector, multiply coordinates by that
+#' If x is a 4-vector, multiply xyz and diameter
+#' TODO Figure out how to document arithemtic functions in one go
+#' @param x a neuronlist
+#' @param y (a numeric vector to multiply coords in neuronlist members)
+#' @return modified neuronlist
+#' @export
+#' @rdname neuronlist-arithmetic
+#' @method * neuronlist
+#' @examples
+#' mn2<-Cell07PNs[1:10]*2
+`*.neuronlist` <- function(x,y) {
+  # TODO look into S3 generics for this functionality
+  nlapply(x,`*`,y)
+}
+
+#' @export
+#' @rdname neuronlist-arithmetic
+#' @method + neuronlist
+`+.neuronlist` <- function(x,y) nlapply(x,`+`,y)
+
+#' @export
+#' @rdname neuronlist-arithmetic
+#' @method - neuronlist
+`-.neuronlist` <- function(x,y) x+(-y)
+
+#' @export
+#' @rdname neuronlist-arithmetic
+#' @method / neuronlist
+`/.neuronlist` <- function(x,y) x*(1/y)
