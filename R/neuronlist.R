@@ -121,6 +121,7 @@ nlapply<-function (X, FUN, ...){
 #'   \code{'df'}
 #' @export
 #' @method plot3d neuronlist
+#' @rdname plot3d.neuronlist
 #' @examples
 #' open3d()
 #' plot3d(kcs20,type=='gamma',col='green')
@@ -219,6 +220,22 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
   df$col=cols
   attr(rval,'df')=df
   invisible(rval)
+}
+
+#' @rdname plot3d.neuronlist
+#' @method plot3d character
+#' @S3method plot3d character
+#' @description \code{plot3d.character} is a convenience method intended for
+#'   exploratory work on the command line.
+#' @details plot3d.character will check if options('nat.default.neuronlist') has
+#'   been set and then use x as an identifier to find a neuron in that 
+#'   neuronlist.
+plot3d.character<-function(x, ...) {
+  nl=get(getOption('nat.default.neuronlist'))
+  if(!is.neuronlist(nl)) 
+    stop("Please set options(nat.default.neuronlist='myfavneuronlist'). ',
+         'See ?nat for details.")
+  plot3d(nl, pmatch(x, names(nl)), ...)
 }
 
 #' Arithmetic for neuron coordinates applied to neuronlists

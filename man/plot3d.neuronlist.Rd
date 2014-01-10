@@ -1,10 +1,13 @@
 \name{plot3d.neuronlist}
+\alias{plot3d.character}
 \alias{plot3d.neuronlist}
 \title{3D plots of the elements in a neuronlist, optionally using a subset
 expression}
 \usage{
   \method{plot3d}{neuronlist} (x, subset, col = NULL,
     colpal = rainbow, skipRedraw = 200, ...)
+
+  \method{plot3d}{character} (x, ...)
 }
 \arguments{
   \item{x}{a neuron list (where omitted will use MyNeurons
@@ -36,6 +39,9 @@ expression}
 \description{
   3D plots of the elements in a neuronlist, optionally
   using a subset expression
+
+  \code{plot3d.character} is a convenience method intended
+  for exploratory work on the command line.
 }
 \details{
   The col and subset parameters are evaluated in the
@@ -46,6 +52,11 @@ expression}
   a factor and colpal is a function then it will be used to
   generate colours with the same number of levels as are
   used in col.
+
+  plot3d.character will check if
+  options('nat.default.neuronlist') has been set and then
+  use x as an identifier to find a neuron in that
+  neuronlist.
 }
 \examples{
 open3d()
