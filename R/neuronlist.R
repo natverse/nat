@@ -137,10 +137,6 @@ nlapply<-function (X, FUN, ...){
 #' plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
 #' }
 plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...){
-  if(!is.neuronlist(x)){
-    subset=x
-    x=MyNeurons
-  }
   # Handle Subset
   df=attr(x,'df')
   if(!missing(subset)){
