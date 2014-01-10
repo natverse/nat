@@ -147,14 +147,26 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
     # now evaluate it looking for variables first in the attached data frame and then 
     # in the environment of the function
     r <- eval(e, df, parent.frame())
+    # match characters against neuron names
+    if(is.character(r)){
+      r=match(r,names(x))
+      if(any(is.na(r))) {
+        warning(sum(is.na(r)),' identifiers could not be',
+                ' matched against names of neuronlist')
+        r=na.omit(r)
+      }
+    }
     # check we got something back
     if((is.logical(r) && sum(r)==0) || length(r)==0){
       # no neurons left, so just return
       return()
     }
     # check that subset expression produced sensible result
-    if(!is.logical(r)) stop("Subset did not evaluate to logical vector")
-    if(length(r)!=length(x)) stop("Subset result does not have same length as neuronlist x")
+    if(is.logical(r)){
+      if(length(r)!=length(x)) stop("Subset result does not have same length as neuronlist x")
+    } else if(is.integer(r)){
+      if(any(r>length(x) | r<0)) stop("Subset evaluated to invalid integer index")
+    } else stop("Subset did not evaluate to logical or character vector")
     # now just select the neurons we want
     x=x[r]
     df=df[r,]
