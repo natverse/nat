@@ -72,3 +72,47 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
     return(system(cmd)==0)
   }
 }
+
+#' Return path to directory containing CMTK binaries
+#' 
+#' @details Queries options('nat.cmtk.bindir') if no dir is specified. If that 
+#'   does not contain the appropriate binaries, it will look in the system PATH 
+#'   and then a succession of plausible places until it finds something.
+#' @param dir to use as binary directory (defaults to 
+#'   options('nat.cmtk.bindir'))
+#' @param extradirs Where to look if CMTK is not in dir or the PATH
+#' @param set Whether to set options('nat.cmtk.bindir') with the found directory
+#' @param check Whether to (re)check a path that has been set with 
+#'   options(nat.cmtk.bindir='/some/path')
+#' @param cmtktool Name of a specific cmtk tool which will be used to identify 
+#'   the location of all cmtk binaries.
+#' @export
+cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
+                      extradirs=c('~/bin','/opt/local/bin','/usr/local/bin',
+                                         '/Applications/IGSRegistrationTools/bin'),
+                      set=FALSE, check=FALSE, cmtktool='gregxform'){
+  bindir=NULL
+  if(!is.null(dir)) {
+    bindir=dir
+    if(check && !file.exists(file.path(dir,cmtktool))) 
+      stop("cmtk is _not_ installed at:", dir,
+           "\nPlease check value of options('nat.cmtk.bindir')")
+  }
+  if (is.null(bindir)){
+    if(isTRUE(nchar(gregxform<-system(paste('which',cmtktool),intern=TRUE))>0)){
+      # identify current gregxform on path
+      bindir=dirname(gregxform)
+    } else {
+      # check some plausible locations
+      for(dir in extradirs){
+        if(file.exists(file.path(dir,cmtktool))) {
+          bindir=dir
+          break
+        }
+      }
+    }
+  }
+  if(set)
+    options(nat.cmtk.bindir=bindir)
+  bindir
+}
