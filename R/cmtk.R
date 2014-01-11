@@ -77,13 +77,16 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' 
 #' @details Queries options('nat.cmtk.bindir') if no dir is specified. If that 
 #'   does not contain the appropriate binaries, it will look in the system PATH 
-#'   and then a succession of plausible places until it finds something.
-#' @param dir to use as binary directory (defaults to 
-#'   options('nat.cmtk.bindir'))
+#'   and then a succession of plausible places until it finds something. Setting
+#'   \code{options(nat.cmtk.bindir=NA)} or passing \code{dir=NA} will stop the
+#'   function from trying to locate CMTK, always returning NULL unless
+#'   check=TRUE when it will error out.
+#' @param dir to use as binary directory or NA (see details) (defaults to 
+#'   options('nat.cmtk.bindir')).
 #' @param extradirs Where to look if CMTK is not in dir or the PATH
 #' @param set Whether to set options('nat.cmtk.bindir') with the found directory
 #' @param check Whether to (re)check that a path that has been set appropriately
-#'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or
+#'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or 
 #'   alternative directories. Will throw an error on failure.
 #' @param cmtktool Name of a specific cmtk tool which will be used to identify 
 #'   the location of all cmtk binaries.
@@ -108,7 +111,7 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
       stop("cmtk is _not_ installed at:", dir,
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
-  if (is.null(bindir)){
+  if(is.null(bindir)){
     ow=options(warn=-1)
     cmtktool_exists=system(paste('which',cmtktool))==0
     options(ow)
@@ -127,6 +130,7 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
       }
     }
   }
+  if(is.na(bindir)) bindir=NULL
   if(check && is.null(bindir))
     stop("Cannot find CMTK. Please install from",
          "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
