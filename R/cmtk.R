@@ -117,8 +117,7 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
     options(ow)
     if(cmtktool_exists){
       # identify location of chosen cmtk tool on current on path
-      cmtktoolpath<-system(paste('which',cmtktool),intern=TRUE,
-                           ignore.stderr=TRUE,ignore.stdout=TRUE)
+      cmtktoolpath<-system(paste('which',cmtktool),intern=TRUE,ignore.stderr=TRUE)
       bindir=dirname(cmtktoolpath)
     } else {
       # check some plausible locations
@@ -130,7 +129,7 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
       }
     }
   }
-  if(is.na(bindir)) bindir=NULL
+  if(!is.null(bindir) && is.na(bindir)) bindir=NULL
   if(check && is.null(bindir))
     stop("Cannot find CMTK. Please install from",
          "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
