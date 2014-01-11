@@ -45,3 +45,4 @@ Collate:
     'xform.R'
     'nat-data.R'
     'dotprops.R'
+    'neuron-plot.R'
