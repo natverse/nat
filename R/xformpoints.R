@@ -58,7 +58,10 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile), add = TRUE)
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
-  cmd=paste('gregxform',ifelse(direction=='forward','-f',''),
+  gregxform=file.path(cmtk.bindir(check=TRUE),'gregxform')
+  # TODO enable CMTK affine transforms using internal R code even when
+  # CMTK command line tools are missing.
+  cmd=paste(gregxform,ifelse(direction=='forward','-f',''),
             ifelse(transformtype=='affine','-n',''),
             shQuote(reg),'<',shQuote(pointsfile))
   pointst=matrix(scan(text=system(cmd, intern = TRUE), quiet=TRUE),

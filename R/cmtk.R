@@ -13,9 +13,9 @@
 #' @family cmtk-geometry
 #' @export
 cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
-  cmd="dof2mat"
-  if(version) return(system2(cmd,'--version',stdout=TRUE))
-  if(Transpose) cmd=paste(cmd,'--transpose')
+  dof2mat=file.path(cmtk.bindir(check=TRUE),"dof2mat")
+  if(version) return(system2(dof2mat,'--version',stdout=TRUE))
+  if(Transpose) cmd=paste(dof2mat,'--transpose')
   
   if(is.numeric(reg)){
     params<-reg
@@ -24,7 +24,7 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
     write.cmtkreg(params,foldername=reg)
   }
   
-  cmd=paste(cmd,shQuote(reg))
+  cmd=paste(dof2mat,shQuote(reg))
   rval=system(cmd,intern=TRUE)
   numbers=as.numeric(unlist(strsplit(rval,"\t")))
   matrix(numbers,ncol=4,byrow=TRUE)
@@ -48,8 +48,8 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
 #' @family cmtk-geometry
 #' @export
 cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
-  cmd="mat2dof"
-  if(version) return(system2(cmd,'--version',stdout=TRUE))
+  mat2dof=file.path(cmtk.bindir(check=TRUE),'mat2dof')
+  if(version) return(system2(mat2dof,'--version',stdout=TRUE))
   if(!is.matrix(m) || nrow(m)!=4 || ncol(m)!=4) stop("Please give me a homogeneous affine matrix (4x4)")
   inf=tempfile()
   on.exit(unlink(inf),add=TRUE)
@@ -57,7 +57,7 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
   write.table(m, file=inf, sep='\t', row.names=F, col.names=F)
   # always transpose because mat2dof appears to read the matrix with last column being 0 0 0 1
   
-  if(Transpose) cmd=paste(cmd,'--transpose')
+  if(Transpose) cmd=paste(mat2dof,'--transpose')
   if(!is.null(centre)) {
     if(length(centre)!=3) stop("Must supply 3-vector for centre")
     cmd=paste(cmd,'--center',paste(centre, collapse=","))
