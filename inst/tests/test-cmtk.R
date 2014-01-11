@@ -1,5 +1,9 @@
 # tests for cmtk command line tools
 
+if(is.null(cmtk.bindir())){
+  message("skipping cmtk command line tool tests since CMTK is not installed")
+} else {
+
 context("cmtk command line tools")
 
 #' round trip test of mat2dof/dof2mat
@@ -62,3 +66,5 @@ test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
 #   expect_equal(ComposeAffineFromIGSParams(params,legacy=TRUE),
 #                      m_base,tolerance=1e-4)
 })
+
+}

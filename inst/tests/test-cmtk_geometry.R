@@ -1,15 +1,19 @@
 context("Verify CMTK geometry functions")
 
-cmtk_version=cmtk.dof2mat(version=TRUE)
-cmtk_numeric_version=numeric_version(sub("([0-9.]+).*",'\\1',cmtk_version))
-
-test_that("CMTK version is >2.4", {
-  expect_true(cmtk_numeric_version>=numeric_version("2.4.0"),
-              'nat depends on CMTK>=2.4.0 for affine matrix (de)composition fixes')
-})
+if(is.null(cmtk.bindir())){
+  cmtk_numeric_version=NULL
+} else {
+  cmtk_version=cmtk.dof2mat(version=TRUE)
+  cmtk_numeric_version=numeric_version(sub("([0-9.]+).*",'\\1',cmtk_version))
+  test_that("CMTK version is >2.4", {
+    expect_true(cmtk_numeric_version>=numeric_version("2.4.0"),
+                'nat depends on CMTK>=2.4.0 for affine matrix (de)composition fixes')
+  })
+}
 
 checkRoundTripFromMat=function(mat,
-                               test.cmtk=cmtk_numeric_version>=numeric_version("2.4.0")){
+                               test.cmtk=!is.null(cmtk_numeric_version) &&
+                                 cmtk_numeric_version>=numeric_version("2.4.0")){
   params=affmat2cmtkparams(mat)
   m2=cmtkparams2affmat(params)
   expect_equal(mat,m2,tolerance=1e-5)
@@ -17,7 +21,7 @@ checkRoundTripFromMat=function(mat,
     # repeat with cmtk tools
     params2=cmtk.mat2dof(mat)
     m3=cmtk.dof2mat(params2)
-    # can't absolutely rely on getting same params back in certain degenerate 
+    # can't absolutely rely on getting same params back in certain degenerate
     # cases e.g. axis flip.
     # checkEqualsNumeric(params,params2,tolerance=1e-5)
     expect_equal(mat,m3,tolerance=1e-5)
