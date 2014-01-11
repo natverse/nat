@@ -86,6 +86,8 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   options(nat.cmtk.bindir='/some/path')
 #' @param cmtktool Name of a specific cmtk tool which will be used to identify 
 #'   the location of all cmtk binaries.
+#' @return Character vector giving path to CMTK binary directory or NULL when
+#'   this cannot be found.
 #' @export
 #' @examples
 #' cmtk.bindir()

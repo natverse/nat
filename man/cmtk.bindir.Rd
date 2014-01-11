@@ -22,6 +22,10 @@
   \item{cmtktool}{Name of a specific cmtk tool which will
   be used to identify the location of all cmtk binaries.}
 }
+\value{
+  Character vector giving path to CMTK binary directory or
+  NULL when this cannot be found.
+}
 \description{
   Return path to directory containing CMTK binaries
 }
