@@ -82,13 +82,15 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   options('nat.cmtk.bindir'))
 #' @param extradirs Where to look if CMTK is not in dir or the PATH
 #' @param set Whether to set options('nat.cmtk.bindir') with the found directory
-#' @param check Whether to (re)check a path that has been set with 
-#'   options(nat.cmtk.bindir='/some/path')
+#' @param check Whether to (re)check that a path that has been set appropriately
+#'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or
+#'   alternative directories. Will throw an error on failure.
 #' @param cmtktool Name of a specific cmtk tool which will be used to identify 
 #'   the location of all cmtk binaries.
-#' @return Character vector giving path to CMTK binary directory or NULL when
+#' @return Character vector giving path to CMTK binary directory or NULL when 
 #'   this cannot be found.
 #' @export
+#' @aliases cmtk
 #' @examples
 #' cmtk.bindir()
 #' # set options('nat.cmtk.bindir') according to where cmtk was found
@@ -107,9 +109,14 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
   if (is.null(bindir)){
-    if(isTRUE(nchar(gregxform<-system(paste('which',cmtktool),intern=TRUE))>0)){
-      # identify current gregxform on path
-      bindir=dirname(gregxform)
+    ow=options(warn=-1)
+    cmtktool_exists=system(paste('which',cmtktool))==0
+    options(ow)
+    if(cmtktool_exists){
+      # identify location of chosen cmtk tool on current on path
+      cmtktoolpath<-system(paste('which',cmtktool),intern=TRUE,
+                           ignore.stderr=TRUE,ignore.stdout=TRUE)
+      bindir=dirname(cmtktoolpath)
     } else {
       # check some plausible locations
       for(dir in extradirs){
@@ -120,6 +127,9 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
       }
     }
   }
+  if(check && is.null(bindir))
+    stop("Cannot find CMTK. Please install from",
+         "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
   if(set)
     options(nat.cmtk.bindir=bindir)
   bindir
