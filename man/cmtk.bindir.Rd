@@ -31,4 +31,11 @@
   binaries, it will look in the system PATH and then a
   succession of plausible places until it finds something.
 }
+\examples{
+cmtk.bindir()
+# set options('nat.cmtk.bindir') according to where cmtk was found
+op=options(nat.cmtk.bindir=NULL)
+cmtk.bindir(set=TRUE)
+options(op)
+}
 

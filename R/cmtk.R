@@ -87,6 +87,12 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' @param cmtktool Name of a specific cmtk tool which will be used to identify 
 #'   the location of all cmtk binaries.
 #' @export
+#' @examples
+#' cmtk.bindir()
+#' # set options('nat.cmtk.bindir') according to where cmtk was found
+#' op=options(nat.cmtk.bindir=NULL)
+#' cmtk.bindir(set=TRUE)
+#' options(op)
 cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/opt/local/bin','/usr/local/bin',
                                          '/Applications/IGSRegistrationTools/bin'),
