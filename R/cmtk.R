@@ -113,7 +113,8 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
   }
   if(is.null(bindir)){
     ow=options(warn=-1)
-    cmtktool_exists=system(paste('which',cmtktool))==0
+    cmtktool_exists=system(paste('which',cmtktool),ignore.stdout=TRUE,
+                           ignore.stderr=TRUE)==0
     options(ow)
     if(cmtktool_exists){
       # identify location of chosen cmtk tool on current on path
