@@ -99,7 +99,7 @@ ParseAMSurfToContourList<-function(filename,RegionNames="ALL",RegionChoice="Inne
     } 
     d$RegionColourList[which(d$RegionList == regionName)] <- color
   }
-  class(d) <- c(class(d), 'hxsurf')
+  class(d) <- c('hxsurf',class(d))
   return(d)
 }
 
