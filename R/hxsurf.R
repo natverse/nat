@@ -44,7 +44,7 @@ ParseAMSurfToContourList<-function(filename,RegionNames="ALL",RegionChoice="Inne
   PatchEnds=grep("^\\s*}",remainingLines[PatchDefLine:length(remainingLines)],perl=TRUE)+PatchDefLine-1
   if(length(PatchEnds)>nPatches) PatchEnds=PatchEnds[1:nPatches]
   #return(d)
-  TriangleDeflines<<-grep("Triangles",remainingLines)
+  TriangleDeflines<-grep("Triangles",remainingLines)
   #myreadtable<-function(...) scan(...)
   for(i in 1:nPatches){
     if(!any(TriangleDeflines[i])){
@@ -52,7 +52,7 @@ ParseAMSurfToContourList<-function(filename,RegionNames="ALL",RegionChoice="Inne
       return (NULL)
     }
     if(Verbose) cat("TriangleDefline =",TriangleDeflines[i],"\n")
-    PatchHeader<<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
+    PatchHeader<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
     if(Verbose) cat("PatchHeader is",length(PatchHeader),"lines long\n")
     # note use of RegionChoice to switch naming between inner and outer
     RegionName=getfield(paste(RegionChoice,"Region",sep=""),PatchHeader,2)
