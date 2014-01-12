@@ -47,3 +47,4 @@ Collate:
     'dotprops.R'
     'neuron-plot.R'
     'zzz.R'
+    'hxsurf.R'

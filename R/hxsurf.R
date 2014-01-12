@@ -1,8 +1,18 @@
-ParseAMSurfToContourList<-function(filename,RegionNames="ALL",RegionChoice="Inner",Verbose=FALSE,FallbackRegionCol="grey"){
-  # function to parse a an amira  HxSurface file
-  # nb RegionChoice is a switch to allow the inneror outer region to
-  # define the name of the region
-  
+#' Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object
+#' 
+#' @param filename Character vector defining path to file
+#' @param RegionNames Character vector specifying which regions should be read 
+#'   from file. Default value of \code{NULL} => all regions.
+#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material should
+#'   define the material of the patch.
+#' @param FallbackRegionCol Colour to set regions when no colour is defined
+#' @param Verbose Print status messages during parsing when \code{TRUE}
+#' @return S3 object of class hxsurf
+#' @export
+#' @seealso \code{\link{plot3d.hxsurf}}
+#' @family amira
+read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
+                      FallbackRegionCol="grey",Verbose=FALSE){
   # Check for header confirming file type
   firstLine=readLines(filename,n=1)
   if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+ascii",firstLine,ignore.case=T,perl=T))){
@@ -36,16 +46,15 @@ ParseAMSurfToContourList<-function(filename,RegionNames="ALL",RegionChoice="Inne
   linesSkipped=dataStart+nVertices-1
   remainingLines=t[(dataStart+nVertices):nLines]
   PatchDefLine=grep("^\\s*Patches\\s*",remainingLines,perl=TRUE)
-  cat("PatchDefLine =",PatchDefLine,"\n")
+  if(Verbose) cat("PatchDefLine =",PatchDefLine,"\n")
   nPatches=as.numeric(getfield("Patches",remainingLines[PatchDefLine],2))
-  cat("nPatches =",nPatches,"\n")
+  if(Verbose) cat("nPatches =",nPatches,"\n")
   PatchStarts=grep("^\\s*{",remainingLines[PatchDefLine:length(remainingLines)],perl=TRUE)+PatchDefLine-1
   if(length(PatchStarts)>nPatches) PatchStarts=PatchStarts[1:nPatches]
   PatchEnds=grep("^\\s*}",remainingLines[PatchDefLine:length(remainingLines)],perl=TRUE)+PatchDefLine-1
   if(length(PatchEnds)>nPatches) PatchEnds=PatchEnds[1:nPatches]
-  #return(d)
   TriangleDeflines<-grep("Triangles",remainingLines)
-  #myreadtable<-function(...) scan(...)
+  
   for(i in 1:nPatches){
     if(!any(TriangleDeflines[i])){
       warning(paste("Unable to find Triangle number in patch",i,"in",filename,"\n"))
@@ -56,27 +65,30 @@ ParseAMSurfToContourList<-function(filename,RegionNames="ALL",RegionChoice="Inne
     if(Verbose) cat("PatchHeader is",length(PatchHeader),"lines long\n")
     # note use of RegionChoice to switch naming between inner and outer
     RegionName=getfield(paste(RegionChoice,"Region",sep=""),PatchHeader,2)
-    #RegionName=getfield("InnerRegion",PatchHeader,2)
     nTriangles=as.numeric(getfield("Triangles",PatchHeader,2))
     if(nTriangles<0 || nTriangles>100000){return(-1)}
     if(Verbose) cat("nTriangles =",nTriangles,"for patch =",i,"\n")
     # Check if we want to load in this region
-    if( ("ALL"%in%RegionNames) || (RegionName%in%RegionNames) ){
+    if( is.null(RegionNames) || RegionName%in%RegionNames ){
       # Ensure we do not try to add no triangles
       if(nTriangles == 0) next
+      start_of_patch=linesSkipped+TriangleDeflines[i]+1
+      thispatch=read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,
+                           quote='',colClasses='integer',blank.lines.skip=FALSE,
+                           fill=FALSE,comment.char="",
+                           col.names=c("V1","V2","V3"))
+      # scan no quicker in these circs, problem is repeated file access
+      # specifying text directly also does not help dues to very slow textConnection
+      # thispatch=matrix(scan(text=t[start_of_patch:(start_of_patch+nTriangles-1)],nlines=nTriangles),ncol=3,byrow=T)
       # check if we have already loaded a patch in this name
       if(RegionName%in%names(d$Regions)){
-        #return(d)
         # add to the old patch
         if(Verbose) cat("Adding to patch name",RegionName,"\n")
-        d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,col.names=c("V1","V2","V3")))
+        d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],thispatch)
       } else {
         # new patch
         if(Verbose) cat("Making new patch name",RegionName,"\n")
-        # scan no quicker in these circs, problem is repeated file 
-        # access
-        #d[[RegionName]]=as.data.frame(matrix(scan(filename,skip=linesSkipped+TriangleDeflines[i],nlines=nTriangles),ncol=3,byrow=T))
-        d[['Regions']][[RegionName]]=read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,col.names=c("V1","V2","V3"))
+        d[['Regions']][[RegionName]]=thispatch
       }
     }
   }
