@@ -15,4 +15,11 @@ test_that("can read hxsurf object", {
                  "#00A48D", "#5E5ECC", "#C927CC", "#CC28A7", "#29CC85", "#CC2855", 
                  "#FF23D9", "#8BCC28", "#26CCCC", "#6728CC", "#00A38D", "#5D5ECC", 
                  "#C926CC"))
+  open3d()
+  plot3d(surf,col='red',alpha=0.2)
+  clear3d()
+  plot3d(surf,alpha=0.2)
+  clear3d()
+  plot3d(surf,col=rainbow,alpha=0.2)
+  rgl.close()
 })

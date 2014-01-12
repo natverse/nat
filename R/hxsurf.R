@@ -130,15 +130,18 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
 #' @import rgl
 #' @seealso \code{\link{read.hxsurf}}
 plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
-  # simple function to plot surfaces as read in using ParseAMSurfToContourList
-  # handle multiple objects
+  # skip so that the scene is updated only once per hxsurf object
+  skip <- par3d(skipRedraw = TRUE)
+  on.exit(par3d(skip))
+  
   if(is.null(col)) {
     if(length(x$RegionColourList)){
       col=x$RegionColourList[match(materials,x$RegionList)]
     } else col=rainbow
-    if(is.function(col)) col=col(length(materials))
-    if(is.factor(col)) col=rainbow(nlevels(col))[as.integer(col)]
   }
+  if(is.function(col)) col=col(length(materials))
+  if(is.factor(col)) col=rainbow(nlevels(col))[as.integer(col)]
+  if(length(col)==1 && length(materials)>1) col=rep(col,length(materials))
   names(col)=materials
   rlist=list()
   for(mat in materials){
