@@ -115,19 +115,37 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   return(d)
 }
 
-plot3dsurface<-function(material,d,VertexComponent="Vertices",col=rainbow,...){
+#' Plot amira surface objects in 3d using rgl
+#' 
+#' @param x An hxsurf surface object
+#' @param materials Character vector naming materials to plot (defaults to all 
+#'   materials in x)
+#' @param col Character vector specifying colors for the materials, or a 
+#'   function that will be called with the number of materials to plot. When
+#'   \code{NULL} (default) will use meterial colours defined in Amira (if
+#'   available), or \code{rainbow} otherwise.
+#' @param ... Additional arguments passed to 
+#' @export
+#' @method plot3d hxsurf
+#' @import rgl
+#' @seealso \code{\link{read.hxsurf}}
+plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
   # simple function to plot surfaces as read in using ParseAMSurfToContourList
   # handle multiple objects
-  if(length(material)>1) {
-    if(is.function(col)) col=col(length(material))
-    if(is.factor(col)) col=rainbow(nlevels(col))[as.integer(col)]		
-    
-    invisible(mapply(
-      plot3dsurface,material,VertexComponent=VertexComponent,col=col,...,MoreArgs=list(d=d)))
-  } else {
-    # get order triangle vertices
-    tri=as.integer(t(d$Regions[[material]]))
-    invisible(triangles3d(d[[VertexComponent]]$X[tri],
-                          d[[VertexComponent]]$Y[tri],d[[VertexComponent]]$Z[tri],col=col,...))
+  if(is.null(col)) {
+    if(length(x$RegionColourList)){
+      col=x$RegionColourList[match(materials,x$RegionList)]
+    } else col=rainbow
+    if(is.function(col)) col=col(length(materials))
+    if(is.factor(col)) col=rainbow(nlevels(col))[as.integer(col)]
   }
+  names(col)=materials
+  rlist=list()
+  for(mat in materials){
+    # get order triangle vertices
+    tri=as.integer(t(x$Regions[[mat]]))
+    rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
+                             x[['Vertices']]$Z[tri],col=col[mat],...)
+  }
+  invisible(rlist)
 }
