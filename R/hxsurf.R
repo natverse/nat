@@ -127,7 +127,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
 #' @param ... Additional arguments passed to 
 #' @export
 #' @method plot3d hxsurf
-#' @import rgl
+#' @importFrom rgl plot3d par3d triangles3d
 #' @seealso \code{\link{read.hxsurf}}
 plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
