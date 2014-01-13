@@ -7,7 +7,8 @@ Currently there isn't a released version on [CRAN](http://cran.r-project.org/).
 The recommendation is to install from our lab repository:
 
 ```r
-install.packages("nat",repos='http://jefferislab.org/R',type='source')
+install.packages('frulhns',repos=c(getOption("repos"),'http://jefferislab.org/R'),
+                 type='both')
 ```
 
 ### Bleeding Edge
