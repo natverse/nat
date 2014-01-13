@@ -7,7 +7,7 @@ Currently there isn't a released version on [CRAN](http://cran.r-project.org/).
 The recommendation is to install from our lab repository:
 
 ```r
-install.packages('frulhns',repos=c(getOption("repos"),'http://jefferislab.org/R'),
+install.packages('nat',repos=c(getOption("repos"),'http://jefferislab.org/R'),
                  type='both')
 ```
 
