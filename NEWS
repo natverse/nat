@@ -1,3 +1,10 @@
+nat 0.4
+=======
+* read.hxsurf and plot3d.hxsurf for reading/plotting Amira surfaces
+* better handling of location of cmtk command line tools see ?cmtk for details
+* add neuronlist and associated methods (including plot)
+* plot3d for neurons and dotprops
+
 nat 0.3
 =======
 * basic and self-contained implementation of neuron class
