@@ -43,3 +43,10 @@ test_that("mirroring twice returns original object", {
   expect_equal(g(g(k12)),k12)
 })
 
+test_that("can mirror raw points", {
+  k=kcs20[[1]]
+  g=function(x) mirror(x,mirrorAxisSize=564.2532)
+  xyz=data.matrix(k$points)
+  expect_equal(g(g(xyz)),xyz)
+})
+
