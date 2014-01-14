@@ -64,7 +64,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   # CMTK command line tools are missing.
   cmd=paste(gregxform,ifelse(direction=='forward','-f',''),
             ifelse(transformtype=='affine','-n',''),
-            shQuote(reg),'<',shQuote(pointsfile))
+            shQuote(path.expand(reg)),'<',shQuote(pointsfile))
   pointst=matrix(scan(text=system(cmd, intern = TRUE), quiet=TRUE),
                  ncol=3, byrow=TRUE, dimnames=dimnames(points))
   if(FallBackToAffine && transformtype=='warp'){
