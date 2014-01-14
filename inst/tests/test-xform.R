@@ -24,3 +24,22 @@ test_that("xform with affine matrix gives same result as neuron arithmetic", {
   expect_equal(xform(n,reg=affmat),n*scalefacs)
   expect_equal(xform(n,reg=affmat),scale(n,scale=1/scalefacs,center=FALSE))
 })
+
+test_that("mirror with flip only gives same result as neuron arithmetic", {
+  n=Cell07PNs[[1]]
+  mn1=(n*c(-1,1,1))+c(168,0,0)
+  mn2=mirror(n,mirrorAxisSize=168)
+  expect_equal(mn2,mn1)
+})
+
+test_that("mirroring twice returns original object", {
+  n=Cell07PNs[[1]]
+  f=function(n) mirror(n,mirrorAxisSize=168)
+  expect_equal(f(f(n)),n)
+  k=kcs20[[1]]
+  g=function(x) mirror(x,mirrorAxisSize=564.2532)
+  expect_equal(g(g(k)),k)
+  k12=kcs20[1:2]
+  expect_equal(g(g(k12)),k12)
+})
+
