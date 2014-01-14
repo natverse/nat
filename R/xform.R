@@ -88,3 +88,58 @@ xform.neuronlist<-function(x, reg, ...){
   # at once would approach a 10x speedup.
   nlapply(x, xform, reg, ...)
 }
+
+#' Mirror 3d object about a given axis, optionally using a warping registration
+#' 
+#' @details The warping registration can be used to account e.g. for the
+#'   asymmetry. between brain hemispheres
+#'   
+#' @details This function is agnostic re node vs cell data, but for node data 
+#'   boundingBox should be supplied while for cell, it should be bounds See
+#'   getBounds/getBoundingBox for details of bounds vs bounding box.
+#' @param x Object with 3d points (with named cols X,Y,Z)
+#' @param ... additional arguments passed to methods or eventually to \code{xform}
+#' @return Object with transformed points
+#' @export
+#' @seealso \code{\link{xform},\link{getBounds}},\code{\link{getBoundingBox}}
+#' @examples
+#' x=Cell07PNs[[1]]
+#' plot3d(x,col='red')
+#' plot3d(mirror(x,168),col='green')
+#' plot3d(mirror(x,168,transform='flip'),col='blue')
+#' y=kcs20[[1]]
+#' plot3d(y,564.2532,transform='flip',col='red')
+#' plot3d(y,mirrorAxisSize=564.2532,transform='flip',col='blue')
+mirror<-function(x, ...) UseMethod('mirror')
+
+#' @param mirrorAxisSize The bounding box of the axis to mirror
+#' @param mirrorAxis Axis to mirror (default \code{"X"})
+#' @param warpfile Path to (optional) CMTK registration
+#' @param transform whether to use warp (default) or affine component of 
+#'   registration, or simply flip about midplane of axis.
+#' @method mirror default
+#' @S3method mirror default
+#' @rdname mirror
+mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
+                         warpfile=NULL, transform=c("warp",'affine','flip'), ...){
+  transform=match.arg(transform)
+  mirrorAxis=match.arg(mirrorAxis)
+  
+  # start by flipping along mirror axis
+  xyz=xyzmatrix(x)
+  xyz[,mirrorAxis]=mirrorAxisSize-1*xyz[,mirrorAxis]
+  xyzmatrix(x)=xyz
+  
+  # then 
+  if(is.null(warpfile) || transform=='flip') {
+    x
+  } else {
+    xform(x, reg=warpfile, transformtype=transform, ...)
+  }
+}
+#' @method mirror neuronlist
+#' @S3method mirror neuronlist
+#' @rdname mirror
+mirror.neuronlist<-function(x, ...){
+  nlapply(x,mirror,...)
+}
