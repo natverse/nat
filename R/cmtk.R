@@ -23,7 +23,7 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
     write.cmtkreg(params,foldername=reg)
   }
   
-  cmd=paste(dof2mat,ifelse(Transpose,'--transpose',''),shQuote(reg))
+  cmd=paste(dof2mat,ifelse(Transpose,'--transpose',''),shQuote(path.expand(reg)))
   rval=system(cmd,intern=TRUE)
   numbers=as.numeric(unlist(strsplit(rval,"\t")))
   matrix(numbers,ncol=4,byrow=TRUE)
@@ -67,7 +67,7 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
     if(length(params)!=15) stop("Trouble reading mat2dof response")
     return(matrix(params,ncol=3,byrow=TRUE))
   } else {
-    cmd=paste(cmd,'--list',shQuote(f),"<",shQuote(inf))
+    cmd=paste(cmd,'--list',shQuote(path.expand(f)),"<",shQuote(inf))
     return(system(cmd)==0)
   }
 }
