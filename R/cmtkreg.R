@@ -12,6 +12,7 @@
 cmtkreg<-function(x, returnDir=TRUE){
   if(length(x)>1) return(sapply(x,cmtkreg,returnDir=returnDir))
   
+  x=path.expand(x)
   if(!file.exists(x)) {
     return(NA_character_)
   }
