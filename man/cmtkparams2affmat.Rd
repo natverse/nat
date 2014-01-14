@@ -2,10 +2,9 @@
 \alias{cmtkparams2affmat}
 \title{Compose homogeneous affine matrix from CMTK registration parameters}
 \usage{
-  cmtkparams2affmat(params = NULL, tx = 0, ty = 0, tz = 0,
-    rx = 0, ry = 0, rz = 0, sx = 1, sy = 1, sz = 1,
-    shx = 0, shy = 0, shz = 0, cx = 0, cy = 0, cz = 0,
-    legacy = NA)
+cmtkparams2affmat(params = NULL, tx = 0, ty = 0, tz = 0, rx = 0,
+  ry = 0, rz = 0, sx = 1, sy = 1, sz = 1, shx = 0, shy = 0,
+  shz = 0, cx = 0, cy = 0, cz = 0, legacy = NA)
 }
 \arguments{
   \item{params}{5x3 matrix of CMTK registration parameters
@@ -28,19 +27,19 @@
   \item{cx,cy,cz}{Centre for rotation}
 }
 \value{
-  4x4 homogeneous affine transformation matrix
+4x4 homogeneous affine transformation matrix
 }
 \description{
-  Compose homogeneous affine matrix from CMTK registration
-  parameters
+Compose homogeneous affine matrix from CMTK registration
+parameters
 }
 \details{
-  If the \code{legacy} parameter is not set explicitly,
-  then it will be set to \code{TRUE} if params has a
-  version attribute <2.4 or FALSE otherwise.
+If the \code{legacy} parameter is not set explicitly, then
+it will be set to \code{TRUE} if params has a version
+attribute <2.4 or FALSE otherwise.
 }
 \seealso{
-  Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
-  \code{\link{cmtk.dof2mat}}, \code{\link{cmtk.mat2dof}}
+Other cmtk-geometry: \code{\link{affmat2cmtkparams}};
+\code{\link{cmtk.dof2mat}}; \code{\link{cmtk.mat2dof}}
 }
 

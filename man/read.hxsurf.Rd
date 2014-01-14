@@ -2,9 +2,8 @@
 \alias{read.hxsurf}
 \title{Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object}
 \usage{
-  read.hxsurf(filename, RegionNames = NULL,
-    RegionChoice = "Inner", FallbackRegionCol = "grey",
-    Verbose = FALSE)
+read.hxsurf(filename, RegionNames = NULL, RegionChoice = "Inner",
+  FallbackRegionCol = "grey", Verbose = FALSE)
 }
 \arguments{
   \item{filename}{Character vector defining path to file}
@@ -24,13 +23,13 @@
   \code{TRUE}}
 }
 \value{
-  S3 object of class hxsurf
+S3 object of class hxsurf
 }
 \description{
-  Read Amira surface (aka HxSurface or HyperSurface) files
-  into hxsurf object
+Read Amira surface (aka HxSurface or HyperSurface) files
+into hxsurf object
 }
 \seealso{
-  \code{\link{plot3d.hxsurf}}
+\code{\link{plot3d.hxsurf}}
 }
 

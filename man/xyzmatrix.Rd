@@ -4,12 +4,11 @@
 \alias{xyzmatrix<-}
 \title{Get and assign coordinates for classes containing 3d vertex data}
 \usage{
-  xyzmatrix(x, ...)
+xyzmatrix(x, ...)
 
-  \method{xyzmatrix}{default} (x, y = NULL, z = NULL,
-    Transpose = FALSE, ...)
+\method{xyzmatrix}{default}(x, y = NULL, z = NULL, Transpose = FALSE, ...)
 
-  xyzmatrix(x) <- value
+xyzmatrix(x) <- value
 }
 \arguments{
   \item{x}{object containing 3d coordinates}
@@ -24,16 +23,16 @@
   \item{value}{Nx3 matrix specifying new xyz coords}
 }
 \value{
-  Nx3 matrix containing 3d coordinates
+Nx3 matrix containing 3d coordinates
 
-  Original object with modified coords
+Original object with modified coords
 }
 \description{
-  Get and assign coordinates for classes containing 3d
-  vertex data
+Get and assign coordinates for classes containing 3d vertex
+data
 
-  Assign xyz elements of neuron or dotprops object. Can
-  also handle matrix like objects with columns named X,Y,Z
+Assign xyz elements of neuron or dotprops object. Can also
+handle matrix like objects with columns named X,Y,Z
 }
 \examples{
 n=Cell07PNs[[1]]
@@ -43,6 +42,6 @@ stopifnot(isTRUE(
 ))
 }
 \seealso{
-  \code{\link{xyzmatrix}}
+\code{\link{xyzmatrix}}
 }
 

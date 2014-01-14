@@ -33,18 +33,3 @@ Suggests:
 License: GPL (>= 2)
 LazyLoad: yes
 LazyData: yes
-Collate:
-    'nat-package.R'
-    'neuron.R'
-    'neuronlist.R'
-    'cmtkreg.R'
-    'xformpoints.R'
-    'cmtk.R'
-    'cmtk_io.R'
-    'cmtk_geometry.R'
-    'xform.R'
-    'nat-data.R'
-    'dotprops.R'
-    'neuron-plot.R'
-    'zzz.R'
-    'hxsurf.R'

@@ -4,11 +4,11 @@
 \alias{is.cmtkreg}
 \title{Create and test cmtkreg objects that specify path to a CMTK registration}
 \usage{
-  cmtkreg(x, returnDir = TRUE)
+cmtkreg(x, returnDir = TRUE)
 
-  as.cmtkreg(x)
+as.cmtkreg(x)
 
-  is.cmtkreg(x, filecheck = c("none", "exists", "magic"))
+is.cmtkreg(x, filecheck = c("none", "exists", "magic"))
 }
 \arguments{
   \item{x}{Path to a cmtk registration (either plain
@@ -24,17 +24,17 @@
   line of file.}
 }
 \description{
-  \code{cmtkreg} creates an object of class \code{cmtkreg}
-  that describes one (or more)
-  \href{www.nitrc.org/projects/cmtk/}{CMTK} registrations.
-  This is simply a character vector that also has class
-  cmtkreg.
+\code{cmtkreg} creates an object of class \code{cmtkreg}
+that describes one (or more)
+\href{www.nitrc.org/projects/cmtk/}{CMTK} registrations.
+This is simply a character vector that also has class
+cmtkreg.
 
-  \code{as.cmtkreg} adds class \code{cmtkreg} to objects
-  that do not already inherit from it.
+\code{as.cmtkreg} adds class \code{cmtkreg} to objects that
+do not already inherit from it.
 
-  \code{is.cmtkreg} checks if an object is a cmtk
-  registration either by checking class (default), or
-  inspecting file.
+\code{is.cmtkreg} checks if an object is a cmtk
+registration either by checking class (default), or
+inspecting file.
 }
 

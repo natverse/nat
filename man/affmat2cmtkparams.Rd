@@ -2,7 +2,7 @@
 \alias{affmat2cmtkparams}
 \title{Decompose homogeneous affine matrix to CMTK registration parameters}
 \usage{
-  affmat2cmtkparams(matrix, centre = c(0, 0, 0))
+affmat2cmtkparams(matrix, centre = c(0, 0, 0))
 }
 \arguments{
   \item{matrix}{4x4 homogeneous affine matrix}
@@ -10,21 +10,20 @@
   \item{centre}{Rotation centre}
 }
 \value{
-  5x3 matrix of CMTK registration parameters with a version
-  attribute
+5x3 matrix of CMTK registration parameters with a version
+attribute
 }
 \description{
-  Decompose homogeneous affine matrix to CMTK registration
-  parameters
+Decompose homogeneous affine matrix to CMTK registration
+parameters
 }
 \details{
-  The version attribute of the resultant matrix marks this
-  as compliant with CMTK>v2.4 (~ Dec 2013) when a bug in
-  affine matrix (de)composition was fixed.
+The version attribute of the resultant matrix marks this as
+compliant with CMTK>v2.4 (~ Dec 2013) when a bug in affine
+matrix (de)composition was fixed.
 }
 \seealso{
-  Other cmtk-geometry: \code{\link{cmtk.dof2mat}},
-  \code{\link{cmtk.mat2dof}},
-  \code{\link{cmtkparams2affmat}}
+Other cmtk-geometry: \code{\link{cmtk.dof2mat}};
+\code{\link{cmtk.mat2dof}}; \code{\link{cmtkparams2affmat}}
 }
 

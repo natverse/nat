@@ -2,8 +2,7 @@
 \alias{plot3d.hxsurf}
 \title{Plot amira surface objects in 3d using rgl}
 \usage{
-  \method{plot3d}{hxsurf} (x, materials = x$RegionList,
-    col = NULL, ...)
+\method{plot3d}{hxsurf}(x, materials = x$RegionList, col = NULL, ...)
 }
 \arguments{
   \item{x}{An hxsurf surface object}
@@ -20,9 +19,9 @@
   \item{...}{Additional arguments passed to}
 }
 \description{
-  Plot amira surface objects in 3d using rgl
+Plot amira surface objects in 3d using rgl
 }
 \seealso{
-  \code{\link{read.hxsurf}}
+\code{\link{read.hxsurf}}
 }
 

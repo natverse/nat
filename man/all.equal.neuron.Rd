@@ -2,11 +2,10 @@
 \alias{all.equal.neuron}
 \title{Check equality on key fields of neuron object}
 \usage{
-  \method{all.equal}{neuron} (target, current,
-    tolerance = 1e-06, check.attributes = FALSE,
-    fieldsToCheck = c("NeuronName", "NumPoints", "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
-    fieldsToCheckIfPresent = "nTrees",
-    CheckSharedFieldsOnly = FALSE, ...)
+\method{all.equal}{neuron}(target, current, tolerance = 1e-06,
+  check.attributes = FALSE, fieldsToCheck = c("NeuronName", "NumPoints",
+  "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
+  fieldsToCheckIfPresent = "nTrees", CheckSharedFieldsOnly = FALSE, ...)
 }
 \arguments{
   \item{fieldsToCheck}{Which fields in the neuron are
@@ -35,9 +34,9 @@
   compared.}
 }
 \description{
-  Check equality on key fields of neuron object
+Check equality on key fields of neuron object
 }
 \seealso{
-  \code{\link{all.equal}}
+\code{\link{all.equal}}
 }
 

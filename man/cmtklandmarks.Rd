@@ -4,11 +4,11 @@
 \alias{write.cmtklandmarks}
 \title{Read and Write CMTK landmarks}
 \usage{
-  read.cmtklandmarks(con)
+read.cmtklandmarks(con)
 
-  cmtklandmarks(xyzs)
+cmtklandmarks(xyzs)
 
-  write.cmtklandmarks(xyzs, filename, Force = FALSE)
+write.cmtklandmarks(xyzs, filename, Force = FALSE)
 }
 \arguments{
   \item{con}{Character vector specifying path or a
@@ -22,18 +22,18 @@
   file (default FALSE)}
 }
 \description{
-  Read and Write CMTK landmarks
+Read and Write CMTK landmarks
 
-  \code{cmtklandmarks} generates in memory list
-  representation of cmtk landmarks
+\code{cmtklandmarks} generates in memory list
+representation of cmtk landmarks
 }
 \details{
-  CMTK landmarks are always unpaired i.e. only contain
-  information for one brain.
+CMTK landmarks are always unpaired i.e. only contain
+information for one brain.
 }
 \seealso{
-  Other cmtk-io: \code{\link{read.cmtk}},
-  \code{\link{read.cmtkreg}}, \code{\link{write.cmtk}},
-  \code{\link{write.cmtkreg}}
+Other cmtk-io: \code{\link{read.cmtkreg}};
+\code{\link{read.cmtk}}; \code{\link{write.cmtkreg}};
+\code{\link{write.cmtk}}
 }
 

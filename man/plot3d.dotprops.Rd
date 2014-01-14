@@ -2,9 +2,8 @@
 \alias{plot3d.dotprops}
 \title{3D plots of dotprops objects using rgl package}
 \usage{
-  \method{plot3d}{dotprops} (x, scalevecs = 1,
-    alpharange = NULL, PlotPoints = FALSE,
-    PlotVectors = TRUE, UseAlpha = FALSE, ...)
+\method{plot3d}{dotprops}(x, scalevecs = 1, alpharange = NULL,
+  PlotPoints = FALSE, PlotVectors = TRUE, UseAlpha = FALSE, ...)
 }
 \arguments{
   \item{x}{A dotprops object}
@@ -28,15 +27,15 @@
   and/or \code{segments3d}}
 }
 \value{
-  invisible list of results of rgl plotting commands
+invisible list of results of rgl plotting commands
 }
 \description{
-  3D plots of dotprops objects using rgl package
+3D plots of dotprops objects using rgl package
 }
 \details{
-  Tangent vectors are plotted by \code{segments3d} and
-  centered on the relevant point. Points are plotted by
-  \code{points3d}.
+Tangent vectors are plotted by \code{segments3d} and
+centered on the relevant point. Points are plotted by
+\code{points3d}.
 }
 \examples{
 open3d()
@@ -48,7 +47,7 @@ plot3d(kcs20[[1]],col='red',lwd=2)
 plot3d(kcs20[[2]],col='green',lwd=2)
 }
 \seealso{
-  \code{\link{dotprops}, \link[rgl]{plot3d},
-  \link[rgl]{points3d}, \link[rgl]{segments3d}}
+\code{\link{dotprops}, \link[rgl]{plot3d},
+\link[rgl]{points3d}, \link[rgl]{segments3d}}
 }
 

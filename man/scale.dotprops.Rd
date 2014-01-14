@@ -2,7 +2,7 @@
 \alias{scale.dotprops}
 \title{Scale and Centre dotprops coords}
 \usage{
-  \method{scale}{dotprops} (x, center = TRUE, scale = TRUE)
+\method{scale}{dotprops}(x, center = TRUE, scale = TRUE)
 }
 \arguments{
   \item{x}{A dotprops object}
@@ -13,17 +13,17 @@
   \item{scale}{3-vector used to divide x,y,z coords}
 }
 \value{
-  neuron with scaled coordinates
+neuron with scaled coordinates
 }
 \description{
-  Scale and Centre dotprops coords
+Scale and Centre dotprops coords
 }
 \details{
-  Note that if scale=TRUE, the neuron will be rescaled to
-  unit sd in each axis likewise if center=TRUE, the neuron
-  will be centred around the axis means
+Note that if scale=TRUE, the neuron will be rescaled to
+unit sd in each axis likewise if center=TRUE, the neuron
+will be centred around the axis means
 }
 \seealso{
-  \code{\link{scale.default}}
+\code{\link{scale.default}}
 }
 

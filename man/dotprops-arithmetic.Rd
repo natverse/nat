@@ -5,13 +5,13 @@
 \alias{/.dotprops}
 \title{Arithmetic for dotprops objects}
 \usage{
-  \method{*}{dotprops} (x, y)
+\method{*}{dotprops}(x, y)
 
-  \method{+}{dotprops} (x, y)
+\method{+}{dotprops}(x, y)
 
-  \method{-}{dotprops} (x, y)
+\method{-}{dotprops}(x, y)
 
-  \method{/}{dotprops} (x, y)
+\method{/}{dotprops}(x, y)
 }
 \arguments{
   \item{x}{A dotprops object}
@@ -20,9 +20,9 @@
   dotprops object}
 }
 \value{
-  A new dotprops object
+A new dotprops object
 }
 \description{
-  Arithmetic for dotprops objects
+Arithmetic for dotprops objects
 }
 

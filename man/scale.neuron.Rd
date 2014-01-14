@@ -2,7 +2,7 @@
 \alias{scale.neuron}
 \title{Divide neuron coords by a factor (and optionally center)}
 \usage{
-  \method{scale}{neuron} (x, center = FALSE, scale = FALSE)
+\method{scale}{neuron}(x, center = FALSE, scale = FALSE)
 }
 \arguments{
   \item{x}{A neuron}
@@ -12,21 +12,21 @@
   \item{scale}{3-vector used to divide x,y,z coords}
 }
 \value{
-  neuron with scaled coordinates
+neuron with scaled coordinates
 }
 \description{
-  Divide neuron coords by a factor (and optionally center)
+Divide neuron coords by a factor (and optionally center)
 }
 \details{
-  Note that if scale=TRUE, the neuron will be rescaled to
-  unit sd in each axis likewise if center=TRUE, the neuron
-  will be centred around the axis means
+Note that if scale=TRUE, the neuron will be rescaled to
+unit sd in each axis likewise if center=TRUE, the neuron
+will be centred around the axis means
 }
 \examples{
 n1.scaledown=scale(Cell07PNs[[1]],scale=c(2,2,3))
 n1.scaleup=scale(Cell07PNs[[1]],scale=1/c(2,2,3))
 }
 \seealso{
-  \code{\link{scale.default}}
+\code{\link{scale.default}}
 }
 

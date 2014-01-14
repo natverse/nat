@@ -2,7 +2,7 @@
 \alias{subset.dotprops}
 \title{Subset points in dotprops object that match given conditions}
 \usage{
-  \method{subset}{dotprops} (x, subset, ...)
+\method{subset}{dotprops}(x, subset, ...)
 }
 \arguments{
   \item{x}{A dotprops object}
@@ -13,17 +13,17 @@
   \item{...}{Additional parameters (currently ignored)}
 }
 \value{
-  subsetted dotprops object
+subsetted dotprops object
 }
 \description{
-  Subset points in dotprops object that match given
-  conditions
+Subset points in dotprops object that match given
+conditions
 }
 \details{
-  \code{subset} defines either logical or numeric indices,
-  in which case these are simply applied to the matrices
-  that define the points, vect etc OR a function (which is
-  called with the 3d points array and returns T/F vector).
+\code{subset} defines either logical or numeric indices, in
+which case these are simply applied to the matrices that
+define the points, vect etc OR a function (which is called
+with the 3d points array and returns T/F vector).
 }
 \examples{
 \dontrun{
@@ -37,6 +37,6 @@ dp3=subset(dp,1:10)
 }
 }
 \seealso{
-  \code{\link{prune.dotprops}}
+\code{\link{prune.dotprops}}
 }
 

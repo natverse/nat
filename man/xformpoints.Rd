@@ -5,16 +5,15 @@
 \alias{xformpoints.default}
 \title{Transform 3d points using a registration, affine matrix or function}
 \usage{
-  xformpoints(reg, points, ...)
+xformpoints(reg, points, ...)
 
-  \method{xformpoints}{character} (reg, points, ...)
+\method{xformpoints}{character}(reg, points, ...)
 
-  \method{xformpoints}{cmtkreg} (reg, points,
-    transformtype = c("warp", "affine"),
-    direction = c("inverse", "forward"),
-    FallBackToAffine = FALSE, ...)
+\method{xformpoints}{cmtkreg}(reg, points, transformtype = c("warp",
+  "affine"), direction = c("inverse", "forward"), FallBackToAffine = FALSE,
+  ...)
 
-  \method{xformpoints}{default} (reg, points, ...)
+\method{xformpoints}{default}(reg, points, ...)
 }
 \arguments{
   \item{reg}{A registration defined by a matrix, a
@@ -39,30 +38,29 @@
   warping transformation.}
 }
 \description{
-  Transform 3d points using a registration, affine matrix
-  or function
+Transform 3d points using a registration, affine matrix or
+function
 }
 \details{
-  When passed a character vector, xformpoints will check to
-  see if it defines a path containing CMTK registration
-  erroring out if this is not the case. If the path does
-  indeed point to a CMTK registration, this method will
-  hand off to xformpoints.cmtkreg. A future TODO would be
-  to provide a mechanism for extending this behaviour for
-  other registration formats.
+When passed a character vector, xformpoints will check to
+see if it defines a path containing CMTK registration
+erroring out if this is not the case. If the path does
+indeed point to a CMTK registration, this method will hand
+off to xformpoints.cmtkreg. A future TODO would be to
+provide a mechanism for extending this behaviour for other
+registration formats.
 
-  Note that the direction of CMTK registrations can be the
-  source of much confusion. This is because CMTK defines
-  the \emph{forward} direction as the transform required to
-  reformat an image in \emph{sample} (floating) space to an
-  image in \emph{template} space. Since this operation
-  involves filling a regular grid in template space by
-  looking up the corresponding positions in sample space,
-  the transformation that is required is (somewhat
-  counterintuitively) the one that maps template to sample.
-  However in neuroanatomical work, one often has points in
-  sample space that one would like to transform into
-  template space. Here one needs the \emph{inverse}
-  transformation.
+Note that the direction of CMTK registrations can be the
+source of much confusion. This is because CMTK defines the
+\emph{forward} direction as the transform required to
+reformat an image in \emph{sample} (floating) space to an
+image in \emph{template} space. Since this operation
+involves filling a regular grid in template space by
+looking up the corresponding positions in sample space, the
+transformation that is required is (somewhat
+counterintuitively) the one that maps template to sample.
+However in neuroanatomical work, one often has points in
+sample space that one would like to transform into template
+space. Here one needs the \emph{inverse} transformation.
 }
 

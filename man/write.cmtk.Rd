@@ -2,7 +2,7 @@
 \alias{write.cmtk}
 \title{Write a suitable list to a CMTK TypedStream file on disk}
 \usage{
-  write.cmtk(l, con, gzip = FALSE, version = NA_character_)
+write.cmtk(l, con, gzip = FALSE, version = NA_character_)
 }
 \arguments{
   \item{l}{Appropriately formatted list}
@@ -17,20 +17,19 @@
   \code{l}.}
 }
 \description{
-  This is probaly only of interest to developers. End users
-  will probably wish to use more specific functions such as
-  write.cmtkreg for writing out registrations.
+This is probaly only of interest to developers. End users
+will probably wish to use more specific functions such as
+write.cmtkreg for writing out registrations.
 }
 \details{
-  NB a version specified on the command line overrides one
-  encoded as an attribute in the input list.
+NB a version specified on the command line overrides one
+encoded as an attribute in the input list.
 }
 \seealso{
-  Other cmtk-io: \code{\link{cmtklandmarks}},
-  \code{\link{read.cmtk}},
-  \code{\link{read.cmtklandmarks}},
-  \code{\link{read.cmtkreg}},
-  \code{\link{write.cmtklandmarks}},
-  \code{\link{write.cmtkreg}}
+Other cmtk-io: \code{\link{cmtklandmarks}},
+\code{\link{read.cmtklandmarks}},
+\code{\link{write.cmtklandmarks}};
+\code{\link{read.cmtkreg}}; \code{\link{read.cmtk}};
+\code{\link{write.cmtkreg}}
 }
 

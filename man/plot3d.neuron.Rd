@@ -2,10 +2,9 @@
 \alias{plot3d.neuron}
 \title{Plot neurons in 3d using rgl library}
 \usage{
-  \method{plot3d}{neuron} (x, WithLine = TRUE,
-    NeuronNames = FALSE, WithNodes = TRUE,
-    WithAllPoints = FALSE, WithText = FALSE,
-    PlotSubTrees = TRUE, add = TRUE, col = NULL, ...)
+\method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
+  WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
+  PlotSubTrees = TRUE, add = TRUE, col = NULL, ...)
 }
 \arguments{
   \item{x}{A neuron to plot}
@@ -37,12 +36,12 @@
   \item{...}{Additional arguments passed to rgl::lines3d}
 }
 \value{
-  list of rgl plotting ids (invisibly) separated into
-  \code{lines,points,texts} according to plot element. See
-  \code{\link[rgl]{plot3d}} for details.
+list of rgl plotting ids (invisibly) separated into
+\code{lines,points,texts} according to plot element. See
+\code{\link[rgl]{plot3d}} for details.
 }
 \description{
-  Plot neurons in 3d using rgl library
+Plot neurons in 3d using rgl library
 }
 \examples{
 # A new plot would have been opened if required
@@ -56,7 +55,7 @@ plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 rgl.close()
 }
 \seealso{
-  \code{\link{plot3d.neuronlist}, \link{plot3d.dotprops},
-  \link[rgl]{plot3d}}
+\code{\link{plot3d.neuronlist}, \link{plot3d.dotprops},
+\link[rgl]{plot3d}}
 }
 

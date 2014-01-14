@@ -3,9 +3,9 @@
 \alias{cmtk.bindir}
 \title{Return path to directory containing CMTK binaries}
 \usage{
-  cmtk.bindir(dir = getOption("nat.cmtk.bindir"),
-    extradirs = c("~/bin", "/usr/local/bin", "/opt/local/bin", "/Applications/IGSRegistrationTools/bin"),
-    set = FALSE, check = FALSE, cmtktool = "gregxform")
+cmtk.bindir(dir = getOption("nat.cmtk.bindir"), extradirs = c("~/bin",
+  "/usr/local/bin", "/opt/local/bin", "/Applications/IGSRegistrationTools/bin"),
+  set = FALSE, check = FALSE, cmtktool = "gregxform")
 }
 \arguments{
   \item{dir}{to use as binary directory or NA (see details)
@@ -27,21 +27,20 @@
   be used to identify the location of all cmtk binaries.}
 }
 \value{
-  Character vector giving path to CMTK binary directory or
-  NULL when this cannot be found.
+Character vector giving path to CMTK binary directory or
+NULL when this cannot be found.
 }
 \description{
-  Return path to directory containing CMTK binaries
+Return path to directory containing CMTK binaries
 }
 \details{
-  Queries options('nat.cmtk.bindir') if no dir is
-  specified. If that does not contain the appropriate
-  binaries, it will look in the system PATH and then a
-  succession of plausible places until it finds something.
-  Setting \code{options(nat.cmtk.bindir=NA)} or passing
-  \code{dir=NA} will stop the function from trying to
-  locate CMTK, always returning NULL unless check=TRUE when
-  it will error out.
+Queries options('nat.cmtk.bindir') if no dir is specified.
+If that does not contain the appropriate binaries, it will
+look in the system PATH and then a succession of plausible
+places until it finds something. Setting
+\code{options(nat.cmtk.bindir=NA)} or passing \code{dir=NA}
+will stop the function from trying to locate CMTK, always
+returning NULL unless check=TRUE when it will error out.
 }
 \examples{
 cmtk.bindir()

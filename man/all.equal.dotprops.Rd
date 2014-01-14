@@ -2,8 +2,8 @@
 \alias{all.equal.dotprops}
 \title{all.equal method tailored to dotprops objects}
 \usage{
-  \method{all.equal}{dotprops} (target, current,
-    check.attributes = FALSE, absoluteVectors = TRUE, ...)
+\method{all.equal}{dotprops}(target, current, check.attributes = FALSE,
+  absoluteVectors = TRUE, ...)
 }
 \arguments{
   \item{target,current}{dotprops objects to compare}
@@ -19,11 +19,11 @@
   \code{all.equal}.}
 }
 \description{
-  This method is require because the direction vectors are
-  computed using an eigen vector decomposition where the
-  sign of the eigenvector is essentially random and subject
-  to small numerical instabilities. Therefore it does not
-  usually make sense to check the value of vect exactly.
+This method is require because the direction vectors are
+computed using an eigen vector decomposition where the sign
+of the eigenvector is essentially random and subject to
+small numerical instabilities. Therefore it does not
+usually make sense to check the value of vect exactly.
 }
 \examples{
 # equal using default

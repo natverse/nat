@@ -2,8 +2,8 @@
 \alias{cmtkreglist}
 \title{Make in-memory CMTK registration list from affine matrix or CMTK parameters}
 \usage{
-  cmtkreglist(x, centre = c(0, 0, 0), reference = "dummy",
-    floating = "dummy")
+cmtkreglist(x, centre = c(0, 0, 0), reference = "dummy",
+  floating = "dummy")
 }
 \arguments{
   \item{x}{5x3 matrix of CMTK registration parameters OR
@@ -17,20 +17,20 @@
   floating images.}
 }
 \value{
-  list of registration parameters suitable for
-  \code{\link{write.cmtkreg}}
+list of registration parameters suitable for
+\code{\link{write.cmtkreg}}
 }
 \description{
-  Make in-memory CMTK registration list from affine matrix
-  or CMTK parameters
+Make in-memory CMTK registration list from affine matrix or
+CMTK parameters
 }
 \details{
-  Note that this uses the modern CMTK notation of
-  floating_study rather than model_study as used by
-  IGSParamsToIGSRegistration (which results in an implicit
-  inversion by CMTK tools).
+Note that this uses the modern CMTK notation of
+floating_study rather than model_study as used by
+IGSParamsToIGSRegistration (which results in an implicit
+inversion by CMTK tools).
 }
 \seealso{
-  \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
+\code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
 }
 

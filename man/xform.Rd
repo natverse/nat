@@ -6,18 +6,17 @@
 \alias{xform.neuronlist}
 \title{Transform the 3d location of objects such as neurons}
 \usage{
-  xform(x, reg, ...)
+xform(x, reg, ...)
 
-  \method{xform}{default} (x, reg,
-    na.action = c("warn", "none", "drop", "error"), ...)
+\method{xform}{default}(x, reg, na.action = c("warn", "none", "drop",
+  "error"), ...)
 
-  \method{xform}{list} (x, reg, FallBackToAffine = TRUE,
-    na.action = "error", ...)
+\method{xform}{list}(x, reg, FallBackToAffine = TRUE, na.action = "error",
+  ...)
 
-  \method{xform}{dotprops} (x, reg,
-    FallBackToAffine = TRUE, ...)
+\method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-  \method{xform}{neuronlist} (x, reg, ...)
+\method{xform}{neuronlist}(x, reg, ...)
 }
 \arguments{
   \item{x}{an object to transform}
@@ -35,23 +34,23 @@
   transform when a cmtk warping transformation fails.}
 }
 \description{
-  \code{xform} is designed to operate on a variety of data
-  types, especially objects encapsulating neurons.
+\code{xform} is designed to operate on a variety of data
+types, especially objects encapsulating neurons.
 }
 \details{
-  Methods are provided for some specialised S3 classes.
-  Further methods can of course be constructed for
-  user-defined S3 classes. However this will probalbly not
-  be necessary if the \code{xyzmatrix} and
-  \code{`xyzmatrix<-`} generics are suitably overloaded
-  \emph{and} the S3 object inherits from \code{list}.
+Methods are provided for some specialised S3 classes.
+Further methods can of course be constructed for
+user-defined S3 classes. However this will probalbly not be
+necessary if the \code{xyzmatrix} and \code{`xyzmatrix<-`}
+generics are suitably overloaded \emph{and} the S3 object
+inherits from \code{list}.
 
-  TODO get this to work for matrices with more than 3
-  columns by working on xyzmatrix definition.
+TODO get this to work for matrices with more than 3 columns
+by working on xyzmatrix definition.
 
-  the dotprops tangent vectors will be recalculated
-  post-transformation (even though they could in theory be
-  transformed more or less correctly). The dotrops
+the dotprops tangent vectors will be recalculated
+post-transformation (even though they could in theory be
+transformed more or less correctly). The dotrops
 }
 \examples{
 \dontrun{
@@ -65,6 +64,6 @@ stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
 }
 }
 \seealso{
-  xformpoints
+xformpoints
 }
 
