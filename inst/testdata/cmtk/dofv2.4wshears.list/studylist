@@ -1,0 +1,8 @@
+! TYPEDSTREAM 2.4
+
+source {
+	studyname "reference"
+}
+source {
+	studyname "floating"
+}

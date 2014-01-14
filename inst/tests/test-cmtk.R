@@ -42,17 +42,17 @@ test_that("test cmtk.mat2dof with shears", {
   expect_equal(cmtk.mat2dof(t(m),Transpose=FALSE),params_base,tolerance=1e-4)
 })
 
-test.cmtk.dof2mat<-function(x){
-  
-  reg=file.path(TestDir,'Data','dofv2.4wshears.list')
+test_that("test cmtk.dof2mat with v2.4 registration or in memory parameters", {
+  reg=file.path('..','testdata','cmtk','dofv2.4wshears.list')
   params=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                 byrow=T)
   m_base=structure(c(0.993768, -0.0869434, -0.0697565, 0, 0.199117, 1.08527, 
                      0.0504537, 0, 0.303757, 0.211115, 1.19715, 0, 100, 50, 50, 1),
                    .Dim = c(4L, 4L))
-  checkEqualsNumeric(cmtk.dof2mat(reg),m_base,tolerance=1e-4)
-  checkEqualsNumeric(cmtk.dof2mat(params),m_base,tolerance=1e-4)
-}
+  expect_equal(cmtk.dof2mat(reg),m_base,tolerance=1e-4)
+  expect_equal(cmtk.dof2mat(params),m_base,tolerance=1e-4)
+  expect_equal(cmtk.dof2mat(params,Transpose=FALSE),t(m_base),tolerance=1e-4)
+})
 
 test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
   reg=file.path('..','testdata','cmtk','dofv1.1wshears.list')
@@ -63,8 +63,6 @@ test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
                   0.0778012981466213, -0.0620696470929289, 1.19004163463567, 0, 
                   100, 50, 50, 1), ncol=4)
   expect_equal(cmtk.dof2mat(reg),m_base,tolerance=1e-4)
-#   expect_equal(ComposeAffineFromIGSParams(params,legacy=TRUE),
-#                      m_base,tolerance=1e-4)
 })
 
 }
