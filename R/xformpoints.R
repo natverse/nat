@@ -16,6 +16,7 @@ xformpoints<-function(reg, points, ...) {
 #'   will hand off to xformpoints.cmtkreg. A future TODO would be to provide a
 #'   mechanism for extending this behaviour for other registration formats.
 #' @method xformpoints character
+#' @S3method xformpoints character
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
   if(is.cmtkreg(reg, filecheck='magic')) xformpoints(as.cmtkreg(reg), points, ...)
