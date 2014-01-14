@@ -1,7 +1,7 @@
 Package: nat
 Type: Package
 Title: nat: NeuroAnatomy Toolbox
-Version: 0.4.1.99
+Version: 0.5
 Date: 2013-01-14
 Author: Greg Jefferis
 Maintainer: Greg Jefferis <jefferis@gmail.com>

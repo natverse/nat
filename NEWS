@@ -1,3 +1,11 @@
+nat 0.5
+=======
+* fix broken handling of cmtk affine transformations
+* implement mirroring of neurons and other objects
+* teach xformpoints (and therefore xform) to handle "~/" in paths
+* bugfix in visibility of S3method xformpoints.character
+* (developer) Switch to roxygen2 v3.0 for documentation
+
 nat 0.4
 =======
 * read.hxsurf and plot3d.hxsurf for reading/plotting Amira surfaces
