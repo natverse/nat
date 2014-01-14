@@ -36,10 +36,10 @@ test_that("test cmtk.mat2dof with shears", {
   m=structure(c(0.993768, -0.0869434, -0.0697565, 0, 0.199117, 1.08527, 
                 0.0504537, 0, 0.303757, 0.211115, 1.19715, 0, 100, 50, 50, 1),
               .Dim = c(4L, 4L))
-  params=cmtk.mat2dof(m)
   params_base=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                      byrow=T)
-  expect_equal(params,params_base,tolerance=1e-4)
+  expect_equal(cmtk.mat2dof(m),params_base,tolerance=1e-4)
+  expect_equal(cmtk.mat2dof(t(m),Transpose=FALSE),params_base,tolerance=1e-4)
 })
 
 test.cmtk.dof2mat<-function(x){
