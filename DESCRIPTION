@@ -1,8 +1,8 @@
 Package: nat
 Type: Package
 Title: nat: NeuroAnatomy Toolbox
-Version: 0.4
-Date: 2013-01-08
+Version: 0.4.1.99
+Date: 2013-01-14
 Author: Greg Jefferis
 Maintainer: Greg Jefferis <jefferis@gmail.com>
 Description: This package is a reboot of the AnalysisSuite
