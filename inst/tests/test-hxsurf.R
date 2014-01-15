@@ -32,5 +32,5 @@ test_that("can xform hxsurf object", {
 test_that("can xform hxsurf object using registration", {
   testsurf <- read.hxsurf("/Users/jefferis/projects/ChiangReanalysis/Templates/JFRC/JFRC2.surf")
   reg <- "~/projects/BridgingRegistrations/FCWB_JFRC2.list/"
-  expect_true({xform(testsurf, reg); TRUE})
+  xform(testsurf, reg)
 })
