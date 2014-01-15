@@ -65,12 +65,13 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   cmd=paste(gregxform,ifelse(direction=='forward','-f',''),
             ifelse(transformtype=='affine','-n',''),
             shQuote(path.expand(reg)),'<',shQuote(pointsfile))
-  pointst=matrix(scan(text=system(cmd, intern = TRUE), quiet=TRUE),
+  pointst=matrix(scan(text=system(cmd, intern = TRUE,ignore.stderr=TRUE),
+                      quiet=TRUE,na.strings=c("ERR","NA","NaN")),
                  ncol=3, byrow=TRUE, dimnames=dimnames(points))
   if(FallBackToAffine && transformtype=='warp'){
     naPoints = is.na(pointst[, 1])
     if(any(naPoints)) {
-      affpoints = xformpoints(reg,points[naPoints,],transformtype='affine')
+      affpoints = xformpoints(reg,points[naPoints,,drop=FALSE],transformtype='affine')
       pointst[naPoints, ] = affpoints
     }
   }
@@ -80,6 +81,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
 #' @method xformpoints default
 #' @rdname xformpoints
 xformpoints.default<-function(reg, points, ...){
+  if(!is.matrix(points) && !is.data.frame(points)) stop("points must be a matrix or dataframe")
   if(is.matrix(reg)) {
     points.mat=data.matrix(points)
     points[,1:3]=(cbind(points.mat,1)%*%t(reg))[,1:3]
