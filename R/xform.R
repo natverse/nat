@@ -115,6 +115,17 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   if(Transpose) t(mx) else mx
 }
 
+#' @rdname xyzmatrix
+#' @S3method xyzmatrix hxsurf
+xyzmatrix.hxsurf<-function(x, Transpose=FALSE,...) {
+  # quick function that gives a generic way to extract coords from 
+  # classes that we care about and returns a matrix
+  # nb unlike xyz.coords this returns a matrix (not a list)
+  mx=data.matrix(x$Vertices[,1:3])
+  colnames(mx)=c("X","Y","Z")
+  if(Transpose) t(mx) else mx
+}
+
 #' @description Assign xyz elements of neuron or dotprops object. Can also
 #'   handle matrix like objects with columns named X,Y,Z
 #' @usage xyzmatrix(x) <- value
@@ -137,6 +148,12 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   else if(is.dotprops(x)) x$points[,c("X","Y","Z")]=value
   else if(all(c("X","Y","Z") %in% colnames(x))) x[,c("X","Y","Z")]=value
   else stop("Not a neuron or dotprops object or a matrix-like object with XYZ volnames")
+  x
+}
+
+#' @S3method xyzmatrix<- hxsurf
+`xyzmatrix<-.hxsurf`<-function(x, value){
+  x$Vertices[,1:3]=value
   x
 }
 

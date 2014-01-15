@@ -1,9 +1,9 @@
-context("hxsurf - amira surfaces")
+context("hxsurf (amira) surfaces")
 
-#' round trip test of mat2dof/dof2mat
+surf_file="../testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
+surf=read.hxsurf(surf_file)
+
 test_that("can read hxsurf object", {
-  surf_file="../testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
-  surf=read.hxsurf(surf_file)
   expect_equal(nrow(surf$Vertices),2549L)
   expect_equal(surf$RegionList,names(surf$Regions))
   expect_equal(surf$RegionList,
@@ -22,4 +22,9 @@ test_that("can read hxsurf object", {
   clear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
   rgl.close()
+})
+
+test_that("can xform hxsurf object", {
+  #' tests both mirror, xform and xyzmatrix methods all in one go
+  expect_equal(mirror(mirror(surf,mirrorAxisSize=100),mirrorAxisSize=100),surf)
 })
