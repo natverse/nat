@@ -59,26 +59,29 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile), add = TRUE)
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
-  gregxform=file.path(cmtk.bindir(check=TRUE),'gregxform')
+  streamxform=file.path(cmtk.bindir(check=TRUE),'streamxform')
   # TODO enable CMTK affine transforms using internal R code even when
   # CMTK command line tools are missing.
-  cmd=paste(gregxform,ifelse(direction=='forward','-f',''),
-            ifelse(transformtype=='affine','-n',''),
+  cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''),
+            ifelse(direction=='forward','--','-- --inverse'),
             shQuote(path.expand(reg)),'<',shQuote(pointsfile))
-  pointst=matrix(scan(text=system(cmd, intern = TRUE,ignore.stderr=TRUE),
-                      quiet=TRUE,na.strings=c("ERR","NA","NaN")),
-                 ncol=3, byrow=TRUE, dimnames=dimnames(points))
+  cmtkOut <- read.table(text=system(cmd, intern = TRUE,ignore.stderr=TRUE),
+                        col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
+                        colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
+  pointst <- data.matrix(cmtkOut[,1:3])
   if(FallBackToAffine && transformtype=='warp'){
-    naPoints = is.na(pointst[, 1])
+    naPoints = cmtkOut$Failed =="FAILED"
     if(any(naPoints)) {
       affpoints = xformpoints(reg,points[naPoints,,drop=FALSE],transformtype='affine')
       pointst[naPoints, ] = affpoints
     }
   }
+  dimnames(pointst)=dimnames(points)
   pointst
 }
 
 #' @method xformpoints default
+#' @S3method xformpoints default
 #' @rdname xformpoints
 xformpoints.default<-function(reg, points, ...){
   if(!is.matrix(points) && !is.data.frame(points)) stop("points must be a matrix or dataframe")
