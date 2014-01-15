@@ -1,0 +1,12 @@
+! TYPEDSTREAM 1.1
+
+time_level 16.1100000000
+time_total 16.1100000000
+walltime_level 5.0000000000
+walltime_total 5.0000000000
+thread_time_level 0.0000000000
+thread_time_total 0.0000000000
+number_of_threads 4
+number_of_cpus 8
+host "fmb61.lmb.internal"
+system "Linux"

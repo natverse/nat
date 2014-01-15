@@ -1,0 +1,11 @@
+! TYPEDSTREAM 1.1
+
+studylist {
+	num_sources 2
+}
+source {
+	studyname "refbrain/FCWB.nrrd"
+}
+source {
+	studyname "images/JFRC2_01.nrrd"
+}
