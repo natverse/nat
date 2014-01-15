@@ -64,7 +64,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
     PatchHeader<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
     if(Verbose) cat("PatchHeader is",length(PatchHeader),"lines long\n")
     # note use of RegionChoice to switch naming between inner and outer
-    RegionName=getfield(paste(RegionChoice,"Region",sep=""),PatchHeader,2)
+    RegionName=getfield(paste(RegionChoice[1],"Region",sep=""),PatchHeader,2)
     nTriangles=as.numeric(getfield("Triangles",PatchHeader,2))
     if(nTriangles<0 || nTriangles>100000){return(-1)}
     if(Verbose) cat("nTriangles =",nTriangles,"for patch =",i,"\n")
