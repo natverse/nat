@@ -20,7 +20,8 @@ mirror(x, ...)
   \item{mirrorAxisSize}{The bounding box of the axis to
   mirror}
 
-  \item{mirrorAxis}{Axis to mirror (default \code{"X"})}
+  \item{mirrorAxis}{Axis to mirror (default \code{"X"}).
+  Can also be an integer in range \code{1:3}.}
 
   \item{warpfile}{Path to (optional) CMTK registration}
 

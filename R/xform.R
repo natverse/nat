@@ -181,7 +181,8 @@ xyzmatrix.hxsurf<-function(x, Transpose=FALSE,...) {
 mirror<-function(x, ...) UseMethod('mirror')
 
 #' @param mirrorAxisSize The bounding box of the axis to mirror
-#' @param mirrorAxis Axis to mirror (default \code{"X"})
+#' @param mirrorAxis Axis to mirror (default \code{"X"}). Can also be an integer
+#'   in range \code{1:3}.
 #' @param warpfile Path to (optional) CMTK registration
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
@@ -191,7 +192,12 @@ mirror<-function(x, ...) UseMethod('mirror')
 mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
                          warpfile=NULL, transform=c("warp",'affine','flip'), ...){
   transform=match.arg(transform)
-  mirrorAxis=match.arg(mirrorAxis)
+  if(is.character(mirrorAxis)) {
+    mirrorAxis=match.arg(mirrorAxis)
+    mirrorAxis=match(mirrorAxis,c("X","Y","Z"))
+  }
+  if(length(mirrorAxis)!=1 || is.na(mirrorAxis) || mirrorAxis<0 || mirrorAxis>3)
+    stop("Invalid mirror axis")
   
   # start by flipping along mirror axis
   xyz=xyzmatrix(x)

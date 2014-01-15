@@ -50,3 +50,10 @@ test_that("can mirror raw points", {
   expect_equal(g(g(xyz)),xyz)
 })
 
+test_that("can mirror using different forms of axis specification", {
+  n=Cell07PNs[[1]]
+  expect_equal(mirror(n,mirrorAxisSize=0,mirrorAxis=1),mirror(n,mirrorAxisSize=0))
+  expect_equal(mirror(n,mirrorAxisSize=0,mirrorAxis=2),mirror(n,mirrorAxisSize=0,mirrorAxis="Y"))
+  expect_error(mirror(n,mirrorAxisSize=0,mirrorAxis=1:2))
+})
+
