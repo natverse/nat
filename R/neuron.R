@@ -111,57 +111,6 @@ scale.neuron<-function(x,center=FALSE,scale=FALSE){
   x
 }
 
-#' Get and assign coordinates for classes containing 3d vertex data
-#' 
-#' @param x object containing 3d coordinates
-#' @param ... additional arguments passed to methods
-#' @return Nx3 matrix containing 3d coordinates
-#' @export
-xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
-
-#' @method xyzmatrix default
-#' @param y,z separate y and z coordinates
-#' @param Transpose Whether to transpose the coordinates to 3xN matrix
-#' @rdname xyzmatrix
-#' @S3method xyzmatrix default
-xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
-  # quick function that gives a generic way to extract coords from 
-  # classes that we care about and returns a matrix
-  # nb unlike xyz.coords this returns a matrix (not a list)
-  x=if(is.neuron(x)) x$d[,c("X","Y","Z")]
-  else if(is.dotprops(x)) x$points
-  else if(!is.null(z)){
-    cbind(x,y,z)
-  } else x
-  mx=data.matrix(x)
-  if(Transpose) t(mx) else mx
-}
-
-#' @description Assign xyz elements of neuron or dotprops object. Can also
-#'   handle matrix like objects with columns named X,Y,Z
-#' @usage xyzmatrix(x) <- value
-#' @param value Nx3 matrix specifying new xyz coords
-#' @return Original object with modified coords
-#' @export
-#' @seealso \code{\link{xyzmatrix}}
-#' @rdname xyzmatrix
-#' @examples
-#' n=Cell07PNs[[1]]
-#' xyzmatrix(n)<-xyzmatrix(n)
-#' stopifnot(isTRUE(
-#'   all.equal(xyzmatrix(n),xyzmatrix(Cell07PNs[[1]]))
-#' ))
-`xyzmatrix<-`<-function(x, value) UseMethod("xyzmatrix<-")
-
-#' @S3method xyzmatrix<- default
-`xyzmatrix<-.default`<-function(x, value){
-  if(is.neuron(x)) x$d[,c("X","Y","Z")]=value
-  else if(is.dotprops(x)) x$points[,c("X","Y","Z")]=value
-  else if(all(c("X","Y","Z") %in% colnames(x))) x[,c("X","Y","Z")]=value
-  else stop("Not a neuron or dotprops object or a matrix-like object with XYZ volnames")
-  x
-}
-
 #' Check equality on key fields of neuron object
 #' 
 #' @inheritParams base::all.equal.default
