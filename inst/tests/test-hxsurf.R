@@ -28,3 +28,9 @@ test_that("can xform hxsurf object", {
   #' tests both mirror, xform and xyzmatrix methods all in one go
   expect_equal(mirror(mirror(surf,mirrorAxisSize=100),mirrorAxisSize=100),surf)
 })
+
+test_that("can xform hxsurf object using registration", {
+  testsurf <- read.hxsurf("/Users/jefferis/projects/ChiangReanalysis/Templates/JFRC/JFRC2.surf")
+  reg <- "~/projects/BridgingRegistrations/FCWB_JFRC2.list/"
+  expect_true({xform(testsurf, reg); TRUE})
+})

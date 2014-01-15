@@ -49,7 +49,7 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
 #'   warping transformation fails.
 xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
   points=xyzmatrix(x)
-  pointst=xform(points, reg, FallBackToAffine=FallBackToAffine, 
+  pointst=xformpoints(reg, points, FallBackToAffine=FallBackToAffine, 
                 na.action=na.action, ...)
   xyzmatrix(x)<-pointst
   x
