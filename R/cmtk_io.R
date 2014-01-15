@@ -51,17 +51,16 @@ read.cmtk<-function(con, CheckLabel=TRUE){
   
   if(is.character(con)) {
     filename=con
-    con=file(filename,'rb')
-    
+    con=file(filename,'rt')
     t=readLines(con,1)
-    if( !any(grep("! TYPEDSTREAM",t[1],fixed=TRUE)) ) 
+    if( !any(grep("! TYPEDSTREAM",t[1],fixed=TRUE,useBytes=TRUE)) )
       stop(paste("This doesn't appear to be an IGS TypedStream:",filename))
     typedStreamVersion=numeric_version(sub("! TYPEDSTREAM ","",t[1],
                                            fixed=TRUE,useBytes=TRUE))
     attr(l,"version")<-typedStreamVersion
   }
   
-  checkLabel=function(label) 	{
+  checkLabel=function(label) {
     if( any(names(l)==label)  ){
       newlabel=make.unique(c(names(l),label))[length(l)+1]
       warning(paste("Duplicate item",label,"renamed",newlabel))
@@ -118,8 +117,8 @@ read.cmtk<-function(con, CheckLabel=TRUE){
       # process active flags
       numItems=prod(l[["dims"]])*3
       #cat("numItemsToRead =",numItems)
-      # nb floor since we have read one line of 30 already
-      numLinesToRead=floor(numItems/30)
+      # nb -1 since we have read one line of 30 already
+      numLinesToRead=ceiling(numItems/30)-1
       #cat("numLinesToRead=",numLinesToRead)
       x=c(items,trim(readLines(con,numLinesToRead,ok=FALSE)))
       #x=paste(x,collapse="")
@@ -155,7 +154,7 @@ read.cmtk<-function(con, CheckLabel=TRUE){
   close(con)
   if(isTRUE(try(file.exists(filename)))){
     attr(l,"file.info")=file.info(filename)
-  }		
+  }
   return(l)
 }
 

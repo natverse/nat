@@ -26,12 +26,14 @@ test_that("read.cmtk and write.cmtk can round-trip a registration file", {
   expect_equivalent(read.cmtkreg(ctf),reglist)
 })
 
-test_that("read and write cmtk landmarks", {
-  testData=matrix(rnorm(15),ncol=3)
-  rownames(testData)=letters[1:5]
-  tmpfile=tempfile()
-  write.cmtklandmarks(testData,tmpfile)
-  testData.new=read.cmtklandmarks(tmpfile)
-  unlink(tmpfile)
-  expect_equal(testData,testData.new,tol=1e-6)  
+test_that("read cmtk warping registration", {
+  reg="../testdata/cmtk/FCWB_JFRC2_01_warp_m0g80c8e1e-1x26r4.list/level-01.list"
+  aff_base=structure(list(xlate = c(40.36793081, -1.083886192, 20.60925626),
+                 rotate = c(2.066985174, 0.1277418389, 1.346021698),
+                 scale = c(1.10115207, 1.112225643, 1.398342945),
+                 shear = c(0, 0, 0),
+                 center = c(318.1980197, 158.9434879, 67.49654964)),
+            .Names = c("xlate", "rotate", "scale", "shear", "center"))
+  r=read.cmtkreg(reg)
+  expect_equal(aff_base,r$registration$affine_xform)
 })
