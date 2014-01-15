@@ -1,6 +1,11 @@
 context("Verify cmtkreg functions")
 require(testthat)
 
+test_that("as.cmtkreg behaves",{
+  base=structure("myreg", class = c("cmtkreg", "character"))
+  expect_equal(as.cmtkreg('myreg'),base)
+})
+
 test_that("is.cmtkreg works ok for objects", {
   reg='missingregistration.list'
   creg=as.cmtkreg('missingregistration.list')

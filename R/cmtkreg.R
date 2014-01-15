@@ -37,7 +37,7 @@ cmtkreg<-function(x, returnDir=TRUE){
 #' @export
 as.cmtkreg<-function(x){
   if(!inherits(x,'cmtkreg'))
-    class(x)=c("cmtkreg",x)
+    class(x)=c("cmtkreg",class(x))
   x
 }
 
