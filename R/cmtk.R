@@ -74,15 +74,15 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 
 #' Return path to directory containing CMTK binaries
 #' 
-#' @details Queries options('nat.cmtk.bindir') if no dir is specified. If that 
-#'   does not contain the appropriate binaries, it will look in the system PATH 
-#'   and then a succession of plausible places until it finds something. Setting
-#'   \code{options(nat.cmtk.bindir=NA)} or passing \code{dir=NA} will stop the
-#'   function from trying to locate CMTK, always returning NULL unless
-#'   check=TRUE when it will error out.
-#' @param dir to use as binary directory or NA (see details) (defaults to 
-#'   options('nat.cmtk.bindir')).
-#' @param extradirs Where to look if CMTK is not in dir or the PATH
+#' @details Queries options('nat.cmtk.bindir') if \code{firtsdir} is not 
+#'   specified. If that does not contain the appropriate binaries, it will look 
+#'   in the system PATH and then a succession of plausible places until it finds
+#'   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing 
+#'   \code{firstdir=NA} will stop the function from trying to locate CMTK, 
+#'   always returning NULL unless check=TRUE when it will error out.
+#' @param firstdir Character vector specifying path containing CMTK binaries or 
+#'   NA (see details). This defaults to options('nat.cmtk.bindir').
+#' @param extradirs Where to look if CMTK is not in \code{firstdir} or the PATH
 #' @param set Whether to set options('nat.cmtk.bindir') with the found directory
 #' @param check Whether to (re)check that a path that has been set appropriately
 #'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or 
@@ -99,15 +99,15 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' op=options(nat.cmtk.bindir=NULL)
 #' cmtk.bindir(set=TRUE)
 #' options(op)
-cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
+cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/usr/local/bin','/opt/local/bin',
                                          '/Applications/IGSRegistrationTools/bin'),
                       set=FALSE, check=FALSE, cmtktool='gregxform'){
   bindir=NULL
-  if(!is.null(dir)) {
-    bindir=dir
-    if(check && !file.exists(file.path(dir,cmtktool))) 
-      stop("cmtk is _not_ installed at:", dir,
+  if(!is.null(firstdir)) {
+    bindir=firstdir
+    if(check && !file.exists(file.path(bindir,cmtktool)))
+      stop("cmtk is _not_ installed at:", bindir,
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
   if(is.null(bindir)){
@@ -121,20 +121,22 @@ cmtk.bindir<-function(dir=getOption('nat.cmtk.bindir'),
       bindir=dirname(cmtktoolpath)
     } else {
       # check some plausible locations
-      for(dir in extradirs){
-        if(file.exists(file.path(dir,cmtktool))) {
-          bindir=dir
+      for(d in extradirs){
+        if(file.exists(file.path(s,cmtktool))) {
+          bindir=d
           break
         }
       }
     }
   }
-  if(!is.null(bindir) && is.na(bindir)) bindir=NULL
+  if(!is.null(bindir)){
+    if(is.na(bindir)) bindir=NULL
+    else bindir=path.expand(bindir)
+  }
   if(check && is.null(bindir))
     stop("Cannot find CMTK. Please install from",
          "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
-  # in case we have an unexpanded ~
-  bindir=path.expand(bindir)
+  
   if(set)
     options(nat.cmtk.bindir=bindir)
   bindir
