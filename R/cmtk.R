@@ -122,7 +122,7 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
     } else {
       # check some plausible locations
       for(d in extradirs){
-        if(file.exists(file.path(s,cmtktool))) {
+        if(file.exists(file.path(d,cmtktool))) {
           bindir=d
           break
         }
