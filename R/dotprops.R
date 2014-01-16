@@ -85,14 +85,6 @@ scale.dotprops<-function(x,center=TRUE,scale=TRUE){
   x
 }
 
-# Set up a private function that directly accesses internal LAPACK routine of eigen
-# TODO Replace this with a strategy that will be acceptable on CRAN
-if(R.version$major<3){
-  .internal_lars<-function(x) .Call("La_rs", x, only.values=FALSE, PACKAGE = "base")
-} else {
-  .internal_lars<-function(x) .Internal(La_rs(x, only.values=FALSE))
-}
-
 #' @description \code{dotprops} makes dotprops representation from raw 3d points
 #'   (extracting vertices from S3 objects that have them)
 #' @details \code{k} will default to 20 nearest neighbours when unset (i.e. when
@@ -180,11 +172,7 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
     inertia[1,2]<-inertia[2,1]<-sum(cpt[1,]*cpt[2,])
     inertia[1,3]<-inertia[3,1]<-sum(cpt[1,]*cpt[3,])
     inertia[2,3]<-inertia[3,2]<-sum(cpt[2,]*cpt[3,])
-    
-    # call internal LAPACK routine of eigen directly
-    z<-.internal_lars(inertia)
-    ord <- rev(seq_along(z$values))
-    v1d1=list(values = z$values[ord], vectors = z$vectors[,ord, drop = FALSE])
+    v1d1<-eigen(inertia,symmetric=TRUE)
     
     alpha[i]=(v1d1$values[1]-v1d1$values[2])/sum(v1d1$values)
     vect[i,]=v1d1$vectors[,1]
