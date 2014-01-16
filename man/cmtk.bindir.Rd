@@ -44,6 +44,17 @@ Setting \code{options(nat.cmtk.bindir=NA)} or passing
 locate CMTK, always returning NULL unless check=TRUE when
 it will error out.
 }
+\section{Installation}{
+  It is recommended to install released CMTK versions
+  available from the
+  \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A bug
+  in composition of affine transformations from CMTK
+  parameters in the CMTK versions <2.4 series means that
+  CMTK>=3.0 is strongly recommended.  CMTK v3 registrations
+  are not backwards compatible with CMTK v2, but CMTKv3 can
+  correctly interpret and convert registrations from
+  earlier versions.
+}
 \examples{
 cmtk.bindir()
 # set options('nat.cmtk.bindir') according to where cmtk was found
