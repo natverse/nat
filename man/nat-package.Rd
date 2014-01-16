@@ -36,7 +36,7 @@ neurons.
   types of interest.
 }
 \seealso{
-\code{\link{dotprops},\link{neuron},\link{plot3d.neuronlist}}
+\code{\link{dotprops},\link{neuron},\link{plot3d.neuronlist},\link{xform}},
 \code{\link{rgl}} which is used for visualisation.
 }
 \keyword{package}
