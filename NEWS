@@ -1,3 +1,18 @@
+nat 0.5.1
+=========
+* Switch license to GPL-3
+* xform (transformation) of hxsurf objects
+* fix xform of neuronlist objects
+* switch from CMTK gregxform to streamxform (gregxform is deprecated; streamxform can concatenate registrations)
+* teach mirror function to accept numeric axis specification
+* Fix bug in checking extra directories in cmtk.bindir
+* Add dotprops.neuronlist and include all dotprops methods in documentation
+* Fix longstanding bug in parsing cmtk warping registrations (only relevant for
+  reading these into R lists - no effect on transformations).
+* fix bug in class of cmtkreg objects
+* Remove call to .Internal(La_rs) by calling eigen directly
+* doc: some notes on CMTK installation
+
 nat 0.5
 =======
 * fix broken handling of cmtk affine transformations
