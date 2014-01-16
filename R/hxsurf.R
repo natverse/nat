@@ -64,31 +64,33 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
     PatchHeader<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
     if(Verbose) cat("PatchHeader is",length(PatchHeader),"lines long\n")
     # note use of RegionChoice to switch naming between inner and outer
-    RegionName=getfield(paste(RegionChoice[1],"Region",sep=""),PatchHeader,2)
-    nTriangles=as.numeric(getfield("Triangles",PatchHeader,2))
-    if(nTriangles<0 || nTriangles>100000){return(-1)}
-    if(Verbose) cat("nTriangles =",nTriangles,"for patch =",i,"\n")
-    # Check if we want to load in this region
-    if( is.null(RegionNames) || RegionName%in%RegionNames ){
-      # Ensure we do not try to add no triangles
-      if(nTriangles == 0) next
-      start_of_patch=linesSkipped+TriangleDeflines[i]+1
-      thispatch=read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,
-                           quote='',colClasses='integer',blank.lines.skip=FALSE,
-                           fill=FALSE,comment.char="",
-                           col.names=c("V1","V2","V3"))
-      # scan no quicker in these circs, problem is repeated file access
-      # specifying text directly also does not help dues to very slow textConnection
-      # thispatch=matrix(scan(text=t[start_of_patch:(start_of_patch+nTriangles-1)],nlines=nTriangles),ncol=3,byrow=T)
-      # check if we have already loaded a patch in this name
-      if(RegionName%in%names(d$Regions)){
-        # add to the old patch
-        if(Verbose) cat("Adding to patch name",RegionName,"\n")
-        d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],thispatch)
-      } else {
-        # new patch
-        if(Verbose) cat("Making new patch name",RegionName,"\n")
-        d[['Regions']][[RegionName]]=thispatch
+    for(RegChoice in RegionChoice) {
+      RegionName=getfield(paste(RegChoice,"Region",sep=""),PatchHeader,2)
+      nTriangles=as.numeric(getfield("Triangles",PatchHeader,2))
+      if(nTriangles<0 || nTriangles>100000){return(-1)}
+      if(Verbose) cat("nTriangles =",nTriangles,"for patch =",i,"\n")
+      # Check if we want to load in this region
+      if( is.null(RegionNames) || RegionName%in%RegionNames ){
+        # Ensure we do not try to add no triangles
+        if(nTriangles == 0) next
+        start_of_patch=linesSkipped+TriangleDeflines[i]+1
+        thispatch=read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,
+                             quote='',colClasses='integer',blank.lines.skip=FALSE,
+                             fill=FALSE,comment.char="",
+                             col.names=c("V1","V2","V3"))
+        # scan no quicker in these circs, problem is repeated file access
+        # specifying text directly also does not help dues to very slow textConnection
+        # thispatch=matrix(scan(text=t[start_of_patch:(start_of_patch+nTriangles-1)],nlines=nTriangles),ncol=3,byrow=T)
+        # check if we have already loaded a patch in this name
+        if(RegionName%in%names(d$Regions)){
+          # add to the old patch
+          if(Verbose) cat("Adding to patch name",RegionName,"\n")
+          d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],thispatch)
+        } else {
+          # new patch
+          if(Verbose) cat("Making new patch name",RegionName,"\n")
+          d[['Regions']][[RegionName]]=thispatch
+        }
       }
     }
   }
