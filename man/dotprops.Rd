@@ -2,6 +2,9 @@
 \alias{as.dotprops}
 \alias{dotprops}
 \alias{dotprops.default}
+\alias{dotprops.dotprops}
+\alias{dotprops.neuron}
+\alias{dotprops.neuronlist}
 \alias{is.dotprops}
 \title{dotprops: Neurons as point clouds with tangent vectors (but no connectivity)}
 \usage{
@@ -10,6 +13,12 @@ is.dotprops(x)
 as.dotprops(x, ...)
 
 dotprops(x, ...)
+
+\method{dotprops}{dotprops}(x, k = attr(x, "k"), ...)
+
+\method{dotprops}{neuronlist}(x, ...)
+
+\method{dotprops}{neuron}(x, Labels = NULL, ...)
 
 \method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
 }

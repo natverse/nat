@@ -103,7 +103,9 @@ if(R.version$major<3){
 dotprops<-function(x, ...) UseMethod('dotprops')
 
 #' @method dotprops dotprops
+#' @S3method dotprops dotprops
 #' @export
+#' @rdname dotprops
 dotprops.dotprops<-function(x, k=attr(x,'k'), ...) {
   dotprops(xyzmatrix(x), k=k, ...)
 }
@@ -115,7 +117,16 @@ dotprops.list<-function(x, ...) {
   dotprops(xyzmatrix(x), ...)
 }
 
+#' @S3method dotprops neuronlist
+#' @method dotprops neuronlist
+#' @rdname dotprops
+dotprops.neuronlist<-function(x, ...) {
+  nlapply(x, dotprops, ...)
+}
+
 #' @S3method dotprops neuron
+#' @method dotprops neuron
+#' @rdname dotprops
 dotprops.neuron<-function(x, Labels=NULL, ...) {
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
