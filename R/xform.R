@@ -79,6 +79,7 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 }
 
 #' @method xform neuronlist
+#' @S3method xform neuronlist
 #' @rdname xform
 xform.neuronlist<-function(x, reg, ...){
   if(length(reg)>1) stop("xform.neuronlist is currently only able to apply",
