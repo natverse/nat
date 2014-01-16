@@ -176,8 +176,8 @@ xyzmatrix.hxsurf<-function(x, Transpose=FALSE,...) {
 #' plot3d(mirror(x,168),col='green')
 #' plot3d(mirror(x,168,transform='flip'),col='blue')
 #' y=kcs20[[1]]
-#' plot3d(y,564.2532,transform='flip',col='red')
-#' plot3d(y,mirrorAxisSize=564.2532,transform='flip',col='blue')
+#' plot3d(mirror(y,564.2532,transform='flip'),col='red')
+#' plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'),col='blue')
 mirror<-function(x, ...) UseMethod('mirror')
 
 #' @param mirrorAxisSize The bounding box of the axis to mirror
