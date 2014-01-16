@@ -57,3 +57,7 @@ test_that("can mirror using different forms of axis specification", {
   expect_error(mirror(n,mirrorAxisSize=0,mirrorAxis=1:2))
 })
 
+test_that("can mirror a neuron list", {
+  k5=kcs20[1:5]
+  expect_equal(mirror(mirror(k5,mirrorAxisSize=0),mirrorAxisSize=0),k5)
+})
