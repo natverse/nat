@@ -30,6 +30,5 @@ Imports:
     RANN
 Suggests:
     testthat
-LazyLoad: yes
 License: GPL-3
 LazyData: yes
