@@ -91,8 +91,10 @@ as.neuronlist<-function(l,df,AddClassToNeurons=TRUE){
 #' @family neuronlist
 #' @examples
 #' kcs.flipped=nlapply(kcs20,xform,reg=function(x, ...) x*c(-1,1,1) )
+#' open3d()
 #' plot3d(kcs20,col='red')
 #' plot3d(kcs.flipped,col='green')
+#' rgl.close()
 nlapply<-function (X, FUN, ...){
   cl=if(is.neuronlist(X)) class(X) else c("neuronlist",'list')
   structure(lapply(X,FUN,...),class=cl,df=attr(X,'df'))

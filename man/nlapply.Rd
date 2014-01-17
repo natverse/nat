@@ -19,8 +19,10 @@ Looks after class and any attached dataframe.
 }
 \examples{
 kcs.flipped=nlapply(kcs20,xform,reg=function(x, ...) x*c(-1,1,1) )
+open3d()
 plot3d(kcs20,col='red')
 plot3d(kcs.flipped,col='green')
+rgl.close()
 }
 \seealso{
 \code{\link{lapply}}
