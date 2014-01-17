@@ -7,6 +7,7 @@
 #' most internal calculations. Useful functions include plot.neuron 
 #' plot3d.neuron write.neuron read.neuron
 #' @rdname neuron
+#' @aliases neuron
 #' @family neuron
 #' @seealso neuronlist
 #' @param n A neuron

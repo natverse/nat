@@ -1,6 +1,7 @@
 \name{is.neuron}
 \alias{as.neuron}
 \alias{is.neuron}
+\alias{neuron}
 \title{neuron: class to represent traced neurons}
 \usage{
 is.neuron(n, Strict = FALSE)
