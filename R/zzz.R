@@ -1,5 +1,10 @@
 .onLoad <- function(libname, pkgname) {
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
+  
+  # Register file formats
+  neuronformats('swc',read=read.neuron.swc,class='neuron')
+  neuronformats('neurolucida',ext='asc',read=read.neuron.neurolucida,
+                class='neuron')
   invisible()
 }
 
@@ -12,3 +17,6 @@
   }
   invisible()
 }
+
+# will store information about formats that we can read
+.neuronformats <- new.env()
