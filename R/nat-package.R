@@ -24,6 +24,12 @@
 #' installation details). The function \code{\link{xform}} has methods to deal
 #' with a variety of types of interest.
 #' 
+#' @section package options:
+#' The following options can be set to specify default behaviour.
+#' \itemize{
+#' \item{\code{nat.cmtk.bindir}}{ Location of CMTK binaries. See \code{\link{cmtk.bindir}}}
+#' \item{\code{nat.default.neuronlist}}{ A neuronlist to use with the \code{\link{plot3d.character}} method}
+#' }
 #' @name nat-package
 #' @aliases nat
 #' @seealso

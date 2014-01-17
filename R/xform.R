@@ -15,10 +15,10 @@
 #' @param x an object to transform
 #' @param reg an object describing a transformation in any of the forms 
 #'   understood by \code{\link{xformpoints}} (see details).
-#' @param ... additional arguments passed to methods
+#' @param ... additional arguments passed to methods and eventually to \code{\link{xformpoints}}
 #' @export
 #' @rdname xform
-#' @seealso xformpoints
+#' @seealso \code{\link{xformpoints}}
 xform<-function(x, reg, ...) UseMethod('xform')
 
 #' @details TODO get this to work for matrices with more than 3 columns by
@@ -45,7 +45,7 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
 #' @method xform list
 #' @S3method xform list
 #' @rdname xform
-#' @param FallBackToAffine whether to use an affine transform when a cmtk
+#' @param FallBackToAffine Whether to use an affine transform when a cmtk
 #'   warping transformation fails.
 xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
   points=xyzmatrix(x)
@@ -58,9 +58,9 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
 #' @method xform dotprops
 #' @S3method xform dotprops
 #' @rdname xform
-#' @details the dotprops tangent vectors will be recalculated
-#'   post-transformation (even though they could in theory be transformed more
-#'   or less correctly). The dotrops
+#' @details the dotprops tangent vectors will be recalculated after the points
+#'   have been transformed (even though they could in theory be transformed more
+#'   or less correctly).
 #' @examples
 #' \dontrun{
 #' kc1=kcs20[[1]]
@@ -160,14 +160,15 @@ xyzmatrix.hxsurf<-function(x, Transpose=FALSE,...) {
 
 #' Mirror 3d object about a given axis, optionally using a warping registration
 #' 
-#' @details The warping registration can be used to account e.g. for the
+#' @details The warping registration can be used to account e.g. for the 
 #'   asymmetry. between brain hemispheres
 #'   
 #' @details This function is agnostic re node vs cell data, but for node data 
-#'   boundingBox should be supplied while for cell, it should be bounds See
+#'   boundingBox should be supplied while for cell, it should be bounds See 
 #'   getBounds/getBoundingBox for details of bounds vs bounding box.
 #' @param x Object with 3d points (with named cols X,Y,Z)
-#' @param ... additional arguments passed to methods or eventually to \code{xform}
+#' @param ... additional arguments passed to methods or eventually to
+#'   \code{xform}
 #' @return Object with transformed points
 #' @export
 #' @seealso \code{\link{xform},\link{getBounds}},\code{\link{getBoundingBox}}

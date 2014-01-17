@@ -35,6 +35,14 @@ neurons.
   \code{\link{xform}} has methods to deal with a variety of
   types of interest.
 }
+
+\section{package options}{
+  The following options can be set to specify default
+  behaviour. \itemize{ \item{\code{nat.cmtk.bindir}}{
+  Location of CMTK binaries. See \code{\link{cmtk.bindir}}}
+  \item{\code{nat.default.neuronlist}}{ A neuronlist to use
+  with the \code{\link{plot3d.character}} method} }
+}
 \seealso{
 \code{\link{dotprops},\link{neuron},\link{plot3d.neuronlist},\link{xform}},
 \code{\link{rgl}} which is used for visualisation.

@@ -25,12 +25,13 @@ xform(x, reg, ...)
   of the forms understood by \code{\link{xformpoints}} (see
   details).}
 
-  \item{...}{additional arguments passed to methods}
+  \item{...}{additional arguments passed to methods and
+  eventually to \code{\link{xformpoints}}}
 
   \item{na.action}{How to handle NAs. NB drop may not work
   for some classes.}
 
-  \item{FallBackToAffine}{whether to use an affine
+  \item{FallBackToAffine}{Whether to use an affine
   transform when a cmtk warping transformation fails.}
 }
 \description{
@@ -48,9 +49,9 @@ inherits from \code{list}.
 TODO get this to work for matrices with more than 3 columns
 by working on xyzmatrix definition.
 
-the dotprops tangent vectors will be recalculated
-post-transformation (even though they could in theory be
-transformed more or less correctly). The dotrops
+the dotprops tangent vectors will be recalculated after the
+points have been transformed (even though they could in
+theory be transformed more or less correctly).
 }
 \examples{
 \dontrun{
@@ -64,6 +65,6 @@ stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
 }
 }
 \seealso{
-xformpoints
+\code{\link{xformpoints}}
 }
 
