@@ -13,7 +13,7 @@ getformatfuns(f, action = c("read", "write"), class = NULL)
 
   \item{ext}{Character vector of file extensions}
 
-  \item{read,}{write Functions to read and write this
+  \item{read,write}{Functions to read and write this
   format}
 
   \item{magic}{Function to test whether a file is of this
@@ -25,6 +25,14 @@ getformatfuns(f, action = c("read", "write"), class = NULL)
 
   \item{class}{The S3 class for the format (character
   vector e.g. 'neuron')}
+
+  \item{f}{Path to a file}
+
+  \item{action}{Whether we must have a read or write
+  function for this file}
+
+  \item{class}{Character vector indicating S3 class that
+  functions must act on/generate.}
 }
 \description{
 Set or return list of registered file formats that we can

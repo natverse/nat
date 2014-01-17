@@ -30,7 +30,7 @@ read.neuron<-function(f, ...){
 #' 
 #' @param format Character vector naming the format
 #' @param ext Character vector of file extensions
-#' @param read, write Functions to read and write this format
+#' @param read,write Functions to read and write this format
 #' @param magic Function to test whether a file is of this format
 #' @param magiclen Optional integer specifying maximum number of bytes required
 #' from file header to determine file's type.
@@ -55,6 +55,10 @@ neuronformats<-function(format,ext=format,read=NULL,write=NULL,magic=NULL,
 
 #' Get the list of functions (read, write etc) for a file
 #' @rdname neuronformats
+#' @param f Path to a file
+#' @param action Whether we must have a read or write function for this file
+#' @param class Character vector indicating S3 class that functions must act
+#'   on/generate.
 getformatfuns<-function(f, action=c('read','write'), class=NULL){
   action=match.arg(action)
   
