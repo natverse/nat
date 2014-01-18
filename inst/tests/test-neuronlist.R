@@ -36,3 +36,10 @@ test_that("subset.neuronlist works with function", {
   s1=subset(kcs20,aptip)
   expect_equal(s1,subset(kcs20,type=='apbp'))
 })
+
+test_that("subset can combine dataframe columns and global variables", {
+# check() fails when running this test fails, but the same code works fine as an example
+#   odds=rep(c(TRUE,FALSE),10)
+#   expect_equal(subset(kcs20,type=='gamma' & odds),
+#                subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10)))
+})

@@ -57,6 +57,10 @@ aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
 apbps=subset(kcs20,aptip)
 # look at which neurons are present in the subsetted neuronlist
 head(apbps)
+# combine global variables with dataframe columns
+odds=rep(c(TRUE,FALSE),10)
+stopifnot(all.equal(subset(kcs20,type=='gamma' & odds),
+            subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10))))
 \dontrun{
 # make a 3d selection function using interactive rgl::select3d() function
 s3d=select3d()
