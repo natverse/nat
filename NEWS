@@ -1,7 +1,9 @@
 nat 0.5.2
 =========
+* add subset.neuronlist
 * add methods for working with dataframe attached to neuronlist 
   (see e.g. ?with.neuronlist)
+* TODO harmonise plot3d.neuronlist subset expressions with subset.neuronlist
 
 nat 0.5.1
 =========
