@@ -367,6 +367,8 @@ subset.neuronlist<-function(x, subset, INDICES=NULL, ReturnList=is.null(INDICES)
   if(missing(subset)) stop("Must supply a subset argument")
   e <- substitute(subset)
   TESTFUN=try(eval(e),silent=TRUE)
+  # try again if we couldn't find it in parent frame
+  if(inherits(TESTFUN,'try-error')) TESTFUN=try(match.fun(e),silent=TRUE)
   if(is.function(TESTFUN)){
     # we are going to apply a function to every element in neuronlist 
     # and expect a return value
