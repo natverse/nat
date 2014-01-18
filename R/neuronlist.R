@@ -313,79 +313,100 @@ head.neuronlist<-function(x, ...) {
   head(attr(x,'df'), ...)
 }
 
-#' Subset a neuronlist returning either a new neuronlist or the names of chosen neurons
-#'
-#' EITHER use its attached dataframe as the basis of subset operation. Then use
-#' rownames of the new dataframe to select neuronlist entries and return that
-#' sublist
-#' OR apply a function to every item in the list that returns TRUE/FALSE
-#' to determine inclusion in output list
-#'
-#' * When ReturnList is F just return the indices into the list
-#' * When INDICES are specified, then use a for loop to iterate over only those
-#' members of the list. This is equivalent to nl[INDICES] but is much
+#' Subset neuronlist returning either new neuronlist or names of chosen neurons
+#' 
+#' @details subset \strong{either} uses the attached dataframe as the basis of
+#'   subset operation, taking the rownames of the new dataframe to select
+#'   neuronlist entries and returning that sublist \strong{or} applies a
+#'   function to every item in the list that returns TRUE/FALSE to determine
+#'   inclusion in output list.
+#' \itemize{
+#' \item When ReturnList is F just return the indices into the list
+#' \item When INDICES are specified, then use a for loop to iterate over only those
+#' members of the list. This is equivalent to x[INDICES] but is much
 #' faster for big lists when memory swapping occurs. Note that any indices not 
-#' present in nl will be dropped with a warning
-#'
-#' @param nl a neuronlist
-#' @param INDICES optional indices to subset neuronlist (faster for big lists)
-#' @param ReturnList whether to return the selected neurons (when T) or just their names
-#' @param ... either a function or column names in the attached dataframe
+#' present in x will be dropped with a warning
+#' }
+
+#' @param x a neuronlist
+#' @param subset An expression that can be evaluated in the context of the 
+#'   dataframe attached to the neuronlist \strong{or} a function which can be 
+#'   applied to each neuron returning \code{TRUE} when that neuron should be 
+#'   included in the return list.
+#' @param INDICES Optional indices to subset neuronlist (faster for big lists). 
+#'   See details.
+#' @param ReturnList whether to return the selected neurons (when T) or just 
+#'   their names
+#' @param ... additional arguments passed to test function or subset.data.frame
+#' @return A \code{neuronlist} or a character vector of names when
+#'   \code{ReturnList=FALSE}.
 #' @export
+#' @method subset neuronlist
+#' @seealso \code{\link{neuronlist}, \link{subset.data.frame}}
 #' @examples
+#' da1pns=subset(Cell07PNs,Glomerulus=='DA1')
+#' with(da1pns,stopifnot(all(Glomerulus=='DA1')))
+#' gammas=subset(kcs20,type=='gamma')
+#' with(gammas,stopifnot(all(type=='gamma')))
+#' # define a function that checks whether a neuron has points in a region in 
+#' # space, specifically the tip of the mushroom body alpha' lobe
+#' aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
+#' # this should identify the alpha'/beta' kenyon cells only
+#' apbps=subset(kcs20,aptip)
+#' # look at which neurons are present in the subsetted neuronlist
+#' head(apbps)
+#' \dontrun{
+#' # make a 3d selection function using interactive rgl::select3d() function
+#' s3d=select3d()
 #' #Apply a 3d search function to the first 100 neurons in the neuronlist dataset
 #' subset(dps[1:100],function(x) {length(subset(x,s3d))>0},ReturnList=F)
 #' #The same but using INDICES, which is up to 100x faster when neuronlist is large
 #' subset(dps,function(x) {length(subset(x,s3d))>0},INDICES=names(dps)[1:100])
-subset.neuronlist<-function(nl, ..., INDICES=NULL, ReturnList=is.null(INDICES)){
-  arglist=try(pairlist(...),silent=TRUE)
-  if(!inherits(arglist,"try-error") && is.function(arglist[[1]])){
+#' }
+subset.neuronlist<-function(x, subset, INDICES=NULL, ReturnList=is.null(INDICES), ...){
+  if(missing(subset)) stop("Must supply a subset argument")
+  e <- substitute(subset)
+  TESTFUN=try(eval(e),silent=TRUE)
+  if(is.function(TESTFUN)){
     # we are going to apply a function to every element in neuronlist 
     # and expect a return value
-    if(length(arglist)>1) stop("I don't know how to handle optional function args.",
-                               " Use an anonymous function instead")
     if(is.null(INDICES)){
-      snl=sapply(nl,arglist[[1]])
-      if(ReturnList) return(nl[snl])
-      else return(names(nl)[snl])
+      snl=sapply(x,TESTFUN,...)
+      if(ReturnList) return(x[snl])
+      else return(names(x)[snl])
     } else {
       if(inherits(INDICES,"character")){
         snl=logical(length(INDICES))
         names(snl)=INDICES
       } else if(inherits(INDICES,"logical")){
         snl=logical(sum(INDICES))
-        names(snl)=names(nl)[INDICES]
+        names(snl)=names(x)[INDICES]
       } else if(inherits(INDICES,"integer")){
         snl=logical(length(INDICES))
-        names(snl)=names(nl)[INDICES]
+        names(snl)=names(x)[INDICES]
       }
       # trim this list of indices down in case any are not present
-      missing_names=setdiff(names(snl),names(nl))
+      missing_names=setdiff(names(snl),names(x))
       if(length(missing_names)>0){
         if(length(missing_names)>10)
-          warning("Dropping ",length(missing_names)," indices, which are not present in neuronlist")
-        else warning("Dropping indices: ",paste(missing_names,collapse=", "),"\n, which are not present in neuronlist")
-        snl=snl[intersect(names(snl),names(nl))]
+          warning("Dropping ",length(missing_names),
+                  " indices, which are not present in neuronlist")
+        else warning("Dropping indices: ",paste(missing_names,collapse=", "),
+                     "\n, which are not present in neuronlist")
+        snl=snl[intersect(names(snl),names(x))]
       }
-      if(ReturnList) {
-        newlist=list()
-        for (n in names(snl)){
-          include=arglist[[1]](nl[[n]])
-          if(include) newlist[[n]]=nl[[n]]
-        }
-        return(newlist)
-      }
-      else{
-        for (n in names(snl)){
-          snl[n]=arglist[[1]](nl[[n]])
-        }
-        return(names(which(snl)))
-      } 
+      
+      selected_names=Filter(function(n) TESTFUN(x[[n]], ...), names(snl))
+      if(ReturnList) return(x[selected_names])
+      else return(selected_names)
     }
   } else {
-    df=attr(nl,'df')
-    sdf=subset(df,...)
+    # massage the original call into a form that we can pass on to subset
+    mc=match.call()
+    mc=mc[!names(mc)%in%c("INDICES","ReturnList")]
+    mc[[1]]=as.name('subset.data.frame')
+    mc[[2]]=quote(attr(x,"df"))
+    sdf=eval(mc)
   }
-  if(ReturnList) nl[rownames(sdf)]
-  else return(rownames(sdf))
+  if(ReturnList) x[rownames(sdf)] else rownames(sdf)
 }
