@@ -280,6 +280,7 @@ plot3d.character<-function(x, ...) {
 #' @inheritParams base::droplevels.data.frame
 #' @S3method droplevels neuronlist
 #' @name neuronlist-dataframe-methods
+#' @aliases droplevels.neuronlist
 #' @return the attached dataframe with levels dropped (NB \strong{not} the
 #'   neuronlist)
 #' @seealso droplevels

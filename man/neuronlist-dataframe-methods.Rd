@@ -1,4 +1,5 @@
 \name{neuronlist-dataframe-methods}
+\alias{droplevels.neuronlist}
 \alias{head.neuronlist}
 \alias{neuronlist-dataframe-methods}
 \alias{with.neuronlist}
