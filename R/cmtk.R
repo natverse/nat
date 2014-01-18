@@ -101,10 +101,12 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   can correctly interpret and convert registrations from earlier versions.
 #' @examples
 #' cmtk.bindir()
+#' \dontrun{
 #' # set options('nat.cmtk.bindir') according to where cmtk was found
 #' op=options(nat.cmtk.bindir=NULL)
 #' cmtk.bindir(set=TRUE)
 #' options(op)
+#' }
 cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/usr/local/bin','/opt/local/bin',
                                          '/Applications/IGSRegistrationTools/bin'),

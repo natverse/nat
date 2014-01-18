@@ -57,9 +57,11 @@ it will error out.
 }
 \examples{
 cmtk.bindir()
+\dontrun{
 # set options('nat.cmtk.bindir') according to where cmtk was found
 op=options(nat.cmtk.bindir=NULL)
 cmtk.bindir(set=TRUE)
 options(op)
+}
 }
 
