@@ -108,8 +108,9 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' options(op)
 #' }
 cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
-                      extradirs=c('~/bin','/usr/local/bin','/opt/local/bin',
-                                         '/Applications/IGSRegistrationTools/bin'),
+                      extradirs=c('~/bin','/usr/local/lib/cmtk/bin',
+                                  '/usr/local/bin','/opt/local/bin',
+                                  '/Applications/IGSRegistrationTools/bin'),
                       set=FALSE, check=FALSE, cmtktool='gregxform'){
   bindir=NULL
   if(!is.null(firstdir)) {
@@ -142,7 +143,7 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
     else bindir=path.expand(bindir)
   }
   if(check && is.null(bindir))
-    stop("Cannot find CMTK. Please install from",
+    stop("Cannot find CMTK. Please install from ",
          "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
   
   if(set)

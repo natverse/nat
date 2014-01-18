@@ -4,8 +4,9 @@
 \title{Return path to directory containing CMTK binaries}
 \usage{
 cmtk.bindir(firstdir = getOption("nat.cmtk.bindir"), extradirs = c("~/bin",
-  "/usr/local/bin", "/opt/local/bin", "/Applications/IGSRegistrationTools/bin"),
-  set = FALSE, check = FALSE, cmtktool = "gregxform")
+  "/usr/local/lib/cmtk/bin", "/usr/local/bin", "/opt/local/bin",
+  "/Applications/IGSRegistrationTools/bin"), set = FALSE, check = FALSE,
+  cmtktool = "gregxform")
 }
 \arguments{
   \item{firstdir}{Character vector specifying path
