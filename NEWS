@@ -1,3 +1,8 @@
+nat 0.5.2
+=========
+* add methods for working with dataframe attached to neuronlist 
+  (see e.g. ?with.neuronlist)
+
 nat 0.5.1
 =========
 * Switch license to GPL-3

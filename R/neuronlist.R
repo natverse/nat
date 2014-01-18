@@ -272,3 +272,42 @@ plot3d.character<-function(x, ...) {
 #' @rdname neuronlist-arithmetic
 #' @method / neuronlist
 `/.neuronlist` <- function(x,y) x*(1/y)
+
+#' Methods for working with the dataframe attached to a neuronlist
+#' 
+#' @description \code{droplevels} Remove redundant factor levels in dataframe 
+#'   attached to neuronlist
+#' @inheritParams base::droplevels.data.frame
+#' @S3method droplevels neuronlist
+#' @name neuronlist-dataframe-methods
+#' @return the attached dataframe with levels dropped (NB \strong{not} the
+#'   neuronlist)
+#' @seealso droplevels
+droplevels.neuronlist<-function(x, except, ...){
+  droplevels(attr(x,'df'))
+}
+
+#' @description \code{with} Evaluate expression in the context of dataframe
+#'   attached to a neuronlist
+#' 
+#' @param data A neuronlist object
+#' @param expr The expression to evaluate
+#' @rdname neuronlist-dataframe-methods
+#' @S3method with neuronlist
+#' @seealso with
+with.neuronlist<-function(data, expr, ...) {
+  eval(substitute(expr), attr(data,'df'), enclos = parent.frame())
+}
+
+#' @description \code{head} Return the first part dataframe attached to
+#'   neuronlist
+#' 
+#' @param x A neuronlist object
+#' @param ... Further arguments passed to default methods (and usually ignored)
+#' @rdname neuronlist-dataframe-methods
+#' @S3method head neuronlist
+#' @importFrom utils head
+#' @seealso head
+head.neuronlist<-function(x, ...) {
+  head(attr(x,'df'), ...)
+}
