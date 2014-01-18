@@ -312,3 +312,80 @@ with.neuronlist<-function(data, expr, ...) {
 head.neuronlist<-function(x, ...) {
   head(attr(x,'df'), ...)
 }
+
+#' Subset a neuronlist returning either a new neuronlist or the names of chosen neurons
+#'
+#' EITHER use its attached dataframe as the basis of subset operation. Then use
+#' rownames of the new dataframe to select neuronlist entries and return that
+#' sublist
+#' OR apply a function to every item in the list that returns TRUE/FALSE
+#' to determine inclusion in output list
+#'
+#' * When ReturnList is F just return the indices into the list
+#' * When INDICES are specified, then use a for loop to iterate over only those
+#' members of the list. This is equivalent to nl[INDICES] but is much
+#' faster for big lists when memory swapping occurs. Note that any indices not 
+#' present in nl will be dropped with a warning
+#'
+#' @param nl a neuronlist
+#' @param INDICES optional indices to subset neuronlist (faster for big lists)
+#' @param ReturnList whether to return the selected neurons (when T) or just their names
+#' @param ... either a function or column names in the attached dataframe
+#' @export
+#' @examples
+#' #Apply a 3d search function to the first 100 neurons in the neuronlist dataset
+#' subset(dps[1:100],function(x) {length(subset(x,s3d))>0},ReturnList=F)
+#' #The same but using INDICES, which is up to 100x faster when neuronlist is large
+#' subset(dps,function(x) {length(subset(x,s3d))>0},INDICES=names(dps)[1:100])
+subset.neuronlist<-function(nl, ..., INDICES=NULL, ReturnList=is.null(INDICES)){
+  arglist=try(pairlist(...),silent=TRUE)
+  if(!inherits(arglist,"try-error") && is.function(arglist[[1]])){
+    # we are going to apply a function to every element in neuronlist 
+    # and expect a return value
+    if(length(arglist)>1) stop("I don't know how to handle optional function args.",
+                               " Use an anonymous function instead")
+    if(is.null(INDICES)){
+      snl=sapply(nl,arglist[[1]])
+      if(ReturnList) return(nl[snl])
+      else return(names(nl)[snl])
+    } else {
+      if(inherits(INDICES,"character")){
+        snl=logical(length(INDICES))
+        names(snl)=INDICES
+      } else if(inherits(INDICES,"logical")){
+        snl=logical(sum(INDICES))
+        names(snl)=names(nl)[INDICES]
+      } else if(inherits(INDICES,"integer")){
+        snl=logical(length(INDICES))
+        names(snl)=names(nl)[INDICES]
+      }
+      # trim this list of indices down in case any are not present
+      missing_names=setdiff(names(snl),names(nl))
+      if(length(missing_names)>0){
+        if(length(missing_names)>10)
+          warning("Dropping ",length(missing_names)," indices, which are not present in neuronlist")
+        else warning("Dropping indices: ",paste(missing_names,collapse=", "),"\n, which are not present in neuronlist")
+        snl=snl[intersect(names(snl),names(nl))]
+      }
+      if(ReturnList) {
+        newlist=list()
+        for (n in names(snl)){
+          include=arglist[[1]](nl[[n]])
+          if(include) newlist[[n]]=nl[[n]]
+        }
+        return(newlist)
+      }
+      else{
+        for (n in names(snl)){
+          snl[n]=arglist[[1]](nl[[n]])
+        }
+        return(names(which(snl)))
+      } 
+    }
+  } else {
+    df=attr(nl,'df')
+    sdf=subset(df,...)
+  }
+  if(ReturnList) nl[rownames(sdf)]
+  else return(rownames(sdf))
+}
