@@ -1,12 +1,15 @@
 \name{xyzmatrix}
 \alias{xyzmatrix}
 \alias{xyzmatrix.default}
+\alias{xyzmatrix.igraph}
 \alias{xyzmatrix<-}
 \title{Get and assign coordinates for classes containing 3d vertex data}
 \usage{
 xyzmatrix(x, ...)
 
 \method{xyzmatrix}{default}(x, y = NULL, z = NULL, ...)
+
+\method{xyzmatrix}{igraph}(x, ...)
 
 xyzmatrix(x) <- value
 }
