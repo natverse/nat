@@ -85,9 +85,19 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
 }
 
 #' read a neuron in swc file format
+#' @section SWC Format:
+#' According to \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc}
+#' SWC file format has a radius not a diameter specification
+#' @param f path to file
 read.neuron.swc<-function(f){
-  message("swc reader not yet implemented!")
-  NULL
+  ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
+  d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",
+               col.names=ColumnNames, check.names = TRUE, fill = FALSE,
+               strip.white = TRUE, blank.lines.skip = TRUE, comment.char = "#")
+  # multiply by 2 to get diam which is what I work with internally
+  d$W=d$W*2
+  do.call("neuron", c(list(d=d), CoreNeuronFromSWC(d), filename=f))
+  neuron(d=d)
 }
 
 #' read a neuron in neurolucida file format
