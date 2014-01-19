@@ -57,8 +57,6 @@ neuronformats<-function(format,ext=format,read=NULL,write=NULL,magic=NULL,
 #' @rdname neuronformats
 #' @param f Path to a file
 #' @param action Whether we must have a read or write function for this file
-#' @param class Character vector indicating S3 class that functions must act
-#'   on/generate.
 getformatfuns<-function(f, action=c('read','write'), class=NULL){
   action=match.arg(action)
   
