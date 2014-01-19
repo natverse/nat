@@ -107,12 +107,21 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   # quick function that gives a generic way to extract coords from 
   # classes that we care about and returns a matrix
   # nb unlike xyz.coords this returns a matrix (not a list)
-  x=if(is.neuron(x)) x$d[,c("X","Y","Z")]
+  xyzn=c("X","Y","Z")
+  x=if(is.neuron(x)) x$d[,xyzn]
   else if(is.dotprops(x)) x$points
   else if(!is.null(z)){
     cbind(x,y,z)
-  } else x
+  } else if(is.data.frame(x)||is.matrix(x)){
+    if(ncol(x)>3){
+      if(!all(xyzn%in%colnames(x)))
+        stop("Ambiguous column names. Unable to retrieve XYZ data")
+      else x[,xyzn]
+    } else if(ncol(x)<2) stop("Must have 3 columns of XYZ data")
+    x
+  }
   mx=data.matrix(x)
+  colnames(mx)=xyzn
   if(Transpose) t(mx) else mx
 }
 
