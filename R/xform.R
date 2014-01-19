@@ -106,10 +106,9 @@ xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
-#' @param Transpose Whether to transpose the coordinates to 3xN matrix
 #' @rdname xyzmatrix
 #' @S3method xyzmatrix default
-xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
+xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
   # quick function that gives a generic way to extract coords from 
   # classes that we care about and returns a matrix
   # nb unlike xyz.coords this returns a matrix (not a list)
@@ -128,18 +127,17 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   }
   mx=data.matrix(x)
   colnames(mx)=xyzn
-  if(Transpose) t(mx) else mx
+  mx
 }
 
-#' @rdname xyzmatrix
 #' @S3method xyzmatrix hxsurf
-xyzmatrix.hxsurf<-function(x, Transpose=FALSE,...) {
+xyzmatrix.hxsurf<-function(x, ...) {
   # quick function that gives a generic way to extract coords from 
   # classes that we care about and returns a matrix
   # nb unlike xyz.coords this returns a matrix (not a list)
   mx=data.matrix(x$Vertices[,1:3])
   colnames(mx)=c("X","Y","Z")
-  if(Transpose) t(mx) else mx
+  mx
 }
 
 #' @description Assign xyz elements of neuron or dotprops object. Can also

@@ -1,15 +1,12 @@
 \name{xyzmatrix}
 \alias{xyzmatrix}
 \alias{xyzmatrix.default}
-\alias{xyzmatrix.hxsurf}
 \alias{xyzmatrix<-}
 \title{Get and assign coordinates for classes containing 3d vertex data}
 \usage{
 xyzmatrix(x, ...)
 
-\method{xyzmatrix}{default}(x, y = NULL, z = NULL, Transpose = FALSE, ...)
-
-\method{xyzmatrix}{hxsurf}(x, Transpose = FALSE, ...)
+\method{xyzmatrix}{default}(x, y = NULL, z = NULL, ...)
 
 xyzmatrix(x) <- value
 }
@@ -19,9 +16,6 @@ xyzmatrix(x) <- value
   \item{...}{additional arguments passed to methods}
 
   \item{y,z}{separate y and z coordinates}
-
-  \item{Transpose}{Whether to transpose the coordinates to
-  3xN matrix}
 
   \item{value}{Nx3 matrix specifying new xyz coords}
 }
