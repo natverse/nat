@@ -98,6 +98,12 @@ xform.neuronlist<-function(x, reg, ...){
 #' @export
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
+#' @S3method xyzmatrix neuron
+xyzmatrix.neuron<-function(x, ...) x$d[,c("X","Y","Z")]
+
+#' @S3method xyzmatrix dotprops
+xyzmatrix.dotprops<-function(x, ...) x$points
+
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
 #' @param Transpose Whether to transpose the coordinates to 3xN matrix
@@ -108,11 +114,11 @@ xyzmatrix.default<-function(x,y=NULL,z=NULL,Transpose=FALSE,...) {
   # classes that we care about and returns a matrix
   # nb unlike xyz.coords this returns a matrix (not a list)
   xyzn=c("X","Y","Z")
-  x=if(is.neuron(x)) x$d[,xyzn]
-  else if(is.dotprops(x)) x$points
-  else if(!is.null(z)){
+  x=if(is.neuron(x,Strict=FALSE)) {
+    x$d[,c("X","Y","Z")]
+  } else if(!is.null(z)){
     cbind(x,y,z)
-  } else if(is.data.frame(x)||is.matrix(x)){
+  } else if(is.data.frame(x) || is.matrix(x)){
     if(ncol(x)>3){
       if(!all(xyzn%in%colnames(x)))
         stop("Ambiguous column names. Unable to retrieve XYZ data")
