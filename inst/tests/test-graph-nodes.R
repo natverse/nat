@@ -1,4 +1,4 @@
-context("graph representations of neurons")
+context("identify nodes in neurons/graphs")
 
 testd=data.frame(PointNo=1:6,Label=2,
                  X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
