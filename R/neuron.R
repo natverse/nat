@@ -167,9 +167,12 @@ as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
     stop("Invalid neuron! Must contain at least one segment with 2 points")
   # Finalise StartPoint - should always be head point of first segment
   StartPoint=sl[[1]][1]
-  
   ncount=igraph::degree(masterg)
-  n=list(NumPoints=length(ncount),
+  d=data.frame(PointNo=get.vertex.attribute(masterg,'label'))
+  xyz=xyzmatrix(x)
+  if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(masterg)$vid,]
+  d=seglist2swc(x=sl,d=d)
+  n=list(d=d,NumPoints=length(ncount),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),
          EndPoints=endpoints(masterg, original.ids='vid'),
@@ -177,7 +180,7 @@ as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
          NumSegs=length(sl),
          SegList=sl)
   if(nTrees>1) n=c(n,list(SubTrees=subtrees))
-  n
+  do.call(neuron, n, ...)
 }
 
 #' @description \code{as.neuron.default} will add class "neuron" to a neuron-like
