@@ -286,8 +286,9 @@ scale.neuron<-function(x,center=FALSE,scale=FALSE){
 #' @export
 #' @seealso \code{\link{all.equal}}
 all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
-                           fieldsToCheck=c("NeuronName", "NumPoints", "StartPoint", "BranchPoints",
-                                           "EndPoints", "NumSegs", "SegList", "d"), fieldsToCheckIfPresent="nTrees",
+                           fieldsToCheck=c("NumPoints", "StartPoint", "BranchPoints",
+                                           "EndPoints", "NumSegs", "SegList", "d"), 
+                           fieldsToCheckIfPresent=c("NeuronName","nTrees","SubTrees"),
                            CheckSharedFieldsOnly=FALSE, ...){
   if(length(fieldsToCheck)==1 && is.na(fieldsToCheck))
     fieldsToCheck=names(current)

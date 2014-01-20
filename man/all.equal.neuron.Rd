@@ -3,9 +3,10 @@
 \title{Check equality on key fields of neuron object}
 \usage{
 \method{all.equal}{neuron}(target, current, tolerance = 1e-06,
-  check.attributes = FALSE, fieldsToCheck = c("NeuronName", "NumPoints",
-  "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
-  fieldsToCheckIfPresent = "nTrees", CheckSharedFieldsOnly = FALSE, ...)
+  check.attributes = FALSE, fieldsToCheck = c("NumPoints", "StartPoint",
+  "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
+  fieldsToCheckIfPresent = c("NeuronName", "nTrees", "SubTrees"),
+  CheckSharedFieldsOnly = FALSE, ...)
 }
 \arguments{
   \item{fieldsToCheck}{Which fields in the neuron are
