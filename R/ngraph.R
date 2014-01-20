@@ -43,7 +43,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE,
 #' @param ... Arguments passed to methods
 #' @export
 #' @rdname ngraph
-as.ngraph<-function(x, ...) UseMethod('ngraph')
+as.ngraph<-function(x, ...) UseMethod('as.ngraph')
 
 #' @description \code{as.ngraph.dataframe} construct ngraph from a data.frame 
 #'   containing SWC format data
