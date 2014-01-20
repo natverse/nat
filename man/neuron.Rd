@@ -1,5 +1,8 @@
 \name{neuron}
 \alias{as.neuron}
+\alias{as.neuron.data.frame}
+\alias{as.neuron.default}
+\alias{as.neuron.igraph}
 \alias{is.neuron}
 \alias{neuron}
 \title{neuron: class to represent traced neurons}
@@ -10,7 +13,13 @@ neuron(d, StartPoint, BranchPoints = integer(), EndPoints, SegList,
 
 is.neuron(x, Strict = FALSE)
 
-as.neuron(x)
+as.neuron(x, ...)
+
+\method{as.neuron}{data.frame}(x, ...)
+
+\method{as.neuron}{igraph}(x, origin = NULL, Verbose = FALSE, ...)
+
+\method{as.neuron}{default}(x, ...)
 }
 \arguments{
   \item{d}{matrix of vertices and associated data in SWC
@@ -47,6 +56,16 @@ as.neuron(x)
   \item{Strict}{Whether to check class of neuron or use a
   more relaxed definition based on object being a list with
   a SegList component.}
+
+  \item{origin}{Root vertex, matched against labels (aka
+  PointNo) when available (see details)}
+
+  \item{Verbose}{Whether to be verbose (default: FALSE)}
+}
+\value{
+A list with elements:
+(NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList,
+[SubTrees]) NB SubTrees will only be present when nTrees>1.
 }
 \description{
 \code{neuron} makes a neuron object from appropriate
@@ -55,8 +74,16 @@ variables.
 \code{is.neuron} will check if an object looks like a
 neuron.
 
-\code{as.neuron} will add class "neuron" to a neuron-like
-object.
+\code{as.neuron} will convert a suitable object to a neuron
+
+\code{as.neuron.data.frame} expects a block of SWC format
+data
+
+\code{as.neuron.igraph} converts a graph (typically an
+\code{ngraph} object) to a neuron
+
+\code{as.neuron.default} will add class "neuron" to a
+neuron-like object.
 }
 \details{
 neuron objects consist of a list containing multiple fields
@@ -70,8 +97,19 @@ include plot.neuron plot3d.neuron write.neuron read.neuron
 StartPoint,BranchPoints,EndPoints are indices matching the
 rows of the vertices in \code{d} \strong{not} arbitrary
 point numbers typically encoded in \code{d$PointNo}.
+
+Columns will be ordered
+c('PointNo','Label','X','Y','Z','W','Parent')
+
+Uses a depth first search on the tree to reorder using the
+given origin.
 }
 \seealso{
 \code{\link{neuronlist}}
+
+\code{\link{graph.dfs}, \link{as.seglist}}
+
+Other neuron: \code{\link{as.ngraph}},
+\code{\link{as.ngraph.data.frame}}, \code{\link{ngraph}}
 }
 

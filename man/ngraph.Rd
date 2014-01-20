@@ -52,4 +52,13 @@ not start from 1 and that may have gaps \item The edge list
 which defines connectivity specifies edges using pairs of
 vertex labels, _not_ raw vertex ids. }
 }
+\seealso{
+\code{\link{igraph}}
+
+Other neuron: \code{\link{as.neuron}},
+\code{\link{as.neuron.data.frame}},
+\code{\link{as.neuron.default}},
+\code{\link{as.neuron.igraph}}, \code{\link{is.neuron}},
+\code{\link{neuron}}
+}
 

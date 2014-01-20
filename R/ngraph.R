@@ -23,6 +23,8 @@
 #'   vertex for each entry in vertexlabels, each vertex having a \code{label}
 #'   attribute. All vertices are included whether connected or not.
 #' @importFrom igraph V set.graph.attribute graph
+#' @family neuron
+#' @seealso \code{\link{igraph}}
 ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, 
                  graph.attributes=NULL){
   if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")

@@ -11,7 +11,7 @@
 #'   the vertices in \code{d} \strong{not} arbitrary point numbers typically 
 #'   encoded in \code{d$PointNo}.
 #' @rdname neuron
-#' @export neuron
+#' @export
 #' @family neuron
 #' @seealso \code{\link{neuronlist}}
 #' @param d matrix of vertices and associated data in SWC format
@@ -71,13 +71,116 @@ is.neuron<-function(x,Strict=FALSE) {
     (!Strict && is.list(x) && !is.null(x$SegList))
 }
 
-#' @description \code{as.neuron} will add class "neuron" to a neuron-like
-#'   object.
+#' @description \code{as.neuron} will convert a suitable object to a neuron
 #' @export
 #' @rdname neuron
-as.neuron<-function(x){
+as.neuron<-function(x, ...) UseMethod('as.neuron')
+
+#' @S3method as.neuron neuron
+as.neuron.neuron<-function(x, ...) x
+
+#' @rdname neuron
+#' @S3method as.neuron data.frame
+#' @details Columns will be ordered c('PointNo','Label','X','Y','Z','W','Parent')
+#' @description  \code{as.neuron.data.frame} expects a block of SWC format data
+as.neuron.data.frame<-function(x, ...) {
+  requiredColumns<-c('PointNo','Label','X','Y','Z','W','Parent')
+  cnx=colnames(x)
+  if(!all(cnx%in%requiredColumns)) stop("Some columns are missing from x")
+  x=x[,c(requiredColumns,setdiff(cnx,requiredColumns))]
+  as.neuron(as.ngraph(x, ...))
+}
+
+#' Make SegList (and other core fields) from full graph of all nodes and origin
+#' 
+#' @description \code{as.neuron.igraph} converts a graph (typically an
+#'   \code{ngraph} object) to a neuron
+#' @details Uses a depth first search on the tree to reorder using the given 
+#'   origin.
+#' @details When the graph contains multiple subgraphs, only one will be chosen 
+#'   as the master tree and used to construct the SegList of the resultant 
+#'   neuron. However all subgraphs will be listed in the SubTrees element of the
+#'   neuron and nTrees will be set appropriately.
+#' @details When the graph vertices have a label attribute derived from PointNo,
+#'   the origin is assumed to be specified with respect to the vertex labels 
+#'   rather than the raw vertex ids.
+#' @param origin Root vertex, matched against labels (aka PointNo) when 
+#'   available (see details)
+#' @param Verbose Whether to be verbose (default: FALSE)
+#' @return A list with elements: 
+#'   (NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList, 
+#'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
+#' @export
+#' @method as.neuron igraph
+#' @rdname neuron
+#' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
+as.neuron.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
+  # translate origin into raw vertex id if necessary 
+  if(!is.null(origin)){
+    vertex_labels=igraph::V(x)$label
+    if(!is.null(vertex_labels)){
+      origin=match(origin,vertex_labels)
+      if(is.na(origin)) stop("Invalid origin")
+    }
+  }
+  # save original vertex ids
+  igraph::V(x)$vid=seq.int(igraph::vcount(x))
+  # check if we have multiple subgraphs
+  if(no.clusters(x)>1){
+    if(is.null(origin)){
+      # no origin specified, will pick the biggest subtree
+      # decompose into list of subgraphs
+      gg=igraph::decompose.graph(x)
+      # reorder by descending number of vertices
+      gg=gg[order(sapply(gg,igraph::vcount), decreasing=TRUE)]
+      subtrees=lapply(gg, as.seglist, Verbose=Verbose)
+      sl=subtrees[[1]]
+      masterg=gg[[1]]
+    } else {
+      # origin specified, subtree containing origin will be the master
+      cg=igraph::clusters(x)
+      master_tree_num=cg$membership[origin]
+      # make a master graph with the vertices from subgraph including origin
+      masterg=igraph::induced.subgraph(x, which(cg$membership==master_tree_num))
+      # ... and then corresponding seglist
+      sl=as.seglist(masterg, origin=origin)
+      # now deal with remaining vertices
+      remainderg=igraph::induced.subgraph(x, which(cg$membership!=master_tree_num))
+      gg=igraph::decompose.graph(remainderg)
+      # reorder by descending number of vertices
+      gg=gg[order(sapply(gg,igraph::vcount), decreasing=TRUE)]
+      subtrees=c(list(sl),lapply(gg, as.seglist, Verbose=Verbose))
+    }
+    nTrees=length(subtrees)
+  } else {
+    # this is a well-behaved graph that is immediately ready to be master graph
+    # of neuron
+    sl=as.seglist(masterg<-x, origin=origin, Verbose=Verbose)
+    nTrees=1
+  }
+  if(length(sl)==0 || length(sl[[1]])<2)
+    stop("Invalid neuron! Must contain at least one segment with 2 points")
+  # Finalise StartPoint - should always be head point of first segment
+  StartPoint=sl[[1]][1]
+  
+  ncount=igraph::degree(masterg)
+  n=list(NumPoints=length(ncount),
+         StartPoint=StartPoint,
+         BranchPoints=branchpoints(masterg, original.ids='vid'),
+         EndPoints=endpoints(masterg, original.ids='vid'),
+         nTrees=nTrees,
+         NumSegs=length(sl),
+         SegList=sl)
+  if(nTrees>1) n=c(n,list(SubTrees=subtrees))
+  n
+}
+
+#' @description \code{as.neuron.default} will add class "neuron" to a neuron-like
+#'   object.
+#' @rdname neuron
+as.neuron.default<-function(x, ...){
   if(is.null(x)) return (NULL)
-  if(!is.neuron(x,Strict=TRUE)) class(x)=c("neuron",class(x))
+  if(is.neuron(x,Strict=FALSE)) class(x)=c("neuron",class(x))
   x
 }
 
