@@ -118,6 +118,7 @@ given origin.
 \code{\link{graph.dfs}, \link{as.seglist}}
 
 Other neuron: \code{\link{as.ngraph}},
-\code{\link{as.ngraph.data.frame}}, \code{\link{ngraph}}
+\code{\link{as.ngraph.data.frame}},
+\code{\link{as.ngraph.neuron}}, \code{\link{ngraph}}
 }
 

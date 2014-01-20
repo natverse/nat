@@ -57,3 +57,20 @@ as.ngraph.data.frame<-function(x, directed=TRUE, ...){
   el=x[x$Parent!=-1,c("Parent","PointNo")]
   ngraph(data.matrix(el), x$PointNo, directed=directed, xyz=xyzmatrix(x), ...)
 }
+
+#' @description \code{as.ngraph.neuron} construct ngraph from a neuron
+#' @rdname ngraph
+#' @export
+#' @method as.ngraph neuron
+#' @param method Whether to use the swc data (x$d) or the seglist to define 
+#'   neuronal connectivity to generate graph.
+#' @details Note that this method \emph{always} keeps the original vertex labels
+#'   (a.k.a. PointNo) as read in from the original file.
+as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
+  method=match.arg(method, several.ok=TRUE)
+  if('swc'%in%method && !is.null(x$d$Parent) && !is.null(x$d$PointNo)){
+    as.ngraph(x$d, directed=directed, ...)
+  } else {
+    as.ngraph(seglist2swc(x)$d, directed=directed)
+  }
+}
