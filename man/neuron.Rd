@@ -7,9 +7,9 @@
 \alias{neuron}
 \title{neuron: class to represent traced neurons}
 \usage{
-neuron(d, StartPoint, BranchPoints = integer(), EndPoints, SegList,
-  SubTrees = NULL, InputFileName = NULL, NeuronName = NULL, ...,
-  MD5 = TRUE)
+neuron(d, NumPoints = nrow(d), StartPoint, BranchPoints = integer(),
+  EndPoints, SegList, SubTrees = NULL, InputFileName = NULL,
+  NeuronName = NULL, ..., MD5 = TRUE)
 
 is.neuron(x, Strict = FALSE)
 
@@ -24,6 +24,8 @@ as.neuron(x, ...)
 \arguments{
   \item{d}{matrix of vertices and associated data in SWC
   format}
+
+  \item{NumPoints}{Number of points in master subtree}
 
   \item{StartPoint,BranchPoints,EndPoints}{Nodes of the
   neuron}
@@ -91,8 +93,14 @@ describing the 3D location and connectivity of points in a
 traced neuron. The critical fields of a neuron, n, are n$d
 which contains a dataframe in SWC format and n$SegList
 which contains a representation of the neuron's topology
-used for most internal calculations. Useful functions
-include plot.neuron plot3d.neuron write.neuron read.neuron
+used for most internal calculations. For historical
+reasons, n$SegList is limited to a \emph{single
+fully-connected} tree. If the tree contains multiple
+unconnected subtrees, then these are stored in n$SubTrees
+and nTrees will be >1; the "master" subtree (typically the
+one with the most points) will then be stored in n$SegList
+and n$NumPoints will refer to the number of points in that
+subtree, not the whole neuron.
 
 StartPoint,BranchPoints,EndPoints are indices matching the
 rows of the vertices in \code{d} \strong{not} arbitrary

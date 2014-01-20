@@ -4,8 +4,12 @@
 #' location and connectivity of points in a traced neuron. The critical fields 
 #' of a neuron, n, are n$d which contains a dataframe in SWC format and 
 #' n$SegList which contains a representation of the neuron's topology used for 
-#' most internal calculations. Useful functions include plot.neuron 
-#' plot3d.neuron write.neuron read.neuron
+#' most internal calculations. For historical reasons, n$SegList is limited to a
+#' \emph{single fully-connected} tree. If the tree contains multiple unconnected
+#' subtrees, then these are stored in n$SubTrees and nTrees will be >1; the
+#' "master" subtree (typically the one with the most points) will then be stored
+#' in n$SegList and n$NumPoints will refer to the number of points in that
+#' subtree, not the whole neuron.
 #' @description \code{neuron} makes a neuron object from appropriate variables.
 #' @details StartPoint,BranchPoints,EndPoints are indices matching the rows of 
 #'   the vertices in \code{d} \strong{not} arbitrary point numbers typically 
@@ -15,27 +19,28 @@
 #' @family neuron
 #' @seealso \code{\link{neuronlist}}
 #' @param d matrix of vertices and associated data in SWC format
+#' @param NumPoints Number of points in master subtree
 #' @param StartPoint,BranchPoints,EndPoints Nodes of the neuron
 #' @param SegList List where each element contains the vertex indices for a 
 #'   single segments of the neuron, starting at root.
 #' @param SubTrees List of SegLists where a neuron has multiple unconnected 
 #'   trees (e.g. because the soma is not part of the graph, or because the 
 #'   neuronal arbour has been cut.)
-#' @param ... Additional fields to be included in neuron. Note that if these
-#'   include CreatedAt, NodeName, InputFileStat or InputFileMD5, they will
+#' @param ... Additional fields to be included in neuron. Note that if these 
+#'   include CreatedAt, NodeName, InputFileStat or InputFileMD5, they will 
 #'   override fields of that name that are calculated automatically.
 #' @param InputFileName Character vector with path to input file
 #' @param NeuronName Character vector containing name of neuron
 #' @param MD5 Logical indicating whether to calculate MD5 hash of input
 #' @importFrom tools md5sum
-neuron<-function(d, StartPoint, BranchPoints=integer(), EndPoints,
+neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPoints,
                  SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL, ...,
                  MD5=TRUE){
   
   coreFieldOrder=c("NumPoints", "StartPoint", "BranchPoints", 
                "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
   mcl<-as.list(match.call())
-  n=c(mcl,list(NumPoints=nrow(d),
+  n=c(mcl,list(NumPoints=NumPoints,
              nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
              NumSegs=length(SegList)))
   n=n[intersect(coreFieldOrder,names(n))]
