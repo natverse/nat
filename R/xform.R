@@ -109,21 +109,16 @@ xyzmatrix.dotprops<-function(x, ...) x$points
 #' @rdname xyzmatrix
 #' @S3method xyzmatrix default
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
-  # quick function that gives a generic way to extract coords from 
-  # classes that we care about and returns a matrix
-  # nb unlike xyz.coords this returns a matrix (not a list)
   xyzn=c("X","Y","Z")
-  x=if(is.neuron(x,Strict=FALSE)) {
-    x$d[,c("X","Y","Z")]
+  if(is.neuron(x,Strict=FALSE)) {
+    x=x$d[,c("X","Y","Z")]
   } else if(!is.null(z)){
-    cbind(x,y,z)
+    x=cbind(x,y,z)
   } else if(is.data.frame(x) || is.matrix(x)){
     if(ncol(x)>3){
-      if(!all(xyzn%in%colnames(x)))
-        stop("Ambiguous column names. Unable to retrieve XYZ data")
-      else x[,xyzn]
-    } else if(ncol(x)<2) stop("Must have 3 columns of XYZ data")
-    x
+      if(all(xyzn%in%colnames(x))) x=x[,xyzn]
+      else stop("Ambiguous column names. Unable to retrieve XYZ data")
+    } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
   }
   mx=data.matrix(x)
   colnames(mx)=xyzn

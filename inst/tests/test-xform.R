@@ -61,3 +61,15 @@ test_that("can mirror a neuron list", {
   k5=kcs20[1:5]
   expect_equal(mirror(mirror(k5,mirrorAxisSize=0),mirrorAxisSize=0),k5)
 })
+
+context('xyzmatrix')
+
+test_that('can extract xyz coords from a matrix',{
+  mx=matrix(1:24,ncol=3)
+  expect_equivalent(xyzmatrix(mx),mx)
+  colnames(mx)=c("X","Y","Z")
+  expect_equal(xyzmatrix(mx),mx)
+  
+  df=data.frame(X=1:4,Y=2:5,Z=3:6,W=1)
+  expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
+})
