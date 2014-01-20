@@ -161,6 +161,7 @@ as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
     # this is a well-behaved graph that is immediately ready to be master graph
     # of neuron
     sl=as.seglist(masterg<-x, origin=origin, Verbose=Verbose)
+    subtrees=list(sl)
     nTrees=1
   }
   if(length(sl)==0 || length(sl[[1]])<2)
@@ -168,10 +169,10 @@ as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Finalise StartPoint - should always be head point of first segment
   StartPoint=sl[[1]][1]
   ncount=igraph::degree(masterg)
-  d=data.frame(PointNo=get.vertex.attribute(masterg,'label'))
+  d=data.frame(PointNo=get.vertex.attribute(x,'label'))
   xyz=xyzmatrix(x)
-  if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(masterg)$vid,]
-  d=seglist2swc(x=sl,d=d)
+  if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(x),]
+  d=seglist2swc(x=subtrees,d=d)
   n=list(d=d,NumPoints=length(ncount),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),
