@@ -135,6 +135,12 @@ xyzmatrix.hxsurf<-function(x, ...) {
   mx
 }
 
+#' @rdname xyzmatrix
+#' @S3method xyzmatrix igraph
+xyzmatrix.igraph<-function(x, ...){
+  igraph::get.graph.attribute(x, 'xyz')
+}
+
 #' @description Assign xyz elements of neuron or dotprops object. Can also
 #'   handle matrix like objects with columns named X,Y,Z
 #' @usage xyzmatrix(x) <- value
@@ -164,6 +170,11 @@ xyzmatrix.hxsurf<-function(x, ...) {
 `xyzmatrix<-.hxsurf`<-function(x, value){
   x$Vertices[,1:3]=value
   x
+}
+
+#' @S3method xyzmatrix<- igraph
+`xyzmatrix<-.igraph`<-function(x, value){
+  igraph::set.graph.attribute(x, 'xyz', value)
 }
 
 #' Mirror 3d object about a given axis, optionally using a warping registration

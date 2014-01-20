@@ -1,0 +1,28 @@
+\name{graph.nodes}
+\alias{graph.nodes}
+\title{Return root, end, or branchpoints of an igraph object}
+\usage{
+graph.nodes(x, type = c("root", "end", "branch"), original.ids = "label",
+  exclude.isolated = TRUE)
+}
+\arguments{
+  \item{x}{An igraph object}
+
+  \item{type}{one of root, end (which includes root) or
+  branch}
+
+  \item{original.ids}{Use named attribute to return
+  original vertex ids (when available). Set to FALSE when
+  this is not desired.}
+
+  \item{exclude.isolated}{Do not count isolated vertices as
+  root points (default)}
+}
+\description{
+Return root, end, or branchpoints of an igraph object
+}
+\details{
+Note that the graph must be directed in order to return a
+root point
+}
+
