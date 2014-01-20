@@ -34,6 +34,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE,
   for(n in names(graph.attributes)){
     g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[g]])
   }
+  class(g)=c("ngraph",class(g))
   g
 }
 
