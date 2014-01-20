@@ -1,3 +1,12 @@
+nat 0.6
+=======
+* major new functionality - bidirectional interconversion of graph and regular
+  neuron representation
+* see as.neuron.* methods and as.ngraph.* methods
+* plan is to use graph representation as the common intermediate with reading 
+  different neuron file formats
+* depends on igraph package
+
 nat 0.5.2
 =========
 * add subset.neuronlist
