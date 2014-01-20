@@ -4,6 +4,7 @@
 \alias{branchpoints.igraph}
 \alias{branchpoints.neuron}
 \alias{endpoints}
+\alias{endpoints.default}
 \alias{endpoints.igraph}
 \alias{endpoints.neuron}
 \alias{rootpoints}
@@ -22,7 +23,7 @@ rootpoints(x, ...)
 
 branchpoints(x, ...)
 
-\method{rootpoints}{default}(x, ...)
+\method{branchpoints}{default}(x, ...)
 
 \method{branchpoints}{neuron}(x, subtrees = 1, ...)
 
@@ -33,15 +34,17 @@ endpoints(x, ...)
 \method{endpoints}{neuron}(x, subtrees = 1, ...)
 
 \method{endpoints}{igraph}(x, ...)
+
+\method{endpoints}{default}(x, ...)
 }
 \arguments{
   \item{x}{Neuron or other object which might have roots}
 
-  \item{...}{}
+  \item{...}{Further arguments passed to methods}
 
-  \item{x}{neuron or graph}
-
-  \item{...}{Additional parameters}
+  \item{subtrees}{Integer index of the fully connected
+  subtree in \code{x$SubTrees}. Only applicable when a
+  \code{neuron} consists of multiple unconnected subtrees.}
 }
 \value{
 Integer point number of root/branch point

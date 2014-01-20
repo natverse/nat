@@ -6,7 +6,7 @@ graph.nodes(x, type = c("root", "end", "branch"), original.ids = "label",
   exclude.isolated = TRUE)
 }
 \arguments{
-  \item{g}{An igraph object}
+  \item{x}{An igraph object}
 
   \item{type}{one of root, end (which includes root) or
   branch}

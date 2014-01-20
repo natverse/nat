@@ -1,7 +1,7 @@
 #' Return root, end, or branchpoints of an igraph object
 #' 
 #' @details Note that the graph must be directed in order to return a root point
-#' @param g An igraph object
+#' @param x An igraph object
 #' @param type one of root, end (which includes root) or branch
 #' @param original.ids Use named attribute to return original vertex ids (when 
 #'   available). Set to FALSE when this is not desired.
@@ -36,7 +36,7 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
 #'
 #' A neuron may have multiple subtrees and therefore multiple roots
 #' @param x Neuron or other object which might have roots
-#' @param ...
+#' @param ... Further arguments passed to methods
 #' @return Integer point number of root/branch point
 #' @export
 rootpoints<-function (x, ...)
@@ -49,6 +49,9 @@ rootpoints.default<-function(x, ...) rootpoints(as.ngraph(x), ...)
 #' @rdname rootpoints
 #' @method rootpoints neuron
 #' @S3method rootpoints neuron
+#' @param subtrees Integer index of the fully connected subtree in
+#'   \code{x$SubTrees}. Only applicable when a \code{neuron} consists of
+#'   multiple unconnected subtrees.
 rootpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$StartPoint)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
@@ -62,8 +65,6 @@ rootpoints.neuron<-function(x, subtrees=1, ...){
 rootpoints.igraph<-function(x, ...) graph.nodes(x, type='root', ...)
 
 #' Return the branchpoints of a neuron or graph
-#' @param x neuron or graph
-#' @param ... Additional parameters
 #' @export
 #' @rdname rootpoints
 #' @alias branchpoints
