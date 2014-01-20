@@ -2,9 +2,9 @@
 \alias{as.seglist}
 \alias{as.seglist.igraph}
 \alias{seglist}
-\title{Make/convert connectivity information into a seglist object}
+\title{Make/convert neuron connectivity information into a seglist object}
 \usage{
-seglist(x)
+seglist(x = NULL)
 
 as.seglist(x, ...)
 

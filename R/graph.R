@@ -1,14 +1,13 @@
-#' Make/convert connectivity information into a seglist object
+#' Make/convert neuron connectivity information into a seglist object
 #' 
 #' @description \code{seglist} makes a seglist object from a list of integer
 #'   vectors of raw vertex ids
 #' @details see \code{\link{neuron}} for further information about seglists.
 #' @param x Object containing connectivity information
-seglist<-function(x) {
-  dots=as.list(x)
-  if(!length(dots)) dots=list()
-  class(dots)=c("seglist",class(dots))
-  dots
+seglist<-function(x=NULL) {
+  sl=as.list(x)
+  if(!inherits(sl,'seglist')) class(sl)=c("seglist",class(sl))
+  sl
 }
 
 #' @rdname seglist
