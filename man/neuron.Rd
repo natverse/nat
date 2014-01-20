@@ -2,7 +2,7 @@
 \alias{as.neuron}
 \alias{as.neuron.data.frame}
 \alias{as.neuron.default}
-\alias{as.neuron.igraph}
+\alias{as.neuron.ngraph}
 \alias{is.neuron}
 \alias{neuron}
 \title{neuron: class to represent traced neurons}
@@ -17,7 +17,7 @@ as.neuron(x, ...)
 
 \method{as.neuron}{data.frame}(x, ...)
 
-\method{as.neuron}{igraph}(x, origin = NULL, Verbose = FALSE, ...)
+\method{as.neuron}{ngraph}(x, origin = NULL, Verbose = FALSE, ...)
 
 \method{as.neuron}{default}(x, ...)
 }

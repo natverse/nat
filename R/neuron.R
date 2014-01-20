@@ -111,10 +111,10 @@ as.neuron.data.frame<-function(x, ...) {
 #'   (NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList, 
 #'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
 #' @export
-#' @method as.neuron igraph
+#' @method as.neuron ngraph
 #' @rdname neuron
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
-as.neuron.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
+as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(!is.null(origin)){
     vertex_labels=igraph::V(x)$label

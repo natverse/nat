@@ -58,7 +58,7 @@ vertex labels, _not_ raw vertex ids. }
 Other neuron: \code{\link{as.neuron}},
 \code{\link{as.neuron.data.frame}},
 \code{\link{as.neuron.default}},
-\code{\link{as.neuron.igraph}}, \code{\link{is.neuron}},
+\code{\link{as.neuron.ngraph}}, \code{\link{is.neuron}},
 \code{\link{neuron}}
 }
 
