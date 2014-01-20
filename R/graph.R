@@ -1,22 +1,48 @@
-#' Convert a fully connected graph into a seglist
+#' Make/convert connectivity information into a seglist object
 #' 
+#' @description \code{seglist} makes a seglist object from a list of integer
+#'   vectors of raw vertex ids
+#' @details see \code{\link{neuron}} for further information about seglists.
+#' @param x Object containing connectivity information
+seglist<-function(x) {
+  dots=as.list(x)
+  if(!length(dots)) dots=list()
+  class(dots)=c("seglist",class(dots))
+  dots
+}
+
+#' @rdname seglist
+#' @param ... Arguments passed to methods
+#' @export
+#' @seealso \code{\link{neuron}}
+as.seglist<-function(x, ...) UseMethod('as.seglist')
+
+#' @S3method as.seglist default
+as.seglist.default<-function(x, ...) stop("Not yet implemented!")
+
+#' @description \code{as.seglist.igraph} will convert a fully connected acyclic 
+#'   ngraph or igraph object into a seglist consisting of exactly one subtree.
 #' @details If the graph vertices have \code{vid} attributes, typically defining
 #'   the original vertex ids of a graph that was then decomposed into subgraphs,
 #'   then the origin is assumed to refer to one of these vids not a raw vertex 
 #'   id of the current graph. The returned seglist will also contain these 
 #'   original vertex ids.
 #' @details The head of the first segment in the seglist will be the origin.
-#' @param g A fully connected \code{igraph}
 #' @param origin The origin of the tree (see details)
+#' @param Verbose Whether to print progress updates to console (default FALSE)
 #' @return a \code{list} with one entry for each unbranched segment.
-graph2seglist<-function(g, origin=NULL, Verbose=FALSE){
+#' @seealso \code{\link{ngraph},\link{igraph}}
+#' @S3method as.seglist igraph
+#' @method as.seglist igraph
+#' @rdname seglist
+as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle degenerate cases
-  if(!is.connected(g)) stop("Graph is not fully connected!")
-  if(igraph::vcount(g)==0) {
+  if(!is.connected(x)) stop("Graph is not fully connected!")
+  if(igraph::vcount(x)==0) {
     if(Verbose) warning("Empty graph! Seglist not defined")
     return(NULL)
   }
-  if(igraph::is.directed(g) && !igraph::is.dag(g)){
+  if(igraph::is.directed(x) && !igraph::is.dag(x)){
     stop("Graph has cycles!")
   }
   
@@ -25,21 +51,21 @@ graph2seglist<-function(g, origin=NULL, Verbose=FALSE){
   # simplest thing to do is to make a fake set of original vertex ids if they
   # are not present and _always_ translate (since this is fast) rather than
   # having separate program logic
-  vids=igraph::V(g)$vid
+  vids=igraph::V(x)$vid
   if(is.null(vids)){
-    vids=seq.int(igraph::vcount(g))
+    vids=seq.int(igraph::vcount(x))
   }
   
   # Floating point
-  if(igraph::vcount(g)==1) {
+  if(igraph::vcount(x)==1) {
     return(list(vids))
   }
   
   # Handle Origin
   if(is.null(origin)){
     # no explicit origin specified, use raw vertex id of graph root
-    if(is.directed(g))
-      origin=rootpoints(g, original.ids=FALSE)
+    if(is.directed(x))
+      origin=rootpoints(x, original.ids=FALSE)
   } else {
     # we've been given an origin but it may not be a raw vertex id for this
     # graph so translate it
@@ -48,15 +74,15 @@ graph2seglist<-function(g, origin=NULL, Verbose=FALSE){
   if(length(origin)==0){
     warning("No valid origin found! Using first endpoint as origin")
     # nb we just want the raw vertex id for this graph, so original.ids = FALSE
-    origin=endpoints(g, original.ids=FALSE)[1]
+    origin=endpoints(x, original.ids=FALSE)[1]
   } else if(length(origin)>1){
     warning("Multiple origins found! Using first origin.")
     origin=origin[1]
   }
   
   # Now do a depth first search to ensure that ordering is correct
-  dfs=igraph::graph.dfs(g, root=origin, father=TRUE, neimode='all')
-  ncount=igraph::degree(g)
+  dfs=igraph::graph.dfs(x, root=origin, father=TRUE, neimode='all')
+  ncount=igraph::degree(x)
   # put the first vertex into the first segment
   # note that here and elsewhere the points stored in curseg will be the
   # _original_ vertex ids specified by "vid" attribute of input graph
