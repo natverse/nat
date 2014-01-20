@@ -71,8 +71,8 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
       if(Verbose) cat("nTriangles =",nTriangles,"for patch =",i,"\n")
       # Check if we want to load in this region
       if( is.null(RegionNames) || RegionName%in%RegionNames ){
-        # Ensure we do not try to add no triangles
-        if(nTriangles == 0) next
+        # Ensure we do not try to add no triangles, or the exterior region
+        if(nTriangles == 0 || RegionName == "Exterior") next
         start_of_patch=linesSkipped+TriangleDeflines[i]+1
         thispatch=read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,
                              quote='',colClasses='integer',blank.lines.skip=FALSE,
