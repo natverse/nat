@@ -4,6 +4,7 @@ testd=data.frame(PointNo=1:6,Label=2,
                  X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
                  Parent=c(-1,1:4,3))
 
+testn=as.neuron(testd)
 test_that("can identify nodes (root,branch,endpoints) from a graph",{
   g1=as.ngraph(testd)  
   expect_equal(rootpoints(g1),1)
@@ -38,4 +39,28 @@ test_that("can identify nodes (root,branch,endpoints) from neuron",{
   expect_equal(rootpoints(n2),rootpoints(g2))
   expect_equal(endpoints(n2),endpoints(g2))
   expect_equal(branchpoints(n2),branchpoints(g2))
+})
+
+test_that("can find nodes in more complicated neurons",{
+  expect_error(rootpoints(testn,subtrees=2))
+  # now check that we can cope if nTrees is not set
+  # (as is sometimes true for old neurons)
+  
+  testn$nTrees=NULL
+  expect_equal(rootpoints(testn),1)
+  expect_error(rootpoints(testn,subtrees=2))
+  
+  # now more complicated neurons - isloated point 
+  testd=data.frame(PointNo=1:6,Label=2,
+                   X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
+                   Parent=c(-1,1:4,-1))
+  testn.floating=as.neuron(testd)
+  expect_equal(rootpoints(testn.floating),1)
+  expect_equal(rootpoints(testn.floating, subtrees=1:2, exclude.isolated=FALSE),c(1,6))
+  
+  testd2=rbind(testd,c(7,2,7,7,0,NA,6))
+  testn.2trees=as.neuron(testd2)
+  # check that we get two roots when there are indeed 2 roots
+  rps=rootpoints(as.ngraph(testn.2trees))
+  expect_equal(rps,c(1,6))
 })
