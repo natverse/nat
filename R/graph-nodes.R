@@ -38,15 +38,17 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
 #' @param x Neuron or other object which might have roots
 #' @param ...
 #' @return Integer point number of root/branch point
-#' @rdname rootpoints
+#' @export
 rootpoints<-function (x, ...)
   UseMethod("rootpoints")
 
 #' @rdname rootpoints
-rootpoints.default<-function(x, ...) rootpoints(as.igraph(x), ...)
+#' @S3method rootpoints default
+rootpoints.default<-function(x, ...) rootpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
-#' @export
+#' @method rootpoints neuron
+#' @S3method rootpoints neuron
 rootpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$StartPoint)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
@@ -56,7 +58,7 @@ rootpoints.neuron<-function(x, subtrees=1, ...){
 
 #' @rdname rootpoints
 #' @method rootpoints igraph
-#' @export
+#' @S3method rootpoints igraph
 rootpoints.igraph<-function(x, ...) graph.nodes(x, type='root', ...)
 
 #' Return the branchpoints of a neuron or graph
@@ -69,36 +71,49 @@ branchpoints<-function (x, ...)
   UseMethod("branchpoints")
 
 #' @rdname rootpoints
-branchpoints.default<-function(x, ...) branchpoints(as.igraph(x), ...)
+#' @S3method branchpoints default
+#' @method branchpoints default
+branchpoints.default<-function(x, ...) branchpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
-#' @detail returns a list if more than one subtree is specified
+#' @detail \code{branchpoints.neuron} returns a list if more than one subtree is
+#'   specified
+#' @S3method branchpoints neuron
+#' @method branchpoints neuron
 branchpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$BranchPoints)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
   if(any(subtrees>x$nTrees)) stop("neuron only has ",nTrees," subtrees")
   else lapply(x$SubTrees[subtrees],
-              function(x) branchpoints(as.igraph.seglist(x)))
+              function(x) branchpoints(as.ngraph(x)))
 }
 
 #' @rdname rootpoints
 #' @method branchpoints igraph
+#' @S3method branchpoints igraph
 branchpoints.igraph<-function(x, ...) graph.nodes(x, type='branch', ...)
 
 #' @rdname rootpoints
-#' @alias endpoints
+#' @export
 endpoints<-function (x, ...) UseMethod("endpoints")
 
 #' @rdname rootpoints
 #' @method endpoints neuron
+#' @S3method endpoints neuron
 endpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(endpoints=x$EndPoints)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
   if(any(subtrees>x$nTrees)) stop("neuron only has ",nTrees," subtrees")
   else lapply(x$SubTrees[subtrees],
-              function(x) endpoints(as.igraph.seglist(x)))
+              function(x) endpoints(as.ngraph(x)))
 }
 
 #' @rdname rootpoints
 #' @method endpoints igraph
+#' @S3method endpoints igraph
 endpoints.igraph<-function(x, ...) graph.nodes(x, type='end', ...)
+
+#' @rdname rootpoints
+#' @S3method endpoints default
+#' @method endpoints default
+endpoints.default<-function(x, ...) endpoints(as.ngraph(x), ...)

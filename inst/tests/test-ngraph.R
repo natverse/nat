@@ -21,4 +21,3 @@ test_that("as.ngraph can convert swc data into an ngraph object",{
   g2=as.ngraph(testd2)
   expect_true(graph.isomorphic(g1,g2))
 })
-

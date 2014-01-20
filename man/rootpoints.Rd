@@ -22,7 +22,7 @@ rootpoints(x, ...)
 
 branchpoints(x, ...)
 
-\method{branchpoints}{default}(x, ...)
+\method{rootpoints}{default}(x, ...)
 
 \method{branchpoints}{neuron}(x, subtrees = 1, ...)
 
