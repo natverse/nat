@@ -16,3 +16,26 @@ test_that("can identify nodes (root,branch,endpoints) from SWC data",{
   expect_equal(endpoints(testd),c(1,5,6))
   expect_equal(branchpoints(testd),3)
 })
+
+test_that("can identify nodes (root,branch,endpoints) from neuron",{
+  n=Cell07PNs[['TKC8R']]
+  expect_equal(rootpoints(n),2L)
+  expect_equal(endpoints(n),c(2L, 286L, 307L, 315L, 323L, 333L, 496L, 548L))
+  expect_equal(branchpoints(n),c(226L, 298L, 306L, 463L))
+  
+  # Hmm these should work, but seems like SWC data block in that neuron is wrong
+  # the tracing was originally in Amira format i.e. the SWC block is not the 
+  # primary definition of the neuron, but was created post-hoc. The neuron may
+  # need to be reparsed with an up to date version of the amiraskel reader or
+  # the swc block should be recalculated.
+  g=as.ngraph(n$d)
+#   expect_equal(rootpoints(g),2L)
+#   expect_equal(endpoints(g),c(2L, 286L, 307L, 315L, 323L, 333L, 496L, 548L))
+#   expect_equal(branchpoints(g),c(226L, 298L, 306L, 463L))
+  
+  n2=Cell07PNs[[1]]
+  g2=as.ngraph(n2$d)
+  expect_equal(rootpoints(n2),rootpoints(g2))
+  expect_equal(endpoints(n2),endpoints(g2))
+  expect_equal(branchpoints(n2),branchpoints(g2))
+})
