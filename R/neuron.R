@@ -6,30 +6,79 @@
 #' n$SegList which contains a representation of the neuron's topology used for 
 #' most internal calculations. Useful functions include plot.neuron 
 #' plot3d.neuron write.neuron read.neuron
+#' @description \code{neuron} makes a neuron object from appropriate variables.
+#' @details StartPoint,BranchPoints,EndPoints are indices matching the rows of 
+#'   the vertices in \code{d} \strong{not} arbitrary point numbers typically 
+#'   encoded in \code{d$PointNo}.
 #' @rdname neuron
-#' @aliases neuron
+#' @export neuron
 #' @family neuron
-#' @seealso neuronlist
-#' @param n A neuron
+#' @seealso \code{\link{neuronlist}}
+#' @param d matrix of vertices and associated data in SWC format
+#' @param StartPoint,BranchPoints,EndPoints Nodes of the neuron
+#' @param SegList List where each element contains the vertex indices for a 
+#'   single segments of the neuron, starting at root.
+#' @param SubTrees List of SegLists where a neuron has multiple unconnected 
+#'   trees (e.g. because the soma is not part of the graph, or because the 
+#'   neuronal arbour has been cut.)
+#' @param ... Additional fields to be included in neuron. Note that if these
+#'   include CreatedAt, NodeName, InputFileStat or InputFileMD5, they will
+#'   override fields of that name that are calculated automatically.
+#' @param InputFileName Character vector with path to input file
+#' @param NeuronName Character vector containing name of neuron
+#' @param MD5 Logical indicating whether to calculate MD5 hash of input
+#' @importFrom tools md5sum
+neuron<-function(d, StartPoint, BranchPoints=integer(), EndPoints,
+                 SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL, ...,
+                 MD5=TRUE){
+  
+  coreFieldOrder=c("NumPoints", "StartPoint", "BranchPoints", 
+               "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
+  mcl<-as.list(match.call())
+  n=c(mcl,list(NumPoints=nrow(d),
+             nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
+             NumSegs=length(SegList)))
+  n=n[intersect(coreFieldOrder,names(n))]
+  
+  if(!is.null(InputFileName)){
+    if(is.null(NeuronName)) NeuronName=basename(InputFileName)
+    else if(is.function(NeuronName)) NeuronName=NeuronName(InputFileName)
+    neuron_extra=list(NeuronName=NeuronName,
+                      InputFileName=InputFileName,
+                      CreatedAt=Sys.time(),
+                      NodeName=Sys.info()["nodename"])
+    if(file.exists(InputFileName)) {
+      neuron_extra$InputFileStat=file.info(InputFileName)[1,]
+      if(MD5) neuron_extra$InputFileMD5=md5sum(InputFileName)
+    }
+    n=c(neuron_extra,n)
+  }
+  dots=list(...)
+  if(length(dots)) {
+    n[names(dots)]=dots
+  }
+  as.neuron(n)
+}
+
+#' @param x A neuron or other object to test/convert
 #' @description \code{is.neuron} will check if an object looks like a neuron.
 #' @param Strict Whether to check class of neuron or use a more relaxed
 #'   definition based on object being a list with a SegList component.
 #' @export
-is.neuron<-function(n,Strict=FALSE) {
-  # If Strict is FALSE will also return TRUE
-  # if n is a list which looks like a neuron
-  inherits(n,"neuron") ||
-    (!Strict && is.list(n) && !is.null(n$SegList))
+#' @rdname neuron
+is.neuron<-function(x,Strict=FALSE) {
+  inherits(x,"neuron") ||
+    (!Strict && is.list(x) && !is.null(x$SegList))
 }
 
 #' @description \code{as.neuron} will add class "neuron" to a neuron-like
 #'   object.
 #' @export
 #' @rdname neuron
-as.neuron<-function(n){
-  if(is.null(n)) return (NULL)
-  if(!is.neuron(n,Strict=TRUE)) class(n)=c("neuron",class(n))
-  n
+as.neuron<-function(x){
+  if(is.null(x)) return (NULL)
+  if(!is.neuron(x,Strict=TRUE)) class(x)=c("neuron",class(x))
+  x
 }
 
 #' Arithmetic for neuron coordinates
