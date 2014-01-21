@@ -85,19 +85,28 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
 }
 
 #' read a neuron in swc file format
-#' @section SWC Format:
-#' According to \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc}
-#' SWC file format has a radius not a diameter specification
+#' @section SWC Format: According to
+#'   \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC file format has a
+#'   radius not a diameter specification
 #' @param f path to file
-read.neuron.swc<-function(f){
+#' @param ... Additional arguments passed to \code{as.neuron()} and then on to
+#'   \code{neuron()}
+#' @seealso \code{\link{read.neuron},\link{neuron}, \link{as.neuron}}
+#' @export
+#' @examples
+#' n=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'))
+#' n2=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
+#'   NeuronName="EBT7R")
+#' n3=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
+#'   NeuronName=function(x) sub("\\..*","",x))
+read.neuron.swc<-function(f, ...){
   ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
   d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",
                col.names=ColumnNames, check.names = TRUE, fill = FALSE,
                strip.white = TRUE, blank.lines.skip = TRUE, comment.char = "#")
   # multiply by 2 to get diam which is what I work with internally
   d$W=d$W*2
-  do.call("neuron", c(list(d=d), CoreNeuronFromSWC(d), filename=f))
-  neuron(d=d)
+  as.neuron(d, InputFileName=f, ...)
 }
 
 #' read a neuron in neurolucida file format
@@ -105,4 +114,3 @@ read.neuron.neurolucida<-function(f){
   message("neurolucida reader not yet implemented!")
   NULL
 }
-
