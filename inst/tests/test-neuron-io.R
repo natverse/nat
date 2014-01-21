@@ -13,8 +13,7 @@ test_that("We can read neurons in rda or rds format", {
 })
 
 test_that("We can read neurons in swc format", {
-  swc=tempfile(fileext='.swc')
-  writeLines('# dummy swc format file',con=swc)
-  on.exit(unlink(swc))
-  expect_message(read.neuron(swc),'not yet implemented')
+  swc='../testdata/neuron/EBT7R.CNG.swc'
+  expect_is(n<-read.neuron(swc),'neuron')
+  expect_equal(n$NeuronName,'EBT7R.CNG.swc')
 })

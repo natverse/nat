@@ -93,7 +93,7 @@ as.neuron.data.frame<-function(x, ...) {
   cnx=colnames(x)
   if(!all(cnx%in%requiredColumns)) stop("Some columns are missing from x")
   x=x[,c(requiredColumns,setdiff(cnx,requiredColumns))]
-  as.neuron(as.ngraph(x, ...))
+  as.neuron(as.ngraph(x), ...)
 }
 
 #' Make SegList (and other core fields) from full graph of all nodes and origin
@@ -181,7 +181,7 @@ as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
          NumSegs=length(sl),
          SegList=sl)
   if(nTrees>1) n=c(n,list(SubTrees=subtrees))
-  do.call(neuron, n, ...)
+  do.call(neuron, c(n, ...))
 }
 
 #' @description \code{as.neuron.default} will add class "neuron" to a neuron-like
