@@ -1,20 +1,34 @@
 #' Make/convert neuron connectivity information into a seglist object
 #' 
-#' @description \code{seglist} makes a seglist object from a list of integer
-#'   vectors of raw vertex ids
+#' @description \code{seglist} makes a seglist object from a list of integer 
+#'   vectors of raw vertex ids. As a convenience if a vector of numeric ids are
+#'   passed these are assumed to specify a neuron with 1 segment.
 #' @details see \code{\link{neuron}} for further information about seglists.
-#' @param x Object containing connectivity information
-seglist<-function(x=NULL) {
-  sl=as.list(x)
+#' @param ... for \code{seglist} integer vectors to convert to a seglist
+#' @return A \code{list} with additional class \code{seglist}.
+#' @export
+#' @examples
+#' sl=seglist(c(1:2),c(2:6))
+seglist<-function(...) {
+  sl=list(...)
   if(!inherits(sl,'seglist')) class(sl)=c("seglist",class(sl))
   sl
 }
 
 #' @rdname seglist
-#' @param ... Arguments passed to methods
+#' @param x object passed to be converted to seglist
 #' @export
 #' @seealso \code{\link{neuron}}
 as.seglist<-function(x, ...) UseMethod('as.seglist')
+
+#' @S3method as.seglist seglist
+as.seglist.seglist<-function(x, ...) x
+
+#' @S3method as.seglist list
+as.seglist.list<-function(x, ...) {
+  if(isTRUE(class(x)=='list')) class(x)=c("seglist",class(x))
+  x
+}
 
 #' @S3method as.seglist default
 as.seglist.default<-function(x, ...) stop("Not yet implemented!")
@@ -57,7 +71,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   
   # Floating point
   if(igraph::vcount(x)==1) {
-    return(list(vids))
+    return(seglist(vids))
   }
   
   # Handle Origin
@@ -87,7 +101,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # _original_ vertex ids specified by "vid" attribute of input graph
   curseg=vids[dfs$order[1]]
   if(length(ncount)==1) stop("Unexpected singleton point found!")
-  sl=list()
+  sl=seglist()
   # we have more than 1 point in graph and some work to do!
   for(i in seq.int(from=2,to=length(dfs$order))){
     curpoint=dfs$order[i]
