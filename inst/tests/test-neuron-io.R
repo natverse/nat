@@ -27,3 +27,9 @@ test_that("We can set the NeuronName field", {
   n<-read.neuron(swc, NeuronName=nfun)
   expect_equal(n$NeuronName,'EBT7R')
 })
+
+test_that("We can read in neurons as a neuronlist",{
+  expect_is(nl<-read.neurons(paths='../testdata/neuron/',pattern='\\.CNG\\.swc$',
+               neuronnames=function(x) sub("\\..*","",basename(x))),'neuronlist')
+  expect_equal(length(nl),2)
+})
