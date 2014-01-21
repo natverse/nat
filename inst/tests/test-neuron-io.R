@@ -17,3 +17,13 @@ test_that("We can read neurons in swc format", {
   expect_is(n<-read.neuron(swc),'neuron')
   expect_equal(n$NeuronName,'EBT7R.CNG.swc')
 })
+
+test_that("We can set the NeuronName field", {
+  swc='../testdata/neuron/EBT7R.CNG.swc'
+  n<-read.neuron(swc, NeuronName="rhubarb")
+  expect_equal(n$NeuronName,'rhubarb')
+  # check that we can use a user defined function to define the NeuronName
+  nfun=function(x) sub("\\..*","",basename(x))
+  n<-read.neuron(swc, NeuronName=nfun)
+  expect_equal(n$NeuronName,'EBT7R')
+})
