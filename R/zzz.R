@@ -3,8 +3,6 @@
   
   # Register file formats
   neuronformats('swc',read=read.neuron.swc,class='neuron')
-  neuronformats('neurolucida',ext='asc',read=read.neuron.neurolucida,
-                class='neuron')
   invisible()
 }
 

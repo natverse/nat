@@ -223,9 +223,3 @@ read.neuron.swc<-function(f, ...){
   d$W=d$W*2
   as.neuron(d, InputFileName=f, ...)
 }
-
-#' read a neuron in neurolucida file format
-read.neuron.neurolucida<-function(f){
-  message("neurolucida reader not yet implemented!")
-  NULL
-}
