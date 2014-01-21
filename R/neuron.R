@@ -87,7 +87,7 @@ as.neuron.neuron<-function(x, ...) x
 #' @rdname neuron
 #' @S3method as.neuron data.frame
 #' @details Columns will be ordered c('PointNo','Label','X','Y','Z','W','Parent')
-#' @description  \code{as.neuron.data.frame} expects a block of SWC format data
+#' @description \code{as.neuron.data.frame} expects a block of SWC format data
 as.neuron.data.frame<-function(x, ...) {
   requiredColumns<-c('PointNo','Label','X','Y','Z','W','Parent')
   cnx=colnames(x)

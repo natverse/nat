@@ -20,10 +20,6 @@ read a neuron in swc file format
 }
 \examples{
 n=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'))
-n2=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
-  NeuronName="EBT7R")
-n3=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
-  NeuronName=function(x) sub("\\\\..*","",x))
 }
 \seealso{
 \code{\link{read.neuron},\link{neuron}, \link{as.neuron}}

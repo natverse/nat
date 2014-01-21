@@ -19,6 +19,14 @@ objects saved in R .rds or .rda format by default.
 Additional file formats can be registered using
 \code{neuronformats}.
 }
+\examples{
+# note that we override the default NeuronName field
+n=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
+  NeuronName="EBT7R")
+# use a function to set the NeuronName field
+n3=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
+  NeuronName=function(x) sub("\\\\..*","",x))
+}
 \seealso{
 \code{\link{read.neurons}, \link{neuronformats}}
 }

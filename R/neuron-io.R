@@ -1,12 +1,19 @@
 #' Read a single neuron from a file
 #' 
 #' @details This function will handle \code{neuron} and \code{dotprops} objects 
-#'   saved in R .rds or .rda format by default. Additional file formats can be
+#'   saved in R .rds or .rda format by default. Additional file formats can be 
 #'   registered using \code{neuronformats}.
 #' @export
 #' @param f Path to file
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{read.neurons}, \link{neuronformats}}
+#' @examples
+#' # note that we override the default NeuronName field
+#' n=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
+#'   NeuronName="EBT7R")
+#' # use a function to set the NeuronName field
+#' n3=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
+#'   NeuronName=function(x) sub("\\..*","",x))
 read.neuron<-function(f, ...){
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
@@ -95,10 +102,6 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
 #' @export
 #' @examples
 #' n=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'))
-#' n2=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
-#'   NeuronName="EBT7R")
-#' n3=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
-#'   NeuronName=function(x) sub("\\..*","",x))
 read.neuron.swc<-function(f, ...){
   ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
   d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",
