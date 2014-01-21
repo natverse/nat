@@ -204,17 +204,16 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
   return(NULL)
 }
 
-#' read a neuron in swc file format
-#' @section SWC Format: According to
+#' Read a neuron in swc file format
+#' 
+#' This function should normally only be called from read.neuron and is not
+#' designed for use by end users.
+#' @section SWC Format: According to 
 #'   \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
-#' @param ... Additional arguments passed to \code{as.neuron()} and then on to
+#' @param ... Additional arguments passed to \code{as.neuron()} and then on to 
 #'   \code{neuron()}
-#' @seealso \code{\link{read.neuron},\link{neuron}, \link{as.neuron}}
-#' @export
-#' @examples
-#' n=read.neuron.swc(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'))
 read.neuron.swc<-function(f, ...){
   ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
   d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",
