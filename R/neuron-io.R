@@ -68,7 +68,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
   if(!is.character(paths)) stop("Expects a character vector of filenames")
   
   if(length(paths)==1 && file.info(paths)$isdir)
-    paths=dir(paths,pattern=pattern,full=TRUE)
+    paths=dir(paths,pattern=pattern,full.names=TRUE)
   
   if(is.function(neuronnames))
     nn=neuronnames(paths)
