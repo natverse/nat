@@ -67,7 +67,7 @@ rootpoints.igraph<-function(x, ...) graph.nodes(x, type='root', ...)
 #' Return the branchpoints of a neuron or graph
 #' @export
 #' @rdname rootpoints
-#' @alias branchpoints
+#' @aliases branchpoints
 branchpoints<-function (x, ...)
   UseMethod("branchpoints")
 
@@ -77,7 +77,7 @@ branchpoints<-function (x, ...)
 branchpoints.default<-function(x, ...) branchpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
-#' @detail \code{branchpoints.neuron} returns a list if more than one subtree is
+#' @details \code{branchpoints.neuron} returns a list if more than one subtree is
 #'   specified
 #' @S3method branchpoints neuron
 #' @method branchpoints neuron
