@@ -1,3 +1,12 @@
+nat 0.7
+=======
+* implement read.neuron and read.neurons
+* so far only works for rda, rds and swc files
+* reading of additional file types will be implemented by registering functions =
+  to test, read and write for the format using a package regsistry controlled by
+  nat::neuronformats.
+* developer: seglists in neurons now have class 'seglist'
+
 nat 0.6
 =======
 * major new functionality - bidirectional interconversion of graph and regular
