@@ -19,7 +19,7 @@ read.neuron<-function(f, ...){
   } else {
     ffs=getformatfuns(f,action='read')
     if(is.null(ffs)) stop("Unable to identify file type of:", f)
-    n=ffs$read(f)
+    n=ffs$read(f, ...)
   }
   # we can normally rely on dotprops objects to have the correct class
   if(is.neuron(n,Strict=FALSE) && !is.dotprops(n)) as.neuron(n)
