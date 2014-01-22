@@ -98,6 +98,22 @@ lapply.neuronlistfh<-function(X, FUN, ...){
 	lapply(db, FUN,...)
 }
 
+#' @S3method as.list neuronlistfh
+as.list.neuronlistfh<-function(x, ...) {
+  attr(x,'db')
+}
+
+#' Methods for neuronlistfh objects
+#'
+#' @export
+#' @param X A neuronlistfh object
+#' @param FUN a function to apply to each element of X
+#' @param ... Additional arguments for FUN
+#' @docType methods
+#' @rdname neuronlistfh-methods
+#' @importFrom methods setMethod
+setMethod("lapply", signature(X = "neuronlistfh"),{ function(X, FUN, ...) lapply(attr(X,'db'), FUN, ...)})
+
 #' extract a sublist from a neuronlistfh, converting to regular in memory list
 #'
 #' Note that if i is a numeric or logical indexing vector, it will be converted
