@@ -1,0 +1,24 @@
+\name{[.neuronlistfh}
+\alias{[.neuronlistfh}
+\title{extract a sublist from a neuronlistfh, converting to regular in memory list}
+\usage{
+\method{[}{neuronlistfh}(x, i, ...)
+}
+\arguments{
+  \item{x}{A neuronlistfh object}
+
+  \item{i}{Indices of items to extract from neuronlistfh
+  object}
+
+  \item{...}{Additional arguments passed to neuronlistfh []
+  function}
+}
+\value{
+A new neuronlist object (i.e. in memory)
+}
+\description{
+Note that if i is a numeric or logical indexing vector, it
+will be converted internally to a vector of names by using
+the (sorted) names of the objects in x (i.e. names(x)[i])
+}
+
