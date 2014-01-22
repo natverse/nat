@@ -10,9 +10,8 @@
 #' @name neuronlistfh
 #' @family neuronlistfh
 #' @seealso neuronlist
+#' @import filehash
 NULL
-
-library(filehash)
 
 #' test if an object is a neuronlistfh
 is.neuronlistfh<-function(nl) {
