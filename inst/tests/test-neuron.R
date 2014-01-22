@@ -14,8 +14,9 @@ testn=as.neuron(testd)
 
 test_that("as.neuron.ngraph",{
   g<-as.ngraph(testn)
-  cn=as.neuron(g,1)
+  cn=as.neuron(g,vertexData=testd,origin=1)
   expect_equal(testn$SegList,cn$SegList)
+  expect_equal(testd,cn$d)
   
   # vertex labels with gaps
   g=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(2:4,6,7,9))

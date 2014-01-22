@@ -93,7 +93,7 @@ as.neuron.data.frame<-function(x, ...) {
   cnx=colnames(x)
   if(!all(cnx%in%requiredColumns)) stop("Some columns are missing from x")
   x=x[,c(requiredColumns,setdiff(cnx,requiredColumns))]
-  as.neuron(as.ngraph(x), ...)
+  as.neuron(as.ngraph(x), vertexData=x, ...)
 }
 
 #' Make SegList (and other core fields) from full graph of all nodes and origin
@@ -119,7 +119,7 @@ as.neuron.data.frame<-function(x, ...) {
 #' @method as.neuron ngraph
 #' @rdname neuron
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
-as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
+as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(!is.null(origin)){
     vertex_labels=igraph::V(x)$label
@@ -168,12 +168,36 @@ as.neuron.ngraph<-function(x, origin=NULL, Verbose=FALSE, ...){
     stop("Invalid neuron! Must contain at least one segment with 2 points")
   # Finalise StartPoint - should always be head point of first segment
   StartPoint=sl[[1]][1]
-  ncount=igraph::degree(masterg)
+  
+  # sort out the vertex information
+  # TODO refactor this into a separate function e.g. normalise.swc since
+  # we need to do something similar in as.neuron.dataframe and seglist2swc etc
   d=data.frame(PointNo=get.vertex.attribute(x,'label'))
-  xyz=xyzmatrix(x)
-  if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(x),]
+  if(is.null(vertexData)){
+    # get vertex information from graph object
+    xyz=xyzmatrix(x)
+    if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(x),]
+  } else {
+    # we were given a block of vertexData
+    if("PointNo"%in%colnames(vertexData)){
+      # to be on the safe side, let's reorder the vertex data so that PointNos
+      # matches PointNos stored in graph as vertex attributes
+      ids=match(d$PointNo, vertexData$PointNo)
+      if(any(is.na(ids)))
+        stop("Mismatch between PointNos stored in graph and those in vertexData")
+      d=cbind(d, vertexData[ids,colnames(vertexData)!='PointNo'])
+    } else {
+      # the datablock doesn't have a PointNo field so just assume that it
+      # is ordered according to the vertex indices
+      if(nrow(d)!=nrow(vertexData))
+        stop("vertexData does not have PointNo column and does not have as",
+             "many rows as there are points in the graph.")
+      d=cbind(c, vertexData[ids,])
+    }
+  }
+  
   d=seglist2swc(x=subtrees,d=d)
-  n=list(d=d,NumPoints=length(ncount),
+  n=list(d=d,NumPoints=igraph::vcount(masterg),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),
          EndPoints=endpoints(masterg, original.ids='vid'),
