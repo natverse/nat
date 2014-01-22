@@ -298,6 +298,7 @@ droplevels.neuronlist<-function(x, except, ...){
 #' @param expr The expression to evaluate
 #' @rdname neuronlist-dataframe-methods
 #' @S3method with neuronlist
+#' @method with neuronlist
 #' @seealso with
 with.neuronlist<-function(data, expr, ...) {
   eval(substitute(expr), attr(data,'df'), enclos = parent.frame())
