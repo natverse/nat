@@ -113,11 +113,3 @@ lapply.neuronlistfh<-function(X, FUN, ...){
   if(!is.character(i)) i=names(x)[i]
   as.neuronlist(attr(x,'db')[i,...],df=attr(x,'df')[i,])
 }
-
-#' plot neurons stored in a neuronlistfh
-#' 
-#' @inheritParams plot3d.neuronlist
-#' @S3method plot3d neuronlistfh
-plot3d.neuronlistfh<-function(x,...){
-  NextMethod('plot3d')
-}
