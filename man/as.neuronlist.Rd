@@ -2,17 +2,13 @@
 \alias{as.neuronlist}
 \title{Make a list of neurons that can be used for coordinate plotting/analysis}
 \usage{
-as.neuronlist(l, df, AddClassToNeurons = TRUE)
+as.neuronlist(l, ...)
 }
 \arguments{
   \item{l}{An existing list or a single neuron to start a
   list}
 
-  \item{df}{A dataframe with one row of information per
-  neuron}
-
-  \item{AddClassToNeurons}{make sure that list elements
-  have class neuron.}
+  \item{...}{Additional arguments passed to methods}
 }
 \value{
 neuronlist with attr('df')

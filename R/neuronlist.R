@@ -39,12 +39,15 @@ neuronlist <- function(...) as.neuronlist(list(...))
 #' parameter will only apply to things that look like neurons but don't have
 #' a class of neuron.
 #' @param l An existing list or a single neuron to start a list
-#' @param df A dataframe with one row of information per neuron
-#' @param AddClassToNeurons make sure that list elements have class neuron.
+#' @param ... Additional arguments passed to methods
 #' @return neuronlist with attr('df')
 #' @export
 #' @seealso \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
-as.neuronlist<-function(l,df,AddClassToNeurons=TRUE){
+as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
+
+#' @S3method as.neuronlist default
+#' @method as.neuronlist default
+as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
   if(is.neuron(l)) {
     n<-l
     l<-list(n)
