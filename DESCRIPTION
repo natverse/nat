@@ -29,7 +29,8 @@ Depends:
 Imports:
     RANN,
     igraph,
-    filehash
+    filehash,
+    methods
 Suggests:
     testthat
 License: GPL-3
