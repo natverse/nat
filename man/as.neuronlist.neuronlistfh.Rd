@@ -2,7 +2,16 @@
 \alias{as.neuronlist.neuronlistfh}
 \title{convert neuronlistfh to a regular (in memory) neuronlist}
 \usage{
-as.neuronlist.neuronlistfh(x, df, ...)
+\method{as.neuronlist}{neuronlistfh}(l, df, ...)
+}
+\arguments{
+  \item{df}{An (optional) dataframe with information about
+  each element of the list}
+
+  \item{l}{An existing list or a single neuron to start a
+  list}
+
+  \item{...}{Additional arguments passed to methods}
 }
 \description{
 convert neuronlistfh to a regular (in memory) neuronlist

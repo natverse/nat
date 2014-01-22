@@ -13,29 +13,48 @@
 #' @import filehash
 NULL
 
-#' test if an object is a neuronlistfh
+#' @description \code{is.neuronlistfh} test if an object is a neuronlistfh
+#' @param nl Object to test
+#' @name neuronlistfh
+#' @aliases is.neuronlistfh
 is.neuronlistfh<-function(nl) {
   inherits(nl,"neuronlistfh")
 }
 
-#' generic function to convert an object to neuronlistfh
+#' @description \code{as.neuronlistfh} generic function to convert an object to
+#'   neuronlistfh
 #' @param x Object to convert
-as.neuronlistfh<-function(l,df,...)
+#' @param df Optional dataframe, where each row describes one neuron
+#' @param ... Additional arguments for methods
+#' @export
+#' @rdname neuronlistfh
+as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' convert a regular neuronlist to one backed by a filehash object
-as.neuronlistfh.neuronlist<-function(l,df,...,dbName='nldb',type='RDS'){
-  if(is.null(names(l))){
-    warning("giving default names to elements of nl")
-    names(l)=seq(l)
+#' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist
+#'   to one backed by a filehash object
+#' @param dbName The name of the underlying filehash database on disk
+#' @param filehash.type The filehash storage type
+#' @method as.neuronlistfh neuronlist
+#' @S3method as.neuronlistfh neuronlist
+#' @rdname neuronlistfh
+as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), ..., dbName='nldb', 
+                                     filehash.type='RDS'){
+  if(is.null(names(x))){
+    warning("giving default names to elements of x")
+    names(x)=seq(x)
   }
-  if(!missing(df)) df=attr(l,'df')
-  db=dumpList(l,dbName=dbName,type=type)
-  as.neuronlistfh.filehash(db,df,...)
+  if(missing(df)) df=attr(x,'df')
+  db=dumpList(x, dbName=dbName, type=filehash.type)
+  as.neuronlistfh.filehash(db, df, ...)
 }
 
-#' wrap a filehash object into a neuronlistfh
-as.neuronlistfh.filehash<-function(x,df,...){
+#' @description \code{as.neuronlistfh.filehash} wrap an existing filehash object
+#'   (on disk) into a neuronlistfh
+#' @method as.neuronlistfh filehash
+#' @S3method as.neuronlistfh filehash
+#' @rdname neuronlistfh
+as.neuronlistfh.filehash<-function(x, df, ...){
   nlfh=as.neuronlist(vector(length=length(x)))
   names(nlfh)=names(x)
   class(nlfh)=c('neuronlistfh',class(nlfh))
@@ -45,26 +64,38 @@ as.neuronlistfh.filehash<-function(x,df,...){
 }
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
-as.neuronlist.neuronlistfh<-function(x,df,...){
+#' @method as.neuronlist neuronlistfh
+#' @S3method as.neuronlist neuronlistfh
+#' @inheritParams as.neuronlist
+#' @param df An (optional) dataframe with information about each element of the
+#'   list
+as.neuronlist.neuronlistfh<-function(l, df, ...){
   if(!missing(df)) {
     # check compatibility
-    if(nrow(df)!=length(x)) stop("df must have the same number of rows as",
+    if(nrow(df)!=length(l)) stop("df must have the same number of rows as",
                                  " there are elements in x")
-    attr(x,'df')=df
+    attr(l,'df')=df
   }
   # get the overloaded subscripting operator to do the work
-  x[names(x)]
+  l[names(l)]
 }
 
-#' extract an element from a neuronlistfh
+#' @S3method [[ neuronlistfh
 "[[.neuronlistfh"<-function(x,i,...){
   if(!is.character(i)) i=names(x)[i]
   attr(x,'db')[[i,...]]
 }
 
+#' Apply a function over a neuronlistfh
+#' 
+#' @method lapply neuronlistfh
+#' @export
+#' @param X A neuronlistfh object
+#' @param FUN a function to apply to each element of X
+#' @param ... Arguments for fun passed on to lapply.filehash
 lapply.neuronlistfh<-function(X, FUN, ...){
 	db=attr(X,'db')
-	lapply(db,FUN,...)
+	lapply(db, FUN,...)
 }
 
 #' extract a sublist from a neuronlistfh, converting to regular in memory list
@@ -77,12 +108,16 @@ lapply.neuronlistfh<-function(X, FUN, ...){
 #' @param ... Additional arguments passed to neuronlistfh [] function
 #' @return A new neuronlist object (i.e. in memory)
 #' @export
+#' @method [ neuronlistfh
 "[.neuronlistfh" <- function(x,i,...) {
   if(!is.character(i)) i=names(x)[i]
   as.neuronlist(attr(x,'db')[i,...],df=attr(x,'df')[i,])
 }
 
 #' plot neurons stored in a neuronlistfh
+#' 
+#' @inheritParams plot3d.neuronlist
+#' @S3method plot3d neuronlistfh
 plot3d.neuronlistfh<-function(x,...){
   NextMethod('plot3d')
 }
