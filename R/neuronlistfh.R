@@ -112,6 +112,8 @@ as.list.neuronlistfh<-function(x, ...) {
 #' @docType methods
 #' @rdname neuronlistfh-methods
 #' @importFrom methods setMethod
+#' @importMethodsFrom filehash lapply
+#' @exportMethod lapply
 setMethod("lapply", signature(X = "neuronlistfh"),{ function(X, FUN, ...) lapply(attr(X,'db'), FUN, ...)})
 
 #' extract a sublist from a neuronlistfh, converting to regular in memory list
