@@ -20,10 +20,12 @@ is.neuronlist<-function(x) {
 }
 
 #' Create a neuronlist from zero or more neurons
-#'
-#' It is perfectly acceptable not to pass any parameters, generating an empty
+#' 
+#' It is perfectly acceptable not to pass any parameters, generating an empty 
 #' neuronlist
 #' @param ... objects to be turned into a list
+#' @param DATAFRAME an optional data.frame to attach to the neuronlist
+#'   containing information about each neuron.
 #' @return return value
 #' @export
 #' @examples
@@ -31,7 +33,7 @@ is.neuronlist<-function(x) {
 #' nl=neuronlist()
 #' # slice an existing neuronlist with regular indexing
 #' kcs5=kcs20[1:5]
-neuronlist <- function(...) as.neuronlist(list(...))
+neuronlist <- function(..., DATAFRAME=NULL) as.neuronlist(list(...), df=DATAFRAME)
 
 #' Make a list of neurons that can be used for coordinate plotting/analysis
 #'
@@ -53,7 +55,7 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
     l<-list(n)
     names(l)<-n$NeuronName
   }
-  if(!missing(df)) {
+  if(!missing(df) &&!is.null(df)) {
     if(nrow(df)!=length(l)) 
       stop("data frame must have same number of rows as there are neurons")
     attr(l,"df")=df

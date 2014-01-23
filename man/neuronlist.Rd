@@ -5,12 +5,15 @@
 \usage{
 is.neuronlist(x)
 
-neuronlist(...)
+neuronlist(..., DATAFRAME = NULL)
 }
 \arguments{
   \item{x}{A neuronlist object}
 
   \item{...}{objects to be turned into a list}
+
+  \item{DATAFRAME}{an optional data.frame to attach to the
+  neuronlist containing information about each neuron.}
 }
 \value{
 return value
