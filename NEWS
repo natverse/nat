@@ -1,3 +1,14 @@
+nat 0.8
+=======
+* important new feature: neuronlistfh objects backed by an on disk filehash
+  allow single neurons to be loaded from disk on demand
+* this allows 1) fast startup suitable for knitr documents and 2) working with
+  more neurons than fit in main memory
+* of course this is slower than working with an in-memory list but for plotting
+  etc this should not be problem
+* furthermore neuronlistfh objects can be subsetted/converted to give in memory
+  neuronlist objects.
+
 nat 0.7
 =======
 * implement read.neuron and read.neurons
