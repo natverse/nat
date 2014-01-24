@@ -10,8 +10,9 @@ test_that("neuronlistfh behaves like a neuronlist",{
   expect_equal(names(kcs20fh),names(kcs20))
   expect_equal(kcs20fh[1:5],kcs5)
   
-  # check that lapply works and produces equivalent results
+  # check that l/sapply works and produces equivalent results
   expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
+  expect_equal(sapply(kcs20fh,length),sapply(kcs20,length))
   
   # check subset
   expect_equal(subset(kcs20,type=='gamma'),subset(kcs20fh,type=='gamma'))

@@ -102,35 +102,8 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   attr(x,'db')[[i,...]]
 }
 
-#' Apply a function over a neuronlistfh
-#' 
-#' @method lapply neuronlistfh
-#' @export
-#' @param X A neuronlistfh object
-#' @param FUN a function to apply to each element of X
-#' @param ... Arguments for fun passed on to lapply.filehash
-lapply.neuronlistfh<-function(X, FUN, ...){
-	db=attr(X,'db')
-	lapply(db, FUN,...)
-}
-
 #' @S3method as.list neuronlistfh
-as.list.neuronlistfh<-function(x, ...) {
-  attr(x,'db')
-}
-
-#' Methods for neuronlistfh objects
-#'
-#' @export
-#' @param X A neuronlistfh object
-#' @param FUN a function to apply to each element of X
-#' @param ... Additional arguments for FUN
-#' @docType methods
-#' @rdname neuronlistfh-methods
-#' @importFrom methods setMethod
-#' @importMethodsFrom filehash lapply
-#' @exportMethod lapply
-setMethod("lapply", signature(X = "neuronlistfh"),{ function(X, FUN, ...) lapply(attr(X,'db'), FUN, ...)})
+as.list.neuronlistfh<-function(x, ...) x
 
 #' extract a sublist from a neuronlistfh, converting to regular in memory list
 #'

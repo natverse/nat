@@ -25,12 +25,12 @@ Description: This package is a reboot of the AnalysisSuite
 Depends:
     R (>= 2.15.1),
     rgl,
-    nat.utils,
-    filehash
+    nat.utils
 Imports:
     RANN,
     igraph,
-    methods
+    methods,
+    filehash
 Suggests:
     testthat
 License: GPL-3
