@@ -2,14 +2,15 @@
 # but is actually backed by an on disk filehash structure
 
 #' neuronlistfh class to store multiple neurons cached on disk
-#'  
-#' neuronlistfh objects consist of a list of neuron objects along with an optional
-#' attached dataframe containing information about the neurons. Relevant
-#' functions include
-#' plot3d.neuronlistfh
+#' 
+#' \code{neuronlistfh} objects consist of a list of neuron objects along with an
+#' optional attached dataframe containing information about the neurons.
+#' \code{neuronlistfh} objects also inherit from \code{neuronlist} and therefore
+#' any appropriate methods e.g. \code{plot3d.neuronlist} can also be used on
+#' \code{neuronlistfh} objects.
 #' @name neuronlistfh
 #' @family neuronlistfh
-#' @seealso neuronlist
+#' @family neuronlist
 #' @import filehash
 NULL
 
@@ -28,13 +29,23 @@ is.neuronlistfh<-function(nl) {
 #' @param ... Additional arguments for methods
 #' @export
 #' @rdname neuronlistfh
+#' @examples
+#' \dontrun{
+#' # create on disk filehash with one file per neuron
+#' # RDS2 is optimised for speed (especially read speed) over size
+#' kcs20fh=as.neuronlistfh(kcs20,dbName='/path/to/my/kcdb',filehash.type='RDS2')
+#' plot3d(subset(kcs20fh,type=='gamma'))
+#' 
+#' # in a new session
+#' kcs20fh=neuronlist(dbName='/path/to/my/kcdb')
+#' }
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist
-#'   to one backed by a filehash object
 #' @param dbName The name of the underlying filehash database on disk
 #' @param filehash.type The filehash storage type
+#' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
+#'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
 #' @S3method as.neuronlistfh neuronlist
 #' @rdname neuronlistfh
