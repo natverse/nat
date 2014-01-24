@@ -101,7 +101,7 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
 #' plot3d(kcs.flipped,col='green')
 #' rgl.close()
 nlapply<-function (X, FUN, ...){
-  cl=if(is.neuronlist(X)) class(X) else c("neuronlist",'list')
+  cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) else c("neuronlist",'list')
   structure(lapply(X,FUN,...),class=cl,df=attr(X,'df'))
 }
 
