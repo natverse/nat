@@ -37,8 +37,7 @@ is.neuronlistfh<-function(nl) {
 #' @examples
 #' \dontrun{
 #' # create on disk filehash with one file per neuron
-#' # RDS2 is optimised for speed (especially read speed) over size
-#' kcs20fh=as.neuronlistfh(kcs20,dbName='/path/to/my/kcdb',filehash.type='RDS2')
+#' kcs20fh=as.neuronlistfh(kcs20,dbName='/path/to/my/kcdb',filehash.type='RDS')
 #' plot3d(subset(kcs20fh,type=='gamma'))
 #' 
 #' # in a new session
