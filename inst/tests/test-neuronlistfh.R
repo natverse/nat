@@ -21,6 +21,11 @@ test_that("neuronlistfh behaves like a neuronlist",{
   kcs20m=mirror(kcs20,mirrorAxisSize=500,transform='flip')
   kcs20fhm=mirror(kcs20fh,mirrorAxisSize=500,transform='flip')
   expect_equal(kcs20m,kcs20fhm)
+  
+  # arithmetic
+  kcs20t=kcs20+1
+  kcs20fht=kcs20fh+1
+  expect_equal(kcs20t,kcs20fht)
 })
 
 test_that("Can load a previously created on disk neuronlistfh representation",{
