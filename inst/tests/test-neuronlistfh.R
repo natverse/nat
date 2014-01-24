@@ -1,12 +1,19 @@
 context("neuronlistfh")
 
-test_that("Subset neuronlistfh -> neuronlist",{
+test_that("neuronlistfh behaves like a neuronlist",{
   kcs5=kcs20[1:5]
   tf=tempfile('kcs20fh')
   on.exit(unlink(tf,recursive=TRUE))
   expect_is(kcs20fh<-as.neuronlistfh(kcs20,dbName=tf),'neuronlistfh')
-  expect_equal(kcs20fh[names(kcs20)[1:5]],kcs5)
   
+  # check that ordering is maintained
+  expect_equal(names(kcs20fh),names(kcs20))
+  expect_equal(kcs20fh[1:5],kcs5)
+  
+  # check that lapply works and produces equivalent results
+  expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
+  
+  # check subset
   expect_equal(subset(kcs20,type=='gamma'),subset(kcs20fh,type=='gamma'))
 })
 
@@ -15,6 +22,7 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   fhpath=tempfile(pattern='kcs20fh')
   kcs20fh=as.neuronlistfh(kcs20,dbName=fhpath,filehash.type='RDS')
   plot3d(subset(kcs20fh,type=='gamma'))
+  on.exit(unlink(fhpath,recursive=TRUE))
   
   # now save and reload 
   tf=tempfile()
