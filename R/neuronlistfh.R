@@ -78,15 +78,7 @@ as.neuronlistfh.filehash<-function(x, df, ...){
 #' @method as.neuronlist neuronlistfh
 #' @S3method as.neuronlist neuronlistfh
 #' @inheritParams as.neuronlist
-#' @param df An (optional) dataframe with information about each element of the
-#'   list
-as.neuronlist.neuronlistfh<-function(l, df, ...){
-  if(!missing(df)) {
-    # check compatibility
-    if(nrow(df)!=length(l)) stop("df must have the same number of rows as",
-                                 " there are elements in x")
-    attr(l,'df')=df
-  }
+as.neuronlist.neuronlistfh<-function(l, ...){
   # get the overloaded subscripting operator to do the work
   l[names(l)]
 }
