@@ -4,10 +4,15 @@
 #' neuronlistfh class to store multiple neurons cached on disk
 #' 
 #' \code{neuronlistfh} objects consist of a list of neuron objects along with an
-#' optional attached dataframe containing information about the neurons.
+#' optional attached dataframe containing information about the neurons. 
 #' \code{neuronlistfh} objects also inherit from \code{neuronlist} and therefore
-#' any appropriate methods e.g. \code{plot3d.neuronlist} can also be used on
+#' any appropriate methods e.g. \code{plot3d.neuronlist} can also be used on 
 #' \code{neuronlistfh} objects.
+#' @details Note that objects are stored in a filehash, which by definition does
+#'   not have any ordering of its elements. However neuronlist onbjects (like 
+#'   lists) do have an ordering. Therefore the names of a neuronlistfh object
+#'   are not necessarily the same as the result of names on the underlying
+#'   filehash object.
 #' @name neuronlistfh
 #' @family neuronlistfh
 #' @family neuronlist
@@ -65,12 +70,20 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), ..., dbName='nldb',
 #' @method as.neuronlistfh filehash
 #' @S3method as.neuronlistfh filehash
 #' @rdname neuronlistfh
+#' @details In \code{as.neuronlistfh.filehash} the dataframe determines the ordering of the objects in
 as.neuronlistfh.filehash<-function(x, df, ...){
   nlfh=as.neuronlist(vector(length=length(x)))
-  names(nlfh)=names(x)
-  class(nlfh)=c('neuronlistfh',class(nlfh))
   attr(nlfh,'db')=x
-  if(!missing(df)) attr(nlfh,'df')=df
+  class(nlfh)=c('neuronlistfh',class(nlfh))
+  
+  if(missing(df)) {
+    names(nlfh)=names(x)
+  } else {
+    if(nrow(df)!=length(x))
+      stop("data.frame must have same number of rows as elements in x")
+    names(nlfh)=rownames(df)
+    attr(nlfh,'df')=df
+  }
   nlfh
 }
 

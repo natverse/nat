@@ -51,6 +51,17 @@ disk representation
 \code{as.neuronlistfh.filehash} wrap an existing filehash
 object (on disk) into a neuronlistfh
 }
+\details{
+Note that objects are stored in a filehash, which by
+definition does not have any ordering of its elements.
+However neuronlist onbjects (like lists) do have an
+ordering. Therefore the names of a neuronlistfh object are
+not necessarily the same as the result of names on the
+underlying filehash object.
+
+In \code{as.neuronlistfh.filehash} the dataframe determines
+the ordering of the objects in
+}
 \examples{
 \dontrun{
 # create on disk filehash with one file per neuron
