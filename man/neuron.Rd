@@ -17,7 +17,8 @@ as.neuron(x, ...)
 
 \method{as.neuron}{data.frame}(x, ...)
 
-\method{as.neuron}{ngraph}(x, origin = NULL, Verbose = FALSE, ...)
+\method{as.neuron}{ngraph}(x, vertexData = NULL, origin = NULL,
+  Verbose = FALSE, ...)
 
 \method{as.neuron}{default}(x, ...)
 }
@@ -58,6 +59,9 @@ as.neuron(x, ...)
   \item{Strict}{Whether to check class of neuron or use a
   more relaxed definition based on object being a list with
   a SegList component.}
+
+  \item{vertexData}{A dataframe with SWC fields especially
+  X,Y,Z,W,PointNo, Parent.}
 
   \item{origin}{Root vertex, matched against labels (aka
   PointNo) when available (see details)}

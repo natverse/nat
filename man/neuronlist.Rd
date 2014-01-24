@@ -5,12 +5,15 @@
 \usage{
 is.neuronlist(x)
 
-neuronlist(...)
+neuronlist(..., DATAFRAME = NULL)
 }
 \arguments{
   \item{x}{A neuronlist object}
 
   \item{...}{objects to be turned into a list}
+
+  \item{DATAFRAME}{an optional data.frame to attach to the
+  neuronlist containing information about each neuron.}
 }
 \value{
 return value
@@ -41,6 +44,10 @@ nl=neuronlist()
 kcs5=kcs20[1:5]
 }
 \seealso{
-Other neuronlist: \code{\link{nlapply}}
+Other neuronlist: \code{\link{as.neuronlistfh}},
+\code{\link{as.neuronlistfh.filehash}},
+\code{\link{as.neuronlistfh.neuronlist}},
+\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
+\code{\link{neuronlistfh}}; \code{\link{nlapply}}
 }
 

@@ -28,7 +28,9 @@ Depends:
     nat.utils
 Imports:
     RANN,
-    igraph
+    igraph,
+    methods,
+    filehash
 Suggests:
     testthat
 License: GPL-3

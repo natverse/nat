@@ -20,10 +20,12 @@ is.neuronlist<-function(x) {
 }
 
 #' Create a neuronlist from zero or more neurons
-#'
-#' It is perfectly acceptable not to pass any parameters, generating an empty
+#' 
+#' It is perfectly acceptable not to pass any parameters, generating an empty 
 #' neuronlist
 #' @param ... objects to be turned into a list
+#' @param DATAFRAME an optional data.frame to attach to the neuronlist
+#'   containing information about each neuron.
 #' @return return value
 #' @export
 #' @examples
@@ -31,7 +33,7 @@ is.neuronlist<-function(x) {
 #' nl=neuronlist()
 #' # slice an existing neuronlist with regular indexing
 #' kcs5=kcs20[1:5]
-neuronlist <- function(...) as.neuronlist(list(...))
+neuronlist <- function(..., DATAFRAME=NULL) as.neuronlist(list(...), df=DATAFRAME)
 
 #' Make a list of neurons that can be used for coordinate plotting/analysis
 #'
@@ -39,18 +41,21 @@ neuronlist <- function(...) as.neuronlist(list(...))
 #' parameter will only apply to things that look like neurons but don't have
 #' a class of neuron.
 #' @param l An existing list or a single neuron to start a list
-#' @param df A dataframe with one row of information per neuron
-#' @param AddClassToNeurons make sure that list elements have class neuron.
+#' @param ... Additional arguments passed to methods
 #' @return neuronlist with attr('df')
 #' @export
 #' @seealso \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
-as.neuronlist<-function(l,df,AddClassToNeurons=TRUE){
+as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
+
+#' @S3method as.neuronlist default
+#' @method as.neuronlist default
+as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
   if(is.neuron(l)) {
     n<-l
     l<-list(n)
     names(l)<-n$NeuronName
   }
-  if(!missing(df)) {
+  if(!missing(df) &&!is.null(df)) {
     if(nrow(df)!=length(l)) 
       stop("data frame must have same number of rows as there are neurons")
     attr(l,"df")=df
@@ -295,6 +300,7 @@ droplevels.neuronlist<-function(x, except, ...){
 #' @param expr The expression to evaluate
 #' @rdname neuronlist-dataframe-methods
 #' @S3method with neuronlist
+#' @method with neuronlist
 #' @seealso with
 with.neuronlist<-function(data, expr, ...) {
   eval(substitute(expr), attr(data,'df'), enclos = parent.frame())

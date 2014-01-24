@@ -27,7 +27,11 @@ rgl.close()
 \seealso{
 \code{\link{lapply}}
 
-Other neuronlist: \code{\link{is.neuronlist}},
+Other neuronlist: \code{\link{as.neuronlistfh}},
+\code{\link{as.neuronlistfh.filehash}},
+\code{\link{as.neuronlistfh.neuronlist}},
+\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
+\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}},
 \code{\link{neuronlist}}
 }
 

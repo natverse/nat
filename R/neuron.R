@@ -98,7 +98,7 @@ as.neuron.data.frame<-function(x, ...) {
 
 #' Make SegList (and other core fields) from full graph of all nodes and origin
 #' 
-#' @description \code{as.neuron.igraph} converts a graph (typically an
+#' @description \code{as.neuron.igraph} converts a graph (typically an 
 #'   \code{ngraph} object) to a neuron
 #' @details Uses a depth first search on the tree to reorder using the given 
 #'   origin.
@@ -109,6 +109,8 @@ as.neuron.data.frame<-function(x, ...) {
 #' @details When the graph vertices have a label attribute derived from PointNo,
 #'   the origin is assumed to be specified with respect to the vertex labels 
 #'   rather than the raw vertex ids.
+#' @param vertexData A dataframe with SWC fields especially X,Y,Z,W,PointNo,
+#'   Parent.
 #' @param origin Root vertex, matched against labels (aka PointNo) when 
 #'   available (see details)
 #' @param Verbose Whether to be verbose (default: FALSE)
