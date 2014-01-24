@@ -16,6 +16,11 @@ test_that("neuronlistfh behaves like a neuronlist",{
   
   # check subset
   expect_equal(subset(kcs20,type=='gamma'),subset(kcs20fh,type=='gamma'))
+  
+  # mirror points
+  kcs20m=mirror(kcs20,mirrorAxisSize=500,transform='flip')
+  kcs20fhm=mirror(kcs20fh,mirrorAxisSize=500,transform='flip')
+  expect_equal(kcs20m,kcs20fhm)
 })
 
 test_that("Can load a previously created on disk neuronlistfh representation",{
