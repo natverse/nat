@@ -213,6 +213,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
 #' @description \code{as.neuron.default} will add class "neuron" to a neuron-like
 #'   object.
 #' @rdname neuron
+#' @S3method as.neuron default
 as.neuron.default<-function(x, ...){
   if(is.null(x)) return (NULL)
   if(is.neuron(x,Strict=FALSE)) class(x)=c("neuron",class(x))
