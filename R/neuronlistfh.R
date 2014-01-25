@@ -97,7 +97,7 @@ as.neuronlistfh.filehash<-function(x, df, ...) NextMethod()
 #'   determine the ordering of the objects, not the values of \code{names()}
 #'   reported by the backing database (which does not have an intrinsic orde)
 as.neuronlistfh.default<-function(x, df, ...){
-  if(!inherits(x,c('filehashRDS','filehashRDS2','remoteDB','localDB')))
+  if(!is(x,'filehash'))
     stop("Unknown/supported backing db class. See ?neuronlistfh for help.")
   nlfh=as.neuronlist(vector(length=length(x)))
   attr(nlfh,'db')=x
