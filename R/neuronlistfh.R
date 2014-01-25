@@ -46,7 +46,7 @@ is.neuronlistfh<-function(nl) {
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' @param dbName The name of the underlying filehash database on disk
+#' @param dbName The path to the underlying \code{filehash} database on disk
 #' @param filehash.type The filehash storage type
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
@@ -64,23 +64,32 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), ..., dbName='nldb',
   as.neuronlistfh(db, df, ...)
 }
 
-#' @description \code{as.neuronlistfh.filehash} wrap an existing filehash object
-#'   (on disk) into a neuronlistfh
 #' @method as.neuronlistfh filehash
 #' @S3method as.neuronlistfh filehash
 #' @rdname neuronlistfh
-#' @details In \code{as.neuronlistfh.filehash} the dataframe determines the ordering of the objects in
-as.neuronlistfh.filehash<-function(x, df, ...){
+as.neuronlistfh.filehash<-function(x, df, ...) NextMethod()
+
+#' @description \code{as.neuronlistfh.default} wraps an existing filehash/stashR
+#'   object (with backing objects on disk) into a neuronlistfh
+#' @S3method as.neuronlistfh default
+#' @rdname neuronlistfh
+#' @details In \code{as.neuronlistfh.default} the rownames of the dataframe
+#'   determine the ordering of the objects, not the values of \code{names()}
+#'   reported by the backing database (which does not have an intrinsic orde)
+as.neuronlistfh.default<-function(x, df, ...){
+  if(!inherits(x,c('filehashRDS','filehashRDS2','remoteDB','localDB')))
+    stop("Unknown/supported backing db class. See ?neuronlistfh for help.")
   nlfh=as.neuronlist(vector(length=length(x)))
   attr(nlfh,'db')=x
   class(nlfh)=c('neuronlistfh',class(nlfh))
   
-  if(missing(df)) {
+  if(missing(df) || is.null(df)) {
     names(nlfh)=names(x)
   } else {
-    if(nrow(df)!=length(x))
-      stop("data.frame must have same number of rows as elements in x")
-    names(nlfh)=rownames(df)
+    nmissing=sum(!names(x)%in%rownames(df))
+    if(nmissing>0)
+      stop("data.frame is missing information about ",nmissing," elements of x")
+    names(nlfh)=intersect(rownames(df),names(x))
     attr(nlfh,'df')=df
   }
   nlfh
