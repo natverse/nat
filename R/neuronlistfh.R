@@ -60,8 +60,8 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), ..., dbName='nldb',
     names(x)=seq(x)
   }
   if(missing(df)) df=attr(x,'df')
-  db=dumpList(x, dbName=dbName, type=filehash.type)
-  as.neuronlistfh.filehash(db, df, ...)
+  db=filehash::dumpList(x, dbName=dbName, type=filehash.type)
+  as.neuronlistfh(db, df, ...)
 }
 
 #' @description \code{as.neuronlistfh.filehash} wrap an existing filehash object
