@@ -103,9 +103,10 @@ as.neuronlistfh.filehash<-function(x, df, ...) NextMethod()
 #'   object (with backing objects on disk) into a neuronlistfh
 #' @S3method as.neuronlistfh default
 #' @rdname neuronlistfh
-#' @details In \code{as.neuronlistfh.default} the rownames of the dataframe
-#'   determine the ordering of the objects, not the values of \code{names()}
-#'   reported by the backing database (which does not have an intrinsic orde)
+#' @details In \code{as.neuronlistfh.default} the rownames of the dataframe 
+#'   determine the ordering of the objects, not the values of \code{names()} 
+#'   reported by the backing database (which does not have an intrinsic order).
+#' @importFrom methods is
 as.neuronlistfh.default<-function(x, df, ...){
   if(!is(x,'filehash'))
     stop("Unknown/supported backing db class. See ?neuronlistfh for help.")

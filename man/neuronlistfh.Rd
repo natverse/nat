@@ -78,7 +78,7 @@ underlying filehash object.
 In \code{as.neuronlistfh.default} the rownames of the
 dataframe determine the ordering of the objects, not the
 values of \code{names()} reported by the backing database
-(which does not have an intrinsic orde)
+(which does not have an intrinsic order).
 }
 \examples{
 \dontrun{
