@@ -11,8 +11,8 @@ is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
 
-\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), ...,
-  dbName = "nldb", filehash.type = "RDS")
+\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
+  dbClass = c("RDS", "RDS2", "remoteDB", "localDB"), ...)
 
 \method{as.neuronlistfh}{filehash}(x, df, ...)
 
@@ -28,10 +28,14 @@ as.neuronlistfh(x, df, ...)
 
   \item{...}{Additional arguments for methods}
 
-  \item{dbName}{The path to the underlying \code{filehash}
+  \item{dir}{The path to the underlying \code{filehash}
   database on disk}
 
-  \item{filehash.type}{The filehash storage type}
+  \item{dbClass}{The \code{filehash} or \code{stashR}
+  database class defaults to \code{filehashRDS}.}
+
+  \item{url}{For a remoteDB object the http url for the
+  remote database store.}
 }
 \description{
 \code{neuronlistfh} objects consist of a list of neuron
