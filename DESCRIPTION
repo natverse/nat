@@ -24,8 +24,7 @@ Description: This package is a reboot of the AnalysisSuite
     to install the AnalysisSuite code bundle.
 Depends:
     R (>= 2.15.1),
-    rgl,
-    nat.utils
+    rgl
 Imports:
     RANN,
     igraph,
