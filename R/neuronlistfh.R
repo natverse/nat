@@ -79,7 +79,6 @@ as.neuronlistfh<-function(x, df, ...)
 #' @param dir The path to the underlying \code{filehash} database on disk
 #' @param dbClass The \code{filehash} or \code{stashR} database class defaults 
 #'   to \code{filehashRDS}.
-#' @param url For a remoteDB object the http url for the remote database store.
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
@@ -96,10 +95,10 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   if(dbClass%in%c("RDS","RDS2")){
     db=filehash::dumpList(x, dbName=dir, type=dbClass)
   } else {
-    db=new(dbClass,dir=dir)
+    db=new(dbClass,dir=dir, ...)
     sapply(names(x),function(n) db[[n]]=x[[n]])
   }
-  as.neuronlistfh(db, df, ...)
+  as.neuronlistfh(db, df)
 }
 
 #' @method as.neuronlistfh filehash

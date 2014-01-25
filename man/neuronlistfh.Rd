@@ -33,9 +33,6 @@ as.neuronlistfh(x, df, ...)
 
   \item{dbClass}{The \code{filehash} or \code{stashR}
   database class defaults to \code{filehashRDS}.}
-
-  \item{url}{For a remoteDB object the http url for the
-  remote database store.}
 }
 \description{
 \code{neuronlistfh} objects consist of a list of neuron
