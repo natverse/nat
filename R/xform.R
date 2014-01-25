@@ -190,7 +190,7 @@ xyzmatrix.igraph<-function(x, ...){
 #'   \code{xform}
 #' @return Object with transformed points
 #' @export
-#' @seealso \code{\link{xform},\link{getBounds}},\code{\link{getBoundingBox}}
+#' @seealso \code{\link{xform}}, \code{nat.as::getBounds, nat.as::getBoundingBox}
 #' @examples
 #' x=Cell07PNs[[1]]
 #' plot3d(x,col='red')

@@ -280,7 +280,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL,
 #' @return subsetted dotprops object
 #' @method subset dotprops
 #' @export
-#' @seealso \code{\link{prune.dotprops}}
+#' @seealso \code{nat.as::prune.dotprops}
 #' @examples
 #' \dontrun{
 #' s3d=select3d()
