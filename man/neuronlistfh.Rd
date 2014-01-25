@@ -94,12 +94,15 @@ kcnl=as.neuronlistfh(kcrdb)
 plot3d(kcnl)
 }
 \dontrun{
-# create on disk filehash with one file per neuron
+# create neuronlistfh object backed by filehash with one file per neuron
 kcs20fh=as.neuronlistfh(kcs20,dbName='/path/to/my/kcdb',filehash.type='RDS')
 plot3d(subset(kcs20fh,type=='gamma'))
+# save neuronlisfh object next to filehash backing database
+save(kcs20fh,file='/path/to/my/kcdb.rda')
 
 # in a new session
-kcs20fh=neuronlist(dbName='/path/to/my/kcdb')
+load("/path/to/my/kcdb.rda")
+plot3d(subset(kcs20fh,type=='gamma'))
 }
 }
 \seealso{
