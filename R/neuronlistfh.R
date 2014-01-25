@@ -76,21 +76,29 @@ is.neuronlistfh<-function(nl) {
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' @param dbName The path to the underlying \code{filehash} database on disk
-#' @param filehash.type The filehash storage type
+#' @param dir The path to the underlying \code{filehash} database on disk
+#' @param dbClass The \code{filehash} or \code{stashR} database class defaults 
+#'   to \code{filehashRDS}.
+#' @param url For a remoteDB object the http url for the remote database store.
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
 #' @S3method as.neuronlistfh neuronlist
 #' @rdname neuronlistfh
-as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), ..., dbName='nldb', 
-                                     filehash.type='RDS'){
+as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
+                                     dbClass=c('RDS','RDS2',
+                                               'remoteDB','localDB'), ...){
   if(is.null(names(x))){
     warning("giving default names to elements of x")
     names(x)=seq(x)
   }
-  if(missing(df)) df=attr(x,'df')
-  db=filehash::dumpList(x, dbName=dbName, type=filehash.type)
+  dbClass=match.arg(dbClass)
+  if(dbClass%in%c("RDS","RDS2")){
+    db=filehash::dumpList(x, dbName=dir, type=dbClass)
+  } else {
+    db=new(dbClass,dir=dir)
+    sapply(names(x),function(n) db[[n]]=x[[n]])
+  }
   as.neuronlistfh(db, df, ...)
 }
 
