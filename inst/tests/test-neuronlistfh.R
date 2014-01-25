@@ -4,7 +4,7 @@ test_that("neuronlistfh behaves like a neuronlist",{
   kcs5=kcs20[1:5]
   tf=tempfile('kcs20fh')
   on.exit(unlink(tf,recursive=TRUE))
-  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dbName=tf),'neuronlistfh')
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=tf),'neuronlistfh')
   
   # check that ordering is maintained
   expect_equal(names(kcs20fh),names(kcs20))
@@ -31,7 +31,7 @@ test_that("neuronlistfh behaves like a neuronlist",{
 test_that("Can load a previously created on disk neuronlistfh representation",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
-  kcs20fh=as.neuronlistfh(kcs20,dbName=fhpath,filehash.type='RDS')
+  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,filehash.type='RDS')
   plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
   
@@ -47,7 +47,7 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
 test_that("Can create neuronlist backed by stashR localDB",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
-  kcs20fh=as.neuronlistfh(kcs20,dbName=fhpath,filehash.type='localDB')
+  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,filehash.type='localDB')
   plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
   
