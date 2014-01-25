@@ -55,7 +55,25 @@ a neuronlistfh
 \code{neuronlistfh} objects also inherit from
 \code{neuronlist} and therefore any appropriate methods
 e.g. \code{plot3d.neuronlist} can also be used on
-\code{neuronlistfh} objects.
+\code{neuronlistfh} objects. Presently only backing objects
+which extend the \code{filehash} class are supported. These
+include: \itemize{ \item filehash RDS, RDS2 (experimental)
+\item stashR remoteDB and localDB objects } The \code{RDS2}
+format is experimental and only available at
+\url{https://github.com/jefferis/filehash} but is likely to
+be the most effective for large (>5000) collections of
+neurons. the \code{remoteDB} format has the unique feature
+of allowing automatic remote download of versioned neurons
+from a remote repository. TODO: could be interesting if
+neuronslistfh objects could wrap multiple remote
+repositories.
+
+Note that objects are stored in a filehash, which by
+definition does not have any ordering of its elements.
+However neuronlist objects (like lists) do have an
+ordering. Therefore the names of a neuronlistfh object are
+not necessarily the same as the result of names on the
+underlying filehash object.
 
 In \code{as.neuronlistfh.default} the rownames of the
 dataframe determine the ordering of the objects, not the
