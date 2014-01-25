@@ -1,3 +1,10 @@
+nat 0.9
+=======
+* support for automatic download of neurons from stashR remote repositories on
+  the web. ?neuronlistfh for details and an example. 
+* Relies on stashR package
+* dev: small doc fixes to make package CRAN compatible.
+
 nat 0.8
 =======
 * important new feature: neuronlistfh objects backed by an on disk filehash
