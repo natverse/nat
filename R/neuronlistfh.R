@@ -3,20 +3,40 @@
 
 #' neuronlistfh class to store multiple neurons cached on disk
 #' 
-#' \code{neuronlistfh} objects consist of a list of neuron objects along with an
-#' optional attached dataframe containing information about the neurons. 
-#' \code{neuronlistfh} objects also inherit from \code{neuronlist} and therefore
-#' any appropriate methods e.g. \code{plot3d.neuronlist} can also be used on 
-#' \code{neuronlistfh} objects.
+#' @description \code{neuronlistfh} objects consist of a list of neuron objects
+#'   along with an optional attached dataframe containing information about the
+#'   neurons.
+#' @details \code{neuronlistfh} objects also inherit from \code{neuronlist} and
+#'   therefore any appropriate methods e.g. \code{plot3d.neuronlist} can also be
+#'   used on \code{neuronlistfh} objects.
+#' @details Presently four classes of backing objects are supported:
+#' \itemize{
+#' \item filehash RDS, RDS2
+#' \item stashR remoteDB and localDB objects
+#' }
 #' @details Note that objects are stored in a filehash, which by definition does
 #'   not have any ordering of its elements. However neuronlist onbjects (like 
-#'   lists) do have an ordering. Therefore the names of a neuronlistfh object
-#'   are not necessarily the same as the result of names on the underlying
+#'   lists) do have an ordering. Therefore the names of a neuronlistfh object 
+#'   are not necessarily the same as the result of names on the underlying 
 #'   filehash object.
 #' @name neuronlistfh
 #' @family neuronlistfh
 #' @family neuronlist
 #' @import filehash
+#' @seealso \code{\link[stashR]{remoteDB}, \link[filehash]{filehash-class}}
+#' @examples
+#' \dontrun{
+#' library(stashR)
+#' # set up local stashR cache of remote db containing 20 kenyon cells
+#' # nb dir sets the location of the local cache and should probably be a
+#' # sensible absolute path on your system.
+#' kcrdb=new("remoteDB",dir='kcrdb',name='kcrdb',
+#'   url='http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/kcdb/')
+#' kcnl=as.neuronlistfh(kcrdb)
+#' # this will automatically download the neurons from the web the first time
+#' # it is run
+#' plot3d(kcnl)
+#' }
 NULL
 
 #' @description \code{is.neuronlistfh} test if an object is a neuronlistfh

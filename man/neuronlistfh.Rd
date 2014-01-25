@@ -1,5 +1,6 @@
 \name{neuronlistfh}
 \alias{as.neuronlistfh}
+\alias{as.neuronlistfh.default}
 \alias{as.neuronlistfh.filehash}
 \alias{as.neuronlistfh.neuronlist}
 \alias{is.neuronlistfh}
@@ -14,6 +15,8 @@ as.neuronlistfh(x, df, ...)
   dbName = "nldb", filehash.type = "RDS")
 
 \method{as.neuronlistfh}{filehash}(x, df, ...)
+
+\method{as.neuronlistfh}{default}(x, df, ...)
 }
 \arguments{
   \item{nl}{Object to test}
@@ -25,7 +28,7 @@ as.neuronlistfh(x, df, ...)
 
   \item{...}{Additional arguments for methods}
 
-  \item{dbName}{The name of the underlying filehash
+  \item{dbName}{The path to the underlying \code{filehash}
   database on disk}
 
   \item{filehash.type}{The filehash storage type}
@@ -34,10 +37,6 @@ as.neuronlistfh(x, df, ...)
 \code{neuronlistfh} objects consist of a list of neuron
 objects along with an optional attached dataframe
 containing information about the neurons.
-\code{neuronlistfh} objects also inherit from
-\code{neuronlist} and therefore any appropriate methods
-e.g. \code{plot3d.neuronlist} can also be used on
-\code{neuronlistfh} objects.
 
 \code{is.neuronlistfh} test if an object is a neuronlistfh
 
@@ -48,21 +47,34 @@ object to neuronlistfh
 neuronlist to one backed by a filehash object with an on
 disk representation
 
-\code{as.neuronlistfh.filehash} wrap an existing filehash
-object (on disk) into a neuronlistfh
+\code{as.neuronlistfh.default} wraps an existing
+filehash/stashR object (with backing objects on disk) into
+a neuronlistfh
 }
 \details{
-Note that objects are stored in a filehash, which by
-definition does not have any ordering of its elements.
-However neuronlist onbjects (like lists) do have an
-ordering. Therefore the names of a neuronlistfh object are
-not necessarily the same as the result of names on the
-underlying filehash object.
+\code{neuronlistfh} objects also inherit from
+\code{neuronlist} and therefore any appropriate methods
+e.g. \code{plot3d.neuronlist} can also be used on
+\code{neuronlistfh} objects.
 
-In \code{as.neuronlistfh.filehash} the dataframe determines
-the ordering of the objects in
+In \code{as.neuronlistfh.default} the rownames of the
+dataframe determine the ordering of the objects, not the
+values of \code{names()} reported by the backing database
+(which does not have an intrinsic orde)
 }
 \examples{
+\dontrun{
+library(stashR)
+# set up local stashR cache of remote db containing 20 kenyon cells
+# nb dir sets the location of the local cache and should probably be a
+# sensible absolute path on your system.
+kcrdb=new("remoteDB",dir='kcrdb',name='kcrdb',
+  url='http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/kcdb/')
+kcnl=as.neuronlistfh(kcrdb)
+# this will automatically download the neurons from the web the first time
+# it is run
+plot3d(kcnl)
+}
 \dontrun{
 # create on disk filehash with one file per neuron
 kcs20fh=as.neuronlistfh(kcs20,dbName='/path/to/my/kcdb',filehash.type='RDS')
@@ -73,6 +85,9 @@ kcs20fh=neuronlist(dbName='/path/to/my/kcdb')
 }
 }
 \seealso{
+\code{\link[stashR]{remoteDB},
+\link[filehash]{filehash-class}}
+
 Other neuronlist: \code{\link{is.neuronlist}},
 \code{\link{neuronlist}}; \code{\link{nlapply}}
 }
