@@ -44,19 +44,18 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
 })
 
-test_that("Can make a neuronlist from a filehash when no dataframe available",{
+test_that("Can create neuronlist backed by stashR localDB",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
+  kcs20fh=as.neuronlistfh(kcs20,dbName=fhpath,filehash.type='localDB')
+  plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
-  kcs20copy=kcs20
-  attr(kcs20copy,'df')=NULL
-  kcs20fh=as.neuronlistfh(kcs20copy,dbName=fhpath,filehash.type='RDS')
-
+  
   # now save and reload 
   tf=tempfile()
   on.exit(unlink(tf),add=TRUE)
   saveRDS(kcs20fh,file=tf)
   kcs20fh2=readRDS(tf)
   expect_equal(kcs20fh,kcs20fh2)
-  expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
+  expect_equal(as.neuronlist(kcs20),as.neuronlist(kcs20fh2))
 })
