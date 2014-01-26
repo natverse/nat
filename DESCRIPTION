@@ -5,6 +5,7 @@ Version: 0.9
 Date: 2013-01-25
 Author: Greg Jefferis
 Maintainer: Greg Jefferis <jefferis@gmail.com>
+URL: https://github.com/jefferis/nat https://jefferislab.org
 Description: This package is a reboot of the AnalysisSuite
     (https://github.com/jefferis/AnalysisSuite) bundle of R code that I have
     been using for a number of years to analyse and visualise 3D biological
