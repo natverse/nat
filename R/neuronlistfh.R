@@ -95,7 +95,7 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   if(dbClass%in%c("RDS","RDS2")){
     db=filehash::dumpList(x, dbName=dir, type=dbClass)
   } else {
-    db=new(dbClass,dir=dir, ...)
+    db=new(dbClass,dir=dir, name=basename(dir), ...)
     sapply(names(x),function(n) db[[n]]=x[[n]])
   }
   as.neuronlistfh(db, df)
