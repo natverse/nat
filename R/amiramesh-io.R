@@ -1,39 +1,53 @@
-ReadAmiramesh<-function(filename,DataSectionsToRead=NULL,Verbose=FALSE,AttachFullHeader=FALSE,Simplify=TRUE,endian){
-  # attempt to write a generic amiramesh reader
-  firstLine=readLines(filename,n=1)
+#' Read AmiraMesh data in binary or ascii format
+#' 
+#' @param file Name of file (or connection) to read
+#' @param sections character vector containing names of sections
+#' @param header Whether to include the full unprocessesd text header as an 
+#'   attribute of the returned list.
+#' @param simplify If there is only one datablock in file do not return wrapped 
+#'   in a list (default TRUE).
+#' @param endian Whether multibyte data types should be treated as big or little
+#'   endian. Default of NULL checks file or uses \code{.Platform$endian}
+#' @param Verbose Print status messages
+#' @return list of named data chunks
+#' @rdname amiramesh-io
+#' @export
+#' @seealso \code{\link{readBin}, \link{.Platform}}
+read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
+                         endian=NULL,Verbose=FALSE){
+  firstLine=readLines(file,n=1)
   if(!any(grep("#\\s+(amira|hyper)mesh",firstLine,ignore.case=TRUE))){
-    warning(paste(filename,"does not appear to be an AmiraMesh file"))
+    warning(paste(file,"does not appear to be an AmiraMesh file"))
     return(NULL)
   }
   binaryfile="binary"==tolower(sub(".*(ascii|binary).*","\\1",firstLine,ignore.case=TRUE))
   
-  if(binaryfile && missing(endian)){
+  if(binaryfile && is.null(endian)){
     if(length(grep("little",firstLine,ignore.case=TRUE))>0) endian='little'
     else endian='big'
   }
   
-  con=if(binaryfile) file(filename,open='rb') else file(filename,open='rt')
+  con=if(binaryfile) file(file,open='rb') else file(file,open='rt')
   on.exit(try(close(con),silent=TRUE))
-  header=ReadAmiramesh.Header(con,Verbose=Verbose,CloseConnection=FALSE)
-  parsedHeader=header[["dataDef"]]
+  h=read.amiramesh.header(con,Verbose=Verbose,CloseConnection=FALSE)
+  parsedHeader=h[["dataDef"]]
   
-  if(is.null(DataSectionsToRead)) DataSectionsToRead=parsedHeader$DataName
-  else DataSectionsToRead=intersect(parsedHeader$DataName,DataSectionsToRead)	
+  if(is.null(sections)) sections=parsedHeader$DataName
+  else sections=intersect(parsedHeader$DataName,sections)  
   if(binaryfile){
-    filedata=.ReadAmiramesh.BinaryData(con,parsedHeader,DataSectionsToRead,Verbose=Verbose,endian=endian)
+    filedata=.read.amiramesh.bin(con,parsedHeader,sections,Verbose=Verbose,endian=endian)
     close(con)
   } else {
     close(con)
-    #print(parsedHeader)
-    filedata=.ReadAmiramesh.ASCIIDataFully(filename,parsedHeader,DataSectionsToRead,Verbose=Verbose)
-    #cat(length(filedata))
+    filedata=read.amiramesh.ascii(file,parsedHeader,sections,Verbose=Verbose)
   }
   
-  if(!AttachFullHeader) header=header[setdiff(names(header),c("header"))]	
-  for (n in names(header))
-    attr(filedata,n)=header[[n]]
+  if(!header) h=h[setdiff(names(h),c("h"))]	
+  for (n in names(h))
+    attr(filedata,n)=h[[n]]
   
-  if(Simplify && length(filedata)==1){
+  # unlist?
+  if(simplify && length(filedata)==1){
     filedata2=filedata[[1]]
     attributes(filedata2)=attributes(filedata)
     dim(filedata2)=dim(filedata[[1]])
@@ -42,14 +56,13 @@ ReadAmiramesh<-function(filename,DataSectionsToRead=NULL,Verbose=FALSE,AttachFul
   return(filedata)
 }
 
-.ReadAmiramesh.BinaryData<-function(con,df,DataSectionsToRead,Verbose=TRUE,endian=endian){
-  #print(df)
+.read.amiramesh.bin<-function(con, df, sections, endian=endian, 
+                              Verbose=TRUE){
   l=list()
-  # TODO
   for(i in seq(len=nrow(df))){
     if(Verbose) cat("Current offset is",seek(con),";",df$nBytes[i],"to read\n")
     
-    if(all(DataSectionsToRead!=df$DataName[i])){
+    if(all(sections!=df$DataName[i])){
       # Just skip this section
       if(Verbose) cat("Skipping data section",df$DataName[i],"\n")
       seek(con,df$nBytes[i],origin="current")
@@ -72,7 +85,7 @@ ReadAmiramesh<-function(filename,DataSectionsToRead=NULL,Verbose=FALSE,AttachFul
       if(ndims>1) dim(x)=dims
       if(ndims==2) x=t(x) # this feels like a hack, but ...
       l[[df$DataName[i]]]=x
-    }		
+    }  	
     readLines(con,n=1) # Skip return at end of section
     nextSectionHeader=readLines(con,n=1)
     if(Verbose) cat("nextSectionHeader = ",nextSectionHeader,"\n")
@@ -80,23 +93,18 @@ ReadAmiramesh<-function(filename,DataSectionsToRead=NULL,Verbose=FALSE,AttachFul
   l
 }
 
-#' Read ASCII AmiraMesh data without assuming anything about line spacing
-#' between sections
-#' @param filename file (or connection) to read
-#' @param df dataframe containing details of data in file
-#' @param DataSectionsToRead character vector containing names of sections
-#' @param Verbose Print status messages
-#' @return list of named data chunks
-#' @author jefferis
-.ReadAmiramesh.ASCIIDataFully<-function(filename,df,DataSectionsToRead,Verbose=TRUE){
+# Read ASCII AmiraMesh data  
+# @details Does not assume anything about line spacing between sections
+# @param df dataframe containing details of data in file
+read.amiramesh.ascii<-function(file,df,sections,Verbose=TRUE){
   l=list()
-  #  df=subset(df,DataName%in%DataSectionsToRead)
+  #  df=subset(df,DataName%in%sections)
   df=df[order(df$DataPos),]
-  if(inherits(filename,'connection')) 
-    con=filename
+  if(inherits(file,'connection')) 
+    con=file
   else {
     # rt is essential to ensure that readLines behaves with gzipped files
-    con=file(filename,open='rt')
+    con=file(file,open='rt')
     on.exit(close(con))
   }
   readLines(con, df$LineOffsets[1]-1)
@@ -106,12 +114,12 @@ ReadAmiramesh<-function(filename,DataSectionsToRead=NULL,Verbose=FALSE,AttachFul
       nskip=0
       while( substring(t<-readLines(con,1),1,1)!="@"){nskip=nskip+1}
       if(Verbose) cat("Skipped",nskip,"lines to reach next data section")
-      if(Verbose) cat("Reading ",df$DataLength[i],"lines in file",filename,"\n")
+      if(Verbose) cat("Reading ",df$DataLength[i],"lines in file",file,"\n")
       
       if(df$RType[i]=="integer") whatval=integer(0) else whatval=numeric(0)
       datachunk=scan(con,what=whatval,n=df$SimpleDataLength[i],quiet=!Verbose)
       # store data if required
-      if(df$DataName[i]%in%DataSectionsToRead){
+      if(df$DataName[i]%in%sections){
         # convert to matrix if required
         if(df$SubLength[i]>1){
           datachunk=matrix(datachunk,ncol=df$SubLength[i],byrow=TRUE)
@@ -125,10 +133,20 @@ ReadAmiramesh<-function(filename,DataSectionsToRead=NULL,Verbose=FALSE,AttachFul
   return(l)
 }
 
-ReadAmiramesh.Header<-function(con,Verbose=TRUE,CloseConnection=TRUE){
+#' Read the header of an amiramesh file
+#' 
+#' @export
+#' @rdname amiramesh-io
+#' @details \code{read.amiramesh.header} will open a connection if file is a 
+#'   character vector and close it when finished reading.
+read.amiramesh.header<-function(file, Verbose=TRUE){
+  if(inherits(file,"connection")) {
+    con=file
+  } else {
+    con<-file(file, open='rt')
+    on.exit(close(con))
+  }
   headerLines=NULL
-  if(!inherits(con,"connection")) con<-file(con,open='rt')
-  if(CloseConnection) on.exit(close(con))
   while( substring(t<-readLines(con,1),1,2)!="@1"){
     headerLines=c(headerLines,t)
   }
