@@ -95,7 +95,7 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   if(dbClass%in%c("RDS","RDS2")){
     db=filehash::dumpList(x, dbName=dir, type=dbClass)
   } else {
-    db=new(dbClass,dir=dir, ...)
+    db=new(dbClass,dir=dir, name=basename(dir), ...)
     sapply(names(x),function(n) db[[n]]=x[[n]])
   }
   as.neuronlistfh(db, df)
@@ -164,7 +164,7 @@ as.list.neuronlistfh<-function(x, ...) x
 #' @method [ neuronlistfh
 "[.neuronlistfh" <- function(x,i,...) {
   if(!is.character(i)) i=names(x)[i]
-  
-  nl=if(isTRUE(attr(class(x),'package')%in%'stashR')) nlapply(attr(x,'db'),"[[",i) else attr(x,'db')[i,...]
-  as.neuronlist(nl,df=attr(x,'df')[i,])
+  db=attr(x,'db')
+  l=if(isTRUE(attr(class(db),'package')%in%'stashR')) lapply(i,function(n) x[[n]]) else db[i,...]
+  as.neuronlist(l,df=attr(x,'df')[i,])
 }

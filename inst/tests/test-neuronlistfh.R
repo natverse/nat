@@ -47,7 +47,12 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
 test_that("Can create neuronlist backed by stashR localDB",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
-  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,filehash.type='localDB')
+  require(stashR)
+  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,dbClass='localDB')
+  db=attr(kcs20fh,'db')
+  expect_is(db,'localDB')
+  require(methods)
+  expect_true(isS4(db))
   plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
   
