@@ -321,31 +321,28 @@ head.neuronlist<-function(x, ...) {
 
 #' Subset neuronlist returning either new neuronlist or names of chosen neurons
 #' 
-#' @details subset \strong{either} uses the attached dataframe as the basis of
-#'   subset operation, taking the rownames of the new dataframe to select
-#'   neuronlist entries and returning that sublist \strong{or} applies a
-#'   function to every item in the list that returns TRUE/FALSE to determine
-#'   inclusion in output list.
+#' @details 
+#' The subset expression should evaluate to one of
 #' \itemize{
-#' \item When ReturnList is F just return the indices into the list
-#' \item When INDICES are specified, then use a for loop to iterate over only those
-#' members of the list. This is equivalent to x[INDICES] but is much
-#' faster for big lists when memory swapping occurs. Note that any indices not 
-#' present in x will be dropped with a warning
+#'   \item character vector of names
+#'   \item logical vector
+#'   \item vector of numeric indices
+#'   }
 #' }
-
+#'   Any missing names are dropped with a warning. The \code{filterfun}
+#'   expression is wrapped in a try. Neurons returning an error will be dropped
+#'   with a warning.
 #' @param x a neuronlist
 #' @param subset An expression that can be evaluated in the context of the 
-#'   dataframe attached to the neuronlist \strong{or} a function which can be 
-#'   applied to each neuron returning \code{TRUE} when that neuron should be 
-#'   included in the return list.
+#'   dataframe attached to the neuronlist. See details.
+#' @param filterfun a function which can be applied to each neuron returning
+#'   \code{TRUE} when that neuron should be included in the return list.
 #' @param INDICES Optional indices to subset neuronlist (faster for big lists). 
 #'   See details.
-#' @param ReturnList whether to return the selected neurons (when T) or just 
-#'   their names
-#' @param ... additional arguments passed to test function or subset.data.frame
-#' @return A \code{neuronlist} or a character vector of names when
-#'   \code{ReturnList=FALSE}.
+#' @param rval What to return (character vector, default='neuronlist')
+#' @param ... additional arguments passed to \code{filterfun}
+#' @return A \code{neuronlist}, character vector of names or the attached
+#'   data.frame according to the value of \code{rval}
 #' @export
 #' @method subset neuronlist
 #' @seealso \code{\link{neuronlist}, \link{subset.data.frame}}
@@ -368,15 +365,19 @@ head.neuronlist<-function(x, ...) {
 #' \dontrun{
 #' # make a 3d selection function using interactive rgl::select3d() function
 #' s3d=select3d()
-#' #Apply a 3d search function to the first 100 neurons in the neuronlist dataset
-#' subset(dps[1:100],function(x) {length(subset(x,s3d))>0},ReturnList=F)
-#' #The same but using INDICES, which is up to 100x faster when neuronlist is large
-#' subset(dps,function(x) {length(subset(x,s3d))>0},INDICES=names(dps)[1:100])
+#' # Apply a 3d search function to the first 100 neurons in the neuronlist dataset
+#' subset(dps[1:100],filterfun=function(x) {sum(s3d(xyzmatrix(x)))>0},
+#'   rval='names')
+#' # combine a search by metadata, neuropil location and 3d location
+#' subset(dps, Gender=="M" & rAL>1000, function(x) sum(s3d(x))>0, rval='name')
+#' # The same but specifying indices directly, which can be considerably faster
+#' # when neuronlist is huge and memory is in short supply
+#' subset(dps, names(dps)[1:100],filterfun=function(x) {sum(s3d(xyzmatrix(x)))>0},
+#'   rval='names')
 #' }
-subset.neuronlist<-function(x, subset, filterfun, ReturnList=TRUE, ...){
-  if(missing(subset) && missing(filterfun)){
-    return(if(ReturnList) x else names(x))
-  }
+subset.neuronlist<-function(x, subset, filterfun, 
+                            rval=c("neuronlist","names",'data.frame'), ...){
+  rval=match.arg(rval)
   nx=names(x)
   df=attr(x,'df')
   if(missing(subset)){
@@ -395,16 +396,13 @@ subset.neuronlist<-function(x, subset, filterfun, ReturnList=TRUE, ...){
       if(length(missing_names)) warning("There are ",length(missing_names),' missing names.')
       r=setdiff(r,missing_names)
     }
-    
-    # check if there is anything left
-    if(!length(r)) return(x[F])
   }
   # now apply filterfun to remaining neurons
-  if(!missing(filterfun)) {
+  if(length(r) && !missing(filterfun)) {
     filter_results=rep(NA,length(r))
     # use for loop because neuronlists are normally large but not long
     for(i in seq_along(r)){
-      tf=try(filterfun(x[[n]]))
+      tf=try(filterfun(x[[r[i]]]))
       if(!inherits(tf,'try-error')) filter_results[i]=tf
     }
     r=r[filter_results]
@@ -414,5 +412,5 @@ subset.neuronlist<-function(x, subset, filterfun, ReturnList=TRUE, ...){
     }
   }
   
-  if(ReturnList) x[r] else r
+  switch(rval,neuronlist=x[r],names=r,data.frame=df[r,])
 }
