@@ -373,52 +373,46 @@ head.neuronlist<-function(x, ...) {
 #' #The same but using INDICES, which is up to 100x faster when neuronlist is large
 #' subset(dps,function(x) {length(subset(x,s3d))>0},INDICES=names(dps)[1:100])
 #' }
-subset.neuronlist<-function(x, subset, INDICES=NULL, ReturnList=is.null(INDICES), ...){
-  if(missing(subset)) stop("Must supply a subset argument")
-  e <- substitute(subset)
-  TESTFUN=try(eval(e),silent=TRUE)
-  # try again if we couldn't find it in parent frame
-  if(inherits(TESTFUN,'try-error')) TESTFUN=try(match.fun(e),silent=TRUE)
-  if(is.function(TESTFUN)){
-    # we are going to apply a function to every element in neuronlist 
-    # and expect a return value
-    if(is.null(INDICES)){
-      snl=sapply(x,TESTFUN,...)
-      if(ReturnList) return(x[snl])
-      else return(names(x)[snl])
-    } else {
-      if(inherits(INDICES,"character")){
-        snl=logical(length(INDICES))
-        names(snl)=INDICES
-      } else if(inherits(INDICES,"logical")){
-        snl=logical(sum(INDICES))
-        names(snl)=names(x)[INDICES]
-      } else if(inherits(INDICES,"integer")){
-        snl=logical(length(INDICES))
-        names(snl)=names(x)[INDICES]
-      }
-      # trim this list of indices down in case any are not present
-      missing_names=setdiff(names(snl),names(x))
-      if(length(missing_names)>0){
-        if(length(missing_names)>10)
-          warning("Dropping ",length(missing_names),
-                  " indices, which are not present in neuronlist")
-        else warning("Dropping indices: ",paste(missing_names,collapse=", "),
-                     "\n, which are not present in neuronlist")
-        snl=snl[intersect(names(snl),names(x))]
-      }
-      
-      selected_names=Filter(function(n) TESTFUN(x[[n]], ...), names(snl))
-      if(ReturnList) return(x[selected_names])
-      else return(selected_names)
-    }
-  } else {
-    # massage the original call into a form that we can pass on to subset
-    mc=match.call()
-    mc=mc[!names(mc)%in%c("INDICES","ReturnList")]
-    mc[[1]]=as.name('subset.data.frame')
-    mc[[2]]=quote(attr(x,"df"))
-    sdf=eval(mc)
+subset.neuronlist<-function(x, subset, filterfun, ReturnList=TRUE, ...){
+  if(missing(subset) && missing(filterfun)){
+    return(if(ReturnList) x else names(x))
   }
-  if(ReturnList) x[rownames(sdf)] else rownames(sdf)
+  nx=names(x)
+  df=attr(x,'df')
+  if(missing(subset)){
+    r=nx
+  } else {
+    # handle the subset expression by turning it into names
+    e <- substitute(subset)
+    r <- eval(e, df, parent.frame())
+    if(is.function(r)) stop("Use of subset with functions is deprecated. ",
+                            "Please use filterfun argument")
+    if(is.logical(r) || is.integer(r) ){
+      r=nx[r]
+    } else if(is.character(r)) {
+      # check against names
+      missing_names=setdiff(r,nx)
+      if(length(missing_names)) warning("There are ",length(missing_names),' missing names.')
+      r=setdiff(r,missing_names)
+    }
+    
+    # check if there is anything left
+    if(!length(r)) return(x[F])
+  }
+  # now apply filterfun to remaining neurons
+  if(!missing(filterfun)) {
+    filter_results=rep(NA,length(r))
+    # use for loop because neuronlists are normally large but not long
+    for(i in seq_along(r)){
+      tf=try(filterfun(x[[n]]))
+      if(!inherits(tf,'try-error')) filter_results[i]=tf
+    }
+    r=r[filter_results]
+    if(any(is.na(filter_results))) {
+      warning("filterfun failed to evaluate for",sum(is.na(r)),'entries in neuronlist')
+      r=na.omit(r)
+    }
+  }
+  
+  if(ReturnList) x[r] else r
 }
