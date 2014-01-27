@@ -6,7 +6,7 @@
 read.amiramesh(file, sections = NULL, header = FALSE, simplify = TRUE,
   endian = NULL, Verbose = FALSE)
 
-read.amiramesh.header(file, Verbose = TRUE)
+read.amiramesh.header(file, Verbose = FALSE)
 }
 \arguments{
   \item{file}{Name of file (or connection) to read}
