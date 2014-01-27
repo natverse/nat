@@ -56,8 +56,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   return(filedata)
 }
 
-.read.amiramesh.bin<-function(con, df, sections, endian=endian, 
-                              Verbose=TRUE){
+.read.amiramesh.bin<-function(con, df, sections, endian=endian, Verbose=FALSE){
   l=list()
   for(i in seq(len=nrow(df))){
     if(Verbose) cat("Current offset is",seek(con),";",df$nBytes[i],"to read\n")
@@ -96,7 +95,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
 # Read ASCII AmiraMesh data  
 # @details Does not assume anything about line spacing between sections
 # @param df dataframe containing details of data in file
-read.amiramesh.ascii<-function(file,df,sections,Verbose=TRUE){
+read.amiramesh.ascii<-function(file,df,sections,Verbose=FALSE){
   l=list()
   #  df=subset(df,DataName%in%sections)
   df=df[order(df$DataPos),]
@@ -139,7 +138,7 @@ read.amiramesh.ascii<-function(file,df,sections,Verbose=TRUE){
 #' @rdname amiramesh-io
 #' @details \code{read.amiramesh.header} will open a connection if file is a 
 #'   character vector and close it when finished reading.
-read.amiramesh.header<-function(file, Verbose=TRUE){
+read.amiramesh.header<-function(file, Verbose=FALSE){
   if(inherits(file,"connection")) {
     con=file
   } else {
