@@ -327,7 +327,6 @@ head.neuronlist<-function(x, ...) {
 #'   \item character vector of names
 #'   \item logical vector
 #'   \item vector of numeric indices
-#'   }
 #' }
 #'   Any missing names are dropped with a warning. The \code{filterfun}
 #'   expression is wrapped in a try. Neurons returning an error will be dropped
@@ -337,8 +336,6 @@ head.neuronlist<-function(x, ...) {
 #'   dataframe attached to the neuronlist. See details.
 #' @param filterfun a function which can be applied to each neuron returning
 #'   \code{TRUE} when that neuron should be included in the return list.
-#' @param INDICES Optional indices to subset neuronlist (faster for big lists). 
-#'   See details.
 #' @param rval What to return (character vector, default='neuronlist')
 #' @param ... additional arguments passed to \code{filterfun}
 #' @return A \code{neuronlist}, character vector of names or the attached

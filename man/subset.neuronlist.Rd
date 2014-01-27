@@ -16,9 +16,6 @@
   neuron returning \code{TRUE} when that neuron should be
   included in the return list.}
 
-  \item{INDICES}{Optional indices to subset neuronlist
-  (faster for big lists).  See details.}
-
   \item{rval}{What to return (character vector,
   default='neuronlist')}
 
@@ -36,7 +33,7 @@ of chosen neurons
 \details{
 The subset expression should evaluate to one of \itemize{
 \item character vector of names \item logical vector \item
-vector of numeric indices } } Any missing names are dropped
+vector of numeric indices } Any missing names are dropped
 with a warning. The \code{filterfun} expression is wrapped
 in a try. Neurons returning an error will be dropped with a
 warning.
