@@ -29,7 +29,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   
   con=if(binaryfile) file(file,open='rb') else file(file,open='rt')
   on.exit(try(close(con),silent=TRUE))
-  h=read.amiramesh.header(con,Verbose=Verbose,CloseConnection=FALSE)
+  h=read.amiramesh.header(con,Verbose=Verbose)
   parsedHeader=h[["dataDef"]]
   
   if(is.null(sections)) sections=parsedHeader$DataName
@@ -42,7 +42,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
     filedata=read.amiramesh.ascii(file,parsedHeader,sections,Verbose=Verbose)
   }
   
-  if(!header) h=h[setdiff(names(h),c("h"))]	
+  if(!header) h=h[setdiff(names(h),c("header"))]	
   for (n in names(h))
     attr(filedata,n)=h[[n]]
   
