@@ -20,12 +20,10 @@ test_that("subset.neuronlist and [] do the same thing", {
 })
 
 test_that("subset.neuronlist works with various indexing forms", {
-  expect_equal(subset(Cell07PNs,function(x) T, INDICES=seq(Cell07PNs)),
+  expect_equal(subset(Cell07PNs, seq(Cell07PNs), rval='names'), names(Cell07PNs))
+  expect_equal(subset(Cell07PNs, rep(T,length(Cell07PNs)), rval='names'), 
                names(Cell07PNs))
-  expect_equal(subset(Cell07PNs,function(x) T, INDICES=rep(T,length(Cell07PNs)))
-               ,names(Cell07PNs))
-  expect_equal(subset(Cell07PNs,function(x) T, INDICES=names(Cell07PNs)),
-               names(Cell07PNs))
+  expect_equal(subset(Cell07PNs, names(Cell07PNs), rval='names'), names(Cell07PNs))
 })
 
 aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
@@ -33,7 +31,7 @@ aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
 test_that("subset.neuronlist works with function", {
   # define a function that checks whether a neuron has points in a region in 
   # space, specifically the tip of the mushroom body alpha' lobe
-  s1=subset(kcs20,aptip)
+  s1=subset(kcs20,filterfun=aptip)
   expect_equal(s1,subset(kcs20,type=='apbp'))
 })
 

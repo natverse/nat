@@ -47,7 +47,7 @@ with(gammas,stopifnot(all(type=='gamma')))
 # space, specifically the tip of the mushroom body alpha' lobe
 aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
 # this should identify the alpha'/beta' kenyon cells only
-apbps=subset(kcs20,aptip)
+apbps=subset(kcs20,filterfun=aptip)
 # look at which neurons are present in the subsetted neuronlist
 head(apbps)
 # combine global variables with dataframe columns
