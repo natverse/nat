@@ -95,7 +95,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
 # Read ASCII AmiraMesh data  
 # @details Does not assume anything about line spacing between sections
 # @param df dataframe containing details of data in file
-read.amiramesh.ascii<-function(file,df,sections,Verbose=FALSE){
+read.amiramesh.ascii<-function(file, df, sections, Verbose=FALSE){
   l=list()
   #  df=subset(df,DataName%in%sections)
   df=df[order(df$DataPos),]
