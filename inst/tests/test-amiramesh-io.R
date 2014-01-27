@@ -4,3 +4,8 @@ test_that("check basic reading of amiramesh header",{
   am='../testdata/neuron/EBT7R.am'
   expect_is(read.amiramesh.header(am),'list')
 })
+
+test_that("check basic reading of amiramesh file (neuron)",{
+  am='../testdata/neuron/EBT7R.am'
+  expect_is(read.amiramesh(am),'list')
+})
