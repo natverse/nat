@@ -15,12 +15,16 @@ xformpoints<-function(reg, points, ...) {
 #'   case. If the path does indeed point to a CMTK registration, this method
 #'   will hand off to xformpoints.cmtkreg. A future TODO would be to provide a
 #'   mechanism for extending this behaviour for other registration formats.
+#
+#'   If a list of transformations is passed in, these transformations are
+#'   performed in sequence order, such that
+#'   \code{xformpoints(c(a,b,c), x) == xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
 #' @method xformpoints character
 #' @S3method xformpoints character
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
-  if(is.cmtkreg(reg, filecheck='magic')) xformpoints(as.cmtkreg(reg), points, ...)
-  else stop("Cannot identify registration class")
+    if (is.cmtkreg(reg[1], filecheck='magic')) xformpoints(as.cmtkreg(reg), points, ...)
+    else stop("Cannot identify registration class")
 }
 
 #' @method xformpoints cmtkreg
@@ -44,7 +48,7 @@ xformpoints.character<-function(reg, points, ...){
 #' @export
 #' @rdname xformpoints
 xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'), 
-                              direction=c("inverse",'forward'), 
+                              direction=NULL, 
                               FallBackToAffine=FALSE, ...){
   if(is.list(reg)){
     # we've been given an in memory list specifying registation parameters
@@ -55,16 +59,18 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   }
   
   transformtype=match.arg(transformtype)
-  direction=match.arg(direction)
+  direction=match.arg(direction,c("inverse",'forward'),several.ok=TRUE)
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile), add = TRUE)
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
   streamxform=file.path(cmtk.bindir(check=TRUE),'streamxform')
   # TODO enable CMTK affine transforms using internal R code even when
   # CMTK command line tools are missing.
-  cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''),
-            ifelse(direction=='forward','--','-- --inverse'),
-            shQuote(path.expand(reg)),'<',shQuote(pointsfile))
+  inverseflags <- unlist(lapply(direction, function(x) ifelse(x == 'forward', '', '--inverse')))
+  regcmd <- paste(c(rbind(inverseflags, shQuote(path.expand(reg)))), collapse=" ")
+  cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''), '--',
+            regcmd,'<',shQuote(pointsfile))
+  message(cmd)
   cmtkOut <- read.table(text=system(cmd, intern = TRUE,ignore.stderr=TRUE),
                         col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
                         colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)

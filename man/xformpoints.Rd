@@ -10,8 +10,7 @@ xformpoints(reg, points, ...)
 \method{xformpoints}{character}(reg, points, ...)
 
 \method{xformpoints}{cmtkreg}(reg, points, transformtype = c("warp",
-  "affine"), direction = c("inverse", "forward"), FallBackToAffine = FALSE,
-  ...)
+  "affine"), direction = NULL, FallBackToAffine = FALSE, ...)
 
 \method{xformpoints}{default}(reg, points, ...)
 }
@@ -48,7 +47,10 @@ erroring out if this is not the case. If the path does
 indeed point to a CMTK registration, this method will hand
 off to xformpoints.cmtkreg. A future TODO would be to
 provide a mechanism for extending this behaviour for other
-registration formats.
+registration formats.  If a list of transformations is
+passed in, these transformations are performed in sequence
+order, such that \code{xformpoints(c(a,b,c), x) ==
+xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
 
 Note that the direction of CMTK registrations can be the
 source of much confusion. This is because CMTK defines the
