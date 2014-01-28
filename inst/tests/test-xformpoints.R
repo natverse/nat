@@ -43,6 +43,11 @@ test_that("xformpoints.cmtkreg works ok", {
   autoConcat <- xformpoints(c(creg2, creg3), direction=c('forward', 'inverse'), points=xyz)
   manualConcat <- xformpoints(creg3, direction='inverse', points=xformpoints(creg2, direction='forward', points=xyz))
   expect_equal(autoConcat, manualConcat, tolerance=1e-6)
+
+  # Check direction argument recycling works
+  autoConcat <- xformpoints(c(creg2, creg3), direction='forward', points=xyz)
+  manualConcat <- xformpoints(creg3, direction='forward', points=xformpoints(creg2, direction='forward', points=xyz))
+  expect_equal(autoConcat, manualConcat, tolerance=1e-6)
   
   # the homogeneous affine matrix equivalent to that cmtk 1.1 registration
   m_base=matrix(c(0.993768017875764, 0.0124333660488193, 0.1029140991094, 
