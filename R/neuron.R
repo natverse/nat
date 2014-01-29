@@ -44,7 +44,7 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
              nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
              NumSegs=length(SegList)))
   n=n[intersect(coreFieldOrder,names(n))]
-  
+  n=lapply(n, eval)
   if(!is.null(InputFileName)){
     if(is.null(NeuronName)) NeuronName=basename(InputFileName)
     else if(is.function(NeuronName)) NeuronName=NeuronName(InputFileName)
