@@ -288,7 +288,7 @@ test_that("We can read hxlineset format neurons",{
 
 test_that("we can read hxskel format neurons",{
   
-  Neurites=structure(list(NeuronName = "Neurites", NumPoints = 291L, StartPoint = 1L, 
+  Neurites=neuron(NeuronName = "Neurites", NumPoints = 291L, StartPoint = 1L, 
       BranchPoints = c(98L, 256L, 272L), EndPoints = c(1L, 54L, 
       202L, 257L, 274L), NumSegs = 7L, SegList = list(c(1, 3, 4, 
       5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
@@ -526,9 +526,11 @@ test_that("we can read hxskel format neurons",{
       2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 3L, 2L, 
       1L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 2L, 
       2L, 2L, 2L)), .Names = c("PointNo", "Label", "X", "Y", "Z", 
-      "W", "Parent", "NeighbourCount"), class = "data.frame", row.names = c(NA, 
-      -291L)) ), .Names = c("NeuronName", "NumPoints", 
-  "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", 
-  "nTrees", "d"))
-  expect_equal(read.neuron('../testdata/neuron/Neurites.am'),Neurites)
+      "W", "Parent", "NeighbourCount"), class = "data.frame",
+      row.names = c(NA, -291L)))
+  expect_is(n<-read.neuron('../testdata/neuron/Neurites.am'),'neuron')
+  g1<-as.ngraph(Neurites)
+  g2<-as.ngraph(n)
+  expect_true(igraph::graph.isomorphic(g1,g2))
+  expect_equivalent(n,Neurites)
 })
