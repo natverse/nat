@@ -91,6 +91,8 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
     names(x)=seq(x)
   }
   dbClass=match.arg(dbClass)
+  if(dbClass!='RDS' && !is.null(remote))
+    stop("remote download only implemented for RDS class at the moment")
   db=filehash::dumpList(x, dbName=dir, type=dbClass)
   
   res <- as.neuronlistfh(db, df)
