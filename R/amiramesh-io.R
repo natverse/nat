@@ -449,3 +449,45 @@ write.zlib<-function(uncompressed, con=raw()){
   if(is.raw(con)) return(d)
   writeBin(object=d,con=con)
 }
+
+#' Check if file is amiramesh format
+#' 
+#' @details Tries to be as fast as possible by reading only first 11 bytes and
+#'   checking if they equal "# AmiraMesh"
+#' @param f Path to a file to be tested
+#' @return logical
+#' @export
+is.amiramesh<-function(f) {
+  if(length(f)>1) return(sapply(f,is.amiramesh))
+  # AmiraMesh
+  magic=as.raw(c(0x23, 0x20, 0x41, 0x6d, 0x69, 0x72, 0x61, 0x4d, 0x65, 
+                 0x73, 0x68))
+  first11bytes=try(readBin(f,what=raw(),n=11),silent=TRUE)
+  !inherits(first11bytes,'try-error') && length(first11bytes)==11 && 
+    all(first11bytes==magic)
+}
+
+#' Return the type of an amiramesh file on disk or a parsed header
+#' 
+#' @details Note that when checking a file we first test if it is an amiramesh
+#'   file (fast) before reading the header and determining content type (slow).
+#' @param x Path to files on disk or a single pre-parsed parameter list
+#' @return character vector (NA_character_ when file invalid)
+#' @export
+amiratype<-function(x){
+  if(is.list(x)) h<-x
+  else {
+    # we have a file
+    if(length(x)>1) return(sapply(x,amiratype))
+    if(!isTRUE(is.amiramesh(x))) return(NA_character_)
+    h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
+    if(inherits(h,'try-error')) return(NA_character_)
+  }
+  if(!is.null(ct<-h$Parameters$ContentType)){
+    ct
+  } else if(!is.null(ct<-h$Parameters$CoordType)){
+    # since e.g. uniform is not very desctiptive
+    # append field to make uniform.field
+    paste(ct,'field',sep='.')
+  } else NA_character_
+}

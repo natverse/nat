@@ -52,3 +52,15 @@ test_that("read.amiramesh can read an 8 bit amira file",{
   # nb 255 bins because 0 is ignored
   expect_equal(counts,tabulate(x,nbins=255))
 })
+
+test_that("is.amiramesh and amiratype",{
+  amfile="../testdata/amira/AL-a_M.am"
+  expect_true(is.amiramesh(amfile))
+  # not enough to have a file ending
+  tf=tempfile(fileext='.am')
+  writeLines("#somethingelse",tf)
+  on.exit(unlink(tf))
+  expect_true(!is.amiramesh(tf))
+
+  expect_equal(amiratype(amfile),'uniform.field')
+})
