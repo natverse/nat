@@ -212,8 +212,10 @@ read.neuronlistfh <- function(file, localdir=NULL) {
     download.file(url=file, destfile=tmpFile)
     objName <- load(tmpFile)
     obj <- get(objName)
-    attr(obj, 'db')@dir <- localdir
+    # fix paths in our new object
+    attr(obj, 'db')@dir <- file.path(localdir,'data')
     attr(obj, 'remote') <- paste0(dirname(file), '/data/')
+    if(!file.exists(localdir)) dir.create(localdir, recursive=TRUE)
   } else {
     objName <- load(file)
     obj <- get(objName)
