@@ -32,7 +32,6 @@ Imports:
     methods,
     filehash
 Suggests:
-    testthat,
-    stashR
+    testthat
 License: GPL-3
 LazyData: yes
