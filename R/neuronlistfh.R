@@ -208,6 +208,7 @@ read.neuronlistfh <- function(file, localdir=NULL) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
     if(is.null(localdir)) stop("localdir must be specified.")
     tmpFile <- tempfile()
+    on.exit(unlink(tmpFile))
     download.file(url=file, destfile=tmpFile)
     objName <- load(tmpFile)
     obj <- get(objName)
