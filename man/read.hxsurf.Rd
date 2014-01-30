@@ -31,5 +31,12 @@ into hxsurf object
 }
 \seealso{
 \code{\link{plot3d.hxsurf}}
+
+Other amira: \code{\link{amiratype}};
+\code{\link{is.amiramesh}};
+\code{\link{read.amiralandmarks}},
+\code{\link{write.amiralandmarks}};
+\code{\link{read.amiramesh}},
+\code{\link{read.amiramesh.header}}
 }
 

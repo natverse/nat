@@ -13,6 +13,7 @@
 #' @rdname amiramesh-io
 #' @export
 #' @seealso \code{\link{readBin}, \link{.Platform}}
+#' @family amira
 read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
                          endian=NULL,Verbose=FALSE){
   firstLine=readLines(file,n=1)
@@ -457,6 +458,7 @@ write.zlib<-function(uncompressed, con=raw()){
 #' @param f Path to a file to be tested
 #' @return logical
 #' @export
+#' @family amira
 is.amiramesh<-function(f) {
   if(length(f)>1) return(sapply(f,is.amiramesh))
   # AmiraMesh
@@ -474,6 +476,7 @@ is.amiramesh<-function(f) {
 #' @param x Path to files on disk or a single pre-parsed parameter list
 #' @return character vector (NA_character_ when file invalid)
 #' @export
+#' @family amira
 amiratype<-function(x){
   if(is.list(x)) h<-x
   else {
