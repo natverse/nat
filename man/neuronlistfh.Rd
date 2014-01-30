@@ -12,7 +12,7 @@ is.neuronlistfh(nl)
 as.neuronlistfh(x, df, ...)
 
 \method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
-  dbClass = c("RDS", "RDS2", "remoteDB", "localDB"), ...)
+  dbClass = c("RDS", "RDS2", "remoteDB", "localDB"), remote = NULL, ...)
 
 \method{as.neuronlistfh}{filehash}(x, df, ...)
 

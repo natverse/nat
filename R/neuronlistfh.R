@@ -86,7 +86,7 @@ as.neuronlistfh<-function(x, df, ...)
 #' @rdname neuronlistfh
 as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
                                      dbClass=c('RDS','RDS2',
-                                               'remoteDB','localDB'), ...){
+                                               'remoteDB','localDB'), remote=NULL, ...){
   if(is.null(names(x))){
     warning("giving default names to elements of x")
     names(x)=seq(x)
@@ -98,7 +98,9 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
     db=new(dbClass,dir=dir, name=basename(dir), ...)
     sapply(names(x),function(n) db[[n]]=x[[n]])
   }
-  as.neuronlistfh(db, df)
+  res <- as.neuronlistfh(db, df)
+  attr(res, 'remote') <- remote
+  res
 }
 
 #' @method as.neuronlistfh filehash
@@ -145,7 +147,19 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 #' @S3method [[ neuronlistfh
 "[[.neuronlistfh"<-function(x,i,...){
   if(!is.character(i)) i=names(x)[i]
-  attr(x,'db')[[i,...]]
+  tryCatch({
+    attr(x,'db')[[i,...]]
+  }, error = function(e) {
+    errMsg <- e$message
+    key <- substr(errMsg, regexpr("'", errMsg) + 1, nchar(errMsg) - 1)
+    fillMissing(key, x)
+    tryCatch({
+      attr(x, 'db')[[i, ...]]
+    }, error = function(e) {
+      "Unable to download file."
+      stop(e)
+    })
+  })
 }
 
 #' @S3method as.list neuronlistfh
@@ -164,7 +178,37 @@ as.list.neuronlistfh<-function(x, ...) x
 #' @method [ neuronlistfh
 "[.neuronlistfh" <- function(x,i,...) {
   if(!is.character(i)) i=names(x)[i]
-  db=attr(x,'db')
-  l=if(isTRUE(attr(class(db),'package')%in%'stashR')) lapply(i,function(n) x[[n]]) else db[i,...]
+  l=lapply(i,function(n) x[[n]])
   as.neuronlist(l,df=attr(x,'df')[i,])
+}
+
+# Called if some objects in the filehash object are not available locally
+#
+# @param missing A list of missing objects
+# @param fh The filehash object that needs filling in
+fillMissing <- function(missing, fh) {
+  objDir <- attr(fh, 'db')@dir
+  if (!file.exists(objDir)) dir.create(objDir)
+  lapply(missing, function(x) download.file(url=paste0(attr(fh, 'remote'), gsub("([A-Z])", "@\\1", x, perl=T)), destfile=file.path(objDir, gsub("([A-Z])", "@\\1", x, perl=T))))
+}
+
+#' Read a local, or remote, neuronlistfh object saved to a file.
+#' 
+#' @param file The file path of the neuronlistfh object. Can be local, or remote (via http or ftp).
+#' @param localdir If the file is to be fetched from a remote location, this is the folder in which downloaded objects will be stored.
+#' @export
+read.neuronlistfh <- function(file, localdir=NULL) {
+  if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
+    if(is.null(localdir)) stop("localdir must be specified.")
+    tmpFile <- tempfile()
+    download.file(url=file, destfile=tmpFile)
+    objName <- load(tmpFile)
+    obj <- get(objName)
+    attr(obj, 'db')@dir <- localdir
+    attr(obj, 'remote') <- paste0(dirname(file), '/data/')
+  } else {
+    objName <- load(file)
+    obj <- get(objName)
+  }
+  obj
 }
