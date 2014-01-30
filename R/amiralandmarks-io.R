@@ -40,14 +40,14 @@ write.amiralandmarks<-function(x, file){
   nummarkers=sapply(l,nrow)
   if(length(unique(nummarkers))!=1) stop("Must have just an equal number of markers in paired landmark sets")
   nummarkers=nummarkers[1]
-  cat("# AmiraMesh 3D ASCII 2.0\n\ndefine Markers",nummarkers,"\n\nParameters {\n\tContentType \"LandmarkSet\",\n\tNumSets",nSets,"\n}\n",file=filename)
+  cat("# AmiraMesh 3D ASCII 2.0\n\ndefine Markers",nummarkers,"\n\nParameters {\n\tContentType \"LandmarkSet\",\n\tNumSets",nSets,"\n}\n",file=file)
   for(i in 1:nSets){
     coordsuffix=ifelse(i==1,"",i)
-    cat("Markers { float[3] Coordinates",coordsuffix," } @",i,sep="","\n",file=filename,append=T)
+    cat("Markers { float[3] Coordinates",coordsuffix," } @",i,sep="","\n",file=file,append=T)
   }
   for(i in 1:nSets){
-    cat("@",i,sep="","\n",file=filename,append=T)
-    write.table(l[[i]],col.names=F,row.names=F,file=filename,append=TRUE)
-    cat("\n",file=filename,append=T)
+    cat("@",i,sep="","\n",file=file,append=T)
+    write.table(l[[i]],col.names=F,row.names=F,file=file,append=TRUE)
+    cat("\n",file=file,append=T)
   }
 }
