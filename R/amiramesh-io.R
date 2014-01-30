@@ -381,7 +381,7 @@ decode.rle<-function(d,uncompressedLength){
     x=d[filepos]
     filepos=filepos+1
     if(x==0)
-      stop(paste("byte at offset",seek(con),"is 0!"))
+      stop(paste("byte at offset ",filepos," is 0!"))
     if(x>0x7f) {
       # cat("x=",x,"\n")
       x=as.integer(x)-128
