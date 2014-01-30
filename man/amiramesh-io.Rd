@@ -40,5 +40,11 @@ is a character vector and close it when finished reading.
 }
 \seealso{
 \code{\link{readBin}, \link{.Platform}}
+
+Other amira: \code{\link{amiratype}};
+\code{\link{is.amiramesh}};
+\code{\link{read.amiralandmarks}},
+\code{\link{write.amiralandmarks}};
+\code{\link{read.hxsurf}}
 }
 

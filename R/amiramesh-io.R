@@ -13,6 +13,7 @@
 #' @rdname amiramesh-io
 #' @export
 #' @seealso \code{\link{readBin}, \link{.Platform}}
+#' @family amira
 read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
                          endian=NULL,Verbose=FALSE){
   firstLine=readLines(file,n=1)
@@ -69,11 +70,17 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
       if(Verbose) cat("Reading data section",df$DataName[i],"\n")
       if(df$HxType[i]=="HxByteRLE"){
         d=readBin(con,what=raw(0),n=as.integer(df$HxLength[i]),size=1)
-        d=DecodeRLEBytes(d,df$SimpleDataLength[i])
+        d=decode.rle(d,df$SimpleDataLength[i])
         x=as.integer(d)
       } else {
+        if(df$HxType[i]=="HxZip"){
+          uncompressed=read.zlib(con, compressedLength=as.integer(df$HxLength[i]))
+        } else {
+          uncompressed=con
+        }
         if(df$RType[i]=="integer") whatval=integer(0) else whatval=numeric(0)
-        x=readBin(con,df$SimpleDataLength[i],size=df$Size[i],what=whatval,signed=df$Signed[i],endian=endian)
+        x=readBin(uncompressed,df$SimpleDataLength[i],size=df$Size[i],
+                  what=whatval,signed=df$Signed[i],endian=endian)
       }
       # note that first dim is moving fastest
       dims=unlist(df$Dims[i])
@@ -351,4 +358,139 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   # we should only get here once if we parse a valid hierarchy
   try(close(con),silent=TRUE)
   return(l)
+}
+
+# decode some raw bytes into a new raw vector of specified length
+# @param bytes to decode
+# @param uncompressedLength Length of the new uncompressed data
+# Expects an integer array
+# Structure is that every odd byte is a count
+# and every even byte is the actual data
+# So 127 0 127 0 127 0 12 0 12 1 0
+# I think that it ends with a zero count
+# -----
+# in fact the above is not quite right. If >=2 consecutive bytes are different
+# then a control byte is written giving the length of the run of different bytes
+# and then the whole run is written out
+# data can therefore only be parsed by the trick of making 2 rows if there 
+# are no control bytes in range -126 to -1
+decode.rle<-function(d,uncompressedLength){
+  rval=raw(uncompressedLength)
+  bytesRead=0
+  filepos=1
+  while(bytesRead<uncompressedLength){
+    x=d[filepos]
+    filepos=filepos+1
+    if(x==0)
+      stop(paste("byte at offset ",filepos," is 0!"))
+    if(x>0x7f) {
+      # cat("x=",x,"\n")
+      x=as.integer(x)-128
+      # cat("now x=",x,"\n")
+      mybytes=d[filepos:(filepos+x-1)]
+      filepos=filepos+x
+      # that's the x that we've read
+    } else {
+      # x>0
+      mybytes=rep.int(d[filepos],x)
+      filepos=filepos+1
+    }
+    rval[(bytesRead+1):(bytesRead+length(mybytes))]=mybytes
+    bytesRead=bytesRead+length(mybytes)
+  }
+  rval
+}
+
+# Uncompress zlib compressed data (from file or memory) to memory
+# 
+# @details zlib compressed data uses the same algorithm but a smaller header 
+#   than gzip data.
+# @details For connections, compressedLength must be supplied, but offset is 
+#   ignored (i.e. you must seek beforehand)
+# @details For files, if compressedLength is not supplied then \code{read.zlib}
+#   will attempt to read until the end of the file.
+# @param compressed Path to compressed file, connection or raw vector.
+# @param offset Byte offset in file on disk
+# @param compressedLength Bytes of compressed data to read
+# @param ... Additional parameters passed to \code{\link{readBin}}
+# @return raw vector of decompressed data
+# @export
+read.zlib<-function(compressed, offset=NA, compressedLength=NA, ...){
+  if(!is.raw(compressed)){
+    if(inherits(compressed,'connection')){
+      if(is.na(compressedLength)) stop("Must supply compressedLength when reading from a connection")
+      con=compressed
+    } else {
+      con<-file(compressed,open='rb')
+      on.exit(close(con))
+      if(!is.na(offset)) seek(con,offset)
+      else offset = 0
+      if(is.na(compressedLength)) compressedLength=file.info(compressed)$size-offset
+    }
+    compressed=readBin(con, what=raw(), n=compressedLength)
+  }
+  memDecompress(compressed,type='gzip')
+}
+
+# Compress raw data, returning raw vector or writing to file
+# 
+# @details The default value of \code{con=raw()} means that this function will 
+#   return a raw vector of compressed data if con is not specified.
+# @param uncompressed \code{raw} vector of data
+# @param con Raw vector or path to output file
+# @return A raw vector (if \code{con} is a raw vector) or invisibly NULL.
+# @seealso Depends on \code{\link{memCompress}}
+# @export
+write.zlib<-function(uncompressed, con=raw()){
+  if(!inherits(con, "connection") && !is.raw(con)){
+    con=open(con, open='wb')
+    on.exit(close(con))
+  }
+  d=memCompress(uncompressed, type='gzip')
+  if(is.raw(con)) return(d)
+  writeBin(object=d,con=con)
+}
+
+#' Check if file is amiramesh format
+#' 
+#' @details Tries to be as fast as possible by reading only first 11 bytes and
+#'   checking if they equal "# AmiraMesh"
+#' @param f Path to a file to be tested
+#' @return logical
+#' @export
+#' @family amira
+is.amiramesh<-function(f) {
+  if(length(f)>1) return(sapply(f,is.amiramesh))
+  # AmiraMesh
+  magic=as.raw(c(0x23, 0x20, 0x41, 0x6d, 0x69, 0x72, 0x61, 0x4d, 0x65, 
+                 0x73, 0x68))
+  first11bytes=try(readBin(f,what=raw(),n=11),silent=TRUE)
+  !inherits(first11bytes,'try-error') && length(first11bytes)==11 && 
+    all(first11bytes==magic)
+}
+
+#' Return the type of an amiramesh file on disk or a parsed header
+#' 
+#' @details Note that when checking a file we first test if it is an amiramesh
+#'   file (fast) before reading the header and determining content type (slow).
+#' @param x Path to files on disk or a single pre-parsed parameter list
+#' @return character vector (NA_character_ when file invalid)
+#' @export
+#' @family amira
+amiratype<-function(x){
+  if(is.list(x)) h<-x
+  else {
+    # we have a file
+    if(length(x)>1) return(sapply(x,amiratype))
+    if(!isTRUE(is.amiramesh(x))) return(NA_character_)
+    h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
+    if(inherits(h,'try-error')) return(NA_character_)
+  }
+  if(!is.null(ct<-h$Parameters$ContentType)){
+    ct
+  } else if(!is.null(ct<-h$Parameters$CoordType)){
+    # since e.g. uniform is not very desctiptive
+    # append field to make uniform.field
+    paste(ct,'field',sep='.')
+  } else NA_character_
 }
