@@ -91,12 +91,8 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
     names(x)=seq(x)
   }
   dbClass=match.arg(dbClass)
-  if(dbClass%in%c("RDS","RDS2")){
-    db=filehash::dumpList(x, dbName=dir, type=dbClass)
-  } else {
-    db=new(dbClass,dir=dir, name=basename(dir), ...)
-    sapply(names(x),function(n) db[[n]]=x[[n]])
-  }
+  db=filehash::dumpList(x, dbName=dir, type=dbClass)
+  
   res <- as.neuronlistfh(db, df)
   attr(res, 'remote') <- remote
   res
