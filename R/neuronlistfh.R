@@ -12,34 +12,33 @@
 #' Presently only backing objects which extend the \code{filehash} class are
 #'   supported. These include:
 #' \itemize{
-#' \item filehash RDS, RDS2 (experimental)
-#' \item stashR remoteDB and localDB objects
+#' \item filehash RDS
+#' \item filehash RDS2 (experimental)
 #' }
+#' We have implemented a simple remote access protocol which is currently only
+#' implemented for the \code{RDS} format. This allows a neuronlistfh object to
+#' be read from a url and downloaded to a local path. Subsequent attempts to
+#' access neurons stored in this list will result in automated download of the
+#' requested neuron to the local cache.
+#' 
 #' The \code{RDS2} format is experimental and only available at 
 #' \url{https://github.com/jefferis/filehash} but is likely to be the most 
-#' effective for large (>5000) collections of neurons. the \code{remoteDB} 
-#' format has the unique feature of allowing automatic remote download of 
-#' versioned neurons from a remote repository. TODO: could be interesting if
-#' neuronslistfh objects could wrap multiple remote repositories.
+#' effective for large (>5000) collections of neurons.
 #' 
 #' Note that objects are stored in a filehash, which by definition does not have
 #' any ordering of its elements. However neuronlist objects (like lists) do have
 #' an ordering. Therefore the names of a neuronlistfh object are not necessarily
-#' the same as the result of names on the underlying filehash object.
+#' the same as the result of calling \code{names()} on the underlying filehash
+#' object.
 #' @name neuronlistfh
 #' @family neuronlistfh
 #' @family neuronlist
 #' @import filehash
-#' @seealso \code{\link[stashR]{remoteDB}, \link[filehash]{filehash-class}}
+#' @seealso \code{\link[filehash]{filehash-class}}
 #' @examples
 #' \dontrun{
-#' library(stashR)
-#' # set up local stashR cache of remote db containing 20 kenyon cells
-#' # nb dir sets the location of the local cache and should probably be a
-#' # sensible absolute path on your system.
-#' kcrdb=new("remoteDB",dir='kcrdb',name='kcrdb',
-#'   url='http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/kcdb/')
-#' kcnl=as.neuronlistfh(kcrdb)
+#' kcnl=read.neuronlistfh('http://jefferislab.org/si/nblast/fcdps/kcs20fh.rds',
+#' 'path/to/my/project/folder')
 #' # this will automatically download the neurons from the web the first time
 #' # it is run
 #' plot3d(kcnl)
@@ -64,10 +63,10 @@ is.neuronlistfh<-function(nl) {
 #' @examples
 #' \dontrun{
 #' # create neuronlistfh object backed by filehash with one file per neuron
-#' kcs20fh=as.neuronlistfh(kcs20,dbName='/path/to/my/kcdb',filehash.type='RDS')
+#' kcs20fh=as.neuronlistfh(kcs20,dir='/path/to/my/kcdb/data',filehash.type='RDS')
 #' plot3d(subset(kcs20fh,type=='gamma'))
 #' # save neuronlisfh object next to filehash backing database
-#' save(kcs20fh,file='/path/to/my/kcdb.rda')
+#' save(kcs20fh,file='/path/to/my/kcdb/kcdb.rda')
 #' 
 #' # in a new session
 #' load("/path/to/my/kcdb.rda")
@@ -77,16 +76,15 @@ as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
 #' @param dir The path to the underlying \code{filehash} database on disk
-#' @param dbClass The \code{filehash} or \code{stashR} database class defaults 
-#'   to \code{filehashRDS}.
+#' @param dbClass The \code{filehash} database class. Defaults to
+#'   \code{filehashRDS}.
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
 #' @S3method as.neuronlistfh neuronlist
 #' @rdname neuronlistfh
 as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
-                                     dbClass=c('RDS','RDS2',
-                                               'remoteDB','localDB'), remote=NULL, ...){
+                                     dbClass=c('RDS','RDS2'), remote=NULL, ...){
   if(is.null(names(x))){
     warning("giving default names to elements of x")
     names(x)=seq(x)
@@ -108,8 +106,8 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
 #' @rdname neuronlistfh
 as.neuronlistfh.filehash<-function(x, df, ...) NextMethod()
 
-#' @description \code{as.neuronlistfh.default} wraps an existing filehash/stashR
-#'   object (with backing objects on disk) into a neuronlistfh
+#' @description \code{as.neuronlistfh.default} wraps an existing filehash object
+#'   (with backing objects on disk) into a neuronlistfh
 #' @S3method as.neuronlistfh default
 #' @rdname neuronlistfh
 #' @details In \code{as.neuronlistfh.default} the rownames of the dataframe 
