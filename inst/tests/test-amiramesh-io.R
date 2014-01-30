@@ -18,3 +18,10 @@ test_that("check reading amiramesh in zlib and rle formats",{
   expect_is(zip<-read.amiramesh(zipam), 'array')
   expect_that(dim(zip), is_equivalent_to(c(50, 50, 50)))
 })
+
+test_that("read.zlib works in memory",{
+  set.seed(42)
+  raw_data=as.raw(sample(1:5,250,replace=T))
+  zlib_data=memCompress(from=raw_data,type='gzip')
+  expect_equal(read.zlib(zlib_data),raw_data)
+})
