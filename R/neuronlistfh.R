@@ -164,7 +164,6 @@ as.list.neuronlistfh<-function(x, ...) x
 #' @method [ neuronlistfh
 "[.neuronlistfh" <- function(x,i,...) {
   if(!is.character(i)) i=names(x)[i]
-  db=attr(x,'db')
-  l=if(isTRUE(attr(class(db),'package')%in%'stashR')) lapply(i,function(n) x[[n]]) else db[i,...]
+  l=lapply(i,function(n) x[[n]])
   as.neuronlist(l,df=attr(x,'df')[i,])
 }
