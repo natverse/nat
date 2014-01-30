@@ -72,8 +72,14 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
         d=decode.rle(d,df$SimpleDataLength[i])
         x=as.integer(d)
       } else {
+        if(df$HxType[i]=="HxZip"){
+          uncompressed=read.zlib(con, compressedLength=as.integer(df$HxLength[i]))
+        } else {
+          uncompressed=con
+        }
         if(df$RType[i]=="integer") whatval=integer(0) else whatval=numeric(0)
-        x=readBin(con,df$SimpleDataLength[i],size=df$Size[i],what=whatval,signed=df$Signed[i],endian=endian)
+        x=readBin(uncompressed,df$SimpleDataLength[i],size=df$Size[i],
+                  what=whatval,signed=df$Signed[i],endian=endian)
       }
       # note that first dim is moving fastest
       dims=unlist(df$Dims[i])
@@ -392,4 +398,54 @@ decode.rle<-function(d,uncompressedLength){
     bytesRead=bytesRead+length(mybytes)
   }
   rval
+}
+
+# Uncompress zlib compressed data (from file or memory) to memory
+# 
+# @details zlib compressed data uses the same algorithm but a smaller header 
+#   than gzip data.
+# @details For connections, compressedLength must be supplied, but offset is 
+#   ignored (i.e. you must seek beforehand)
+# @details For files, if compressedLength is not supplied then \code{read.zlib}
+#   will attempt to read until the end of the file.
+# @param compressed Path to compressed file, connection or raw vector.
+# @param offset Byte offset in file on disk
+# @param compressedLength Bytes of compressed data to read
+# @param ... Additional parameters passed to \code{\link{readBin}}
+# @return raw vector of decompressed data
+# @export
+read.zlib<-function(compressed, offset=NA, compressedLength=NA, ...){
+  if(!is.raw(compressed)){
+    if(inherits(compressed,'connection')){
+      if(is.na(compressedLength)) stop("Must supply compressedLength when reading from a connection")
+      con=compressed
+    } else {
+      con<-file(compressed,open='rb')
+      on.exit(close(con))
+      if(!is.na(offset)) seek(con,offset)
+      else offset = 0
+      if(is.na(compressedLength)) compressedLength=file.info(compressed)$size-offset
+    }
+    compressed=readBin(con, what=raw(), n=compressedLength)
+  }
+  memDecompress(compressed,type='gzip')
+}
+
+# Compress raw data, returning raw vector or writing to file
+# 
+# @details The default value of \code{con=raw()} means that this function will 
+#   return a raw vector of compressed data if con is not specified.
+# @param uncompressed \code{raw} vector of data
+# @param con Raw vector or path to output file
+# @return A raw vector (if \code{con} is a raw vector) or invisibly NULL.
+# @seealso Depends on \code{\link{memCompress}}
+# @export
+write.zlib<-function(uncompressed, con=raw()){
+  if(!inherits(con, "connection") && !is.raw(con)){
+    con=open(con, open='wb')
+    on.exit(close(con))
+  }
+  d=memCompress(uncompressed, type='gzip')
+  if(is.raw(con)) return(d)
+  writeBin(object=d,con=con)
 }
