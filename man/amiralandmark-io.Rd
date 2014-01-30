@@ -18,6 +18,10 @@ write.amiralandmarks(x, file)
   or a list with two matrices, one for landmarks in each
   space.}
 }
+\value{
+for read.amiralandmarks a matrix for an unpaired landmark
+set or a list of length 2 for a paired landmark set.
+}
 \description{
 Read and Write Amira Landmarks files
 }

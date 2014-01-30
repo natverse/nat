@@ -4,6 +4,8 @@
 #' @param CoordinatesOnly Only return Coordinates of points
 #' @param Verbose Whether to write status messages
 #' @rdname amiralandmark-io
+#' @return for read.amiralandmarks a matrix for an unpaired landmark set or a
+#'   list of length 2 for a paired landmark set.
 #' @export
 read.amiralandmarks<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
   r=read.amiramesh(file, header=TRUE, simplify=FALSE, Verbose=Verbose)
