@@ -199,8 +199,10 @@ fillMissing <- function(missing, fh) {
 
 #' Read a local, or remote, neuronlistfh object saved to a file.
 #' 
-#' @param file The file path of the neuronlistfh object. Can be local, or remote (via http or ftp).
-#' @param localdir If the file is to be fetched from a remote location, this is the folder in which downloaded objects will be stored.
+#' @param file The file path of the neuronlistfh object. Can be local, or remote
+#'   (via http or ftp).
+#' @param localdir If the file is to be fetched from a remote location, this is
+#'   the folder in which downloaded objects will be stored.
 #' @export
 read.neuronlistfh <- function(file, localdir=NULL) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
