@@ -142,6 +142,12 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 #' @S3method [[ neuronlistfh
 "[[.neuronlistfh"<-function(x,i,...){
   if(!is.character(i)) i=names(x)[i]
+  
+  if(is.null(attr(x,'remote'))){
+    # no remote specified, just treat as normal
+    return(attr(x,'db')[[i,...]])
+  }
+  # we have a remote. let's try and use it to fetch these keys
   tryCatch({
     attr(x,'db')[[i,...]]
   }, error = function(e) {
