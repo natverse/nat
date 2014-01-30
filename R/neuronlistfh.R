@@ -190,7 +190,9 @@ as.list.neuronlistfh<-function(x, ...) x
 fillMissing <- function(missing, fh) {
   objDir <- attr(fh, 'db')@dir
   if (!file.exists(objDir)) dir.create(objDir)
-  lapply(missing, function(x) download.file(url=paste0(attr(fh, 'remote'), gsub("([A-Z])", "@\\1", x, perl=T)), destfile=file.path(objDir, gsub("([A-Z])", "@\\1", x, perl=T))))
+  objfiles=gsub("([A-Z])", "@\\1", missing, perl=T)
+  mapply(download.file, url=paste0(attr(fh, 'remote'), objfiles),
+         destfile=file.path(objDir,objfiles))
 }
 
 #' Read a local, or remote, neuronlistfh object saved to a file.
