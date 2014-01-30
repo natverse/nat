@@ -69,7 +69,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
       if(Verbose) cat("Reading data section",df$DataName[i],"\n")
       if(df$HxType[i]=="HxByteRLE"){
         d=readBin(con,what=raw(0),n=as.integer(df$HxLength[i]),size=1)
-        d=DecodeRLEBytes(d,df$SimpleDataLength[i])
+        d=decode.rle(d,df$SimpleDataLength[i])
         x=as.integer(d)
       } else {
         if(df$RType[i]=="integer") whatval=integer(0) else whatval=numeric(0)
@@ -351,4 +351,45 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   # we should only get here once if we parse a valid hierarchy
   try(close(con),silent=TRUE)
   return(l)
+}
+
+# decode some raw bytes into a new raw vector of specified length
+# @param bytes to decode
+# @param uncompressedLength Length of the new uncompressed data
+# Expects an integer array
+# Structure is that every odd byte is a count
+# and every even byte is the actual data
+# So 127 0 127 0 127 0 12 0 12 1 0
+# I think that it ends with a zero count
+# -----
+# in fact the above is not quite right. If >=2 consecutive bytes are different
+# then a control byte is written giving the length of the run of different bytes
+# and then the whole run is written out
+# data can therefore only be parsed by the trick of making 2 rows if there 
+# are no control bytes in range -126 to -1
+decode.rle<-function(d,uncompressedLength){
+  rval=raw(uncompressedLength)
+  bytesRead=0
+  filepos=1
+  while(bytesRead<uncompressedLength){
+    x=d[filepos]
+    filepos=filepos+1
+    if(x==0)
+      stop(paste("byte at offset",seek(con),"is 0!"))
+    if(x>0x7f) {
+      # cat("x=",x,"\n")
+      x=as.integer(x)-128
+      # cat("now x=",x,"\n")
+      mybytes=d[filepos:(filepos+x-1)]
+      filepos=filepos+x
+      # that's the x that we've read
+    } else {
+      # x>0
+      mybytes=rep.int(d[filepos],x)
+      filepos=filepos+1
+    }
+    rval[(bytesRead+1):(bytesRead+length(mybytes))]=mybytes
+    bytesRead=bytesRead+length(mybytes)
+  }
+  rval
 }
