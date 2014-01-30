@@ -76,8 +76,9 @@ as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
 #' @param dir The path to the underlying \code{filehash} database on disk
-#' @param dbClass The \code{filehash} database class. Defaults to
-#'   \code{filehashRDS}.
+#' @param dbClass The \code{filehash} database class. Defaults to \code{RDS}.
+#' @param remote The url pointing to a remote repository containing files for
+#'   each neuron.
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
@@ -183,7 +184,7 @@ as.list.neuronlistfh<-function(x, ...) x
 # Called if some objects in the filehash object are not available locally
 #
 # @param missing A list of missing objects
-# @param fh The filehash object that needs filling in
+# @param fh The neuronlistfh object that needs filling in
 fillMissing <- function(missing, fh) {
   objDir <- attr(fh, 'db')@dir
   if (!file.exists(objDir)) dir.create(objDir)

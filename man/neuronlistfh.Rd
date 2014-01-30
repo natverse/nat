@@ -32,7 +32,10 @@ as.neuronlistfh(x, df, ...)
   database on disk}
 
   \item{dbClass}{The \code{filehash} database class.
-  Defaults to \code{filehashRDS}.}
+  Defaults to \code{RDS}.}
+
+  \item{remote}{The url pointing to a remote repository
+  containing files for each neuron.}
 }
 \description{
 \code{neuronlistfh} objects consist of a list of neuron
