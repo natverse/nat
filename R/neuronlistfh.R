@@ -199,21 +199,38 @@ fillMissing <- function(missing, fh) {
 
 #' Read a local, or remote, neuronlistfh object saved to a file.
 #' 
-#' @param file The file path of the neuronlistfh object. Can be local, or remote (via http or ftp).
-#' @param localdir If the file is to be fetched from a remote location, this is the folder in which downloaded objects will be stored.
+#' @details When reading a remote \code{neuronlistfh} object, it is downloaded 
+#'   and cached to \code{localdir}. If there is already a cached file at the
+#'   appropriate location then the md5sums are checked and the downloaded file
+#'   will be copied on top of the original copy if they are different.
+#'   
+#' @param file The file path of the neuronlistfh object. Can be local, or remote
+#'   (via http or ftp).
+#' @param localdir If the file is to be fetched from a remote location, this is 
+#'   the folder in which downloaded objects will be stored.
 #' @export
+#' @importFrom tools md5sum
 read.neuronlistfh <- function(file, localdir=NULL) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
     if(is.null(localdir)) stop("localdir must be specified.")
     tmpFile <- tempfile()
+    on.exit(unlink(tmpFile))
     download.file(url=file, destfile=tmpFile)
-    objName <- load(tmpFile)
-    obj <- get(objName)
-    attr(obj, 'db')@dir <- localdir
+    obj <- readRDS(tmpFile)
+    # fix paths in our new object
+    attr(obj, 'db')@dir <- file.path(localdir,'data')
     attr(obj, 'remote') <- paste0(dirname(file), '/data/')
+    # save it to disk
+    cached.neuronlistfh<-file.path(localdir,basename(file))
+    if(!file.exists(localdir)) dir.create(localdir, recursive=TRUE)
+    saveRDS(obj,file=tmpFile)
+    # and copy / replace existing copy
+    if(!file.exists(cached.neuronlistfh) || md5sum(cached.neuronlistfh)!=md5sum(tmpFile)){
+      message("Updating cached neuronlistfh: ",basename(cached.neuronlistfh))
+      file.copy(tmpFile,cached.neuronlistfh)
+    }
+    obj
   } else {
-    objName <- load(file)
-    obj <- get(objName)
+    readRDS(file)
   }
-  obj
 }
