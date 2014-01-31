@@ -216,8 +216,7 @@ read.neuronlistfh <- function(file, localdir=NULL) {
     tmpFile <- tempfile()
     on.exit(unlink(tmpFile))
     download.file(url=file, destfile=tmpFile)
-    objName <- load(tmpFile)
-    obj <- get(objName)
+    obj <- readRDS(tmpFile)
     # fix paths in our new object
     attr(obj, 'db')@dir <- file.path(localdir,'data')
     attr(obj, 'remote') <- paste0(dirname(file), '/data/')
@@ -227,11 +226,11 @@ read.neuronlistfh <- function(file, localdir=NULL) {
     saveRDS(obj,file=tmpFile)
     # and copy / replace existing copy
     if(!file.exists(cached.neuronlistfh) || md5sum(cached.neuronlistfh)!=md5sum(tmpFile)){
+      message("Updating cached neuronlistfh: ",basename(cached.neuronlistfh))
       file.copy(tmpFile,cached.neuronlistfh)
     }
+    obj
   } else {
-    objName <- load(file)
-    obj <- get(objName)
+    readRDS(file)
   }
-  obj
 }
