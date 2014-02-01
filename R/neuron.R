@@ -98,7 +98,7 @@ as.neuron.data.frame<-function(x, ...) {
 
 #' Make SegList (and other core fields) from full graph of all nodes and origin
 #' 
-#' @description \code{as.neuron.igraph} converts a graph (typically an 
+#' @description \code{as.neuron.ngraph} converts a graph (typically an 
 #'   \code{ngraph} object) to a neuron
 #' @details Uses a depth first search on the tree to reorder using the given 
 #'   origin.
