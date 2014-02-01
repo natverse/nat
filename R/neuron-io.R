@@ -254,7 +254,7 @@ read.neuron.hxskel<-function(file, ...){
       attr(SegmentProps,'Materials')=attr(ndata,'Materials')
     }
     # we can only add one numeric label to the SWC format version of the neuron
-    FirstSegmentProps=subset(SegmentProps,!duplicated(PointNo))
+    FirstSegmentProps=SegmentProps[!duplicated(SegmentProps$PointNo),]
     # 0 = undefined
     d$Label=0L
     d[FirstSegmentProps$PointNo,"Label"]=FirstSegmentProps$Id
