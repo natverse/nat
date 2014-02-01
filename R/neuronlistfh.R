@@ -225,7 +225,7 @@ read.neuronlistfh <- function(file, localdir=NULL) {
     if(!file.exists(localdir)) dir.create(localdir, recursive=TRUE)
     saveRDS(obj,file=tmpFile)
     # and copy / replace existing copy
-    if(!file.exists(cached.neuronlistfh) || md5sum(cached.neuronlistfh)!=md5sum(tmpFile)){
+    if(!file.exists(cached.neuronlistfh) || isTRUE(md5sum(cached.neuronlistfh)!=md5sum(tmpFile))){
       message("Updating cached neuronlistfh: ",basename(cached.neuronlistfh))
       file.copy(tmpFile,cached.neuronlistfh)
     }
