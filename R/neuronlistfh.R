@@ -37,7 +37,7 @@
 #' @seealso \code{\link[filehash]{filehash-class}}
 #' @examples
 #' \dontrun{
-#' kcnl=read.neuronlistfh('http://jefferislab.org/si/nblast/fcdps/kcs20fh.rds',
+#' kcnl=read.neuronlistfh('http://jefferislab.org/si/nblast/flycircuit/kcs20.rds',
 #' 'path/to/my/project/folder')
 #' # this will automatically download the neurons from the web the first time
 #' # it is run
