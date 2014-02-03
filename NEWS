@@ -1,3 +1,10 @@
+nat 1.0
+=======
+* implement reading of amiramesh data
+* including amira SkeletonGraph format tracings
+* switch to filehashRDS format for repositories of remote neurons
+* retire stashR backend for neuronlistfh remote repositories (too slow)
+
 nat 0.9
 =======
 * support for automatic download of neurons from stashR remote repositories on
