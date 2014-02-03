@@ -534,3 +534,12 @@ test_that("we can read hxskel format neurons",{
   expect_true(igraph::graph.isomorphic(g1,g2))
   expect_equivalent(n,Neurites)
 })
+
+test_that("we can identify amira hxskel neurons",{
+  # hxlineset neuron
+  expect_false(is.hxskel('../testdata/neuron/EBT7R.am'))
+  # swc neuron
+  expect_false(is.hxskel('../testdata/neuron/EBT7R.CNG.swc'))
+  # hxskel neuron
+  expect_true(is.hxskel('../testdata/neuron/Neurites.am'))
+})

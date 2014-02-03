@@ -270,3 +270,11 @@ read.neuron.hxskel<-function(file, ...){
   n=as.neuron(ug, vertexData=d, origin=Origin, ... )
   n
 }
+
+is.hxskel<-function(f){
+  if(length(f)>1) return(sapply(f,is.hxskel))
+  # nb we need to return quickly 
+  if(!is.amiramesh(f)) return(FALSE)
+  # OK is this our kind of amiramesh?
+  isTRUE(amiratype(f)=="SkeletonGraph")
+}
