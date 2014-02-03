@@ -3,7 +3,7 @@
   
   # Register file formats
   neuronformats('swc',read=read.neuron.swc,class='neuron')
-  neuronformats('am',read="read.neuron.hxskel",class='neuron')
+  neuronformats('am',read="read.neuron.hxskel",magic=is.hxskel,class='neuron')
   invisible()
 }
 
