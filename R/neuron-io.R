@@ -185,7 +185,7 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
   
   magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
-  magic=if(is.finite(max_magiclen)) readBin(f,what=raw(),n=max_magiclen) else NULL
+  magicbytes=if(is.finite(max_magiclen)) readBin(f,what=raw(),n=max_magiclen) else NULL
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
   for(format in formatsforclass){
     ffs=get(format,envir=.neuronformats)
@@ -194,8 +194,8 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
     if (!action%in%names(ffs)) next
     
     if(!is.null(ffs$magic)){
-      # we have a magic function for this file, so check by magic
-      if(ffs$magic(magic)) return(ffs)
+      # we have a magic function for this file, so check by candidate magic bytes
+      if(ffs$magic(f, magicbytes)) return(ffs)
     } else {
       # else check by file extension
       if(ext%in%ffs$ext) return(ffs)
@@ -271,10 +271,13 @@ read.neuron.hxskel<-function(file, ...){
   n
 }
 
-is.hxskel<-function(f){
+is.hxskel<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
   if(length(f)>1) return(sapply(f,is.hxskel))
   # nb we need to return quickly 
-  if(!is.amiramesh(f)) return(FALSE)
+  tocheck=if(is.null(bytes))  f else bytes
+  if(!is.amiramesh(tocheck)) return(FALSE)
   # OK is this our kind of amiramesh?
   isTRUE(amiratype(f)=="SkeletonGraph")
 }

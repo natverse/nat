@@ -542,4 +542,7 @@ test_that("we can identify amira hxskel neurons",{
   expect_false(is.hxskel('../testdata/neuron/EBT7R.CNG.swc'))
   # hxskel neuron
   expect_true(is.hxskel('../testdata/neuron/Neurites.am'))
+  # hxskel
+  p='../testdata/neuron/Neurites.am'
+  expect_true(is.hxskel(p,bytes=readBin(p,what=raw(),n=80)))
 })
