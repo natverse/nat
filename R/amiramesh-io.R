@@ -489,7 +489,7 @@ amiratype<-function(x){
   if(!is.null(ct<-h$Parameters$ContentType)){
     ct
   } else if(!is.null(ct<-h$Parameters$CoordType)){
-    # since e.g. uniform is not very desctiptive
+    # since e.g. uniform is not very descriptive
     # append field to make uniform.field
     paste(ct,'field',sep='.')
   } else NA_character_
