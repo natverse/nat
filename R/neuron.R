@@ -209,6 +209,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   }
   
   d=seglist2swc(x=subtrees,d=d)
+  d=normalise_swc(d)
   n=list(d=d,NumPoints=igraph::vcount(masterg),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),
