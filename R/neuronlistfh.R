@@ -208,14 +208,15 @@ fillMissing <- function(missing, fh) {
 #'   (via http or ftp).
 #' @param localdir If the file is to be fetched from a remote location, this is 
 #'   the folder in which downloaded objects will be stored.
+#' @param ... Extra arguments to pass to \code{download.file}.
 #' @export
 #' @importFrom tools md5sum
-read.neuronlistfh <- function(file, localdir=NULL) {
+read.neuronlistfh <- function(file, localdir=NULL, ...) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
     if(is.null(localdir)) stop("localdir must be specified.")
     tmpFile <- tempfile()
     on.exit(unlink(tmpFile))
-    download.file(url=file, destfile=tmpFile)
+    download.file(url=file, destfile=tmpFile, ...)
     obj <- readRDS(tmpFile)
     # fix paths in our new object
     attr(obj, 'db')@dir <- file.path(localdir,'data')
