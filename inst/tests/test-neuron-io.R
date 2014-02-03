@@ -283,7 +283,8 @@ test_that("We can read hxlineset format neurons",{
   "NumPoints", "StartPoint", "EndPoints", "BranchPoints", "NumSegs", 
   "SegList", "d"), class = c("neuron", "list"))
   
-  expect_equal(read.neuron('../testdata/neuron/EBT7R.am'),ebt7)
+  expect_error(read.neuron('../testdata/neuron/EBT7R.am'),
+               regexp='Unable to identify')
 })
 
 test_that("we can read hxskel format neurons",{
