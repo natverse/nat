@@ -89,16 +89,26 @@ as.neuron.neuron<-function(x, ...) x
 #' @details Columns will be ordered c('PointNo','Label','X','Y','Z','W','Parent')
 #' @description \code{as.neuron.data.frame} expects a block of SWC format data
 as.neuron.data.frame<-function(x, ...) {
-  requiredColumns<-c('PointNo','Label','X','Y','Z','W','Parent')
-  cnx=colnames(x)
-  if(!all(cnx%in%requiredColumns)) stop("Some columns are missing from x")
-  x=x[,c(requiredColumns,setdiff(cnx,requiredColumns))]
+  x=normalise_swc(x)
   as.neuron(as.ngraph(x), vertexData=x, ...)
+}
+
+normalise_swc<-function(x, requiredColumns=
+                          c('PointNo','Label','X','Y','Z','W','Parent'),
+                        actionOnError=c('warning','stop')){
+  cnx=colnames(x)
+  actionOnError=match.fun(match.arg(actionOnError))
+  missingColumns=setdiff(requiredColumns, cnx)
+  if(length(missingColumns))
+    actionOnError("Columns ", paste(missingColumns, collapse=","), " are missing from x")
+  # if we are only warning on error we may not all have desired columns
+  requiredColumnsWeHave=intersect(requiredColumns,cnx)
+  x[,c(requiredColumnsWeHave,setdiff(cnx,requiredColumns))]
 }
 
 #' Make SegList (and other core fields) from full graph of all nodes and origin
 #' 
-#' @description \code{as.neuron.igraph} converts a graph (typically an 
+#' @description \code{as.neuron.ngraph} converts a graph (typically an 
 #'   \code{ngraph} object) to a neuron
 #' @details Uses a depth first search on the tree to reorder using the given 
 #'   origin.
@@ -199,6 +209,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   }
   
   d=seglist2swc(x=subtrees,d=d)
+  d=normalise_swc(d)
   n=list(d=d,NumPoints=igraph::vcount(masterg),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),

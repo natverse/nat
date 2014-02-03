@@ -73,3 +73,43 @@ as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
     as.ngraph(seglist2swc(x)$d, directed=directed)
   }
 }
+
+as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
+  if(inherits(x,'ngraph'))
+    if(is.directed(x)==directed) return(x)
+  
+  if(is.directed(x) && !directed) x=as.undirected(x, ...)
+  else if(directed) x=as.directed.usingroot(x, root, mode=mode, ...)
+  
+  if(!inherits(x,'ngraph')){
+    class(x)=c("ngraph",class(x))
+  }
+  x
+}
+
+as.directed.usingroot<-function(g, root, mode=c('out','in')){
+  mode=match.arg(mode)
+  # make a directed graph _keeping any attributes_
+  if(igraph::is.directed(g))
+    dg=igraph::as.directed(g,mode='arbitrary')
+  dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, neimode='all')
+  el=igraph::get.edgelist(dg)
+  
+  connected_vertices=which(is.finite(dfs$order))
+  edges_to_check=which(el[,1]%in%connected_vertices)
+  
+  # for each edge, check if it must be flipped
+  parent.dists=dfs$dist[el[edges_to_check,1]]
+  child.dists=dfs$dist[el[edges_to_check,2]]
+  #
+  parent_closer=parent.dists<child.dists
+  same_dist=parent.dists==child.dists
+  parent_further=parent.dists>child.dists
+  #
+  if(any(same_dist)) warning(sum(same_dist)," edges connect vertices that are the same distance from the root => cycles.")
+  edges_to_flip <- edges_to_check[if(mode=='out') parent_further else parent_closer]
+  
+  dg=igraph::delete.edges(dg,edges_to_flip)
+  dg=igraph::add.edges(dg,t(el[edges_to_flip,2:1]))
+  dg
+}

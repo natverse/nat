@@ -85,7 +85,7 @@ neuron.
 \code{as.neuron.data.frame} expects a block of SWC format
 data
 
-\code{as.neuron.igraph} converts a graph (typically an
+\code{as.neuron.ngraph} converts a graph (typically an
 \code{ngraph} object) to a neuron
 
 \code{as.neuron.default} will add class "neuron" to a

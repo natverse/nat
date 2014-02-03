@@ -26,7 +26,7 @@ read.neuron<-function(f, ...){
   } else {
     ffs=getformatfuns(f,action='read')
     if(is.null(ffs)) stop("Unable to identify file type of:", f)
-    n=ffs$read(f, ...)
+    n=match.fun(ffs$read)(f, ...)
   }
   # we can normally rely on dotprops objects to have the correct class
   if(is.neuron(n,Strict=FALSE) && !is.dotprops(n)) as.neuron(n)
@@ -185,7 +185,7 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
   
   magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
-  magic=if(is.finite(max_magiclen)) readBin(f,what=raw(),n=max_magiclen) else NULL
+  magicbytes=if(is.finite(max_magiclen)) readBin(f,what=raw(),n=max_magiclen) else NULL
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
   for(format in formatsforclass){
     ffs=get(format,envir=.neuronformats)
@@ -194,8 +194,8 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
     if (!action%in%names(ffs)) next
     
     if(!is.null(ffs$magic)){
-      # we have a magic function for this file, so check by magic
-      if(ffs$magic(magic)) return(ffs)
+      # we have a magic function for this file, so check by candidate magic bytes
+      if(ffs$magic(f, magicbytes)) return(ffs)
     } else {
       # else check by file extension
       if(ext%in%ffs$ext) return(ffs)
@@ -222,4 +222,62 @@ read.neuron.swc<-function(f, ...){
   # multiply by 2 to get diam which is what I work with internally
   d$W=d$W*2
   as.neuron(d, InputFileName=f, ...)
+}
+
+# read neurons in the format produced by Amira skeletonize plugin
+read.neuron.hxskel<-function(file, ...){
+  ndata=read.amiramesh(file)
+  required_fields=c("Coordinates", "NeighbourCount", "Radii", "NeighbourList")
+  missing_fields=setdiff(required_fields,names(ndata))
+  if(length(missing_fields))
+    stop("Neuron: ",file," is missing fields: ",paste(missing_fields,collapse=" "))
+  
+  d=data.frame(ndata$Coordinates)
+  colnames(d)=c("X","Y","Z")
+  d$W=ndata$Radii*2
+  d$NeighbourCount=ndata$NeighbourCount
+  nVertices=nrow(d)
+  d$PointNo=seq(nVertices)
+  d[,1:4]=round(d[,1:4],digits=3)
+  # Note these numbers come in zero indexed, but I will want them 1-indexed
+  Neighbours=data.frame(Neighbour=ndata$NeighbourList+1,CurPoint=rep(seq(nVertices),d$NeighbourCount))
+  Origin=ndata$Origins
+  if(!is.null(Origin)) Origin=Origin+1
+  
+  # Handle materials
+  if(length(ndata$vertexTypeList)){
+    SegmentProps=data.frame(
+      PointNo=rep(seq(nVertices),ndata$vertexTypeCounter),
+      Id=ndata$vertexTypeList)
+    if(length(attr(ndata,'Materials'))){
+      # we have named materials, so let's add them as an attribute
+      attr(SegmentProps,'Materials')=attr(ndata,'Materials')
+    }
+    # we can only add one numeric label to the SWC format version of the neuron
+    FirstSegmentProps=SegmentProps[!duplicated(SegmentProps$PointNo),]
+    # 0 = undefined
+    d$Label=0L
+    d[FirstSegmentProps$PointNo,"Label"]=FirstSegmentProps$Id
+  }
+
+  el=data.matrix(Neighbours)
+  # make a doubly linked graph from this double edge list
+  doubleg=ngraph(el, d$PointNo, directed=TRUE)
+  # TODO see if we can make appropriate directed graph rather than converting
+  # to undirected.
+  ug=as.undirected(doubleg, mode='collapse')
+  if(!inherits(ug,'ngraph')) class(ug)=c("ngraph",class(ug))
+  n=as.neuron(ug, vertexData=d, origin=Origin, ... )
+  n
+}
+
+is.hxskel<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f,is.hxskel))
+  # nb we need to return quickly 
+  tocheck=if(is.null(bytes))  f else bytes
+  if(!is.amiramesh(tocheck)) return(FALSE)
+  # OK is this our kind of amiramesh?
+  isTRUE(amiratype(f)=="SkeletonGraph")
 }

@@ -453,14 +453,15 @@ write.zlib<-function(uncompressed, con=raw()){
 
 #' Check if file is amiramesh format
 #' 
-#' @details Tries to be as fast as possible by reading only first 11 bytes and
+#' @details Tries to be as fast as possible by reading only first 11 bytes and 
 #'   checking if they equal "# AmiraMesh"
-#' @param f Path to a file to be tested
+#' @param f Path to one or more files to be tested \strong{or} an array of raw
+#'   bytes, for one file only.
 #' @return logical
 #' @export
 #' @family amira
 is.amiramesh<-function(f) {
-  if(length(f)>1) return(sapply(f,is.amiramesh))
+  if(is.character(f) && length(f)>1) return(sapply(f,is.amiramesh))
   # AmiraMesh
   magic=as.raw(c(0x23, 0x20, 0x41, 0x6d, 0x69, 0x72, 0x61, 0x4d, 0x65, 
                  0x73, 0x68))
@@ -489,7 +490,7 @@ amiratype<-function(x){
   if(!is.null(ct<-h$Parameters$ContentType)){
     ct
   } else if(!is.null(ct<-h$Parameters$CoordType)){
-    # since e.g. uniform is not very desctiptive
+    # since e.g. uniform is not very descriptive
     # append field to make uniform.field
     paste(ct,'field',sep='.')
   } else NA_character_

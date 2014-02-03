@@ -5,7 +5,8 @@
 is.amiramesh(f)
 }
 \arguments{
-  \item{f}{Path to a file to be tested}
+  \item{f}{Path to one or more files to be tested
+  \strong{or} an array of raw bytes, for one file only.}
 }
 \value{
 logical
