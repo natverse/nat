@@ -533,6 +533,11 @@ test_that("we can read hxskel format neurons",{
   g2<-as.ngraph(n)
   expect_true(igraph::graph.isomorphic(g1,g2))
   expect_equivalent(n,Neurites)
+  tmpfile=tempfile(fileext='.wurgle')
+  on.exit(unlink(tmpfile))
+  file.copy('../testdata/neuron/Neurites.am',tmpfile)
+  
+  expect_equal(read.neuron(tmpfile),n)
 })
 
 test_that("we can identify amira hxskel neurons",{
