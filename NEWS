@@ -1,3 +1,7 @@
+nat 1.0.1
+=========
+* fix bug in cmtk.bindir() on Solaris (thanks to Brian Ripley)
+
 nat 1.0
 =======
 * implement reading of amiramesh data
