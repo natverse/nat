@@ -120,13 +120,8 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
   if(is.null(bindir)){
-    ow=options(warn=-1)
-    cmtktool_exists=system(paste('which',cmtktool),ignore.stdout=TRUE,
-                           ignore.stderr=TRUE)==0
-    options(ow)
-    if(cmtktool_exists){
-      # identify location of chosen cmtk tool on current on path
-      cmtktoolpath<-system(paste('which',cmtktool),intern=TRUE,ignore.stderr=TRUE)
+    cmtktoolpath=Sys.which(cmtktool)
+    if(nchar(cmtktoolpath)>0){
       bindir=dirname(cmtktoolpath)
     } else {
       # check some plausible locations
