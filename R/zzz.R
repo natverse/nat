@@ -10,9 +10,8 @@
 .onAttach <- function(libname, pkgname) {
   if(is.null(cmtk.bindir()))
   {
-    packageStartupMessage("Full functionality of nat depends on CMTK. ",
-                          "Please install and make sure that it is in your path. ",
-                          "See ?cmtk for details.")
+    packageStartupMessage("Some nat functions depend on a CMTK installation. ",
+                          "See ?cmtk and README.md for details.")
   }
   invisible()
 }
