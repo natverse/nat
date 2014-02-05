@@ -6,16 +6,30 @@ single neurons.
 As of v1.0 there is a released version on CRAN.
 
 ```r
-install.packages('nat',dependencies=TRUE)
+install.packages('nat')
 ```
+
+It you wish to run the package tests, it is necessary to install with 
+`dependencies=TRUE`.
 
 ### Released versions
-Interim released versions are available from our lab repository:
+Interim **source code** packages for released versions are available from our 
+lab repository:
 
 ```r
-install.packages('nat',repos=c(getOption("repos"),'http://jefferislab.org/R'),
+# when binary packages are preferred (e.g. mac/windows)
+install.packages('nat',repos=c('http://jefferislab.org/R',getOption("repos")),
                  type='both')
+# when source packages are the default (e.g. linux)
+install.packages('nat',repos=c('http://jefferislab.org/R',getOption("repos")))
 ```
+
+Note the specification of both the jefferislab.org repository and the default 
+CRAN repository in order to ensure that package dependencies are installed from 
+CRAN and the main package is installed from our repository. Note also that it is
+necessary to specify `type='both` on platforms where binary packages are the
+norm (Windows/MacOS X) since **nat** is only provided as a source package on our
+repository.
 
 ### Bleeding Edge
 You can, however, download the [tar ball](https://github.com/jefferis/nat/tarball/master),
