@@ -74,12 +74,17 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 
 #' Return path to directory containing CMTK binaries
 #' 
+#' @description The \href{www.nitrc.org/projects/cmtk}{Computational Morphometry
+#'   Toolkit} (CMTK) is the default image registration toolkit supported by nat.
+#'   An external CMTK installation is required in order to apply CMTK
+#'   registrations. This function attempts to locate the full path to the CMTK
+#'   executable files and can query and set an option.
 #' @details Queries options('nat.cmtk.bindir') if \code{firtsdir} is not 
 #'   specified. If that does not contain the appropriate binaries, it will look 
 #'   in the system PATH and then a succession of plausible places until it finds
 #'   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing 
 #'   \code{firstdir=NA} will stop the function from trying to locate CMTK, 
-#'   always returning NULL unless check=TRUE when it will error out.
+#'   always returning NULL unless \code{check=TRUE} when it will error out.
 #' @param firstdir Character vector specifying path containing CMTK binaries or 
 #'   NA (see details). This defaults to options('nat.cmtk.bindir').
 #' @param extradirs Where to look if CMTK is not in \code{firstdir} or the PATH
@@ -100,13 +105,14 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
 #'   can correctly interpret and convert registrations from earlier versions.
 #' @examples
-#' cmtk.bindir()
+#' message(ifelse(is.null(d<-cmtk.bindir()), "CMTK not found!",
+#'                paste("CMTK is at:",d)))
 #' \dontrun{
 #' # set options('nat.cmtk.bindir') according to where cmtk was found
 #' op=options(nat.cmtk.bindir=NULL)
 #' cmtk.bindir(set=TRUE)
-#' options(op)
-#' }
+#' options(op)}
+#' @seealso \code{\link{options}}
 cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/usr/local/lib/cmtk/bin',
                                   '/usr/local/bin','/opt/local/bin',

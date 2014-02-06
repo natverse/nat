@@ -33,7 +33,13 @@ Character vector giving path to CMTK binary directory or
 NULL when this cannot be found.
 }
 \description{
-Return path to directory containing CMTK binaries
+The \href{www.nitrc.org/projects/cmtk}{Computational
+Morphometry Toolkit} (CMTK) is the default image
+registration toolkit supported by nat.  An external CMTK
+installation is required in order to apply CMTK
+registrations. This function attempts to locate the full
+path to the CMTK executable files and can query and set an
+option.
 }
 \details{
 Queries options('nat.cmtk.bindir') if \code{firtsdir} is
@@ -42,8 +48,8 @@ binaries, it will look in the system PATH and then a
 succession of plausible places until it finds something.
 Setting \code{options(nat.cmtk.bindir=NA)} or passing
 \code{firstdir=NA} will stop the function from trying to
-locate CMTK, always returning NULL unless check=TRUE when
-it will error out.
+locate CMTK, always returning NULL unless \code{check=TRUE}
+when it will error out.
 }
 \section{Installation}{
   It is recommended to install released CMTK versions
@@ -57,12 +63,15 @@ it will error out.
   earlier versions.
 }
 \examples{
-cmtk.bindir()
+message(ifelse(is.null(d<-cmtk.bindir()), "CMTK not found!",
+               paste("CMTK is at:",d)))
 \dontrun{
 # set options('nat.cmtk.bindir') according to where cmtk was found
 op=options(nat.cmtk.bindir=NULL)
 cmtk.bindir(set=TRUE)
-options(op)
+options(op)}
 }
+\seealso{
+\code{\link{options}}
 }
 
