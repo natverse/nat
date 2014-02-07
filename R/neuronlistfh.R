@@ -200,38 +200,55 @@ fillMissing <- function(missing, fh) {
 #' Read a local, or remote, neuronlistfh object saved to a file.
 #' 
 #' @details When reading a remote \code{neuronlistfh} object, it is downloaded 
-#'   and cached to \code{localdir}. If there is already a cached file at the
-#'   appropriate location then the md5sums are checked and the downloaded file
-#'   will be copied on top of the original copy if they are different.
+#'   and cached to \code{localdir}. If there is already a cached file at the 
+#'   appropriate location and \code{update=TRUE} then the md5sums are checked 
+#'   and the downloaded file will be copied on top of the original copy if they 
+#'   are different; if \code{udpate=FALSE}, the default, then no action will be
+#'   taken.
 #'   
 #' @param file The file path of the neuronlistfh object. Can be local, or remote
 #'   (via http or ftp).
 #' @param localdir If the file is to be fetched from a remote location, this is 
 #'   the folder in which downloaded objects will be stored.
+#' @param update Whether to update local copy of neuronlistfh (default: FALSE, 
+#'   see details)
 #' @param ... Extra arguments to pass to \code{download.file}.
+#'   
 #' @export
 #' @importFrom tools md5sum
-read.neuronlistfh <- function(file, localdir=NULL, ...) {
+read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
     if(is.null(localdir)) stop("localdir must be specified.")
-    tmpFile <- tempfile()
-    on.exit(unlink(tmpFile))
-    download.file(url=file, destfile=tmpFile, ...)
-    obj <- readRDS(tmpFile)
-    # fix paths in our new object
-    attr(obj, 'db')@dir <- file.path(localdir,'data')
-    attr(obj, 'remote') <- paste0(dirname(file), '/data/')
-    # save it to disk
-    cached.neuronlistfh<-file.path(localdir,basename(file))
     if(!file.exists(localdir)) dir.create(localdir, recursive=TRUE)
-    saveRDS(obj,file=tmpFile)
-    # and copy / replace existing copy
-    if(!file.exists(cached.neuronlistfh) || isTRUE(md5sum(cached.neuronlistfh)!=md5sum(tmpFile))){
-      message("Updating cached neuronlistfh: ",basename(cached.neuronlistfh))
-      file.copy(tmpFile,cached.neuronlistfh)
+
+    cached.neuronlistfh<-file.path(localdir,basename(file))
+    
+    if(!file.exists(cached.neuronlistfh) || update){
+      tmpFile <- tempfile()
+      on.exit(unlink(tmpFile))
+      download.file(url=file, destfile=tmpFile, ...)
+      obj <- readRDS(tmpFile)
+      
+      # fix paths in our new object
+      attr(obj, 'db')@dir <- file.path(localdir,'data')
+      attr(obj, 'remote') <- paste0(dirname(file), '/data/')
+      
+      # save it to disk
+      saveRDS(obj,file=tmpFile)
+      # and copy / replace existing copy
+      if(!file.exists(cached.neuronlistfh) || isTRUE(md5sum(cached.neuronlistfh)!=md5sum(tmpFile))){
+        message("Updating cached neuronlistfh: ",basename(cached.neuronlistfh))
+        file.copy(tmpFile,cached.neuronlistfh)
+      }
+      return(obj)
+    } else {
+      file = cached.neuronlistfh
     }
-    obj
-  } else {
-    readRDS(file)
   }
+  
+  obj<-readRDS(file)
+  
+  # fix path to filehash in object that we have read from disk just to be safe
+  attr(obj, 'db')@dir <- file.path(dirname(file),'data')
+  obj
 }
