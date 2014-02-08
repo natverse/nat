@@ -6,7 +6,7 @@
 read.amiramesh(file, sections = NULL, header = FALSE, simplify = TRUE,
   endian = NULL, Verbose = FALSE)
 
-read.amiramesh.header(file, Verbose = FALSE)
+read.amiramesh.header(file, Parse = TRUE, Verbose = FALSE)
 }
 \arguments{
   \item{file}{Name of file (or connection) to read}
@@ -25,6 +25,9 @@ read.amiramesh.header(file, Verbose = FALSE)
   file or uses \code{.Platform$endian}}
 
   \item{Verbose}{Print status messages}
+
+  \item{Parse}{Logical indicating whether to parse header
+  (default: TRUE)}
 }
 \value{
 list of named data chunks
