@@ -653,3 +653,8 @@ test_that("we can identify amira hxlineset neurons",{
   on.exit(close(gzf))
   expect_true(is.hxlineset(r,bytes=readBin(gzf,what=raw(),n=80)))
 })
+
+test_that("read a flycircuit lineset neuron w/o radius info",{
+  f="../testdata/neuron/testneuron_fclineset.am.gz"
+  expect_is(n<-read.neuron(f),'neuron')
+})

@@ -292,7 +292,7 @@ is.hxskel<-function(f, bytes=NULL){
 # @param file Path to the amiramesh file
 # @param defaultDiameter If diameter information, missing use this default
 # @return A neuron object
-read.neuron.hxlineset<-function(file, defaultDiameter=NA, ...){
+read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
   amdata=read.amiramesh(file)
   if(!all(c("Coordinates","LineIdx")%in%names(amdata)))
     stop("Cannot find required data sections")
