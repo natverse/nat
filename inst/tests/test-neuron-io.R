@@ -15,7 +15,7 @@ test_that("We can read neurons in rda or rds format", {
 test_that("We can read neurons in swc format", {
   swc='../testdata/neuron/EBT7R.CNG.swc'
   expect_is(n<-read.neuron(swc),'neuron')
-  expect_equal(n$NeuronName,'EBT7R.CNG.swc')
+  expect_equal(n$NeuronName,'EBT7R.CNG')
 })
 
 test_that("We can set the NeuronName field", {

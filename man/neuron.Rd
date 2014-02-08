@@ -49,7 +49,9 @@ as.neuron(x, ...)
   file}
 
   \item{NeuronName}{Character vector containing name of
-  neuron}
+  neuron or a function with one argument (the full path)
+  which returns the name. The default (\code{NULL}) sets
+  NeuronName to the file name without the file extension.}
 
   \item{MD5}{Logical indicating whether to calculate MD5
   hash of input}
