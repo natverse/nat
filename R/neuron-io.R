@@ -185,7 +185,17 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
   
   magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
-  magicbytes=if(is.finite(max_magiclen)) readBin(f,what=raw(),n=max_magiclen) else NULL
+  if(is.finite(max_magiclen)) {
+    magicbytes = readBin(f,what=raw(),n=max_magiclen)
+    # check if this looks like a gzip file
+    gzip_magic=as.raw(c(0x1f, 0x8b))
+    if(all(magicbytes[1:2]==gzip_magic)){
+      gzf=gzfile(f,open='rb')
+      on.exit(close(gzf))
+      magicbytes=readBin(gzf,what=raw(),n=max_magiclen)
+    }
+  } else magicbytes=NULL
+  
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
   for(format in formatsforclass){
     ffs=get(format,envir=.neuronformats)
@@ -275,9 +285,50 @@ is.hxskel<-function(f, bytes=NULL){
   if(!is.null(bytes) && length(f)>1)
     stop("can only supply raw bytes to check for single file")
   if(length(f)>1) return(sapply(f,is.hxskel))
-  # nb we need to return quickly 
-  tocheck=if(is.null(bytes))  f else bytes
-  if(!is.amiramesh(tocheck)) return(FALSE)
-  # OK is this our kind of amiramesh?
-  isTRUE(amiratype(f)=="SkeletonGraph")
+  isTRUE(amiratype(f, bytes=bytes)=="SkeletonGraph")
+}
+
+# Read neuron in Amira's native lineset format
+# @param file Path to the amiramesh file
+# @param defaultDiameter If diameter information, missing use this default
+# @return A neuron object
+read.neuron.hxlineset<-function(file, defaultDiameter=NA, ...){
+  amdata=read.amiramesh(file)
+  if(!all(c("Coordinates","LineIdx")%in%names(amdata)))
+    stop("Cannot find required data sections")
+  
+  coords=as.data.frame(amdata$Coordinates)
+  colnames(coords)=c("X","Y","Z")
+  
+  # See if we can find some radius data in one of the other data sections
+  radiusData=amdata[!names(amdata)%in%c("Coordinates","LineIdx")]
+  lad=length(radiusData)
+  if(lad==0){
+    warning("No width data for neuron:",file)
+    coords[,"W"]=defaultDiameter
+  } else if (lad==1) {
+    # assume Amira provides radius
+    coords[,"W"]=radiusData[[1]]*2
+  } else if (lad>1) {
+    warning("Assuming that Data section ",lad," (",names(radiusData)[lad],") specifies radius")
+    coords[,"W"]=radiusData[[lad]]*2
+  }
+  
+  coords=cbind(PointNo=seq(1:nrow(coords)), coords)
+  
+  # extract points that define lines (and immediately convert to 1-indexed)
+  lpts = amdata$LineIdx+1
+  lpts[lpts==0]=NA
+  # construct edge list
+  el=cbind(start=lpts[-length(lpts)], end=lpts[-1])
+  el=el[!is.na(rowSums(el)),]
+  ng=ngraph(el, vertexlabels=coords$PointNo)
+  as.neuron(ng, vertexData=coords, InputFileName=file, ...)
+}
+
+is.hxlineset<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f,is.hxlineset))
+  isTRUE(amiratype(f, bytes=bytes)=="HxLineSet")
 }

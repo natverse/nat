@@ -63,4 +63,6 @@ test_that("is.amiramesh and amiratype",{
   expect_true(!is.amiramesh(tf))
 
   expect_equal(amiratype(amfile),'uniform.field')
+  
+  expect_equal(amiratype("../testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
 })

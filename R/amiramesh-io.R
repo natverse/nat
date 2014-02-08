@@ -254,6 +254,16 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   return(returnList)
 }
 
+# utility function to check that the label for a given item is unique
+.checkLabel=function(l, label)   {
+  if( any(names(l)==label)  ){
+    newlabel=make.unique(c(names(l),label))[length(l)+1]
+    warning(paste("Duplicate item",label,"renamed",newlabel))
+    label=newlabel
+  }
+  label
+}
+
 .ParseAmirameshParameters<-function(textArray, CheckLabel=TRUE,ParametersOnly=FALSE){
   
   # First check what kind of input we have
@@ -265,16 +275,6 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   }
   # empty list to store results
   l=list()
-  
-  # utility function to check that the label for a given item is unique
-  checkLabel=function(label) 	{
-    if( any(names(l)==label)  ){
-      newlabel=make.unique(c(names(l),label))[length(l)+1]
-      warning(paste("Duplicate item",label,"renamed",newlabel))
-      label=newlabel
-    }
-    label
-  }
   
   # Should this check to see if the connection still exists?
   # in case we want to bail out sooner
@@ -311,7 +311,7 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
       # parse new subsection
       #cat("new subsection -> recursion\n")
       # set the list element!
-      if(CheckLabel) label=checkLabel(label)
+      if(CheckLabel) label=.checkLabel(l, label)
       l[[length(l)+1]]=.ParseAmirameshParameters(con,CheckLabel=CheckLabel)
       names(l)[length(l)]<-label
       
@@ -337,18 +337,16 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
         
         if(returnAfterParsing) thisLine=sub("\\}","",thisLine,fixed=TRUE)
         
-        # dequote quoted string
-        # can do this by using a textConnection
-        tc=textConnection(thisLine)
-        
-        items=scan(tc,what="",quiet=TRUE)[-1]
-        close(tc)
+        # dequote quoted string using scan
+        items=scan(text=thisLine,what="",quiet=TRUE)[-1]
+        # remove any commas
+        items=items[items!=","]
         attr(items,"quoted")=TRUE
       }
     }
     # set the list element!
     if(CheckLabel)
-      label=checkLabel(label)
+      label=.checkLabel(l, label)
     
     l[[length(l)+1]]=items
     names(l)[length(l)]<-label
@@ -465,6 +463,10 @@ is.amiramesh<-function(f) {
   # AmiraMesh
   magic=as.raw(c(0x23, 0x20, 0x41, 0x6d, 0x69, 0x72, 0x61, 0x4d, 0x65, 
                  0x73, 0x68))
+  if(is.character(f)) {
+    f=gzfile(f, open='rb')
+    on.exit(close(f))
+  }
   first11bytes=try(readBin(f,what=raw(),n=11),silent=TRUE)
   !inherits(first11bytes,'try-error') && length(first11bytes)==11 && 
     all(first11bytes==magic)
@@ -472,26 +474,32 @@ is.amiramesh<-function(f) {
 
 #' Return the type of an amiramesh file on disk or a parsed header
 #' 
-#' @details Note that when checking a file we first test if it is an amiramesh
-#'   file (fast) before reading the header and determining content type (slow).
+#' @details Note that when checking a file we first test if it is an amiramesh 
+#'   file (fast, especially when \code{bytes!=NULL}) before reading the header 
+#'   and determining content type (slow).
 #' @param x Path to files on disk or a single pre-parsed parameter list
+#' @param bytes A raw vector containing at least 11 bytes from the start of the
+#'   file.
 #' @return character vector (NA_character_ when file invalid)
 #' @export
 #' @family amira
-amiratype<-function(x){
+amiratype<-function(x, bytes=NULL){
   if(is.list(x)) h<-x
   else {
-    # we have a file
+    # we have a file, optionally with some raw data
+    if(!is.null(bytes) && length(x)>1) 
+      stop("Can only accept bytes argument for single file")
     if(length(x)>1) return(sapply(x,amiratype))
-    if(!isTRUE(is.amiramesh(x))) return(NA_character_)
+    tocheck=if(is.null(bytes)) x else bytes
+    if(!isTRUE(is.amiramesh(tocheck))) return(NA_character_)
     h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
     if(inherits(h,'try-error')) return(NA_character_)
   }
   if(!is.null(ct<-h$Parameters$ContentType)){
-    ct
+    as.vector(ct)
   } else if(!is.null(ct<-h$Parameters$CoordType)){
     # since e.g. uniform is not very descriptive
     # append field to make uniform.field
-    paste(ct,'field',sep='.')
+    paste(as.vector(ct),'field',sep='.')
   } else NA_character_
 }

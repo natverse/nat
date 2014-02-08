@@ -6,9 +6,9 @@
 #' n$SegList which contains a representation of the neuron's topology used for 
 #' most internal calculations. For historical reasons, n$SegList is limited to a
 #' \emph{single fully-connected} tree. If the tree contains multiple unconnected
-#' subtrees, then these are stored in n$SubTrees and nTrees will be >1; the
+#' subtrees, then these are stored in n$SubTrees and nTrees will be >1; the 
 #' "master" subtree (typically the one with the most points) will then be stored
-#' in n$SegList and n$NumPoints will refer to the number of points in that
+#' in n$SegList and n$NumPoints will refer to the number of points in that 
 #' subtree, not the whole neuron.
 #' @description \code{neuron} makes a neuron object from appropriate variables.
 #' @details StartPoint,BranchPoints,EndPoints are indices matching the rows of 
@@ -30,7 +30,9 @@
 #'   include CreatedAt, NodeName, InputFileStat or InputFileMD5, they will 
 #'   override fields of that name that are calculated automatically.
 #' @param InputFileName Character vector with path to input file
-#' @param NeuronName Character vector containing name of neuron
+#' @param NeuronName Character vector containing name of neuron or a function 
+#'   with one argument (the full path) which returns the name. The default
+#'   (\code{NULL}) sets NeuronName to the file name without the file extension.
 #' @param MD5 Logical indicating whether to calculate MD5 hash of input
 #' @importFrom tools md5sum
 neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPoints,
@@ -46,7 +48,7 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
   n=n[intersect(coreFieldOrder,names(n))]
   n=lapply(n, eval)
   if(!is.null(InputFileName)){
-    if(is.null(NeuronName)) NeuronName=basename(InputFileName)
+    if(is.null(NeuronName)) NeuronName=sub("\\.[^.]+$","",basename(InputFileName))
     else if(is.function(NeuronName)) NeuronName=NeuronName(InputFileName)
     neuron_extra=list(NeuronName=NeuronName,
                       InputFileName=InputFileName,
