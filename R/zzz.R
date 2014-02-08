@@ -4,9 +4,9 @@
   # Register file formats
   neuronformats('swc',read=read.neuron.swc,class='neuron')
   neuronformats('hxskel', ext='am', read="read.neuron.hxskel", magic=is.hxskel,
-                class='neuron')
+                class='neuron', magiclen=11)
   neuronformats('hxlineset', ext='am', read="read.neuron.hxlineset", 
-                magic=is.hxlineset, class='neuron')
+                magic=is.hxlineset, class='neuron', magiclen=11)
   invisible()
 }
 
