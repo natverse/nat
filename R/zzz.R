@@ -2,10 +2,10 @@
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
   
   # Register file formats
-  neuronformats('swc',read=read.neuron.swc,class='neuron')
-  neuronformats('hxskel', ext='am', read="read.neuron.hxskel", magic=is.hxskel,
+  registerformat('swc',read=read.neuron.swc,class='neuron')
+  registerformat('hxskel', ext='am', read="read.neuron.hxskel", magic=is.hxskel,
                 class='neuron', magiclen=11)
-  neuronformats('hxlineset', ext='am', read="read.neuron.hxlineset", 
+  registerformat('hxlineset', ext='am', read="read.neuron.hxlineset", 
                 magic=is.hxlineset, class='neuron', magiclen=11)
   invisible()
 }

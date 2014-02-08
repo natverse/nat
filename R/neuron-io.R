@@ -24,7 +24,7 @@ read.neuron<-function(f, ...){
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
   } else {
-    ffs=getformatfuns(f,action='read')
+    ffs=getformatreader(f)
     if(is.null(ffs)) stop("Unable to identify file type of:", f)
     n=match.fun(ffs$read)(f, ...)
   }
@@ -148,23 +148,61 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 
 #' Set or return list of registered file formats that we can read
 #' 
+#' @description \code{neuronformats} returns format names, functions or a table
+#'   of info re functions that match a filter.
+#' @inheritParams registerformat
+neuronformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
+                        rval=c("names",'info','all')){
+  currentformats=ls(envir=.neuronformats)
+  if(!is.null(format)) {
+    if(format%in%currentformats)
+      currentformats=format
+    else stop("unrecognised format")
+  } else {
+    if(!is.null(ext)){
+      currentformats<-Filter(function(x) isTRUE(
+        get(x,envir=.neuronformats)$ext%in%ext), currentformats)
+    }
+    if(!is.null(class)){
+      currentformats<-Filter(function(x) isTRUE(
+        get(x,envir=.neuronformats)$class%in%class), currentformats)
+    }
+    if(isTRUE(read)){
+      currentformats<-Filter(function(x) 
+        isTRUE(!is.null(get(x,envir=.neuronformats)$read)), currentformats)
+    }
+    if(isTRUE(write)){
+      currentformats<-Filter(function(x) 
+        isTRUE(!is.null(get(x,envir=.neuronformats)$write)), currentformats)
+    }
+  }
+  rval=match.arg(rval)
+  if(rval=='names'){
+    currentformats
+  } else if(rval=='info'){
+    sapply(currentformats,function(x) {
+      fx=get(x, envir=.neuronformats)
+      c(fx[c('ext','class')],read=!is.null(fx$read),write=!is.null(fx$write),
+        magic=!is.null(fx$magic))
+    })
+  } else if(rval=='all') {
+    mget(currentformats, envir=.neuronformats)
+  }
+}
+
+#' @description \code{registerformat} registers a format in the io registry
+#' @export
 #' @param format Character vector naming the format
 #' @param ext Character vector of file extensions
 #' @param read,write Functions to read and write this format
 #' @param magic Function to test whether a file is of this format
-#' @param magiclen Optional integer specifying maximum number of bytes required
-#' from file header to determine file's type.
+#' @param magiclen Optional integer specifying maximum number of bytes required 
+#'   from file header to determine file's type.
 #' @param class The S3 class for the format (character vector e.g. 'neuron')
-neuronformats<-function(format,ext=format,read=NULL,write=NULL,magic=NULL,
-                        magiclen=NA_integer_,class=NULL){
+#' @rdname neuronformats
+registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
+                         magiclen=NA_integer_,class=NULL){
   currentformats=ls(envir=.neuronformats)
-  if(missing(format)){
-    if(!is.null(class)) 
-      return(Filter(function(x) isTRUE(
-        get(x,envir=.neuronformats)$class%in%class),currentformats))
-    else return(currentformats)
-  }
-  
   if(format%in%currentformats) warning("This format has already been registered")
   if(is.null(read) && is.null(write)) stop("Must be provide at least one read or write function")
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
@@ -173,39 +211,36 @@ neuronformats<-function(format,ext=format,read=NULL,write=NULL,magic=NULL,
   invisible()
 }
 
-#' Get the list of functions (read, write etc) for a file
+#' Get the list of functions to read a file
 #' @rdname neuronformats
-#' @param f Path to a file
-#' @param action Whether we must have a read or write function for this file
-getformatfuns<-function(f, action=c('read','write'), class=NULL){
-  action=match.arg(action)
-  
+#' @param file Path to a file
+getformatreader<-function(file, class=NULL){
   formatsforclass<-neuronformats(class=class)
   if(!length(formatsforclass)) return(NULL)
   
   magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
   if(is.finite(max_magiclen)) {
-    magicbytes = readBin(f,what=raw(),n=max_magiclen)
+    magicbytes = readBin(file,what=raw(),n=max_magiclen)
     # check if this looks like a gzip file
     gzip_magic=as.raw(c(0x1f, 0x8b))
     if(all(magicbytes[1:2]==gzip_magic)){
-      gzf=gzfile(f,open='rb')
+      gzf=gzfile(file,open='rb')
       on.exit(close(gzf))
       magicbytes=readBin(gzf,what=raw(),n=max_magiclen)
     }
   } else magicbytes=NULL
   
-  ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
+  ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(file)))
   for(format in formatsforclass){
     ffs=get(format,envir=.neuronformats)
     
-    # check that we have a read or write function for this format
-    if (!action%in%names(ffs)) next
+    # check that we have a read function for this format
+    if (!"read"%in%names(ffs)) next
     
     if(!is.null(ffs$magic)){
       # we have a magic function for this file, so check by candidate magic bytes
-      if(ffs$magic(f, magicbytes)) return(ffs)
+      if(ffs$magic(file, magicbytes)) return(ffs)
     } else {
       # else check by file extension
       if(ext%in%ffs$ext) return(ffs)

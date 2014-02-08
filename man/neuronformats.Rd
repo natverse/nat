@@ -1,12 +1,16 @@
 \name{neuronformats}
-\alias{getformatfuns}
+\alias{getformatreader}
 \alias{neuronformats}
+\alias{registerformat}
 \title{Set or return list of registered file formats that we can read}
 \usage{
-neuronformats(format, ext = format, read = NULL, write = NULL,
+neuronformats(format = NULL, ext = NULL, read = NULL, write = NULL,
+  class = NULL, rval = c("names", "info", "all"))
+
+registerformat(format = NULL, ext = format, read = NULL, write = NULL,
   magic = NULL, magiclen = NA_integer_, class = NULL)
 
-getformatfuns(f, action = c("read", "write"), class = NULL)
+getformatreader(file, class = NULL)
 }
 \arguments{
   \item{format}{Character vector naming the format}
@@ -26,15 +30,14 @@ getformatfuns(f, action = c("read", "write"), class = NULL)
   \item{class}{The S3 class for the format (character
   vector e.g. 'neuron')}
 
-  \item{f}{Path to a file}
-
-  \item{action}{Whether we must have a read or write
-  function for this file}
+  \item{file}{Path to a file}
 }
 \description{
-Set or return list of registered file formats that we can
-read
+\code{neuronformats} returns format names, functions or a
+table of info re functions that match a filter.
 
-Get the list of functions (read, write etc) for a file
+\code{registerformat} registers a format in the io registry
+
+Get the list of functions to read a file
 }
 
