@@ -591,7 +591,10 @@ test_that("we can identify amira hxlineset neurons",{
   expect_false(is.hxlineset(q,bytes=readBin(p,what=raw(),n=80)))
   # gzipped direct
   expect_true(is.hxlineset('../testdata/neuron/testneuron_fclineset.am.gz'))
-  # gzipeed via byte array
+  # gzipped via byte array
+  # nb this relies on decompression which is looked after by getformatfuns
   r='../testdata/neuron/testneuron_fclineset.am.gz'
-  expect_true(is.hxlineset(r,bytes=readBin(r,what=raw(),n=80)))
+  gzf=gzfile(r, open='rb')
+  on.exit(close(gzf))
+  expect_true(is.hxlineset(r,bytes=readBin(gzf,what=raw(),n=80)))
 })
