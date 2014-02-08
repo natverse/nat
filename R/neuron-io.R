@@ -211,9 +211,14 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
   invisible()
 }
 
-#' Get the list of functions to read a file
+#' @description \code{getformatwriter} gets the function to read a file
 #' @rdname neuronformats
 #' @param file Path to a file
+#' @details \code{getformatreader} starts by reading a set number of bytes from 
+#'   the start off the current file and then checks using file extension and 
+#'   magic functions to see if it can identify the file. Presently formats are 
+#'   in a queue in alphabetical order, dispatching on the first match.
+#' @export
 getformatreader<-function(file, class=NULL){
   formatsforclass<-neuronformats(class=class)
   if(!length(formatsforclass)) return(NULL)
@@ -249,8 +254,9 @@ getformatreader<-function(file, class=NULL){
   return(NULL)
 }
 
-#' Get the list of functions to write a file
+#' @description \code{getformatwriter} gets the function to write a file
 #' @rdname neuronformats
+#' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   if(!is.null(file)) ext=sub("\\.[^.]+$","",file)
   nfs=neuronformats(format=format, ext=ext, class=class, rval='all')
