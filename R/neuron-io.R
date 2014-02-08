@@ -249,6 +249,16 @@ getformatreader<-function(file, class=NULL){
   return(NULL)
 }
 
+#' Get the list of functions to write a file
+#' @rdname neuronformats
+getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
+  if(!is.null(file)) ext=sub("\\.[^.]+$","",file)
+  nfs=neuronformats(format=format, ext=ext, class=class, rval='all')
+  if(length(nfs)>1) stop("Ambiguous file format specification!")
+  if(length(nfs)==0) stop("No matching writer for this file format!")
+  return(nfs$write)
+}
+
 #' Read a neuron in swc file format
 #' 
 #' This function should normally only be called from read.neuron and is not
