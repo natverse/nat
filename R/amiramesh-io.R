@@ -337,12 +337,10 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
         
         if(returnAfterParsing) thisLine=sub("\\}","",thisLine,fixed=TRUE)
         
-        # dequote quoted string
-        # can do this by using a textConnection
-        tc=textConnection(thisLine)
-        
-        items=scan(tc,what="",quiet=TRUE)[-1]
-        close(tc)
+        # dequote quoted string using scan
+        items=scan(text=thisLine,what="",quiet=TRUE)[-1]
+        # remove any commas
+        items=items[items!=","]
         attr(items,"quoted")=TRUE
       }
     }
