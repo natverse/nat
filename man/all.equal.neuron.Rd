@@ -6,7 +6,7 @@
   check.attributes = FALSE, fieldsToCheck = c("NumPoints", "StartPoint",
   "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
   fieldsToCheckIfPresent = c("NeuronName", "nTrees", "SubTrees"),
-  CheckSharedFieldsOnly = FALSE, ...)
+  fieldsToExclude = character(), CheckSharedFieldsOnly = FALSE, ...)
 }
 \arguments{
   \item{fieldsToCheck}{Which fields in the neuron are
@@ -14,6 +14,9 @@
 
   \item{fieldsToCheckIfPresent}{These fields are only
   checked if they are present}
+
+  \item{fieldsToExclude}{Character vector of fields to
+  exclude from check}
 
   \item{CheckSharedFieldsOnly}{Logical whether to check
   shared fields only (default: FALSE)}
@@ -36,6 +39,15 @@
 }
 \description{
 Check equality on key fields of neuron object
+}
+\examples{
+x=Cell07PNs[[1]]
+y=x
+y$NeuronName='rhubarb'
+# NOT TRUE
+all.equal(x, y)
+# TRUE
+all.equal(x, y, fieldsToExclude='NeuronName')
 }
 \seealso{
 \code{\link{all.equal}}

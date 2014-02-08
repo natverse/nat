@@ -245,12 +245,12 @@ read.neuron.hxskel<-function(file, ...){
   d=data.frame(ndata$Coordinates)
   colnames(d)=c("X","Y","Z")
   d$W=ndata$Radii*2
-  d$NeighbourCount=ndata$NeighbourCount
   nVertices=nrow(d)
   d$PointNo=seq(nVertices)
-  d[,1:4]=round(d[,1:4],digits=3)
+  d[,1:4]=zapsmall(d[,1:4])
   # Note these numbers come in zero indexed, but I will want them 1-indexed
-  Neighbours=data.frame(Neighbour=ndata$NeighbourList+1,CurPoint=rep(seq(nVertices),d$NeighbourCount))
+  Neighbours=data.frame(Neighbour=ndata$NeighbourList+1,
+                        CurPoint=rep(seq(nVertices),ndata$NeighbourCount))
   Origin=ndata$Origins
   if(!is.null(Origin)) Origin=Origin+1
   
@@ -277,7 +277,7 @@ read.neuron.hxskel<-function(file, ...){
   # to undirected.
   ug=as.undirected(doubleg, mode='collapse')
   if(!inherits(ug,'ngraph')) class(ug)=c("ngraph",class(ug))
-  n=as.neuron(ug, vertexData=d, origin=Origin, ... )
+  n=as.neuron(ug, vertexData=d, origin=Origin, InputFileName=file, ... )
   n
 }
 
@@ -292,7 +292,7 @@ is.hxskel<-function(f, bytes=NULL){
 # @param file Path to the amiramesh file
 # @param defaultDiameter If diameter information, missing use this default
 # @return A neuron object
-read.neuron.hxlineset<-function(file, defaultDiameter=NA, ...){
+read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
   amdata=read.amiramesh(file)
   if(!all(c("Coordinates","LineIdx")%in%names(amdata)))
     stop("Cannot find required data sections")
@@ -314,7 +314,7 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA, ...){
     coords[,"W"]=radiusData[[lad]]*2
   }
   
-  coords=cbind(PointNo=seq(1:nrow(coords)), coords)
+  coords=cbind(PointNo=seq(1:nrow(coords)), zapsmall(coords))
   
   # extract points that define lines (and immediately convert to 1-indexed)
   lpts = amdata$LineIdx+1
