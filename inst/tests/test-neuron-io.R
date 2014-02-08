@@ -576,3 +576,22 @@ test_that("we can identify amira hxskel neurons",{
   p='../testdata/neuron/Neurites.am'
   expect_true(is.hxskel(p,bytes=readBin(p,what=raw(),n=80)))
 })
+
+test_that("we can identify amira hxlineset neurons",{
+  # hxlineset neuron
+  expect_true(is.hxlineset('../testdata/neuron/EBT7R.am'))
+  # swc neuron
+  expect_false(is.hxlineset('../testdata/neuron/EBT7R.CNG.swc'))
+  # hxskel neuron
+  expect_false(is.hxlineset('../testdata/neuron/Neurites.am'))
+  # hxlineset via byte array
+  p='../testdata/neuron/EBT7R.am'
+  expect_true(is.hxlineset(p,bytes=readBin(p,what=raw(),n=80)))
+  q='../testdata/neuron/Neurites.am'
+  expect_false(is.hxlineset(q,bytes=readBin(p,what=raw(),n=80)))
+  # gzipped direct
+  expect_true(is.hxlineset('../testdata/neuron/testneuron_fclineset.am.gz'))
+  # gzipeed via byte array
+  r='../testdata/neuron/testneuron_fclineset.am.gz'
+  expect_true(is.hxlineset(r,bytes=readBin(r,what=raw(),n=80)))
+})
