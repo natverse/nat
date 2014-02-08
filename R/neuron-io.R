@@ -185,7 +185,17 @@ getformatfuns<-function(f, action=c('read','write'), class=NULL){
   
   magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
-  magicbytes=if(is.finite(max_magiclen)) readBin(f,what=raw(),n=max_magiclen) else NULL
+  if(is.finite(max_magiclen)) {
+    magicbytes = readBin(f,what=raw(),n=max_magiclen)
+    # check if this looks like a gzip file
+    gzip_magic=as.raw(c(0x1f, 0x8b))
+    if(all(magicbytes[1:2]==gzip_magic)){
+      gzf=gzfile(f,open='rb')
+      on.exit(close(gzf))
+      magicbytes=readBin(gzf,what=raw(),n=max_magiclen)
+    }
+  } else magicbytes=NULL
+  
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
   for(format in formatsforclass){
     ffs=get(format,envir=.neuronformats)
