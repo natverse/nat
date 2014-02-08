@@ -141,11 +141,12 @@ read.amiramesh.ascii<-function(file, df, sections, Verbose=FALSE){
 
 #' Read the header of an amiramesh file
 #' 
+#' @param Parse Logical indicating whether to parse header (default: TRUE)
 #' @export
 #' @rdname amiramesh-io
 #' @details \code{read.amiramesh.header} will open a connection if file is a 
 #'   character vector and close it when finished reading.
-read.amiramesh.header<-function(file, Verbose=FALSE){
+read.amiramesh.header<-function(file, Parse=TRUE, Verbose=FALSE){
   if(inherits(file,"connection")) {
     con=file
   } else {
@@ -156,6 +157,7 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   while( substring(t<-readLines(con,1),1,2)!="@1"){
     headerLines=c(headerLines,t)
   }
+  if(!Parse) return(headerLines)
   returnList<-list(header=headerLines)
   
   nHeaderLines=length(headerLines)
