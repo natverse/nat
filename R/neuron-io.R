@@ -277,7 +277,7 @@ read.neuron.hxskel<-function(file, ...){
   # to undirected.
   ug=as.undirected(doubleg, mode='collapse')
   if(!inherits(ug,'ngraph')) class(ug)=c("ngraph",class(ug))
-  n=as.neuron(ug, vertexData=d, origin=Origin, ... )
+  n=as.neuron(ug, vertexData=d, origin=Origin, InputFileName=file, ... )
   n
 }
 
