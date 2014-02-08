@@ -325,3 +325,78 @@ read.neuron.swc<-function(f, ...){
   d$W=d$W*2
   as.neuron(d, InputFileName=f, ...)
 }
+
+#' Write out a neuron in any of the file formats we know about
+#'
+#' If filename is not specified the neuron's InputFileName field will be checked.
+#' If this is missing there will be an error.
+#' If dir is specified it will be combined with basename(filename).
+#' If filename is specified but ftype is not, it will be inferred from filename's
+#'   extension.
+#' @param n A neuron
+#' @param filename Path to output file
+#' @param dir Path to directory (this will replace dirname(filename) if specified)
+#' @param ftype File type (a unique abbreviation of 
+#'   'swc','lineset.am','skeletonize.am','neurolucida.asc','borst','rds')
+#' @param suffix Will replace the default suffix for the filetype and should
+#'   include the period eg suffix='.amiramesh' or suffix='_reg.swc'
+#' @param ... Additional arguments passed to selected  WriteNeuron function
+#' @return return value
+#' @export
+#' @seealso \code{\link{WriteSWCFile, WriteNeuronToAM, WriteNeuronToAM3D, 
+#'   WriteAscFromNeuron, WriteBorstFile,saveRDS}}
+write.neuron<-function(n,filename=NULL,dir=NULL,ftype=c('swc','lineset.am',
+                                                        'skeletonize.am','neurolucida.asc','borst','rds'),suffix=NULL,...){
+  if(is.dotprops(n)){
+    # we only know how to save dotprops objects in R's internal format
+    ftype='rds'
+  }
+  if(is.null(filename)){
+    # no filename was specified - use the one embedded in neuron
+    filename=n$InputFileName
+    if(is.null(filename)) stop("No filename specified and neuron does not have an InputFileName")
+    if(!is.null(suffix)){
+      # we specified an explicit suffix - use this to identify file type
+      ftype_from_ext=switch(tolower(suffix),.swc='swc',.asc='neurolucida.asc',
+                            .am='lineset.am',.amiramesh='lineset.am',.borst='borst',.rds='rds',NA)
+      if(is.na(ftype_from_ext) && length(ftype!=1)){
+        stop("file suffix: ",suffix,
+             " does not uniquely identify filetype nor has this been specified directly")
+      } else if(length(ftype_from_ext)>1)
+        ftype=ftype_from_ext
+      else
+        ftype=match.arg(ftype)
+    } else {
+      # use the file type to specify the suffix
+      ftype=match.arg(ftype)
+      suffix=sub(".*?([^.]+)$",".\\1",ftype)
+    }
+  } else {
+    ext=sub(".*(\\.[^.]+)$","\\1",filename)
+    ftype_from_ext=switch(tolower(ext),.swc='swc',.asc='neurolucida.asc',
+                          .am='lineset.am',.amiramesh='lineset.am',.borst='borst',.rds='rds',NA)
+    if(!is.na(ftype_from_ext) && length(ftype)!=1)
+      ftype=ftype_from_ext
+    else ftype=match.arg(ftype)
+  }
+  # replace with an explicit suffix if desired
+  if(!is.null(suffix)) filename=sub("(\\.[^.]+)$",suffix,filename)
+  if(!is.null(dir)){
+    filename=file.path(dir,basename(filename))
+  }
+  if(ftype=='rds'){
+    saveRDS(n,file=filename,...)
+  } else if(ftype=='lineset.am'){
+    WriteNeuronToAM(n,filename,...)
+  } else if(ftype=='skeletonize.am'){
+    WriteNeuronToAM3D(n,filename,...)
+  } else if(ftype=='neurolucida.asc'){
+    WriteAscFromNeuron(n,filename,...)
+  } else if(ftype=='swc'){
+    WriteSWCFile(n,filename,...)
+  } else if(ftype=='borst'){
+    WriteBorstFile(n,filename,...)
+  } else {
+    stop("Unimplemented file type ",ftype)
+  }
+}
