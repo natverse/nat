@@ -247,7 +247,7 @@ read.neuron.hxskel<-function(file, ...){
   d$W=ndata$Radii*2
   nVertices=nrow(d)
   d$PointNo=seq(nVertices)
-  d[,1:4]=round(d[,1:4],digits=3)
+  d[,1:4]=zapsmall(d[,1:4])
   # Note these numbers come in zero indexed, but I will want them 1-indexed
   Neighbours=data.frame(Neighbour=ndata$NeighbourList+1,
                         CurPoint=rep(seq(nVertices),ndata$NeighbourCount))
@@ -314,7 +314,7 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA, ...){
     coords[,"W"]=radiusData[[lad]]*2
   }
   
-  coords=cbind(PointNo=seq(1:nrow(coords)), coords)
+  coords=cbind(PointNo=seq(1:nrow(coords)), zapsmall(coords))
   
   # extract points that define lines (and immediately convert to 1-indexed)
   lpts = amdata$LineIdx+1
