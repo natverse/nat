@@ -496,10 +496,10 @@ amiratype<-function(x, bytes=NULL){
     if(inherits(h,'try-error')) return(NA_character_)
   }
   if(!is.null(ct<-h$Parameters$ContentType)){
-    ct
+    as.vector(ct)
   } else if(!is.null(ct<-h$Parameters$CoordType)){
     # since e.g. uniform is not very descriptive
     # append field to make uniform.field
-    paste(ct,'field',sep='.')
+    paste(as.vector(ct),'field',sep='.')
   } else NA_character_
 }
