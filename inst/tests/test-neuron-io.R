@@ -542,7 +542,7 @@ test_that("we can read hxskel format neurons",{
   on.exit(unlink(tmpfile))
   file.copy('../testdata/neuron/Neurites.am',tmpfile)
   
-  expect_equal(read.neuron(tmpfile),n)
+  expect_equal(read.neuron(tmpfile), n, fieldsToExclude='NeuronName')
 })
 
 test_that("we can identify amira hxskel neurons",{
@@ -559,9 +559,12 @@ test_that("we can identify amira hxskel neurons",{
 
 test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
   expect_is(l<-read.neuron("../testdata/neuron/testneuron_lineset.am"),'neuron')
-  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am"))
-  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d_ascii.am.gz"))
-  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am.gz"))
+  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am"),
+               fieldsToExclude='NeuronName')
+  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d_ascii.am.gz"),
+               fieldsToExclude='NeuronName')
+  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am.gz"),
+               fieldsToExclude='NeuronName')
 })
 
 test_that("we can identify amira hxlineset neurons",{
