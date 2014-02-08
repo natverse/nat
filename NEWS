@@ -1,3 +1,8 @@
+nat 1.0.1.99
+============
+* Give read.neuronlistfh an update argument (default:FALSE) so that it does not
+  re-download remote data.
+
 nat 1.0.1
 =========
 * fix bug in cmtk.bindir() on Solaris (thanks to Brian Ripley)
