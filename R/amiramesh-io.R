@@ -254,6 +254,16 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   return(returnList)
 }
 
+# utility function to check that the label for a given item is unique
+.checkLabel=function(l, label)   {
+  if( any(names(l)==label)  ){
+    newlabel=make.unique(c(names(l),label))[length(l)+1]
+    warning(paste("Duplicate item",label,"renamed",newlabel))
+    label=newlabel
+  }
+  label
+}
+
 .ParseAmirameshParameters<-function(textArray, CheckLabel=TRUE,ParametersOnly=FALSE){
   
   # First check what kind of input we have
@@ -265,16 +275,6 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
   }
   # empty list to store results
   l=list()
-  
-  # utility function to check that the label for a given item is unique
-  checkLabel=function(label) 	{
-    if( any(names(l)==label)  ){
-      newlabel=make.unique(c(names(l),label))[length(l)+1]
-      warning(paste("Duplicate item",label,"renamed",newlabel))
-      label=newlabel
-    }
-    label
-  }
   
   # Should this check to see if the connection still exists?
   # in case we want to bail out sooner
@@ -311,7 +311,7 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
       # parse new subsection
       #cat("new subsection -> recursion\n")
       # set the list element!
-      if(CheckLabel) label=checkLabel(label)
+      if(CheckLabel) label=.checkLabel(l, label)
       l[[length(l)+1]]=.ParseAmirameshParameters(con,CheckLabel=CheckLabel)
       names(l)[length(l)]<-label
       
@@ -337,18 +337,16 @@ read.amiramesh.header<-function(file, Verbose=FALSE){
         
         if(returnAfterParsing) thisLine=sub("\\}","",thisLine,fixed=TRUE)
         
-        # dequote quoted string
-        # can do this by using a textConnection
-        tc=textConnection(thisLine)
-        
-        items=scan(tc,what="",quiet=TRUE)[-1]
-        close(tc)
+        # dequote quoted string using scan
+        items=scan(text=thisLine,what="",quiet=TRUE)[-1]
+        # remove any commas
+        items=items[items!=","]
         attr(items,"quoted")=TRUE
       }
     }
     # set the list element!
     if(CheckLabel)
-      label=checkLabel(label)
+      label=.checkLabel(l, label)
     
     l[[length(l)+1]]=items
     names(l)[length(l)]<-label
@@ -498,10 +496,10 @@ amiratype<-function(x, bytes=NULL){
     if(inherits(h,'try-error')) return(NA_character_)
   }
   if(!is.null(ct<-h$Parameters$ContentType)){
-    ct
+    as.vector(ct)
   } else if(!is.null(ct<-h$Parameters$CoordType)){
     # since e.g. uniform is not very descriptive
     # append field to make uniform.field
-    paste(ct,'field',sep='.')
+    paste(as.vector(ct),'field',sep='.')
   } else NA_character_
 }
