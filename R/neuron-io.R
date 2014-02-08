@@ -317,7 +317,7 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA, ...){
   el=cbind(start=lpts[-length(lpts)], end=lpts[-1])
   el=el[!is.na(rowSums(el)),]
   ng=ngraph(el, vertexlabels=coords$PointNo)
-  as.neuron(ng, vertexData=coords, InputFileName=file)
+  as.neuron(ng, vertexData=coords, InputFileName=file, ...)
 }
 
 is.hxlineset<-function(f, bytes=NULL){
