@@ -133,7 +133,7 @@ normalise_swc<-function(x, requiredColumns=
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
-  if(!is.null(origin)){
+  if(length(origin)){
     vertex_labels=igraph::V(x)$label
     if(!is.null(vertex_labels)){
       origin=match(origin,vertex_labels)
