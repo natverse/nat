@@ -317,18 +317,28 @@ scale.neuron<-function(x,center=FALSE,scale=FALSE){
 #' 
 #' @inheritParams base::all.equal.default
 #' @param fieldsToCheck Which fields in the neuron are always check
-#' @param fieldsToCheckIfPresent These fields are only checked if they are
+#' @param fieldsToCheckIfPresent These fields are only checked if they are 
 #'   present
+#' @param fieldsToExclude Character vector of fields to exclude from check
 #' @param CheckSharedFieldsOnly Logical whether to check shared fields only 
 #'   (default: FALSE)
 #' @param ... additional arguments passed to \code{all.equal}
 #' @method all.equal neuron
 #' @export
 #' @seealso \code{\link{all.equal}}
+#' @examples
+#' x=Cell07PNs[[1]]
+#' y=x
+#' y$NeuronName='rhubarb'
+#' # NOT TRUE
+#' all.equal(x, y)
+#' # TRUE
+#' all.equal(x, y, fieldsToExclude='NeuronName')
 all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
                            fieldsToCheck=c("NumPoints", "StartPoint", "BranchPoints",
                                            "EndPoints", "NumSegs", "SegList", "d"), 
                            fieldsToCheckIfPresent=c("NeuronName","nTrees","SubTrees"),
+                           fieldsToExclude=character(),
                            CheckSharedFieldsOnly=FALSE, ...){
   if(length(fieldsToCheck)==1 && is.na(fieldsToCheck))
     fieldsToCheck=names(current)
@@ -351,6 +361,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
     if(length(missingfields)>0)
       return(paste("Target missing fields: ",missingfields))		
   }
+  fieldsToCheck=setdiff(fieldsToCheck,fieldsToExclude)
   all.equal(target[fieldsToCheck],current[fieldsToCheck],
             tolerance=tolerance, check.attributes=check.attributes, ...)
 }
