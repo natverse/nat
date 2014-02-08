@@ -577,6 +577,13 @@ test_that("we can identify amira hxskel neurons",{
   expect_true(is.hxskel(p,bytes=readBin(p,what=raw(),n=80)))
 })
 
+test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
+  expect_is(l<-read.neuron("../testdata/neuron/testneuron_lineset.am"),'neuron')
+  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am"))
+  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d_ascii.am.gz"))
+  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am.gz"))
+})
+
 test_that("we can identify amira hxlineset neurons",{
   # hxlineset neuron
   expect_true(is.hxlineset('../testdata/neuron/EBT7R.am'))
