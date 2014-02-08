@@ -284,7 +284,7 @@ test_that("We can read hxlineset format neurons",{
   "SegList", "d"), class = c("neuron", "list"))
   
   expect_error(read.neuron('../testdata/neuron/EBT7R.am'),
-               regexp='Unable to identify')
+               regexp='not yet implemented')
 })
 
 test_that("we can read hxskel format neurons",{
