@@ -472,18 +472,24 @@ is.amiramesh<-function(f) {
 
 #' Return the type of an amiramesh file on disk or a parsed header
 #' 
-#' @details Note that when checking a file we first test if it is an amiramesh
-#'   file (fast) before reading the header and determining content type (slow).
+#' @details Note that when checking a file we first test if it is an amiramesh 
+#'   file (fast, especially when \code{bytes!=NULL}) before reading the header 
+#'   and determining content type (slow).
 #' @param x Path to files on disk or a single pre-parsed parameter list
+#' @param bytes A raw vector containing at least 11 bytes from the start of the
+#'   file.
 #' @return character vector (NA_character_ when file invalid)
 #' @export
 #' @family amira
-amiratype<-function(x){
+amiratype<-function(x, bytes=NULL){
   if(is.list(x)) h<-x
   else {
-    # we have a file
+    # we have a file, optionally with some raw data
+    if(!is.null(bytes) && length(x)>1) 
+      stop("Can only accept bytes argument for single file")
     if(length(x)>1) return(sapply(x,amiratype))
-    if(!isTRUE(is.amiramesh(x))) return(NA_character_)
+    tocheck=if(is.null(bytes)) x else bytes
+    if(!isTRUE(is.amiramesh(tocheck))) return(NA_character_)
     h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
     if(inherits(h,'try-error')) return(NA_character_)
   }
