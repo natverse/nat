@@ -245,12 +245,12 @@ read.neuron.hxskel<-function(file, ...){
   d=data.frame(ndata$Coordinates)
   colnames(d)=c("X","Y","Z")
   d$W=ndata$Radii*2
-  d$NeighbourCount=ndata$NeighbourCount
   nVertices=nrow(d)
   d$PointNo=seq(nVertices)
   d[,1:4]=round(d[,1:4],digits=3)
   # Note these numbers come in zero indexed, but I will want them 1-indexed
-  Neighbours=data.frame(Neighbour=ndata$NeighbourList+1,CurPoint=rep(seq(nVertices),d$NeighbourCount))
+  Neighbours=data.frame(Neighbour=ndata$NeighbourList+1,
+                        CurPoint=rep(seq(nVertices),ndata$NeighbourCount))
   Origin=ndata$Origins
   if(!is.null(Origin)) Origin=Origin+1
   
