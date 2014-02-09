@@ -187,7 +187,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
     if(is.na(m)) stop("Unrecognised format: ", format)
     currentformats=currentformats[m]
   } else {
-    if(!is.null(ext)){
+    if(!is.null(ext) && !is.na(ext)){
       if(substr(ext,1,1)!=".") ext=paste(".",sep="",ext)
       currentformats<-Filter(function(x) isTRUE(
         get(x,envir=.fileformats)$ext%in%ext), currentformats)
