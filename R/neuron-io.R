@@ -169,6 +169,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 #'   
 #'   \item \code{getformatwriter} returns a list. The writer can be accessed 
 #'   with \code{$write}.}
+#' @export
 #' @examples
 #' # information about the currently registered file formats
 #' fileformats(rval='info')
