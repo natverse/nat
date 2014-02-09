@@ -1,7 +1,14 @@
-nat 1.0.1.99
-============
+nat 1.1
+=======
+* Implemented reading and writing of groups of neurons from/to neuronlists.
+  See read.neurons and write.neurons.
+* Implemented writing of single neurons in swc format, Amira's HxLineSet and 
+  SkeletonGraph formats, and R's rds format.
+* Can now read Amira HxLineSet format neurons (see read.neuron)
 * Give read.neuronlistfh an update argument (default:FALSE) so that it does not
   re-download remote data.
+* dev: speed and flexibility improvements in fileformats ioregistry.
+  see ?fileformats for details of new functions.
 
 nat 1.0.1
 =========
