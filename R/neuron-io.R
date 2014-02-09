@@ -14,6 +14,8 @@
 #' # use a function to set the NeuronName field
 #' n3=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
 #'   NeuronName=function(x) sub("\\..*","",x))
+#' # show the currently registered file formats that we can read
+#' fileformats(class='neuron', read=TRUE)
 read.neuron<-function(f, ...){
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
@@ -167,6 +169,9 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 #'   
 #'   \item \code{getformatwriter} returns a list. The writer can be accessed 
 #'   with \code{$write}.}
+#' @examples
+#' # information about the currently registered file formats
+#' fileformats(rval='info')
 fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
                         rval=c("names",'info','all')){
   currentformats<-ls(envir=.fileformats)
@@ -285,11 +290,13 @@ getformatreader<-function(file, class=NULL){
 #' @description \code{getformatwriter} gets the function to write a file
 #' @details If \code{ext=NA} then extension will not be used to query file 
 #'   formats and it will be overwritten by the default extensions returned by 
-#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will use the
-#'   specified extension to overwrite the value returned by \code{fileformats}. 
-#'   If \code{ext=NULL} and \code{file='somefilename.someext'} then \code{ext} 
-#'   will be set to \code{'someext'} and that will override the value returned
-#'   by \code{fileformats}.
+#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will
+#'   use the specified extension to overwrite the value returned by
+#'   \code{fileformats}. If \code{ext=NULL} and
+#'   \code{file='somefilename.someext'} then \code{ext} will be set to
+#'   \code{'someext'} and that will override the value returned by
+#'   \code{fileformats}. See \code{\link{write.neuron}} for code to make this
+#'   discussion more concrete.
 #' @rdname fileformats
 #' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
@@ -347,6 +354,9 @@ read.neuron.swc<-function(f, ...){
 #' @return return value
 #' @export
 #' @seealso \code{\link{fileformats}, \link{saveRDS}}
+#' @examples
+#' # show the currently registered file formats that we can write
+#' fileformats(class='neuron', write=TRUE)
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){

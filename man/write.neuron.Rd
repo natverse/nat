@@ -40,6 +40,10 @@ an error. If dir is specified it will be combined with
 basename(file). If file is specified but format is not, it
 will be inferred from file's extension.
 }
+\examples{
+# show the currently registered file formats that we can write
+fileformats(class='neuron', write=TRUE)
+}
 \seealso{
 \code{\link{fileformats}, \link{saveRDS}}
 }
