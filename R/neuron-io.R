@@ -198,11 +198,11 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
   if(rval=='names'){
     currentformats
   } else if(rval=='info'){
-    sapply(currentformats,function(x) {
+    t(sapply(currentformats,function(x) {
       fx=get(x, envir=.fileformats)
       c(fx[c('ext','class')],read=!is.null(fx$read),write=!is.null(fx$write),
         magic=!is.null(fx$magic))
-    })
+    }))
   } else if(rval=='all') {
     mget(currentformats, envir=.fileformats)
   }
