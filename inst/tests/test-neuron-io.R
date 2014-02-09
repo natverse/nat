@@ -679,3 +679,23 @@ test_that("read a flycircuit lineset neuron w/o radius info",{
   f="../testdata/neuron/testneuron_fclineset.am.gz"
   expect_is(n<-read.neuron(f),'neuron')
 })
+
+test_that("write neuron/dotprops to rds file",{
+  x=kcs20[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(write.neuron(x, dir=td), 
+               file.path(td,'FruMARCM-M001205_seg002_03.rds'))
+  expect_equal(write.neuron(x, dir=td, ext='.RDS'),
+               file.path(td,'FruMARCM-M001205_seg002_03.RDS'))
+  
+  y=Cell07PNs[[1]]
+  expect_error(write.neuron(y, dir=td),'Ambiguous file format')
+  expect_equal(write.neuron(y, dir=td, format='rds', ext='.RDS'),
+               file.path(td,'EBH11R.RDS'))
+  expect_equal(write.neuron(y, dir=td, format='rds', ext='_skel.rds'),
+               file.path(td,'EBH11R_skel.rds'))
+  
+})
