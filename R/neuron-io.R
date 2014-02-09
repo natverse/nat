@@ -173,6 +173,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
     else stop("unrecognised format")
   } else {
     if(!is.null(ext)){
+      if(substr(ext,1,1)==".") ext=substr(ext,2,nchar(ext))
       currentformats<-Filter(function(x) isTRUE(
         get(x,envir=.fileformats)$ext%in%ext), currentformats)
     }
@@ -213,11 +214,21 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
 #'   from file header to determine file's type.
 #' @param class The S3 class for the format (character vector e.g. 'neuron')
 #' @rdname fileformats
+#' @examples
+#' \dontrun{
+#' registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,
+#'   class='neuron')
+#' }
 registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
                          magiclen=NA_integer_,class=NULL){
   currentformats=ls(envir=.fileformats)
-  if(format%in%currentformats) warning("This format has already been registered")
-  if(is.null(read) && is.null(write)) stop("Must be provide at least one read or write function")
+  if(format%in%currentformats)
+    warning("This format has already been registered")
+  if(is.null(read) && is.null(write)) 
+    stop("Must provide at least one read or write function")
+  
+  if(substr(ext,1,1)==".") ext=substr(ext,2,nchar(ext))
+  
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
                      class=class),
          envir=.fileformats)
