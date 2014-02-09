@@ -21,7 +21,8 @@ getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 
   \item{format}{Character vector naming the format}
 
-  \item{ext}{Character vector of file extensions}
+  \item{ext}{Character vector of file extensions (including
+  periods)}
 
   \item{read,write}{Functions to read and write this
   format}
@@ -71,6 +72,16 @@ bytes from the start off the current file and then checks
 using file extension and magic functions to see if it can
 identify the file. Presently formats are in a queue in
 alphabetical order, dispatching on the first match.
+
+If \code{ext=NA} then extension will not be used to query
+file formats and it will be overwritten by the default
+extensions returned by \code{fileformats}. If
+\code{ext='.someext'} \code{getformatwriter} will use the
+specified extension to overwrite the value returned by
+\code{fileformats}.  If \code{ext=NULL} and
+\code{file='somefilename.someext'} then \code{ext} will be
+set to \code{'someext'} and that will override the value
+returned by \code{fileformats}.
 }
 \examples{
 \dontrun{
