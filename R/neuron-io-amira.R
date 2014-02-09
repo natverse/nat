@@ -107,62 +107,30 @@ is.hxlineset<-function(f, bytes=NULL){
   isTRUE(any(grepl("ContentType.*HxLineSet",h,useBytes=T)))
 }
 
-WriteNeuronToAM3D<-function(ANeuron,AMFile=NULL,
-                            suffix="am3",Force=F,MakeDir=T,WriteAllSubTrees=TRUE,ScaleSubTreeNumsTo1=TRUE,sep=NULL){
-  # write out a neuron in the specialised skeletonize AM3D format 
-  # (as opposed to the basic AmiraMesh format which is the native format
-  # of amira for linesets)
-  # WriteAllSubTrees will write out all the stores subtrees in a neuron 
-  # which has multiple subtrees (which is often true of ill-formed 
-  # skeletonize neurons).  It will also add a data field that can be used
-  # to visualised different subtrees eg by colouring
-  
-  if(is.null(AMFile))
-    AMFile=paste(sub("(.*)\\.[^.]*$","\\1",ANeuron$InputFileName),sep=".",suffix)
-  else if(isTRUE(file.info(AMFile)$isdir)){
-    # we've been given a directory
-    # we want to write a file into this directory with same name as original
-    AMFile=file.path(AMFile,
-                     paste(sub("(.*)\\.[^.]*$","\\1",basename(ANeuron$InputFileName)),sep=".",suffix))
-  }
-  
-  if(!Force && file.exists(AMFile) ){
-    warning(paste(AMFile,"already exists; use Force=T to overwrite"))
-    return()
-  }
-  if(!file.exists(dirname(AMFile))){
-    # either bail
-    if(!MakeDir){
-      warning(paste(dirname(AMFile),"does not exist; use MakeDir=T to overwrite"))
-      return()
-    } else {
-      # or try to make a directory
-      if(!dir.create(dirname(AMFile))){
-        warning(paste("Unable to create",dirname(AMFile)))
-      }
-    }
-  }
-  if(!file.create(AMFile)){
-    warning(paste("Unable to write to file",AMFile))
-    return()
-  }
-  
+# write out a neuron in the specialised skeletonize AM3D format 
+# (as opposed to the basic AmiraMesh format which is the native format
+# of amira for linesets)
+# WriteAllSubTrees will write out all the stored subtrees in a neuron 
+# which has multiple subtrees (which is often true of ill-formed 
+# skeletonize neurons).  It will also add a data field that can be used
+# to visualised different subtrees eg by colouring
+write.neuron.hxskel<-function(x, file, WriteAllSubTrees=TRUE, 
+                              ScaleSubTreeNumsTo1=TRUE, sep=NULL){
   # if asked & nTrees is >1  (NB isTRUE handles NULL case correctly)
-  if(WriteAllSubTrees && isTRUE(ANeuron$nTrees>1)){	
+  if(WriteAllSubTrees && isTRUE(x$nTrees>1)){	
     WriteAllSubTrees=TRUE 
     # nb recurs =F, so list of lists -> list (rather than vector)
-    SegList=unlist(ANeuron$SubTrees,recurs=F)
+    SegList=unlist(x$SubTrees,recursive=FALSE)
   } else {
     WriteAllSubTrees=FALSE
-    SegList=ANeuron$SegList
+    SegList=x$SegList
   }
   chosenVertices=sort(unique(unlist(SegList)))
   nVertices=length(chosenVertices)
-  cat("nVertices =",nVertices,"\n")
   # I think that restristicting to chosen vertices without
   # any renumbering of points is problematic
   # FIXME - need to renumber vertices if there are NAs
-  #	nVertices=nrow(ANeuron$d)
+  # nVertices=nrow(x$d)
   # the number of points required to define the edge list
   # if each segment contains n points, then 2(n-1) edges
   nEdgeList=sum(sapply(SegList,length)-1)*2
@@ -179,12 +147,11 @@ WriteNeuronToAM3D<-function(ANeuron,AMFile=NULL,
   EdgeList=do.call('rbind',lapply(SegList,makeEdges))
   EdgeList=EdgeList[order(EdgeList$CurPoint,EdgeList$Neighbour),]
   
-  cat("Writing to",AMFile,"\n")
   # Write the header
-  cat("# AmiraMesh 3D ASCII 2.0\n",file=AMFile)
-  fc=file(AMFile,open="at") # ie append, text mode
+  cat("# AmiraMesh 3D ASCII 2.0\n",file=file)
+  fc=file(file,open="at") # ie append, text mode
   
-  cat("# Created by WriteNeuronToAM3D -",format(Sys.time(),usetz=T),"\n\n",file=fc)	
+  cat("# Created by nat::write.neuron.hxskel\n\n",file=fc)
   cat("nVertices", nVertices,"\nnEdges",nEdgeList,"\n",file=fc)
   
   vertexTypeList=ifelse(WriteAllSubTrees,nVertices,0) 
@@ -204,18 +171,17 @@ WriteNeuronToAM3D<-function(ANeuron,AMFile=NULL,
   
   # Write the 3D coords
   cat("@1 # ",nVertices,"xyz coordinates\n",file=fc)
-  #write(t(ANeuron$d[,c("X","Y","Z")]),ncolumns=3,file=fc)
   if(is.null(sep)){
     # Amira seems fussy about having nicely aligned columns
     # using format with trim = FALSE (the default actually) 
     # and after getting rid of names results in a nicely justified table
-    Coords=as.matrix(ANeuron$d[,c("X","Y","Z")])
+    Coords=as.matrix(x$d[,c("X","Y","Z")])
     rownames(Coords)<-colnames(Coords)<-NULL
     write.table(format(Coords,trim=FALSE,scientific=FALSE),
                 quote=F,row.names=FALSE,col.names=FALSE,file=fc)
   } else {
     # sep was explicitly specified, so use that
-    write.table(ANeuron$d[chosenVertices,c("X","Y","Z")],col.names=F,row.names=F,file=fc,sep=sep)
+    write.table(x$d[chosenVertices,c("X","Y","Z")],col.names=F,row.names=F,file=fc,sep=sep)
   }
   
   # Write number of neighbours
@@ -227,7 +193,7 @@ WriteNeuronToAM3D<-function(ANeuron,AMFile=NULL,
   # Write the Radii
   cat("\n@3 #",nVertices,"radii\n",file=fc)
   # NB Divide width by 2
-  write.table(ANeuron$d$W[chosenVertices]/2,col.names=F,row.names=F,file=fc)
+  write.table(x$d$W[chosenVertices]/2,col.names=F,row.names=F,file=fc)
   
   # Write the edgelist information
   cat("\n@4 #",nEdgeList,"bidirectional edges\n",file=fc)
@@ -236,20 +202,16 @@ WriteNeuronToAM3D<-function(ANeuron,AMFile=NULL,
   
   # Write the origin information NB -1 since 0 indexed
   cat("\n@5 #n 1\n",file=fc)
-  cat(ANeuron$StartPoint-1,"\n",file=fc)
+  cat(x$StartPoint-1,"\n",file=fc)
   
   # Write the vertexTypeCounter information
   cat("\n@6 #",nVertices,"\n",file=fc)
   cat(paste(rep(0,nVertices),"\n"),sep="",file=fc)
   
-  # nb have to -1 from each point because amira is 0 indexed
-  # AND add -1 to each segment as a terminator
-  #tmp=do.call("paste",ANeuron$SegList)
-  #writeLines(tmp,con=fc)
   if(WriteAllSubTrees) {
     cat("\n@7 # subtrees\n",file=fc)
-    if(ScaleSubTreeNumsTo1) ANeuron$d$SubTree=ANeuron$d$SubTree/max(ANeuron$d$SubTree)
-    write.table(ANeuron$d$SubTree,col.names=F,row.names=F,file=fc)
+    if(ScaleSubTreeNumsTo1) x$d$SubTree=x$d$SubTree/max(x$d$SubTree)
+    write.table(x$d$SubTree,col.names=F,row.names=F,file=fc)
   }
   cat("\n",file=fc)
   close(fc)
