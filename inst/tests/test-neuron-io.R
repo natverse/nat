@@ -14,6 +14,11 @@ test_that("We can query fileformats",{
   expect_equal(getformatwriter(file='test.am', ext='rds')$ext,'rds')
   expect_equal(getformatwriter(file='test.am', format='rds')$ext,'rds')
   expect_equal(getformatwriter(file='test.am', ext='.rds')$ext,'rds')
+  
+  expect_error(getformatwriter(file='test.rds', ext='.rhubarb'))
+  
+  expect_equal(fileformats(format='hxl', ext='_skel.am', class='neuron'),
+               'hxlineset')
 })
 
 test_that("We can read neurons in rda or rds format", {

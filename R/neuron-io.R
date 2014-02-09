@@ -148,9 +148,12 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 
 #' Set or return list of registered file formats that we can read
 #' 
-#' @description \code{fileformats} returns format names, a format definition
-#'   list or a table of information about the formats that match the given
+#' @description \code{fileformats} returns format names, a format definition 
+#'   list or a table of information about the formats that match the given 
 #'   filter conditions.
+#' @details if a \code{format} argument is passed to \code{fileformats} it will
+#'   be matched wigth partial string matching and iif a unique match exists that
+#'   will be returned.
 #' @inheritParams registerformat
 #' @param rval Character vector choosing what kind of return value 
 #'   \code{fileformats} will give.
@@ -167,19 +170,19 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
                         rval=c("names",'info','all')){
   currentformats=ls(envir=.fileformats)
+  if(!is.null(class)){
+    currentformats<-Filter(function(x) isTRUE(
+      get(x,envir=.fileformats)$class%in%class), currentformats)
+  }
   if(!is.null(format)) {
-    if(format%in%currentformats)
-      currentformats=format
-    else stop("unrecognised format")
+    m=pmatch(format, currentformats)
+    if(is.na(m)) stop("Unrecognised format: ", format)
+    currentformats=currentformats[m]
   } else {
     if(!is.null(ext)){
       if(substr(ext,1,1)==".") ext=substr(ext,2,nchar(ext))
       currentformats<-Filter(function(x) isTRUE(
         get(x,envir=.fileformats)$ext%in%ext), currentformats)
-    }
-    if(!is.null(class)){
-      currentformats<-Filter(function(x) isTRUE(
-        get(x,envir=.fileformats)$class%in%class), currentformats)
     }
     if(isTRUE(read)){
       currentformats<-Filter(function(x) 

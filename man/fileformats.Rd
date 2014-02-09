@@ -62,10 +62,20 @@ that match the given filter conditions.
 \code{getformatwriter} gets the function to write a file
 }
 \details{
+if a \code{format} argument is passed to \code{fileformats}
+it will be matched wigth partial string matching and iif a
+unique match exists that will be returned.
+
 \code{getformatreader} starts by reading a set number of
 bytes from the start off the current file and then checks
 using file extension and magic functions to see if it can
 identify the file. Presently formats are in a queue in
 alphabetical order, dispatching on the first match.
+}
+\examples{
+\dontrun{
+registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,
+  class='neuron')
+}
 }
 
