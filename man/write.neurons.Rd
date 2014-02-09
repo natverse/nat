@@ -38,6 +38,15 @@ write.neurons(Cell07PNs, dir="testwn3",
 jefferis
 }
 \seealso{
-\code{\link{write.neuron}, \link{subset.neuronlist}}
+\code{\link{write.neuron}}
+
+Other neuronlist: \code{\link{as.neuronlistfh}},
+\code{\link{as.neuronlistfh.default}},
+\code{\link{as.neuronlistfh.filehash}},
+\code{\link{as.neuronlistfh.neuronlist}},
+\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
+\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}},
+\code{\link{neuronlist}}; \code{\link{nlapply}};
+\code{\link{read.neurons}}
 }
 

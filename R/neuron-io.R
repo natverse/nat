@@ -62,9 +62,10 @@ read.neuron<-function(f, ...){
 #' @param SortOnUpdate Sort the neuronlist when update adds new neurons
 #' @param nl An existing neuronlist to be updated (see details)
 #' @param ... Additional arguements to passed to read.neuron methods
-#' @return neuronlist object containing the neurons
+#' @return \code{neuronlist} object containing the neurons
 #' @export
 #' @seealso \code{\link{read.neuron}}
+#' @family neuronlist
 read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
                        df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE, ...){
   if(!is.character(paths)) stop("Expects a character vector of filenames")
@@ -433,7 +434,8 @@ write.neuron.swc<-function(x, file, ...){
 #' @param ... Additional arguments passed to write.neuron
 #' @author jefferis
 #' @export
-#' @seealso \code{\link{write.neuron}, \link{subset.neuronlist}}
+#' @seealso \code{\link{write.neuron}}
+#' @family neuronlist
 #' @examples
 #' \dontrun{
 #' write.neurons(Cell07PNs,dir="testwn",
