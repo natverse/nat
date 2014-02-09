@@ -370,19 +370,18 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, ...){
 }
 
 # write neuron to SWC file
-WriteSWCFile<-function(ANeuron,
-                       FileName=gsub("(.*)[.]+[^.]+$","\\1.swc",basename(ANeuron$InputFileName)),...){
-  # function to write out an SWC file from a Neuron
-  # GJ 040328
-  cat("FileName:",FileName)
-  ColumnNames<-c("PointNo","Label","X","Y","Z","radius","Parent")
-  df=ANeuron$d[,seq(ColumnNames)]
-  names(df)=ColumnNames
-  # nb neurolucida seems to use diam, while swc uses radius
-  # 
-  df$radius=df$radius/2
-  writeLines(c("# SWC format file","# based on specifications at http://www.soton.ac.uk/~dales/morpho/morpho_doc/"),con=FileName)
-  cat("# Created by WriteSWCFile - ",format(Sys.time(),usetz=T),"\n\n",file=FileName,append=TRUE)	
-  cat("#",ColumnNames,"\n",file=FileName,append=TRUE)
-  write.table(df,FileName,col.names=F,row.names=F,append=TRUE,...)
+write.neuron.swc<-function(x, file, ...){
+  our_col_names<-c("PointNo","Label","X","Y","Z","W","Parent")
+  if(!all(our_col_names%in%colnames(x$d))) stop("Some columns are missing!")
+  df=x$d[,our_col_names]
+  colnames(df)[colnames(df)=="W"]="Radius"
+  
+  # nb neurolucida seems to use diam, but swc uses radius
+  df$Radius=df$Radius/2
+  writeLines(c("# SWC format file",
+               "# based on specifications at http://research.mssm.edu/cnic/swc.html"),
+             con=file)
+  cat("# Created by nat::write.neuron.swc", file=file, append=TRUE)  
+  cat("#", colnames(df), "\n", file=file, append=TRUE)
+  write.table(df, file, col.names=F, row.names=F, append=TRUE, ...)
 }

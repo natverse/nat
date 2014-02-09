@@ -2,7 +2,8 @@
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
   
   # Register file formats
-  registerformat('swc',read=read.neuron.swc,class='neuron')
+  registerformat('swc', read=read.neuron.swc, write=write.neuron.swc, 
+                 class='neuron')
   registerformat('rds', read=readRDS, write=saveRDS, class='neuron')
   registerformat('hxskel', ext='.am', read="read.neuron.hxskel", magic=is.hxskel,
                 class='neuron', magiclen=11)
