@@ -30,9 +30,9 @@ read.neuron<-function(f, ...){
     if(is.null(ffs)) stop("Unable to identify file type of:", f)
     n=match.fun(ffs$read)(f, ...)
   }
+  # make sure that neuron actually inherits from neuron
   # we can normally rely on dotprops objects to have the correct class
-  if(is.neuron(n,Strict=FALSE) && !is.dotprops(n)) as.neuron(n)
-  else n
+  if(!is.dotprops(n)) as.neuron(n)
 }
 
 #' Read one or more neurons from file to a neuronlist in memory
