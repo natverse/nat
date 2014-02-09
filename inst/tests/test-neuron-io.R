@@ -679,3 +679,80 @@ test_that("read a flycircuit lineset neuron w/o radius info",{
   f="../testdata/neuron/testneuron_fclineset.am.gz"
   expect_is(n<-read.neuron(f),'neuron')
 })
+
+test_that("write neuron/dotprops to rds file",{
+  x=kcs20[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(f<-write.neuron(x, dir=td), 
+               file.path(td,'FruMARCM-M001205_seg002_03.rds'))
+  # can't overwrite get an NA back
+  expect_true(is.na(write.neuron(x, f)))
+  # can overwrite with force
+  expect_equal(write.neuron(x, f, Force=TRUE), f)
+  unlink(f)
+  
+  expect_equal(write.neuron(x, dir=td, ext='.RDS'),
+               file.path(td,'FruMARCM-M001205_seg002_03.RDS'))
+  
+  y=Cell07PNs[[1]]
+  expect_error(write.neuron(y, dir=td),'Ambiguous file format')
+  expect_equal(write.neuron(y, dir=td, format='rds', ext='.RDS'),
+               file.path(td,'EBH11R.RDS'))
+  expect_equal(write.neuron(y, dir=td, format='rds', ext='_skel.rds'),
+               file.path(td,'EBH11R_skel.rds'))
+  
+})
+
+test_that("write neuron to swc file",{
+  y=Cell07PNs[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(write.neuron(y, dir=td, ext='.swc'),
+               file.path(td,'EBH11R.swc'))
+  expect_equal(f<-write.neuron(y, dir=td, format='swc', ext='_skel.swc'),
+               file.path(td,'EBH11R_skel.swc'))
+  expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+})
+
+test_that("write neuron to amira hxskel file",{
+  y=Cell07PNs[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(f<-write.neuron(y, dir=td, format='hxskel'),
+               file.path(td,'EBH11R.am'))
+  expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+})
+
+test_that("write neuron to amira hxlineset file",{
+  y=Cell07PNs[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(f<-write.neuron(y, dir=td, format='hxlineset'),
+               file.path(td,'EBH11R.am'))
+  expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+})
+
+test_that("write neuron to unknown format",{
+  expect_error(write.neuron(Cell07PNs[[1]], dir=td, format='rhubarb'))
+})
+
+test_that("write.neurons",{
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  neurons_to_write=subset(Cell07PNs,Scored.By%in%c("ACH","CJP"),rval='names')
+  expect_is(written_files<-write.neurons(Cell07PNs, dir=td,
+                INDICES=neurons_to_write,
+                subdir=file.path(Glomerulus),format='swc'),'character')
+  files_found=dir(td,recursive=T,pattern='swc$')
+  expect_true(all(basename(written_files)%in%basename(files_found)))
+})

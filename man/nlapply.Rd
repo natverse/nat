@@ -33,6 +33,7 @@ Other neuronlist: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
 \code{\link{neuronlistfh}}; \code{\link{is.neuronlist}},
-\code{\link{neuronlist}}
+\code{\link{neuronlist}}; \code{\link{read.neurons}};
+\code{\link{write.neurons}}
 }
 

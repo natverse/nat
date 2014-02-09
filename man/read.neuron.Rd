@@ -26,6 +26,8 @@ n=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
 # use a function to set the NeuronName field
 n3=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
   NeuronName=function(x) sub("\\\\..*","",x))
+# show the currently registered file formats that we can read
+fileformats(class='neuron', read=TRUE)
 }
 \seealso{
 \code{\link{read.neurons}, \link{fileformats}}

@@ -78,12 +78,16 @@ file formats and it will be overwritten by the default
 extensions returned by \code{fileformats}. If
 \code{ext='.someext'} \code{getformatwriter} will use the
 specified extension to overwrite the value returned by
-\code{fileformats}.  If \code{ext=NULL} and
+\code{fileformats}. If \code{ext=NULL} and
 \code{file='somefilename.someext'} then \code{ext} will be
 set to \code{'someext'} and that will override the value
-returned by \code{fileformats}.
+returned by \code{fileformats}. See
+\code{\link{write.neuron}} for code to make this discussion
+more concrete.
 }
 \examples{
+# information about the currently registered file formats
+fileformats(rval='info')
 \dontrun{
 registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,
   class='neuron')

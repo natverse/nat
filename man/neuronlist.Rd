@@ -49,6 +49,7 @@ Other neuronlist: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.filehash}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}; \code{\link{nlapply}}
+\code{\link{neuronlistfh}}; \code{\link{nlapply}};
+\code{\link{read.neurons}}; \code{\link{write.neurons}}
 }
 

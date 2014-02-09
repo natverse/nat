@@ -106,3 +106,186 @@ is.hxlineset<-function(f, bytes=NULL){
   h=read.amiramesh.header(f, Parse=FALSE)
   isTRUE(any(grepl("ContentType.*HxLineSet",h,useBytes=T)))
 }
+
+# write out a neuron in the specialised skeletonize AM3D format 
+# (as opposed to the basic AmiraMesh format which is the native format
+# of amira for linesets)
+# WriteAllSubTrees will write out all the stored subtrees in a neuron 
+# which has multiple subtrees (which is often true of ill-formed 
+# skeletonize neurons).  It will also add a data field that can be used
+# to visualised different subtrees eg by colouring
+write.neuron.hxskel<-function(x, file, WriteAllSubTrees=TRUE, 
+                              ScaleSubTreeNumsTo1=TRUE, sep=NULL){
+  # if asked & nTrees is >1  (NB isTRUE handles NULL case correctly)
+  if(WriteAllSubTrees && isTRUE(x$nTrees>1)){	
+    WriteAllSubTrees=TRUE 
+    # nb recurs =F, so list of lists -> list (rather than vector)
+    SegList=unlist(x$SubTrees,recursive=FALSE)
+  } else {
+    WriteAllSubTrees=FALSE
+    SegList=x$SegList
+  }
+  chosenVertices=sort(unique(unlist(SegList)))
+  nVertices=length(chosenVertices)
+  # I think that restristicting to chosen vertices without
+  # any renumbering of points is problematic
+  # FIXME - need to renumber vertices if there are NAs
+  # nVertices=nrow(x$d)
+  # the number of points required to define the edge list
+  # if each segment contains n points, then 2(n-1) edges
+  nEdgeList=sum(sapply(SegList,length)-1)*2
+  # Make EdgeList
+  makeEdges=function(seg){
+    lSeg=length(seg)
+    if(lSeg<2) return()
+    elFwd=cbind(seg[-lSeg],seg[-1])
+    elRev=cbind(seg[-1],seg[-lSeg])
+    df=data.frame(rbind(elFwd,elRev))
+    names(df)=c("CurPoint","Neighbour")
+    df[order(df$CurPoint,df$Neighbour),]
+  }
+  EdgeList=do.call('rbind',lapply(SegList,makeEdges))
+  EdgeList=EdgeList[order(EdgeList$CurPoint,EdgeList$Neighbour),]
+  
+  # Write the header
+  cat("# AmiraMesh 3D ASCII 2.0\n",file=file)
+  fc=file(file,open="at") # ie append, text mode
+  
+  cat("# Created by nat::write.neuron.hxskel\n\n",file=fc)
+  cat("nVertices", nVertices,"\nnEdges",nEdgeList,"\n",file=fc)
+  
+  vertexTypeList=ifelse(WriteAllSubTrees,nVertices,0) 
+  cat("define Origins 1\ndefine vertexTypeList",vertexTypeList,"\n\n",file=fc)
+  
+  cat("Parameters {\n",file=fc)
+  cat("    ContentType \"SkeletonGraph\"\n",file=fc)
+  cat("}\n\n",file=fc)
+  
+  cat("Vertices { float[3] Coordinates } @1\n",file=fc)
+  cat("Vertices { int NeighbourCount } @2\n",file=fc)
+  cat("Vertices { float Radii } @3\n",file=fc)
+  cat("EdgeData { int NeighbourList } @4\n",file=fc)
+  cat("Origins { int Origins } @5\n",file=fc)
+  cat("Vertices { int vertexTypeCounter } @6\n",file=fc)
+  cat("vertexTypeList { int vertexTypeList } @7\n\n",file=fc)
+  
+  # Write the 3D coords
+  cat("@1 # ",nVertices,"xyz coordinates\n",file=fc)
+  if(is.null(sep)){
+    # Amira seems fussy about having nicely aligned columns
+    # using format with trim = FALSE (the default actually) 
+    # and after getting rid of names results in a nicely justified table
+    Coords=as.matrix(x$d[,c("X","Y","Z")])
+    rownames(Coords)<-colnames(Coords)<-NULL
+    write.table(format(Coords,trim=FALSE,scientific=FALSE),
+                quote=F,row.names=FALSE,col.names=FALSE,file=fc)
+  } else {
+    # sep was explicitly specified, so use that
+    write.table(x$d[chosenVertices,c("X","Y","Z")],col.names=F,row.names=F,file=fc,sep=sep)
+  }
+  
+  # Write number of neighbours
+  cat("\n@2 #",nVertices,"numbers of neighbours \n",file=fc)
+  numNeighbours=integer(nVertices) # filled with 0s
+  numNeighbours[sort(unique(EdgeList$CurPoint))]=table(EdgeList$CurPoint)
+  write.table(numNeighbours,col.names=F,row.names=F,file=fc)
+  
+  # Write the Radii
+  cat("\n@3 #",nVertices,"radii\n",file=fc)
+  # NB Divide width by 2
+  write.table(x$d$W[chosenVertices]/2,col.names=F,row.names=F,file=fc)
+  
+  # Write the edgelist information
+  cat("\n@4 #",nEdgeList,"bidirectional edges\n",file=fc)
+  #NB -1 since Amira is 0 indexed
+  write.table(EdgeList$Neighbour-1,col.names=F,row.names=F,file=fc)
+  
+  # Write the origin information NB -1 since 0 indexed
+  cat("\n@5 #n 1\n",file=fc)
+  cat(x$StartPoint-1,"\n",file=fc)
+  
+  # Write the vertexTypeCounter information
+  cat("\n@6 #",nVertices,"\n",file=fc)
+  cat(paste(rep(0,nVertices),"\n"),sep="",file=fc)
+  
+  if(WriteAllSubTrees) {
+    cat("\n@7 # subtrees\n",file=fc)
+    if(ScaleSubTreeNumsTo1) x$d$SubTree=x$d$SubTree/max(x$d$SubTree)
+    write.table(x$d$SubTree,col.names=F,row.names=F,file=fc)
+  }
+  cat("\n",file=fc)
+  close(fc)
+}
+
+# write out a neuron in the basic AmiraMesh format which is the native format
+# of amira for linesets (as opposed to the specialised skeletonize AM3D)
+# WriteAllSubTrees will write out all the stored subtrees in a neuron 
+# which has multiple subtrees (which is often true of ill-formed 
+# skeletonize neurons)
+write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
+                                 ScaleSubTreeNumsTo1=TRUE, WriteRadius=TRUE){
+  
+  # if asked & nTrees is present and >1
+  if(WriteAllSubTrees && !is.null(x$nTrees) && x$nTrees>1){	
+    WriteAllSubTrees=TRUE 
+    # nb recurs =F, so list of lists -> list (rather than vector)
+    SegList=unlist(x$SubTrees, recursive=F)
+  } else {
+    WriteAllSubTrees=FALSE
+    SegList=x$SegList
+  }
+  chosenVertices=sort(unique(unlist(SegList)))
+  nVertices=length(chosenVertices)
+  # the number of points required to define the line segments
+  # including the terminating -1s (1 for each segment)
+  nLinePoints=length(unlist(SegList))+length(SegList) 
+  
+  # Write the header
+  cat("# AmiraMesh ASCII 1.0\n",file=file)
+  fc=file(file,open="at") # ie append, text mode
+  
+  cat("# Created by nat::write.neuron.hxlineset\n\n",file=fc)
+  cat("define Lines",nLinePoints,"\n",file=fc)
+  cat("define Vertices", nVertices,"\n\n",file=fc)
+  
+  cat("Parameters {\n",file=fc)
+  cat("    ContentType \"HxLineSet\"\n",file=fc)
+  cat("}\n\n",file=fc)
+  sectionNumbers=c(Coordinates=1,LineIdx=2)
+  cat("Vertices { float[3] Coordinates } = @1\n",file=fc)
+  if(WriteRadius){
+    cat("Vertices { float Data } = @2\n",file=fc)
+    sectionNumbers=c(Coordinates=1,Data=2,LineIdx=3)
+  }
+  cat("Lines { int LineIdx } = @",sectionNumbers['LineIdx'],"\n",sep="",file=fc)
+  if(WriteAllSubTrees) {
+    sectionNumbers=c(sectionNumbers,Data2=max(sectionNumbers)+1)
+    cat("Vertices { float Data2 } =@",sectionNumbers['Data2'],"\n",sep="",file=fc)
+  }
+  cat("\n",file=fc)
+  
+  # Write the 3D coords
+  cat("@1 # ",nVertices,"xyz coordinates\n",file=fc)
+  #write(t(x$d[,c("X","Y","Z")]),ncolumns=3,file=fc)
+  write.table(x$d[chosenVertices,c("X","Y","Z")],col.names=F,row.names=F,file=fc)
+  
+  
+  # Write the Radii
+  if(WriteRadius){
+    cat("\n@",sectionNumbers['Data']," # ",nVertices," width values\n",sep="",file=fc)
+    # NB Divide width by 2
+    write.table(x$d$W[chosenVertices]/2,col.names=F,row.names=F,file=fc,na='NaN')
+  }
+  
+  # Write the segment information
+  cat("\n@",sectionNumbers['LineIdx']," #",nLinePoints,"line segments\n",sep="",file=fc)
+  # nb have to -1 from each point because amira is 0 indexed
+  # AND add -1 to each segment as a terminator
+  tmp=lapply(SegList,function(x) cat(x-1,"-1 \n",file=fc) )
+  if(WriteAllSubTrees) {
+    cat("\n@",sectionNumbers['Data2']," # subtrees\n",sep="",file=fc)
+    if(ScaleSubTreeNumsTo1) x$d$SubTree=x$d$SubTree/max(x$d$SubTree)
+    write.table(x$d$SubTree,col.names=F,row.names=F,file=fc)
+  }
+  close(fc)
+}

@@ -31,7 +31,7 @@ read.neurons(paths, pattern = NULL, neuronnames = basename, nl = NULL,
   methods}
 }
 \value{
-neuronlist object containing the neurons
+\code{neuronlist} object containing the neurons
 }
 \description{
 Read one or more neurons from file to a neuronlist in
@@ -61,5 +61,14 @@ ordering identical to reading all neurons from scratch.
 }
 \seealso{
 \code{\link{read.neuron}}
+
+Other neuronlist: \code{\link{as.neuronlistfh}},
+\code{\link{as.neuronlistfh.default}},
+\code{\link{as.neuronlistfh.filehash}},
+\code{\link{as.neuronlistfh.neuronlist}},
+\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
+\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}},
+\code{\link{neuronlist}}; \code{\link{nlapply}};
+\code{\link{write.neurons}}
 }
 
