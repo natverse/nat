@@ -271,11 +271,12 @@ getformatreader<-function(file, class=NULL){
 #' @rdname fileformats
 #' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
-  if(!is.null(file)) ext=sub("\\.[^.]+$","",file)
+  if(!is.null(file) && is.null(ext))
+    ext=sub(".*\\.([^.]+$)","\\1",basename(file))
   nfs=fileformats(format=format, ext=ext, class=class, rval='all')
   if(length(nfs)>1) stop("Ambiguous file format specification!")
   if(length(nfs)==0) stop("No matching writer for this file format!")
-  nfs
+  nfs[[1]]
 }
 
 #' Read a neuron in swc file format
