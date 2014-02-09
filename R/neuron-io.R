@@ -368,3 +368,21 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, ...){
   match.fun(fw$write)(n, file=fw$file, ...)
   invisible(fw$file)
 }
+
+# write neuron to SWC file
+WriteSWCFile<-function(ANeuron,
+                       FileName=gsub("(.*)[.]+[^.]+$","\\1.swc",basename(ANeuron$InputFileName)),...){
+  # function to write out an SWC file from a Neuron
+  # GJ 040328
+  cat("FileName:",FileName)
+  ColumnNames<-c("PointNo","Label","X","Y","Z","radius","Parent")
+  df=ANeuron$d[,seq(ColumnNames)]
+  names(df)=ColumnNames
+  # nb neurolucida seems to use diam, while swc uses radius
+  # 
+  df$radius=df$radius/2
+  writeLines(c("# SWC format file","# based on specifications at http://www.soton.ac.uk/~dales/morpho/morpho_doc/"),con=FileName)
+  cat("# Created by WriteSWCFile - ",format(Sys.time(),usetz=T),"\n\n",file=FileName,append=TRUE)	
+  cat("#",ColumnNames,"\n",file=FileName,append=TRUE)
+  write.table(df,FileName,col.names=F,row.names=F,append=TRUE,...)
+}
