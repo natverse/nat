@@ -262,7 +262,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   nfs=fileformats(format=format, ext=ext, class=class, rval='all')
   if(length(nfs)>1) stop("Ambiguous file format specification!")
   if(length(nfs)==0) stop("No matching writer for this file format!")
-  return(nfs$write)
+  nfs
 }
 
 #' Read a neuron in swc file format
