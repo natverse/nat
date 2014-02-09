@@ -229,7 +229,7 @@ write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
   if(WriteAllSubTrees && !is.null(x$nTrees) && x$nTrees>1){	
     WriteAllSubTrees=TRUE 
     # nb recurs =F, so list of lists -> list (rather than vector)
-    SegList=unlist(x$SubTrees,recurs=F)
+    SegList=unlist(x$SubTrees, recursive=F)
   } else {
     WriteAllSubTrees=FALSE
     SegList=x$SegList
