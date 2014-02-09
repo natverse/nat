@@ -169,7 +169,8 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 #'   with \code{$write}.}
 fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
                         rval=c("names",'info','all')){
-  currentformats=ls(envir=.fileformats)
+  currentformats<-ls(envir=.fileformats)
+  
   if(!is.null(class)){
     currentformats<-Filter(function(x) isTRUE(
       get(x,envir=.fileformats)$class%in%class), currentformats)
@@ -184,7 +185,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
   }
   if(!is.null(format)) {
     m=pmatch(format, currentformats)
-    if(is.na(m)) stop("Unrecognised format: ", format)
+    if(is.na(m)) stop("No format available to meet this specification: ", format)
     currentformats=currentformats[m]
   } else {
     if(!is.null(ext) && !is.na(ext)){
