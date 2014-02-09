@@ -424,44 +424,51 @@ write.neuron.swc<-function(x, file, ...){
 
 #' Write neurons from a neuronlist object to individual files
 #' 
-#' NB using INDICES to subset a large neuron list can be much faster
 #' @param nl neuronlist object
 #' @param dir directory to write neurons
-#' @param subdir String naming field in neuron that specifies a subdirectory
-#'   OR expression to evaluate in the context of neuronlist's df attribute
-#' @param INDICES names of neurons in neuronlist to write
+#' @param subdir String naming field in neuron that specifies a subdirectory OR 
+#'   expression to evaluate in the context of neuronlist's df attribute
+#' @param INDICES Character vector of the names of a subset of neurons in
+#'   neuronlist to write.
 #' @param ... Additional arguments passed to write.neuron
-#' @return 
 #' @author jefferis
 #' @export
-#' @seealso \code{\link{write.neuron}}
+#' @seealso \code{\link{write.neuron}, \link{subset.neuronlist}}
 #' @examples
 #' \dontrun{
-#' write.neurons(MyNeurons,'/path/to/some/dir',subdir='CellType')
-#' write.neurons(MyNeurons,'/path/to/some/dir',subdir=file.path(PNType,Glomerulus,Sex))
+#' write.neurons(Cell07PNs,dir="testwn",
+#'   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
+#' # only write a subset
+#' write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn2",
+#'   subdir=file.path(Glomerulus),format='hxlineset')
+#' # The same, but likely faster for big neuronlists
+#' write.neurons(Cell07PNs, dir="testwn3",
+#'   INDICES=subset(Cell07PNs,Scored.By="ACH",rval='names'),
+#'   subdir=file.path(Glomerulus),format='hxlineset')
 #' }
-write.neuronlist<-function(nl,dir,subdir=NULL,INDICES=names(nl),...){
-  .Deprecated("nat::read.neurons")
+write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), ...){
   if(!file.exists(dir)) dir.create(dir)
-  # Construct subdirectory structure based on 
   df=attr(nl,'df')
+  # Construct subdirectory structure based on 
   ee=substitute(subdir)
   subdirs=NULL
   if(is.call(ee) && !is.null(df)){
     df=df[INDICES,]
-    subdirs=file.path(dir,eval(ee,df,parent.frame()))
+    subdirs=file.path(dir, eval(ee, df, parent.frame()))
     names(subdirs)=INDICES
   }
+  written=structure(rep("",length(INDICES)), .Names = INDICES)
   for(nn in INDICES){
     n=nl[[nn]]
     thisdir=dir
     if(is.null(subdirs)){
       propval=n[[subdir]]
-      if(!is.null(propval)) thisdir=file.path(dir,propval)
+      if(!is.null(propval)) thisdir=file.path(dir, propval)
     } else {
       thisdir=subdirs[nn]
     }
-    if(!file.exists(thisdir)) dir.create(thisdir,recursive=TRUE)
-    write.neuron(n,dir=thisdir,...)
+    if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
+    written[nn]=write.neuron(n, dir=thisdir, ...)
   }
+  invisible(written)
 }
