@@ -217,53 +217,22 @@ write.neuron.hxskel<-function(x, file, WriteAllSubTrees=TRUE,
   close(fc)
 }
 
-WriteNeuronToAM<-function(ANeuron,AMFile=NULL,
-                          suffix="am",Force=F,MakeDir=T,WriteAllSubTrees=TRUE,ScaleSubTreeNumsTo1=TRUE,
-                          WriteRadius=TRUE){
-  # write out a neuron in the basic AmiraMesh format which is the native format
-  # of amira for linesets (as opposed to the specialised skeletonize AM3D)
-  # WriteAllSubTrees will write out all the stored subtrees in a neuron 
-  # which has multiple subtrees (which is often true of ill-formed 
-  # skeletonize neurons)
-  
-  if(is.null(AMFile))
-    AMFile=paste(sub("(.*)\\.[^.]*$","\\1",ANeuron$InputFileName),sep=".",suffix)
-  else if(isTRUE(file.info(AMFile)$isdir)){
-    # we've been given a directory
-    # we want to write a file into this directory with same name as original
-    AMFile=file.path(AMFile,
-                     paste(sub("(.*)\\.[^.]*$","\\1",basename(ANeuron$InputFileName)),sep=".",suffix))
-  }
-  
-  if(!Force && file.exists(AMFile) ){
-    warning(paste(AMFile,"already exists; use Force=T to overwrite"))
-    return()
-  }
-  if(!file.exists(dirname(AMFile))){
-    # either bail
-    if(!MakeDir){
-      warning(paste(dirname(AMFile),"does not exist; use MakeDir=T to create"))
-      return()
-    } else {
-      # or try to make a directory
-      if(!dir.create(dirname(AMFile),recursive=TRUE) ){
-        warning(paste("Unable to create",dirname(AMFile)))
-      }
-    }
-  }
-  if(!file.create(AMFile)){
-    warning(paste("Unable to write to file",AMFile))
-    return()
-  }
+# write out a neuron in the basic AmiraMesh format which is the native format
+# of amira for linesets (as opposed to the specialised skeletonize AM3D)
+# WriteAllSubTrees will write out all the stored subtrees in a neuron 
+# which has multiple subtrees (which is often true of ill-formed 
+# skeletonize neurons)
+write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
+                                 ScaleSubTreeNumsTo1=TRUE, WriteRadius=TRUE){
   
   # if asked & nTrees is present and >1
-  if(WriteAllSubTrees && !is.null(ANeuron$nTrees) && ANeuron$nTrees>1){	
+  if(WriteAllSubTrees && !is.null(x$nTrees) && x$nTrees>1){	
     WriteAllSubTrees=TRUE 
     # nb recurs =F, so list of lists -> list (rather than vector)
-    SegList=unlist(ANeuron$SubTrees,recurs=F)
+    SegList=unlist(x$SubTrees,recurs=F)
   } else {
     WriteAllSubTrees=FALSE
-    SegList=ANeuron$SegList
+    SegList=x$SegList
   }
   chosenVertices=sort(unique(unlist(SegList)))
   nVertices=length(chosenVertices)
@@ -271,12 +240,11 @@ WriteNeuronToAM<-function(ANeuron,AMFile=NULL,
   # including the terminating -1s (1 for each segment)
   nLinePoints=length(unlist(SegList))+length(SegList) 
   
-  cat("Writing to",AMFile,"\n")
   # Write the header
-  cat("# AmiraMesh ASCII 1.0\n",file=AMFile)
-  fc=file(AMFile,open="at") # ie append, text mode
+  cat("# AmiraMesh ASCII 1.0\n",file=file)
+  fc=file(file,open="at") # ie append, text mode
   
-  cat("# Created by WriteNeuronToAM - ",format(Sys.time(),usetz=T),"\n\n",file=fc)	
+  cat("# Created by nat::write.neuron.hxlineset\n\n",file=fc)
   cat("define Lines",nLinePoints,"\n",file=fc)
   cat("define Vertices", nVertices,"\n\n",file=fc)
   
@@ -298,15 +266,15 @@ WriteNeuronToAM<-function(ANeuron,AMFile=NULL,
   
   # Write the 3D coords
   cat("@1 # ",nVertices,"xyz coordinates\n",file=fc)
-  #write(t(ANeuron$d[,c("X","Y","Z")]),ncolumns=3,file=fc)
-  write.table(ANeuron$d[chosenVertices,c("X","Y","Z")],col.names=F,row.names=F,file=fc)
+  #write(t(x$d[,c("X","Y","Z")]),ncolumns=3,file=fc)
+  write.table(x$d[chosenVertices,c("X","Y","Z")],col.names=F,row.names=F,file=fc)
   
   
   # Write the Radii
   if(WriteRadius){
     cat("\n@",sectionNumbers['Data']," # ",nVertices," width values\n",sep="",file=fc)
     # NB Divide width by 2
-    write.table(ANeuron$d$W[chosenVertices]/2,col.names=F,row.names=F,file=fc,na='NaN')
+    write.table(x$d$W[chosenVertices]/2,col.names=F,row.names=F,file=fc,na='NaN')
   }
   
   # Write the segment information
@@ -316,8 +284,8 @@ WriteNeuronToAM<-function(ANeuron,AMFile=NULL,
   tmp=lapply(SegList,function(x) cat(x-1,"-1 \n",file=fc) )
   if(WriteAllSubTrees) {
     cat("\n@",sectionNumbers['Data2']," # subtrees\n",sep="",file=fc)
-    if(ScaleSubTreeNumsTo1) ANeuron$d$SubTree=ANeuron$d$SubTree/max(ANeuron$d$SubTree)
-    write.table(ANeuron$d$SubTree,col.names=F,row.names=F,file=fc)
+    if(ScaleSubTreeNumsTo1) x$d$SubTree=x$d$SubTree/max(x$d$SubTree)
+    write.table(x$d$SubTree,col.names=F,row.names=F,file=fc)
   }
   close(fc)
 }
