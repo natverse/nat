@@ -9,7 +9,8 @@
                  write='write.neuron.hxskel', magic=is.hxskel,
                  class='neuron', magiclen=11)
   registerformat('hxlineset', ext='.am', read="read.neuron.hxlineset", 
-                magic=is.hxlineset, class='neuron', magiclen=11)
+                 write=write.neuron.hxlineset, magic=is.hxlineset,
+                 class='neuron', magiclen=11)
   invisible()
 }
 
