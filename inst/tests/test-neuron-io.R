@@ -1,5 +1,26 @@
 context("basic input output for neurons")
 
+test_that("We can query fileformats",{
+  expect_equal(fileformats(ext='swc',rval='names'),'swc')
+  expect_equal(fileformats(ext='am', class='neuron', rval='names'),
+               c('hxlineset','hxskel'))
+  expect_is(fileformats(class='neuron',rval='info'),'matrix')
+  
+  expect_is(fw<-getformatwriter(file='test.rds'),'list')
+  expect_equal(fw$ext,'.rds')
+  expect_equal(fw$read,readRDS)
+  expect_equal(fw$write,saveRDS)
+  
+  expect_equal(getformatwriter(file='test.am', format='rds')$file,'test.am')
+  expect_equal(getformatwriter(file='test.am', format='rds', ext=NA)$file,'test.rds')
+  expect_equal(getformatwriter(file='test.am', ext='.rds')$ext,'.rds')
+  
+  expect_error(getformatwriter(file='test.rds', ext='.rhubarb'))
+  
+  expect_equal(fileformats(format='hxl', ext='_skel.am', class='neuron'),
+               'hxlineset')
+})
+
 test_that("We can read neurons in rda or rds format", {
   rda=tempfile(fileext='.rda')
   rds=tempfile(fileext='.rds')

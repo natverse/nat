@@ -2,11 +2,11 @@
 #' 
 #' @details This function will handle \code{neuron} and \code{dotprops} objects 
 #'   saved in R .rds or .rda format by default. Additional file formats can be 
-#'   registered using \code{neuronformats}.
+#'   registered using \code{fileformats}.
 #' @export
 #' @param f Path to file
 #' @param ... additional arguments passed to format-specific readers
-#' @seealso \code{\link{read.neurons}, \link{neuronformats}}
+#' @seealso \code{\link{read.neurons}, \link{fileformats}}
 #' @examples
 #' # note that we override the default NeuronName field
 #' n=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
@@ -24,7 +24,7 @@ read.neuron<-function(f, ...){
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
   } else {
-    ffs=getformatfuns(f,action='read')
+    ffs=getformatreader(f)
     if(is.null(ffs)) stop("Unable to identify file type of:", f)
     n=match.fun(ffs$read)(f, ...)
   }
@@ -148,70 +148,162 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 
 #' Set or return list of registered file formats that we can read
 #' 
+#' @description \code{fileformats} returns format names, a format definition 
+#'   list or a table of information about the formats that match the given 
+#'   filter conditions.
+#' @details if a \code{format} argument is passed to \code{fileformats} it will
+#'   be matched wigth partial string matching and iif a unique match exists that
+#'   will be returned.
+#' @inheritParams registerformat
+#' @param rval Character vector choosing what kind of return value 
+#'   \code{fileformats} will give.
+#' @return \itemize{
+#'   
+#'   \item \code{fileformats} returns a character vector, matrix or list 
+#'   according to the value of rval.
+#'   
+#'   \item \code{getformatreader} returns a list. The reader can be accessed 
+#'   with \code{$read}
+#'   
+#'   \item \code{getformatwriter} returns a list. The writer can be accessed 
+#'   with \code{$write}.}
+fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
+                        rval=c("names",'info','all')){
+  currentformats=ls(envir=.fileformats)
+  if(!is.null(class)){
+    currentformats<-Filter(function(x) isTRUE(
+      get(x,envir=.fileformats)$class%in%class), currentformats)
+  }
+  if(isTRUE(read)){
+    currentformats<-Filter(function(x) 
+      isTRUE(!is.null(get(x,envir=.fileformats)$read)), currentformats)
+  }
+  if(isTRUE(write)){
+    currentformats<-Filter(function(x) 
+      isTRUE(!is.null(get(x,envir=.fileformats)$write)), currentformats)
+  }
+  if(!is.null(format)) {
+    m=pmatch(format, currentformats)
+    if(is.na(m)) stop("Unrecognised format: ", format)
+    currentformats=currentformats[m]
+  } else {
+    if(!is.null(ext)){
+      if(substr(ext,1,1)!=".") ext=paste(".",sep="",ext)
+      currentformats<-Filter(function(x) isTRUE(
+        get(x,envir=.fileformats)$ext%in%ext), currentformats)
+    }
+  }
+  rval=match.arg(rval)
+  if(rval=='names'){
+    currentformats
+  } else if(rval=='info'){
+    sapply(currentformats,function(x) {
+      fx=get(x, envir=.fileformats)
+      c(fx[c('ext','class')],read=!is.null(fx$read),write=!is.null(fx$write),
+        magic=!is.null(fx$magic))
+    })
+  } else if(rval=='all') {
+    mget(currentformats, envir=.fileformats)
+  }
+}
+
+#' @description \code{registerformat} registers a format in the io registry
+#' @export
 #' @param format Character vector naming the format
-#' @param ext Character vector of file extensions
+#' @param ext Character vector of file extensions (including periods)
 #' @param read,write Functions to read and write this format
 #' @param magic Function to test whether a file is of this format
-#' @param magiclen Optional integer specifying maximum number of bytes required
-#' from file header to determine file's type.
+#' @param magiclen Optional integer specifying maximum number of bytes required 
+#'   from file header to determine file's type.
 #' @param class The S3 class for the format (character vector e.g. 'neuron')
-neuronformats<-function(format,ext=format,read=NULL,write=NULL,magic=NULL,
-                        magiclen=NA_integer_,class=NULL){
-  currentformats=ls(envir=.neuronformats)
-  if(missing(format)){
-    if(!is.null(class)) 
-      return(Filter(function(x) isTRUE(
-        get(x,envir=.neuronformats)$class%in%class),currentformats))
-    else return(currentformats)
-  }
+#' @rdname fileformats
+#' @examples
+#' \dontrun{
+#' registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,
+#'   class='neuron')
+#' }
+registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
+                         magiclen=NA_integer_,class=NULL){
+  currentformats=ls(envir=.fileformats)
+  if(format%in%currentformats)
+    warning("This format has already been registered")
+  if(is.null(read) && is.null(write)) 
+    stop("Must provide at least one read or write function")
   
-  if(format%in%currentformats) warning("This format has already been registered")
-  if(is.null(read) && is.null(write)) stop("Must be provide at least one read or write function")
+  if(substr(ext,1,1)!=".") ext=paste(".",sep='',ext)
+  
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
                      class=class),
-         envir=.neuronformats)
+         envir=.fileformats)
   invisible()
 }
 
-#' Get the list of functions (read, write etc) for a file
-#' @rdname neuronformats
-#' @param f Path to a file
-#' @param action Whether we must have a read or write function for this file
-getformatfuns<-function(f, action=c('read','write'), class=NULL){
-  action=match.arg(action)
-  
-  formatsforclass<-neuronformats(class=class)
+#' @description \code{getformatwriter} gets the function to read a file
+#' @rdname fileformats
+#' @param file Path to a file
+#' @details \code{getformatreader} starts by reading a set number of bytes from 
+#'   the start off the current file and then checks using file extension and 
+#'   magic functions to see if it can identify the file. Presently formats are 
+#'   in a queue in alphabetical order, dispatching on the first match.
+#' @export
+getformatreader<-function(file, class=NULL){
+  formatsforclass<-fileformats(class=class)
   if(!length(formatsforclass)) return(NULL)
   
-  magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
+  magiclens=sapply(formatsforclass,function(f) get(f,envir=.fileformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
   if(is.finite(max_magiclen)) {
-    magicbytes = readBin(f,what=raw(),n=max_magiclen)
+    magicbytes = readBin(file,what=raw(),n=max_magiclen)
     # check if this looks like a gzip file
     gzip_magic=as.raw(c(0x1f, 0x8b))
     if(all(magicbytes[1:2]==gzip_magic)){
-      gzf=gzfile(f,open='rb')
+      gzf=gzfile(file,open='rb')
       on.exit(close(gzf))
       magicbytes=readBin(gzf,what=raw(),n=max_magiclen)
     }
   } else magicbytes=NULL
   
-  ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
+  ext=tolower(sub(".*(\\.[^.]+$)","\\1",basename(file)))
   for(format in formatsforclass){
-    ffs=get(format,envir=.neuronformats)
+    ffs=get(format,envir=.fileformats)
     
-    # check that we have a read or write function for this format
-    if (!action%in%names(ffs)) next
+    # check that we have a read function for this format
+    if (!"read"%in%names(ffs)) next
     
     if(!is.null(ffs$magic)){
       # we have a magic function for this file, so check by candidate magic bytes
-      if(ffs$magic(f, magicbytes)) return(ffs)
+      if(ffs$magic(file, magicbytes)) return(ffs)
     } else {
       # else check by file extension
       if(ext%in%ffs$ext) return(ffs)
     }
   }
   return(NULL)
+}
+
+#' @description \code{getformatwriter} gets the function to write a file
+#' @details If \code{ext=NA} then extension will not be used to query file 
+#'   formats and it will be overwritten by the default extensions returned by 
+#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will use the
+#'   specified extension to overwrite the value returned by \code{fileformats}. 
+#'   If \code{ext=NULL} and \code{file='somefilename.someext'} then \code{ext} 
+#'   will be set to \code{'someext'} and that will override the value returned
+#'   by \code{fileformats}.
+#' @rdname fileformats
+#' @export
+getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
+  
+  if(!is.null(file) && is.null(ext))
+    ext=sub(".*(\\.[^.]+$)","\\1",basename(file))
+  ext_was_set=!is.null(ext) && !is.na(ext)
+  nfs=fileformats(format=format, ext=ext, class=class, rval='all')
+  if(length(nfs)>1) stop("Ambiguous file format specification!")
+  if(length(nfs)==0) stop("No matching writer for this file format!")
+  r=nfs[[1]]
+  
+  if(ext_was_set) r$ext=ext
+  if(!is.null(file)) r$file=sub("\\.[^.]+$",r$ext,file)
+  r
 }
 
 #' Read a neuron in swc file format
