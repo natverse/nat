@@ -16,6 +16,9 @@ getformatreader(file, class = NULL)
 getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 }
 \arguments{
+  \item{rval}{Character vector choosing what kind of return
+  value \code{fileformats} will give.}
+
   \item{format}{Character vector naming the format}
 
   \item{ext}{Character vector of file extensions}
@@ -35,9 +38,22 @@ getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 
   \item{file}{Path to a file}
 }
+\value{
+\itemize{
+
+\item \code{fileformats} returns a character vector, matrix
+or list according to the value of rval.
+
+\item \code{getformatreader} returns a list. The reader can
+be accessed with \code{$read}
+
+\item \code{getformatwriter} returns a list. The writer can
+be accessed with \code{$write}.}
+}
 \description{
-\code{fileformats} returns format names, functions or a
-table of info re functions that match a filter.
+\code{fileformats} returns format names, a format
+definition list or a table of information about the formats
+that match the given filter conditions.
 
 \code{registerformat} registers a format in the io registry
 

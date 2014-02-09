@@ -148,9 +148,22 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 
 #' Set or return list of registered file formats that we can read
 #' 
-#' @description \code{fileformats} returns format names, functions or a table
-#'   of info re functions that match a filter.
+#' @description \code{fileformats} returns format names, a format definition
+#'   list or a table of information about the formats that match the given
+#'   filter conditions.
 #' @inheritParams registerformat
+#' @param rval Character vector choosing what kind of return value 
+#'   \code{fileformats} will give.
+#' @return \itemize{
+#'   
+#'   \item \code{fileformats} returns a character vector, matrix or list 
+#'   according to the value of rval.
+#'   
+#'   \item \code{getformatreader} returns a list. The reader can be accessed 
+#'   with \code{$read}
+#'   
+#'   \item \code{getformatwriter} returns a list. The writer can be accessed 
+#'   with \code{$write}.}
 fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
                         rval=c("names",'info','all')){
   currentformats=ls(envir=.fileformats)
