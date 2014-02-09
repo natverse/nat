@@ -699,3 +699,16 @@ test_that("write neuron/dotprops to rds file",{
                file.path(td,'EBH11R_skel.rds'))
   
 })
+
+test_that("write neuron to swc file",{
+  y=Cell07PNs[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(write.neuron(y, dir=td, ext='.swc'),
+               file.path(td,'EBH11R.swc'))
+  expect_equal(f<-write.neuron(y, dir=td, format='swc', ext='_skel.swc'),
+               file.path(td,'EBH11R_skel.swc'))
+  expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+})
