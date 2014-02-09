@@ -2,11 +2,11 @@
 #' 
 #' @details This function will handle \code{neuron} and \code{dotprops} objects 
 #'   saved in R .rds or .rda format by default. Additional file formats can be 
-#'   registered using \code{neuronformats}.
+#'   registered using \code{fileformats}.
 #' @export
 #' @param f Path to file
 #' @param ... additional arguments passed to format-specific readers
-#' @seealso \code{\link{read.neurons}, \link{neuronformats}}
+#' @seealso \code{\link{read.neurons}, \link{fileformats}}
 #' @examples
 #' # note that we override the default NeuronName field
 #' n=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
@@ -148,12 +148,12 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
 
 #' Set or return list of registered file formats that we can read
 #' 
-#' @description \code{neuronformats} returns format names, functions or a table
+#' @description \code{fileformats} returns format names, functions or a table
 #'   of info re functions that match a filter.
 #' @inheritParams registerformat
-neuronformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
+fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL, 
                         rval=c("names",'info','all')){
-  currentformats=ls(envir=.neuronformats)
+  currentformats=ls(envir=.fileformats)
   if(!is.null(format)) {
     if(format%in%currentformats)
       currentformats=format
@@ -161,19 +161,19 @@ neuronformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
   } else {
     if(!is.null(ext)){
       currentformats<-Filter(function(x) isTRUE(
-        get(x,envir=.neuronformats)$ext%in%ext), currentformats)
+        get(x,envir=.fileformats)$ext%in%ext), currentformats)
     }
     if(!is.null(class)){
       currentformats<-Filter(function(x) isTRUE(
-        get(x,envir=.neuronformats)$class%in%class), currentformats)
+        get(x,envir=.fileformats)$class%in%class), currentformats)
     }
     if(isTRUE(read)){
       currentformats<-Filter(function(x) 
-        isTRUE(!is.null(get(x,envir=.neuronformats)$read)), currentformats)
+        isTRUE(!is.null(get(x,envir=.fileformats)$read)), currentformats)
     }
     if(isTRUE(write)){
       currentformats<-Filter(function(x) 
-        isTRUE(!is.null(get(x,envir=.neuronformats)$write)), currentformats)
+        isTRUE(!is.null(get(x,envir=.fileformats)$write)), currentformats)
     }
   }
   rval=match.arg(rval)
@@ -181,12 +181,12 @@ neuronformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
     currentformats
   } else if(rval=='info'){
     sapply(currentformats,function(x) {
-      fx=get(x, envir=.neuronformats)
+      fx=get(x, envir=.fileformats)
       c(fx[c('ext','class')],read=!is.null(fx$read),write=!is.null(fx$write),
         magic=!is.null(fx$magic))
     })
   } else if(rval=='all') {
-    mget(currentformats, envir=.neuronformats)
+    mget(currentformats, envir=.fileformats)
   }
 }
 
@@ -199,20 +199,20 @@ neuronformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
 #' @param magiclen Optional integer specifying maximum number of bytes required 
 #'   from file header to determine file's type.
 #' @param class The S3 class for the format (character vector e.g. 'neuron')
-#' @rdname neuronformats
+#' @rdname fileformats
 registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
                          magiclen=NA_integer_,class=NULL){
-  currentformats=ls(envir=.neuronformats)
+  currentformats=ls(envir=.fileformats)
   if(format%in%currentformats) warning("This format has already been registered")
   if(is.null(read) && is.null(write)) stop("Must be provide at least one read or write function")
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
                      class=class),
-         envir=.neuronformats)
+         envir=.fileformats)
   invisible()
 }
 
 #' @description \code{getformatwriter} gets the function to read a file
-#' @rdname neuronformats
+#' @rdname fileformats
 #' @param file Path to a file
 #' @details \code{getformatreader} starts by reading a set number of bytes from 
 #'   the start off the current file and then checks using file extension and 
@@ -220,10 +220,10 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
 #'   in a queue in alphabetical order, dispatching on the first match.
 #' @export
 getformatreader<-function(file, class=NULL){
-  formatsforclass<-neuronformats(class=class)
+  formatsforclass<-fileformats(class=class)
   if(!length(formatsforclass)) return(NULL)
   
-  magiclens=sapply(formatsforclass,function(f) get(f,envir=.neuronformats)$magiclen)
+  magiclens=sapply(formatsforclass,function(f) get(f,envir=.fileformats)$magiclen)
   max_magiclen=max(c(-Inf,magiclens),na.rm=TRUE)
   if(is.finite(max_magiclen)) {
     magicbytes = readBin(file,what=raw(),n=max_magiclen)
@@ -238,7 +238,7 @@ getformatreader<-function(file, class=NULL){
   
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(file)))
   for(format in formatsforclass){
-    ffs=get(format,envir=.neuronformats)
+    ffs=get(format,envir=.fileformats)
     
     # check that we have a read function for this format
     if (!"read"%in%names(ffs)) next
@@ -255,11 +255,11 @@ getformatreader<-function(file, class=NULL){
 }
 
 #' @description \code{getformatwriter} gets the function to write a file
-#' @rdname neuronformats
+#' @rdname fileformats
 #' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   if(!is.null(file)) ext=sub("\\.[^.]+$","",file)
-  nfs=neuronformats(format=format, ext=ext, class=class, rval='all')
+  nfs=fileformats(format=format, ext=ext, class=class, rval='all')
   if(length(nfs)>1) stop("Ambiguous file format specification!")
   if(length(nfs)==0) stop("No matching writer for this file format!")
   return(nfs$write)

@@ -1,10 +1,10 @@
 context("basic input output for neurons")
 
-test_that("We can query neuronformats",{
-  expect_equal(neuronformats(ext='swc',rval='names'),'swc')
-  expect_equal(neuronformats(ext='am', class='neuron', rval='names'),
+test_that("We can query fileformats",{
+  expect_equal(fileformats(ext='swc',rval='names'),'swc')
+  expect_equal(fileformats(ext='am', class='neuron', rval='names'),
                c('hxlineset','hxskel'))
-  expect_is(neuronformats(class='neuron',rval='info'),'matrix')
+  expect_is(fileformats(class='neuron',rval='info'),'matrix')
 })
 
 test_that("We can read neurons in rda or rds format", {

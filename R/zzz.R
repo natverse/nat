@@ -20,4 +20,4 @@
 }
 
 # will store information about formats that we can read
-.neuronformats <- new.env()
+.fileformats <- new.env()

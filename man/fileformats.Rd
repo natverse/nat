@@ -1,11 +1,11 @@
-\name{neuronformats}
+\name{fileformats}
+\alias{fileformats}
 \alias{getformatreader}
 \alias{getformatwriter}
-\alias{neuronformats}
 \alias{registerformat}
 \title{Set or return list of registered file formats that we can read}
 \usage{
-neuronformats(format = NULL, ext = NULL, read = NULL, write = NULL,
+fileformats(format = NULL, ext = NULL, read = NULL, write = NULL,
   class = NULL, rval = c("names", "info", "all"))
 
 registerformat(format = NULL, ext = format, read = NULL, write = NULL,
@@ -36,7 +36,7 @@ getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
   \item{file}{Path to a file}
 }
 \description{
-\code{neuronformats} returns format names, functions or a
+\code{fileformats} returns format names, functions or a
 table of info re functions that match a filter.
 
 \code{registerformat} registers a format in the io registry

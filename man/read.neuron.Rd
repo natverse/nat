@@ -17,7 +17,7 @@ Read a single neuron from a file
 This function will handle \code{neuron} and \code{dotprops}
 objects saved in R .rds or .rda format by default.
 Additional file formats can be registered using
-\code{neuronformats}.
+\code{fileformats}.
 }
 \examples{
 # note that we override the default NeuronName field
@@ -28,6 +28,6 @@ n3=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
   NeuronName=function(x) sub("\\\\..*","",x))
 }
 \seealso{
-\code{\link{read.neurons}, \link{neuronformats}}
+\code{\link{read.neurons}, \link{fileformats}}
 }
 
