@@ -730,6 +730,16 @@ test_that("write neuron to amira hxskel file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
+test_that("write neuron to amira hxlineset file",{
+  y=Cell07PNs[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  expect_equal(f<-write.neuron(y, dir=td, format='hxlineset'),
+               file.path(td,'EBH11R.am'))
+  expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+})
 
 test_that("write neuron to unknown format",{
   expect_error(write.neuron(Cell07PNs[[1]], dir=td, format='rhubarb'))
