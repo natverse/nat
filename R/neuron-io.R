@@ -328,10 +328,11 @@ read.neuron.swc<-function(f, ...){
 
 #' Write out a neuron in any of the file formats we know about
 #' 
-#' If file is not specified the neuron's Inputfile field will be checked. If 
-#' this is missing there will be an error. If dir is specified it will be 
-#' combined with basename(file). If file is specified but format is not, it will 
-#' be inferred from file's extension.
+#' If file is not specified the neuron's InputFileName field will be checked
+#' (for a dotprops object it will be the \code{'file'} attribute). If this is
+#' missing there will be an error. If dir is specified it will be combined with
+#' basename(file). If file is specified but format is not, it will be inferred
+#' from file's extension.
 #' @param n A neuron
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
@@ -339,11 +340,14 @@ read.neuron.swc<-function(f, ...){
 #'   neurons including 'swc', 'hxlineset', 'hxskel'
 #' @param ext Will replace the default extension for the filetype and should 
 #'   include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}
+#' @param Force Whether to overwrite an existing file
+#' @param MakeDir Whether to create directory implied by \code{file} argument.
 #' @param ... Additional arguments passed to selected writer function
 #' @return return value
 #' @export
 #' @seealso \code{\link{fileformats}, \link{saveRDS}}
-write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, ...){
+write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
+                       Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
     format='rds'
@@ -364,9 +368,29 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, ...){
     if(is.null(ext)) ext=NA
   }
   fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
-  if(!is.null(dir)) fw$file=file.path(dir,basename(fw$file))
-  match.fun(fw$write)(n, file=fw$file, ...)
-  invisible(fw$file)
+  file=fw$file
+  if(!is.null(dir)) file=file.path(dir,basename(file))
+  
+  # Now check that we can write to the location that we have chosen
+  if(!Force && file.exists(file)){
+    warning(file," already exists; use Force=T to overwrite")
+    return(NA_character_)
+  }
+  if(!file.exists(dirname(file))){
+    if(MakeDir){
+      if(!dir.create(dirname(file)))
+        stop("Unable to create ",dirname(file))
+    } else {
+      stop(dirname(file)," does not exist; use MakeDir=T to overwrite")
+    }
+  }
+  if(!file.create(file)){
+    stop("Unable to write to file ",file)
+  }
+  
+  # OK all fine, so let's write
+  match.fun(fw$write)(n, file=file, ...)
+  invisible(file)
 }
 
 # write neuron to SWC file

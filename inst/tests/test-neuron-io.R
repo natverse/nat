@@ -686,8 +686,14 @@ test_that("write neuron/dotprops to rds file",{
   dir.create(td)
   on.exit(unlink(td,recursive=TRUE))
   
-  expect_equal(write.neuron(x, dir=td), 
+  expect_equal(f<-write.neuron(x, dir=td), 
                file.path(td,'FruMARCM-M001205_seg002_03.rds'))
+  # can't overwrite get an NA back
+  expect_true(is.na(write.neuron(x, f)))
+  # can overwrite with force
+  expect_equal(write.neuron(x, f, Force=TRUE), f)
+  unlink(f)
+  
   expect_equal(write.neuron(x, dir=td, ext='.RDS'),
                file.path(td,'FruMARCM-M001205_seg002_03.RDS'))
   
