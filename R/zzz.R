@@ -3,6 +3,7 @@
   
   # Register file formats
   registerformat('swc',read=read.neuron.swc,class='neuron')
+  registerformat('rds', read=readRDS, write=saveRDS, class='neuron')
   registerformat('hxskel', ext='am', read="read.neuron.hxskel", magic=is.hxskel,
                 class='neuron', magiclen=11)
   registerformat('hxlineset', ext='am', read="read.neuron.hxlineset", 
