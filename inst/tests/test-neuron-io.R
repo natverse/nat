@@ -744,3 +744,15 @@ test_that("write neuron to amira hxlineset file",{
 test_that("write neuron to unknown format",{
   expect_error(write.neuron(Cell07PNs[[1]], dir=td, format='rhubarb'))
 })
+
+test_that("write.neurons",{
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  neurons_to_write=subset(Cell07PNs,Scored.By%in%c("ACH","CJP"),rval='names')
+  expect_is(written_files<-write.neurons(Cell07PNs, dir=td,
+                INDICES=neurons_to_write,
+                subdir=file.path(Glomerulus),format='swc'),'character')
+  files_found=dir(td,recursive=T,pattern='swc$')
+  expect_true(all(basename(written_files)%in%basename(files_found)))
+})
