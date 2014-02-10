@@ -43,3 +43,10 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   expect_equal(kcs20fh,kcs20fh2)
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
 })
+
+test_that("Can download a neuronlistfh object with MD5'd objects", {
+  localdir <- tempdir()
+  on.exit(unlink(localdir))
+  kcs20md5 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20fhmd5.rds", localdir=localdir)
+  expect_equal(dim(kcs20md5[[1]]$points), c(284, 3))
+})
