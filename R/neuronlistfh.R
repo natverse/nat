@@ -86,27 +86,28 @@
 #' plot3d(kcnl)
 #' }
 #' @export
+#' @param db a \code{filehash} object that manages an on disk database of neuron
+#'   objects. See Implementation details.
 #' @param hashtable A named character vector in which the elements are filenames
-#'   on disk (managed by the filehash object) an dthe
+#'   on disk (managed by the filehash object) and the names are the keys used in
+#'   R to refer to the neuron objects.
 #' @importFrom methods is
 #' @return a \code{neuronlistfh} object which is a character \code{vector} with 
-#'   classes \code{neuronlistfh, neuronlist} and attributes \code{db,df}. See 
+#'   classes \code{neuronlistfh, neuronlist} and attributes \code{db, df}. See 
 #'   Implementation details.
-neuronlistfh<-function(x, df, hashtable){
-  if(!is(x,'filehash'))
-    stop("Unknown/supported backing db class. See ?neuronlistfh for help.")
+neuronlistfh<-function(db, df, hashtable){
+  if(!is(db,'filehash'))
+    stop("Unknown/unsupported backing db class. See ?neuronlistfh for help.")
 
   nlfh=hashtable
 
-  attr(nlfh,'db')=x
+  attr(nlfh,'db')=db
   class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
   
-  if(missing(df) || is.null(df)) {
-    #names(nlfh)=names(x)
-  } else {
+  if(!missing(df) && !is.null(df)) {
     nmissing=sum(!names(hashtable)%in%rownames(df))
     if(nmissing>0)
-      stop("data.frame is missing information about ",nmissing," elements of x")
+      stop("data.frame is missing information about ",nmissing," elements of db")
     names(nlfh)=intersect(rownames(df),names(hashtable))
     attr(nlfh,'df')=df
   }

@@ -5,7 +5,7 @@
 \alias{neuronlistfh}
 \title{neuronlistfh - List of neurons loaded on demand from disk or remote website}
 \usage{
-neuronlistfh(x, df, hashtable)
+neuronlistfh(db, df, hashtable)
 
 is.neuronlistfh(nl)
 
@@ -15,6 +15,10 @@ as.neuronlistfh(x, df, ...)
   dbClass = c("RDS", "RDS2"), remote = NULL, ...)
 }
 \arguments{
+  \item{db}{a \code{filehash} object that manages an on
+  disk database of neuron objects. See Implementation
+  details.}
+
   \item{hashtable}{A named character vector in which the
   elements are filenames on disk (managed by the filehash
   object) and the names are the keys used in R to refer to
@@ -41,7 +45,7 @@ as.neuronlistfh(x, df, ...)
 \value{
 a \code{neuronlistfh} object which is a character
 \code{vector} with classes \code{neuronlistfh, neuronlist}
-and attributes \code{db,df}. See Implementation details.
+and attributes \code{db, df}. See Implementation details.
 }
 \description{
 \code{neuronlistfh} objects consist of a list of neuron
