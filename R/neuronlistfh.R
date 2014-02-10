@@ -113,7 +113,6 @@ neuronlistfh<-function(x, df, hashtable){
   nlfh
 }
 
-
 #' @description \code{is.neuronlistfh} test if an object is a neuronlistfh
 #' @param nl Object to test
 #' @name neuronlistfh
@@ -172,18 +171,6 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   attr(res, 'remote') <- remote
   res
 }
-
-#' @method as.neuronlistfh filehash
-#' @S3method as.neuronlistfh filehash
-#' @rdname neuronlistfh
-as.neuronlistfh.filehash<-function(x, df, ...)
-
-#' @rdname neuronlistfh
-as.neuronlistfh.default<-function(x, df, ...) {
-  if(!inherits(x,'neuronlistfh')) class(x)<-c('neuronlistfh',class(x))
-
-}
-
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
 #' @method as.neuronlist neuronlistfh

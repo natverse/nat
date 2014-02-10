@@ -45,7 +45,6 @@ kcs5=kcs20[1:5]
 }
 \seealso{
 Other neuronlist: \code{\link{as.neuronlistfh}},
-\code{\link{as.neuronlistfh.filehash}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
 \code{\link{neuronlistfh}}; \code{\link{nlapply}};

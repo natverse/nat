@@ -1,6 +1,5 @@
 \name{neuronlistfh}
 \alias{as.neuronlistfh}
-\alias{as.neuronlistfh.filehash}
 \alias{as.neuronlistfh.neuronlist}
 \alias{is.neuronlistfh}
 \alias{neuronlistfh}
@@ -14,13 +13,12 @@ as.neuronlistfh(x, df, ...)
 
 \method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
   dbClass = c("RDS", "RDS2"), remote = NULL, ...)
-
-\method{as.neuronlistfh}{filehash}(x, df, ...)
 }
 \arguments{
   \item{hashtable}{A named character vector in which the
   elements are filenames on disk (managed by the filehash
-  object) an dthe}
+  object) and the names are the keys used in R to refer to
+  the neuron objects.}
 
   \item{nl}{Object to test}
 
