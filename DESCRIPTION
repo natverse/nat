@@ -28,7 +28,8 @@ Imports:
     RANN,
     igraph,
     methods,
-    filehash
+    filehash,
+    digest
 Suggests:
     testthat
 License: GPL-3
