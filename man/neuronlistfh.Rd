@@ -1,12 +1,13 @@
 \name{neuronlistfh}
 \alias{as.neuronlistfh}
-\alias{as.neuronlistfh.default}
 \alias{as.neuronlistfh.filehash}
 \alias{as.neuronlistfh.neuronlist}
 \alias{is.neuronlistfh}
 \alias{neuronlistfh}
 \title{neuronlistfh class to store multiple neurons cached on disk}
 \usage{
+neuronlistfh(x, df, hashtable)
+
 is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
@@ -15,8 +16,6 @@ as.neuronlistfh(x, df, ...)
   dbClass = c("RDS", "RDS2"), remote = NULL, ...)
 
 \method{as.neuronlistfh}{filehash}(x, df, ...)
-
-\method{as.neuronlistfh}{default}(x, df, ...)
 }
 \arguments{
   \item{nl}{Object to test}
@@ -50,9 +49,6 @@ object to neuronlistfh
 \code{as.neuronlistfh.neuronlist} converts a regular
 neuronlist to one backed by a filehash object with an on
 disk representation
-
-\code{as.neuronlistfh.default} wraps an existing filehash
-object (with backing objects on disk) into a neuronlistfh
 }
 \details{
 \code{neuronlistfh} objects also inherit from
@@ -80,11 +76,6 @@ However neuronlist objects (like lists) do have an
 ordering. Therefore the names of a neuronlistfh object are
 not necessarily the same as the result of calling
 \code{names()} on the underlying filehash object.
-
-In \code{as.neuronlistfh.default} the rownames of the
-dataframe determine the ordering of the objects, not the
-values of \code{names()} reported by the backing database
-(which does not have an intrinsic order).
 }
 \examples{
 \dontrun{

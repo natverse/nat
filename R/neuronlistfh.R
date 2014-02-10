@@ -43,7 +43,34 @@
 #' # it is run
 #' plot3d(kcnl)
 #' }
-NULL
+#' @description \code{neuronlistfh} constructs a neuronlistfh object from a 
+#  filehash, dataframe and hashtable.
+#  @export
+#' @details In \code{neuronlistfh} the rownames of the dataframe 
+#'   determine the ordering of the objects, not the values of \code{names()} 
+#'   reported by the backing database (which does not have an intrinsic order).
+#' @importFrom methods is
+neuronlistfh<-function(x, df, hashtable){
+  if(!is(x,'filehash'))
+    stop("Unknown/supported backing db class. See ?neuronlistfh for help.")
+
+  nlfh=hashtable
+
+  attr(nlfh,'db')=x
+  class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
+  
+  if(missing(df) || is.null(df)) {
+    #names(nlfh)=names(x)
+  } else {
+    nmissing=sum(!names(hashtable)%in%rownames(df))
+    if(nmissing>0)
+      stop("data.frame is missing information about ",nmissing," elements of x")
+    names(nlfh)=intersect(rownames(df),names(hashtable))
+    attr(nlfh,'df')=df
+  }
+  nlfh
+}
+
 
 #' @description \code{is.neuronlistfh} test if an object is a neuronlistfh
 #' @param nl Object to test
@@ -83,6 +110,7 @@ as.neuronlistfh<-function(x, df, ...)
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
 #' @S3method as.neuronlistfh neuronlist
+#' @importFrom digest digest
 #' @rdname neuronlistfh
 as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
                                      dbClass=c('RDS','RDS2'), remote=NULL, ...){
@@ -93,9 +121,12 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   dbClass=match.arg(dbClass)
   if(dbClass!='RDS' && !is.null(remote))
     stop("remote download only implemented for RDS class at the moment")
+  # md5 by default. Should we use something else?
+  hashtable=sapply(x,digest)
+  names(x)=hashtable
   db=filehash::dumpList(x, dbName=dir, type=dbClass)
   
-  res <- as.neuronlistfh(db, df)
+  res <- neuronlistfh(db, df, hashtable)
   attr(res, 'remote') <- remote
   res
 }
@@ -103,34 +134,14 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
 #' @method as.neuronlistfh filehash
 #' @S3method as.neuronlistfh filehash
 #' @rdname neuronlistfh
-as.neuronlistfh.filehash<-function(x, df, ...) NextMethod()
+as.neuronlistfh.filehash<-function(x, df, ...)
 
-#' @description \code{as.neuronlistfh.default} wraps an existing filehash object
-#'   (with backing objects on disk) into a neuronlistfh
-#' @S3method as.neuronlistfh default
 #' @rdname neuronlistfh
-#' @details In \code{as.neuronlistfh.default} the rownames of the dataframe 
-#'   determine the ordering of the objects, not the values of \code{names()} 
-#'   reported by the backing database (which does not have an intrinsic order).
-#' @importFrom methods is
-as.neuronlistfh.default<-function(x, df, ...){
-  if(!is(x,'filehash'))
-    stop("Unknown/supported backing db class. See ?neuronlistfh for help.")
-  nlfh=as.neuronlist(vector(length=length(x)))
-  attr(nlfh,'db')=x
-  class(nlfh)=c('neuronlistfh',class(nlfh))
-  
-  if(missing(df) || is.null(df)) {
-    names(nlfh)=names(x)
-  } else {
-    nmissing=sum(!names(x)%in%rownames(df))
-    if(nmissing>0)
-      stop("data.frame is missing information about ",nmissing," elements of x")
-    names(nlfh)=intersect(rownames(df),names(x))
-    attr(nlfh,'df')=df
-  }
-  nlfh
+as.neuronlistfh.default<-function(x, df, ...) {
+  if(!inherits(x,'neuronlistfh')) class(x)<-c('neuronlistfh',class(x))
+
 }
+
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
 #' @method as.neuronlist neuronlistfh
@@ -143,8 +154,12 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 
 #' @S3method [[ neuronlistfh
 "[[.neuronlistfh"<-function(x,i,...){
-  if(!is.character(i)) i=names(x)[i]
-  
+
+  # we need to translate the incoming key to the md5 hash
+  # this should cover all cases (numeric, logical, names)
+  hashtable=structure(as.vector(x),.Names=names(x))
+  i=hashtable[i]
+
   if(is.null(attr(x,'remote'))){
     # no remote specified, just treat as normal
     return(attr(x,'db')[[i,...]])
@@ -192,9 +207,8 @@ as.list.neuronlistfh<-function(x, ...) x
 fillMissing <- function(missing, fh) {
   objDir <- attr(fh, 'db')@dir
   if (!file.exists(objDir)) dir.create(objDir)
-  objfiles=gsub("([A-Z])", "@\\1", missing, perl=T)
-  mapply(download.file, url=paste0(attr(fh, 'remote'), objfiles),
-         destfile=file.path(objDir,objfiles))
+  mapply(download.file, url=paste0(attr(fh, 'remote'), missing),
+         destfile=file.path(objDir,missing))
 }
 
 #' Read a local, or remote, neuronlistfh object saved to a file.
