@@ -22,7 +22,9 @@ as.neuronlistfh(x, df, ...)
   \item{hashtable}{A named character vector in which the
   elements are filenames on disk (managed by the filehash
   object) and the names are the keys used in R to refer to
-  the neuron objects.}
+  the neuron objects. Note that the hashtable defines the
+  order of objects in the neuronlist and will be used to
+  reorder the dataframe if necessary.}
 
   \item{nl}{Object to test}
 

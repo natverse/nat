@@ -90,7 +90,9 @@
 #'   objects. See Implementation details.
 #' @param hashtable A named character vector in which the elements are filenames
 #'   on disk (managed by the filehash object) and the names are the keys used in
-#'   R to refer to the neuron objects.
+#'   R to refer to the neuron objects. Note that the hashtable defines the order
+#'   of objects in the neuronlist and will be used to reorder the dataframe if 
+#'   necessary.
 #' @importFrom methods is
 #' @return a \code{neuronlistfh} object which is a character \code{vector} with 
 #'   classes \code{neuronlistfh, neuronlist} and attributes \code{db, df}. See 
@@ -107,8 +109,8 @@ neuronlistfh<-function(db, df, hashtable){
     nmissing=sum(!names(hashtable)%in%rownames(df))
     if(nmissing>0)
       stop("data.frame is missing information about ",nmissing," elements of db")
-    names(nlfh)=intersect(rownames(df),names(hashtable))
-    attr(nlfh,'df')=df
+    # reorder dataframe using hashtable
+    attr(nlfh,'df')=df[intersect(names(hashtable),rownames(df)),]
   }
   nlfh
 }
