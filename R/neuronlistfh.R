@@ -101,7 +101,8 @@ neuronlistfh<-function(db, df, hashtable){
   if(!is(db,'filehash'))
     stop("Unknown/unsupported backing db class. See ?neuronlistfh for help.")
 
-  nlfh=list(hashtable=hashtable)
+  nlfh=structure(rep(F,length(hashtable)),.Names=names(hashtable))
+  attr(nlfh,'hashtable')=hashtable
   class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
   attr(nlfh,'db')=db
   
@@ -114,15 +115,6 @@ neuronlistfh<-function(db, df, hashtable){
   }
   nlfh
 }
-
-#' @S3method length neuronlistfh
-length.neuronlistfh<-function(x) length(x$hashtable)
-
-#' @S3method names neuronlistfh
-names.neuronlistfh<-function(x) names(x$hashtable)
-
-#' @S3method names<- neuronlistfh
-`names<-.neuronlistfh`<-function(x, value) {names(x$hashtable)<-value; x}
 
 #' @description \code{is.neuronlistfh} test if an object is a neuronlistfh
 #' @param nl Object to test
@@ -199,7 +191,7 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 
   # we need to translate the incoming key to the md5 hash
   # this should cover all cases (numeric, logical, names)
-  i=x$hashtable[i]
+  i=attr(x,'hashtable')[i]
 
   if(is.null(attr(x,'remote'))){
     # no remote specified, just treat as normal
