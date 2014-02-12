@@ -44,6 +44,15 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
 })
 
+test_that("Can create a neuronlistfh with a hashmap",{
+  fhpath=tempfile(pattern='kcs20fh')
+  on.exit(unlink(fhpath,recursive=TRUE))
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=fhpath,hashmap=TRUE),'neuronlistfh')
+  
+  expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
+  expect_equal(sapply(kcs20fh,length),sapply(kcs20,length))
+})
+
 test_that("Can download a neuronlistfh object with MD5'd objects", {
   localdir <- tempfile()
   dir.create(localdir)
