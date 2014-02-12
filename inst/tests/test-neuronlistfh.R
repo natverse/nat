@@ -31,7 +31,7 @@ test_that("neuronlistfh behaves like a neuronlist",{
 test_that("Can load a previously created on disk neuronlistfh representation",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
-  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,filehash.type='RDS')
+  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,dbClass='RDS')
   plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
   
@@ -42,4 +42,21 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   kcs20fh2=readRDS(tf)
   expect_equal(kcs20fh,kcs20fh2)
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
+})
+
+test_that("Can create a neuronlistfh with a hashmap",{
+  fhpath=tempfile(pattern='kcs20fh')
+  on.exit(unlink(fhpath,recursive=TRUE))
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=fhpath,hashmap=TRUE),'neuronlistfh')
+  
+  expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
+  expect_equal(sapply(kcs20fh,length),sapply(kcs20,length))
+})
+
+test_that("Can download a neuronlistfh object with MD5'd objects", {
+  localdir <- tempfile()
+  dir.create(localdir)
+  on.exit(unlink(localdir, recursive=TRUE))
+  kcs20md5 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20fhmd5.rds", localdir=localdir)
+  expect_equal(dim(kcs20md5[[1]]$points), c(284, 3))
 })

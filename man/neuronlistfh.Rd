@@ -1,24 +1,37 @@
 \name{neuronlistfh}
 \alias{as.neuronlistfh}
-\alias{as.neuronlistfh.default}
-\alias{as.neuronlistfh.filehash}
 \alias{as.neuronlistfh.neuronlist}
 \alias{is.neuronlistfh}
 \alias{neuronlistfh}
-\title{neuronlistfh class to store multiple neurons cached on disk}
+\title{neuronlistfh - List of neurons loaded on demand from disk or remote website}
 \usage{
+neuronlistfh(db, df, keyfilemap, hashmap = 1000L)
+
 is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
 
 \method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
   dbClass = c("RDS", "RDS2"), remote = NULL, ...)
-
-\method{as.neuronlistfh}{filehash}(x, df, ...)
-
-\method{as.neuronlistfh}{default}(x, df, ...)
 }
 \arguments{
+  \item{db}{a \code{filehash} object that manages an on
+  disk database of neuron objects. See Implementation
+  details.}
+
+  \item{keyfilemap}{A named character vector in which the
+  elements are filenames on disk (managed by the filehash
+  object) and the names are the keys used in R to refer to
+  the neuron objects. Note that the keyfilemap defines the
+  order of objects in the neuronlist and will be used to
+  reorder the dataframe if necessary.}
+
+  \item{hashmap}{A logical indicating whether to add a
+  hashed environment for rapid object lookup by name or an
+  integer or an integer definining a threhsold number of
+  objects when this will happen (see Implementation
+  details).}
+
   \item{nl}{Object to test}
 
   \item{x}{Object to convert}
@@ -26,7 +39,8 @@ as.neuronlistfh(x, df, ...)
   \item{df}{Optional dataframe, where each row describes
   one neuron}
 
-  \item{...}{Additional arguments for methods}
+  \item{...}{Additional arguments for methods, eventually
+  passed to \code{neuronlistfh()} constructor.}
 
   \item{dir}{The path to the underlying \code{filehash}
   database on disk}
@@ -37,10 +51,28 @@ as.neuronlistfh(x, df, ...)
   \item{remote}{The url pointing to a remote repository
   containing files for each neuron.}
 }
+\value{
+a \code{neuronlistfh} object which is a character
+\code{vector} with classes \code{neuronlistfh, neuronlist}
+and attributes \code{db, df}. See Implementation details.
+}
 \description{
 \code{neuronlistfh} objects consist of a list of neuron
 objects along with an optional attached dataframe
-containing information about the neurons.
+containing information about the neurons. In contrast to
+\code{neuronlist} objects the neurons are not present in
+memory but are instead dynamically loaded from disk as
+required.  \code{neuronlistfh} objects also inherit from
+\code{neuronlist} and therefore any appropriate methods
+e.g. \code{plot3d.neuronlist} can also be used on
+\code{neuronlistfh} objects.
+
+\code{neuronlistfh} constructs a neuronlistfh object from a
+\code{filehash}, \code{data.frame} and \code{keyfilemap}.
+End users will \strong{not} typically use this function to
+make a \code{neuronlistfh}.  They will usually read them
+using \code{read.neuronlistfh} and sometimes create them by
+using \code{as.neuronlistfh} on a \code{neuronlist} object.
 
 \code{is.neuronlistfh} test if an object is a neuronlistfh
 
@@ -50,41 +82,87 @@ object to neuronlistfh
 \code{as.neuronlistfh.neuronlist} converts a regular
 neuronlist to one backed by a filehash object with an on
 disk representation
-
-\code{as.neuronlistfh.default} wraps an existing filehash
-object (with backing objects on disk) into a neuronlistfh
 }
-\details{
-\code{neuronlistfh} objects also inherit from
-\code{neuronlist} and therefore any appropriate methods
-e.g. \code{plot3d.neuronlist} can also be used on
-\code{neuronlistfh} objects. Presently only backing objects
-which extend the \code{filehash} class are supported. These
-include: \itemize{ \item filehash RDS \item filehash RDS2
-(experimental) } We have implemented a simple remote access
-protocol which is currently only implemented for the
-\code{RDS} format. This allows a neuronlistfh object to be
-read from a url and downloaded to a local path. Subsequent
-attempts to access neurons stored in this list will result
-in automated download of the requested neuron to the local
-cache.
+\section{Implementation details}{
+  neuronlistfh objects are a hybrid between regular
+  \code{neuronlist} objects that organise data and metadata
+  for collections of neurons and a backing \code{filehash}
+  object. Instead of keeping objects in memory, they are
+  \emph{always} loaded from disk.  Although this sounds
+  like it might be slow, for nearly all practical purposes
+  (e.g. plotting neurons) the time to read the neuron from
+  disk is small compared with the time to plot the neuron;
+  the OS will cache repeated reads of the same file. The
+  benefits in memory and startup time (<1s vs 100s for our
+  16,000 neuron database) are vital for collections of
+  1000s of neurons e.g. for dynamic report generation using
+  knitr or for users with <8Gb RAM or running 32 bit R.
 
-The \code{RDS2} format is experimental and only available
-at \url{https://github.com/jefferis/filehash} but is likely
-to be the most effective for large (>5000) collections of
-neurons.
+  neuronlistfh objects include: \itemize{
 
-Note that objects are stored in a filehash, which by
-definition does not have any ordering of its elements.
-However neuronlist objects (like lists) do have an
-ordering. Therefore the names of a neuronlistfh object are
-not necessarily the same as the result of calling
-\code{names()} on the underlying filehash object.
+  \item{attr("keyfilemap")}{ A named character vector that
+  determines the ordering of objects in the neuronlist and
+  translates keys in R to filenames on disk. For objects
+  created by \code{as.neuronlistfh} the filenames will be
+  the md5 hash of the object as calculated using
+  \code{digest}. This design means that the same key can be
+  used to refer to multiple distinct objects on disk.
+  Objects are effecitvely versioned by their contents. So
+  if an updated neuronlistfh object is posted to a website
+  and then fetched by a user it will result in the
+  automated download of any updated objects to which it
+  refers.}
 
-In \code{as.neuronlistfh.default} the rownames of the
-dataframe determine the ordering of the objects, not the
-values of \code{names()} reported by the backing database
-(which does not have an intrinsic order).
+  \item{attr("db")}{ The backing database - typically of
+  class \code{filehashRDS}. This manages the loading of
+  objects from disk.}
+
+  \item{attr(x,"df")}{ The data.frame of metadata which can
+  be used to select and plot neurons. See
+  \code{\link{neuronlist}} for examples.}
+
+  \item{attr(x,"hashmap")}{ (Optional) a hashed environment
+  which can be used for rapid lookup using key names
+  (rather than numeric/logical indices).  There is a space
+  potential to pay for this redundant lookup methos, but it
+  is normally worth while given that the dataframe object
+  is typically considerably larger. To give some numbers,
+  the additional environment might occupy ~ 1% of a 16,000
+  object neuronlistfh object and reduce mean lookup time
+  from 0.5 ms to 1us. Having located the object, on my
+  machine it can take as little as 0.1ms to load from disk,
+  so these savings are relevant.}
+
+  } Presently only backing objects which extend the
+  \code{filehash} class are supported (although in theory
+  other backing objects could be added). These include:
+  \itemize{
+
+  \item filehash RDS
+
+  \item filehash RDS2 (experimental)}
+
+  We have also implemented a simple remote access protocol
+  (currently only for the \code{RDS} format). This allows a
+  neuronlistfh object to be read from a url and downloaded
+  to a local path. Subsequent attempts to access neurons
+  stored in this list will result in automated download of
+  the requested neuron to the local cache.
+
+  An alternative backend, the experimental \code{RDS2}
+  format is supported (available at
+  \url{https://github.com/jefferis/filehash}). This is
+  likely to be the most effective for large (5,000-500,000)
+  collections of neurons, especially when using network
+  filesystems (nfs, afp) which are typically very slow at
+  handling directory reads.
+
+  Note that objects are stored in a filehash, which by
+  definition does not have any ordering of its elements.
+  However neuronlist objects (like lists) do have an
+  ordering. Therefore the names of a neuronlistfh object
+  are not necessarily the same as the result of calling
+  \code{names()} on the underlying filehash object.
 }
 \examples{
 \dontrun{
@@ -96,14 +174,16 @@ plot3d(kcnl)
 }
 \dontrun{
 # create neuronlistfh object backed by filehash with one file per neuron
-kcs20fh=as.neuronlistfh(kcs20,dir='/path/to/my/kcdb/data',filehash.type='RDS')
+# by convention we create a subfolder called data in which the objects live
+kcs20fh=as.neuronlistfh(kcs20, dir='/path/to/my/kcdb/data')
 plot3d(subset(kcs20fh,type=='gamma'))
-# save neuronlisfh object next to filehash backing database
-save(kcs20fh,file='/path/to/my/kcdb/kcdb.rda')
+# ... and, again by convention, save the neuronlisfh object next to filehash
+# backing database
+saveRDS(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 
 # in a new session
-load("/path/to/my/kcdb.rda")
-plot3d(subset(kcs20fh,type=='gamma'))
+read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
+plot3d(subset(kcs20fh, type=='gamma'))
 }
 }
 \seealso{

@@ -1,35 +1,86 @@
 # define neuronlistfh, that looks like a regular in memory neuronlist
 # but is actually backed by an on disk filehash structure
 
-#' neuronlistfh class to store multiple neurons cached on disk
+#' neuronlistfh - List of neurons loaded on demand from disk or remote website
 #' 
-#' @description \code{neuronlistfh} objects consist of a list of neuron objects
-#'   along with an optional attached dataframe containing information about the
-#'   neurons.
-#' @details \code{neuronlistfh} objects also inherit from \code{neuronlist} and
+#' @description \code{neuronlistfh} objects consist of a list of neuron objects 
+#'   along with an optional attached dataframe containing information about the 
+#'   neurons. In contrast to \code{neuronlist} objects the neurons are not 
+#'   present in memory but are instead dynamically loaded from disk as required.
+#'   \code{neuronlistfh} objects also inherit from \code{neuronlist} and 
 #'   therefore any appropriate methods e.g. \code{plot3d.neuronlist} can also be
 #'   used on \code{neuronlistfh} objects.
-#' Presently only backing objects which extend the \code{filehash} class are
-#'   supported. These include:
-#' \itemize{
-#' \item filehash RDS
-#' \item filehash RDS2 (experimental)
-#' }
-#' We have implemented a simple remote access protocol which is currently only
-#' implemented for the \code{RDS} format. This allows a neuronlistfh object to
-#' be read from a url and downloaded to a local path. Subsequent attempts to
-#' access neurons stored in this list will result in automated download of the
-#' requested neuron to the local cache.
-#' 
-#' The \code{RDS2} format is experimental and only available at 
-#' \url{https://github.com/jefferis/filehash} but is likely to be the most 
-#' effective for large (>5000) collections of neurons.
-#' 
-#' Note that objects are stored in a filehash, which by definition does not have
-#' any ordering of its elements. However neuronlist objects (like lists) do have
-#' an ordering. Therefore the names of a neuronlistfh object are not necessarily
-#' the same as the result of calling \code{names()} on the underlying filehash
-#' object.
+#'   
+#'   \code{neuronlistfh} constructs a neuronlistfh object from a 
+#'   \code{filehash}, \code{data.frame} and \code{keyfilemap}. End users will 
+#'   \strong{not} typically use this function to make a \code{neuronlistfh}. 
+#'   They will usually read them using \code{read.neuronlistfh} and sometimes 
+#'   create them by using \code{as.neuronlistfh} on a \code{neuronlist} object.
+#'   
+#' @section Implementation details: neuronlistfh objects are a hybrid between 
+#'   regular \code{neuronlist} objects that organise data and metadata for 
+#'   collections of neurons and a backing \code{filehash} object. Instead of 
+#'   keeping objects in memory, they are \emph{always} loaded from disk. 
+#'   Although this sounds like it might be slow, for nearly all practical 
+#'   purposes (e.g. plotting neurons) the time to read the neuron from disk is 
+#'   small compared with the time to plot the neuron; the OS will cache repeated
+#'   reads of the same file. The benefits in memory and startup time (<1s vs 
+#'   100s for our 16,000 neuron database) are vital for collections of 1000s of 
+#'   neurons e.g. for dynamic report generation using knitr or for users with 
+#'   <8Gb RAM or running 32 bit R.
+#'   
+#'   neuronlistfh objects include: \itemize{
+#'   
+#'   \item{attr("keyfilemap")}{ A named character vector that determines the 
+#'   ordering of objects in the neuronlist and translates keys in R to filenames
+#'   on disk. For objects created by \code{as.neuronlistfh} the filenames will 
+#'   be the md5 hash of the object as calculated using \code{digest}. This 
+#'   design means that the same key can be used to refer to multiple distinct 
+#'   objects on disk. Objects are effecitvely versioned by their contents. So if
+#'   an updated neuronlistfh object is posted to a website and then fetched by a
+#'   user it will result in the automated download of any updated objects to 
+#'   which it refers.}
+#'   
+#'   \item{attr("db")}{ The backing database - typically of class 
+#'   \code{filehashRDS}. This manages the loading of objects from disk.}
+#'   
+#'   \item{attr(x,"df")}{ The data.frame of metadata which can be used to select
+#'   and plot neurons. See \code{\link{neuronlist}} for examples.}
+#'   
+#'   \item{attr(x,"hashmap")}{ (Optional) a hashed environment which can be used
+#'   for rapid lookup using key names (rather than numeric/logical indices). 
+#'   There is a space potential to pay for this redundant lookup methos, but it 
+#'   is normally worth while given that the dataframe object is typically 
+#'   considerably larger. To give some numbers, the additional environment might
+#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup
+#'   time from 0.5 ms to 1us. Having located the object, on my machine it can
+#'   take as little as 0.1ms to load from disk, so these savings are relevant.}
+#'   
+#'   } Presently only backing objects which extend the \code{filehash} class are
+#'   supported (although in theory other backing objects could be added). These 
+#'   include: \itemize{
+#'   
+#'   \item filehash RDS
+#'   
+#'   \item filehash RDS2 (experimental)}
+#'   
+#'   We have also implemented a simple remote access protocol (currently only 
+#'   for the \code{RDS} format). This allows a neuronlistfh object to be read 
+#'   from a url and downloaded to a local path. Subsequent attempts to access 
+#'   neurons stored in this list will result in automated download of the 
+#'   requested neuron to the local cache.
+#'   
+#'   An alternative backend, the experimental \code{RDS2} format is supported 
+#'   (available at \url{https://github.com/jefferis/filehash}). This is likely 
+#'   to be the most effective for large (5,000-500,000) collections of neurons, 
+#'   especially when using network filesystems (nfs, afp) which are typically 
+#'   very slow at handling directory reads.
+#'   
+#'   Note that objects are stored in a filehash, which by definition does not 
+#'   have any ordering of its elements. However neuronlist objects (like lists) 
+#'   do have an ordering. Therefore the names of a neuronlistfh object are not 
+#'   necessarily the same as the result of calling \code{names()} on the 
+#'   underlying filehash object.
 #' @name neuronlistfh
 #' @family neuronlistfh
 #' @family neuronlist
@@ -43,7 +94,50 @@
 #' # it is run
 #' plot3d(kcnl)
 #' }
-NULL
+#' @export
+#' @param db a \code{filehash} object that manages an on disk database of neuron
+#'   objects. See Implementation details.
+#' @param keyfilemap A named character vector in which the elements are 
+#'   filenames on disk (managed by the filehash object) and the names are the 
+#'   keys used in R to refer to the neuron objects. Note that the keyfilemap 
+#'   defines the order of objects in the neuronlist and will be used to reorder 
+#'   the dataframe if necessary.
+#' @param hashmap A logical indicating whether to add a hashed environment for 
+#'   rapid object lookup by name or an integer or an integer definining a 
+#'   threhsold number of objects when this will happen (see Implementation 
+#'   details).
+#' @importFrom methods is
+#' @return a \code{neuronlistfh} object which is a character \code{vector} with 
+#'   classes \code{neuronlistfh, neuronlist} and attributes \code{db, df}. See 
+#'   Implementation details.
+neuronlistfh<-function(db, df, keyfilemap, hashmap=1000L){
+  if(!is(db,'filehash'))
+    stop("Unknown/unsupported backing db class. See ?neuronlistfh for help.")
+
+  if(!is.character(keyfilemap) || is.null(names(keyfilemap)) || 
+       any(duplicated(names(keyfilemap)))){
+    stop("keyfilemap must have as many unique names as elements")
+  }
+  
+  nlfh=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
+  attr(nlfh,'keyfilemap')=keyfilemap
+  class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
+  attr(nlfh,'db')=db
+  if(is.numeric(hashmap)) hashmap = length(keyfilemap)>=hashmap
+  
+  if(hashmap){
+    attr(db,'hashmap')=list2env(as.list(keyfilemap))
+  }
+  
+  if(!missing(df) && !is.null(df)) {
+    nmissing=sum(!names(keyfilemap)%in%rownames(df))
+    if(nmissing>0)
+      stop("data.frame is missing information about ",nmissing," elements of db")
+    # reorder dataframe using keyfilemap
+    attr(nlfh,'df')=df[intersect(names(keyfilemap),rownames(df)),]
+  }
+  nlfh
+}
 
 #' @description \code{is.neuronlistfh} test if an object is a neuronlistfh
 #' @param nl Object to test
@@ -53,24 +147,27 @@ is.neuronlistfh<-function(nl) {
   inherits(nl,"neuronlistfh")
 }
 
-#' @description \code{as.neuronlistfh} generic function to convert an object to
+#' @description \code{as.neuronlistfh} generic function to convert an object to 
 #'   neuronlistfh
 #' @param x Object to convert
 #' @param df Optional dataframe, where each row describes one neuron
-#' @param ... Additional arguments for methods
+#' @param ... Additional arguments for methods, eventually passed to
+#'   \code{neuronlistfh()} constructor.
 #' @export
 #' @rdname neuronlistfh
 #' @examples
 #' \dontrun{
 #' # create neuronlistfh object backed by filehash with one file per neuron
-#' kcs20fh=as.neuronlistfh(kcs20,dir='/path/to/my/kcdb/data',filehash.type='RDS')
+#' # by convention we create a subfolder called data in which the objects live
+#' kcs20fh=as.neuronlistfh(kcs20, dir='/path/to/my/kcdb/data')
 #' plot3d(subset(kcs20fh,type=='gamma'))
-#' # save neuronlisfh object next to filehash backing database
-#' save(kcs20fh,file='/path/to/my/kcdb/kcdb.rda')
+#' # ... and, again by convention, save the neuronlisfh object next to filehash 
+#' # backing database
+#' saveRDS(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 #' 
 #' # in a new session
-#' load("/path/to/my/kcdb.rda")
-#' plot3d(subset(kcs20fh,type=='gamma'))
+#' read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
+#' plot3d(subset(kcs20fh, type=='gamma'))
 #' }
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
@@ -83,6 +180,7 @@ as.neuronlistfh<-function(x, df, ...)
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
 #' @S3method as.neuronlistfh neuronlist
+#' @importFrom digest digest
 #' @rdname neuronlistfh
 as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
                                      dbClass=c('RDS','RDS2'), remote=NULL, ...){
@@ -93,43 +191,14 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   dbClass=match.arg(dbClass)
   if(dbClass!='RDS' && !is.null(remote))
     stop("remote download only implemented for RDS class at the moment")
+  # md5 by default. Should we use something else?
+  keyfilemap=sapply(x,digest)
+  names(x)=keyfilemap
   db=filehash::dumpList(x, dbName=dir, type=dbClass)
   
-  res <- as.neuronlistfh(db, df)
+  res <- neuronlistfh(db, df, keyfilemap, ...)
   attr(res, 'remote') <- remote
   res
-}
-
-#' @method as.neuronlistfh filehash
-#' @S3method as.neuronlistfh filehash
-#' @rdname neuronlistfh
-as.neuronlistfh.filehash<-function(x, df, ...) NextMethod()
-
-#' @description \code{as.neuronlistfh.default} wraps an existing filehash object
-#'   (with backing objects on disk) into a neuronlistfh
-#' @S3method as.neuronlistfh default
-#' @rdname neuronlistfh
-#' @details In \code{as.neuronlistfh.default} the rownames of the dataframe 
-#'   determine the ordering of the objects, not the values of \code{names()} 
-#'   reported by the backing database (which does not have an intrinsic order).
-#' @importFrom methods is
-as.neuronlistfh.default<-function(x, df, ...){
-  if(!is(x,'filehash'))
-    stop("Unknown/supported backing db class. See ?neuronlistfh for help.")
-  nlfh=as.neuronlist(vector(length=length(x)))
-  attr(nlfh,'db')=x
-  class(nlfh)=c('neuronlistfh',class(nlfh))
-  
-  if(missing(df) || is.null(df)) {
-    names(nlfh)=names(x)
-  } else {
-    nmissing=sum(!names(x)%in%rownames(df))
-    if(nmissing>0)
-      stop("data.frame is missing information about ",nmissing," elements of x")
-    names(nlfh)=intersect(rownames(df),names(x))
-    attr(nlfh,'df')=df
-  }
-  nlfh
 }
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
@@ -143,8 +212,13 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 
 #' @S3method [[ neuronlistfh
 "[[.neuronlistfh"<-function(x,i,...){
-  if(!is.character(i)) i=names(x)[i]
-  
+
+  # we need to translate the incoming key to the md5 hash
+  # if a hashmap is available, that will be faster for lookup by names
+  if(is.character(i) && !is.null(hm<-attr(x,'hashmap'))){
+    i = hm$i
+  } else i = attr(x,'keyfilemap')[i]
+
   if(is.null(attr(x,'remote'))){
     # no remote specified, just treat as normal
     return(attr(x,'db')[[i,...]])
@@ -192,9 +266,8 @@ as.list.neuronlistfh<-function(x, ...) x
 fillMissing <- function(missing, fh) {
   objDir <- attr(fh, 'db')@dir
   if (!file.exists(objDir)) dir.create(objDir)
-  objfiles=gsub("([A-Z])", "@\\1", missing, perl=T)
-  mapply(download.file, url=paste0(attr(fh, 'remote'), objfiles),
-         destfile=file.path(objDir,objfiles))
+  mapply(download.file, url=paste0(attr(fh, 'remote'), missing),
+         destfile=file.path(objDir,missing))
 }
 
 #' Read a local, or remote, neuronlistfh object saved to a file.
