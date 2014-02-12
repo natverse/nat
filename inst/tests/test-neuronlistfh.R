@@ -31,7 +31,7 @@ test_that("neuronlistfh behaves like a neuronlist",{
 test_that("Can load a previously created on disk neuronlistfh representation",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
-  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,filehash.type='RDS')
+  kcs20fh=as.neuronlistfh(kcs20,dir=fhpath,dbClass='RDS')
   plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
   
