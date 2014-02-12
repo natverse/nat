@@ -12,7 +12,7 @@
 #'   used on \code{neuronlistfh} objects.
 #'   
 #'   \code{neuronlistfh} constructs a neuronlistfh object from a 
-#'   \code{filehash}, \code{data.frame} and \code{hashtable}. End users will 
+#'   \code{filehash}, \code{data.frame} and \code{keyfilemap}. End users will 
 #'   \strong{not} typically use this function to make a \code{neuronlistfh}. 
 #'   They will usually read them using \code{read.neuronlistfh} and sometimes 
 #'   create them by using \code{as.neuronlistfh} on a \code{neuronlist} object.
@@ -31,15 +31,15 @@
 #'   
 #'   neuronlistfh objects include: \itemize{
 #'   
-#'   \item{hashtable}{ A named character vector that determines the ordering of 
-#'   objects in the neuronlist and translates keys in R to filenames on disk. 
-#'   For objects created by \code{as.neuronlistfh} the filenames will be the md5
-#'   hash of the object as calculated using \code{digest}. This design means 
-#'   that the same key can be used to refer to multiple distinct objects on 
-#'   disk. Objects are effecitvely versioned by their contents. So if an updated
-#'   neuronlistfh object is posted to a website and then fetched by a user it 
-#'   will result in the automated download of any updated objects to which it 
-#'   refers.}
+#'   \item{attr("keyfilemap")}{ A named character vector that determines the 
+#'   ordering of objects in the neuronlist and translates keys in R to filenames
+#'   on disk. For objects created by \code{as.neuronlistfh} the filenames will 
+#'   be the md5 hash of the object as calculated using \code{digest}. This 
+#'   design means that the same key can be used to refer to multiple distinct 
+#'   objects on disk. Objects are effecitvely versioned by their contents. So if
+#'   an updated neuronlistfh object is posted to a website and then fetched by a
+#'   user it will result in the automated download of any updated objects to 
+#'   which it refers.}
 #'   
 #'   \item{attr("db")}{ The backing database - typically of class 
 #'   \code{filehashRDS}. This manages the loading of objects from disk.}
@@ -48,7 +48,7 @@
 #'   and plot neurons. See \code{\link{neuronlist}} for examples.}
 #'   
 #'   } Presently only backing objects which extend the \code{filehash} class are
-#'   supported although in theory other backing objects could be added. These 
+#'   supported (although in theory other backing objects could be added). These 
 #'   include: \itemize{
 #'   
 #'   \item filehash RDS
@@ -88,30 +88,30 @@
 #' @export
 #' @param db a \code{filehash} object that manages an on disk database of neuron
 #'   objects. See Implementation details.
-#' @param hashtable A named character vector in which the elements are filenames
+#' @param keyfilemap A named character vector in which the elements are filenames
 #'   on disk (managed by the filehash object) and the names are the keys used in
-#'   R to refer to the neuron objects. Note that the hashtable defines the order
+#'   R to refer to the neuron objects. Note that the keyfilemap defines the order
 #'   of objects in the neuronlist and will be used to reorder the dataframe if 
 #'   necessary.
 #' @importFrom methods is
 #' @return a \code{neuronlistfh} object which is a character \code{vector} with 
 #'   classes \code{neuronlistfh, neuronlist} and attributes \code{db, df}. See 
 #'   Implementation details.
-neuronlistfh<-function(db, df, hashtable){
+neuronlistfh<-function(db, df, keyfilemap){
   if(!is(db,'filehash'))
     stop("Unknown/unsupported backing db class. See ?neuronlistfh for help.")
 
-  nlfh=structure(rep(F,length(hashtable)),.Names=names(hashtable))
-  attr(nlfh,'hashtable')=hashtable
+  nlfh=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
+  attr(nlfh,'keyfilemap')=keyfilemap
   class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
   attr(nlfh,'db')=db
   
   if(!missing(df) && !is.null(df)) {
-    nmissing=sum(!names(hashtable)%in%rownames(df))
+    nmissing=sum(!names(keyfilemap)%in%rownames(df))
     if(nmissing>0)
       stop("data.frame is missing information about ",nmissing," elements of db")
-    # reorder dataframe using hashtable
-    attr(nlfh,'df')=df[intersect(names(hashtable),rownames(df)),]
+    # reorder dataframe using keyfilemap
+    attr(nlfh,'df')=df[intersect(names(keyfilemap),rownames(df)),]
   }
   nlfh
 }
@@ -168,11 +168,11 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   if(dbClass!='RDS' && !is.null(remote))
     stop("remote download only implemented for RDS class at the moment")
   # md5 by default. Should we use something else?
-  hashtable=sapply(x,digest)
-  names(x)=hashtable
+  keyfilemap=sapply(x,digest)
+  names(x)=keyfilemap
   db=filehash::dumpList(x, dbName=dir, type=dbClass)
   
-  res <- neuronlistfh(db, df, hashtable)
+  res <- neuronlistfh(db, df, keyfilemap)
   attr(res, 'remote') <- remote
   res
 }
@@ -191,7 +191,7 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 
   # we need to translate the incoming key to the md5 hash
   # this should cover all cases (numeric, logical, names)
-  i=attr(x,'hashtable')[i]
+  i=attr(x,'keyfilemap')[i]
 
   if(is.null(attr(x,'remote'))){
     # no remote specified, just treat as normal

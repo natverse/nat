@@ -5,7 +5,7 @@
 \alias{neuronlistfh}
 \title{neuronlistfh - List of neurons loaded on demand from disk or remote website}
 \usage{
-neuronlistfh(db, df, hashtable)
+neuronlistfh(db, df, keyfilemap)
 
 is.neuronlistfh(nl)
 
@@ -19,10 +19,10 @@ as.neuronlistfh(x, df, ...)
   disk database of neuron objects. See Implementation
   details.}
 
-  \item{hashtable}{A named character vector in which the
+  \item{keyfilemap}{A named character vector in which the
   elements are filenames on disk (managed by the filehash
   object) and the names are the keys used in R to refer to
-  the neuron objects. Note that the hashtable defines the
+  the neuron objects. Note that the keyfilemap defines the
   order of objects in the neuronlist and will be used to
   reorder the dataframe if necessary.}
 
@@ -61,7 +61,7 @@ e.g. \code{plot3d.neuronlist} can also be used on
 \code{neuronlistfh} objects.
 
 \code{neuronlistfh} constructs a neuronlistfh object from a
-\code{filehash}, \code{data.frame} and \code{hashtable}.
+\code{filehash}, \code{data.frame} and \code{keyfilemap}.
 End users will \strong{not} typically use this function to
 make a \code{neuronlistfh}.  They will usually read them
 using \code{read.neuronlistfh} and sometimes create them by
@@ -93,9 +93,9 @@ disk representation
 
   neuronlistfh objects include: \itemize{
 
-  \item{hashtable}{ A named character vector that
+  \item{attr("keyfilemap")}{ A named character vector that
   determines the ordering of objects in the neuronlist and
-  translates keys in R to filenames on disk.  For objects
+  translates keys in R to filenames on disk. For objects
   created by \code{as.neuronlistfh} the filenames will be
   the md5 hash of the object as calculated using
   \code{digest}. This design means that the same key can be
@@ -115,8 +115,8 @@ disk representation
   \code{\link{neuronlist}} for examples.}
 
   } Presently only backing objects which extend the
-  \code{filehash} class are supported although in theory
-  other backing objects could be added. These include:
+  \code{filehash} class are supported (although in theory
+  other backing objects could be added). These include:
   \itemize{
 
   \item filehash RDS
