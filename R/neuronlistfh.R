@@ -147,11 +147,12 @@ is.neuronlistfh<-function(nl) {
   inherits(nl,"neuronlistfh")
 }
 
-#' @description \code{as.neuronlistfh} generic function to convert an object to
+#' @description \code{as.neuronlistfh} generic function to convert an object to 
 #'   neuronlistfh
 #' @param x Object to convert
 #' @param df Optional dataframe, where each row describes one neuron
-#' @param ... Additional arguments for methods
+#' @param ... Additional arguments for methods, eventually passed to
+#'   \code{neuronlistfh()} constructor.
 #' @export
 #' @rdname neuronlistfh
 #' @examples
@@ -195,7 +196,7 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   names(x)=keyfilemap
   db=filehash::dumpList(x, dbName=dir, type=dbClass)
   
-  res <- neuronlistfh(db, df, keyfilemap)
+  res <- neuronlistfh(db, df, keyfilemap, ...)
   attr(res, 'remote') <- remote
   res
 }

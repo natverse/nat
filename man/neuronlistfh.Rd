@@ -39,7 +39,8 @@ as.neuronlistfh(x, df, ...)
   \item{df}{Optional dataframe, where each row describes
   one neuron}
 
-  \item{...}{Additional arguments for methods}
+  \item{...}{Additional arguments for methods, eventually
+  passed to \code{neuronlistfh()} constructor.}
 
   \item{dir}{The path to the underlying \code{filehash}
   database on disk}
