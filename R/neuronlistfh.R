@@ -47,6 +47,15 @@
 #'   \item{attr(x,"df")}{ The data.frame of metadata which can be used to select
 #'   and plot neurons. See \code{\link{neuronlist}} for examples.}
 #'   
+#'   \item{attr(x,"hashmap")}{ (Optional) a hashed environment which can be used
+#'   for rapid lookup using key names (rather than numeric/logical indices). 
+#'   There is a space potential to pay for this redundant lookup methos, but it 
+#'   is normally worth while given that the dataframe object is typically 
+#'   considerably larger. To give some numbers, the additional environment might
+#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup
+#'   time from 0.5 ms to 1us. Having located the object, on my machine it can
+#'   take as little as 0.1ms to load from disk, so these savings are relevant.}
+#'   
 #'   } Presently only backing objects which extend the \code{filehash} class are
 #'   supported (although in theory other backing objects could be added). These 
 #'   include: \itemize{
@@ -88,23 +97,37 @@
 #' @export
 #' @param db a \code{filehash} object that manages an on disk database of neuron
 #'   objects. See Implementation details.
-#' @param keyfilemap A named character vector in which the elements are filenames
-#'   on disk (managed by the filehash object) and the names are the keys used in
-#'   R to refer to the neuron objects. Note that the keyfilemap defines the order
-#'   of objects in the neuronlist and will be used to reorder the dataframe if 
-#'   necessary.
+#' @param keyfilemap A named character vector in which the elements are 
+#'   filenames on disk (managed by the filehash object) and the names are the 
+#'   keys used in R to refer to the neuron objects. Note that the keyfilemap 
+#'   defines the order of objects in the neuronlist and will be used to reorder 
+#'   the dataframe if necessary.
+#' @param hashmap A logical indicating whether to add a hashed environment for 
+#'   rapid object lookup by name or an integer or an integer definining a 
+#'   threhsold number of objects when this will happen (see Implementation 
+#'   details).
 #' @importFrom methods is
 #' @return a \code{neuronlistfh} object which is a character \code{vector} with 
 #'   classes \code{neuronlistfh, neuronlist} and attributes \code{db, df}. See 
 #'   Implementation details.
-neuronlistfh<-function(db, df, keyfilemap){
+neuronlistfh<-function(db, df, keyfilemap, hashmap=1000L){
   if(!is(db,'filehash'))
     stop("Unknown/unsupported backing db class. See ?neuronlistfh for help.")
 
+  if(!is.character(keyfilemap) || is.null(names(keyfilemap)) || 
+       any(duplicated(names(keyfilemap)))){
+    stop("keyfilemap must have as many unique names as elements")
+  }
+  
   nlfh=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
   attr(nlfh,'keyfilemap')=keyfilemap
   class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
   attr(nlfh,'db')=db
+  if(is.numeric(hashmap)) hashmap = length(keyfilemap)>=hashmap
+  
+  if(hashmap){
+    attr(db,'hashmap')=list2env(as.list(keyfilemap))
+  }
   
   if(!missing(df) && !is.null(df)) {
     nmissing=sum(!names(keyfilemap)%in%rownames(df))
@@ -190,8 +213,10 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 "[[.neuronlistfh"<-function(x,i,...){
 
   # we need to translate the incoming key to the md5 hash
-  # this should cover all cases (numeric, logical, names)
-  i=attr(x,'keyfilemap')[i]
+  # if a hashmap is available, that will be faster for lookup by names
+  if(is.character(i) && !is.null(hm<-attr(x,'hashmap'))){
+    i = hm$i
+  } else i = attr(x,'keyfilemap')[i]
 
   if(is.null(attr(x,'remote'))){
     # no remote specified, just treat as normal

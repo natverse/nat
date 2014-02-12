@@ -5,7 +5,7 @@
 \alias{neuronlistfh}
 \title{neuronlistfh - List of neurons loaded on demand from disk or remote website}
 \usage{
-neuronlistfh(db, df, keyfilemap)
+neuronlistfh(db, df, keyfilemap, hashmap = 1000L)
 
 is.neuronlistfh(nl)
 
@@ -25,6 +25,12 @@ as.neuronlistfh(x, df, ...)
   the neuron objects. Note that the keyfilemap defines the
   order of objects in the neuronlist and will be used to
   reorder the dataframe if necessary.}
+
+  \item{hashmap}{A logical indicating whether to add a
+  hashed environment for rapid object lookup by name or an
+  integer or an integer definining a threhsold number of
+  objects when this will happen (see Implementation
+  details).}
 
   \item{nl}{Object to test}
 
@@ -113,6 +119,18 @@ disk representation
   \item{attr(x,"df")}{ The data.frame of metadata which can
   be used to select and plot neurons. See
   \code{\link{neuronlist}} for examples.}
+
+  \item{attr(x,"hashmap")}{ (Optional) a hashed environment
+  which can be used for rapid lookup using key names
+  (rather than numeric/logical indices).  There is a space
+  potential to pay for this redundant lookup methos, but it
+  is normally worth while given that the dataframe object
+  is typically considerably larger. To give some numbers,
+  the additional environment might occupy ~ 1% of a 16,000
+  object neuronlistfh object and reduce mean lookup time
+  from 0.5 ms to 1us. Having located the object, on my
+  machine it can take as little as 0.1ms to load from disk,
+  so these savings are relevant.}
 
   } Presently only backing objects which extend the
   \code{filehash} class are supported (although in theory
