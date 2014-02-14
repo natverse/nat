@@ -227,9 +227,7 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   tryCatch({
     attr(x,'db')[[i,...]]
   }, error = function(e) {
-    errMsg <- e$message
-    key <- substr(errMsg, regexpr("'", errMsg) + 1, nchar(errMsg) - 1)
-    fillMissing(key, x)
+    fillMissing(i, x)
     tryCatch({
       attr(x, 'db')[[i, ...]]
     }, error = function(e) {
