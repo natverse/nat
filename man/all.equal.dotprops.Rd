@@ -19,7 +19,10 @@
   \code{all.equal}.}
 }
 \description{
-This method is require because the direction vectors are
+all.equal method tailored to dotprops objects
+}
+\details{
+This method is required because the direction vectors are
 computed using an eigen vector decomposition where the sign
 of the eigenvector is essentially random and subject to
 small numerical instabilities. Therefore it does not

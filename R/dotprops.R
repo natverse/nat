@@ -185,14 +185,14 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
 
 #' all.equal method tailored to dotprops objects
 #' 
-#' This method is require because the direction vectors are computed using an 
-#' eigen vector decomposition where the sign of the eigenvector is essentially 
-#' random and subject to small numerical instabilities. Therefore it does not 
-#' usually make sense to check the value of vect exactly.
+#' @details This method is required because the direction vectors are computed
+#'   using an eigen vector decomposition where the sign of the eigenvector is
+#'   essentially random and subject to small numerical instabilities. Therefore
+#'   it does not usually make sense to check the value of vect exactly.
 #' @method all.equal dotprops
 #' @param target,current dotprops objects to compare
 #' @param check.attributes Whether to check attributes (false by default)
-#' @param absoluteVectors Whether to check only the absolute value of eigen
+#' @param absoluteVectors Whether to check only the absolute value of eigen 
 #'   vectors for equality (default TRUE, see description)
 #' @param ... Additional arguments passed to base \code{all.equal}.
 #' @export
