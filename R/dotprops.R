@@ -193,7 +193,7 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
 #' @param target,current dotprops objects to compare
 #' @param check.attributes Whether to check attributes (false by default)
 #' @param absoluteVectors Whether to check only the absolute value of eigen 
-#'   vectors for equality (default TRUE, see description)
+#'   vectors for equality (default TRUE, see details)
 #' @param ... Additional arguments passed to base \code{all.equal}.
 #' @export
 #' @examples

@@ -10,8 +10,12 @@ expression}
 \method{plot3d}{character}(x, ...)
 }
 \arguments{
-  \item{x}{a neuron list (where omitted will use MyNeurons
-  as default)}
+  \item{x}{a neuron list or, for \code{plot3d.character}, a
+  character vector of neuron names. The default neuronlist
+  used by plot3d.character can be set by using
+  \code{options(nat.default.neuronlist='mylist')}. See
+  ?\code{\link{nat}} for details.
+  \code{\link{nat-package}}.}
 
   \item{subset}{Expression evaluating to logical mask for
   neurons. See details.}
@@ -71,5 +75,8 @@ plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),col=Glomerulus)
 plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
 plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
 }
+}
+\seealso{
+\code{\link{nat-package}}
 }
 

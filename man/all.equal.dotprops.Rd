@@ -13,7 +13,7 @@
 
   \item{absoluteVectors}{Whether to check only the absolute
   value of eigen vectors for equality (default TRUE, see
-  description)}
+  details)}
 
   \item{...}{Additional arguments passed to base
   \code{all.equal}.}

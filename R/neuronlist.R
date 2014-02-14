@@ -114,21 +114,24 @@ nlapply<-function (X, FUN, ...){
 #'   levels against the named elements of colpal. If col evaluates to a factor 
 #'   and colpal is a function then it will be used to generate colours with the 
 #'   same number of levels as are used in col.
-#' @param x a neuron list (where omitted will use MyNeurons as default)
+#' @param x a neuron list or, for \code{plot3d.character}, a character vector of
+#'   neuron names. The default neuronlist used by plot3d.character can be set by
+#'   using \code{options(nat.default.neuronlist='mylist')}. See
+#'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
 #' @param subset Expression evaluating to logical mask for neurons. See details.
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param colpal A vector of colours or a function that generates colours
 #' @param skipRedraw When plotting more than this many (default 200) neurons 
 #'   skip redraw for individual neurons (this is much faster for large number of
-#'   neurons). Can also accept logical values TRUE (always skip) FALSE (never
+#'   neurons). Can also accept logical values TRUE (always skip) FALSE (never 
 #'   skip).
 #' @param ... options passed on to plot3d (such as colours, line width etc)
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
 #'   \code{'df'}
 #' @export
 #' @method plot3d neuronlist
-#' @rdname plot3d.neuronlist
+#' @seealso \code{\link{nat-package}}
 #' @examples
 #' open3d()
 #' plot3d(kcs20,type=='gamma',col='green')
