@@ -37,9 +37,15 @@ test_that('read.nrrd.header',{
 })
 
 
-test_that('read.nrrd',{
+test_that('read-write.nrrd',{
   origlhmaskfile="../testdata/nrrd/LHMask.nrrd"
   expect_is(d<-read.nrrd(origlhmaskfile),'array')
   expect_true(is.raw(d))
   expect_equal(sum(d!=0), 28669)
+  
+  tf=tempfile(fileext='.nrrd')
+  on.exit(unlink(tf))
+  write.nrrd(d,file=tf,enc='raw',dtype='byte')
+  d2=read.nrrd(file=tf)
+  expect_equal(d, d2, tol=1e-6)
 })
