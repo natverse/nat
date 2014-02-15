@@ -1,0 +1,28 @@
+\name{write.nrrd}
+\alias{write.nrrd}
+\title{Write a 3d array to a NRRD file}
+\usage{
+write.nrrd(x, file, enc = c("raw", "text", "gzip"), dtype = c("float",
+  "byte", "short", "ushort", "int", "double"), endian = c("big", "little"))
+}
+\arguments{
+  \item{x}{A 3d data array}
+
+  \item{file}{Character string naming a file}
+
+  \item{enc}{One of three supported nrrd encodings ("raw",
+  "text", "gzip")}
+
+  \item{dtype}{The data type to write. One of
+  "float","byte", "short", "ushort", "int", "double"}
+
+  \item{endian}{One of "big" or "little"}
+}
+\description{
+Produces a lattice format file i.e. one with a regular
+x,y,z grid
+}
+\seealso{
+\code{\link{read.nrrd}}
+}
+

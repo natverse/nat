@@ -294,7 +294,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #' @param x A 3d data array
 #' @param file Character string naming a file
 #' @param enc One of three supported nrrd encodings ("raw", "text", "gzip")
-#' @param dtypw The data type to write. One of "float","byte", "short", 
+#' @param dtype The data type to write. One of "float","byte", "short", 
 #'   "ushort", "int", "double"
 #' @param endian One of "big" or "little"
 #' @export
@@ -316,12 +316,12 @@ write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
   cat("NRRD0004\n", file=file)
   cat("encoding: ", enc,"\ntype: ", nrrdDataType, "\n",sep="", append=TRUE, 
       file=file)
-  cat("dimension: ", length(dim(dens)), "\nsizes: ", paste(dim(dens), collapse=" "),
+  cat("dimension: ", length(dim(x)), "\nsizes: ", paste(dim(x), collapse=" "),
       "\n",sep="", append=TRUE, file=file)
-  voxdims=voxdim.gjdens(dens)
+  voxdims=voxdim.gjdens(x)
   if(!is.null(voxdims)) cat("spacings:", voxdims,"\n", file=file, append=TRUE)
   
-  if(!is.list(dens)) d=dens else d=dens$estimate
+  if(!is.list(x)) d=x else d=x$estimate
   
   # Find data type and size for amira
   dtype=match.arg(dtype)	
@@ -338,7 +338,7 @@ write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
   cat("\n", file=file, append=TRUE)
   
   if(enc=='text'){
-    write(as.vector(d,mode=dmode),ncol=1,file=file,append=TRUE)
+    write(as.vector(d,mode=dmode),ncolumns=1,file=file,append=TRUE)
   } else {
     if(enc=="gzip") fc=gzfile(file,"ab")
     else fc=file(file,open="ab") # ie append, bin mode
