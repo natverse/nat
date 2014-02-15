@@ -38,7 +38,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     # detached nrrd
     if(!inherits(file,"connection"))
       attr(h,'path')=file
-    datafiles=NrrdDataFiles(h)
+    datafiles=nrrd.datafiles(h)
     # TODO - handle more than one datafile!
     if(length(datafiles)!=1) stop("Can currently only handle exactly one datafile")
     close(fc)
@@ -217,10 +217,10 @@ is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
   TRUE
 }
 
-NrrdDataFiles<-function(nhdr,ReturnAbsPath=TRUE){
+nrrd.datafiles<-function(nhdr,ReturnAbsPath=TRUE){
   if(!is.list(nhdr)){
     # we need to read in the nrrd header
-    if(length(nhdr)>1) return(sapply(nhdr,NrrdDataFiles))
+    if(length(nhdr)>1) return(sapply(nhdr,nrrd.datafiles))
     if(!is.nrrd(nhdr)) stop("This is not a nrrd file")
     h=read.nrrd.header(nhdr)
   } else h=nhdr
