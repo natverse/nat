@@ -89,7 +89,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     return(d)
   }
   latticeBoundingBox=rbind(c(0,0,0),(h$sizes-1)*voxdims)
-  if(!missing(origin)){
+  if(!is.null(origin)){
     latticeBoundingBox=t(origin+t(latticeBoundingBox))
   } else if('space origin'%in%names(h)){
     # FIXME should space origin interpretation depend on node vs cell?
