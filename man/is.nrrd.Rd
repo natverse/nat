@@ -1,0 +1,25 @@
+\name{is.nrrd}
+\alias{is.nrrd}
+\title{Check if a file is a NRRD file}
+\usage{
+is.nrrd(f, ReturnVersion = FALSE, TrustSuffix = FALSE)
+}
+\arguments{
+  \item{f}{A character vector specifying the path or a raw
+  vector with at least 8 bytes.}
+
+  \item{ReturnVersion}{Whether to return the version of the
+  nrrd format in which the file is encoded (1-5).}
+
+  \item{TrustSuffix}{Whether to trust that a file ending in
+  .nrrd or .nhdr is a NRRD}
+}
+\description{
+Check if a file is a NRRD file
+}
+\details{
+Note that multiple files can be checked when a character
+vector of length > 1 is provided, but only one file can be
+checked when a raw byte array is provided.
+}
+
