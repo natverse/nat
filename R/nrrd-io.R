@@ -1,3 +1,108 @@
+#' Read nrrd file into 3d array in memory
+#' 
+#' @details ReadByteAsRaw=unsigned (the default) only reads unsigned byte data
+#'   as a raw array. This saves quite a bit of space and still allows data to be
+#'   used for logical indexing.
+#' @param filename Path to a 3D nrrd
+#' @param Verbose Show data length (default FALSE)
+#' @param ReadData When FALSE just return attributes (e.g. voxel size)
+#' @param AttachFullHeader Include the full nrrd header as an attribute of the
+#'   returned object (default FALSE)
+#' @param ReadByteAsRaw Read 8 bit data as an R raw object rather than integer
+#' @param origin Add a user specified origin (x,y,z) to the returned object
+#' @return a 3D data array with attributes compatible with gjdens objects
+#' @export
+Read3DDensityFromNrrd<-function(filename,Verbose=FALSE,ReadData=TRUE,AttachFullHeader=!ReadData,
+                                ReadByteAsRaw=c("unsigned","all","none"),origin){
+  ReadByteAsRaw=match.arg(ReadByteAsRaw)
+  fc=file(filename,'rb')
+  h=ReadNrrdHeader(fc,CloseConnection=FALSE)
+  # store the path because ReadNrrdHeader couldn't do it 
+  # TODO more elegant way of dealing with paths when connection sent to ReadNrrdHeader
+  attr(h,'path')=filename
+  
+  # now read the data
+  dataTypes=data.frame(name=I(c("int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64",
+                                "float", "double", "block")),
+                       size=c(1,1,2,2,4,4,8,8,4,8,NA),what=I(c(rep("integer",8),rep("numeric",2),"raw")),
+                       signed=c(rep(c(T,F),4),rep(T,3)))
+  if(ReadByteAsRaw=="all") dataTypes$what[1:2]='raw'
+  else if(ReadByteAsRaw=="unsigned") dataTypes$what[2]='raw'
+  
+  i=which(dataTypes$name==.standardNrrdType(h$type))
+  if(length(i)!=1){
+    close(fc)
+    stop("Unrecognised data type")
+  }
+  if(!is.null(h$datafile)){
+    # detached nrrd
+    if(!inherits(filename,"connection"))
+      attr(h,'path')=filename
+    datafiles=NrrdDataFiles(h)
+    # TODO - handle more than one datafile!
+    if(length(datafiles)!=1) stop("Can currently only handle exactly one datafile")
+    close(fc)
+    fc=file(datafiles,open='rb')
+    filename=datafiles
+  }
+  dataLength=prod(h$sizes)
+  endian=ifelse(is.null(h$endian),.Platform$endian,h$endian)
+  if(Verbose) cat("dataLength =",dataLength,"dataType =",dataTypes$what[i],"size=",dataTypes$size[i],"\n")
+  enc=tolower(h$encoding)
+  if(ReadData){
+    if(enc=="raw"){
+      d=readBin(fc,what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
+                signed=dataTypes$signed[i],endian=endian)
+      close(fc)
+    } else if(enc%in%c("gz","gzip")) {
+      # unfortunately gzcon seems to reset the connection 
+      # rather than starting to read from the current location
+      headerlength=seek(fc)
+      close(fc)
+      tf=tempfile()
+      system(paste('tail -c +',sep="",headerlength+1," ",filename," > ",tf))
+      gzf=gzfile(tf,'rb')
+      d=readBin(gzf,what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
+                signed=dataTypes$signed[i],endian=endian)
+      close(gzf)
+      unlink(tf)
+    } else if(enc%in%c("ascii","txt","text")){
+      if(dataTypes$what[i]=='integer') whatVal=integer(0) else whatVal=double(0)
+      d=scan(fc,what=whatVal,nmax=dataLength,quiet=TRUE)
+      close(fc)
+    } else {
+      stop("nrrd encoding ",enc," is not implemented")
+    }
+    dim(d)<-h$sizes
+  } else {
+    # don't read the data, we just wanted the (full) header information
+    if(dataTypes$what[i]=='integer') d=integer(0) else d=double(0)
+    attr(d,'datablock')=list(what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
+                             signed=dataTypes$signed[i],endian=endian)
+    attr(d,'datablock')$datastartpos=seek(fc)
+    close(fc)
+  }
+  if(AttachFullHeader) attr(d,"header")=h
+  voxdims<-NrrdVoxDims(h,ReturnAbsoluteDims = FALSE)
+  if(any(is.na(voxdims))){
+    # missing pixel size info, so just return
+    return(d)
+  }
+  latticeBoundingBox=rbind(c(0,0,0),(h$sizes-1)*voxdims)
+  if(!missing(origin)){
+    latticeBoundingBox=t(origin+t(latticeBoundingBox))
+  } else if('space origin'%in%names(h)){
+    # FIXME should space origin interpretation depend on node vs cell?
+    # (and we are assuming that we will be working as node in R)
+    latticeBoundingBox=t(h[['space origin']]+t(latticeBoundingBox))
+  }
+  attr(d,"BoundingBox")<-as.vector(latticeBoundingBox)
+  attr(d,"x")<-seq(latticeBoundingBox[1],latticeBoundingBox[2],len=h$sizes[1])
+  attr(d,"y")<-seq(latticeBoundingBox[3],latticeBoundingBox[4],len=h$sizes[2])
+  attr(d,"z")<-seq(latticeBoundingBox[5],latticeBoundingBox[6],len=h$sizes[3])
+  return(d)
+}
+
 #' Read the (text) header of a NRRD format file
 #' 
 #' @param file Path to the file or a connection
