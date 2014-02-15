@@ -257,20 +257,6 @@ NrrdDataFiles<-function(nhdr,ReturnAbsPath=TRUE){
   dfs
 }
 
-.standardNrrdType<-function(type){
-  if(type%in%c("float","double","block")) return (type)
-  if(type%in%c("signed char", "int8", "int8_t")) return("int8")
-  if(type%in%c("uchar", "unsigned char", "uint8", "uint8_t")) return("uint8")
-  if(type%in%c("short", "short int", "signed short", "signed short int", "int16", "int16_t")) return("int16")
-  if(type%in%c("ushort", "unsigned short", "unsigned short int", "uint16", "uint16_t")) return("uint16")
-  if(type%in%c("int", "signed int", "int32", "int32_t")) return("int32")
-  if(type%in%c("uint", "unsigned int", "uint32", "uint32_t")) return("uint32")
-  if(type%in%c("longlong", "long long", "long long int", "signed long long", "signed long long int", "int64", "int64_t"))
-    return("int64")
-  if(type%in%c("ulonglong", "unsigned long long", "unsigned long long int", "uint64", "uint64_t")) return("uint64")
-  return(NULL)
-}
-
 #' Return voxel dimensions (by default absolute voxel dimensions)
 #' 
 #' @details NB Can handle off diagonal terms in space directions matrix, BUT
@@ -299,4 +285,18 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   # Sometimes get -ve space dirs, take abs if requested
   if(ReturnAbsoluteDims) abs(voxdims)
   else voxdims
+}
+
+.standardNrrdType<-function(type){
+  if(type%in%c("float","double","block")) return (type)
+  if(type%in%c("signed char", "int8", "int8_t")) return("int8")
+  if(type%in%c("uchar", "unsigned char", "uint8", "uint8_t")) return("uint8")
+  if(type%in%c("short", "short int", "signed short", "signed short int", "int16", "int16_t")) return("int16")
+  if(type%in%c("ushort", "unsigned short", "unsigned short int", "uint16", "uint16_t")) return("uint16")
+  if(type%in%c("int", "signed int", "int32", "int32_t")) return("int32")
+  if(type%in%c("uint", "unsigned int", "uint32", "uint32_t")) return("uint32")
+  if(type%in%c("longlong", "long long", "long long int", "signed long long", "signed long long int", "int64", "int64_t"))
+    return("int64")
+  if(type%in%c("ulonglong", "unsigned long long", "unsigned long long int", "uint64", "uint64_t")) return("uint64")
+  return(NULL)
 }
