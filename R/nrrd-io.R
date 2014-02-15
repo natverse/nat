@@ -318,7 +318,7 @@ write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
       file=file)
   cat("dimension: ", length(dim(x)), "\nsizes: ", paste(dim(x), collapse=" "),
       "\n",sep="", append=TRUE, file=file)
-  voxdims=voxdim.gjdens(x)
+  voxdims=voxdims(x)
   if(!is.null(voxdims)) cat("spacings:", voxdims,"\n", file=file, append=TRUE)
   
   if(!is.list(x)) d=x else d=x$estimate
