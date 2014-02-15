@@ -288,46 +288,61 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   else voxdims
 }
 
-Write3DDensityToNrrd<-function(filename,dens,enc=c("raw","text","gzip"),
-                               dtype=c("float","byte", "short", "ushort", "int", "double"),endian=c('big','little')){
-  # Produces a lattice format file -
-  # that is one with a regular x,y,z grid
-  # Can also write a detached Nrrd header that points to the AmiraMesh
-  # data to allow it to be opened by a nrrd reader
+#' Write a 3d array to a NRRD file
+#' 
+#' Produces a lattice format file i.e. one with a regular x,y,z grid
+#' @param x A 3d data array
+#' @param file Character string naming a file
+#' @param enc One of three supported nrrd encodings ("raw", "text", "gzip")
+#' @param dtypw The data type to write. One of "float","byte", "short", 
+#'   "ushort", "int", "double"
+#' @param endian One of "big" or "little"
+#' @export
+#' @seealso \code{\link{read.nrrd}}
+write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
+                     dtype=c("float","byte", "short", "ushort", "int", "double"),
+                     endian=c('big','little')){
   enc=match.arg(enc)
   endian=match.arg(endian)
   dtype=match.arg(dtype)
-  
+
   nrrdDataTypes=structure(c("uint8","uint16","int16","int32","float","double"),
                           names=c("byte", "ushort", "short", "int", "float", "double"))
   
   nrrdDataType=nrrdDataTypes[dtype]
-  if(is.na(nrrdDataType)) stop("Unable to write nrrd file for data type: ",dtype)
-  cat("NRRD0004\n",file=filename)
-  cat("encoding: ",enc,"\ntype: ",nrrdDataType,"\n",sep="",append=TRUE,file=filename)
-  cat("dimension: ",length(dim(dens)),"\nsizes: ",paste(dim(dens),collapse=" "),"\n",sep="",append=TRUE,file=filename)
+  if(is.na(nrrdDataType))
+    stop("Unable to write nrrd file for data type: ",dtype)
+  
+  cat("NRRD0004\n", file=file)
+  cat("encoding: ", enc,"\ntype: ", nrrdDataType, "\n",sep="", append=TRUE, 
+      file=file)
+  cat("dimension: ", length(dim(dens)), "\nsizes: ", paste(dim(dens), collapse=" "),
+      "\n",sep="", append=TRUE, file=file)
   voxdims=voxdim.gjdens(dens)
-  if(!is.null(voxdims)) cat("spacings:",voxdims,"\n",file=filename,append=TRUE)
+  if(!is.null(voxdims)) cat("spacings:", voxdims,"\n", file=file, append=TRUE)
   
   if(!is.list(dens)) d=dens else d=dens$estimate
+  
   # Find data type and size for amira
   dtype=match.arg(dtype)	
-  dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", "int", "double"))]
+  dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", 
+                                           "int", "double"))]
   # Set the data mode which will be used in the as.vector call at the
   # moment that the binary data is written out.
   if(dtype%in%c("byte","short","ushort","int")) dmode="integer"
   if(dtype%in%c("float","double")) dmode="numeric"
   # record byte ordering if necessary
-  if(enc!='text' && dtypesize>1) cat("endian: ",endian,"\n",sep="",file=filename,append=TRUE)
+  if(enc!='text' && dtypesize>1)
+    cat("endian: ", endian,"\n", sep="", file=file, append=TRUE)
   # Single blank line terminates header
-  cat("\n",file=filename,append=TRUE)
+  cat("\n", file=file, append=TRUE)
   
   if(enc=='text'){
-    write(as.vector(d,mode=dmode),ncol=1,file=filename,append=TRUE)
+    write(as.vector(d,mode=dmode),ncol=1,file=file,append=TRUE)
   } else {
-    if(enc=="gzip") fc=gzfile(filename,"ab")
-    else fc=file(filename,open="ab") # ie append, bin mode
-    writeBin(as.vector(d,mode=dmode),fc,size=dtypesize,endian=endian)
+    if(enc=="gzip") fc=gzfile(file,"ab")
+    else fc=file(file,open="ab") # ie append, bin mode
+    writeBin(as.vector(d, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }
 }
