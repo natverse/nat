@@ -19,3 +19,19 @@ test_that('is.nrrd works',{
   expect_true(is.nrrd(lhmaskfile))
   expect_false(is.nrrd(lhmaskfile, TrustSuffix=TRUE))
 })
+
+test_that('read.nrrd.header',{
+  origlhmaskfile="../testdata/nrrd/LHMask.nrrd"
+  expect_is(h<-read.nrrd.header(origlhmaskfile),'list')
+  
+  baseh=structure(list(type = "uint8", encoding = "gzip", endian = "big", 
+      dimension = 3, sizes = c(50, 50, 50), `space dimension` = 3, 
+      `space directions` = structure(c(1.39999997615814, 0, 0, 
+      0, 1.39999997615814, 0, 0, 0, 1.39999997615814), .Dim = c(3L, 
+      3L)), `space origin` = c(0, 0, 0), `space units` = c("microns", 
+      "microns", "microns")), .Names = c("type", "encoding", "endian", 
+  "dimension", "sizes", "space dimension", "space directions", 
+  "space origin", "space units"))
+  
+  expect_equivalent(h, baseh)
+})
