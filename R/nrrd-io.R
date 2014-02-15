@@ -184,12 +184,13 @@ read.nrrd.header<-function(file, Verbose=FALSE){
 #' @details Note that multiple files can be checked when a character vector of 
 #'   length > 1 is provided, but only one file can be checked when a raw byte 
 #'   array is provided.
-#' @param f A character vector specifying the path or a raw vector with at least 8
-#'   bytes.
-#' @param ReturnVersion Whether to return the version of the nrrd format in
+#' @param f A character vector specifying the path or a raw vector with at least
+#'   8 bytes.
+#' @param ReturnVersion Whether to return the version of the nrrd format in 
 #'   which the file is encoded (1-5).
 #' @param TrustSuffix Whether to trust that a file ending in .nrrd or .nhdr is a
 #'   NRRD
+#' @export
 is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
   # TrustSuffix => expect files to end in nrrd or nhdr
   if(TrustSuffix){
