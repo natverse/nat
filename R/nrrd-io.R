@@ -1,25 +1,25 @@
 #' Read nrrd file into 3d array in memory
 #' 
-#' @details ReadByteAsRaw=unsigned (the default) only reads unsigned byte data
+#' @details ReadByteAsRaw=unsigned (the default) only reads unsigned byte data 
 #'   as a raw array. This saves quite a bit of space and still allows data to be
 #'   used for logical indexing.
-#' @param filename Path to a 3D nrrd
-#' @param Verbose Show data length (default FALSE)
+#' @param file Path to a 3D nrrd
+#' @param origin Add a user specified origin (x,y,z) to the returned object
 #' @param ReadData When FALSE just return attributes (e.g. voxel size)
-#' @param AttachFullHeader Include the full nrrd header as an attribute of the
+#' @param AttachFullHeader Include the full nrrd header as an attribute of the 
 #'   returned object (default FALSE)
 #' @param ReadByteAsRaw Read 8 bit data as an R raw object rather than integer
-#' @param origin Add a user specified origin (x,y,z) to the returned object
+#' @param Verbose Show data length (default FALSE)
 #' @return a 3D data array with attributes compatible with gjdens objects
 #' @export
-Read3DDensityFromNrrd<-function(filename,Verbose=FALSE,ReadData=TRUE,AttachFullHeader=!ReadData,
-                                ReadByteAsRaw=c("unsigned","all","none"),origin){
+read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData,
+                    Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
   ReadByteAsRaw=match.arg(ReadByteAsRaw)
-  fc=file(filename,'rb')
-  h=ReadNrrdHeader(fc,CloseConnection=FALSE)
+  fc=file(file,'rb')
+  h=read.nrrd.header(fc)
   # store the path because ReadNrrdHeader couldn't do it 
   # TODO more elegant way of dealing with paths when connection sent to ReadNrrdHeader
-  attr(h,'path')=filename
+  attr(h,'path')=file
   
   # now read the data
   dataTypes=data.frame(name=I(c("int8", "uint8", "int16", "uint16", "int32", "uint32", "int64", "uint64",
@@ -36,14 +36,14 @@ Read3DDensityFromNrrd<-function(filename,Verbose=FALSE,ReadData=TRUE,AttachFullH
   }
   if(!is.null(h$datafile)){
     # detached nrrd
-    if(!inherits(filename,"connection"))
-      attr(h,'path')=filename
+    if(!inherits(file,"connection"))
+      attr(h,'path')=file
     datafiles=NrrdDataFiles(h)
     # TODO - handle more than one datafile!
     if(length(datafiles)!=1) stop("Can currently only handle exactly one datafile")
     close(fc)
     fc=file(datafiles,open='rb')
-    filename=datafiles
+    file=datafiles
   }
   dataLength=prod(h$sizes)
   endian=ifelse(is.null(h$endian),.Platform$endian,h$endian)
@@ -60,7 +60,7 @@ Read3DDensityFromNrrd<-function(filename,Verbose=FALSE,ReadData=TRUE,AttachFullH
       headerlength=seek(fc)
       close(fc)
       tf=tempfile()
-      system(paste('tail -c +',sep="",headerlength+1," ",filename," > ",tf))
+      system(paste('tail -c +',sep="",headerlength+1," ",file," > ",tf))
       gzf=gzfile(tf,'rb')
       d=readBin(gzf,what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
                 signed=dataTypes$signed[i],endian=endian)
