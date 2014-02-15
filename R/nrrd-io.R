@@ -1,11 +1,17 @@
-ReadNrrdHeader<-function(filename,Verbose=TRUE,CloseConnection=TRUE){
+#' Read the (text) header of a NRRD format file
+#' 
+#' @param file Path to the file or a connection
+#' @param Verbose Whether to print status information while reading (default F)
+#' @return A list with elements for the key nrrd header fields
+#' @export
+read.nrrd.header<-function(file, Verbose=FALSE){
   nrrdspec=list()
-  if(!inherits(filename,"connection")){
-    con<-file(filename,open='rt')
-    attr(nrrdspec,"path")=filename # store filename
-  } else con=filename
+  if(!inherits(file,"connection")){
+    con<-file(file,open='rt')
+    attr(nrrdspec,"path")=file # store file
+    on.exit(close(con))
+  } else con=file
   
-  if(CloseConnection) on.exit(close(con))
   # Look for empty line signifying end of header
   headerLines=readLines(con,1)
   NRRDMAGIC="NRRD000"
