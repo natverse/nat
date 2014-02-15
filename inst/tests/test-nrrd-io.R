@@ -35,3 +35,11 @@ test_that('read.nrrd.header',{
   
   expect_equivalent(h, baseh)
 })
+
+
+test_that('read.nrrd',{
+  origlhmaskfile="../testdata/nrrd/LHMask.nrrd"
+  expect_is(d<-read.nrrd(origlhmaskfile),'array')
+  expect_true(is.raw(d))
+  expect_equal(sum(d!=0), 28669)
+})
