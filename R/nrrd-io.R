@@ -223,7 +223,7 @@ NrrdDataFiles<-function(nhdr,ReturnAbsPath=TRUE){
     # we need to read in the nrrd header
     if(length(nhdr)>1) return(sapply(nhdr,NrrdDataFiles))
     if(!is.nrrd(nhdr)) stop("This is not a nrrd file")
-    h=ReadNrrdHeader(nhdr)
+    h=read.nrrd.header(nhdr)
   } else h=nhdr
   if(is.null(h$datafile)){
     # straight nrrd without detached header
