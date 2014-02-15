@@ -75,6 +75,44 @@ read.nrrd.header<-function(file, Verbose=FALSE){
   nrrdspec
 }
 
+#' Check if a file is a NRRD file
+#' 
+#' @details Note that multiple files can be checked when a character vector of 
+#'   length > 1 is provided, but only one file can be checked when a raw byte 
+#'   array is provided.
+#' @param A character vector specifying the path or a raw vector with at least 8
+#'   bytes.
+#' @param ReturnVersion Whether to return the version of the nrrd format in
+#'   which the file is encoded (1-5).
+#' @param TrustSuffix Whether to trust that a file ending in .nrrd or .nhdr is a
+#'   NRRD
+is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
+  # TrustSuffix => expect files to end in nrrd or nhdr
+  if(TrustSuffix){
+    if(ReturnVersion)
+      stop("Cannot use return nrrd version without reading file to check nrrd magic")
+    if(!is.character(f)) stop("Cannot examine suffix when filename is not provided!")
+    return(grepl("\\.n(hdr|rrd)$", f, ignore.case=TRUE))
+  }
+  
+  if(length(f)>1)
+    return(sapply(f, is.nrrd, ReturnVersion=ReturnVersion))
+  
+  if(!file.exists(f)){
+    stop("file does not exist")
+  }
+  
+  nrrd=as.raw(c(0x4e,0x52,0x52,0x44, 0x30, 0x30, 0x30))
+  magic=readBin(f, what=nrrd, n=8)
+  if(any(magic[1:7]!=nrrd))
+    return (FALSE)
+  
+  if(ReturnVersion)
+    return(as.integer(magic[8])-0x30) # nb 0x30 is ASCII code for '0'
+  
+  TRUE
+}
+
 NrrdDataFiles<-function(nhdr,ReturnAbsPath=TRUE){
   if(!is.list(nhdr)){
     # we need to read in the nrrd header
