@@ -3,13 +3,13 @@
 #' @details ReadByteAsRaw=unsigned (the default) only reads unsigned byte data 
 #'   as a raw array. This saves quite a bit of space and still allows data to be
 #'   used for logical indexing.
-#' @param file Path to a 3D nrrd
+#' @param file Path to a nrrd (or a connection for \code{read.nrrd.header})
 #' @param origin Add a user specified origin (x,y,z) to the returned object
 #' @param ReadData When FALSE just return attributes (e.g. voxel size)
 #' @param AttachFullHeader Include the full nrrd header as an attribute of the 
 #'   returned object (default FALSE)
 #' @param ReadByteAsRaw Read 8 bit data as an R raw object rather than integer
-#' @param Verbose Show data length (default FALSE)
+#' @param Verbose Status messages while reading
 #' @return a 3D data array with attributes compatible with gjdens objects
 #' @export
 read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData,
@@ -105,10 +105,9 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
 
 #' Read the (text) header of a NRRD format file
 #' 
-#' @param file Path to the file or a connection
-#' @param Verbose Whether to print status information while reading (default F)
 #' @return A list with elements for the key nrrd header fields
 #' @export
+#' @rdname read.nrrd
 read.nrrd.header<-function(file, Verbose=FALSE){
   nrrdspec=list()
   if(!inherits(file,"connection")){
@@ -185,7 +184,7 @@ read.nrrd.header<-function(file, Verbose=FALSE){
 #' @details Note that multiple files can be checked when a character vector of 
 #'   length > 1 is provided, but only one file can be checked when a raw byte 
 #'   array is provided.
-#' @param A character vector specifying the path or a raw vector with at least 8
+#' @param f A character vector specifying the path or a raw vector with at least 8
 #'   bytes.
 #' @param ReturnVersion Whether to return the version of the nrrd format in
 #'   which the file is encoded (1-5).
