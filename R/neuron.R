@@ -146,7 +146,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   igraph::V(x)$vid=seq.int(igraph::vcount(x))
   # check if we have multiple subgraphs
   if(no.clusters(x)>1){
-    if(is.null(origin)){
+    if(!length(origin)){
       # no origin specified, will pick the biggest subtree
       # decompose into list of subgraphs
       gg=igraph::decompose.graph(x)
