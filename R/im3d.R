@@ -2,6 +2,7 @@
 #' 
 #' @param d An image like object with associated voxel dimensions
 #' @param ... Additional arguments for methods
+#' @export
 voxdims<-function(d, ...) UseMethod("voxdims")
 
 #' @S3method voxdims default
