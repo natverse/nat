@@ -223,10 +223,17 @@ as.neuronlist.neuronlistfh<-function(l, ...){
     # no remote specified, just treat as normal
     return(attr(x,'db')[[i,...]])
   }
+  
+  # The tryCatch block below will leak a connection, so make a note of how many
+  # we start with so we can remove the extra one once the block has finished
+  connBefore <- rownames(showConnections(all=T))
+  
   # we have a remote. let's try and use it to fetch these keys
   tryCatch({
+    # DEBUG: The leak happens here
     attr(x,'db')[[i,...]]
   }, error = function(e) {
+    # DEBUG: We'll have an extra connection now
     fillMissing(i, x)
     tryCatch({
       attr(x, 'db')[[i, ...]]
@@ -235,6 +242,13 @@ as.neuronlist.neuronlistfh<-function(l, ...){
       stop(e)
     })
   })
+  
+  # Deal with connection leak
+  connAfter <- rownames(showConnections(all=T))
+  conns <- c(connBefore, connAfter)
+  conns <- conns[!(duplicated(conns, fromLast=F) | duplicated(conns, fromLast=T))]
+  if(length(conns) > 0)
+    close(getConnection(as.numeric(conns)))
 }
 
 #' @S3method as.list neuronlistfh

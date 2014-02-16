@@ -1,3 +1,9 @@
+nat 1.2
+=======
+* Basic implementation of reading/writing NRRD format image data.
+  See read.nrrd and write.nrrd for details.
+* Some initial work on implementation of a class for 3d images, im3d
+
 nat 1.1
 =======
 * Implemented reading and writing of groups of neurons from/to neuronlists.
