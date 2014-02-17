@@ -88,19 +88,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     # missing pixel size info, so just return
     return(d)
   }
-  latticeBoundingBox=rbind(c(0,0,0),(h$sizes-1)*voxdims)
-  if(!is.null(origin)){
-    latticeBoundingBox=t(origin+t(latticeBoundingBox))
-  } else if('space origin'%in%names(h)){
-    # FIXME should space origin interpretation depend on node vs cell?
-    # (and we are assuming that we will be working as node in R)
-    latticeBoundingBox=t(h[['space origin']]+t(latticeBoundingBox))
-  }
-  attr(d,"BoundingBox")<-as.vector(latticeBoundingBox)
-  attr(d,"x")<-seq(latticeBoundingBox[1],latticeBoundingBox[2],len=h$sizes[1])
-  attr(d,"y")<-seq(latticeBoundingBox[3],latticeBoundingBox[4],len=h$sizes[2])
-  attr(d,"z")<-seq(latticeBoundingBox[5],latticeBoundingBox[6],len=h$sizes[3])
-  return(d)
+  im3d(d, dims=h$sizes, voxdims=voxdims)
 }
 
 #' Read the (text) header of a NRRD format file

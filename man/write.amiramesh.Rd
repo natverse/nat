@@ -1,0 +1,44 @@
+\name{write.amiramesh}
+\alias{write.amiramesh}
+\title{Write a 3d data object to an amiramesh format file}
+\usage{
+write.amiramesh(x, file, enc = c("binary", "raw", "text", "hxzip"),
+  dtype = c("float", "byte", "short", "ushort", "int", "double"),
+  endian = .Platform$endian, WriteNrrdHeader = FALSE)
+}
+\arguments{
+  \item{enc}{Encoding of the data. NB "raw" and "binary"
+  are synonyms.}
+
+  \item{dtype}{Data type to write to disk}
+
+  \item{endian}{Endianness of data block. Defaults to
+  current value of \code{.Platform$endian}.}
+
+  \item{WriteNrrdHeader}{Whether to write a separate
+  detached nrrd header next to the amiramesh file allowing
+  it to be opened by a NRRD reader. See details.}
+
+  \item{x}{The image data to write (an im3d, or capable of
+  being interpreted as such)}
+
+  \item{file}{Character vector describing a single file}
+}
+\description{
+Write a 3d data object to an amiramesh format file
+}
+\details{
+Note that only raw or text format data can accommodate a
+detached NRRD format header - the
+}
+\examples{
+d=array(rnorm(1000),c(10,10,10))
+tf=tempfile(fileext='.am')
+write.amiramesh(d,file=tf, WriteNrrdHeader=TRUE)
+d2=read.nrrd(paste(tf,sep='', '.nhdr'))
+all.equal(d, d2, tol=1e-6)
+}
+\seealso{
+\code{\link{.Platform}, \link{read.amiramesh}}
+}
+
