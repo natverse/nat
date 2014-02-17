@@ -35,7 +35,7 @@ write.im3d<-function(x, file, ...){
   if(ext%in%c('.nrrd','.nhdr')){
     write.nrrd(x, file, ...)
   } else if(ext%in%c(".am",'.amiramesh')){
-    message("write.im3d not yet implemented for amirmamesh format")
+    write.amiramesh(x, file, ...)
   } else {
     stop("Unable to write data in format: ",ext)
   }

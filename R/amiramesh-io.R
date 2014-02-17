@@ -506,22 +506,38 @@ amiratype<-function(x, bytes=NULL){
   } else NA_character_
 }
 
-Write3DDensityToAmiraLattice<-function(filename,dens,ftype=c("binary","text","hxzip"),
-                                       dtype=c("float","byte", "short", "ushort", "int", "double"),WriteNrrdHeader=FALSE,endian=c('big','little')){
-  # Produces a lattice format file -
-  # that is one with a regular x,y,z grid
-  # Can also write a detached Nrrd header that points to the AmiraMesh
-  # data to allow it to be opened by a nrrd reader
-  ftype=match.arg(ftype)
-  endian=match.arg(endian)
-  if(ftype=='text') cat("# AmiraMesh ASCII 1.0\n\n",file=filename)
-  else if(endian=='little') cat("# AmiraMesh BINARY-LITTLE-ENDIAN 2.1\n\n",file=filename)
-  else cat("# AmiraMesh 3D BINARY 2.0\n\n",file=filename)
+#' Write a 3d data object to an amiramesh format file
+#' @inheritParams write.im3d
+#' @param enc Encoding of the data. NB "raw" and "binary" are synonyms.
+#' @param dtype Data type to write to disk
+#' @param endian Endianness of data block. Defaults to current value of 
+#'   \code{.Platform$endian}.
+#' @param WriteNrrdHeader Whether to write a separate detached nrrd header next 
+#'   to the amiramesh file allowing it to be opened by a NRRD reader. See
+#'   details.
+#' @details Note that only raw or text format data can accommodate a detached
+#'   NRRD format header - the
+#' @export
+#' @seealso \code{\link{.Platform}, \link{read.amiramesh}}
+#' @examples
+#' d=array(rnorm(1000),c(10,10,10))
+#' tf=tempfile(fileext='.am')
+#' write.amiramesh(d,file=tf, WriteNrrdHeader=TRUE)
+#' d2=read.nrrd(paste(tf,sep='', '.nhdr'))
+#' all.equal(d, d2, tol=1e-6)
+write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
+                          dtype=c("float","byte", "short", "ushort", "int", "double"),
+                          endian=.Platform$endian, WriteNrrdHeader=FALSE){
+  enc=match.arg(enc)
+  endian=match.arg(endian, c('big','little'))
+  if(enc=='text') cat("# AmiraMesh ASCII 1.0\n\n",file=file)
+  else if(endian=='little') cat("# AmiraMesh BINARY-LITTLE-ENDIAN 2.1\n\n",file=file)
+  else cat("# AmiraMesh 3D BINARY 2.0\n\n",file=file)
   
-  fc=file(filename,open="at") # ie append, text mode
-  cat("# Created by Write3DDensityToAmiraLattice - ",format(Sys.time(),usetz=T),"\n\n",file=fc)	
+  fc=file(file,open="at") # ie append, text mode
+  cat("# Created by write.amiramesh\n\n",file=fc)	
   
-  if(!is.list(dens)) d=dens else d=dens$estimate
+  if(!is.list(x)) d=x else d=x$estimate
   # Find data type and size for amira
   dtype=match.arg(dtype)	
   dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", "int", "double"))]
@@ -530,8 +546,6 @@ Write3DDensityToAmiraLattice<-function(filename,dens,ftype=c("binary","text","hx
   if(dtype%in%c("byte","short","ushort","int")) dmode="integer"
   if(dtype%in%c("float","double")) dmode="numeric"
   
-  
-  #lattice=apply(d$eval.points,2,length)
   lattice=dim(d)
   cat("define Lattice",lattice,"\n",file=fc)
   
@@ -542,61 +556,59 @@ Write3DDensityToAmiraLattice<-function(filename,dens,ftype=c("binary","text","hx
   # voxels at which the density is evaluated
   cat("\t# BoundingBox is xmin xmax ymin ymax zmin zmax\n",file=fc)
   BoundingBox=NULL
-  if(!is.null(attr(dens,"BoundingBox"))){
-    BoundingBox=attr(dens,"BoundingBox")
+  if(!is.null(attr(x,"BoundingBox"))){
+    BoundingBox=attr(x,"BoundingBox")
   } else if(is.list(d) && !is.null(d$eval.points)){
     BoundingBox=as.vector(apply(d$eval.points,2,range))
   }
   if(!is.null(BoundingBox)) cat("\t BoundingBox",BoundingBox,"\n",file=fc)
   cat("}\n\n",file=fc)
   
-  if(ftype=="hxzip"){
+  if(enc=="hxzip"){
     raw_data=writeBin(as.vector(d,mode=dmode),raw(),size=dtypesize,endian=endian)
-    zlibdata=nat:::write.zlib(raw_data)
+    zlibdata=write.zlib(raw_data)
     cat("Lattice { ",dtype," ScalarField } = @1(HxZip,",length(zlibdata),")\n\n",sep="",file=fc)
   } else cat("Lattice {",dtype,"ScalarField } = @1\n\n",file=fc)
   
   cat("@1\n",file=fc)
-  
-  #cat(str(as.vector(d)))
   close(fc)
   
   # Write a Nrrd header to accompany the amira file if desired
   # see http://teem.sourceforge.net/nrrd/
   if(WriteNrrdHeader) {
-    if(ftype=="hxzip") stop("Nrrd cannot cope with Amira's HxZip encoding (which is subtly different from gzip)")
-    nrrdFilename=paste(filename,sep=".","nhdr")
-    cat("NRRD0004\n",file=nrrdFilename)
-    fc=file(nrrdFilename,open="at") # ie append, text mode
+    if(enc=="hxzip") stop("Nrrd cannot handle Amira's HxZip encoding (which is subtly different from gzip)")
+    nrrdfile=paste(file,sep=".","nhdr")
+    cat("NRRD0004\n",file=nrrdfile)
+    fc=file(nrrdfile,open="at") # ie append, text mode
     nrrdType=ifelse(dtype=="byte","uint8",dtype)
     
-    cat("encoding:", ifelse(ftype=="text","text","raw"),"\n",file=fc)
+    cat("encoding:", ifelse(enc=="text","text","raw"),"\n",file=fc)
     cat("type: ",nrrdType,"\n",sep="",file=fc)
     cat("endian: ",endian,"\n",sep="",file=fc)
     # Important - this sets the offset in the amiramesh file from which
     # to start reading data
-    cat("byte skip:",file.info(filename)$size,"\n",file=fc)
+    cat("byte skip:",file.info(file)$size,"\n",file=fc)
     cat("dimension: ",length(lattice),"\n",sep="",file=fc)
     cat("sizes:",lattice,"\n",file=fc)
-    voxdims=voxdim.gjdens(dens)
+    voxdims=voxdims(x)
     if(!is.null(voxdims)) cat("spacings:",voxdims,"\n",file=fc)
     if(!is.null(BoundingBox)){
       cat("axis mins:",matrix(BoundingBox,nrow=2)[1,],"\n",file=fc)
       cat("axis maxs:",matrix(BoundingBox,nrow=2)[2,],"\n",file=fc)
     }
-    cat("data file: ",basename(filename),"\n",sep="",file=fc)
+    cat("data file: ",basename(file),"\n",sep="",file=fc)
     cat("\n",file=fc)
     close(fc)
   }
   
-  if(ftype=='text'){
-    write(as.vector(d,mode=dmode),ncol=1,file=filename,append=TRUE)
+  if(enc=='text'){
+    write(as.vector(d, mode=dmode), ncol=1, file=file, append=TRUE)
   } else {
-    fc=file(filename,open="ab") # ie append, bin mode
-    if(ftype=="hxzip")
-      writeBin(zlibdata,fc,size=1,endian=endian)
+    fc=file(file,open="ab") # ie append, bin mode
+    if(enc=="hxzip")
+      writeBin(zlibdata, fc, size=1, endian=endian)
     else
-      writeBin(as.vector(d,mode=dmode),fc,size=dtypesize,endian=endian)
+      writeBin(as.vector(d, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }
 }
