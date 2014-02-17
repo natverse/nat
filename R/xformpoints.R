@@ -70,7 +70,6 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   regcmd <- paste(c(rbind(inverseflags, shQuote(path.expand(reg)))), collapse=" ")
   cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''), '--',
             regcmd,'<',shQuote(pointsfile))
-  message(cmd)
   cmtkOut <- read.table(text=system(cmd, intern = TRUE,ignore.stderr=TRUE),
                         col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
                         colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
