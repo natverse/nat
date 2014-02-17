@@ -114,6 +114,14 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   }
 }
 
+#' @S3method boundingbox character
+boundingbox.character<-function(x, ...) {
+  if(!file.exists(x))
+    stop("Unable to find a file at path: ",x)
+  
+  boundingbox(read.im3d(x, ReadData=FALSE))
+}
+
 #' @S3method boundingbox default
 boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   input=match.arg(tolower(input),c("boundingbox",'bounds'))
