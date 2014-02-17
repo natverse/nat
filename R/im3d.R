@@ -79,15 +79,9 @@ write.im3d<-function(x, file, ...){
 
 read.im3d.amiramesh<-function(file, ...){
   d<-read.amiramesh(file, ...)
-  latticeDims=dim(d)
-  latticeBounds=attr(d,'Parameters')$BoundingBox
-  if(length(latticeBounds)>0){
-    attr(d,"BoundingBox")<-latticeBounds
-    attr(d,"x")<-seq(latticeBounds[1],latticeBounds[2],len=latticeDims[1])
-    attr(d,"y")<-seq(latticeBounds[3],latticeBounds[4],len=latticeDims[2])
-    attr(d,"z")<-seq(latticeBounds[5],latticeBounds[6],len=latticeDims[3])
-  }
-  d
+  
+  latticeDims=attr(d,'dataDef')$Dims[[1]]
+  im3d(d, dims=latticeDims, BoundingBox=attr(d,'Parameters')$BoundingBox)
 }
 
 #' Return voxel dimensions of an object
