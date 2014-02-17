@@ -80,22 +80,55 @@ voxdims.default<-function(d, ...){
   return(NULL)
 }
 
+#' Get the bounding box of an im3d volume or other compatible object
+#' 
+#' @details The bounding box is defined as the cuboid with vertices at the most 
+#'   extreme vertices of an image, \emph{when those vertices are assumed to have
+#'   a single position (sometimes thought of as their centre) }\strong{and no 
+#'   physical extent.}
+#' @param x A vector, matrix or im3d object or, for \code{boundingbox.character}
+#'   a character vector specifying a file.
+#' @export
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 
-getBoundingBox<-function(b,bounds=attr(b,"bounds"),voxdim=voxdim.gjdens(b)){
-  # nb BoundingBox = CENTRES of outer voxels (like Amira)
-  if(!is.null(attr(b,"BoundingBox"))) return(attr(b,"BoundingBox"))
-  else if(!is.null(bounds) && !is.null(voxdim)){
-    
-    if(is.vector(bounds)) bounds<-matrix(bounds,nrow=2)
-    halfVoxelDims=voxdim/2
-    bounds[1,]=bounds[1,]+halfVoxelDims
-    bounds[2,]=bounds[2,]-halfVoxelDims
-    # zap small gets rid of FP rounding errors
-    return(zapsmall(bounds))
+#' @method boundingbox im3d
+#' @S3method boundingbox im3d
+#' @param dims The dimensions of the image array - can be used to override 
+#'   dim(x) e.g. when only the metadata for an im3d has been read in.
+#' @export
+#' @rdname boundingbox
+boundingbox.im3d<-function(x, dims=dim(x), ...) {
+  if(!is.null(attr(x,"BoundingBox"))) attr(x,"BoundingBox")
+  else if(!is.null(b<-attr(x,"bounds"))) {
+    boundingbox(b, dims, ...)
+  } else {
+    bb=sapply(c('x','y','z'),
+                  function(d) {ll=attr(x,d);c(ll[1],ll[length(ll)])}, USE.NAMES=F)
+    if(is.null(dims))
+      dims=sapply(c('x','y','z'),function(d) length(attr(b,d)),USE.NAMES=F)
+    boundingbox(bb, dims)
   }
-  else if(is.character(b) && file.exists(b)){
-    return(attr(read.im3d(b,ReadData=FALSE),'BoundingBox'))
+}
+
+#' @S3method boundingbox default
+boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
+  input=match.arg(tolower(input),c("boundingbox",'bounds'))
+  if(!length(x)) NULL
+  if(is.vector(x)) {
+    if(length(x)!=6) stop("Must supply a vector of length 6")
+    x=matrix(x,nrow=2)
+  } else if(is.matrix(x)){
+    if(!isTRUE(all.equal(dim(x),c(2L,3L),check.attributes=FALSE)))
+      stop("Must supply a 2 x 3 matrix of physical extents")
   }
-  return(NULL)
+  if(input=='bounds'){
+    if(missing(dims)) stop("must supply dimensions when input is of type bounds!")
+    # we need to find the voxel dimensions in order to subtract off a
+    # half voxel dim in each axis
+    halfVoxelDims=voxdims(x, dims=dims)/2
+    x[1,]=x[1,]+halfVoxelDims
+    x[2,]=x[2,]-halfVoxelDims
+  }
+  # zap small gets rid of FP rounding errors
+  zapsmall(x)
 }
