@@ -20,6 +20,12 @@ test_that("check reading amiramesh in zlib and rle formats",{
   expect_equivalent(rle,zip)
 })
 
+test_that("we can avoid reading data sections",{
+  zipam='../testdata/amira/LHMask.zip.am'
+  expect_is(d<-read.amiramesh(zipam), 'array')
+  expect_equal(attr(d,'BoundingBox'), c(95.7, 164.3, 60.7, 129.3, 0.7, 69.3))
+})
+
 test_that("read.zlib works in memory",{
   set.seed(42)
   raw_data=as.raw(sample(1:5,250,replace=T))

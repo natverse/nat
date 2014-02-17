@@ -34,13 +34,19 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   parsedHeader=h[["dataDef"]]
   
   if(is.null(sections)) sections=parsedHeader$DataName
-  else sections=intersect(parsedHeader$DataName,sections)  
-  if(binaryfile){
-    filedata=.read.amiramesh.bin(con,parsedHeader,sections,Verbose=Verbose,endian=endian)
-    close(con)
+  else sections=intersect(parsedHeader$DataName,sections)
+  if(length(sections)){
+    if(binaryfile){
+      filedata=.read.amiramesh.bin(con,parsedHeader,sections,Verbose=Verbose,endian=endian)
+      close(con)
+    } else {
+      close(con)
+      filedata=read.amiramesh.ascii(file,parsedHeader,sections,Verbose=Verbose)
+    }
   } else {
-    close(con)
-    filedata=read.amiramesh.ascii(file,parsedHeader,sections,Verbose=Verbose)
+    # we don't have any data to read - just make a dummy return object to which
+    # we can add attributes
+    filedata=array()
   }
   
   if(!header) h=h[setdiff(names(h),c("header"))]	
