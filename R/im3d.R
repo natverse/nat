@@ -1,3 +1,24 @@
+#' Read a 3D block of image data
+#' 
+#' @param file Character vector describing a single file to read
+#' @param ... Arguments passed to methods
+#' @export
+read.im3d<-function(file, ...){
+  ext=sub(".*(\\.[^.])","\\1",file)
+  x=if(ext%in%c('.nrrd','.nhdr')){
+    message(ext," not yet implemented!")
+    array(dim=c(1,1))
+  } else if(ext%in%c(".am",'.amiramesh')){
+    message(ext," not yet implemented!")
+    array(dim=c(1,1))
+  } else {
+    stop("Unable to read data saved in format: ",ext)
+  }
+  if(!inherits(x,'im3d'))
+    class(x)<-c("im3d",class(x))
+  x
+}
+    
 #' Return voxel dimensions of an object
 #' 
 #' @param d An image like object with associated voxel dimensions
