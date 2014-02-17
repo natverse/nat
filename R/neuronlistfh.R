@@ -241,13 +241,13 @@ as.neuronlist.neuronlistfh<-function(l, ...){
       "Unable to download file."
       stop(e)
     })
+  }, finally = {
+    # Deal with connection leak
+    connAfter <- rownames(showConnections(all=T))
+    connNew <- setdiff(connAfter,connBefore)
+    if(length(connNew) > 0)
+      close(getConnection(as.integer(connNew)))
   })
-  
-  # Deal with connection leak
-  connAfter <- rownames(showConnections(all=T))
-  connNew <- setdiff(connAfter,connBefore)
-  if(length(connNew) > 0)
-    close(getConnection(as.integer(connNew)))
 }
 
 #' @S3method as.list neuronlistfh
