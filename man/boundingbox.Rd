@@ -12,6 +12,8 @@ boundingbox(x, ...)
   \code{boundingbox.character} a character vector
   specifying a file.}
 
+  \item{...}{Additional arguments passed to methods}
+
   \item{dims}{The dimensions of the image array - can be
   used to override dim(x) e.g. when only the metadata for
   an im3d has been read in.}

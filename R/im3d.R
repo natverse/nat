@@ -91,6 +91,7 @@ voxdims.default<-function(d, ...){
 #'   physical extent.}
 #' @param x A vector, matrix or im3d object or, for \code{boundingbox.character}
 #'   a character vector specifying a file.
+#' @param ... Additional arguments passed to methods
 #' @export
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 

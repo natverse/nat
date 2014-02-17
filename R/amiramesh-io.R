@@ -608,7 +608,7 @@ write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
   }
   
   if(enc=='text'){
-    write(as.vector(d, mode=dmode), ncol=1, file=file, append=TRUE)
+    write(as.vector(d, mode=dmode), ncolumns=1, file=file, append=TRUE)
   } else {
     fc=file(file,open="ab") # ie append, bin mode
     if(enc=="hxzip")
