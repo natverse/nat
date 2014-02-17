@@ -21,6 +21,21 @@ read.im3d<-function(file, ...){
   x
 }
 
+#' @param x The image data to write (an im3d, or capable of being interpreted as
+#'   such)
+#' @seealso \code{\link{write.nrrd}}
+#' @export
+write.im3d<-function(x, file, ...){
+  ext=sub(".*(\\.[^.])","\\1",file)
+  if(ext%in%c('.nrrd','.nhdr')){
+    write.nrrd(x, file, ...)
+  } else if(ext%in%c(".am",'.amiramesh')){
+    message("write.im3d not yet implemented for amirmamesh format")
+  } else {
+    stop("Unable to write data in format: ",ext)
+  }
+}
+
 read.im3d.amiramesh<-function(file, ...){
   d<-read.amiramesh(file, ...)
   latticeDims=dim(d)
