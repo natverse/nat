@@ -17,8 +17,8 @@ write.im3d(x, file, ...)
   being interpreted as such)}
 }
 \value{
-An objecting inheriting from base \code{array} and
-\code{im3d} classes.
+For \code{read.im3d} an objecting inheriting from base
+\code{array} and \code{im3d} classes.
 }
 \description{
 Read/Write calibrated 3D blocks of image data
