@@ -126,7 +126,7 @@ boundingbox.character<-function(x, ...) {
 #' @S3method boundingbox default
 boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   input=match.arg(tolower(input),c("boundingbox",'bounds'))
-  if(!length(x)) NULL
+  if(!length(x)) return(NULL)
   if(is.vector(x)) {
     if(length(x)!=6) stop("Must supply a vector of length 6")
     x=matrix(x,nrow=2)
