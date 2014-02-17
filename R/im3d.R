@@ -1,3 +1,36 @@
+#' Construct an im3d object representing 3D image data, densities etc
+#' 
+#' @param dims The dimensions of the image array - may be overridden when construcing an im3d in which the
+#' data block has been omitted
+im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL, BoundingBox=NULL, bounds=NULL){
+  if(!inherits(x,'im3d'))
+    class(x)<-c("im3d",class(x))
+  
+  boundSpecs=!c(is.null(BoundingBox), is.null(bounds), is.null(voxdims))
+  if(sum(boundSpecs)<1){
+    return(x)
+  } else if(sum(boundSpecs)>1)
+    stop("only 1 of boundingBox, bounds or voxdims can be supplied")
+  if(!is.null(BoundingBox)){
+    BoundingBox=boundingbox(BoundingBox)
+    voxdims=voxdims(BoundingBox,dims=dims)
+    attr(x,'BoundingBox')=BoundingBox
+  } else if(!is.null(bounds)) {
+    #FIXME add bounds
+  } else if(!is.null(voxdims)) {
+    BoundingBox=rbind(c(0,0,0),(dims-1)*voxdims)
+    if(!is.null(origin)){
+      BoundingBox=t(origin+t(BoundingBox))
+      # we can only formally make a bounding box if we have an origin
+      attr(x,'BoundingBox')=BoundingBox
+    }
+  }
+  attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
+  attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
+  attr(x,"z")<-seq(BoundingBox[5],BoundingBox[6],len=dims[3])
+  x
+}
+
 #' Read/Write calibrated 3D blocks of image data
 #' 
 #' @details Currently only nrrd and amira formats are implemented. Furthermore 
