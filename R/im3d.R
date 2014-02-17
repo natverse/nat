@@ -6,8 +6,7 @@
 read.im3d<-function(file, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
-    message(ext," not yet implemented!")
-    array(dim=c(1,1))
+    read.nrrd(file, ...)
   } else if(ext%in%c(".am",'.amiramesh')){
     message(ext," not yet implemented!")
     array(dim=c(1,1))
