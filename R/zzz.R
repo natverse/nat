@@ -1,5 +1,6 @@
 .onLoad <- function(libname, pkgname) {
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
+  options(nat.default.neuronlist = 'dps')
   
   # Register file formats
   registerformat('swc', read=read.neuron.swc, write=write.neuron.swc, 
