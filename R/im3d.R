@@ -1,15 +1,18 @@
 #' Read a 3D block of image data
 #' 
+#' @details Currently only nrrd and amira formats are implemented. Furthermore 
+#'   implementing a registry to allow extension to arbitrary formats remains a
+#'   TODO item.
 #' @param file Character vector describing a single file to read
 #' @param ... Arguments passed to methods
 #' @export
+#' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
 read.im3d<-function(file, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
     read.nrrd(file, ...)
   } else if(ext%in%c(".am",'.amiramesh')){
-    message(ext," not yet implemented!")
-    array(dim=c(1,1))
+    read.im3d.amiramesh(file, ...)
   } else {
     stop("Unable to read data saved in format: ",ext)
   }
@@ -17,7 +20,20 @@ read.im3d<-function(file, ...){
     class(x)<-c("im3d",class(x))
   x
 }
-    
+
+read.im3d.amiramesh<-function(file, ...){
+  d<-read.amiramesh(file, ...)
+  latticeDims=dim(d)
+  latticeBounds=attr(d,'Parameters')$BoundingBox
+  if(length(latticeBounds)>0){
+    attr(d,"BoundingBox")<-latticeBounds
+    attr(d,"x")<-seq(latticeBounds[1],latticeBounds[2],len=latticeDims[1])
+    attr(d,"y")<-seq(latticeBounds[3],latticeBounds[4],len=latticeDims[2])
+    attr(d,"z")<-seq(latticeBounds[5],latticeBounds[6],len=latticeDims[3])
+  }
+  d
+}
+
 #' Return voxel dimensions of an object
 #' 
 #' @param d An image like object with associated voxel dimensions
