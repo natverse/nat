@@ -505,3 +505,99 @@ amiratype<-function(x, bytes=NULL){
     paste(as.vector(ct),'field',sep='.')
   } else NA_character_
 }
+
+Write3DDensityToAmiraLattice<-function(filename,dens,ftype=c("binary","text","hxzip"),
+                                       dtype=c("float","byte", "short", "ushort", "int", "double"),WriteNrrdHeader=FALSE,endian=c('big','little')){
+  # Produces a lattice format file -
+  # that is one with a regular x,y,z grid
+  # Can also write a detached Nrrd header that points to the AmiraMesh
+  # data to allow it to be opened by a nrrd reader
+  ftype=match.arg(ftype)
+  endian=match.arg(endian)
+  if(ftype=='text') cat("# AmiraMesh ASCII 1.0\n\n",file=filename)
+  else if(endian=='little') cat("# AmiraMesh BINARY-LITTLE-ENDIAN 2.1\n\n",file=filename)
+  else cat("# AmiraMesh 3D BINARY 2.0\n\n",file=filename)
+  
+  fc=file(filename,open="at") # ie append, text mode
+  cat("# Created by Write3DDensityToAmiraLattice - ",format(Sys.time(),usetz=T),"\n\n",file=fc)	
+  
+  if(!is.list(dens)) d=dens else d=dens$estimate
+  # Find data type and size for amira
+  dtype=match.arg(dtype)	
+  dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", "int", "double"))]
+  # Set the data mode which will be used in the as.vector call at the
+  # moment that the binary data is written out.
+  if(dtype%in%c("byte","short","ushort","int")) dmode="integer"
+  if(dtype%in%c("float","double")) dmode="numeric"
+  
+  
+  #lattice=apply(d$eval.points,2,length)
+  lattice=dim(d)
+  cat("define Lattice",lattice,"\n",file=fc)
+  
+  cat("Parameters { CoordType \"uniform\",\n",file=fc)
+  # note Amira's definition for the bounding box:
+  # the range of the voxel centres.
+  # So eval.points should correspond to the CENTRE of the
+  # voxels at which the density is evaluated
+  cat("\t# BoundingBox is xmin xmax ymin ymax zmin zmax\n",file=fc)
+  BoundingBox=NULL
+  if(!is.null(attr(dens,"BoundingBox"))){
+    BoundingBox=attr(dens,"BoundingBox")
+  } else if(is.list(d) && !is.null(d$eval.points)){
+    BoundingBox=as.vector(apply(d$eval.points,2,range))
+  }
+  if(!is.null(BoundingBox)) cat("\t BoundingBox",BoundingBox,"\n",file=fc)
+  cat("}\n\n",file=fc)
+  
+  if(ftype=="hxzip"){
+    raw_data=writeBin(as.vector(d,mode=dmode),raw(),size=dtypesize,endian=endian)
+    zlibdata=nat:::write.zlib(raw_data)
+    cat("Lattice { ",dtype," ScalarField } = @1(HxZip,",length(zlibdata),")\n\n",sep="",file=fc)
+  } else cat("Lattice {",dtype,"ScalarField } = @1\n\n",file=fc)
+  
+  cat("@1\n",file=fc)
+  
+  #cat(str(as.vector(d)))
+  close(fc)
+  
+  # Write a Nrrd header to accompany the amira file if desired
+  # see http://teem.sourceforge.net/nrrd/
+  if(WriteNrrdHeader) {
+    if(ftype=="hxzip") stop("Nrrd cannot cope with Amira's HxZip encoding (which is subtly different from gzip)")
+    nrrdFilename=paste(filename,sep=".","nhdr")
+    cat("NRRD0004\n",file=nrrdFilename)
+    fc=file(nrrdFilename,open="at") # ie append, text mode
+    nrrdType=ifelse(dtype=="byte","uint8",dtype)
+    
+    cat("encoding:", ifelse(ftype=="text","text","raw"),"\n",file=fc)
+    cat("type: ",nrrdType,"\n",sep="",file=fc)
+    cat("endian: ",endian,"\n",sep="",file=fc)
+    # Important - this sets the offset in the amiramesh file from which
+    # to start reading data
+    cat("byte skip:",file.info(filename)$size,"\n",file=fc)
+    cat("dimension: ",length(lattice),"\n",sep="",file=fc)
+    cat("sizes:",lattice,"\n",file=fc)
+    voxdims=voxdim.gjdens(dens)
+    if(!is.null(voxdims)) cat("spacings:",voxdims,"\n",file=fc)
+    if(!is.null(BoundingBox)){
+      cat("axis mins:",matrix(BoundingBox,nrow=2)[1,],"\n",file=fc)
+      cat("axis maxs:",matrix(BoundingBox,nrow=2)[2,],"\n",file=fc)
+    }
+    cat("data file: ",basename(filename),"\n",sep="",file=fc)
+    cat("\n",file=fc)
+    close(fc)
+  }
+  
+  if(ftype=='text'){
+    write(as.vector(d,mode=dmode),ncol=1,file=filename,append=TRUE)
+  } else {
+    fc=file(filename,open="ab") # ie append, bin mode
+    if(ftype=="hxzip")
+      writeBin(zlibdata,fc,size=1,endian=endian)
+    else
+      writeBin(as.vector(d,mode=dmode),fc,size=dtypesize,endian=endian)
+    close(fc)
+  }
+}
+
