@@ -1,11 +1,15 @@
-#' Read a 3D block of image data
+#' Read/Write calibrated 3D blocks of image data
 #' 
 #' @details Currently only nrrd and amira formats are implemented. Furthermore 
-#'   implementing a registry to allow extension to arbitrary formats remains a
+#'   implementing a registry to allow extension to arbitrary formats remains a 
 #'   TODO item.
-#' @param file Character vector describing a single file to read
+#' @param file Character vector describing a single file
 #' @param ... Arguments passed to methods
+#' @return For \code{read.im3d} an objecting inheriting from base \code{array}
+#'   and \code{im3d} classes.
 #' @export
+#' @name im3d-io
+#' @aliases read.im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
 read.im3d<-function(file, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
@@ -23,6 +27,7 @@ read.im3d<-function(file, ...){
 
 #' @param x The image data to write (an im3d, or capable of being interpreted as
 #'   such)
+#' @rdname im3d-io
 #' @seealso \code{\link{write.nrrd}}
 #' @export
 write.im3d<-function(x, file, ...){
