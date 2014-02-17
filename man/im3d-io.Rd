@@ -4,12 +4,15 @@
 \alias{write.im3d}
 \title{Read/Write calibrated 3D blocks of image data}
 \usage{
-read.im3d(file, ...)
+read.im3d(file, ReadData = TRUE, ...)
 
 write.im3d(x, file, ...)
 }
 \arguments{
   \item{file}{Character vector describing a single file}
+
+  \item{ReadData}{Whether to read the data itself or return
+  metadata only.  Default: TRUE.}
 
   \item{...}{Arguments passed to methods}
 
