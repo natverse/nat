@@ -245,10 +245,9 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   
   # Deal with connection leak
   connAfter <- rownames(showConnections(all=T))
-  conns <- c(connBefore, connAfter)
-  conns <- conns[!(duplicated(conns, fromLast=F) | duplicated(conns, fromLast=T))]
-  if(length(conns) > 0)
-    close(getConnection(as.numeric(conns)))
+  connNew <- setdiff(connAfter,connBefore)
+  if(length(connNew) > 0)
+    close(getConnection(as.integer(connNew)))
 }
 
 #' @S3method as.list neuronlistfh
