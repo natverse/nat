@@ -59,28 +59,28 @@ read.im3d.amiramesh<-function(file, ...){
 
 #' Return voxel dimensions of an object
 #' 
-#' @param d An image like object with associated voxel dimensions
+#' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3
+#'   BoundingBox \code{matrix}.
 #' @param ... Additional arguments for methods
+#' @return A numeric vector of length 3, NA when NULL
 #' @export
-voxdims<-function(d, ...) UseMethod("voxdims")
+#' @seealso \code{\link{boundingbox}}
+#' @family im3d
+voxdims<-function(x, ...) UseMethod("voxdims")
 
 #' @S3method voxdims default
-voxdims.default<-function(d, ...){
-  if(all(c("x","y","z") %in% names(attributes(d)))){
-    originaldims=sapply(attributes(d)[c("x","y","z")],length)
-  } else {
-    originaldims=dim(d)
-  }
-  if (!is.null(attr(d,"bounds")))
-    # bounds = outer limit of voxels
-    return(diff(matrix(attr(d,"bounds"),nrow=2))/originaldims)
-  else if (!  is.null(attr(d,"BoundingBox"))) {
-    # BoundingBox = CENTRES of outer voxels (like Amira)
-    # therefore includes 1 fewer voxel in each dimension
-    return(diff(matrix(attr(d,"BoundingBox"),nrow=2))/(originaldims-1))
-  } 
-  #warning("Cannot find bounds or BoundingBox attribute")
-  return(NULL)
+voxdims.im3d<-function(x, ...){
+  voxdims(boundingbox(x), dim(x), ...)
+}
+
+#' @S3method voxdims default
+#' @param dims The number of voxels in each dimension when x is a BoundingBox
+#'   matrix.
+voxdims.default<-function(x, dims, ...){
+  if(length(x)){
+    vd=diff(boundingbox(x, dims, ...))/(dims-1)
+    return(as.vector(vd))
+  } else rep(NA_real_, 3)
 }
 
 #' Get the bounding box of an im3d volume or other compatible object
@@ -93,6 +93,7 @@ voxdims.default<-function(d, ...){
 #'   a character vector specifying a file.
 #' @param ... Additional arguments passed to methods
 #' @export
+#' @family im3d
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 
 #' @method boundingbox im3d
