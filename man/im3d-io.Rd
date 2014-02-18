@@ -4,7 +4,8 @@
 \alias{write.im3d}
 \title{Read/Write calibrated 3D blocks of image data}
 \usage{
-read.im3d(file, ReadData = TRUE, ...)
+read.im3d(file, ReadData = TRUE, SimplifyAttributes = FALSE,
+  ReadByteAsRaw = FALSE, ...)
 
 write.im3d(x, file, ...)
 }
@@ -12,7 +13,14 @@ write.im3d(x, file, ...)
   \item{file}{Character vector describing a single file}
 
   \item{ReadData}{Whether to read the data itself or return
-  metadata only.  Default: TRUE.}
+  metadata only.  Default: TRUE}
+
+  \item{SimplifyAttributes}{When \code{TRUE} leave only
+  core im3d attributes.}
+
+  \item{ReadByteAsRaw}{Whether to read byte values as R
+  \code{\link{raw}} arrays. These occupy 1/4 memory but
+  arithmetic is less convenient.  (default: FALSE)}
 
   \item{...}{Arguments passed to methods}
 

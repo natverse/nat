@@ -3,13 +3,19 @@ context("im3d")
 test_that("can read im3d files",{
   expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"),'im3d')
   expect_is(d,'array')
-  expect_true(is.raw(d))
+  expect_true(is.integer(d))
   expect_equal(sum(d!=0), 28669)
+  
+  expect_is(d0<-read.im3d("../testdata/nrrd/LHMask.nrrd", ReadData=FALSE),'im3d')
+  expect_equal(dim(d0), dim(d))
+  expect_equal(length(d0), 0L)
   
   amfile="../testdata/amira/AL-a_M.am"
   expect_is(d<-read.im3d(amfile), 'im3d')
   expect_is(d,'array')
   expect_equivalent(dim(d), c(154L, 154L, 87L))
+  expect_is(d0<-read.im3d(amfile, ReadData=FALSE), 'im3d')
+  expect_equivalent(dim(d0), c(154L, 154L, 87L))
   
   expect_error(read.im3d("../testdata/nrrd/LHMask.rhubarb"))
 })
@@ -26,11 +32,39 @@ test_that("round trip test for im3d",{
   expect_error(write.im3d(d, tf2))
 })
 
-test_that("voxdims and bounding box",{
+test_that("dim, voxdims and boundingbox",{
   expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"), 'im3d')
+  expect_equal(dim(d),c(50,50,50))
+  
+  expect_is(d0<-read.im3d("../testdata/nrrd/LHMask.nrrd", ReadData=FALSE), 'im3d')
+  expect_equal(dim(d0),c(50,50,50))
+  
   expect_equal(voxdims(d), c(1.4, 1.4, 1.4))
   
   bb_base=structure(c(0, 68.6, 0, 68.6, 0, 68.6), .Dim = 2:3)
   expect_equal(boundingbox(d), bb_base)
   expect_equal(boundingbox.character("../testdata/nrrd/LHMask.nrrd"), bb_base)
+  
+  expect_is(am<-read.im3d("../testdata/amira/VerySmallLabelField.am", 
+                          SimplifyAttributes=TRUE), 'im3d')
+  expect_equivalent(dim(am),c(2L,2L,1L))
+  expect_equal(voxdims(am),c(0.5,0.5,2))
+  # somewhat oddly, Amira decides that if dim=1 for any axis, the bounding
+  # box will not be 0 or infinite, but the size that would be expected for dim=2
+  expect_equal(boundingbox(am),structure(c(0, 0.5, 0, 0.5, 0, 2), .Dim = 2:3))
+  
+  expect_is(nrrd<-read.im3d("../testdata/amira/VerySmallLabelField.nrrd",
+                            SimplifyAttributes=TRUE), 'im3d')
+  expect_equivalent(dim(am),c(2L,2L,1L))
+  expect_equal(voxdims(am),c(0.5,0.5,2))
+  
+  # these should be equal when SimplifyAttributes=TRUE
+  expect_equal(nrrd, am)
+
+  expect_true(is.raw(nrrdraw<-read.im3d(ReadByteAsRaw=TRUE,
+    "../testdata/amira/VerySmallLabelField.nrrd", SimplifyAttributes=TRUE,)))
+  expect_true(is.raw(amraw<-read.im3d(ReadByteAsRaw=TRUE,
+    "../testdata/amira/VerySmallLabelField.am", SimplifyAttributes=TRUE)))
+  # ... and again
+  expect_equal(nrrdraw, amraw)
 })

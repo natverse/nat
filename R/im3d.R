@@ -5,9 +5,11 @@
 #'   constructing an im3d in which the data block has been omitted
 #' @param voxdims The voxel dimensions
 #' @param origin the location (or centre) of the first voxel
-#' @param BoundingBox,bounds Physical extent of image See
-#'   \code{\link{boundingbox}} details for the distinction
+#' @param BoundingBox,bounds Physical extent of image. See 
+#'   \code{\link{boundingbox}} details for the distinction.
 #' @return An array with additional class \code{im3d}
+#' @details We follow Amira's convention of setting the bounding box equal to
+#'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
                BoundingBox=NULL, bounds=NULL){
@@ -20,19 +22,20 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
   } else if(sum(boundSpecs)>1)
     stop("only 1 of boundingBox, bounds or voxdims can be supplied")
   if(!is.null(BoundingBox)){
-    BoundingBox=boundingbox(BoundingBox)
     voxdims=voxdims(BoundingBox,dims=dims)
     attr(x,'BoundingBox')=BoundingBox
   } else if(!is.null(bounds)) {
     #FIXME add bounds
   } else if(!is.null(voxdims)) {
-    BoundingBox=rbind(c(0,0,0),(dims-1)*voxdims)
+    corrected_dims=pmax(dims-1, 1)
+    BoundingBox=rbind(c(0,0,0),corrected_dims*voxdims)
     if(!is.null(origin)){
       BoundingBox=t(origin+t(BoundingBox))
-      # we can only formally make a bounding box if we have an origin
-      attr(x,'BoundingBox')=BoundingBox
     }
   }
+  # always add a bounding box
+  attr(x,'BoundingBox')=boundingbox(BoundingBox)
+  attr(x,'origin')=origin
   attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
   attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
   attr(x,"z")<-seq(BoundingBox[5],BoundingBox[6],len=dims[3])
@@ -45,8 +48,12 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #'   implementing a registry to allow extension to arbitrary formats remains a 
 #'   TODO item.
 #' @param file Character vector describing a single file
-#' @param ReadData Whether to read the data itself or return metadata only.
-#'   Default: TRUE.
+#' @param ReadData Whether to read the data itself or return metadata only. 
+#'   Default: TRUE
+#' @param SimplifyAttributes When \code{TRUE} leave only core im3d attributes.
+#' @param ReadByteAsRaw Whether to read byte values as R \code{\link{raw}}
+#'   arrays. These occupy 1/4 memory but arithmetic is less convenient.
+#'   (default: FALSE)
 #' @param ... Arguments passed to methods
 #' @return For \code{read.im3d} an objecting inheriting from base \code{array} 
 #'   and \code{im3d} classes.
@@ -54,15 +61,20 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #' @name im3d-io
 #' @aliases read.im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
-read.im3d<-function(file, ReadData=TRUE, ...){
+read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
+                    ReadByteAsRaw=FALSE, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
-    read.nrrd(file, ReadData=ReadData, ...)
+    read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else if(ext%in%c(".am",'.amiramesh')){
-    if(ReadData) read.im3d.amiramesh(file, ...)
-    else read.im3d.amiramesh(file, sections=NA, ...)
+    if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
+    else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else {
     stop("Unable to read data saved in format: ",ext)
+  }
+  if(SimplifyAttributes){
+    coreattrs=c("BoundingBox",'origin','x','y','z')
+    mostattributes(x)<-attributes(x)[coreattrs]
   }
   if(!inherits(x,'im3d'))
     class(x)<-c("im3d",class(x))
@@ -88,16 +100,24 @@ write.im3d<-function(x, file, ...){
 read.im3d.amiramesh<-function(file, ...){
   d<-read.amiramesh(file, ...)
   
-  latticeDims=attr(d,'dataDef')$Dims[[1]]
-  im3d(d, dims=latticeDims, BoundingBox=attr(d,'Parameters')$BoundingBox)
+  # Amira does not store the "space origin" separately as is the case for nrrds
+  # Have decided that we should always store the origin inferred from the
+  # BoundingBox
+  bb=attr(d,'Parameters')$BoundingBox
+  origin <- if(length(bb)) bb[c(1,3,5)] else NULL
+  im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin)
 }
 
 #' Return voxel dimensions of an object
 #' 
+#' @description This would properly be thought of as the voxel spacing when 
+#'   voxels are assumed not to have a physical extent (only a location).
 #' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3 
 #'   BoundingBox \code{matrix}.
 #' @param ... Additional arguments for methods
 #' @return A numeric vector of length 3, NA when NULL
+#' @details We follow Amira's convention of returning a voxel dimension equal to
+#'   the bounding box size (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @seealso \code{\link{boundingbox}}
 #' @family im3d
@@ -115,7 +135,8 @@ voxdims.im3d<-function(x, ...){
 #' @rdname voxdims
 voxdims.default<-function(x, dims, ...){
   if(length(x)){
-    vd=diff(boundingbox(x, dims, ...))/(dims-1)
+    corrected_dims=pmax(dims-1,1)
+    vd=diff(boundingbox(x, dims, ...))/(corrected_dims)
     return(as.vector(vd))
   } else rep(NA_real_, 3)
 }
@@ -146,8 +167,6 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   } else {
     bb=sapply(c('x','y','z'),
                   function(d) {ll=attr(x,d);c(ll[1],ll[length(ll)])}, USE.NAMES=F)
-    if(is.null(dims))
-      dims=sapply(c('x','y','z'),function(d) length(attr(b,d)),USE.NAMES=F)
     boundingbox(bb, dims)
   }
 }
@@ -185,4 +204,15 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   }
   # zap small gets rid of FP rounding errors
   zapsmall(x)
+}
+
+#' @S3method dim im3d
+dim.im3d<-function(x){
+  dimx=NextMethod(generic='dim')
+  if(is.null(dimx)){
+    xyz=c('x','y','z')
+    dimsavail=xyz[sapply(xyz, function(d) !is.null(attr(x,d)))]
+    dimx=sapply(dimsavail, function(d) length(attr(x,d)), USE.NAMES=F)
+  }
+  dimx
 }

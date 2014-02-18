@@ -1,5 +1,7 @@
 #' Read AmiraMesh data in binary or ascii format
 #' 
+#' @details reading byte data as raw arrays requires 1/4 memory but complicates
+#'   arithmetic.
 #' @param file Name of file (or connection) to read
 #' @param sections character vector containing names of sections
 #' @param header Whether to include the full unprocessesd text header as an 
@@ -8,6 +10,8 @@
 #'   in a list (default TRUE).
 #' @param endian Whether multibyte data types should be treated as big or little
 #'   endian. Default of NULL checks file or uses \code{.Platform$endian}
+#' @param ReadByteAsRaw Logical specifying whether to read 8 bit data as an R 
+#'   \code{raw} vector rather than \code{integer} vector (default: FALSE).
 #' @param Verbose Print status messages
 #' @return list of named data chunks
 #' @rdname amiramesh-io
@@ -15,7 +19,7 @@
 #' @seealso \code{\link{readBin}, \link{.Platform}}
 #' @family amira
 read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
-                         endian=NULL,Verbose=FALSE){
+                         endian=NULL,ReadByteAsRaw=FALSE,Verbose=FALSE){
   firstLine=readLines(file,n=1)
   if(!any(grep("#\\s+(amira|hyper)mesh",firstLine,ignore.case=TRUE))){
     warning(paste(file,"does not appear to be an AmiraMesh file"))
@@ -32,7 +36,9 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   on.exit(try(close(con),silent=TRUE))
   h=read.amiramesh.header(con,Verbose=Verbose)
   parsedHeader=h[["dataDef"]]
-  
+  if(ReadByteAsRaw){
+    parsedHeader$RType[parsedHeader$SimpleType=='byte']='raw'
+  }
   if(is.null(sections)) sections=parsedHeader$DataName
   else sections=intersect(parsedHeader$DataName,sections)
   if(length(sections)){
@@ -46,7 +52,8 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   } else {
     # we don't have any data to read - just make a dummy return object to which
     # we can add attributes
-    filedata=array()
+    filedata<-switch(parsedHeader$RType[1],
+                     integer=integer(0), raw=raw(), numeric(0))
   }
   
   if(!header) h=h[setdiff(names(h),c("header"))]	
@@ -54,7 +61,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
     attr(filedata,n)=h[[n]]
   
   # unlist?
-  if(simplify && length(filedata)==1){
+  if(simplify && is.list(filedata) && length(filedata)==1){
     filedata2=filedata[[1]]
     attributes(filedata2)=attributes(filedata)
     dim(filedata2)=dim(filedata[[1]])
@@ -84,7 +91,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
         } else {
           uncompressed=con
         }
-        if(df$RType[i]=="integer") whatval=integer(0) else whatval=numeric(0)
+        whatval=switch(df$RType[i], integer=integer(0), raw=raw(0), numeric(0))
         x=readBin(uncompressed,df$SimpleDataLength[i],size=df$Size[i],
                   what=whatval,signed=df$Signed[i],endian=endian)
       }

@@ -8,13 +8,17 @@
 #' @param ReadData When FALSE just return attributes (e.g. voxel size)
 #' @param AttachFullHeader Include the full nrrd header as an attribute of the 
 #'   returned object (default FALSE)
-#' @param ReadByteAsRaw Read 8 bit data as an R raw object rather than integer
+#' @param ReadByteAsRaw Either a character vector or a logical vector specifying
+#'   when R should read 8 bit data as an R \code{raw} vector rather than 
+#'   \code{integer} vector.
 #' @param Verbose Status messages while reading
 #' @return a 3D data array with attributes compatible with gjdens objects
 #' @export
 read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData,
                     Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
-  ReadByteAsRaw=match.arg(ReadByteAsRaw)
+  if(is.logical(ReadByteAsRaw))
+    ReadByteAsRaw=ifelse(ReadByteAsRaw, 'all', 'none')
+  else ReadByteAsRaw=match.arg(ReadByteAsRaw, c("unsigned","all","none"))
   fc=file(file,'rb')
   h=read.nrrd.header(fc)
   # store the path because ReadNrrdHeader couldn't do it 
@@ -88,7 +92,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     # missing pixel size info, so just return
     return(d)
   }
-  im3d(d, dims=h$sizes, voxdims=voxdims)
+  im3d(d, dims=h$sizes, voxdims=voxdims, origin=h[['space origin']])
 }
 
 #' Read the (text) header of a NRRD format file
@@ -307,7 +311,21 @@ write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
   cat("dimension: ", length(dim(x)), "\nsizes: ", paste(dim(x), collapse=" "),
       "\n",sep="", append=TRUE, file=file)
   voxdims=voxdims(x)
-  if(!is.null(voxdims)) cat("spacings:", voxdims,"\n", file=file, append=TRUE)
+  if(length(voxdims) && !(any(is.na(voxdims)))) {
+    origin=attr(x,'origin')
+    if(length(origin)){
+      # we need to write out as space origin + space directions
+      nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+      cat("space origin:", nrrdvec(origin),"\n", file=file, append=TRUE)
+      cat("space directions:",
+          nrrdvec(c(voxdims[1], 0, 0)),
+          nrrdvec(c(0, voxdims[2], 0)),
+          nrrdvec(c(0, 0, voxdims[3])),
+          '\n', file=file, append=TRUE)
+    } else {
+      cat("spacings:", voxdims,"\n", file=file, append=TRUE)
+    }
+  }
   
   if(!is.list(x)) d=x else d=x$estimate
   
