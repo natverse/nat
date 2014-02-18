@@ -57,4 +57,7 @@ test_that("dim, voxdims and boundingbox",{
                             SimplifyAttributes=TRUE), 'im3d')
   expect_equivalent(dim(am),c(2L,2L,1L))
   expect_equal(voxdims(am),c(0.5,0.5,2))
+  
+  # these should be equal when SimplifyAttributes=TRUE
+  expect_equal(nrrd, am)
 })
