@@ -526,10 +526,10 @@ amiratype<-function(x, bytes=NULL){
 #' @export
 #' @seealso \code{\link{.Platform}, \link{read.amiramesh}}
 #' @examples
-#' d=array(rnorm(1000),c(10,10,10))
+#' d=array(rnorm(1000), c(10, 10, 10))
 #' tf=tempfile(fileext='.am')
-#' write.amiramesh(d,file=tf, WriteNrrdHeader=TRUE)
-#' d2=read.nrrd(paste(tf,sep='', '.nhdr'))
+#' write.amiramesh(im3d(d, voxdims=c(0.5,0.5,1)), file=tf, WriteNrrdHeader=TRUE)
+#' d2=read.nrrd(paste(tf, sep='', '.nhdr'))
 #' all.equal(d, d2, tol=1e-6)
 write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
                           dtype=c("float","byte", "short", "ushort", "int", "double"),
