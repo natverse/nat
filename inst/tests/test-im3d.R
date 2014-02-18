@@ -6,10 +6,16 @@ test_that("can read im3d files",{
   expect_true(is.raw(d))
   expect_equal(sum(d!=0), 28669)
   
+  expect_is(d0<-read.im3d("../testdata/nrrd/LHMask.nrrd", ReadData=FALSE),'im3d')
+  expect_equal(dim(d0), dim(d))
+  expect_equal(length(d0), 0L)
+  
   amfile="../testdata/amira/AL-a_M.am"
   expect_is(d<-read.im3d(amfile), 'im3d')
   expect_is(d,'array')
   expect_equivalent(dim(d), c(154L, 154L, 87L))
+  expect_is(d0<-read.im3d(amfile, ReadData=FALSE), 'im3d')
+  expect_equivalent(dim(d0), c(154L, 154L, 87L))
   
   expect_error(read.im3d("../testdata/nrrd/LHMask.rhubarb"))
 })
@@ -28,8 +34,10 @@ test_that("round trip test for im3d",{
 
 test_that("dim, voxdims and boundingbox",{
   expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"), 'im3d')
-  
   expect_equal(dim(d),c(50,50,50))
+  
+  expect_is(d0<-read.im3d("../testdata/nrrd/LHMask.nrrd", ReadData=FALSE), 'im3d')
+  expect_equal(dim(d0),c(50,50,50))
   
   expect_equal(voxdims(d), c(1.4, 1.4, 1.4))
   
