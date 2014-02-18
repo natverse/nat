@@ -5,9 +5,11 @@
 #'   constructing an im3d in which the data block has been omitted
 #' @param voxdims The voxel dimensions
 #' @param origin the location (or centre) of the first voxel
-#' @param BoundingBox,bounds Physical extent of image. See
+#' @param BoundingBox,bounds Physical extent of image. See 
 #'   \code{\link{boundingbox}} details for the distinction.
 #' @return An array with additional class \code{im3d}
+#' @details We follow Amira's convention of setting the bounding box equal to
+#'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
                BoundingBox=NULL, bounds=NULL){
@@ -25,7 +27,8 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
   } else if(!is.null(bounds)) {
     #FIXME add bounds
   } else if(!is.null(voxdims)) {
-    BoundingBox=rbind(c(0,0,0),(dims-1)*voxdims)
+    corrected_dims=pmax(dims-1, 1)
+    BoundingBox=rbind(c(0,0,0),corrected_dims*voxdims)
     if(!is.null(origin)){
       BoundingBox=t(origin+t(BoundingBox))
     }
@@ -106,10 +109,14 @@ read.im3d.amiramesh<-function(file, ...){
 
 #' Return voxel dimensions of an object
 #' 
+#' @description This would properly be thought of as the voxel spacing when 
+#'   voxels are assumed not to have a physical extent (only a location).
 #' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3 
 #'   BoundingBox \code{matrix}.
 #' @param ... Additional arguments for methods
 #' @return A numeric vector of length 3, NA when NULL
+#' @details We follow Amira's convention of returning a voxel dimension equal to
+#'   the bounding box size (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @seealso \code{\link{boundingbox}}
 #' @family im3d
@@ -127,7 +134,8 @@ voxdims.im3d<-function(x, ...){
 #' @rdname voxdims
 voxdims.default<-function(x, dims, ...){
   if(length(x)){
-    vd=diff(boundingbox(x, dims, ...))/(dims-1)
+    corrected_dims=pmax(dims-1,1)
+    vd=diff(boundingbox(x, dims, ...))/(corrected_dims)
     return(as.vector(vd))
   } else rep(NA_real_, 3)
 }

@@ -44,4 +44,17 @@ test_that("dim, voxdims and boundingbox",{
   bb_base=structure(c(0, 68.6, 0, 68.6, 0, 68.6), .Dim = 2:3)
   expect_equal(boundingbox(d), bb_base)
   expect_equal(boundingbox.character("../testdata/nrrd/LHMask.nrrd"), bb_base)
+  
+  expect_is(am<-read.im3d("../testdata/amira/VerySmallLabelField.am", 
+                          SimplifyAttributes=TRUE), 'im3d')
+  expect_equivalent(dim(am),c(2L,2L,1L))
+  expect_equal(voxdims(am),c(0.5,0.5,2))
+  # somewhat oddly, Amira decides that if dim=1 for any axis, the bounding
+  # box will not be 0 or infinite, but the size that would be expected for dim=2
+  expect_equal(boundingbox(am),structure(c(0, 0.5, 0, 0.5, 0, 2), .Dim = 2:3))
+  
+  expect_is(nrrd<-read.im3d("../testdata/amira/VerySmallLabelField.nrrd",
+                            SimplifyAttributes=TRUE), 'im3d')
+  expect_equivalent(dim(am),c(2L,2L,1L))
+  expect_equal(voxdims(am),c(0.5,0.5,2))
 })

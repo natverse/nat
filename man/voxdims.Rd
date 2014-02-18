@@ -20,7 +20,14 @@ voxdims(x, ...)
 A numeric vector of length 3, NA when NULL
 }
 \description{
-Return voxel dimensions of an object
+This would properly be thought of as the voxel spacing when
+voxels are assumed not to have a physical extent (only a
+location).
+}
+\details{
+We follow Amira's convention of returning a voxel dimension
+equal to the bounding box size (rather than 0) for any
+dimension with only 1 voxel.
 }
 \seealso{
 \code{\link{boundingbox}}

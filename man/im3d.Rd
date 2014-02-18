@@ -27,4 +27,9 @@ An array with additional class \code{im3d}
 Construct an im3d object representing 3D image data,
 densities etc
 }
+\details{
+We follow Amira's convention of setting the bounding box
+equal to voxel dimension (rather than 0) for any dimension
+with only 1 voxel.
+}
 
