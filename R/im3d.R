@@ -1,8 +1,16 @@
 #' Construct an im3d object representing 3D image data, densities etc
 #' 
-#' @param dims The dimensions of the image array - may be overridden when construcing an im3d in which the
-#' data block has been omitted
-im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL, BoundingBox=NULL, bounds=NULL){
+#' @param x The object to turn into an im3d
+#' @param dims The dimensions of the image array - may be overridden when 
+#'   constructing an im3d in which the data block has been omitted
+#' @param voxdims The voxel dimensions
+#' @param origin the location (or centre) of the first voxel
+#' @param BoundingBox,bounds Physical extent of image See
+#'   \code{\link{boundingbox}} details for the distinction
+#' @return An array with additional class \code{im3d}
+#' @export
+im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
+               BoundingBox=NULL, bounds=NULL){
   if(!inherits(x,'im3d'))
     class(x)<-c("im3d",class(x))
   
