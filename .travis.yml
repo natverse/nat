@@ -7,6 +7,7 @@ before_install:
 install:
   - ./travis-tool.sh install_deps
   - sh -e /etc/init.d/xvfb start
+  - apt-get install alien
 notifications:
   email:
     on_success: change
