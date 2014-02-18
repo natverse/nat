@@ -54,7 +54,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
     attr(filedata,n)=h[[n]]
   
   # unlist?
-  if(simplify && length(filedata)==1){
+  if(simplify && is.list(filedata) && length(filedata)==1){
     filedata2=filedata[[1]]
     attributes(filedata2)=attributes(filedata)
     dim(filedata2)=dim(filedata[[1]])
