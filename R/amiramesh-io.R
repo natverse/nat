@@ -46,7 +46,7 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   } else {
     # we don't have any data to read - just make a dummy return object to which
     # we can add attributes
-    filedata=array()
+    filedata<-if(parsedHeader$RType[1]=="integer") integer(0) else numeric(0)
   }
   
   if(!header) h=h[setdiff(names(h),c("header"))]	
