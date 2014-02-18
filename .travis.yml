@@ -4,9 +4,10 @@ before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
-  - sudo apt-get install alien
-  - curl 'https://www.nitrc.org/frs/download.php/6179/CMTK-3.0.0-Linux-x86_64.rpm//?i_agree=1&download_now=1' -o cmtk.rpm
-  - sudo alien -i cmtk.rpm
+  - wget -O- http://neuro.debian.net/lists/precise.de-m.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+  - sudo apt-key adv --recv-keys --keyserver pgp.mit.edu 2649A5A9
+  - sudo apt-get update
+  - sudo apt-get install cmtk
 install:
   - ./travis-tool.sh install_deps
   - sh -e /etc/init.d/xvfb start
