@@ -5,6 +5,8 @@ before_install:
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
   - sudo apt-get install alien
+  - curl https://www.nitrc.org/frs/download.php/6179/CMTK-3.0.0-Linux-x86_64.rpm -o cmtk.rpm
+  - alien -i cmtk.rpm
 install:
   - ./travis-tool.sh install_deps
   - sh -e /etc/init.d/xvfb start
