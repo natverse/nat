@@ -45,8 +45,9 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #'   implementing a registry to allow extension to arbitrary formats remains a 
 #'   TODO item.
 #' @param file Character vector describing a single file
-#' @param ReadData Whether to read the data itself or return metadata only.
-#'   Default: TRUE.
+#' @param ReadData Whether to read the data itself or return metadata only. 
+#'   Default: TRUE
+#' @param SimplifyAttributes When \code{TRUE} leave only core im3d attributes.
 #' @param ... Arguments passed to methods
 #' @return For \code{read.im3d} an objecting inheriting from base \code{array} 
 #'   and \code{im3d} classes.
@@ -54,7 +55,7 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #' @name im3d-io
 #' @aliases read.im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
-read.im3d<-function(file, ReadData=TRUE, ...){
+read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
     read.nrrd(file, ReadData=ReadData, ...)
@@ -63,6 +64,10 @@ read.im3d<-function(file, ReadData=TRUE, ...){
     else read.im3d.amiramesh(file, sections=NA, ...)
   } else {
     stop("Unable to read data saved in format: ",ext)
+  }
+  if(SimplifyAttributes){
+    coreattrs=c("BoundingBox",'origin','x','y','z')
+    mostattributes(x)<-attributes(x)[coreattrs]
   }
   if(!inherits(x,'im3d'))
     class(x)<-c("im3d",class(x))

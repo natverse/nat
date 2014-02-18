@@ -17,8 +17,8 @@ im3d(x = numeric(0), dims = dim(x), voxdims = NULL, origin = NULL,
   \item{origin}{the location (or centre) of the first
   voxel}
 
-  \item{BoundingBox,bounds}{Physical extent of image See
-  \code{\link{boundingbox}} details for the distinction}
+  \item{BoundingBox,bounds}{Physical extent of image. See
+  \code{\link{boundingbox}} details for the distinction.}
 }
 \value{
 An array with additional class \code{im3d}
