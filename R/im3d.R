@@ -146,8 +146,6 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   } else {
     bb=sapply(c('x','y','z'),
                   function(d) {ll=attr(x,d);c(ll[1],ll[length(ll)])}, USE.NAMES=F)
-    if(is.null(dims))
-      dims=sapply(c('x','y','z'),function(d) length(attr(b,d)),USE.NAMES=F)
     boundingbox(bb, dims)
   }
 }
