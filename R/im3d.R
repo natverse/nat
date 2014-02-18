@@ -51,6 +51,9 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #' @param ReadData Whether to read the data itself or return metadata only. 
 #'   Default: TRUE
 #' @param SimplifyAttributes When \code{TRUE} leave only core im3d attributes.
+#' @param ReadByteAsRaw Whether to read byte values as R \code{\link{raw}}
+#'   arrays. These occupy 1/4 memory but arithmetic is less convenient.
+#'   (default: FALSE)
 #' @param ... Arguments passed to methods
 #' @return For \code{read.im3d} an objecting inheriting from base \code{array} 
 #'   and \code{im3d} classes.
@@ -58,10 +61,11 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #' @name im3d-io
 #' @aliases read.im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
-read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE, ...){
+read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
+                    ReadByteAsRaw=FALSE, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
-    read.nrrd(file, ReadData=ReadData, ...)
+    read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else if(ext%in%c(".am",'.amiramesh')){
     if(ReadData) read.im3d.amiramesh(file, ...)
     else read.im3d.amiramesh(file, sections=NA, ...)
