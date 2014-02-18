@@ -86,7 +86,7 @@ read.im3d.amiramesh<-function(file, ...){
 
 #' Return voxel dimensions of an object
 #' 
-#' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3
+#' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3 
 #'   BoundingBox \code{matrix}.
 #' @param ... Additional arguments for methods
 #' @return A numeric vector of length 3, NA when NULL
@@ -95,14 +95,16 @@ read.im3d.amiramesh<-function(file, ...){
 #' @family im3d
 voxdims<-function(x, ...) UseMethod("voxdims")
 
-#' @S3method voxdims default
+#' @S3method voxdims im3d
 voxdims.im3d<-function(x, ...){
   voxdims(boundingbox(x), dim(x), ...)
 }
 
 #' @S3method voxdims default
-#' @param dims The number of voxels in each dimension when x is a BoundingBox
+#' @method voxdims default
+#' @param dims The number of voxels in each dimension when x is a BoundingBox 
 #'   matrix.
+#' @rdname voxdims
 voxdims.default<-function(x, dims, ...){
   if(length(x)){
     vd=diff(boundingbox(x, dims, ...))/(dims-1)
@@ -150,7 +152,11 @@ boundingbox.character<-function(x, ...) {
   boundingbox(read.im3d(x, ReadData=FALSE))
 }
 
+#' @method boundingbox default
 #' @S3method boundingbox default
+#' @param input Whether \code{x} defines the boundingbox or bounds of the image 
+#'   (see details).
+#' @rdname boundingbox
 boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   input=match.arg(tolower(input),c("boundingbox",'bounds'))
   if(!length(x)) return(NULL)
