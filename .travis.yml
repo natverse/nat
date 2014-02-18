@@ -14,4 +14,6 @@ env:
   - global:
     - WARNINGS_ARE_ERRORS=1
     - _R_CHECK_FORCE_SUGGESTS_=0
-    -  RGL_USE_NULL=1
+    - DISPLAY=:99.0
+install:
+  - sh -e /etc/init.d/xvfb start
