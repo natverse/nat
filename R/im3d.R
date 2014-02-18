@@ -20,7 +20,6 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
   } else if(sum(boundSpecs)>1)
     stop("only 1 of boundingBox, bounds or voxdims can be supplied")
   if(!is.null(BoundingBox)){
-    BoundingBox=boundingbox(BoundingBox)
     voxdims=voxdims(BoundingBox,dims=dims)
     attr(x,'BoundingBox')=BoundingBox
   } else if(!is.null(bounds)) {
@@ -32,7 +31,7 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
     }
   }
   # always add a bounding box
-  attr(x,'BoundingBox')=BoundingBox
+  attr(x,'BoundingBox')=boundingbox(BoundingBox)
   attr(x,'origin')=origin
   attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
   attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
