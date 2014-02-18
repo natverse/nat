@@ -241,7 +241,7 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
 #'   been set and then use x as an identifier to find a neuron in that 
 #'   neuronlist.
 plot3d.character<-function(x, ...) {
-  nl=get(getOption('nat.default.neuronlist'))
+  nl=get(getOption('nat.default.neuronlist', default=stop('Option "nat.default.neuronlist" is not set. See ?nat for details.')))
   if(!is.neuronlist(nl)) 
     stop("Please set options(nat.default.neuronlist='myfavneuronlist'). ',
          'See ?nat for details.")
