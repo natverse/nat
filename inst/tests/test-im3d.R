@@ -3,7 +3,7 @@ context("im3d")
 test_that("can read im3d files",{
   expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"),'im3d')
   expect_is(d,'array')
-  expect_true(is.raw(d))
+  expect_true(is.integer(d))
   expect_equal(sum(d!=0), 28669)
   
   expect_is(d0<-read.im3d("../testdata/nrrd/LHMask.nrrd", ReadData=FALSE),'im3d')
