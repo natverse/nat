@@ -60,4 +60,11 @@ test_that("dim, voxdims and boundingbox",{
   
   # these should be equal when SimplifyAttributes=TRUE
   expect_equal(nrrd, am)
+
+  expect_true(is.raw(nrrdraw<-read.im3d(ReadByteAsRaw=TRUE,
+    "../testdata/amira/VerySmallLabelField.nrrd", SimplifyAttributes=TRUE,)))
+  expect_true(is.raw(amraw<-read.im3d(ReadByteAsRaw=TRUE,
+    "../testdata/amira/VerySmallLabelField.am", SimplifyAttributes=TRUE)))
+  # ... and again
+  expect_equal(nrrdraw, amraw)
 })

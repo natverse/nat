@@ -67,8 +67,8 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
   x=if(ext%in%c('.nrrd','.nhdr')){
     read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else if(ext%in%c(".am",'.amiramesh')){
-    if(ReadData) read.im3d.amiramesh(file, ...)
-    else read.im3d.amiramesh(file, sections=NA, ...)
+    if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
+    else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else {
     stop("Unable to read data saved in format: ",ext)
   }
