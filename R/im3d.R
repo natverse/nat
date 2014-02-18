@@ -5,8 +5,8 @@
 #'   constructing an im3d in which the data block has been omitted
 #' @param voxdims The voxel dimensions
 #' @param origin the location (or centre) of the first voxel
-#' @param BoundingBox,bounds Physical extent of image See
-#'   \code{\link{boundingbox}} details for the distinction
+#' @param BoundingBox,bounds Physical extent of image. See
+#'   \code{\link{boundingbox}} details for the distinction.
 #' @return An array with additional class \code{im3d}
 #' @export
 im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
@@ -29,10 +29,11 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
     BoundingBox=rbind(c(0,0,0),(dims-1)*voxdims)
     if(!is.null(origin)){
       BoundingBox=t(origin+t(BoundingBox))
-      # we can only formally make a bounding box if we have an origin
-      attr(x,'BoundingBox')=BoundingBox
     }
   }
+  # always add a bounding box
+  attr(x,'BoundingBox')=BoundingBox
+  attr(x,'origin')=origin
   attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
   attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
   attr(x,"z")<-seq(BoundingBox[5],BoundingBox[6],len=dims[3])
