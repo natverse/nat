@@ -307,7 +307,21 @@ write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
   cat("dimension: ", length(dim(x)), "\nsizes: ", paste(dim(x), collapse=" "),
       "\n",sep="", append=TRUE, file=file)
   voxdims=voxdims(x)
-  if(!is.null(voxdims)) cat("spacings:", voxdims,"\n", file=file, append=TRUE)
+  if(length(voxdims) && !(any(is.na(voxdims)))) {
+    origin=attr(x,'origin')
+    if(length(origin)){
+      # we need to write out as space origin + space directions
+      nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+      cat("space origin:", nrrdvec(origin),"\n", file=file, append=TRUE)
+      cat("space directions:",
+          nrrdvec(c(voxdims[1], 0, 0)),
+          nrrdvec(c(0, voxdims[2], 0)),
+          nrrdvec(c(0, 0, voxdims[3])),
+          '\n', file=file, append=TRUE)
+    } else {
+      cat("spacings:", voxdims,"\n", file=file, append=TRUE)
+    }
+  }
   
   if(!is.list(x)) d=x else d=x$estimate
   
