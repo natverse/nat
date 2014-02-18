@@ -88,8 +88,15 @@ write.im3d<-function(x, file, ...){
 read.im3d.amiramesh<-function(file, ...){
   d<-read.amiramesh(file, ...)
   
-  latticeDims=attr(d,'dataDef')$Dims[[1]]
-  im3d(d, dims=latticeDims, BoundingBox=attr(d,'Parameters')$BoundingBox)
+  # amira does not store the "space origin" separately as is the case for nrrds
+  # but if the bounding box has a non-zero origin then it must have been set
+  # explicitly
+  bb=attr(d,'Parameters')$BoundingBox
+  origin <- if(length(bb)) bb[c(1,3,5)] else NULL
+  if(isTRUE(all(origin==c(0, 0, 0)))){
+    origin=NULL
+  }
+  im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin)
 }
 
 #' Return voxel dimensions of an object
