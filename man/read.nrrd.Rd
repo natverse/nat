@@ -22,8 +22,10 @@ read.nrrd.header(file, Verbose = FALSE)
   \item{AttachFullHeader}{Include the full nrrd header as
   an attribute of the returned object (default FALSE)}
 
-  \item{ReadByteAsRaw}{Read 8 bit data as an R raw object
-  rather than integer}
+  \item{ReadByteAsRaw}{Either a character vector or a
+  logical vector specifying when R should read 8 bit data
+  as an R \code{raw} vector rather than \code{integer}
+  vector.}
 
   \item{Verbose}{Status messages while reading}
 }

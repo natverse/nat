@@ -8,13 +8,17 @@
 #' @param ReadData When FALSE just return attributes (e.g. voxel size)
 #' @param AttachFullHeader Include the full nrrd header as an attribute of the 
 #'   returned object (default FALSE)
-#' @param ReadByteAsRaw Read 8 bit data as an R raw object rather than integer
+#' @param ReadByteAsRaw Either a character vector or a logical vector specifying
+#'   when R should read 8 bit data as an R \code{raw} vector rather than 
+#'   \code{integer} vector.
 #' @param Verbose Status messages while reading
 #' @return a 3D data array with attributes compatible with gjdens objects
 #' @export
 read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData,
                     Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
-  ReadByteAsRaw=match.arg(ReadByteAsRaw)
+  if(is.logical(ReadByteAsRaw))
+    ReadByteAsRaw=ifelse(ReadByteAsRaw, 'all', 'none')
+  else ReadByteAsRaw=match.arg(ReadByteAsRaw, c("unsigned","all","none"))
   fc=file(file,'rb')
   h=read.nrrd.header(fc)
   # store the path because ReadNrrdHeader couldn't do it 
