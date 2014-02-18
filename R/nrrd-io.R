@@ -88,7 +88,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     # missing pixel size info, so just return
     return(d)
   }
-  im3d(d, dims=h$sizes, voxdims=voxdims)
+  im3d(d, dims=h$sizes, voxdims=voxdims, origin=h[['space origin']])
 }
 
 #' Read the (text) header of a NRRD format file
