@@ -26,8 +26,11 @@ test_that("round trip test for im3d",{
   expect_error(write.im3d(d, tf2))
 })
 
-test_that("voxdims and bounding box",{
+test_that("dim, voxdims and boundingbox",{
   expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"), 'im3d')
+  
+  expect_equal(dim(d),c(50,50,50))
+  
   expect_equal(voxdims(d), c(1.4, 1.4, 1.4))
   
   bb_base=structure(c(0, 68.6, 0, 68.6, 0, 68.6), .Dim = 2:3)

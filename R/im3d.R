@@ -186,3 +186,14 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   # zap small gets rid of FP rounding errors
   zapsmall(x)
 }
+
+#' @S3method dim im3d
+dim.im3d<-function(x){
+  dimx=NextMethod(generic='dim')
+  if(is.null(dimx)){
+    xyz=c('x','y','z')
+    dimsavail=xyz[sapply(xyz, function(d) !is.null(attr(x,d)))]
+    dimx=sapply(dimsavail, function(d) length(attr(x,d)), USE.NAMES=F)
+  }
+  dimx
+}
