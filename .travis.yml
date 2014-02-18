@@ -6,6 +6,7 @@ before_install:
   - ./travis-tool.sh bootstrap
 install:
   - ./travis-tool.sh install_deps
+  - sh -e /etc/init.d/xvfb start
 notifications:
   email:
     on_success: change
@@ -15,5 +16,3 @@ env:
     - WARNINGS_ARE_ERRORS=1
     - _R_CHECK_FORCE_SUGGESTS_=0
     - DISPLAY=:99.0
-install:
-  - sh -e /etc/init.d/xvfb start
