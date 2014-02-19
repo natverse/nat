@@ -10,11 +10,18 @@ neurons.
 }
 \section{neuron objects}{
   At present there are 2 main representations of neuronal
-  data. \itemize{ \item{\code{neuron}}{ objects contain one
-  or more connected trees that make up a neuron}
+  data:
+
+  \itemize{
+
+  \item{\code{neuron}}{ objects contain one or more
+  connected trees that make up a neuron}
+
   \item{\code{dotprops}}{ objects each contain a single
   neuron represented as points and tangent vectors in which
-  the connectivity information has been discarded} }
+  the connectivity information has been discarded}
+
+  }
 }
 
 \section{Collections of neurons}{
@@ -34,6 +41,16 @@ neurons.
   ?\link{cmtk} for installation details). The function
   \code{\link{xform}} has methods to deal with a variety of
   types of interest.
+}
+
+\section{3d image data}{
+  In addition to data types defined by unstructured
+  collections of 3d vertices such as neuron, dotprops and
+  hxsurf objects nat provides the \code{\link{im3d}} class
+  to handle image/density data on a regular grid. I/O is
+  handled by \code{\link{read.im3d}} and
+  \code{\link{write.im3d}}, which are currently implemented
+  for the amiramesh and nrrd file formats.
 }
 
 \section{package options}{
