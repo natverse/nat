@@ -1,5 +1,5 @@
 # nat: NeuroAnatomy Toolbox
-[![Build Status](https://travis-ci.org/ajdm/nat.png)](https://travis-ci.org/ajdm/nat)
+[![Build Status](https://travis-ci.org/jefferis/nat.png)](https://travis-ci.org/jefferis/nat)
 
 An R package for the analysis of biological image data, especially tracings of
 single neurons.
