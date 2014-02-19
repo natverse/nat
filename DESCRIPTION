@@ -1,7 +1,7 @@
 Package: nat
 Type: Package
 Title: nat: NeuroAnatomy Toolbox for Analysis of 3D Image Data
-Version: 1.2
+Version: 1.2.0.99
 Date: 2013-02-19
 Author: Greg Jefferis with contributions from Ashley Manton
 Maintainer: Greg Jefferis <jefferis@gmail.com>
