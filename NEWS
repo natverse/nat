@@ -2,9 +2,19 @@ nat 1.2
 =======
 * Basic implementation of reading/writing NRRD format image data.
   See read.nrrd and write.nrrd for details.
-* Some initial work on implementation of a class for 3d images, im3d
-* workaround for connection leak in filehashRDS objects 
+* Basic implementation of reading/writing Amira format image data.
+  See read.amiramesh and write.amiramesh for details.
+* Basic implementation of a class for 3d images, im3d
+* see read.im3d and write.im3d for I/O
+* and voxdims and boundingbox methods for physical dimensions
+* switch to more flexible neuronlistfh structure in which objects on disk are
+  named by the md5 hash of their contents.
+* workaround for connection leak in filehashRDS objects that stopped downloads
+  of more than 124 new objects by a neuronlistfh (ajdm).
   (see https://github.com/rdpeng/filehash/pull/3 for details)
+* dev: approach allowing some tests (e.g. those using the web) to be ignored on
+  CRAN (ajdm)
+* dev: travis continuous integration support (ajdm)
 
 nat 1.1
 =======
