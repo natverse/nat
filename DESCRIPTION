@@ -13,11 +13,12 @@ Description: This package is a reboot of the AnalysisSuite
     installed using the nat.as package presently available at
     https://github.com/jefferis/nat.as. The nat package is considerably cleaner
     but currently provides only a subset of the full functionality of nat.as /
-    AnalysisSuite. nat can read 3D images and surfaces in Amira formats. Traced
-    neurons can be imported from SWC and Amira SkeletonGraph format. These data
-    can then be visualised in 3D via rgl, manipulated including applying
+    AnalysisSuite. nat can read and write 3D images in NRRD and Amira formats
+    and read surfaces in Amira's hxsurf format. Traced neurons can be imported
+    from and written to SWC and Amira LineSet and SkeletonGraph formats. These
+    data can then be visualised in 3D via rgl, manipulated including applying
     calculated registrations, e.g. using the CMTK registration suite, and
-    analysed. There package also has a simple representation for neurons that
+    analysed. The package also has a simple representation for neurons that
     have been subjected to a 3D skeletonisation but not formally traced; this
     allows morphological comparison between neurons including searches and
     clustering.
