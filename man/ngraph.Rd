@@ -46,7 +46,13 @@ vertexlabels, each vertex having a \code{label} attribute.
 All vertices are included whether connected or not.
 }
 \description{
-ngraph: a graph to encode a neuron's connectivity
+the \code{ngraph} class contains a (completely general)
+graph representation of a neuron's connectivity in an
+\code{igraph} object. It may additionally contain vertex
+label or position data. See details.
+
+\code{ngraph()} creates an ngraph from edge and vertex
+information.
 
 \code{as.ngraph} converts an object to an ngraph
 
@@ -57,10 +63,27 @@ data.frame containing SWC format data
 }
 \details{
 We make the following assumptions about neurons coming in
-\itemize{ \item They have an integer vertex label that need
-not start from 1 and that may have gaps \item The edge list
-which defines connectivity specifies edges using pairs of
-vertex labels, _not_ raw vertex ids. }
+
+\itemize{
+
+\item They have an integer vertex label that need not start
+from 1 and that may have gaps
+
+\item The edge list which defines connectivity specifies
+edges using pairs of vertex labels, _not_ raw vertex ids.
+
+}
+
+We make no attempt to determine the root points at this
+stage.
+
+The raw vertex ids in the graph will be in the order of
+vertexlabels and can therefore be used to index a block of
+vertex coordinates. The vertexlabels will be stored using
+the vertex attribute \code{label}
+
+When the graph is directed (default) the edges will be from
+the root to the other tips of the neuron.
 
 Note that this method \emph{always} keeps the original
 vertex labels (a.k.a. PointNo) as read in from the original

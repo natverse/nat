@@ -1,14 +1,20 @@
 #' Construct an im3d object representing 3D image data, densities etc
 #' 
+#' \code{im3d} objects consist of a data array with attributes defining the 
+#' spatial positions at which the voxels are located. There should always be a 
+#' \code{BoundingBox} attribute which defines the physical extent of the volume 
+#' in the same manner as the Amira 3d visualisation and analysis software. This 
+#' corresponds to the \strong{node} centers option in the
+#' \href{http://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
 #' @param x The object to turn into an im3d
 #' @param dims The dimensions of the image array - may be overridden when 
 #'   constructing an im3d in which the data block has been omitted
 #' @param voxdims The voxel dimensions
 #' @param origin the location (or centre) of the first voxel
-#' @param BoundingBox,bounds Physical extent of image. See 
-#'   \code{\link{boundingbox}} details for the distinction.
+#' @param BoundingBox,bounds Physical extent of image. See the details section 
+#'   of \code{\link{boundingbox}}'s help for the distinction.
 #' @return An array with additional class \code{im3d}
-#' @details We follow Amira's convention of setting the bounding box equal to
+#' @details We follow Amira's convention of setting the bounding box equal to 
 #'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @family im3d
@@ -117,7 +123,7 @@ read.im3d.amiramesh<-function(file, ...){
 #' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3 
 #'   BoundingBox \code{matrix}.
 #' @param ... Additional arguments for methods
-#' @return A numeric vector of length 3, NA when NULL
+#' @return A numeric vector of length 3, NA when missing.
 #' @details We follow Amira's convention of returning a voxel dimension equal to
 #'   the bounding box size (rather than 0) for any dimension with only 1 voxel.
 #' @export
@@ -146,21 +152,24 @@ voxdims.default<-function(x, dims, ...){
 
 #' Get the bounding box of an im3d volume or other compatible object
 #' 
-#' @details The bounding box is defined as the cuboid with vertices at the most 
-#'   extreme vertices of an image, \emph{when those vertices are assumed to have
-#'   a single position (sometimes thought of as their centre) }\strong{and no 
-#'   physical extent.}
-#' @param x A vector, matrix or im3d object or, for \code{boundingbox.character}
-#'   a character vector specifying a file.
-#' @param ... Additional arguments passed to methods
+#' @details The bounding box is defined as the position of the voxels at the two
+#'   opposite corners of the cuboid encompassing an image, \emph{when each voxel
+#'   is assumed to have a single position (sometimes thought of as its centre) 
+#'   \strong{and no physical extent.}} When written as a vector it should look 
+#'   like: \code{c(x0,x1,y0,y1,z0,z1)}. When written as a matrix it should look 
+#'   like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position
+#'   of the origin.
+#' @param x A vector or matrix specifying a bounding box, an \code{im3d} object 
+#'   or, for \code{boundingbox.character}, a character vector specifying a file.
+#' @inheritParams voxdims
 #' @export
 #' @family im3d
+#' @examples
+#' boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 
 #' @method boundingbox im3d
 #' @S3method boundingbox im3d
-#' @param dims The dimensions of the image array - can be used to override 
-#'   dim(x) e.g. when only the metadata for an im3d has been read in.
 #' @export
 #' @rdname boundingbox
 boundingbox.im3d<-function(x, dims=dim(x), ...) {

@@ -18,14 +18,22 @@ im3d(x = numeric(0), dims = dim(x), voxdims = NULL, origin = NULL,
   voxel}
 
   \item{BoundingBox,bounds}{Physical extent of image. See
-  \code{\link{boundingbox}} details for the distinction.}
+  the details section of \code{\link{boundingbox}}'s help
+  for the distinction.}
 }
 \value{
 An array with additional class \code{im3d}
 }
 \description{
-Construct an im3d object representing 3D image data,
-densities etc
+\code{im3d} objects consist of a data array with attributes
+defining the spatial positions at which the voxels are
+located. There should always be a \code{BoundingBox}
+attribute which defines the physical extent of the volume
+in the same manner as the Amira 3d visualisation and
+analysis software. This corresponds to the \strong{node}
+centers option in the
+\href{http://teem.sourceforge.net/nrrd/format.html}{NRRD
+format}.
 }
 \details{
 We follow Amira's convention of setting the bounding box

@@ -1,18 +1,30 @@
 #' ngraph: a graph to encode a neuron's connectivity
 #' 
+#' @description the \code{ngraph} class contains a (completely general) graph 
+#'   representation of a neuron's connectivity in an \code{igraph} object. It 
+#'   may additionally contain vertex label or position data. See details.
+#'   
+#'   \code{ngraph()} creates an ngraph from edge and vertex information.
 #' @details We make the following assumptions about neurons coming in
-#' \itemize{ 
+#'   
+#'   \itemize{
+#'   
 #'   \item They have an integer vertex label that need not start from 1 and that
-#'   may have gaps 
-#'   \item The edge list which defines connectivity specifies edges using pairs
+#'   may have gaps
+#'   
+#'   \item The edge list which defines connectivity specifies edges using pairs 
 #'   of vertex labels, _not_ raw vertex ids.
-#' }
-#' @details We make no attempt to determine the root points at this stage.
-#' @details The raw vertex ids in the graph will be in the order of vertexlabels
-#'   and can therefore be used to index a block of vertex coordinates. The
-#'   verexlabels will be stored using the vertex attribute \code{label}
-#' @details When the graph is directed (default) the edges will be from the root
-#'   to the other tips of the neuron.
+#'   
+#'   }
+#'   
+#'   We make no attempt to determine the root points at this stage.
+#'   
+#'   The raw vertex ids in the graph will be in the order of vertexlabels and 
+#'   can therefore be used to index a block of vertex coordinates. The 
+#'   vertexlabels will be stored using the vertex attribute \code{label}
+#'   
+#'   When the graph is directed (default) the edges will be from the root to the
+#'   other tips of the neuron.
 #' @param el A two columm matrix (start, end) defining edges
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
@@ -20,7 +32,7 @@
 #' @param directed Whether the resultant graph should be directed (default TRUE)
 #' @param graph.attributes List of named attributes to be added to the graph
 #' @return an \code{igraph} object with additional class \code{ngraph}, having a
-#'   vertex for each entry in vertexlabels, each vertex having a \code{label}
+#'   vertex for each entry in vertexlabels, each vertex having a \code{label} 
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
 #' @seealso \code{\link{igraph}}

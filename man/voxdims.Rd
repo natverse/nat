@@ -17,7 +17,7 @@ voxdims(x, ...)
   is a BoundingBox matrix.}
 }
 \value{
-A numeric vector of length 3, NA when NULL
+A numeric vector of length 3, NA when missing.
 }
 \description{
 This would properly be thought of as the voxel spacing when
