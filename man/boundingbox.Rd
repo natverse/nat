@@ -37,7 +37,8 @@ thought of as their centre) }\strong{and no physical
 extent.}
 }
 \seealso{
-Other im3d: \code{\link{voxdims}},
-\code{\link{voxdims.default}}
+Other im3d: \code{\link{im3d-io}}, \code{\link{read.im3d}},
+\code{\link{write.im3d}}; \code{\link{im3d}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 

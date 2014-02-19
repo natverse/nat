@@ -32,4 +32,11 @@ We follow Amira's convention of setting the bounding box
 equal to voxel dimension (rather than 0) for any dimension
 with only 1 voxel.
 }
+\seealso{
+Other im3d: \code{\link{boundingbox}},
+\code{\link{boundingbox.default}},
+\code{\link{boundingbox.im3d}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
+}
 

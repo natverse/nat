@@ -43,5 +43,10 @@ arbitrary formats remains a TODO item.
 \code{\link{read.nrrd}, \link{read.amiramesh}}
 
 \code{\link{write.nrrd}}
+
+Other im3d: \code{\link{boundingbox}},
+\code{\link{boundingbox.default}},
+\code{\link{boundingbox.im3d}}; \code{\link{im3d}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 

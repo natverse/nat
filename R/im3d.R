@@ -11,6 +11,7 @@
 #' @details We follow Amira's convention of setting the bounding box equal to
 #'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
+#' @family im3d
 im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
                BoundingBox=NULL, bounds=NULL){
   if(!inherits(x,'im3d'))
@@ -60,6 +61,7 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
 #' @export
 #' @name im3d-io
 #' @aliases read.im3d
+#' @family im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
                     ReadByteAsRaw=FALSE, ...){
@@ -133,6 +135,7 @@ voxdims.im3d<-function(x, ...){
 #' @param dims The number of voxels in each dimension when x is a BoundingBox 
 #'   matrix.
 #' @rdname voxdims
+#' @family im3d
 voxdims.default<-function(x, dims, ...){
   if(length(x)){
     corrected_dims=pmax(dims-1,1)
