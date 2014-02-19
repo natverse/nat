@@ -1,4 +1,5 @@
 \name{read.hxsurf}
+\alias{hxsurf}
 \alias{read.hxsurf}
 \title{Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object}
 \usage{
@@ -23,14 +24,30 @@ read.hxsurf(filename, RegionNames = NULL, RegionChoice = "Inner",
   \code{TRUE}}
 }
 \value{
-S3 object of class hxsurf
+A list with S3 class hxsurf with elements \itemize{
+
+\item{Vertices}{ A data.frame with columns \code{X, Y, Z,
+PointNo}}
+
+\item{Regions}{ A list with 3 column data.frames specifying
+triplets of vertices for each region (with reference to
+\code{PointNo} column in \code{Vertices} element)}
+
+\item{RegionList}{ Character vector of region names (should
+match names of \code{RegionList} element)}
+
+\item{RegionColourList}{ Character vector specifying
+default colour to plot each region in R's \code{\link{rgb}}
+format}
+
+}
 }
 \description{
 Read Amira surface (aka HxSurface or HyperSurface) files
 into hxsurf object
 }
 \seealso{
-\code{\link{plot3d.hxsurf}}
+\code{\link{plot3d.hxsurf}, \link{rgb}}
 
 Other amira: \code{\link{amiratype}};
 \code{\link{is.amiramesh}};

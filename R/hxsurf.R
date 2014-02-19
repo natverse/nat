@@ -3,13 +3,28 @@
 #' @param filename Character vector defining path to file
 #' @param RegionNames Character vector specifying which regions should be read 
 #'   from file. Default value of \code{NULL} => all regions.
-#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material should
+#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material should 
 #'   define the material of the patch.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
-#' @return S3 object of class hxsurf
+#' @return A list with S3 class hxsurf with elements \itemize{
+#'   
+#'   \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
+#'   
+#'   \item{Regions}{ A list with 3 column data.frames specifying triplets of 
+#'   vertices for each region (with reference to \code{PointNo} column in
+#'   \code{Vertices} element)}
+#'   
+#'   \item{RegionList}{ Character vector of region names (should match names of
+#'   \code{RegionList} element)}
+#'   
+#'   \item{RegionColourList}{ Character vector specifying default colour to plot
+#'   each region in R's \code{\link{rgb}} format}
+#'   
+#'   }
 #' @export
-#' @seealso \code{\link{plot3d.hxsurf}}
+#' @seealso \code{\link{plot3d.hxsurf}, \link{rgb}}
+#' @aliases hxsurf
 #' @family amira
 read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
                       FallbackRegionCol="grey",Verbose=FALSE){
