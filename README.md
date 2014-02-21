@@ -29,7 +29,7 @@ install.packages('nat',repos=c('http://jefferislab.org/R',getOption("repos")))
 Note the specification of both the jefferislab.org repository and the default 
 CRAN repository in order to ensure that package dependencies are installed from 
 CRAN and the main package is installed from our repository. Note also that it is
-necessary to specify `type='both` on platforms where binary packages are the
+necessary to specify `type='both'` on platforms where binary packages are the
 norm (Windows/MacOS X) since **nat** is only provided as a source package on our
 repository.
 
