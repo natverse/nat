@@ -108,8 +108,8 @@ one with the most points) will then be stored in n$SegList
 and n$NumPoints will refer to the number of points in that
 subtree, not the whole neuron.
 
-StartPoint,BranchPoints,EndPoints are indices matching the
-rows of the vertices in \code{d} \strong{not} arbitrary
+StartPoint, BranchPoints, EndPoints are indices matching
+the rows of the vertices in \code{d} \strong{not} arbitrary
 point numbers typically encoded in \code{d$PointNo}.
 
 Columns will be ordered

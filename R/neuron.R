@@ -11,7 +11,7 @@
 #' in n$SegList and n$NumPoints will refer to the number of points in that 
 #' subtree, not the whole neuron.
 #' @description \code{neuron} makes a neuron object from appropriate variables.
-#' @details StartPoint,BranchPoints,EndPoints are indices matching the rows of 
+#' @details StartPoint, BranchPoints, EndPoints are indices matching the rows of 
 #'   the vertices in \code{d} \strong{not} arbitrary point numbers typically 
 #'   encoded in \code{d$PointNo}.
 #' @rdname neuron

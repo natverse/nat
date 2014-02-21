@@ -7,37 +7,37 @@
 #'   
 #'   \itemize{
 #'   
-#'   \item{\code{neuron}}{ objects contain one or more connected trees that make
-#'   up a neuron}
+#'   \item{\code{\link{neuron}}}{ objects contain one or more connected trees
+#'   that make up a neuron}
 #'   
-#'   \item{\code{dotprops}}{ objects each contain a single neuron represented as
-#'   points and tangent vectors in which the connectivity information has been 
-#'   discarded}
+#'   \item{\code{\link{dotprops}}}{ objects each contain a single neuron
+#'   represented as points and tangent vectors in which the connectivity
+#'   information has been discarded}
 #'   
 #'   }
-#' @section Collections of neurons: Neurons can be collected as 
+#' @section Collections of Neurons: Neurons can be collected as 
 #'   \code{\link{neuronlist}} objects, which contain multiple \code{neuron} or 
 #'   \code{dotprops} objects along with an attached dataframe of metadata that 
 #'   can be used to colour or subset the neurons during plotting (see 
 #'   \code{\link{plot3d.neuronlist}}).
 #'   
-#' @section transformations: \code{neuron} or \code{dotprops} objects can be 
+#' @section Transformations: \code{neuron} or \code{dotprops} objects can be 
 #'   transformed from e.g. sample to template brain space using affine or 
 #'   non-rigid registrations, typically calculated with the open source 
 #'   \href{www.nitrc.org/projects/cmtk/}{CMTK} package (see ?\link{cmtk} for 
 #'   installation details). The function \code{\link{xform}} has methods to deal
 #'   with a variety of types of interest.
 #'   
-#' @section 3d image data: In addition to data types defined by unstructured 
+#' @section 3d Image Data: In addition to data types defined by unstructured 
 #'   collections of 3d vertices such as \code{\link{neuron}, \link{dotprops}} 
 #'   and \code{\link{hxsurf}} objects nat provides the \code{\link{im3d}} class 
 #'   to handle image/density data on a regular grid. I/O is handled by 
 #'   \code{\link{read.im3d}} and \code{\link{write.im3d}}, which are currently 
-#'   implemented for the amiramesh and nrrd file formats. Spatial information
-#'   can be queried with \code{\link{voxdims}} and \code{\link{boundingbox}}
+#'   implemented for the amiramesh and nrrd file formats. Spatial information 
+#'   can be queried with \code{\link{voxdims}} and \code{\link{boundingbox}} 
 #'   methods.
 #'   
-#' @section package options: The following options can be set to specify default
+#' @section Package Options: The following options can be set to specify default
 #'   behaviour.
 #'   
 #'   \itemize{

@@ -14,17 +14,17 @@ neurons.
 
   \itemize{
 
-  \item{\code{neuron}}{ objects contain one or more
+  \item{\code{\link{neuron}}}{ objects contain one or more
   connected trees that make up a neuron}
 
-  \item{\code{dotprops}}{ objects each contain a single
-  neuron represented as points and tangent vectors in which
-  the connectivity information has been discarded}
+  \item{\code{\link{dotprops}}}{ objects each contain a
+  single neuron represented as points and tangent vectors
+  in which the connectivity information has been discarded}
 
   }
 }
 
-\section{Collections of neurons}{
+\section{Collections of Neurons}{
   Neurons can be collected as \code{\link{neuronlist}}
   objects, which contain multiple \code{neuron} or
   \code{dotprops} objects along with an attached dataframe
@@ -33,7 +33,7 @@ neurons.
   \code{\link{plot3d.neuronlist}}).
 }
 
-\section{transformations}{
+\section{Transformations}{
   \code{neuron} or \code{dotprops} objects can be
   transformed from e.g. sample to template brain space
   using affine or non-rigid registrations, typically
@@ -44,7 +44,7 @@ neurons.
   types of interest.
 }
 
-\section{3d image data}{
+\section{3d Image Data}{
   In addition to data types defined by unstructured
   collections of 3d vertices such as \code{\link{neuron},
   \link{dotprops}} and \code{\link{hxsurf}} objects nat
@@ -57,7 +57,7 @@ neurons.
   methods.
 }
 
-\section{package options}{
+\section{Package Options}{
   The following options can be set to specify default
   behaviour.
 
