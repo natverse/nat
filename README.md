@@ -53,4 +53,6 @@ Windows, Linux and Mac at http://www.nitrc.org/projects/cmtk/. Source code is
 available from the same site or an unofficial mirror repository at 
 https://github.com/jefferis/cmtk. We have extensive experience of using CMTK
 under linux (where we compile from source) and mac (where we compile or use the
-MacOSX-10.6-x86_64.dmg binary installers).
+MacOSX-10.6-x86_64.dmg binary installers). We have also used 
+[neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
+travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
