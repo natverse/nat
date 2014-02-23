@@ -6,7 +6,6 @@ if(Sys.getenv('NOT_CRAN') == "true") {
   test_package("nat")
 } else {
   # We're on CRAN, so don't run anything involving remote files
-  regex <- "^(?:(?!nocran).)+$"
-  attr(regex, "perl") <- TRUE
+  regex <- "^[^.]+"
   test_package("nat", filter=regex)
 }
