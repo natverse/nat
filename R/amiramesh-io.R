@@ -425,10 +425,12 @@ decode.rle<-function(d,uncompressedLength){
 # @param compressed Path to compressed file, connection or raw vector.
 # @param offset Byte offset in file on disk
 # @param compressedLength Bytes of compressed data to read
+# @param type The compression type. See ?memDecompress for details.
 # @param ... Additional parameters passed to \code{\link{readBin}}
 # @return raw vector of decompressed data
+# sealso memDecompress
 # @export
-read.zlib<-function(compressed, offset=NA, compressedLength=NA, ...){
+read.zlib<-function(compressed, offset=NA, compressedLength=NA, type='gzip', ...){
   if(!is.raw(compressed)){
     if(inherits(compressed,'connection')){
       if(is.na(compressedLength)) stop("Must supply compressedLength when reading from a connection")
@@ -442,7 +444,7 @@ read.zlib<-function(compressed, offset=NA, compressedLength=NA, ...){
     }
     compressed=readBin(con, what=raw(), n=compressedLength)
   }
-  memDecompress(compressed,type='gzip')
+  memDecompress(compressed, type=type, ...)
 }
 
 # Compress raw data, returning raw vector or writing to file
