@@ -53,27 +53,15 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
   endian=ifelse(is.null(h$endian),.Platform$endian,h$endian)
   if(Verbose) cat("dataLength =",dataLength,"dataType =",dataTypes$what[i],"size=",dataTypes$size[i],"\n")
   enc=tolower(h$encoding)
+  on.exit(close(fc))
   if(ReadData){
-    if(enc=="raw"){
+    if(enc%in%c("gz","gzip")) fc=gzcon(fc)
+    if(enc%in%c("gz","gzip",'raw')){
       d=readBin(fc,what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
-                signed=dataTypes$signed[i],endian=endian)
-      close(fc)
-    } else if(enc%in%c("gz","gzip")) {
-      # unfortunately gzcon seems to reset the connection 
-      # rather than starting to read from the current location
-      headerlength=seek(fc)
-      close(fc)
-      tf=tempfile()
-      system(paste('tail -c +',sep="",headerlength+1," ",file," > ",tf))
-      gzf=gzfile(tf,'rb')
-      d=readBin(gzf,what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
-                signed=dataTypes$signed[i],endian=endian)
-      close(gzf)
-      unlink(tf)
+                 signed=dataTypes$signed[i],endian=endian)
     } else if(enc%in%c("ascii","txt","text")){
       if(dataTypes$what[i]=='integer') whatVal=integer(0) else whatVal=double(0)
       d=scan(fc,what=whatVal,nmax=dataLength,quiet=TRUE)
-      close(fc)
     } else {
       stop("nrrd encoding ",enc," is not implemented")
     }
@@ -84,7 +72,6 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     attr(d,'datablock')=list(what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
                              signed=dataTypes$signed[i],endian=endian)
     attr(d,'datablock')$datastartpos=seek(fc)
-    close(fc)
   }
   if(AttachFullHeader) attr(d,"header")=h
   voxdims<-nrrd.voxdims(h,ReturnAbsoluteDims = FALSE)
