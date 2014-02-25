@@ -371,8 +371,26 @@ projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na
   rval
 }
 
-flip.array=function(a,flipdim='X'){
-  ndims=length(dim(a))
+#' Flip an array, matrix or vector about an axis
+#' 
+#' @param x Object to flip
+#' @param ... Aditional arguments for methods
+#' @export
+flip<-function(x, ...) UseMethod('flip')
+
+#' @export
+#' @method flip array
+#' @rdname flip
+#' @param flipdim Character vector or 1-indexed integer indicating array 
+#'   dimension alogn which flip will occur. Characters X, Y, Z map onto 
+#'   dimensions 1, 2, 3.
+#'   
+#' @details Note that dimensions 1 and 2 for R matrices will be rows and 
+#'   columns, respectively, which does not map easily onto the intuition of a 2D
+#'   image matrix where the X axis would typically be thought of as running from
+#'   left to right on the page and the Y axis would run from top to bottom.
+flip.array=function(x, flipdim='X', ...){
+  ndims=length(dim(x))
   if(ndims>3) stop("Can't handle more than 3D arrays")
   
   if(is.character(flipdim)){
@@ -380,31 +398,30 @@ flip.array=function(a,flipdim='X'){
     # fixed a bug which prevented y axis flips
     flipdim=which(letters==flipdim)-which(letters=="x")+1
   }
-  if(!flipdim%in%seq(len=length(dim(a)))){
+  if(!flipdim%in%seq(len=length(dim(x)))){
     stop("Can't match dimension to flip")
   }
   
-  revidxs=dim(a)[flipdim]:1
+  revidxs=dim(x)[flipdim]:1
   
   if(ndims==3){
-    if(flipdim==1) rval=a[revidxs,,]
-    if(flipdim==2) rval=a[,revidxs,]
-    if(flipdim==3) rval=a[,,revidxs]
+    if(flipdim==1) rval=x[revidxs,,]
+    if(flipdim==2) rval=x[,revidxs,]
+    if(flipdim==3) rval=x[,,revidxs]
   }
   else if(ndims==2){
-    if(flipdim==1) rval=a[revidxs,]
-    if(flipdim==2) rval=a[,revidxs]
+    if(flipdim==1) rval=x[revidxs,]
+    if(flipdim==2) rval=x[,revidxs]
   }
   else if (ndims==1){
-    return(flip.vector(a))
+    return(flip.vector(x))
   }
-  attributes(rval)=attributes(a)
+  attributes(rval)=attributes(x)
   return (rval)
 }
 
+#' @S3method flip vector
+flip.vector=function(x, ...) rev(x)
 
-flip.vector=function(x) rev(x)
-
-flip.matrix=function(x,...) {
-  flip.array(x,...)
-}
+#' @S3method flip matrix
+flip.matrix=function(x, ...) flip.array(x, ...)
