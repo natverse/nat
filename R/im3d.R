@@ -228,3 +228,145 @@ dim.im3d<-function(x){
   }
   dimx
 }
+
+image.gjdens<-function(x=NULL,y=NULL,
+                       z, zlim=NULL, xlim=range(x,finite=TRUE), ylim=range(y,finite=TRUE),
+                       plotdims=NULL,flipdims='y',filledContour=FALSE,asp=NA, axes=FALSE,
+                       xlab=NULL,ylab=NULL,
+                       nlevels=20,levels = pretty(zlim, nlevels+1),
+                       color.palette=jet.colors,col = color.palette(length(levels) - 1),...){
+  
+  # # function which will extend R's image function
+  # by 
+  # 1. allowing images to have inverted x or ylims.
+  #    - What would be the best here - I thought of just checking whether
+  #    xlim or ylim were reversed, but I think that an actual flip command
+  #    is preferable.
+  # 2. Defaulting to a suitable colour ramp
+  #@    << handle z as first argument >>
+  #@+node:jefferis.20051016235253.1:<< handle z as first argument >>
+  if (missing(z)) {
+    if (!is.null(x)) {
+      z <- x
+      attributes(z)<-attributes(x)
+      x <- NULL
+    }
+    else stop("no 'z' matrix specified")
+  }
+  #@-node:jefferis.20051016235253.1:<< handle z as first argument >>
+  #@nl
+  #@    << set x y z >>
+  #@+node:jefferis.20051024111842:<< set x y z >>
+  # don't try and plot anything if we have malformed zlims
+  if(is.null(zlim)) zlim=range(z,finite=TRUE)
+  if(!all(is.finite(zlim))){
+    warning(paste("supplied zlim is not finite:",zlim))
+    zlim=c(0,0)
+  }
+  
+  if(!is.null(plotdims)){
+    plotdims=tolower(plotdims); plotdims=unlist(strsplit(plotdims,split=""))
+    if(is.null(x)) x=attr(z,plotdims[1])
+    if(is.null(y)) y=attr(z,plotdims[2])
+  } else if(!is.null(attr(z,"ProjDim"))){
+    # if this is a projection, then choose correct axes to display
+    plotdims=setdiff(c("x","y","z"),attr(z,"ProjDim"))
+    if(is.null(x)) x=attr(z,plotdims[1])
+    if(is.null(y)) y=attr(z,plotdims[2])
+  } else if (all( c("x","y")%in%names(attributes(z)) )){
+    if(is.null(x)) x=attr(z,"x")
+    if(is.null(y)) y=attr(z,"y")
+  }
+  # If we still haven't set anything, then use default
+  if(is.null(x)) x=seq(0,1,len=nrow(z))
+  if(is.null(y)) y=seq(0,1,len=ncol(z))
+  if(is.null(plotdims)) plotdims=c("x","y")
+  #@-node:jefferis.20051024111842:<< set x y z >>
+  #@nl
+  #@    << handle flipdims >>
+  #@+node:jefferis.20051016235253:<< handle flipdims >>
+  numbers=1:3;names(numbers)=letters[24:26]
+  
+  # what about transposing matrix if axes have been swapped?
+  if(numbers[plotdims[1]]>numbers[plotdims[2]]){
+    z=t(z)
+  }
+  
+  if(is.numeric(flipdims)) flipdims=names(numbers(flipdims))
+  if(is.character(flipdims)) {
+    flipdims=unlist(strsplit(tolower(flipdims),split=""))
+    # nb at this stage we assume z looks like our axes, so
+    # we don't try to match axis names etc
+    if(plotdims[1]%in%flipdims) z<-flip.array(z,1)
+    if(plotdims[2]%in%flipdims) z<-flip.array(z,2)
+  }
+  
+  # now reverse axes if required
+  if(plotdims[1]%in%flipdims) x=-rev(x)
+  if(plotdims[2]%in%flipdims) y=-rev(y)
+  #@nonl
+  #@-node:jefferis.20051016235253:<< handle flipdims >>
+  #@nl
+  
+  
+  if(filledContour){
+    plot(0,0,xlim,ylim,type='n',asp=asp,axes=FALSE,
+         xlab=plotdims[1],ylab=plotdims[2],xaxs="i",yaxs="i",...)
+    if (!is.double(z)) storage.mode(z) <- "double"
+    .Internal(filledcontour(as.double(x), as.double(y), z, as.double(levels), 
+                            col = col))
+  } else {
+    image(x=x,y=y,z=z,zlim=zlim,xlim=xlim,ylim=ylim,col=col,asp=asp,axes=FALSE,
+          xlab=plotdims[1],ylab=plotdims[2],...)
+  }
+  if(axes){
+    axis(2,pretty(par("usr")[3:4]),abs(pretty(par("usr")[3:4])))
+    axis(1,pretty(par("usr")[1:2]),abs(pretty(par("usr")[1:2])))
+  }
+  # Return info that will be useful for creating scalebars
+  invisible(list(zlim=zlim,nlevels.actual=length(levels),nlevels.orig=nlevels,
+                 levels=levels,colors=col))
+}
+
+projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na.rm=T,mask=NULL,...){
+  ndims=length(dim(a))
+  if(is.character(projdim)){
+    projdim=tolower(projdim)
+    projdim=which(letters==projdim)-which(letters=="x")+1
+  }
+  if(ndims<3) {
+    if(warn) warning("3D arrays only in zproj - no z axis in array")
+    return (a)
+  }
+  if(!is.null(mask)) a[mask==0]=NA
+  
+  if(is.character(projfun) && projdim==ndims) {
+    # This will do fast sums over the last dimension for 3 funcs
+    projfun=match.arg(projfun)
+    # These functions are handled specially
+    if( projfun=="sum" || projfun=="integrate" ){
+      rval=rowSums(a,dims=ndims-1,na.rm=na.rm)
+    } else if(projfun=="mean"){ 		
+      rval=rowMeans(a,dims=ndims-1,na.rm=na.rm)
+    }
+  } else {
+    # This is the more general routine
+    if(is.character(projfun) && projfun=="integrate") projfun.fun=sum
+    else projfun.fun=match.fun(projfun)
+    # Now do the projection
+    margins=setdiff(1:ndims,projdim)
+    rval=apply(a,margins,projfun.fun,na.rm=na.rm,...)
+  }
+  if(is.character(projfun) && projfun=="integrate") {
+    dx=voxdim.gjdens(a)[projdim]
+    rval=rval*dx
+  }
+  
+  # copy over attributes
+  attributeNamesToCopy=setdiff(names(attributes(a)),names(attributes(rval)))
+  attributes(rval)=c(attributes(rval),attributes(a)[attributeNamesToCopy])
+  # ... and set the ProjDim to the correct letter
+  projDimChar=letters[23+projdim]
+  attr(rval,'ProjDim')=if(!is.na(projDimChar)) projDimChar else projdim
+  rval
+}
