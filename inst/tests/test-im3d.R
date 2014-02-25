@@ -68,3 +68,20 @@ test_that("dim, voxdims and boundingbox",{
   # ... and again
   expect_equal(nrrdraw, amraw)
 })
+
+test_that("can flip arrays",{
+  m=matrix(1:4, ncol=2, nrow=2, byrow=TRUE)
+  # NB the orientation is determined by matching x to 
+  mf1=rbind(c(3,4),c(1,2))
+  mf2=rbind(c(2,1),c(4,3))
+  expect_equal(flip(m), mf1)
+  expect_equal(flip(m,flipdim=2), mf2)
+  expect_equal(flip(m,flipdim='y'), mf2)
+  expect_error(flip(m,flipdim='z'))
+  
+  a6=array(1:6,1:3)
+  # singleton x dimension so flip has no effect
+  expect_equal(flip(a6), a6)
+  expect_equal(flip(a6, 2), array(c(2,1,4,3,6,5),1:3))
+  expect_equal(flip(a6, 3), array(c(5,6,3,4,1,2),1:3))
+})
