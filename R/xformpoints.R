@@ -68,9 +68,12 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   # CMTK command line tools are missing.
   inverseflags <- unlist(lapply(direction, function(x) ifelse(x == 'forward', '', '--inverse')))
   regcmd <- paste(c(rbind(inverseflags, shQuote(path.expand(reg)))), collapse=" ")
+  outfile=tempfile()
+  on.exit(unlink(outfile))
   cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''), '--',
-            regcmd,'<',shQuote(pointsfile))
-  cmtkOut <- read.table(text=system(cmd, intern = TRUE,ignore.stderr=TRUE),
+            regcmd,'<',shQuote(pointsfile),">",shQuote(outfile))
+  if(system(cmd,ignore.stderr=TRUE)!=0) stop("Error running CMTK streamxform!")
+  cmtkOut <- read.table(outfile,
                         col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
                         colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
   pointst <- data.matrix(cmtkOut[,1:3])
