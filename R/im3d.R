@@ -370,3 +370,41 @@ projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na
   attr(rval,'ProjDim')=if(!is.na(projDimChar)) projDimChar else projdim
   rval
 }
+
+flip.array=function(a,flipdim='X'){
+  ndims=length(dim(a))
+  if(ndims>3) stop("Can't handle more than 3D arrays")
+  
+  if(is.character(flipdim)){
+    flipdim=tolower(flipdim)
+    # fixed a bug which prevented y axis flips
+    flipdim=which(letters==flipdim)-which(letters=="x")+1
+  }
+  if(!flipdim%in%seq(len=length(dim(a)))){
+    stop("Can't match dimension to flip")
+  }
+  
+  revidxs=dim(a)[flipdim]:1
+  
+  if(ndims==3){
+    if(flipdim==1) rval=a[revidxs,,]
+    if(flipdim==2) rval=a[,revidxs,]
+    if(flipdim==3) rval=a[,,revidxs]
+  }
+  else if(ndims==2){
+    if(flipdim==1) rval=a[revidxs,]
+    if(flipdim==2) rval=a[,revidxs]
+  }
+  else if (ndims==1){
+    return(flip.vector(a))
+  }
+  attributes(rval)=attributes(a)
+  return (rval)
+}
+
+
+flip.vector=function(x) rev(x)
+
+flip.matrix=function(x,...) {
+  flip.array(x,...)
+}
