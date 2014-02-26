@@ -425,3 +425,45 @@ flip.vector=function(x, ...) rev(x)
 
 #' @S3method flip matrix
 flip.matrix=function(x, ...) flip.array(x, ...)
+
+#' Slice out a 3d subarray (or 2d matrix) from a 3d image array
+#' 
+#' @param x An im3d objet
+#' @param slice Indices defining the slices to keep
+#' @param slicedim Charaacter vector or integer defining axis from which slices 
+#'   will be removed.
+#' @param drop Whether singleton dimensions will be dropped (default: TRUE) 
+#'   conveting 3d array to 2d matrix.
+#' @details Note the sample locations stored in the x,y,z attributes will be 
+#'   updated appropriately. FIXME: Should we also update bounding box?
+imslice<-function(x, slice, slicedim='z', drop=TRUE, ...){
+  ndims=length(dim(x))
+  if(is.character(slicedim)){
+    slicedim=tolower(slicedim)
+    slicedim=which(slicedim==c("x",'y','z'))
+  }
+  if(ndims<3) {
+    stop("3D arrays only in slice.gjdens - no z axis in array")
+  }
+  if(slicedim==3)
+    rval=x[,,slice, drop=drop]
+  else if(slicedim==2)
+    rval=x[,slice,, drop=drop]
+  else if(slicedim==1)
+    rval=x[slice,,, drop=drop]
+  attributeNamesToCopy=setdiff(names(attributes(x)),names(attributes(rval)))
+  attributes(rval)=c(attributes(rval),attributes(x)[attributeNamesToCopy])
+  # ... and set the SliceDim to the correct letter
+  sliceDimChar=letters[23+slicedim]
+  if(!is.na(sliceDimChar)){
+    attr(rval,'SliceDim')=sliceDimChar
+    attr(rval,sliceDimChar)=attr(rval,sliceDimChar)[slice]
+  } else{
+    attr(rval,'SliceDim')=slicedim
+  }
+  voxdims=voxdims(x)
+  attr(rval,'OriginalBoundingBox')=attr(rval,'BoundingBox')
+  attr(rval,'BoundingBox')=NULL
+  attr(rval,'BoundingBox')=boundingbox(rval)
+  rval
+}

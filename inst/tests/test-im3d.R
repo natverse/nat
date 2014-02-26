@@ -85,3 +85,9 @@ test_that("can flip arrays",{
   expect_equal(flip(a6, 2), array(c(2,1,4,3,6,5),1:3))
   expect_equal(flip(a6, 3), array(c(5,6,3,4,1,2),1:3))
 })
+
+test_that("can slice out subarray from image",{
+  i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
+  i2=im3d(array(1:4,c(1,2,2)),voxdims=c(2,3,4))
+  expect_equal(imslice(i,1:2),i2)
+})
