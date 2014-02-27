@@ -3,7 +3,7 @@
 \title{Write a 3d array to a NRRD file}
 \usage{
 write.nrrd(x, file, enc = c("raw", "text", "gzip"), dtype = c("float",
-  "byte", "short", "ushort", "int", "double"), endian = c("big", "little"))
+  "byte", "short", "ushort", "int", "double"), endian = .Platform$endian)
 }
 \arguments{
   \item{x}{A 3d data array}
@@ -16,13 +16,14 @@ write.nrrd(x, file, enc = c("raw", "text", "gzip"), dtype = c("float",
   \item{dtype}{The data type to write. One of
   "float","byte", "short", "ushort", "int", "double"}
 
-  \item{endian}{One of "big" or "little"}
+  \item{endian}{One of "big" or "little". Defaults to
+  \code{.Platform$endian}.}
 }
 \description{
 Produces a lattice format file i.e. one with a regular
 x,y,z grid
 }
 \seealso{
-\code{\link{read.nrrd}}
+\code{\link{read.nrrd}, \link{.Platform}}
 }
 

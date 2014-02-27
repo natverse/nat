@@ -275,14 +275,14 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #' @param enc One of three supported nrrd encodings ("raw", "text", "gzip")
 #' @param dtype The data type to write. One of "float","byte", "short", 
 #'   "ushort", "int", "double"
-#' @param endian One of "big" or "little"
+#' @param endian One of "big" or "little". Defaults to \code{.Platform$endian}.
 #' @export
-#' @seealso \code{\link{read.nrrd}}
+#' @seealso \code{\link{read.nrrd}, \link{.Platform}}
 write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
                      dtype=c("float","byte", "short", "ushort", "int", "double"),
-                     endian=c('big','little')){
+                     endian=.Platform$endian){
   enc=match.arg(enc)
-  endian=match.arg(endian)
+  endian=match.arg(endian, c('big','little'))
   dtype=match.arg(dtype)
 
   nrrdDataTypes=structure(c("uint8","uint16","int16","int32","float","double"),
