@@ -30,9 +30,8 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
     stop("only 1 of boundingBox, bounds or voxdims can be supplied")
   if(!is.null(BoundingBox)){
     voxdims=voxdims(BoundingBox,dims=dims)
-    attr(x,'BoundingBox')=BoundingBox
   } else if(!is.null(bounds)) {
-    #FIXME add bounds
+    BoundingBox=boundingbox(bounds, dims=dims, input='bounds')
   } else if(!is.null(voxdims)) {
     corrected_dims=pmax(dims-1, 1)
     BoundingBox=rbind(c(0,0,0),corrected_dims*voxdims)
