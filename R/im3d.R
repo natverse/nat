@@ -637,6 +637,39 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
   rval
 }
 
+#' Return function that finds maximum of its inputs within a clamping range
+#' 
+#' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
+#'   of length 2.
+#' @return A function with signature \code{f(x, ..., na.rm)}
+#' @examples
+#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
+#' op=par(mfrow=c(1,2))
+#' rval=image(projection(d,projfun=max))
+#' image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)
+#' par(op)
+clampmax<-function(xmin,xmax) {
+  # this fn returns a new function that will find the maximum of its inputs
+  # and then clamp the return value between xmin and xmax
+  # +/- Inf are converted to NA
+  if(missing(xmax)) {
+    xmax=xmin[2]
+    xmin=xmin[1]
+  }
+  function(x, ..., na.rm=FALSE){
+    r=suppressWarnings(max(x, ..., na.rm=na.rm))
+    if(!is.finite(r))
+      NA
+    else if(r<xmin)
+      xmin 
+    else if(r>xmax)
+      xmax
+    else r
+  }
+}
+
+
 expand.grid.gjdens<-function(d){
   # takes the x,y and z attributes of d and
   # makes an n x 3 matrix containing the grid points
