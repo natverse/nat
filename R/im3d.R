@@ -374,7 +374,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #' @param a Array of image data (im3d format)
 #' @param projdim The image dimension down which to project
 #' @param projfun The function that collapses each vector of image data down to 
-#'   a single pixel. Can be a character vector naming a function or a function.
+#'   a single pixel. Can be a character vector naming a function or a function. 
 #'   See details.
 #' @param na.rm Logical indicating whether to ignore \code{NA} values in the 
 #'   image data when calculating function results. default: \code{TRUE}
@@ -383,6 +383,12 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #' @details Note that \code{projfun} must have an argument \code{na.rm} like the
 #'   S3 Summary \code{\link{groupGeneric}} functions such as \code{sum, min} 
 #'   etc.
+#'   
+#'   Note also that the BoundingBox of a 2d projection is not well-defined for
+#'   the axis along which the projection was made. Presently both the evaluation
+#'   location and the BoundingBox extremes are set to 0 after a projection is
+#'   made but FIXME this is not completely satisfactory. Perhaps defining this
+#'   to be NA or the midpoint of the orginal axis would be better justified.
 #' @seealso \code{\link{groupGeneric}}
 #' @export
 #' @family im3d
@@ -428,7 +434,14 @@ projection<-function(a, projdim='z', projfun=c('integrate','mean','sum'),
   attributes(rval)=c(attributes(rval),attributes(a)[attributeNamesToCopy])
   # ... and set the ProjDim to the correct letter
   projDimChar=letters[23+projdim]
-  attr(rval,'ProjDim')=if(!is.na(projDimChar)) projDimChar else projdim
+  if(!is.na(projDimChar)){
+    attr(rval,'ProjDim')=projDimChar
+    attr(rval,projDimChar)=0
+  } else attr(rval,'ProjDim') = projdim
+
+  boundingbox(rval)<-NULL
+  # this will use the x, y, z attributes to set the bouding box
+  boundingbox(rval)<-boundingbox(rval)
   attr(rval,'OriginalBoundingBox')=attr(a,'BoundingBox')
   rval
 }
