@@ -186,6 +186,20 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   }
 }
 
+#' Return the space origin of a 3d image object
+#' 
+#' @description Defined as the first coordinates (x,y,z) of the bounding box, 
+#'   which in turn matches the nrrd definition of the location of the "centre" 
+#'   of the first voxel.
+#' @param x Object for which origin should be returned. See 
+#'   \code{\link{boundingbox}}.
+#' @param \dots Additional arguments passed to \code{\link{boundingbox}}
+#' @family im3d
+#' @export
+origin<-function(x, ...) {
+  boundingbox(x, ...)[c(1, 3, 5)]
+}
+
 #' @S3method boundingbox character
 boundingbox.character<-function(x, ...) {
   if(!file.exists(x))
