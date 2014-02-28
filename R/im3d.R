@@ -670,27 +670,21 @@ clampmax<-function(xmin,xmax) {
   }
 }
 
-
-expand.grid.gjdens<-function(d){
-  # takes the x,y and z attributes of d and
-  # makes an n x 3 matrix containing the grid points
-  
-  # this is basically the guts of expand.grid
-  # but returns a nice clean matrix
-  
+#' Convert locations of im3d voxel grid into XYZ coordinates
+#' 
+#' @param d An \code{im3d} object
+#' @return Nx3 matrix of image coordindates
+#' @seealso expand.grid
+imexpand.grid<-function(d){
   dims=dim(d)
   orep <- prod(dims)
   nargs=3
   
-  if(all(c("x","y","z") %in% names(attributes(d)))){
-    args=attributes(d)[c("x","y","z")]
-  } else {
-    args=list()
-    boundingBox=matrix(getBoundingBox(d),nrow=2)
-    for(i in seq(dims)){
-      args[[i]]=seq(from=boundingBox[1,i],to=boundingBox[2,i],length=dims[i])
-    }
-  }
+  args=list()
+  bb=boundingbox(d)
+  for(i in seq(dims))
+    args[[i]]=seq(from=bb[1,i],to=bb[2,i],length=dims[i])
+  
   rep.fac <- 1
   rval=matrix(nrow=orep,ncol=length(dims))
   for (i in 1:nargs) {

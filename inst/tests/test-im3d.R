@@ -134,7 +134,7 @@ test_that("unmask",{
 })
 
 
-test_that("xyzpos and ijkpos",{
+test_that("xyzpos, ijkpos and imexpand.grid",{
   d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
   o=origin(d)
   expect_equal(ijkpos(d,o), c(1,1,1))
@@ -148,6 +148,11 @@ test_that("xyzpos and ijkpos",{
   set.seed(42)
   ijks=mapply(sample,dim(d),10)
   expect_equal(ijkpos(d,xyzpos(d,ijks)), ijks)
+  
+  # check that imexpand.grid coords match direct translation of all indices
+  # by xyzpos
+  all_ijks=arrayInd(seq.int(prod(dim(d))), dim(d))
+  expect_equal(imexpand.grid(d), xyzpos(d,all_ijks))
 })
 
 test_that("clampmax",{
