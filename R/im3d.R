@@ -301,9 +301,9 @@ dim.im3d<-function(x){
 #'   \code{\link{image.default}}.
 #' @examples
 #' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
-#' image(LHMask[,,10], asp=TRUE)
+#' image(imslice(LHMask,10), asp=TRUE)
 #' # useRaster is appreciably quicker in most cases
-#' image(LHMask[,,10], asp=TRUE, useRaster=TRUE)
+#' image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)
 image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
                        plotdims=NULL,flipdims='y', filled.contour=FALSE, asp=NA,
                        axes=FALSE, xlab=NULL, ylab=NULL,
