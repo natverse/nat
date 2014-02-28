@@ -1,3 +1,12 @@
+nat 1.3
+=======
+* implementation of new im3d image manipulations functions including image.im3d,
+  projection, unmask, imslice, imscalebar, imexpand.grid, flip, origin,
+  boundingbox<-.
+* see ?im3d, ?boundingbox, ?image3d.im3d, ?imscalebar and ?flip for details
+* fix reading of gzipped nrrds on windows
+* dev: fix nocran tests
+
 nat 1.2
 =======
 * Basic implementation of reading/writing NRRD format image data.
