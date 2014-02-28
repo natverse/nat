@@ -24,4 +24,12 @@ Note the sample locations stored in the x,y,z attributes
 will be updated appropriately. FIXME: Should we also update
 bounding box?
 }
+\seealso{
+Other im3d: \code{\link{boundingbox}},
+\code{\link{boundingbox.default}},
+\code{\link{boundingbox.im3d}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{im3d}}; \code{\link{projection}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
+}
 

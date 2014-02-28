@@ -457,6 +457,8 @@ flip.matrix=function(x, ...) flip.array(x, ...)
 #'   conveting 3d array to 2d matrix.
 #' @details Note the sample locations stored in the x,y,z attributes will be 
 #'   updated appropriately. FIXME: Should we also update bounding box?
+#' @export
+#' @family im3d
 imslice<-function(x, slice, slicedim='z', drop=TRUE){
   ndims=length(dim(x))
   if(is.character(slicedim)){
