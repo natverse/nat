@@ -328,16 +328,36 @@ image.gjdens<-function(x=NULL,y=NULL,
                  levels=levels,colors=col))
 }
 
-projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na.rm=T,mask=NULL,...){
+#' Make 2D (orthogonal) projection of 3d image data
+#' 
+#' @param a Array of image data (im3d format)
+#' @param projdim The image dimension down which to project
+#' @param projfun The function that collapses each vector of image data down to 
+#'   a single pixel. Can be a character vector naming a function or a function.
+#'   See details.
+#' @param na.rm Logical indicating whether to ignore \code{NA} values in the 
+#'   image data when calculating function results. default: \code{TRUE}
+#' @param mask A mask with the same extent as the image.
+#' @param ... Additional arguments for projfun
+#' @family im3d
+#' @details Note that \code{projfun} must have an argument \code{na.rm} like the
+#'   S3 Summary \code{\link{groupGeneric}} functions such as \code{sum, min} 
+#'   etc.
+#' @seealso \code{\link{groupGeneric}}
+#' @export
+#' @examples
+#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' image(projection(LHMask),asp=TRUE)
+projection<-function(a, projdim='z', projfun=c('integrate','mean','sum'), 
+                     na.rm=T, mask=NULL, ...){
   ndims=length(dim(a))
   if(is.character(projdim)){
     projdim=tolower(projdim)
     projdim=which(letters==projdim)-which(letters=="x")+1
   }
-  if(ndims<3) {
-    if(warn) warning("3D arrays only in zproj - no z axis in array")
-    return (a)
-  }
+  if(ndims<3)
+    stop("3D arrays only in zproj - no z axis in array")
+
   if(!is.null(mask)) a[mask==0]=NA
   
   if(is.character(projfun) && projdim==ndims) {
@@ -346,7 +366,7 @@ projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na
     # These functions are handled specially
     if( projfun=="sum" || projfun=="integrate" ){
       rval=rowSums(a,dims=ndims-1,na.rm=na.rm)
-    } else if(projfun=="mean"){ 		
+    } else if(projfun=="mean"){
       rval=rowMeans(a,dims=ndims-1,na.rm=na.rm)
     }
   } else {
@@ -358,7 +378,7 @@ projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na
     rval=apply(a,margins,projfun.fun,na.rm=na.rm,...)
   }
   if(is.character(projfun) && projfun=="integrate") {
-    dx=voxdim.gjdens(a)[projdim]
+    dx=voxdims(a)[projdim]
     rval=rval*dx
   }
   
@@ -368,6 +388,7 @@ projection<-function(a,projdim='z',projfun=c('integrate','mean','sum'),warn=F,na
   # ... and set the ProjDim to the correct letter
   projDimChar=letters[23+projdim]
   attr(rval,'ProjDim')=if(!is.na(projDimChar)) projDimChar else projdim
+  attr(rval,'OriginalBoundingBox')=attr(a,'BoundingBox')
   rval
 }
 
