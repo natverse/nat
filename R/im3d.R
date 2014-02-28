@@ -592,3 +592,12 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
   mostattributes(current)<-acurrent[attrsToCheck]
   NextMethod(target, current, tolerance=tolerance, ...)
 }
+
+unmask=function(x, mask, default=NA, attributes.=attributes(mask),
+                copyAttributes=TRUE){
+  rval=mask
+  if(copyAttributes) attributes(rval)=attributes.
+  rval[mask!=1]=default
+  rval[mask==1]=x
+  rval
+}
