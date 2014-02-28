@@ -283,11 +283,10 @@ dim.im3d<-function(x){
 #'   vector). Defaults to \code{c('x','y')}
 #' @param flipdims Which dimensions to flip (character vector). Defaults to 
 #'   flipping y.
-#' @param filled.contour Whether to use a \code{\link{filled.contour}} plot
+#' @param filled.contour Whether to use a \code{\link{filled.contour}} plot 
 #'   instead of a regular \code{\link{image}} plot.
 #' @param asp Whether to have a a square aspect ratio (logical, default: 
 #'   \code{FALSE})
-
 #' @param nlevels The number of colour levels in z
 #' @param levels The levels at which to break z values
 #' @param axes Whether to plot axes (default: \code{FALSE})
@@ -297,8 +296,21 @@ dim.im3d<-function(x){
 #' @param color.palette The colour palette from which \code{col} will be 
 #'   selected.
 #' @param \dots graphical parameters for \code{\link{plot}} or 
-#'   \code{\link{image}} may also be passed as arguments to this function. See
+#'   \code{\link{image}} may also be passed as arguments to this function. See 
 #'   \code{\link{image.default}}.
+#' @return A \code{list} with elements:
+#'   
+#'   \itemize{
+#'   
+#'   \item{zlim}{ The z (intensity limits)}
+#'   
+#'   \item{nlevels.actual}{ The actual number of plotted levels}
+#'   
+#'   \item{nlevels.orig}{ The requested number of plotted levels}
+#'   
+#'   \item{levels}{ The chosen levels}
+#'   
+#'   \item{colors}{ A character vector of colours} }
 #' @examples
 #' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(imslice(LHMask,10), asp=TRUE)

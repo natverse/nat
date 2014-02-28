@@ -61,6 +61,22 @@
   or \code{\link{image}} may also be passed as arguments to
   this function. See \code{\link{image.default}}.}
 }
+\value{
+A \code{list} with elements:
+
+\itemize{
+
+\item{zlim}{ The z (intensity limits)}
+
+\item{nlevels.actual}{ The actual number of plotted levels}
+
+\item{nlevels.orig}{ The requested number of plotted
+levels}
+
+\item{levels}{ The chosen levels}
+
+\item{colors}{ A character vector of colours} }
+}
 \description{
 Method to plot spatially calibrated image arrays
 }
