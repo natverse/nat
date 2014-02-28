@@ -9,8 +9,8 @@ imslice(x, slice, slicedim = "z", drop = TRUE)
 
   \item{slice}{Indices defining the slices to keep}
 
-  \item{slicedim}{Charaacter vector or integer defining
-  axis from which slices will be removed.}
+  \item{slicedim}{Character vector or integer defining axis
+  from which slices will be removed.}
 
   \item{drop}{Whether singleton dimensions will be dropped
   (default: TRUE) conveting 3d array to 2d matrix.}

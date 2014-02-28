@@ -514,9 +514,9 @@ flip.matrix=function(x, ...) flip.array(x, ...)
 #' Slice out a 3d subarray (or 2d matrix) from a 3d image array
 #' 
 #' @param x An im3d objet
+#' @param slice Indices defining the slices to keep
 #' @param slicedim Character vector or integer defining axis from which slices 
 #'   will be removed.
-#' @param slice Indices defining the slices to keep
 #' @param drop Whether singleton dimensions will be dropped (default: TRUE) 
 #'   conveting 3d array to 2d matrix.
 #' @details Note the sample locations stored in the x,y,z attributes will be 
