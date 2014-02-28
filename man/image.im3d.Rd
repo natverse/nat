@@ -59,9 +59,15 @@
 
   \item{\dots}{graphical parameters for \code{\link{plot}}
   or \code{\link{image}} may also be passed as arguments to
-  this function.}
+  this function. See \code{\link{image.default}}.}
 }
 \description{
 Method to plot spatially calibrated image arrays
+}
+\examples{
+LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+image(LHMask[,,10], asp=TRUE)
+# useRaster is appreciably quicker in most cases
+image(LHMask[,,10], asp=TRUE, useRaster=TRUE)
 }
 
