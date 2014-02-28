@@ -503,3 +503,47 @@ imslice<-function(x, slice, slicedim='z', drop=TRUE){
   attr(rval,'BoundingBox')=boundingbox(rval)
   rval
 }
+
+#' Check equality on data and key attributes of im3d objects
+#' 
+#' @inheritParams base::all.equal.default
+#' @param attrsToCheck Which attributes in im3d should always be checked
+#' @param attrsToCheckIfPresent Which attributes in im3d should be checked if
+#'   present
+#' @param CheckSharedAttrsOnly Logical whether to check shared attributes only 
+#'   (default: FALSE)
+#' @param ... additional arguments passed to \code{all.equal}
+#' @method all.equal im3d
+#' @export
+#' @seealso \code{\link{all.equal}}
+all.equal.im3d<-function(target, current, tolerance=1e-6,
+                         attrsToCheck=c("BoundingBox"), 
+                         attrsToCheckIfPresent=c('dim','names','dimnames','x','y','z'),
+                         CheckSharedAttrsOnly=FALSE, ...){
+  atarget=attributes(target)
+  acurrent=attributes(current)
+  if(length(attrsToCheck)==1 && is.na(attrsToCheck))
+    fieldsToCheck=names(atarget)
+  
+  if(!inherits(current,'im3d'))
+    return ("target and current must both be im3d objects")
+  attrsInCommon=intersect(names(target),names(current))
+  # figure out which of the optional fields to check are present
+  attrsToCheckIfPresent=intersect(attrsInCommon,attrsToCheckIfPresent)
+  # and add those to the fields to check 
+  attrsToCheck=unique(c(attrsToCheck,attrsToCheckIfPresent))
+  if(CheckSharedAttrsOnly){
+    attrsToCheck=intersect(attrsInCommon,attrsToCheck)
+  } else{
+    # check all core fields
+    missingfields=setdiff(attrsToCheck,names(acurrent))
+    if(length(missingfields)>0)
+      return(paste("Current missing attributes: ",missingfields))
+    missingfields=setdiff(attrsToCheck,names(atarget))
+    if(length(missingfields)>0)
+      return(paste("Target missing attributes: ",missingfields))
+  }
+  mostattributes(target)<-atarget[attrsToCheck]
+  mostattributes(current)<-acurrent[attrsToCheck]
+  NextMethod(target, current, tolerance=tolerance, ...)
+}
