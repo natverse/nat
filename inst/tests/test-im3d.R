@@ -106,6 +106,9 @@ test_that("set bounding box",{
   boundingbox(z2)<-z
   expect_equal(z, z2)
   
+  boundingbox(z2)<-NULL
+  expect_true(is.null(attr(z2,'BoundingBox')))
+  
   expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"),'im3d')
   z3=z
   boundingbox(z3)<-boundingbox(d)
