@@ -22,7 +22,10 @@ im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
                BoundingBox=NULL, bounds=NULL){
   if(!inherits(x,'im3d'))
     class(x)<-c("im3d",class(x))
-  
+  # add extra singleton dimension if we have 2d data
+  if(length(dims)==2) dims=c(dims,1)
+  # think about this - add 0 dimension if required
+  if(length(voxdims)==2) voxdims=c(voxdims,0)
   boundSpecs=!c(is.null(BoundingBox), is.null(bounds), is.null(voxdims))
   if(sum(boundSpecs)<1){
     return(x)
