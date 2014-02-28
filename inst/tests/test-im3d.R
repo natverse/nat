@@ -132,3 +132,20 @@ test_that("unmask",{
   # unmask a vector ofim3d contents by original im3d returns original
   expect_equal(unmask(as.vector(i),i),i)
 })
+
+
+test_that("xyzpos and ijkpos",{
+  d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
+  o=origin(d)
+  expect_equal(ijkpos(d,o), c(1,1,1))
+  expect_equal(xyzpos(d,c(1,1,1)), o)
+  
+  far_corner=boundingbox(d)[c(2,4,6)]
+  expect_equal(ijkpos(d,far_corner), dim(d))
+  expect_equal(xyzpos(d,dim(d)), far_corner)
+  
+  # round trip for 10 random points
+  set.seed(42)
+  ijks=mapply(sample,dim(d),10)
+  expect_equal(ijkpos(d,xyzpos(d,ijks)), ijks)
+})

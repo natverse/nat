@@ -708,23 +708,34 @@ expand.grid.gjdens<-function(d){
   return(rval)
 }
 
-xyzpos.gjdens<-function(d,ijk)
+#' Interconvert pixel and physical coordinates
+#' @description \code{xyzpos} converts pixel coordinates to physical coordinates
+#' @param d An \code{im3d} object defining a physical space
+#' @param ijk an Nx3 matrix of pixel coordinates (1-indexed)
+#' @rdname im3d-xyzijk
+#' @export
+xyzpos<-function(d, ijk)
 {
-  # return the xyz position for a pixel location (i,j,k)
-  # This will be the pixel centre based on the bounding box
-  # Note that ijk will be 1-indexed according to R's convention
-  
   # transpose if we have received a matrix (with 3 cols i,j,k) so that
-  # multiplication below doesn not need to be changed
+  # multiplication below does not need to be changed
   if(is.matrix(ijk)) ijk=t(ijk)
   if(any(ijk<1)) warning("expects 1-indexed pixel coordinate so pixels <1 make little sense")
-  dxyz=as.vector(voxdim.gjdens(d))
-  origin=getBoundingBox(d)[c(1,3,5)]
-  xyz=(ijk-1)*dxyz+origin
+  xyz=(ijk-1)*voxdims(d)+origin(d)
   if(is.matrix(xyz)) t(xyz) else xyz
 }
 
-ijkpos.gjdens<-function(d,xyz,roundToNearestPixel=TRUE)
+#' @description \code{ijkpos} converts physical coordinates to pixel coordinates
+#' @param xyz Nx3 matrix of physical coordinates
+#' @param roundToNearestPixel
+#' @return Nx3 matrix of physica l or pixel coordinates
+#' @rdname im3d-xyzijk
+#' @export
+#' @examples
+#' # make an emty im3d
+#' d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
+#' # check round trip for origin
+#' stopifnot(all.equal(ijkpos(d,xyzpos(d,c(1,1,1))), c(1,1,1)))
+ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
 {
   # return the ijk position for a physical location (x,y,z)
   # This will be the pixel centre based on the bounding box
@@ -733,13 +744,8 @@ ijkpos.gjdens<-function(d,xyz,roundToNearestPixel=TRUE)
   # transpose if we have received a matrix (with 3 cols x,y,z) so that
   # multiplication below doesn not need to be changed
   if(is.matrix(xyz)) xyz=t(xyz)
-  
-  dxyz=as.vector(voxdim.gjdens(d))
-  BB=getBoundingBox(d)
-  origin=BB[c(1,3,5)]
-  farcorner=BB[c(2,4,6)]
-  
-  ijk=(xyz-origin)/dxyz+1
+    
+  ijk=(xyz-origin(d))/voxdims(d)+1
   if(roundToNearestPixel) {
     ijk=round(ijk)
     if(any(ijk<1) || any(ijk>dim(d))) warning("pixel coordinates outside image data")
