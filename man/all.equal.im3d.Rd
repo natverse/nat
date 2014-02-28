@@ -3,8 +3,8 @@
 \title{Check equality on data and key attributes of im3d objects}
 \usage{
 \method{all.equal}{im3d}(target, current, tolerance = 1e-06,
-  attrsToCheck = c("BoundingBox"), attrsToCheckIfPresent = c("x", "y", "z"),
-  CheckSharedFieldsOnly = FALSE, ...)
+  attrsToCheck = c("BoundingBox"), attrsToCheckIfPresent = c("dim", "names",
+  "dimnames", "x", "y", "z"), CheckSharedAttrsOnly = FALSE, ...)
 }
 \arguments{
   \item{attrsToCheck}{Which attributes in im3d should
