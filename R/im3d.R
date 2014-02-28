@@ -593,11 +593,31 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
   NextMethod(target, current, tolerance=tolerance, ...)
 }
 
-unmask=function(x, mask, default=NA, attributes.=attributes(mask),
+#' Make a regular im3d image array contain values at locations defined by a mask
+#' 
+#' @details The values in x will be placed into a grid defined by the dimensions
+#'   of the \code{mask} in the order defined by the standard R linear 
+#'   subscripting of arrays (see e.g. \code{\link{arrayInd}}).
+#' @param x the data to place on a regular grid
+#' @param mask An im3d regular image array where non-zero voxels are the
+#'   selected element.
+#' @export
+#' @family im3d
+#' @examples
+#' # read in a mask
+#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd', package='nat'))
+#' # pick out all the non zero values
+#' inmask=LHMask[LHMask!=0]
+#' # fill the non-zero elements of the mask with a vector that iterates over the
+#' # values 0:9
+#' stripes=unmask(seq(inmask)%%10, LHMask)
+#' # make an image from one slice of that result array
+#' image(imslice(stripes,11), asp=TRUE)
+unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
                 copyAttributes=TRUE){
-  rval=mask
+  rval=vector(mode=mode(x),length=length(mask))
   if(copyAttributes) attributes(rval)=attributes.
-  rval[mask!=1]=default
-  rval[mask==1]=x
+  rval[mask==0]=default
+  rval[mask!=0]=x
   rval
 }
