@@ -95,6 +95,15 @@ test_that("can slice out subarray from image",{
   expect_equal(imslice(i, 1:2), i3)
 })
 
+test_that("can make projections",{
+  expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"), 'im3d')
+  expect_equal(dim(d),c(50,50,50))
+  
+  pd<-projection(d,projfun='sum')
+  sd=read.im3d("../testdata/nrrd/LHMask_sum.nrrd")
+  expect_equal(pd, sd)
+})
+
 test_that("set bounding box",{
   z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))
   
