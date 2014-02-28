@@ -606,8 +606,16 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
 #'   of the \code{mask} in the order defined by the standard R linear 
 #'   subscripting of arrays (see e.g. \code{\link{arrayInd}}).
 #' @param x the data to place on a regular grid
-#' @param mask An im3d regular image array where non-zero voxels are the
+#' @param mask An im3d regular image array where non-zero voxels are the 
 #'   selected element.
+#' @param default Value for regions outside the mask (default: NA)
+#' @param copyAttributes Whether to copy over attributes (including \code{dim})
+#'   from the mask to the returned object. default: \code{TRUE}
+#' @param attributes. Attributes to set on new
+#' @return A new \code{im3d} object with attributes/dimensions defined by 
+#'   \code{mask} and values from \code{x}. If \code{copyAttributes} is 
+#'   \code{FALSE}, then it will have mode of \code{x} and length of \code{mask} 
+#'   but no other attributes.
 #' @export
 #' @family im3d
 #' @examples

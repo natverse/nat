@@ -10,6 +10,22 @@ unmask(x, mask, default = NA, attributes. = attributes(mask),
 
   \item{mask}{An im3d regular image array where non-zero
   voxels are the selected element.}
+
+  \item{default}{Value for regions outside the mask
+  (default: NA)}
+
+  \item{copyAttributes}{Whether to copy over attributes
+  (including \code{dim}) from the mask to the returned
+  object. default: \code{TRUE}}
+
+  \item{attributes.}{Attributes to set on new}
+}
+\value{
+A new \code{im3d} object with attributes/dimensions defined
+by \code{mask} and values from \code{x}. If
+\code{copyAttributes} is \code{FALSE}, then it will have
+mode of \code{x} and length of \code{mask} but no other
+attributes.
 }
 \description{
 Make a regular im3d image array contain values at locations
