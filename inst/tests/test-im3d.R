@@ -126,3 +126,9 @@ test_that("set bounding box",{
   boundingbox(z4)<-boundingbox("../testdata/nrrd/LHMask.nrrd")
   expect_equal(boundingbox(z4), boundingbox(d))
 })
+
+test_that("unmask",{
+  i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
+  # unmask a vector ofim3d contents by original im3d returns original
+  expect_equal(unmask(as.vector(i),i),i)
+})
