@@ -673,8 +673,13 @@ clampmax<-function(xmin,xmax) {
 #' Convert locations of im3d voxel grid into XYZ coordinates
 #' 
 #' @param d An \code{im3d} object
+#' @family im3d
 #' @return Nx3 matrix of image coordindates
 #' @seealso expand.grid
+#' @export
+#' @examples
+#' d=im3d(,dim=c(2,3,2),origin=c(10,20,30),voxdims=c(1,2,3))
+#' imexpand.grid(d)
 imexpand.grid<-function(d){
   dims=dim(d)
   orep <- prod(dims)
@@ -709,6 +714,7 @@ imexpand.grid<-function(d){
 #' @param ijk an Nx3 matrix of pixel coordinates (1-indexed)
 #' @name im3d-coords
 #' @aliases im3d-coords xyzpos
+#' @family im3d
 #' @export
 xyzpos<-function(d, ijk)
 {
