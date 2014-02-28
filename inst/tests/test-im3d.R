@@ -90,6 +90,9 @@ test_that("can slice out subarray from image",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
   i2=im3d(array(1:4,c(1,2,2)),voxdims=c(2,3,4))
   expect_equal(imslice(i, 1:2, drop=FALSE), i2)
+  
+  i4=im3d(array(1:6,2:3),dims=c(1,2,3),voxdims=c(2,3,4))
+  expect_equal(imslice(i, 1, 'x'), i4)
 
   i3=im3d(array(1:4,c(2,2)),voxdims=c(2,3,4))
   expect_equal(imslice(i, 1:2), i3)

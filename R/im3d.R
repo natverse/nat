@@ -514,9 +514,9 @@ flip.matrix=function(x, ...) flip.array(x, ...)
 #' Slice out a 3d subarray (or 2d matrix) from a 3d image array
 #' 
 #' @param x An im3d objet
-#' @param slice Indices defining the slices to keep
-#' @param slicedim Charaacter vector or integer defining axis from which slices 
+#' @param slicedim Character vector or integer defining axis from which slices 
 #'   will be removed.
+#' @param slice Indices defining the slices to keep
 #' @param drop Whether singleton dimensions will be dropped (default: TRUE) 
 #'   conveting 3d array to 2d matrix.
 #' @details Note the sample locations stored in the x,y,z attributes will be 
@@ -542,7 +542,16 @@ imslice<-function(x, slice, slicedim='z', drop=TRUE){
   class(rval)=class(x)
   # note that use of origin + voxdims to set bounding box will cope with cases
   # where there is now a singleton dimension
-  rval=im3d(rval, origin=origin(x), voxdims=voxdims(x))
+  # need to signal singleton dimension explicitly when it has been dropped
+  newdims=dim(rval)
+  if(length(newdims)<2) stop("newdims unexpectedly <2")
+  if(length(newdims)==2){
+    # need to insert an extra singleton dimension so that bounding box
+    # is set correctly if slicedim was 1 or 2 (i.e. x or y)
+    if(slicedim==1) newdims=c(1, newdims)
+    else if(slicedim==2) newdims=c(newdims[1], 1, newdims[2])
+  }
+  rval=im3d(rval, dims=newdims, origin=origin(x), voxdims=voxdims(x))
   
   sliceDimChar=letters[23+slicedim]
   if(!is.na(sliceDimChar)){
