@@ -690,10 +690,21 @@ clampmax<-function(xmin,xmax) {
   }
 }
 
-makeScaleBar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="Density",
+#' Make a scalebar to accompany an image.im3d plot
+#' 
+#' @param levels The levels at which z values were cut \strong{or} a list 
+#'   returned by \code{\link{imaged.im3d}}
+#' @param col The plotted colours for each level
+#' @param nlevels The number of colour levels (inferred from levels when 
+#'   \code{NULL})
+#' @param zlim The limits of the plotted z (intensity) values of the image
+#' @param horizontal Whether to make a horizontal or vertical scalebar (default:
+#'   TRUE)
+#' @param lab The (single) axis label for the scale bar (default:
+#'   \code{Density})
+#' @param mar The margins for ths plot
+imscalebar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="Density",
                        mar=c(4,2,2,2)+0.1,border=NULL, ...){
-  
-  # allow 
   if(!is.null(zlim) ){
     nc <- length(col)
     if ( (any(!is.finite(zlim)) || diff(zlim) < 0)) 
@@ -702,9 +713,6 @@ makeScaleBar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="De
       zlim <- if (zlim[1] == 0) 
         c(-1, 1)
     else zlim[1] + c(-0.4, 0.4) * abs(zlim[1])
-    #z <- (z - zlim[1])/diff(zlim)
-    #zi <- floor((nc - 1e-05) * z + 1e-07)
-    #zi[zi < 0 | zi >= nc] <- NA
     levels=seq(from=zlim[1],to=zlim[2],len=nc+1)
   }
   # allow scaleinfo objects to be passed directly
@@ -713,13 +721,15 @@ makeScaleBar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="De
     levels=levels$levels
   }
   if(horizontal){
-    par(mar=mar)
+    op=par(mar=mar)
+    on.exit(par(op))
     plot(range(levels), c(0,1), type="n",
          xaxs="i", yaxs="i", xlab=lab, ylab="", yaxt="n", ...)
     rect(levels[-length(levels)], 0, border=border,
          levels[-1], col = col  , 1)
   } else {
-    par(mar=mar[c(2,1,3,4)])
+    op=par(mar=mar[c(2,1,3,4)])
+    on.exit(par(op))
     plot(c(0,1), range(levels), type="n",
          xaxs="i", yaxs="i", xlab="", ylab=lab, xaxt="n", ...)
     rect(0, levels[-length(levels)], border=border,
