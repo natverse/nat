@@ -1,5 +1,6 @@
-\name{xyzpos}
+\name{im3d-coords}
 \alias{ijkpos}
+\alias{im3d-coords}
 \alias{xyzpos}
 \title{Interconvert pixel and physical coordinates}
 \usage{
@@ -15,7 +16,9 @@ ijkpos(d, xyz, roundToNearestPixel = TRUE)
 
   \item{xyz}{Nx3 matrix of physical coordinates}
 
-  \item{roundToNearestPixel}{}
+  \item{roundToNearestPixel}{Whether to round calculated
+  pixel coordinates to nearest integer value (i.e. nearest
+  pixel). default: \code{TRUE}}
 }
 \value{
 Nx3 matrix of physica l or pixel coordinates

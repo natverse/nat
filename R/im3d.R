@@ -707,7 +707,8 @@ imexpand.grid<-function(d){
 #' @description \code{xyzpos} converts pixel coordinates to physical coordinates
 #' @param d An \code{im3d} object defining a physical space
 #' @param ijk an Nx3 matrix of pixel coordinates (1-indexed)
-#' @rdname im3d-xyzijk
+#' @name im3d-coords
+#' @aliases im3d-coords xyzpos
 #' @export
 xyzpos<-function(d, ijk)
 {
@@ -721,9 +722,11 @@ xyzpos<-function(d, ijk)
 
 #' @description \code{ijkpos} converts physical coordinates to pixel coordinates
 #' @param xyz Nx3 matrix of physical coordinates
-#' @param roundToNearestPixel
+#' @param roundToNearestPixel Whether to round calculated pixel coordinates to
+#'   nearest integer value (i.e. nearest pixel). default: \code{TRUE}
 #' @return Nx3 matrix of physica l or pixel coordinates
-#' @rdname im3d-xyzijk
+#' @rdname im3d-coords
+#' @aliases im3d-coords ijkpos
 #' @export
 #' @examples
 #' # make an emty im3d
