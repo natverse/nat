@@ -36,12 +36,14 @@ Other im3d: \code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}}; \code{\link{im3d-io}},
 \code{\link{read.im3d}}, \code{\link{write.im3d}};
-\code{\link{im3d}}
+\code{\link{im3d}}; \code{\link{imslice}};
+\code{\link{projection}}
 
 Other im3d: \code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}}; \code{\link{im3d-io}},
 \code{\link{read.im3d}}, \code{\link{write.im3d}};
-\code{\link{im3d}}
+\code{\link{im3d}}; \code{\link{imslice}};
+\code{\link{projection}}
 }
 

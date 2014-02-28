@@ -45,6 +45,7 @@ boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 \seealso{
 Other im3d: \code{\link{im3d-io}}, \code{\link{read.im3d}},
 \code{\link{write.im3d}}; \code{\link{im3d}};
+\code{\link{imslice}}; \code{\link{projection}};
 \code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 

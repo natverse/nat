@@ -352,12 +352,12 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #'   image data when calculating function results. default: \code{TRUE}
 #' @param mask A mask with the same extent as the image.
 #' @param ... Additional arguments for projfun
-#' @family im3d
 #' @details Note that \code{projfun} must have an argument \code{na.rm} like the
 #'   S3 Summary \code{\link{groupGeneric}} functions such as \code{sum, min} 
 #'   etc.
 #' @seealso \code{\link{groupGeneric}}
 #' @export
+#' @family im3d
 #' @examples
 #' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(projection(LHMask),asp=TRUE)
