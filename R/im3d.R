@@ -326,10 +326,11 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
   } else if (all( c("x","y")%in%names(attributes(z)) )){
     x=attr(z,"x")
     y=attr(z,"y")
+  } else {
+    # If we still haven't set anything, then use default
+    x=seq(0,1,len=nrow(z))
+    y=seq(0,1,len=ncol(z))
   }
-  # If we still haven't set anything, then use default
-  if(is.null(x)) x=seq(0,1,len=nrow(z))
-  if(is.null(y)) y=seq(0,1,len=ncol(z))
   if(is.null(plotdims)) plotdims=c("x","y")
   # handle flipdims
   numbers=1:3;names(numbers)=letters[24:26]
