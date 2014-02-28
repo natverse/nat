@@ -235,6 +235,20 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   zapsmall(x)
 }
 
+#' @description Set the bounding box of an im3d object
+#' @rdname boundingbox
+#' @param value The object which will provide the new boundingbox information.
+#'   This can be be either an im3d object with a boundingbox or a vector or
+#'   matrix defined according to \code{boundingbox.default}.
+#' @export
+`boundingbox<-`<-function(x, value) UseMethod("boundingbox<-")
+
+#' @S3method boundingbox<- default
+`boundingbox<-.default`<-function(x, value){
+  attr(x,'BoundingBox')<-boundingbox(value)
+  x
+}
+
 #' @S3method dim im3d
 dim.im3d<-function(x){
   dimx=NextMethod(generic='dim')
@@ -501,9 +515,12 @@ imslice<-function(x, slice, slicedim='z', drop=TRUE){
     rval=x[,slice,, drop=drop]
   else if(slicedim==1)
     rval=x[slice,,, drop=drop]
-  attributeNamesToCopy=setdiff(names(attributes(x)),names(attributes(rval)))
-  attributes(rval)=c(attributes(rval),attributes(x)[attributeNamesToCopy])
-  # ... and set the SliceDim to the correct letter
+  
+  class(rval)=class(x)
+  # note that use of origin + voxdims to set bounding box will cope with cases
+  # where there is now a singleton dimension
+  rval=im3d(rval, origin=origin(x), voxdims=voxdims(x))
+  
   sliceDimChar=letters[23+slicedim]
   if(!is.na(sliceDimChar)){
     attr(rval,'SliceDim')=sliceDimChar
@@ -511,10 +528,7 @@ imslice<-function(x, slice, slicedim='z', drop=TRUE){
   } else{
     attr(rval,'SliceDim')=slicedim
   }
-  voxdims=voxdims(x)
-  attr(rval,'OriginalBoundingBox')=attr(rval,'BoundingBox')
-  attr(rval,'BoundingBox')=NULL
-  attr(rval,'BoundingBox')=boundingbox(rval)
+  attr(rval,'OriginalBoundingBox')=attr(x,'BoundingBox')
   rval
 }
 

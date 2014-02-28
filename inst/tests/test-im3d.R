@@ -91,3 +91,23 @@ test_that("can slice out subarray from image",{
   i2=im3d(array(1:4,c(1,2,2)),voxdims=c(2,3,4))
   expect_equivalent(imslice(i,1:2),i2)
 })
+
+test_that("set bounding box",{
+  z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))
+  
+  z1=z
+  boundingbox(z1)<-boundingbox(z)
+  expect_equal(z, z1)
+  # set bounding box with an im3d object
+  z2=z
+  boundingbox(z2)<-z
+  expect_equal(z, z2)
+  
+  expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"),'im3d')
+  z3=z
+  boundingbox(z3)<-boundingbox(d)
+  expect_equal(boundingbox(z3), boundingbox(d))
+  z4=z
+  boundingbox(z4)<-boundingbox("../testdata/nrrd/LHMask.nrrd")
+  expect_equal(boundingbox(z4), boundingbox(d))
+})
