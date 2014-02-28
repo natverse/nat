@@ -180,6 +180,10 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   else if(!is.null(b<-attr(x,"bounds"))) {
     boundingbox(b, dims, ...)
   } else {
+    # Use the locations of sample points. Note there is one special case we need
+    # to consider, when dims=1 in any axis When this is the case the BoundingBox
+    # found by this method will not match that determined by making the
+    # calculationg using e.g. origin+voxdims.
     bb=sapply(c('x','y','z'),
                   function(d) {ll=attr(x,d);c(ll[1],ll[length(ll)])}, USE.NAMES=F)
     boundingbox(bb, dims)

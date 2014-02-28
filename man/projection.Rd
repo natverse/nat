@@ -29,6 +29,14 @@ Make 2D (orthogonal) projection of 3d image data
 Note that \code{projfun} must have an argument \code{na.rm}
 like the S3 Summary \code{\link{groupGeneric}} functions
 such as \code{sum, min} etc.
+
+Note also that the BoundingBox of a 2d projection is not
+well-defined for the axis along which the projection was
+made. Presently both the evaluation location and the
+BoundingBox extremes are set to 0 after a projection is
+made but FIXME this is not completely satisfactory. Perhaps
+defining this to be NA or the midpoint of the orginal axis
+would be better justified.
 }
 \examples{
 LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
@@ -39,9 +47,11 @@ image(projection(LHMask),asp=TRUE)
 
 Other im3d: \code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
-\code{\link{boundingbox.im3d}}; \code{\link{im3d-io}},
+\code{\link{boundingbox.im3d}},
+\code{\link{boundingbox<-}}; \code{\link{im3d-io}},
 \code{\link{read.im3d}}, \code{\link{write.im3d}};
 \code{\link{im3d}}; \code{\link{imslice}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+\code{\link{origin}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
 }
 

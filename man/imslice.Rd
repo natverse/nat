@@ -27,9 +27,11 @@ bounding box?
 \seealso{
 Other im3d: \code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
-\code{\link{boundingbox.im3d}}; \code{\link{im3d-io}},
+\code{\link{boundingbox.im3d}},
+\code{\link{boundingbox<-}}; \code{\link{im3d-io}},
 \code{\link{read.im3d}}, \code{\link{write.im3d}};
-\code{\link{im3d}}; \code{\link{projection}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+\code{\link{im3d}}; \code{\link{origin}};
+\code{\link{projection}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
 }
 
