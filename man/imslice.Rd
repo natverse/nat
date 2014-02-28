@@ -2,7 +2,7 @@
 \alias{imslice}
 \title{Slice out a 3d subarray (or 2d matrix) from a 3d image array}
 \usage{
-imslice(x, slice, slicedim = "z", drop = TRUE, ...)
+imslice(x, slice, slicedim = "z", drop = TRUE)
 }
 \arguments{
   \item{x}{An im3d objet}
