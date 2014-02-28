@@ -636,3 +636,80 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
   rval[mask!=0]=x
   rval
 }
+
+expand.grid.gjdens<-function(d){
+  # takes the x,y and z attributes of d and
+  # makes an n x 3 matrix containing the grid points
+  
+  # this is basically the guts of expand.grid
+  # but returns a nice clean matrix
+  
+  dims=dim(d)
+  orep <- prod(dims)
+  nargs=3
+  
+  if(all(c("x","y","z") %in% names(attributes(d)))){
+    args=attributes(d)[c("x","y","z")]
+  } else {
+    args=list()
+    boundingBox=matrix(getBoundingBox(d),nrow=2)
+    for(i in seq(dims)){
+      args[[i]]=seq(from=boundingBox[1,i],to=boundingBox[2,i],length=dims[i])
+    }
+  }
+  rep.fac <- 1
+  rval=matrix(nrow=orep,ncol=length(dims))
+  for (i in 1:nargs) {
+    x <- args[[i]]
+    nx <- length(x)
+    orep <- orep/nx
+    x <- x[rep.int(rep.int(seq(length = nx), rep.int(rep.fac, 
+                                                     nx)), orep)]
+    if (!is.factor(x) && is.character(x)){
+      cat("converting to factor")
+      x <- factor(x, levels = unique(x))
+    }
+    rval[,i]=x
+    rep.fac <- rep.fac * nx
+  }
+  return(rval)
+}
+
+xyzpos.gjdens<-function(d,ijk)
+{
+  # return the xyz position for a pixel location (i,j,k)
+  # This will be the pixel centre based on the bounding box
+  # Note that ijk will be 1-indexed according to R's convention
+  
+  # transpose if we have received a matrix (with 3 cols i,j,k) so that
+  # multiplication below doesn not need to be changed
+  if(is.matrix(ijk)) ijk=t(ijk)
+  if(any(ijk<1)) warning("expects 1-indexed pixel coordinate so pixels <1 make little sense")
+  dxyz=as.vector(voxdim.gjdens(d))
+  origin=getBoundingBox(d)[c(1,3,5)]
+  xyz=(ijk-1)*dxyz+origin
+  if(is.matrix(xyz)) t(xyz) else xyz
+}
+
+ijkpos.gjdens<-function(d,xyz,roundToNearestPixel=TRUE)
+{
+  # return the ijk position for a physical location (x,y,z)
+  # This will be the pixel centre based on the bounding box
+  # Note that ijk will be 1-indexed according to R's convention
+  
+  # transpose if we have received a matrix (with 3 cols x,y,z) so that
+  # multiplication below doesn not need to be changed
+  if(is.matrix(xyz)) xyz=t(xyz)
+  
+  dxyz=as.vector(voxdim.gjdens(d))
+  BB=getBoundingBox(d)
+  origin=BB[c(1,3,5)]
+  farcorner=BB[c(2,4,6)]
+  
+  ijk=(xyz-origin)/dxyz+1
+  if(roundToNearestPixel) {
+    ijk=round(ijk)
+    if(any(ijk<1) || any(ijk>dim(d))) warning("pixel coordinates outside image data")
+  }
+  if(is.matrix(ijk)) t(ijk) else ijk
+}
