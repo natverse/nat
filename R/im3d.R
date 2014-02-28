@@ -144,7 +144,6 @@ voxdims.im3d<-function(x, ...){
 #' @param dims The number of voxels in each dimension when x is a BoundingBox 
 #'   matrix.
 #' @rdname voxdims
-#' @family im3d
 voxdims.default<-function(x, dims, ...){
   if(length(x)){
     corrected_dims=pmax(dims-1,1)

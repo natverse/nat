@@ -53,10 +53,14 @@ position of the origin.
 boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 }
 \seealso{
-Other im3d: \code{\link{im3d-io}}, \code{\link{read.im3d}},
+Other im3d: \code{\link{ijkpos}}, \code{\link{ijkpos}},
+\code{\link{im3d-coords}}, \code{\link{im3d-coords}},
+\code{\link{im3d-coords}}, \code{\link{xyzpos}};
+\code{\link{im3d-io}}, \code{\link{read.im3d}},
 \code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{projection}}; \code{\link{voxdims}},
+\code{\link{imexpand.grid}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{projection}};
+\code{\link{unmask}}; \code{\link{voxdims}},
 \code{\link{voxdims.default}}
 }
 

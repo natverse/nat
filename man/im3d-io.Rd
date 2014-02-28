@@ -47,9 +47,13 @@ arbitrary formats remains a TODO item.
 Other im3d: \code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
-\code{\link{boundingbox<-}}; \code{\link{im3d}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{projection}}; \code{\link{voxdims}},
+\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
+\code{\link{ijkpos}}, \code{\link{im3d-coords}},
+\code{\link{im3d-coords}}, \code{\link{im3d-coords}},
+\code{\link{xyzpos}}; \code{\link{im3d}};
+\code{\link{imexpand.grid}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{projection}};
+\code{\link{unmask}}; \code{\link{voxdims}},
 \code{\link{voxdims.default}}
 }
 

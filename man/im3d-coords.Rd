@@ -36,4 +36,15 @@ d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
 # check round trip for origin
 stopifnot(all.equal(ijkpos(d,xyzpos(d,c(1,1,1))), c(1,1,1)))
 }
+\seealso{
+Other im3d: \code{\link{boundingbox}},
+\code{\link{boundingbox.default}},
+\code{\link{boundingbox.im3d}},
+\code{\link{boundingbox<-}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{im3d}}; \code{\link{imexpand.grid}};
+\code{\link{imslice}}; \code{\link{origin}};
+\code{\link{projection}}; \code{\link{unmask}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
+}
 
