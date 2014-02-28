@@ -149,3 +149,11 @@ test_that("xyzpos and ijkpos",{
   ijks=mapply(sample,dim(d),10)
   expect_equal(ijkpos(d,xyzpos(d,ijks)), ijks)
 })
+
+test_that("clampmax",{
+  LHMask=read.im3d('../testdata/nrrd/LHMask.nrrd')
+  d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
+  p=projection(d,projfun=clampmax(0,10))
+  expect_true(max(p, na.rm=T)<=10)
+  expect_true(min(p, na.rm=T)>=0)
+})

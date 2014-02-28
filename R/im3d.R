@@ -642,6 +642,7 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
 #' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
 #'   of length 2.
 #' @return A function with signature \code{f(x, ..., na.rm)}
+#' @export
 #' @examples
 #' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
 #' d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
