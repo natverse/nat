@@ -1,6 +1,6 @@
 \name{unmask}
 \alias{unmask}
-\title{Make a regular im3d image array contain values at locations defined by a mask}
+\title{Make im3d image array containing values at locations defined by a mask}
 \usage{
 unmask(x, mask, default = NA, attributes. = attributes(mask),
   copyAttributes = TRUE)
@@ -8,8 +8,8 @@ unmask(x, mask, default = NA, attributes. = attributes(mask),
 \arguments{
   \item{x}{the data to place on a regular grid}
 
-  \item{mask}{An im3d regular image array where non-zero
-  voxels are the selected element.}
+  \item{mask}{An \code{im3d} regular image array where
+  non-zero voxels are the selected element.}
 
   \item{default}{Value for regions outside the mask
   (default: NA)}
@@ -18,7 +18,8 @@ unmask(x, mask, default = NA, attributes. = attributes(mask),
   (including \code{dim}) from the mask to the returned
   object. default: \code{TRUE}}
 
-  \item{attributes.}{Attributes to set on new}
+  \item{attributes.}{Attributes to set on new object.
+  Defaults to attributes of \code{mask}}
 }
 \value{
 A new \code{im3d} object with attributes/dimensions defined
@@ -28,7 +29,7 @@ mode of \code{x} and length of \code{mask} but no other
 attributes.
 }
 \description{
-Make a regular im3d image array contain values at locations
+Make im3d image array containing values at locations
 defined by a mask
 }
 \details{
