@@ -53,8 +53,8 @@ neurons.
   \code{\link{read.im3d}} and \code{\link{write.im3d}},
   which are currently implemented for the amiramesh and
   nrrd file formats. Spatial information can be queried
-  with \code{\link{voxdims}} and \code{\link{boundingbox}}
-  methods.
+  with \code{\link{voxdims}}, \code{\link{boundingbox}} and
+  \code{\link{ijkpos}, \link{xyzpos}} methods.
 }
 
 \section{Package Options}{

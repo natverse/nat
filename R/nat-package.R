@@ -34,8 +34,8 @@
 #'   to handle image/density data on a regular grid. I/O is handled by 
 #'   \code{\link{read.im3d}} and \code{\link{write.im3d}}, which are currently 
 #'   implemented for the amiramesh and nrrd file formats. Spatial information 
-#'   can be queried with \code{\link{voxdims}} and \code{\link{boundingbox}} 
-#'   methods.
+#'   can be queried with \code{\link{voxdims}}, \code{\link{boundingbox}} and
+#'   \code{\link{ijkpos}, \link{xyzpos}} methods.
 #'   
 #' @section Package Options: The following options can be set to specify default
 #'   behaviour.
