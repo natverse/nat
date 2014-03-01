@@ -68,3 +68,100 @@ test_that("dim, voxdims and boundingbox",{
   # ... and again
   expect_equal(nrrdraw, amraw)
 })
+
+test_that("can flip arrays",{
+  m=matrix(1:4, ncol=2, nrow=2, byrow=TRUE)
+  # NB the orientation is determined by matching x to 
+  mf1=rbind(c(3,4),c(1,2))
+  mf2=rbind(c(2,1),c(4,3))
+  expect_equal(flip(m), mf1)
+  expect_equal(flip(m,flipdim=2), mf2)
+  expect_equal(flip(m,flipdim='y'), mf2)
+  expect_error(flip(m,flipdim='z'))
+  
+  a6=array(1:6,1:3)
+  # singleton x dimension so flip has no effect
+  expect_equal(flip(a6), a6)
+  expect_equal(flip(a6, 2), array(c(2,1,4,3,6,5),1:3))
+  expect_equal(flip(a6, 3), array(c(5,6,3,4,1,2),1:3))
+})
+
+test_that("can slice out subarray from image",{
+  i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
+  i2=im3d(array(1:4,c(1,2,2)),voxdims=c(2,3,4))
+  expect_equal(imslice(i, 1:2, drop=FALSE), i2)
+  
+  i4=im3d(array(1:6,2:3),dims=c(1,2,3),voxdims=c(2,3,4))
+  expect_equal(imslice(i, 1, 'x'), i4)
+
+  i3=im3d(array(1:4,c(2,2)),voxdims=c(2,3,4))
+  expect_equal(imslice(i, 1:2), i3)
+})
+
+test_that("can make projections",{
+  expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"), 'im3d')
+  expect_equal(dim(d),c(50,50,50))
+  
+  pd<-projection(d,projfun='sum')
+  sd=read.im3d("../testdata/nrrd/LHMask_sum.nrrd")
+  expect_equal(pd, sd)
+})
+
+test_that("set bounding box",{
+  z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))
+  
+  z1=z
+  boundingbox(z1)<-boundingbox(z)
+  expect_equal(z, z1)
+  # set bounding box with an im3d object
+  z2=z
+  boundingbox(z2)<-z
+  expect_equal(z, z2)
+  
+  boundingbox(z2)<-NULL
+  expect_true(is.null(attr(z2,'BoundingBox')))
+  
+  expect_is(d<-read.im3d("../testdata/nrrd/LHMask.nrrd"),'im3d')
+  z3=z
+  boundingbox(z3)<-boundingbox(d)
+  expect_equal(boundingbox(z3), boundingbox(d))
+  z4=z
+  boundingbox(z4)<-boundingbox("../testdata/nrrd/LHMask.nrrd")
+  expect_equal(boundingbox(z4), boundingbox(d))
+})
+
+test_that("unmask",{
+  i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
+  # unmask a vector ofim3d contents by original im3d returns original
+  expect_equal(unmask(as.vector(i),i),i)
+})
+
+
+test_that("xyzpos, ijkpos and imexpand.grid",{
+  d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
+  o=origin(d)
+  expect_equal(ijkpos(d,o), c(1,1,1))
+  expect_equal(xyzpos(d,c(1,1,1)), o)
+  
+  far_corner=boundingbox(d)[c(2,4,6)]
+  expect_equal(ijkpos(d,far_corner), dim(d))
+  expect_equal(xyzpos(d,dim(d)), far_corner)
+  
+  # round trip for 10 random points
+  set.seed(42)
+  ijks=mapply(sample,dim(d),10)
+  expect_equal(ijkpos(d,xyzpos(d,ijks)), ijks)
+  
+  # check that imexpand.grid coords match direct translation of all indices
+  # by xyzpos
+  all_ijks=arrayInd(seq.int(prod(dim(d))), dim(d))
+  expect_equal(imexpand.grid(d), xyzpos(d,all_ijks))
+})
+
+test_that("clampmax",{
+  LHMask=read.im3d('../testdata/nrrd/LHMask.nrrd')
+  d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
+  p=projection(d,projfun=clampmax(0,10))
+  expect_true(max(p, na.rm=T)<=10)
+  expect_true(min(p, na.rm=T)>=0)
+})

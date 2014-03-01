@@ -2,6 +2,7 @@
 \alias{boundingbox}
 \alias{boundingbox.default}
 \alias{boundingbox.im3d}
+\alias{boundingbox<-}
 \title{Get the bounding box of an im3d volume or other compatible object}
 \usage{
 boundingbox(x, ...)
@@ -10,6 +11,8 @@ boundingbox(x, ...)
 
 \method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"),
   ...)
+
+boundingbox(x) <- value
 }
 \arguments{
   \item{x}{A vector or matrix specifying a bounding box, an
@@ -19,6 +22,11 @@ boundingbox(x, ...)
   \item{input}{Whether \code{x} defines the boundingbox or
   bounds of the image (see details).}
 
+  \item{value}{The object which will provide the new
+  boundingbox information.  This can be be either an im3d
+  object with a boundingbox or a vector or matrix defined
+  according to \code{boundingbox.default}.}
+
   \item{...}{Additional arguments for methods}
 
   \item{dims}{The number of voxels in each dimension when x
@@ -27,6 +35,8 @@ boundingbox(x, ...)
 \description{
 Get the bounding box of an im3d volume or other compatible
 object
+
+Set the bounding box of an im3d object
 }
 \details{
 The bounding box is defined as the position of the voxels
@@ -43,8 +53,14 @@ position of the origin.
 boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 }
 \seealso{
-Other im3d: \code{\link{im3d-io}}, \code{\link{read.im3d}},
+Other im3d: \code{\link{ijkpos}}, \code{\link{ijkpos}},
+\code{\link{im3d-coords}}, \code{\link{im3d-coords}},
+\code{\link{im3d-coords}}, \code{\link{xyzpos}};
+\code{\link{im3d-io}}, \code{\link{read.im3d}},
 \code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+\code{\link{imexpand.grid}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{projection}};
+\code{\link{unmask}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
 }
 
