@@ -693,16 +693,28 @@ clampmax<-function(xmin,xmax) {
 #' Make a scalebar to accompany an image.im3d plot
 #' 
 #' @param levels The levels at which z values were cut \strong{or} a list 
-#'   returned by \code{\link{imaged.im3d}}
+#'   returned by \code{\link{image.im3d}}
 #' @param col The plotted colours for each level
 #' @param nlevels The number of colour levels (inferred from levels when 
 #'   \code{NULL})
 #' @param zlim The limits of the plotted z (intensity) values of the image
 #' @param horizontal Whether to make a horizontal or vertical scalebar (default:
 #'   TRUE)
-#' @param lab The (single) axis label for the scale bar (default:
+#' @param lab The (single) axis label for the scale bar (default: 
 #'   \code{Density})
 #' @param mar The margins for ths plot
+#' @param border Color for rectangle border (see \code{\link{rect}}'s 
+#'   \code{border} argument for details).
+#' @param \dots Additional arguments for \code{plot}
+#' @importFrom graphics rect
+#' @export
+#' @examples
+#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' op=par()
+#' layout(matrix(c(1, 2), ncol = 2L), widths = c(1, 0.2))
+#' rval=image(imslice(LHMask,10), asp=TRUE)
+#' imscalebar(rval)
+#' par(op)
 imscalebar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="Density",
                        mar=c(4,2,2,2)+0.1,border=NULL, ...){
   if(!is.null(zlim) ){

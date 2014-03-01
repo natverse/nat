@@ -7,7 +7,7 @@ imscalebar(levels, col, nlevels = NULL, zlim = NULL, horizontal = TRUE,
 }
 \arguments{
   \item{levels}{The levels at which z values were cut
-  \strong{or} a list returned by \code{\link{imaged.im3d}}}
+  \strong{or} a list returned by \code{\link{image.im3d}}}
 
   \item{col}{The plotted colours for each level}
 
@@ -24,8 +24,22 @@ imscalebar(levels, col, nlevels = NULL, zlim = NULL, horizontal = TRUE,
   (default: \code{Density})}
 
   \item{mar}{The margins for ths plot}
+
+  \item{border}{Color for rectangle border (see
+  \code{\link{rect}}'s \code{border} argument for
+  details).}
+
+  \item{\dots}{Additional arguments for \code{plot}}
 }
 \description{
 Make a scalebar to accompany an image.im3d plot
+}
+\examples{
+LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+op=par()
+layout(matrix(c(1, 2), ncol = 2L), widths = c(1, 0.2))
+rval=image(imslice(LHMask,10), asp=TRUE)
+imscalebar(rval)
+par(op)
 }
 
