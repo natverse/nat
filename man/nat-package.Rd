@@ -37,11 +37,10 @@ neurons.
   \code{neuron} or \code{dotprops} objects can be
   transformed from e.g. sample to template brain space
   using affine or non-rigid registrations, typically
-  calculated with the open source
-  \href{www.nitrc.org/projects/cmtk/}{CMTK} package (see
-  ?\link{cmtk} for installation details). The function
-  \code{\link{xform}} has methods to deal with a variety of
-  types of interest.
+  calculated with the open source CMTK package available at
+  \url{www.nitrc.org/projects/cmtk/}, see ?\link{cmtk} for
+  installation details. The function \code{\link{xform}}
+  has methods to deal with a variety of types of interest.
 }
 
 \section{3d Image Data}{

@@ -7,11 +7,11 @@
 #'   
 #'   \itemize{
 #'   
-#'   \item{\code{\link{neuron}}}{ objects contain one or more connected trees
+#'   \item{\code{\link{neuron}}}{ objects contain one or more connected trees 
 #'   that make up a neuron}
 #'   
-#'   \item{\code{\link{dotprops}}}{ objects each contain a single neuron
-#'   represented as points and tangent vectors in which the connectivity
+#'   \item{\code{\link{dotprops}}}{ objects each contain a single neuron 
+#'   represented as points and tangent vectors in which the connectivity 
 #'   information has been discarded}
 #'   
 #'   }
@@ -23,10 +23,10 @@
 #'   
 #' @section Transformations: \code{neuron} or \code{dotprops} objects can be 
 #'   transformed from e.g. sample to template brain space using affine or 
-#'   non-rigid registrations, typically calculated with the open source 
-#'   \href{www.nitrc.org/projects/cmtk/}{CMTK} package (see ?\link{cmtk} for 
-#'   installation details). The function \code{\link{xform}} has methods to deal
-#'   with a variety of types of interest.
+#'   non-rigid registrations, typically calculated with the open source CMTK
+#'   package available at \url{www.nitrc.org/projects/cmtk/}, see ?\link{cmtk}
+#'   for installation details. The function \code{\link{xform}} has methods to
+#'   deal with a variety of types of interest.
 #'   
 #' @section 3d Image Data: In addition to data types defined by unstructured 
 #'   collections of 3d vertices such as \code{\link{neuron}, \link{dotprops}} 
@@ -34,7 +34,7 @@
 #'   to handle image/density data on a regular grid. I/O is handled by 
 #'   \code{\link{read.im3d}} and \code{\link{write.im3d}}, which are currently 
 #'   implemented for the amiramesh and nrrd file formats. Spatial information 
-#'   can be queried with \code{\link{voxdims}}, \code{\link{boundingbox}} and
+#'   can be queried with \code{\link{voxdims}}, \code{\link{boundingbox}} and 
 #'   \code{\link{ijkpos}, \link{xyzpos}} methods.
 #'   
 #' @section Package Options: The following options can be set to specify default
