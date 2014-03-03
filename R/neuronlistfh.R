@@ -84,7 +84,6 @@
 #' @name neuronlistfh
 #' @family neuronlistfh
 #' @family neuronlist
-#' @import filehash
 #' @seealso \code{\link[filehash]{filehash-class}}
 #' @examples
 #' \dontrun{
@@ -106,6 +105,8 @@
 #'   rapid object lookup by name or an integer or an integer definining a 
 #'   threhsold number of objects when this will happen (see Implementation 
 #'   details).
+#' @importClassesFrom filehash filehash filehashRDS
+#' @importMethodsFrom filehash [[
 #' @importFrom methods is
 #' @return a \code{neuronlistfh} object which is a character \code{vector} with 
 #'   classes \code{neuronlistfh, neuronlist} and attributes \code{db, df}. See 
