@@ -414,3 +414,43 @@ subset.neuronlist<-function(x, subset, filterfun,
   
   switch(rval,neuronlist=x[r],names=r,data.frame=df[r,])
 }
+
+#' Find names of neurons within a 3d selection box (usually drawn in rgl window)
+#' 
+#' @details Uses \code{\link{subset.neuronlist}}, so can work on dotprops or 
+#'   neuron lists.
+#' @param sel3dfun A \code{\link{select3d}} style function to indicate if points
+#'   are within region
+#' @param indices Names of neurons to search (defaults to all neurons in list)
+#' @param db \code{neuronlist} to search. Can also be a character vector naming
+#'   the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.
+#' @param threshold More than this many points must be present in region
+#' @return Character vector of names of selected neurons
+#' @export
+#' @seealso \code{\link{select3d}, \link{subset.neuronlist}}
+#' @examples
+#' \dontrun{
+#' plot3d(kcs20)
+#' # draw a 3d selection e.g. around tip of vertical lobe when ready
+#' find.neuron(db=kcs20)
+#' # would return 9 neurons
+#' # make a standalone selection function
+#' vertical_lobe=select3d()
+#' find.neuron(vertical_lobe, db=kcs20)
+#' # use base::Negate function to invert the selection function 
+#' # i.e. choose neurons that do not overlap the selection region
+#' find.neuron(Negate(vertical_lobe), db=kcs20)
+#' }
+find.neuron<-function(sel3dfun=select3d(), indices=names(db), 
+                      db=getOption("nat.default.neuronlist"), threshold=0){
+  
+  if(is.null(db))
+    stop("Please pass a neuronlist in argument db or set options",
+         "(nat.default.neuronlist='myfavneuronlist'). See ?nat for details.")
+  if(is.character(db)) db=get(db, mode='list')
+  selfun=function(x){
+    pointsinside=sel3dfun(xyzmatrix(x))
+    sum(pointsinside, na.rm=T)>threshold
+  }
+  subset(db, subset=indices, filterfun=selfun, rval='names')
+}

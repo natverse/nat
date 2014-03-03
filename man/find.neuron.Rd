@@ -1,0 +1,50 @@
+\name{find.neuron}
+\alias{find.neuron}
+\title{Find names of neurons within a 3d selection box (usually drawn in rgl window)}
+\usage{
+find.neuron(sel3dfun = select3d(), indices = names(db),
+  db = getOption("nat.default.neuronlist"), threshold = 0)
+}
+\arguments{
+  \item{sel3dfun}{A \code{\link{select3d}} style function
+  to indicate if points are within region}
+
+  \item{indices}{Names of neurons to search (defaults to
+  all neurons in list)}
+
+  \item{db}{\code{neuronlist} to search. Can also be a
+  character vector naming the neuronlist. Defaults to
+  \code{options('nat.default.neuronlist')}.}
+
+  \item{threshold}{More than this many points must be
+  present in region}
+}
+\value{
+Character vector of names of selected neurons
+}
+\description{
+Find names of neurons within a 3d selection box (usually
+drawn in rgl window)
+}
+\details{
+Uses \code{\link{subset.neuronlist}}, so can work on
+dotprops or neuron lists.
+}
+\examples{
+\dontrun{
+plot3d(kcs20)
+# draw a 3d selection e.g. around tip of vertical lobe when ready
+find.neuron(db=kcs20)
+# would return 9 neurons
+# make a standalone selection function
+vertical_lobe=select3d()
+find.neuron(vertical_lobe, db=kcs20)
+# use base::Negate function to invert the selection function
+# i.e. choose neurons that do not overlap the selection region
+find.neuron(Negate(vertical_lobe), db=kcs20)
+}
+}
+\seealso{
+\code{\link{select3d}, \link{subset.neuronlist}}
+}
+
