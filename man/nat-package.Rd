@@ -30,7 +30,11 @@ neurons.
   \code{dotprops} objects along with an attached dataframe
   of metadata that can be used to colour or subset the
   neurons during plotting (see
-  \code{\link{plot3d.neuronlist}}).
+  \code{\link{plot3d.neuronlist}} and
+  \code{\link{subset.neuronlist}}).  Interactive 3D
+  selection of neurons in a neuronlist is also possible
+  using \code{\link{find.neuron}} (which makes use of rgl's
+  \code{\link{select3d}} function.
 }
 
 \section{Transformations}{
