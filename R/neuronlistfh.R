@@ -127,7 +127,7 @@ neuronlistfh<-function(db, df, keyfilemap, hashmap=1000L){
   if(is.numeric(hashmap)) hashmap = length(keyfilemap)>=hashmap
   
   if(hashmap){
-    attr(db,'hashmap')=list2env(as.list(keyfilemap))
+    attr(nlfh,'hashmap')=list2env(as.list(keyfilemap))
   }
   
   if(!missing(df) && !is.null(df)) {
@@ -217,7 +217,7 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   # we need to translate the incoming key to the md5 hash
   # if a hashmap is available, that will be faster for lookup by names
   if(is.character(i) && !is.null(hm<-attr(x,'hashmap'))){
-    i = hm$i
+    i = get(i,envir=hm)
   } else i = attr(x,'keyfilemap')[i]
 
   if(is.null(attr(x,'remote'))){
