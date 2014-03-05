@@ -24,6 +24,13 @@ test_that("can read hxsurf object", {
   rgl.close()
 })
 
+test_that("can save and re-read hxsurf object", {
+  surffile <- tempfile()
+  write.hxsurf(surf, surffile)
+  newsurf <- read.hxsurf(surffile)
+  expect_equal(newsurf, surf)
+})
+
 test_that("can xform hxsurf object", {
   #' tests both mirror, xform and xyzmatrix methods all in one go
   expect_equal(mirror(mirror(surf,mirrorAxisSize=100),mirrorAxisSize=100),surf)
