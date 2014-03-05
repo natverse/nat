@@ -53,3 +53,30 @@ test_that("Can create a neuronlistfh with a hashmap",{
   expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
   expect_equal(sapply(kcs20fh,length),sapply(kcs20,length))
 })
+
+test_that("We can create a neuronlistfh without rewriting objects",{
+  # make a neuronlistfh
+  fhpath=tempfile(pattern='kcs20fh')
+  fhdatapath=file.path(fhpath,'data')
+  dir.create(fhdatapath,recursive=TRUE)
+  on.exit(unlink(fhpath,recursive=TRUE))
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=fhdatapath),'neuronlistfh')
+  
+  # then make a new copy after removing one file
+  kfm=attr(kcs20fh,'keyfilemap')
+  unlink(file.path(fhdatapath,kfm[1]))
+  # check we are missing one file
+  expect_equal(length(dir(fhdatapath)),length(kfm)-1)
+  
+  # that we don't replace it when WriteObjects='no'
+  expect_is(kcs20fh2<-as.neuronlistfh(kcs20,dir=fhdatapath,WriteObjects='no'),
+            'neuronlistfh')
+  expect_equal(length(dir(fhdatapath)),length(kfm)-1)
+  
+  expect_is(kcs20fh3<-as.neuronlistfh(kcs20,dir=fhdatapath,WriteObjects='missing'),
+            'neuronlistfh')
+  # and that we put it back when WriteObjects='missing'
+  expect_equal(length(dir(fhdatapath)),length(kfm))
+  
+  expect_equal(sapply(kcs20fh3,length),sapply(kcs20,length))
+})

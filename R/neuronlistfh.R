@@ -184,18 +184,34 @@ as.neuronlistfh<-function(x, df, ...)
 #' @importFrom digest digest
 #' @rdname neuronlistfh
 as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
-                                     dbClass=c('RDS','RDS2'), remote=NULL, ...){
+                                     dbClass=c('RDS','RDS2'), remote=NULL, 
+                                     WriteObjects=c("yes",'no','missing'), ...){
   if(is.null(names(x))){
     warning("giving default names to elements of x")
     names(x)=seq(x)
   }
+  WriteObjects=match.arg(WriteObjects)
+  if(WriteObjects!='yes' && dbClass!='RDS')
+    stop("Must always write objects when dbClass!='RDS'")
   dbClass=match.arg(dbClass)
   if(dbClass!='RDS' && !is.null(remote))
     stop("remote download only implemented for RDS class at the moment")
   # md5 by default. Should we use something else?
   keyfilemap=sapply(x,digest)
   names(x)=keyfilemap
-  db=filehash::dumpList(x, dbName=dir, type=dbClass)
+  if(WriteObjects=='yes'){
+    db=filehash::dumpList(x, dbName=dir, type=dbClass)
+  } else {
+    if(!dbCreate(dir)) stop("Error creating database at location: ",dir)
+    db=dbInit(dir, type=dbClass)
+    if(WriteObjects=='missing') {
+      # figure out which objects we need to dump
+      objects_present=dir(dir)
+      objects_missing=setdiff(keyfilemap,objects_present)
+      if(length(objects_missing))
+        db=filehash::dumpList(x[objects_missing], dbName=dir, type=dbClass)
+    }
+  }
   
   res <- neuronlistfh(db, df, keyfilemap, ...)
   attr(res, 'remote') <- remote
