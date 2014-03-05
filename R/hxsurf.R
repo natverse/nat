@@ -151,7 +151,7 @@ write.hxsurf <- function(surf, filename) {
   for (i in 1:nrow(regionData)) {
     cat("        ", regionData[i, 1], " {\n", sep="", file=fc)
     cat("            Id ", i+1, ",\n", sep="", file=fc)
-    cat("            Color ", paste(format(col2rgb(regionData[i, 2])/255, digits=5), collapse=" "), "\n", sep="", file=fc)
+    cat("            Color ", paste(zapsmall(col2rgb(regionData[i, 2])/255), collapse=" "), "\n", sep="", file=fc)
     cat("        }\n", file=fc)
   }
   cat("    }\n", file=fc)
