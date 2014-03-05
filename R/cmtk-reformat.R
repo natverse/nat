@@ -10,7 +10,8 @@
 #' @export
 #' @rdname cmtk.reformatx
 cmtk.targetvolume<-function(target){
-  if(is.character(target) && is.amiramesh(target)){
+  if(is.character(target) && !is.nrrd(target,TrustSuffix=TRUE) &&
+       isTRUE(try(is.amiramesh(target), silent=TRUE))){
     target=read.im3d(target,ReadData=FALSE)
   }
   if(is.character(target)){
@@ -31,11 +32,11 @@ cmtk.targetvolume<-function(target){
     #           Define target grid for reformating as Nx,Ny,Nz:dX,dY,dZ[:Ox,Oy,Oz]
     #           (dims:pixel:origin)
     # TODO: Double check definition of origin
-    target=paste("--target-grid",shQuote(paste(
+    target=paste("--target-grid",paste(
       paste(dim(target),collapse=","),
       paste(voxdims(target),collapse=","),
       paste(origin(target),collapse=","),sep=":")
-    ))
+    )
   } else {
     stop("Unrecognised target specification")
   }
