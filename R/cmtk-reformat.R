@@ -1,12 +1,14 @@
-# Defines a target volume for a CMTK reformatx operation
-# 
-# @details if the character vector specifies an amiramesh file, it will be
-#   converted to a bare \code{im3d} object and then to an appropriate
-#   '--target-grid' specification.
-# @param target A character vector specifying a file, an \code{im3d} object or a
-#   6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
-# @return a character vector specifying the full cmtk reformatx '--target' or 
-#   '--target-grid' argument
+#' Defines a target volume for a CMTK reformatx operation
+#' 
+#' @details if the character vector specifies an amiramesh file, it will be
+#'   converted to a bare \code{im3d} object and then to an appropriate
+#'   '--target-grid' specification.
+#' @param target A character vector specifying a file, an \code{im3d} object or a
+#'   6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
+#' @return a character vector specifying the full cmtk reformatx '--target' or 
+#'   '--target-grid' argument
+#' @export
+#' @rdname cmtk.reformatx
 cmtk.targetvolume<-function(target){
   if(is.character(target) && is.amiramesh(target)){
     target=read.im3d(target,ReadData=FALSE)
