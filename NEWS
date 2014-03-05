@@ -1,3 +1,9 @@
+nat 1.3.2
+=========
+* fix bug in find.neuron for neuronlistfh objects
+* fix bug in neuronlistfh constructor (wasn't adding hashmap) and 
+  [[.neuronlistfh (was not searching properly for objects when using hashmap).
+
 nat 1.3.1
 =========
 * add find.neuron for interactive selection of neurons in 3d.
