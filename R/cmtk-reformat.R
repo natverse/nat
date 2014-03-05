@@ -42,11 +42,31 @@ cmtk.targetvolume<-function(target){
   target
 }
 
-ReformatImage<-function(floating,target,registrations,output, 
-                        dryrun=FALSE, Verbose=TRUE, MakeLock=TRUE, OverWrite=c("no","update","yes"),
-                        filesToIgnoreModTimes=NULL,
-                        reformatxPath=file.path(cmtk.bindir(check=TRUE),"reformatx"),reformatoptions="-v --pad-out 0",
-                        Push=FALSE,...){
+#' Refomat an image with a CMTK registration using the reformatx tool
+#' 
+#' @param floating The floating image to be reformatted
+#' @param registrations One or more CMTK format registrations on disk
+#' @param output The output image (defaults to target-floating.nrrd)
+#' @param dryrun Just print command
+#' @param Verbose Whether to be verbose about updates
+#' @param MakeLock Whether to use a lock file to allow simple parallelisation 
+#'   (see \code{makelock})
+#' @param OverWrite Whether to OverWrite an existing output file. One of 
+#'   c("no","update","yes"). When OverWrite='update' 
+#'   \code{\link{RunCmdForNewerInput}} is used to determine if the output is 
+#'   older than any of the input files.
+#' @param filesToIgnoreModTimes Input files whose modification time should not 
+#'   be checked when determining if new output is required.
+#' @param ... additional arguments passed to CMTK \code{reformatx} after 
+#'   processing by \code{\link{cmtk.call}}.
+#' @importFrom nat.utils makelock removelock RunCmdForNewerInput
+#' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock},
+#'   \link{RunCmdForNewerInput}}
+#' @export
+cmtk.reformatx<-function(floating, target, registrations, output, 
+                         reformatoptions="-v --pad-out 0", dryrun=FALSE,
+                         Verbose=TRUE, MakeLock=TRUE,
+                         OverWrite=c("no","update","yes"), filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
   if(missing(output)){
     output=file.path(dirname(floating),paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
@@ -56,7 +76,7 @@ ReformatImage<-function(floating,target,registrations,output,
   if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
   else OverWrite=match.arg(OverWrite)
   
-  targetspec=.makeReformatxTargetSpecification(target)
+  targetspec=cmtk.targetvolume(target)
   allinputs=c(floating,registrations)
   # if the target was a plain file add it to the inputs
   if(substring(targetspec,1,2)!="--") allinputs=c(allinputs,target)
@@ -77,9 +97,11 @@ ReformatImage<-function(floating,target,registrations,output,
     } else if(Verbose) cat("Overwriting",output,"because OverWrite=\"yes\"\n")
   } else OverWrite="yes" # just for the purpose of the runtime checks below 
   
-  cmd=paste(shQuote(reformatxPath), reformatoptions,
-            "-o",shQuote(output),ifelse(Push,"--push",""),"--floating",shQuote(floating),targetspec,
-            paste(shQuote(registrations),collapse=" "))
+  cmd=cmtk.call('reformatx',reformatoptions,
+                outfile=shQuote(output),
+                floating=shQuote(floating),
+                FINAL.ARGS=c(targetspec,
+                             paste(shQuote(registrations),collapse=" ")))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
   if(dryrun) PrintCommand<-TRUE
