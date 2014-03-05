@@ -1,0 +1,60 @@
+\name{cmtk.call}
+\alias{cmtk.call}
+\title{Utility function to create a call to a cmtk commandline tool}
+\usage{
+cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL)
+}
+\arguments{
+  \item{tool}{Name of the CMTK tool}
+
+  \item{PROCESSED.ARGS}{Character vector of arguments that
+  have already been processed by the callee. Placed
+  immediately after cmtk tool.}
+
+  \item{...}{Additional named arguments to be processed.
+  See details.}
+
+  \item{FINAL.ARGS}{Character vector of arguments that have
+  already been processed by the callee. Placed at the end
+  of the call after optional arguments.}
+}
+\value{
+a string of the form \code{"<tool> <PROCESSED.ARGS> <...>
+<FINAL.ARGS>"}
+}
+\description{
+Utility function to create a call to a cmtk commandline
+tool
+}
+\details{
+arguments in ... will be processed as follows:
+
+\itemize{
+
+\item{argument names}{ will be converted from
+\code{arg.name} to \code{--arg-name}}
+
+\item{logical vectors}{ (which must be of length 1) will be
+passed on as \code{--arg-name}}
+
+\item{character vectors}{ (which must be of length 1) will
+be passed on as \code{--arg-name arg} i.e. quoting is left
+up to callee.}
+
+\item{numeric vectors}{ will be collapsed with commas if of
+length 1 and then passed on unquoted e.g.
+\code{target.offset=c(1,2,3)} will result in
+\code{--target-offset 1,2,3}}
+
+}
+}
+\examples{
+\dontrun{
+cmtk.call("reformatx",'--outfile=out.nrrd', floating='floating.nrrd',
+  mask=TRUE, target.offset=c(1,2,3), FINAL.ARGS=c('target.nrrd','reg.list'))
+}
+}
+\seealso{
+\code{\link{cmtk.bindir}}
+}
+
