@@ -52,8 +52,8 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   d$Vertices=read.table(filename,skip=dataStart,nrows=nVertices,col.names=c("X","Y","Z"),colClasses=rep("numeric",3))
   d$Regions <- list()
   
-  # round to 3dp to avoid any surprises (like v small -ve numbers)
-  d$Vertices=round(d$Vertices,digits=3)
+  # round to avoid any surprises (like v small -ve numbers)
+  d$Vertices=zapsmall(d$Vertices)
   d$Vertices$PointNo=seq(nrow(d$Vertices))
   if(Verbose) cat("Finished processing Vertices\n")
   
