@@ -202,8 +202,8 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   if(WriteObjects=='yes'){
     db=filehash::dumpList(x, dbName=dir, type=dbClass)
   } else {
-    if(!dbCreate(dir)) stop("Error creating database at location: ",dir)
-    db=dbInit(dir, type=dbClass)
+    if(!filehash::dbCreate(dir)) stop("Error creating database at location: ",dir)
+    db=filehash::dbInit(dir, type=dbClass)
     if(WriteObjects=='missing') {
       # figure out which objects we need to dump
       objects_present=dir(dir)
