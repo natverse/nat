@@ -48,6 +48,7 @@ test_that("Can create a neuronlistfh with a hashmap",{
   fhpath=tempfile(pattern='kcs20fh')
   on.exit(unlink(fhpath,recursive=TRUE))
   expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=fhpath,hashmap=TRUE),'neuronlistfh')
+  expect_is(attr(kcs20fh,'hashmap'),'environment')
   
   expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
   expect_equal(sapply(kcs20fh,length),sapply(kcs20,length))
