@@ -207,6 +207,8 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
       } else if(is.numeric(arg)){
         arg=paste(1:3,collapse=',')
         cmd=paste(cmd,cmtkarg,arg)
+      } else if(is.null(arg)){
+        # just ifgnore null arguemnts
       } else {
         stop("unrecognised argument type")
       }

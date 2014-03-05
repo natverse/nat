@@ -69,6 +69,10 @@ test_that("cmtk.call",{
   reformatx=shQuote(file.path(cmtk.bindir(check=TRUE),'reformatx'))
   expect_equal(cmtk.call('reformatx',PROCESSED.ARGS='--outfile myfile.nrrd'),
                paste(reformatx,'--outfile myfile.nrrd'))
+  
+  expect_equal(cmtk.call('reformatx','--outfile myfile.nrrd', mask=NULL),
+               paste(reformatx,'--outfile myfile.nrrd'))
+  
   expect_equal(
     cmtk.call('reformatx', PROCESSED.ARGS='--outfile myfile.nrrd', mask=TRUE),
     paste(reformatx,'--outfile myfile.nrrd','--mask'))
