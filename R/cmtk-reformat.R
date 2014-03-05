@@ -117,6 +117,6 @@ cmtk.reformatx<-function(floating, target, registrations, output,
       removelock(lockfile)
     } else if(Verbose) cat("Unable to make lockfile:",lockfile,"\n")
   }
-  if(PrintCommand) cat("cmd:\n",cmd,"\n") 
+  if(Verbose||dryrun && PrintCommand) cat("cmd:\n",cmd,"\n") 
   return(TRUE)
 }
