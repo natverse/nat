@@ -50,7 +50,7 @@ cmtk.targetvolume<-function(target){
 #' @param output The output image (defaults to target-floating.nrrd)
 #' @param dryrun Just print command
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
-#'   update checks.
+#'   update checks. Sets \code{reformatx} \code{--verbose} option.
 #' @param MakeLock Whether to use a lock file to allow simple parallelisation 
 #'   (see \code{makelock})
 #' @param OverWrite Whether to OverWrite an existing output file. One of 
@@ -66,7 +66,7 @@ cmtk.targetvolume<-function(target){
 #'   \link{RunCmdForNewerInput}}
 #' @export
 cmtk.reformatx<-function(floating, target, registrations, output, 
-                         reformatoptions="-v --pad-out 0", dryrun=FALSE,
+                         dryrun=FALSE,
                          Verbose=TRUE, MakeLock=TRUE,
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
@@ -100,11 +100,9 @@ cmtk.reformatx<-function(floating, target, registrations, output,
     } else if(Verbose) cat("Overwriting",output,"because OverWrite=\"yes\"\n")
   } else OverWrite="yes" # just for the purpose of the runtime checks below 
   
-  cmd=cmtk.call('reformatx',reformatoptions,
-                outfile=shQuote(output),
-                floating=shQuote(floating),
-                FINAL.ARGS=c(targetspec,
-                             paste(shQuote(registrations),collapse=" ")))
+  cmd=cmtk.call('reformatx',if(Verbose) "--verbose" else NULL,
+                outfile=shQuote(output),floating=shQuote(floating),
+                FINAL.ARGS=c(targetspec,paste(shQuote(registrations),collapse=" ")))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
   if(dryrun) PrintCommand<-TRUE

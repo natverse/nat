@@ -5,9 +5,8 @@
 \usage{
 cmtk.targetvolume(target)
 
-cmtk.reformatx(floating, target, registrations, output,
-  reformatoptions = "-v --pad-out 0", dryrun = FALSE, Verbose = TRUE,
-  MakeLock = TRUE, OverWrite = c("no", "update", "yes"),
+cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
+  Verbose = TRUE, MakeLock = TRUE, OverWrite = c("no", "update", "yes"),
   filesToIgnoreModTimes = NULL, ...)
 }
 \arguments{
@@ -25,7 +24,9 @@ cmtk.reformatx(floating, target, registrations, output,
 
   \item{dryrun}{Just print command}
 
-  \item{Verbose}{Whether to be verbose about updates}
+  \item{Verbose}{Whether to show cmtk status messages and
+  be verbose about file update checks. Sets
+  \code{reformatx} \code{--verbose} option.}
 
   \item{MakeLock}{Whether to use a lock file to allow
   simple parallelisation (see \code{makelock})}
