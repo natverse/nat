@@ -49,7 +49,8 @@ cmtk.targetvolume<-function(target){
 #' @param registrations One or more CMTK format registrations on disk
 #' @param output The output image (defaults to target-floating.nrrd)
 #' @param dryrun Just print command
-#' @param Verbose Whether to be verbose about updates
+#' @param Verbose Whether to show cmtk status messages and be verbose about file
+#'   update checks.
 #' @param MakeLock Whether to use a lock file to allow simple parallelisation 
 #'   (see \code{makelock})
 #' @param OverWrite Whether to OverWrite an existing output file. One of 
@@ -61,13 +62,14 @@ cmtk.targetvolume<-function(target){
 #' @param ... additional arguments passed to CMTK \code{reformatx} after 
 #'   processing by \code{\link{cmtk.call}}.
 #' @importFrom nat.utils makelock removelock RunCmdForNewerInput
-#' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock},
+#' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
 #' @export
 cmtk.reformatx<-function(floating, target, registrations, output, 
                          reformatoptions="-v --pad-out 0", dryrun=FALSE,
                          Verbose=TRUE, MakeLock=TRUE,
-                         OverWrite=c("no","update","yes"), filesToIgnoreModTimes=NULL, ...){
+                         OverWrite=c("no","update","yes"),
+                         filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
   if(missing(output)){
     output=file.path(dirname(floating),paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
@@ -107,12 +109,12 @@ cmtk.reformatx<-function(floating, target, registrations, output,
   PrintCommand<-FALSE
   if(dryrun) PrintCommand<-TRUE
   if(!dryrun) {
-    if(!MakeLock) system(cmd,...)
+    if(!MakeLock) system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
     else if(makelock(lockfile)){
       if(OverWrite=="update")
         PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose,...)
       else {
-        PrintCommand<-TRUE;system(cmd,...)
+        PrintCommand<-TRUE;system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
       }
       removelock(lockfile)
     } else if(Verbose) cat("Unable to make lockfile:",lockfile,"\n")
