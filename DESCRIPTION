@@ -30,7 +30,8 @@ Imports:
     igraph,
     methods,
     filehash,
-    digest
+    digest,
+    nat.utils
 Suggests:
     testthat
 License: GPL-3

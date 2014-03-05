@@ -65,4 +65,25 @@ test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
   expect_equal(cmtk.dof2mat(reg),m_base,tolerance=1e-4)
 })
 
+test_that("cmtk.call",{
+  reformatx=shQuote(file.path(cmtk.bindir(check=TRUE),'reformatx'))
+  expect_equal(cmtk.call('reformatx',PROCESSED.ARGS='--outfile myfile.nrrd'),
+               paste(reformatx,'--outfile myfile.nrrd'))
+  
+  expect_equal(cmtk.call('reformatx','--outfile myfile.nrrd', mask=NULL),
+               paste(reformatx,'--outfile myfile.nrrd'))
+  
+  expect_equal(
+    cmtk.call('reformatx', PROCESSED.ARGS='--outfile myfile.nrrd', mask=TRUE),
+    paste(reformatx,'--outfile myfile.nrrd','--mask'))
+  
+})
+
+
 }
+
+test_that('cmtk.arg.names works',{
+  expect_equal(cmtk.arg.name('mask'),'--mask')
+  expect_equal(cmtk.arg.name('target.grid'),'--target-grid')
+  expect_equal(cmtk.arg.name('target.offset.pixels'),'--target-offset-pixels')
+})

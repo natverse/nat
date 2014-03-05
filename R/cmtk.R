@@ -151,3 +151,77 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
     options(nat.cmtk.bindir=bindir)
   bindir
 }
+
+#' Utility function to create a call to a cmtk commandline tool
+#' 
+#' @details arguments in ... will be processed as follows:
+#'   
+#'   \itemize{
+#'   
+#'   \item{argument names}{ will be converted from \code{arg.name} to 
+#'   \code{--arg-name}}
+#'   
+#'   \item{logical vectors}{ (which must be of length 1) will be passed on as 
+#'   \code{--arg-name}}
+#'   
+#'   \item{character vectors}{ (which must be of length 1) will be passed on as
+#'   \code{--arg-name arg} i.e. quoting is left up to callee.}
+#'   
+#'   \item{numeric vectors}{ will be collapsed with commas if of length 1 and 
+#'   then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will result in 
+#'   \code{--target-offset 1,2,3}}
+#'   
+#'   }
+#' @param tool Name of the CMTK tool
+#' @param PROCESSED.ARGS Character vector of arguments that have already been 
+#'   processed by the callee. Placed immediately after cmtk tool.
+#' @param ... Additional named arguments to be processed. See details.
+#' @param FINAL.ARGS Character vector of arguments that have already been 
+#'   processed by the callee. Placed at the end of the call after optional 
+#'   arguments.
+#' @return a string of the form \code{"<tool> <PROCESSED.ARGS> <...> 
+#'   <FINAL.ARGS>"}
+#' @seealso \code{\link{cmtk.bindir}}
+#' @export
+#' @examples
+#' \dontrun{
+#' cmtk.call("reformatx",'--outfile=out.nrrd', floating='floating.nrrd',
+#'   mask=TRUE, target.offset=c(1,2,3), FINAL.ARGS=c('target.nrrd','reg.list'))
+#' }
+cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
+  cmd=shQuote(file.path(cmtk.bindir(check=TRUE),tool))
+  if(!is.null(PROCESSED.ARGS)){
+    cmd=paste(cmd, paste(PROCESSED.ARGS, collapse=' '))
+  }
+  
+  if(!missing(...)){
+    xargs=pairlist(...)
+    for(n in names(xargs)){
+      arg=xargs[[n]]
+      cmtkarg=cmtk.arg.name(n)
+      if(is.character(arg)){
+        if(length(arg)!=1) stop("character arguments must have length 1")
+        cmd=paste(cmd,cmtkarg,arg)
+      } else if(is.logical(arg)){
+        cmd=paste(cmd,cmtkarg)
+      } else if(is.numeric(arg)){
+        arg=paste(1:3,collapse=',')
+        cmd=paste(cmd,cmtkarg,arg)
+      } else if(is.null(arg)){
+        # just ifgnore null arguemnts
+      } else {
+        stop("unrecognised argument type")
+      }
+    }
+  }
+  
+  if(!is.null(FINAL.ARGS)){
+    cmd=paste(cmd, paste(FINAL.ARGS, collapse=' '))
+  }
+  
+  cmd
+}
+
+# utility function to make a cmtk argument name from a valid R argument
+# by converting periods to dashes
+cmtk.arg.name<-function(x) paste("--",gsub("\\.",'-',x),sep='')
