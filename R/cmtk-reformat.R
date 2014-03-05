@@ -39,3 +39,59 @@ cmtk.targetvolume<-function(target){
   }
   target
 }
+
+ReformatImage<-function(floating,target,registrations,output, 
+                        dryrun=FALSE, Verbose=TRUE, MakeLock=TRUE, OverWrite=c("no","update","yes"),
+                        filesToIgnoreModTimes=NULL,
+                        reformatxPath=file.path(cmtk.bindir(check=TRUE),"reformatx"),reformatoptions="-v --pad-out 0",
+                        Push=FALSE,...){
+  # TODO improve default ouput file name
+  if(missing(output)){
+    output=file.path(dirname(floating),paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
+  } else if(isTRUE(file.info(output)$isdir)){
+    output=file.path(output,paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
+  }
+  if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
+  else OverWrite=match.arg(OverWrite)
+  
+  targetspec=.makeReformatxTargetSpecification(target)
+  allinputs=c(floating,registrations)
+  # if the target was a plain file add it to the inputs
+  if(substring(targetspec,1,2)!="--") allinputs=c(allinputs,target)
+  
+  inputsExist=file.exists(allinputs)
+  if(!all(inputsExist)){
+    cat("Missing input files",basename(allinputs)[!inputsExist],"\n")
+    return(FALSE)
+  }
+  if( file.exists(output) ){
+    # output exists
+    if(OverWrite=="no"){
+      if(Verbose) cat("Output",output,"already exists; use OverWrite=\"yes\"\n")
+      return(FALSE)
+    } else if(OverWrite=="update"){
+      # check modification times
+      filesToCheck=setdiff(allinputs,filesToIgnoreModTimes)
+    } else if(Verbose) cat("Overwriting",output,"because OverWrite=\"yes\"\n")
+  } else OverWrite="yes" # just for the purpose of the runtime checks below 
+  
+  cmd=paste(shQuote(reformatxPath), reformatoptions,
+            "-o",shQuote(output),ifelse(Push,"--push",""),"--floating",shQuote(floating),targetspec,
+            paste(shQuote(registrations),collapse=" "))
+  lockfile=paste(output,".lock",sep="")
+  PrintCommand<-FALSE
+  if(dryrun) PrintCommand<-TRUE
+  if(!dryrun) {
+    if(!MakeLock) system(cmd,...)
+    else if(makelock(lockfile)){
+      if(OverWrite=="update")
+        PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose,...)
+      else {
+        PrintCommand<-TRUE;system(cmd,...)
+      }
+      removelock(lockfile)
+    } else if(Verbose) cat("Unable to make lockfile:",lockfile,"\n")
+  }
+  if(PrintCommand) cat("cmd:\n",cmd,"\n") 
+  return(TRUE)
+}
