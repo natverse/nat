@@ -175,8 +175,10 @@ as.neuronlistfh<-function(x, df, ...)
 
 #' @param dir The path to the underlying \code{filehash} database on disk
 #' @param dbClass The \code{filehash} database class. Defaults to \code{RDS}.
-#' @param remote The url pointing to a remote repository containing files for
+#' @param remote The url pointing to a remote repository containing files for 
 #'   each neuron.
+#' @param WriteObjects Whether to write objects to disk. Missing implies that 
+#'   existing objects will not be overwritten. Default \code{"yes"}.
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist

@@ -12,7 +12,8 @@ is.neuronlistfh(nl)
 as.neuronlistfh(x, df, ...)
 
 \method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
-  dbClass = c("RDS", "RDS2"), remote = NULL, ...)
+  dbClass = c("RDS", "RDS2"), remote = NULL, WriteObjects = c("yes", "no",
+  "missing"), ...)
 }
 \arguments{
   \item{db}{a \code{filehash} object that manages an on
@@ -50,6 +51,10 @@ as.neuronlistfh(x, df, ...)
 
   \item{remote}{The url pointing to a remote repository
   containing files for each neuron.}
+
+  \item{WriteObjects}{Whether to write objects to disk.
+  Missing implies that existing objects will not be
+  overwritten. Default \code{"yes"}.}
 }
 \value{
 a \code{neuronlistfh} object which is a character
