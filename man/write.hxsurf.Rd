@@ -1,5 +1,4 @@
 \name{write.hxsurf}
-\alias{hxsurf}
 \alias{write.hxsurf}
 \title{Write Amira surface (aka HxSurface or HyperSurface) into .surf file.}
 \usage{

@@ -139,7 +139,6 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
 #' @return \code{NULL} or integer status from \code{\link{close}}.
 #' @export
 #' @seealso \code{\link{plot3d.hxsurf}},\code{\link{read.hxsurf}}, \code{\link{rgb}}
-#' @aliases hxsurf
 #' @family amira
 write.hxsurf <- function(surf, filename) {
   fc <- file(filename, open="at")
