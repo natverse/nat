@@ -132,6 +132,53 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   return(d)
 }
 
+#' Write Amira surface (aka HxSurface or HyperSurface) into .surf file.
+#' 
+#' @param surf hxsurf object to write to file.
+#' @param filename character vector defining path to file.
+#' @return \code{NULL} or integer status from \code{\link{close}}.
+#' @export
+#' @seealso \code{\link{plot3d.hxsurf}},\code{\link{read.hxsurf}}, \code{\link{rgb}}
+#' @aliases hxsurf
+#' @family amira
+write.hxsurf <- function(surf, filename) {
+  fc <- file(filename, open="at")
+  cat("# HyperSurface 0.1 ASCII\n\n", file=fc)
+  
+  cat("Parameters {\n", file=fc)
+  cat("    Materials {\n", file=fc)
+  cat("        Exterior {\n            Id 1\n        }\n", file=fc)
+  regionData <- cbind(surf$RegionList, surf$RegionColourList)
+  for (i in 1:nrow(regionData)) {
+    cat("        ", regionData[i, 1], " {\n", sep="", file=fc)
+    cat("            Id ", i+1, ",\n", sep="", file=fc)
+    cat("            Color ", paste(format(col2rgb(regionData[i, 2])/255, digits=5), collapse=" "), "\n", sep="", file=fc)
+    cat("        }\n", file=fc)
+  }
+  cat("    }\n", file=fc)
+  cat("    BoundaryIds {\n        Name \"BoundaryConditions\"\n    }\n", file=fc)
+  cat("}\n\n", file=fc)
+  
+  cat("Vertices ", nrow(surf$Vertices), "\n", sep="", file=fc)
+  apply(surf$Vertices[, 1:3], 1, function(x) cat("    ", x[1], " ", x[2], " ", x[3], "\n", sep="", file=fc))
+  
+  cat("NBranchingPoints 0\nNVerticesOnCurves 0\nBoundaryCurves 0\n", file=fc)
+  cat("Patches ", length(surf$Regions), "\n", sep="", file=fc)
+  
+  for(i in 1:length(surf$Regions)) {
+    region <- surf$Regions[[i]]
+    cat("{\n", file=fc)
+    cat("InnerRegion ", names(surf$Regions[i]), "\n", sep="", file=fc)
+    cat("OuterRegion Exterior\n", file=fc)
+    cat("BoundaryId 0\n", file=fc)
+    cat("BranchingPoints 0\n\n", file=fc)
+    cat("Triangles ", nrow(region), "\n", sep="", file=fc)
+    apply(region, 1, function(x) cat("    ", paste(x, collapse=" "), "\n", sep="", file=fc))
+    cat("}\n", file=fc)
+  }
+  close(fc)
+}
+
 #' Plot amira surface objects in 3d using rgl
 #' 
 #' @param x An hxsurf surface object
