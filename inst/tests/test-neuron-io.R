@@ -21,12 +21,24 @@ test_that("We can query fileformats",{
                'hxlineset')
 })
 
-test_that("We can read neurons in rda or rds format", {
+test_that("We can read single neurons in rda or rds format", {
   rda=tempfile(fileext='.rda')
   rds=tempfile(fileext='.rds')
   on.exit(unlink(c(rda,rds)))
   
   n=Cell07PNs[[1]]
+  save(n,file=rda)
+  saveRDS(n,file=rds)
+  expect_equivalent(n,read.neuron(rda))
+  expect_equivalent(n,read.neuron(rds))
+})
+
+test_that("We can read single dotprops objects in rda or rds format", {
+  rda=tempfile(fileext='.rda')
+  rds=tempfile(fileext='.rds')
+  on.exit(unlink(c(rda,rds)))
+  
+  n=kcs20[[1]]
   save(n,file=rda)
   saveRDS(n,file=rds)
   expect_equivalent(n,read.neuron(rda))

@@ -32,7 +32,7 @@ read.neuron<-function(f, ...){
   }
   # make sure that neuron actually inherits from neuron
   # we can normally rely on dotprops objects to have the correct class
-  if(!is.dotprops(n)) as.neuron(n)
+  if(is.dotprops(n)) n else as.neuron(n)
 }
 
 #' Read one or more neurons from file to a neuronlist in memory
