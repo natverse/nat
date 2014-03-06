@@ -52,8 +52,6 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   d$Vertices=read.table(filename,skip=dataStart,nrows=nVertices,col.names=c("X","Y","Z"),colClasses=rep("numeric",3))
   d$Regions <- list()
   
-  # round to avoid any surprises (like v small -ve numbers)
-  d$Vertices=zapsmall(d$Vertices)
   d$Vertices$PointNo=seq(nrow(d$Vertices))
   if(Verbose) cat("Finished processing Vertices\n")
   
@@ -159,7 +157,7 @@ write.hxsurf <- function(surf, filename) {
   cat("}\n\n", file=fc)
   
   cat("Vertices ", nrow(surf$Vertices), "\n", sep="", file=fc)
-  apply(surf$Vertices[, 1:3], 1, function(x) cat("    ", x[1], " ", x[2], " ", x[3], "\n", sep="", file=fc))
+  apply(surf$Vertices[, 1:3], 1, function(x) cat("    ", sprintf(x[1], fmt="%.6f"), " ", sprintf(x[2], fmt="%.6f"), " ", sprintf(x[3], fmt="%.6f"), "\n", sep="", file=fc))
   
   cat("NBranchingPoints 0\nNVerticesOnCurves 0\nBoundaryCurves 0\n", file=fc)
   cat("Patches ", length(surf$Regions), "\n", sep="", file=fc)
