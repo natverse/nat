@@ -2,10 +2,15 @@
 \alias{read.neuron}
 \title{Read a single neuron from a file}
 \usage{
-read.neuron(f, ...)
+read.neuron(f, format = NULL, ...)
 }
 \arguments{
   \item{f}{Path to file}
+
+  \item{format}{The file format of the neuron. When
+  \code{format=NULL}, the default, \code{read.neuron} will
+  infer the file format from the extension or file header
+  (aka magic) using the \code{fileformats} registry.}
 
   \item{...}{additional arguments passed to format-specific
   readers}

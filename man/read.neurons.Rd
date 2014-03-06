@@ -2,8 +2,8 @@
 \alias{read.neurons}
 \title{Read one or more neurons from file to a neuronlist in memory}
 \usage{
-read.neurons(paths, pattern = NULL, neuronnames = basename, nl = NULL,
-  df = NULL, OmitFailures = TRUE, SortOnUpdate = FALSE, ...)
+read.neurons(paths, pattern = NULL, neuronnames = basename, format = NULL,
+  nl = NULL, df = NULL, OmitFailures = TRUE, SortOnUpdate = FALSE, ...)
 }
 \arguments{
   \item{paths}{Paths to neuron input files (or directory
@@ -14,6 +14,9 @@ read.neurons(paths, pattern = NULL, neuronnames = basename, nl = NULL,
 
   \item{neuronnames}{Character vector or function that
   specifies neuron names}
+
+  \item{format}{File format for neuron (see
+  \code{read.neuron})}
 
   \item{df}{Optional data frame containing information
   about each neuron}

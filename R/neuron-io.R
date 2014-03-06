@@ -5,6 +5,9 @@
 #'   registered using \code{fileformats}.
 #' @export
 #' @param f Path to file
+#' @param format The file format of the neuron. When \code{format=NULL}, the 
+#'   default, \code{read.neuron} will infer the file format from the extension
+#'   or file header (aka magic) using the \code{fileformats} registry.
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{read.neurons}, \link{fileformats}}
 #' @examples
@@ -16,12 +19,13 @@
 #'   NeuronName=function(x) sub("\\..*","",x))
 #' # show the currently registered file formats that we can read
 #' fileformats(class='neuron', read=TRUE)
-read.neuron<-function(f, ...){
+read.neuron<-function(f, format=NULL, ...){
   #if(!file.exists(f)) stop("Unable to read file: ",f)
-  ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
-  if(ext=="rds")
+  if(is.null(format))
+    format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
+  if(format=="rds")
     n=readRDS(f)
-  else if(ext=="rda"){
+  else if(format=="rda"){
     objname=load(f,envir=environment())
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
@@ -56,6 +60,7 @@ read.neuron<-function(f, ...){
 #' @param paths Paths to neuron input files (or directory containing neurons)
 #' @param pattern If paths is a directory, regex that file names must match.
 #' @param neuronnames Character vector or function that specifies neuron names
+#' @param format File format for neuron (see \code{read.neuron})
 #' @param df Optional data frame containing information about each neuron
 #' @param OmitFailures Omit failures (when TRUE) or leave an NA value in the 
 #'   list
@@ -66,8 +71,9 @@ read.neuron<-function(f, ...){
 #' @export
 #' @seealso \code{\link{read.neuron}}
 #' @family neuronlist
-read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
-                       df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE, ...){
+read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
+                       nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
+                       ...){
   if(!is.character(paths)) stop("Expects a character vector of filenames")
   
   if(length(paths)==1 && file.info(paths)$isdir)
@@ -124,7 +130,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, nl=NULL,
   # Actually read in the neurons
   for(n in names(paths)){
     f=paths[n]
-    x=try(read.neuron(f))
+    x=try(read.neuron(f, format=format, ...))
     if(inherits(x,'try-error')){
       if(OmitFailures) x=NULL
       else x=NA
