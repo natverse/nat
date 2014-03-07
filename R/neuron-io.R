@@ -74,6 +74,16 @@ read.neuron<-function(f, format=NULL, ...){
 read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
+  if(inherits(paths,'neuronlistfh')){
+    nlfh=paths
+    dbdir=attr(nlfh,'db')@dir
+    kfm=attr(nlfh,'keyfilemap')
+    paths=structure(file.path(dbdir,kfm),.Names=names(kfm))
+    neuronnames=names(kfm)
+    df=attr(nlfh,'df')
+    format='rds'
+  }
+  
   if(!is.character(paths)) stop("Expects a character vector of filenames")
   
   if(length(paths)==1 && file.info(paths)$isdir)

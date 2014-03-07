@@ -34,10 +34,15 @@ test_that("We can read single neurons in rda or rds format", {
   
   # check that we can read neurons in rda or rds format
   # even if they do not have an appropriate file extension
-  file.rename(rds,tfrds<-tempfile())
-  file.rename(rda,tfrda<-tempfile())
+  file.copy(rds,tfrds<-tempfile())
+  file.copy(rda,tfrda<-tempfile())
+  on.exit(unlink(c(tfrda,tfrds)),add=TRUE)
+  
   expect_equivalent(n,read.neuron(tfrds,format='rds'))
   expect_equivalent(n,read.neuron(tfrda,format='rda'))
+  
+  # check that a length 1 neuronlist works ok
+  expect_equivalent(n,read.neurons(tfrds,format='rds')[[1]])
 })
 
 test_that("We can read single dotprops objects in rda or rds format", {
@@ -53,10 +58,13 @@ test_that("We can read single dotprops objects in rda or rds format", {
   
   # check that we can read dotprops objects in rda or rds format
   # even if they do not have an appropriate file extension
-  file.rename(rds,tfrds<-tempfile())
-  file.rename(rda,tfrda<-tempfile())
+  file.copy(rds,tfrds<-tempfile())
+  file.copy(rda,tfrda<-tempfile())
+  on.exit(unlink(c(tfrda,tfrds)),add=TRUE)
   expect_equivalent(n,read.neuron(tfrds,format='rds'))
   expect_equivalent(n,read.neuron(tfrda,format='rda'))
+  
+  expect_equivalent(n,read.neurons(tfrds,format='rds')[[1]])
 })
 
 test_that("We can read neurons in swc format", {

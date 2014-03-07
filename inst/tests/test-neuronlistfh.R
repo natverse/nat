@@ -80,3 +80,11 @@ test_that("We can create a neuronlistfh without rewriting objects",{
   
   expect_equal(sapply(kcs20fh3,length),sapply(kcs20,length))
 })
+
+test_that("read.neurons(nlfh) == as.neuronlist(nlfh)",{
+  tf=tempfile('kcs20fh')
+  on.exit(unlink(tf,recursive=TRUE))
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=tf),'neuronlistfh')
+  
+  expect_equal(as.neuronlist(kcs20fh), read.neurons(kcs20fh))
+})
