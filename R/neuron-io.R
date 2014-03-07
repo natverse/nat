@@ -75,6 +75,8 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
   if(inherits(paths,'neuronlistfh')){
+    if(!inherits(attr(paths,'db'),'filehashRDS'))
+      stop("read.neurons only supports reading neuronlistfh with an RDS format filehash")
     nlfh=paths
     dbdir=attr(nlfh,'db')@dir
     kfm=attr(nlfh,'keyfilemap')
