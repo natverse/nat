@@ -6,17 +6,18 @@ read.neurons(paths, pattern = NULL, neuronnames = basename, format = NULL,
   nl = NULL, df = NULL, OmitFailures = TRUE, SortOnUpdate = FALSE, ...)
 }
 \arguments{
-  \item{paths}{Paths to neuron input files (or directory
-  containing neurons)}
+  \item{paths}{Paths to neuron input files \emph{or} a
+  directory containing neurons \emph{or} a
+  \code{\link{neuronlistfh}} object.}
 
-  \item{pattern}{If paths is a directory, regex that file
-  names must match.}
+  \item{pattern}{If paths is a directory, \link{regex} that
+  file names must match.}
 
   \item{neuronnames}{Character vector or function that
   specifies neuron names}
 
   \item{format}{File format for neuron (see
-  \code{read.neuron})}
+  \code{\link{read.neuron}})}
 
   \item{df}{Optional data frame containing information
   about each neuron}
@@ -34,7 +35,7 @@ read.neurons(paths, pattern = NULL, neuronnames = basename, format = NULL,
   methods}
 }
 \value{
-\code{neuronlist} object containing the neurons
+\code{\link{neuronlist}} object containing the neurons
 }
 \description{
 Read one or more neurons from file to a neuronlist in
