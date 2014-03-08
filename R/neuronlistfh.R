@@ -357,3 +357,37 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   attr(obj, 'file') <- file
   obj
 }
+
+#' Write out a neuronlistfh object to an RDS file
+#' 
+#' @details This function writes the main neuronlistfh object to disk, but makes
+#'   no attempt to touch/verify the associated object files.
+#'   
+#'   if \code{file} is not specified, then the function will first check if 
+#'   \code{x} has a \code{'file'} attribute. If that does not exist, then 
+#'   \code{attr(x,'db')@@dir}, the backing \code{filehash} database directory, is
+#'   inspected. The save path \code{file} will then be constructed by taking the
+#'   directory one up from the database directory and using the name of the 
+#'   neuronlistfh object with the suffix '.rds'. e.g. write.neuronlistfh(kcs20) 
+#'   with db directory '/my/path/dps/data' will be saved as
+#'   '/my/path/dps/kcs20.rds'
+#' @param x The neuronlistfh object to write out
+#' @param file Path where the file will be written (see details)
+#' @param overwrite Whether to overwrite an existing file
+#' @param \dots Additional paramaters passed to \code{saveRDS}
+#' @seealso \code{\link{saveRDS}}
+#' @family neuronlistfh
+#' @export
+write.neuronlistfh<-function(x, file=attr(x,'file'), overwrite=FALSE, ...){
+  if(is.null(file)) {
+    dbdir=attr(x, 'db')@dir
+    file=file.path(dirname(dbdir), paste0(as.character(substitute(x)),'.rds'))
+  }
+  # check that we can write to this location
+  dir_exists=file.exists(dirname(file))
+  if(!dir_exists) stop("output directory does not exist")
+  if(file.exists(file) && !overwrite) 
+    stop("Set overwrite=TRUE to overwrite existing neuronlistfh")
+  saveRDS(x, file=file, ...)
+  invisible(file)
+}
