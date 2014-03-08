@@ -33,6 +33,12 @@ using the name of the neuronlistfh object with the suffix
 '.rds'. e.g. write.neuronlistfh(kcs20) with db directory
 '/my/path/dps/data' will be saved as
 '/my/path/dps/kcs20.rds'
+
+Note that if x has a \code{'file'} attribute (set by
+\code{read.neuronlistfh}) then this will be removed before
+the file is saved (since the file attribute must be set on
+read to ensure that we know exactly which file on disk was
+the source of the object in memory).
 }
 \seealso{
 \code{\link{saveRDS}}

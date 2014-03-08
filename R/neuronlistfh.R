@@ -365,12 +365,17 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
 #'   
 #'   if \code{file} is not specified, then the function will first check if 
 #'   \code{x} has a \code{'file'} attribute. If that does not exist, then 
-#'   \code{attr(x,'db')@@dir}, the backing \code{filehash} database directory, is
-#'   inspected. The save path \code{file} will then be constructed by taking the
-#'   directory one up from the database directory and using the name of the 
+#'   \code{attr(x,'db')@@dir}, the backing \code{filehash} database directory, 
+#'   is inspected. The save path \code{file} will then be constructed by taking 
+#'   the directory one up from the database directory and using the name of the 
 #'   neuronlistfh object with the suffix '.rds'. e.g. write.neuronlistfh(kcs20) 
-#'   with db directory '/my/path/dps/data' will be saved as
+#'   with db directory '/my/path/dps/data' will be saved as 
 #'   '/my/path/dps/kcs20.rds'
+#'   
+#'   Note that if x has a \code{'file'} attribute (set by 
+#'   \code{read.neuronlistfh}) then this will be removed before the file is 
+#'   saved (since the file attribute must be set on read to ensure that we know 
+#'   exactly which file on disk was the source of the object in memory).
 #' @param x The neuronlistfh object to write out
 #' @param file Path where the file will be written (see details)
 #' @param overwrite Whether to overwrite an existing file
@@ -388,6 +393,8 @@ write.neuronlistfh<-function(x, file=attr(x,'file'), overwrite=FALSE, ...){
   if(!dir_exists) stop("output directory does not exist")
   if(file.exists(file) && !overwrite) 
     stop("Set overwrite=TRUE to overwrite existing neuronlistfh")
+  # set file attribute to NULL on way out
+  if(!is.null(attr(x,'file'))) attr(x,'file')=NULL
   saveRDS(x, file=file, ...)
   invisible(file)
 }
