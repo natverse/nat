@@ -335,6 +335,7 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
       # fix paths in our new object
       attr(obj, 'db')@dir <- file.path(localdir,'data')
       attr(obj, 'remote') <- paste0(dirname(file), '/data/')
+      attr(obj, 'file') <- file
       
       # save it to disk
       saveRDS(obj,file=tmpFile)
@@ -353,5 +354,6 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   
   # fix path to filehash in object that we have read from disk just to be safe
   attr(obj, 'db')@dir <- file.path(dirname(file),'data')
+  attr(obj, 'file') <- file
   obj
 }
