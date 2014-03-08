@@ -37,8 +37,12 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   
   # now save and reload 
   tf=tempfile()
+  tf2=tempfile()
   on.exit(unlink(tf),add=TRUE)
-  saveRDS(kcs20fh,file=tf)
+  write.neuronlistfh(kcs20fh,file=tf)
+  saveRDS(kcs20fh,file=tf2)
+  # ensure that write.neuronlistfh and saveRDS produce identical file
+  expect_equivalent(tools::md5sum(tf),tools::md5sum(tf2))
   kcs20fh2=readRDS(tf)
   expect_equal(kcs20fh,kcs20fh2)
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
