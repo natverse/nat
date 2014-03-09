@@ -473,7 +473,8 @@ remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
                                   download.missing=FALSE, delete.extra=FALSE,
                                   update.object=TRUE, ...) {
   # first update the neuronlist object on disk
-  x=read.neuronlistfh(remote, localdir=attr(x,'file'), update=TRUE)
+  if(update.object)
+    x=read.neuronlistfh(remote, localdir=attr(x,'file'), update=TRUE)
   
   if(download.missing || delete.extra) {
     db=attr(x, 'db')
