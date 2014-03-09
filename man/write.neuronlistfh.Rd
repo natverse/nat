@@ -46,6 +46,6 @@ the source of the object in memory).
 Other neuronlistfh: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}
+\code{\link{neuronlistfh}}; \code{\link{read.neuronlistfh}}
 }
 
