@@ -129,7 +129,7 @@ disk representation
   \item{attr(x,"hashmap")}{ (Optional) a hashed environment
   which can be used for rapid lookup using key names
   (rather than numeric/logical indices).  There is a space
-  potential to pay for this redundant lookup methos, but it
+  potential to pay for this redundant lookup method, but it
   is normally worth while given that the dataframe object
   is typically considerably larger. To give some numbers,
   the additional environment might occupy ~ 1% of a 16,000
@@ -138,7 +138,9 @@ disk representation
   machine it can take as little as 0.1ms to load from disk,
   so these savings are relevant.}
 
-  } Presently only backing objects which extend the
+  }
+
+  Presently only backing objects which extend the
   \code{filehash} class are supported (although in theory
   other backing objects could be added). These include:
   \itemize{
@@ -160,7 +162,7 @@ disk representation
   likely to be the most effective for large (5,000-500,000)
   collections of neurons, especially when using network
   filesystems (nfs, afp) which are typically very slow at
-  handling directory reads.
+  listing large directories.
 
   Note that objects are stored in a filehash, which by
   definition does not have any ordering of its elements.

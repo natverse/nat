@@ -49,14 +49,16 @@
 #'   
 #'   \item{attr(x,"hashmap")}{ (Optional) a hashed environment which can be used
 #'   for rapid lookup using key names (rather than numeric/logical indices). 
-#'   There is a space potential to pay for this redundant lookup methos, but it 
+#'   There is a space potential to pay for this redundant lookup method, but it 
 #'   is normally worth while given that the dataframe object is typically 
 #'   considerably larger. To give some numbers, the additional environment might
-#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup
-#'   time from 0.5 ms to 1us. Having located the object, on my machine it can
+#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup 
+#'   time from 0.5 ms to 1us. Having located the object, on my machine it can 
 #'   take as little as 0.1ms to load from disk, so these savings are relevant.}
 #'   
-#'   } Presently only backing objects which extend the \code{filehash} class are
+#'   }
+#'   
+#'   Presently only backing objects which extend the \code{filehash} class are 
 #'   supported (although in theory other backing objects could be added). These 
 #'   include: \itemize{
 #'   
@@ -74,7 +76,7 @@
 #'   (available at \url{https://github.com/jefferis/filehash}). This is likely 
 #'   to be the most effective for large (5,000-500,000) collections of neurons, 
 #'   especially when using network filesystems (nfs, afp) which are typically 
-#'   very slow at handling directory reads.
+#'   very slow at listing large directories.
 #'   
 #'   Note that objects are stored in a filehash, which by definition does not 
 #'   have any ordering of its elements. However neuronlist objects (like lists) 
@@ -306,19 +308,43 @@ fillMissing <- function(missing, fh) {
 #'   and cached to \code{localdir}. If there is already a cached file at the 
 #'   appropriate location and \code{update=TRUE} then the md5sums are checked 
 #'   and the downloaded file will be copied on top of the original copy if they 
-#'   are different; if \code{udpate=FALSE}, the default, then no action will be
+#'   are different; if \code{udpate=FALSE}, the default, then no action will be 
 #'   taken.
 #'   
+#'   Note also that there is a strict convention for the layout of the files on 
+#'   disk. The neuronlistfh object will be saved in R's \code{RDS} format and 
+#'   will be placed next to a folder called \code{data} which will contain the 
+#'   data objects, also saved in RDS format. For example if \code{myneurons.rds}
+#'   is downloaded to \code{localdir="\\path\\to\\localdir"} the resultant file 
+#'   layout will be as follows:
+#'   
+#'   \itemize{
+#'   
+#'   \item \code{\\path\\to\\localdir\\myneurons.rds}
+#'   
+#'   \item \code{\\path\\to\\localdir\\data\\2f88e16c4f21bfcb290b2a8288c05bd0}
+#'   
+#'   \item \code{\\path\\to\\localdir\\data\\5b58e040ee35f3bcc6023fb7836c842e}
+#'   
+#'   \item \code{\\path\\to\\localdir\\data\... etc}
+#'   
+#'   }
+#'   
+#'   Given this arrangment, the data directory should always be at a fixed 
+#'   location with respect to the saved neuronlistfh object and this is checked 
+#'   on read and write. If the neuronlistfh object specified by file does not 
+#'   have a filehash database with a valid \code{dir} slot and there is no 
+#'   'data' directory adjacent to the neuronlistfh object, an error will result.
 #' @param file The file path of the neuronlistfh object. Can be local, or remote
 #'   (via http or ftp).
 #' @param localdir If the file is to be fetched from a remote location, this is 
-#'   the folder in which downloaded objects will be stored.
+#'   the folder in which downloaded RDS file will be saved. See details.
 #' @param update Whether to update local copy of neuronlistfh (default: FALSE, 
 #'   see details)
 #' @param ... Extra arguments to pass to \code{download.file}.
-#'   
 #' @export
 #' @importFrom tools md5sum
+#' @family neuronlistfh
 read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
     if(is.null(localdir)) stop("localdir must be specified.")
