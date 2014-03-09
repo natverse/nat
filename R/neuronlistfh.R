@@ -166,7 +166,7 @@ is.neuronlistfh<-function(nl) {
 #' plot3d(subset(kcs20fh,type=='gamma'))
 #' # ... and, again by convention, save the neuronlisfh object next to filehash 
 #' # backing database
-#' saveRDS(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
+#' write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 #' 
 #' # in a new session
 #' read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
@@ -175,7 +175,8 @@ is.neuronlistfh<-function(nl) {
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' @param dir The path to the underlying \code{filehash} database on disk
+#' @param dbdir The path to the underlying \code{filehash} database on disk. By
+#'   convention this should be a path whose final element is 'data'
 #' @param dbClass The \code{filehash} database class. Defaults to \code{RDS}.
 #' @param remote The url pointing to a remote repository containing files for 
 #'   each neuron.
@@ -187,7 +188,7 @@ as.neuronlistfh<-function(x, df, ...)
 #' @S3method as.neuronlistfh neuronlist
 #' @importFrom digest digest
 #' @rdname neuronlistfh
-as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
+as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
                                      dbClass=c('RDS','RDS2'), remote=NULL, 
                                      WriteObjects=c("yes",'no','missing'), ...){
   if(is.null(names(x))){
@@ -204,16 +205,16 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   keyfilemap=sapply(x,digest)
   names(x)=keyfilemap
   if(WriteObjects=='yes'){
-    db=filehash::dumpList(x, dbName=dir, type=dbClass)
+    db=filehash::dumpList(x, dbName=dbdir, type=dbClass)
   } else {
-    if(!filehash::dbCreate(dir)) stop("Error creating database at location: ",dir)
-    db=filehash::dbInit(dir, type=dbClass)
+    if(!filehash::dbCreate(dbdir)) stop("Error creating database at location: ",dbdir)
+    db=filehash::dbInit(dbdir, type=dbClass)
     if(WriteObjects=='missing') {
       # figure out which objects we need to dump
-      objects_present=dir(dir)
+      objects_present=dir(dbdir)
       objects_missing=setdiff(keyfilemap,objects_present)
       if(length(objects_missing))
-        db=filehash::dumpList(x[objects_missing], dbName=dir, type=dbClass)
+        db=filehash::dumpList(x[objects_missing], dbName=dbdir, type=dbClass)
     }
   }
   

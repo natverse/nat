@@ -11,7 +11,7 @@ is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
 
-\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
+\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dbdir = NULL,
   dbClass = c("RDS", "RDS2"), remote = NULL, WriteObjects = c("yes", "no",
   "missing"), ...)
 }
@@ -43,8 +43,9 @@ as.neuronlistfh(x, df, ...)
   \item{...}{Additional arguments for methods, eventually
   passed to \code{neuronlistfh()} constructor.}
 
-  \item{dir}{The path to the underlying \code{filehash}
-  database on disk}
+  \item{dbdir}{The path to the underlying \code{filehash}
+  database on disk. By convention this should be a path
+  whose final element is 'data'}
 
   \item{dbClass}{The \code{filehash} database class.
   Defaults to \code{RDS}.}
@@ -186,7 +187,7 @@ kcs20fh=as.neuronlistfh(kcs20, dir='/path/to/my/kcdb/data')
 plot3d(subset(kcs20fh,type=='gamma'))
 # ... and, again by convention, save the neuronlisfh object next to filehash
 # backing database
-saveRDS(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
+write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 
 # in a new session
 read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
