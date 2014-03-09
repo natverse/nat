@@ -436,3 +436,62 @@ write.neuronlistfh<-function(x, file=attr(x,'file'), overwrite=FALSE, ...){
   saveRDS(x, file=file, ...)
   invisible(file)
 }
+
+#' Synchronise a remote object
+#' 
+#' @param x Object to synchronise with a remote URL
+#' @param remote The remote URL to update from
+#' @param download.missing Whether to download missing objects (default TRUE)
+#' @param delete.extra Whether to delete objects (default TRUE)
+#' @param \dots Additional arguments passed to methods
+#' @export
+#' @family neuronlistfh
+remotesync<-function(x, remote=attr(x,'remote'), download.missing=TRUE, 
+                     delete.extra=FALSE, ...) UseMethod("remotesync")
+
+#' @S3method remotesync default
+remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE, delete.extra=FALSE, ...){
+  if(is.character(x)) x=read.neuronlistfh(x)
+  
+  if(!inherits(x,'neuronlistfh'))
+    stop("Unable to update object of class", class(x))
+  
+  UseMethod("remotesync")
+}
+
+#' @S3method remotesync neuronlistfh
+#' @param update.object Whether to update the neuronlistfh object itself on disk
+#'   (default TRUE)
+#' @return The updated \code{neuronlistfh} object (invisibly)
+#' @rdname remotesync
+#' @examples
+#' \dontrun{
+#' kcs20=read.neuronlistfh('kcs20.rds')
+#' kcs20=remotesync(kcs20)
+#' }
+remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
+                                  download.missing=FALSE, delete.extra=FALSE,
+                                  update.object=TRUE, ...) {
+  # first update the neuronlist object on disk
+  x=read.neuronlistfh(remote, localdir=attr(x,'file'), update=TRUE)
+  
+  if(download.missing || delete.extra) {
+    db=attr(x, 'db')
+    keyfilemap=attr(x, 'keyfilemap')
+    objects_present=dir(dir)
+
+    if(download.missing){
+      objects_missing=setdiff(keyfilemap, objects_present)
+      if(length(objects_missing))
+        fillMissing(file.path(db@dir, objects_missing), db)
+    }
+    
+    if(delete.extra){
+      objects_extra=setdiff(objects_present, keyfilemap)
+      if(length(objects_extra))
+        unlink(file.path(db@dir, objects_missing))
+    }
+  }
+  
+  invisible(x)
+}

@@ -69,7 +69,8 @@ neuronlistfh object, an error will result.
 Other neuronlistfh: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}};
+\code{\link{neuronlistfh}}; \code{\link{remotesync}},
+\code{\link{remotesync.neuronlistfh}};
 \code{\link{write.neuronlistfh}}
 }
 

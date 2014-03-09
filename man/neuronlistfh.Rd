@@ -202,6 +202,8 @@ Other neuronlist: \code{\link{is.neuronlist}},
 \code{\link{read.neurons}}; \code{\link{write.neurons}}
 
 Other neuronlistfh: \code{\link{read.neuronlistfh}};
+\code{\link{remotesync}},
+\code{\link{remotesync.neuronlistfh}};
 \code{\link{write.neuronlistfh}}
 }
 
