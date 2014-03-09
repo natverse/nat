@@ -4,7 +4,7 @@ test_that("neuronlistfh behaves like a neuronlist",{
   kcs5=kcs20[1:5]
   tf=tempfile('kcs20fh')
   on.exit(unlink(tf,recursive=TRUE))
-  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=tf),'neuronlistfh')
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20, dbdir=tf),'neuronlistfh')
   
   # check that ordering is maintained
   expect_equal(names(kcs20fh),names(kcs20))
@@ -32,7 +32,7 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
   dir.create(file.path(fhpath,'data'),recursive=T)
-  kcs20fh=as.neuronlistfh(kcs20, dir=file.path(fhpath, 'data'), dbClass='RDS')
+  kcs20fh=as.neuronlistfh(kcs20, dbdir=file.path(fhpath, 'data'), dbClass='RDS')
   plot3d(subset(kcs20fh,type=='gamma'))
   on.exit(unlink(fhpath,recursive=TRUE))
   
@@ -55,7 +55,8 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
 test_that("Can create a neuronlistfh with a hashmap",{
   fhpath=tempfile(pattern='kcs20fh')
   on.exit(unlink(fhpath,recursive=TRUE))
-  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=fhpath,hashmap=TRUE),'neuronlistfh')
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20, dbdir=fhpath, hashmap=TRUE),
+            'neuronlistfh')
   expect_is(attr(kcs20fh,'hashmap'),'environment')
   
   expect_equal(lapply(kcs20fh,length),lapply(kcs20,length))
@@ -68,7 +69,7 @@ test_that("We can create a neuronlistfh without rewriting objects",{
   fhdatapath=file.path(fhpath,'data')
   dir.create(fhdatapath,recursive=TRUE)
   on.exit(unlink(fhpath,recursive=TRUE))
-  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=fhdatapath),'neuronlistfh')
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20, dbdir=fhdatapath), 'neuronlistfh')
   
   # then make a new copy after removing one file
   kfm=attr(kcs20fh,'keyfilemap')
@@ -77,12 +78,12 @@ test_that("We can create a neuronlistfh without rewriting objects",{
   expect_equal(length(dir(fhdatapath)),length(kfm)-1)
   
   # that we don't replace it when WriteObjects='no'
-  expect_is(kcs20fh2<-as.neuronlistfh(kcs20,dir=fhdatapath,WriteObjects='no'),
+  expect_is(kcs20fh2<-as.neuronlistfh(kcs20, dbdir=fhdatapath, WriteObjects='no'),
             'neuronlistfh')
   expect_equal(length(dir(fhdatapath)),length(kfm)-1)
   
-  expect_is(kcs20fh3<-as.neuronlistfh(kcs20,dir=fhdatapath,WriteObjects='missing'),
-            'neuronlistfh')
+  expect_is(kcs20fh3<-as.neuronlistfh(kcs20, dbdir=fhdatapath, 
+                                      WriteObjects='missing'), 'neuronlistfh')
   # and that we put it back when WriteObjects='missing'
   expect_equal(length(dir(fhdatapath)),length(kfm))
   
@@ -92,7 +93,7 @@ test_that("We can create a neuronlistfh without rewriting objects",{
 test_that("read.neurons(nlfh) == as.neuronlist(nlfh)",{
   tf=tempfile('kcs20fh')
   on.exit(unlink(tf,recursive=TRUE))
-  expect_is(kcs20fh<-as.neuronlistfh(kcs20,dir=tf),'neuronlistfh')
+  expect_is(kcs20fh<-as.neuronlistfh(kcs20, dbdir=tf), 'neuronlistfh')
   
   expect_equal(as.neuronlist(kcs20fh), read.neurons(kcs20fh))
 })

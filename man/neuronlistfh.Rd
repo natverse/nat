@@ -183,7 +183,7 @@ plot3d(kcnl)
 \dontrun{
 # create neuronlistfh object backed by filehash with one file per neuron
 # by convention we create a subfolder called data in which the objects live
-kcs20fh=as.neuronlistfh(kcs20, dir='/path/to/my/kcdb/data')
+kcs20fh=as.neuronlistfh(kcs20, dbdir='/path/to/my/kcdb/data')
 plot3d(subset(kcs20fh,type=='gamma'))
 # ... and, again by convention, save the neuronlisfh object next to filehash
 # backing database
