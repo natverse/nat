@@ -31,10 +31,10 @@ downloaded file will be copied on top of the original copy
 if they are different; if \code{udpate=FALSE}, the default,
 then no action will be taken.
 
-Note also that there is a strict convention for the layout
-of the files on disk. The neuronlistfh object will be saved
-in R's \code{RDS} format and will be placed next to a
-folder called \code{data} which will contain the data
+Note also that there is a \emph{strict convention} for the
+layout of the files on disk. The neuronlistfh object will
+be saved in R's \code{RDS} format and will be placed next
+to a folder called \code{data} which will contain the data
 objects, also saved in RDS format. For example if
 \code{myneurons.rds} is downloaded to
 \code{localdir="\\path\\to\\localdir"} the resultant file
@@ -56,11 +56,14 @@ layout will be as follows:
 
 Given this arrangment, the data directory should always be
 at a fixed location with respect to the saved neuronlistfh
-object and this is checked on read and write. If the
-neuronlistfh object specified by file does not have a
-filehash database with a valid \code{dir} slot and there is
-no 'data' directory adjacent to the neuronlistfh object, an
-error will result.
+object and this is enforced on download and the default
+behaviour on read and write. However it does remain
+possible (if not recommended) to site the neuronlistfh and
+filehash database directory in different relative
+locations; if the neuronlistfh object specified by file
+does not have a filehash database with a valid \code{dir}
+slot and there is no 'data' directory adjacent to the
+neuronlistfh object, an error will result.
 }
 \seealso{
 Other neuronlistfh: \code{\link{as.neuronlistfh}},
