@@ -293,14 +293,27 @@ as.list.neuronlistfh<-function(x, ...) x
 }
 
 # Called if some objects in the filehash object are not available locally
-#
+# 
 # @param missing A list of missing objects
 # @param fh The neuronlistfh object that needs filling in
-fillMissing <- function(missing, fh) {
+# @param quiet Whether to show download progress for each neuron
+# @param progress Whether to show download progress for all requested neuron
+#   (default: TRUE when >=5 neurons to download)
+fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5) {
   objDir <- attr(fh, 'db')@dir
   if (!file.exists(objDir)) dir.create(objDir)
-  mapply(download.file, url=paste0(attr(fh, 'remote'), missing),
-         destfile=file.path(objDir,missing))
+  
+  if(progress) {
+    tpb=txtProgressBar(min=0,max=length(missing),style=3)
+    message('Downloading ',length(missing),' missing neurons from ',
+            attr(fh, 'remote'))
+  }
+  for(i in seq_along(missing)){
+    download.file(url=paste0(attr(fh, 'remote'), missing[i]),
+                  destfile=file.path(objDir,missing[i]),
+                  quiet=quiet)
+    if(progress) setTxtProgressBar(tpb,i)
+  }
 }
 
 #' Read a local, or remote, neuronlistfh object saved to a file.
