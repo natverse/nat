@@ -1,3 +1,14 @@
+nat 1.4.0
+* add cmtk.reformatx command for reformatting images using CMTK registrations
+* new function remotesync to synchronise a neuronlistfh object with its remote
+  source.
+* add write.neuronlistfh and improve consistency/docs of path handling in 
+  read.neuronlistfh
+* option to write missing (or no) neurons when using as.neuronlistfh.neuronlist
+  this makes it _much_ faster to re-export these objects or prepare neuronlistfh
+  for subsets of an existing group of neurons
+* fix hashmap functionality of neuronlistfh (speeds up access)
+
 nat 1.3.2
 =========
 * fix bug in find.neuron for neuronlistfh objects
