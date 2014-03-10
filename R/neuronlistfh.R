@@ -483,12 +483,12 @@ remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
   if(download.missing || delete.extra) {
     db=attr(x, 'db')
     keyfilemap=attr(x, 'keyfilemap')
-    objects_present=dir(dir)
+    objects_present=dir(db@dir)
 
     if(download.missing){
       objects_missing=setdiff(keyfilemap, objects_present)
       if(length(objects_missing))
-        fillMissing(file.path(db@dir, objects_missing), db)
+        fillMissing(objects_missing, x)
     }
     
     if(delete.extra){

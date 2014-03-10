@@ -22,10 +22,20 @@ test_that("Can synchronise a neuronlistfh object with its remote", {
   kfm=attr(kcs20fh.remote,'keyfilemap')
   dbdir=attr(kcs20fh.remote, 'db')@dir
   files_before=dir(dbdir)
-  # now sync (nothing should happen)
+  # now sync (nothing should happen, only object)
   remotesync(kcs20fh.remote)
   files_after=dir(dbdir)
   expect_equal(files_before,files_after)
   
-  #unlink(kfm)
+  # now sync (nothing should happen since there should be no missing files)
+  remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE)
+  files_after=dir(dbdir)
+  expect_equal(files_before,files_after)
+  
+  # delete a file and check it is downloaded
+  unlink(file.path(dbdir,files_before[1]))
+  remotesync(kcs20fh.remote, update.object=FALSE)
+  expect_equal(files_before[-1],dir(dbdir))
+  remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE)
+  expect_equal(files_before,dir(dbdir))
 })
