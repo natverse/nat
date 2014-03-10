@@ -460,8 +460,9 @@ remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE, 
 }
 
 #' @S3method remotesync neuronlistfh
-#' @param update.object Whether to update the neuronlistfh object itself on disk
-#'   (default TRUE)
+#' @param update.object Whether to update the \code{neuronlistfh} object itself
+#'   on disk (default TRUE). Note that this assumes that the \code{neuronlistfh}
+#'   object has not been renamed after it was downloaded.
 #' @return The updated \code{neuronlistfh} object (invisibly)
 #' @rdname remotesync
 #' @examples
@@ -473,8 +474,11 @@ remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
                                   download.missing=FALSE, delete.extra=FALSE,
                                   update.object=TRUE, ...) {
   # first update the neuronlist object on disk
-  if(update.object)
-    x=read.neuronlistfh(remote, localdir=attr(x,'file'), update=TRUE)
+  if(update.object){
+    # construct url to neuronlistfh object from remote data directory
+    remoteurl_nlfh=paste0(dirname(remote),'/',basename(attr(x,'file')))
+    x=read.neuronlistfh(remoteurl_nlfh, localdir=dirname(attr(x,'file')), update=TRUE)
+  }
   
   if(download.missing || delete.extra) {
     db=attr(x, 'db')

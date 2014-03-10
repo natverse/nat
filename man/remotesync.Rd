@@ -23,8 +23,10 @@ remotesync(x, remote = attr(x, "remote"), download.missing = TRUE,
 
   \item{\dots}{Additional arguments passed to methods}
 
-  \item{update.object}{Whether to update the neuronlistfh
-  object itself on disk (default TRUE)}
+  \item{update.object}{Whether to update the
+  \code{neuronlistfh} object itself on disk (default TRUE).
+  Note that this assumes that the \code{neuronlistfh}
+  object has not been renamed after it was downloaded.}
 }
 \value{
 The updated \code{neuronlistfh} object (invisibly)
