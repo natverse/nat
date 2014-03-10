@@ -44,4 +44,9 @@ test_that("Can synchronise a neuronlistfh object with its remote", {
   writeLines('rhubarb',con=tf)
   remotesync(kcs20fh.remote, update.object=FALSE, delete.extra=TRUE)
   expect_equal(files_before,dir(dbdir))
+  
+  # check that we can synchronise when just giving path to object on disk
+  expect_equal(remotesync(attr(kcs20fh.remote,'file'),
+                          update.object=FALSE,download.missing=TRUE),
+               kcs20fh.remote)
 })

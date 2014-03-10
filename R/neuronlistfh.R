@@ -450,13 +450,15 @@ remotesync<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
                      delete.extra=FALSE, ...) UseMethod("remotesync")
 
 #' @S3method remotesync default
-remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE, delete.extra=FALSE, ...){
+remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
+                             delete.extra=FALSE, ...){
   if(is.character(x)) x=read.neuronlistfh(x)
   
   if(!inherits(x,'neuronlistfh'))
     stop("Unable to update object of class", class(x))
   
-  UseMethod("remotesync")
+  remotesync(x, remote=remote, download.missing=download.missing,
+             delete.extra=delete.extra, ...)
 }
 
 #' @S3method remotesync neuronlistfh
