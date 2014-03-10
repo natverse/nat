@@ -29,6 +29,7 @@ Read and Write Amira Landmarks files
 Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
 \code{\link{read.hxsurf}}; \code{\link{is.amiramesh}};
 \code{\link{read.amiramesh}},
-\code{\link{read.amiramesh.header}}
+\code{\link{read.amiramesh.header}};
+\code{\link{write.hxsurf}}
 }
 

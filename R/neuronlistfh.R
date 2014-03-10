@@ -49,14 +49,16 @@
 #'   
 #'   \item{attr(x,"hashmap")}{ (Optional) a hashed environment which can be used
 #'   for rapid lookup using key names (rather than numeric/logical indices). 
-#'   There is a space potential to pay for this redundant lookup methos, but it 
+#'   There is a space potential to pay for this redundant lookup method, but it 
 #'   is normally worth while given that the dataframe object is typically 
 #'   considerably larger. To give some numbers, the additional environment might
-#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup
-#'   time from 0.5 ms to 1us. Having located the object, on my machine it can
+#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup 
+#'   time from 0.5 ms to 1us. Having located the object, on my machine it can 
 #'   take as little as 0.1ms to load from disk, so these savings are relevant.}
 #'   
-#'   } Presently only backing objects which extend the \code{filehash} class are
+#'   }
+#'   
+#'   Presently only backing objects which extend the \code{filehash} class are 
 #'   supported (although in theory other backing objects could be added). These 
 #'   include: \itemize{
 #'   
@@ -74,7 +76,7 @@
 #'   (available at \url{https://github.com/jefferis/filehash}). This is likely 
 #'   to be the most effective for large (5,000-500,000) collections of neurons, 
 #'   especially when using network filesystems (nfs, afp) which are typically 
-#'   very slow at handling directory reads.
+#'   very slow at listing large directories.
 #'   
 #'   Note that objects are stored in a filehash, which by definition does not 
 #'   have any ordering of its elements. However neuronlist objects (like lists) 
@@ -160,11 +162,11 @@ is.neuronlistfh<-function(nl) {
 #' \dontrun{
 #' # create neuronlistfh object backed by filehash with one file per neuron
 #' # by convention we create a subfolder called data in which the objects live
-#' kcs20fh=as.neuronlistfh(kcs20, dir='/path/to/my/kcdb/data')
+#' kcs20fh=as.neuronlistfh(kcs20, dbdir='/path/to/my/kcdb/data')
 #' plot3d(subset(kcs20fh,type=='gamma'))
 #' # ... and, again by convention, save the neuronlisfh object next to filehash 
 #' # backing database
-#' saveRDS(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
+#' write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 #' 
 #' # in a new session
 #' read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
@@ -173,7 +175,8 @@ is.neuronlistfh<-function(nl) {
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' @param dir The path to the underlying \code{filehash} database on disk
+#' @param dbdir The path to the underlying \code{filehash} database on disk. By
+#'   convention this should be a path whose final element is 'data'
 #' @param dbClass The \code{filehash} database class. Defaults to \code{RDS}.
 #' @param remote The url pointing to a remote repository containing files for 
 #'   each neuron.
@@ -185,7 +188,7 @@ as.neuronlistfh<-function(x, df, ...)
 #' @S3method as.neuronlistfh neuronlist
 #' @importFrom digest digest
 #' @rdname neuronlistfh
-as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
+as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
                                      dbClass=c('RDS','RDS2'), remote=NULL, 
                                      WriteObjects=c("yes",'no','missing'), ...){
   if(is.null(names(x))){
@@ -202,16 +205,16 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dir=NULL,
   keyfilemap=sapply(x,digest)
   names(x)=keyfilemap
   if(WriteObjects=='yes'){
-    db=filehash::dumpList(x, dbName=dir, type=dbClass)
+    db=filehash::dumpList(x, dbName=dbdir, type=dbClass)
   } else {
-    if(!filehash::dbCreate(dir)) stop("Error creating database at location: ",dir)
-    db=filehash::dbInit(dir, type=dbClass)
+    if(!filehash::dbCreate(dbdir)) stop("Error creating database at location: ",dbdir)
+    db=filehash::dbInit(dbdir, type=dbClass)
     if(WriteObjects=='missing') {
       # figure out which objects we need to dump
-      objects_present=dir(dir)
+      objects_present=dir(dbdir)
       objects_missing=setdiff(keyfilemap,objects_present)
       if(length(objects_missing))
-        db=filehash::dumpList(x[objects_missing], dbName=dir, type=dbClass)
+        db=filehash::dumpList(x[objects_missing], dbName=dbdir, type=dbClass)
     }
   }
   
@@ -306,19 +309,47 @@ fillMissing <- function(missing, fh) {
 #'   and cached to \code{localdir}. If there is already a cached file at the 
 #'   appropriate location and \code{update=TRUE} then the md5sums are checked 
 #'   and the downloaded file will be copied on top of the original copy if they 
-#'   are different; if \code{udpate=FALSE}, the default, then no action will be
+#'   are different; if \code{udpate=FALSE}, the default, then no action will be 
 #'   taken.
 #'   
+#'   Note also that there is a \emph{strict convention} for the layout of the 
+#'   files on disk. The neuronlistfh object will be saved in R's \code{RDS} 
+#'   format and will be placed next to a folder called \code{data} which will 
+#'   contain the data objects, also saved in RDS format. For example if 
+#'   \code{myneurons.rds} is downloaded to 
+#'   \code{localdir="\\path\\to\\localdir"} the resultant file layout will be as
+#'   follows:
+#'   
+#'   \itemize{
+#'   
+#'   \item \code{\\path\\to\\localdir\\myneurons.rds}
+#'   
+#'   \item \code{\\path\\to\\localdir\\data\\2f88e16c4f21bfcb290b2a8288c05bd0}
+#'   
+#'   \item \code{\\path\\to\\localdir\\data\\5b58e040ee35f3bcc6023fb7836c842e}
+#'   
+#'   \item \code{\\path\\to\\localdir\\data\... etc}
+#'   
+#'   }
+#'   
+#'   Given this arrangment, the data directory should always be at a fixed 
+#'   location with respect to the saved neuronlistfh object and this is enforced
+#'   on download and the default behaviour on read and write. However it does 
+#'   remain possible (if not recommended) to site the neuronlistfh and filehash
+#'   database directory in different relative locations; if the neuronlistfh
+#'   object specified by file does not have a filehash database with a valid
+#'   \code{dir} slot and there is no 'data' directory adjacent to the
+#'   neuronlistfh object, an error will result.
 #' @param file The file path of the neuronlistfh object. Can be local, or remote
 #'   (via http or ftp).
 #' @param localdir If the file is to be fetched from a remote location, this is 
-#'   the folder in which downloaded objects will be stored.
+#'   the folder in which downloaded RDS file will be saved. See details.
 #' @param update Whether to update local copy of neuronlistfh (default: FALSE, 
 #'   see details)
 #' @param ... Extra arguments to pass to \code{download.file}.
-#'   
 #' @export
 #' @importFrom tools md5sum
+#' @family neuronlistfh
 read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
     if(is.null(localdir)) stop("localdir must be specified.")
@@ -335,6 +366,7 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
       # fix paths in our new object
       attr(obj, 'db')@dir <- file.path(localdir,'data')
       attr(obj, 'remote') <- paste0(dirname(file), '/data/')
+      attr(obj, 'file') <- cached.neuronlistfh
       
       # save it to disk
       saveRDS(obj,file=tmpFile)
@@ -352,6 +384,119 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   obj<-readRDS(file)
   
   # fix path to filehash in object that we have read from disk just to be safe
-  attr(obj, 'db')@dir <- file.path(dirname(file),'data')
+  dbdir=attr(obj, 'db')@dir
+  if(!isTRUE(file.info(dbdir)$isdir)){
+    dbdir2 <- file.path(dirname(file),'data')
+    if(!isTRUE(file.info(dbdir2)$isdir))
+      stop("Unable to locate data directory at: ", dbdir, ' or: ', dbdir2)
+    dbdir=attr(obj, 'db')@dir <- dbdir2
+  }
+  
+  attr(obj, 'file') <- file
   obj
+}
+
+#' Write out a neuronlistfh object to an RDS file
+#' 
+#' @details This function writes the main neuronlistfh object to disk, but makes
+#'   no attempt to touch/verify the associated object files.
+#'   
+#'   if \code{file} is not specified, then the function will first check if 
+#'   \code{x} has a \code{'file'} attribute. If that does not exist, then 
+#'   \code{attr(x,'db')@@dir}, the backing \code{filehash} database directory, 
+#'   is inspected. The save path \code{file} will then be constructed by taking 
+#'   the directory one up from the database directory and using the name of the 
+#'   neuronlistfh object with the suffix '.rds'. e.g. write.neuronlistfh(kcs20) 
+#'   with db directory '/my/path/dps/data' will be saved as 
+#'   '/my/path/dps/kcs20.rds'
+#'   
+#'   Note that if x has a \code{'file'} attribute (set by 
+#'   \code{read.neuronlistfh}) then this will be removed before the file is 
+#'   saved (since the file attribute must be set on read to ensure that we know 
+#'   exactly which file on disk was the source of the object in memory).
+#' @param x The neuronlistfh object to write out
+#' @param file Path where the file will be written (see details)
+#' @param overwrite Whether to overwrite an existing file
+#' @param \dots Additional paramaters passed to \code{saveRDS}
+#' @seealso \code{\link{saveRDS}}
+#' @family neuronlistfh
+#' @export
+write.neuronlistfh<-function(x, file=attr(x,'file'), overwrite=FALSE, ...){
+  if(is.null(file)) {
+    dbdir=attr(x, 'db')@dir
+    file=file.path(dirname(dbdir), paste0(as.character(substitute(x)),'.rds'))
+  }
+  # check that we can write to this location
+  dir_exists=file.exists(dirname(file))
+  if(!dir_exists) stop("output directory does not exist")
+  if(file.exists(file) && !overwrite) 
+    stop("Set overwrite=TRUE to overwrite existing neuronlistfh")
+  # set file attribute to NULL on way out
+  if(!is.null(attr(x,'file'))) attr(x,'file')=NULL
+  saveRDS(x, file=file, ...)
+  invisible(file)
+}
+
+#' Synchronise a remote object
+#' 
+#' @param x Object to synchronise with a remote URL
+#' @param remote The remote URL to update from
+#' @param download.missing Whether to download missing objects (default TRUE)
+#' @param delete.extra Whether to delete objects (default TRUE)
+#' @param \dots Additional arguments passed to methods
+#' @export
+#' @family neuronlistfh
+remotesync<-function(x, remote=attr(x,'remote'), download.missing=TRUE, 
+                     delete.extra=FALSE, ...) UseMethod("remotesync")
+
+#' @S3method remotesync default
+remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE, delete.extra=FALSE, ...){
+  if(is.character(x)) x=read.neuronlistfh(x)
+  
+  if(!inherits(x,'neuronlistfh'))
+    stop("Unable to update object of class", class(x))
+  
+  UseMethod("remotesync")
+}
+
+#' @S3method remotesync neuronlistfh
+#' @param update.object Whether to update the \code{neuronlistfh} object itself
+#'   on disk (default TRUE). Note that this assumes that the \code{neuronlistfh}
+#'   object has not been renamed after it was downloaded.
+#' @return The updated \code{neuronlistfh} object (invisibly)
+#' @rdname remotesync
+#' @examples
+#' \dontrun{
+#' kcs20=read.neuronlistfh('kcs20.rds')
+#' kcs20=remotesync(kcs20)
+#' }
+remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
+                                  download.missing=FALSE, delete.extra=FALSE,
+                                  update.object=TRUE, ...) {
+  # first update the neuronlist object on disk
+  if(update.object){
+    # construct url to neuronlistfh object from remote data directory
+    remoteurl_nlfh=paste0(dirname(remote),'/',basename(attr(x,'file')))
+    x=read.neuronlistfh(remoteurl_nlfh, localdir=dirname(attr(x,'file')), update=TRUE)
+  }
+  
+  if(download.missing || delete.extra) {
+    db=attr(x, 'db')
+    keyfilemap=attr(x, 'keyfilemap')
+    objects_present=dir(db@dir)
+
+    if(download.missing){
+      objects_missing=setdiff(keyfilemap, objects_present)
+      if(length(objects_missing))
+        fillMissing(objects_missing, x)
+    }
+    
+    if(delete.extra){
+      objects_extra=setdiff(objects_present, keyfilemap)
+      if(length(objects_extra))
+        unlink(file.path(db@dir, objects_extra))
+    }
+  }
+  
+  invisible(x)
 }

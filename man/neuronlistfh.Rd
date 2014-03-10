@@ -11,7 +11,7 @@ is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
 
-\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dir = NULL,
+\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dbdir = NULL,
   dbClass = c("RDS", "RDS2"), remote = NULL, WriteObjects = c("yes", "no",
   "missing"), ...)
 }
@@ -43,8 +43,9 @@ as.neuronlistfh(x, df, ...)
   \item{...}{Additional arguments for methods, eventually
   passed to \code{neuronlistfh()} constructor.}
 
-  \item{dir}{The path to the underlying \code{filehash}
-  database on disk}
+  \item{dbdir}{The path to the underlying \code{filehash}
+  database on disk. By convention this should be a path
+  whose final element is 'data'}
 
   \item{dbClass}{The \code{filehash} database class.
   Defaults to \code{RDS}.}
@@ -129,7 +130,7 @@ disk representation
   \item{attr(x,"hashmap")}{ (Optional) a hashed environment
   which can be used for rapid lookup using key names
   (rather than numeric/logical indices).  There is a space
-  potential to pay for this redundant lookup methos, but it
+  potential to pay for this redundant lookup method, but it
   is normally worth while given that the dataframe object
   is typically considerably larger. To give some numbers,
   the additional environment might occupy ~ 1% of a 16,000
@@ -138,7 +139,9 @@ disk representation
   machine it can take as little as 0.1ms to load from disk,
   so these savings are relevant.}
 
-  } Presently only backing objects which extend the
+  }
+
+  Presently only backing objects which extend the
   \code{filehash} class are supported (although in theory
   other backing objects could be added). These include:
   \itemize{
@@ -160,7 +163,7 @@ disk representation
   likely to be the most effective for large (5,000-500,000)
   collections of neurons, especially when using network
   filesystems (nfs, afp) which are typically very slow at
-  handling directory reads.
+  listing large directories.
 
   Note that objects are stored in a filehash, which by
   definition does not have any ordering of its elements.
@@ -180,11 +183,11 @@ plot3d(kcnl)
 \dontrun{
 # create neuronlistfh object backed by filehash with one file per neuron
 # by convention we create a subfolder called data in which the objects live
-kcs20fh=as.neuronlistfh(kcs20, dir='/path/to/my/kcdb/data')
+kcs20fh=as.neuronlistfh(kcs20, dbdir='/path/to/my/kcdb/data')
 plot3d(subset(kcs20fh,type=='gamma'))
 # ... and, again by convention, save the neuronlisfh object next to filehash
 # backing database
-saveRDS(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
+write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 
 # in a new session
 read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
@@ -197,5 +200,10 @@ plot3d(subset(kcs20fh, type=='gamma'))
 Other neuronlist: \code{\link{is.neuronlist}},
 \code{\link{neuronlist}}; \code{\link{nlapply}};
 \code{\link{read.neurons}}; \code{\link{write.neurons}}
+
+Other neuronlistfh: \code{\link{read.neuronlistfh}};
+\code{\link{remotesync}},
+\code{\link{remotesync.neuronlistfh}};
+\code{\link{write.neuronlistfh}}
 }
 

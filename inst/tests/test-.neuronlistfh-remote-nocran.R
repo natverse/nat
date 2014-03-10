@@ -7,3 +7,41 @@ test_that("Can download a neuronlistfh object with MD5'd objects", {
   kcs20md5 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir)
   expect_equal(dim(kcs20md5[[1]]$points), c(284, 3))
 })
+
+test_that("Can synchronise a neuronlistfh object with its remote", {
+  localdir <- tempfile()
+  dir.create(localdir)
+  on.exit(unlink(localdir, recursive=TRUE))
+  kcs20fh.remote <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds",
+                                      localdir=localdir)
+  expect_equal(dim(kcs20fh.remote[[1]]$points), c(284, 3))
+  # make a neuronlistfh object from the local data bundled with this package
+  # pointing the database directory to the same location as kcs20fh.remote
+  kcs20fh.local=as.neuronlistfh(kcs20, dbdir=attr(kcs20fh.remote, 'db')@dir)
+
+  kfm=attr(kcs20fh.remote,'keyfilemap')
+  dbdir=attr(kcs20fh.remote, 'db')@dir
+  files_before=dir(dbdir)
+  # now sync (nothing should happen, only object)
+  remotesync(kcs20fh.remote)
+  files_after=dir(dbdir)
+  expect_equal(files_before,files_after)
+  
+  # now sync (nothing should happen since there should be no missing files)
+  remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE)
+  files_after=dir(dbdir)
+  expect_equal(files_before,files_after)
+  
+  # delete a file and check it is downloaded
+  unlink(file.path(dbdir,files_before[1]))
+  remotesync(kcs20fh.remote, update.object=FALSE)
+  expect_equal(files_before[-1],dir(dbdir))
+  remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE)
+  expect_equal(files_before,dir(dbdir))
+  
+  # add an extra file and check it is deleted
+  tf=tempfile(tmpdir=dbdir)
+  writeLines('rhubarb',con=tf)
+  remotesync(kcs20fh.remote, update.object=FALSE, delete.extra=TRUE)
+  expect_equal(files_before,dir(dbdir))
+})
