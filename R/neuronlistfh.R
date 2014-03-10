@@ -494,7 +494,7 @@ remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
     if(delete.extra){
       objects_extra=setdiff(objects_present, keyfilemap)
       if(length(objects_extra))
-        unlink(file.path(db@dir, objects_missing))
+        unlink(file.path(db@dir, objects_extra))
     }
   }
   
