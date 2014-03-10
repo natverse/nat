@@ -366,7 +366,7 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
       # fix paths in our new object
       attr(obj, 'db')@dir <- file.path(localdir,'data')
       attr(obj, 'remote') <- paste0(dirname(file), '/data/')
-      attr(obj, 'file') <- file
+      attr(obj, 'file') <- cached.neuronlistfh
       
       # save it to disk
       saveRDS(obj,file=tmpFile)
