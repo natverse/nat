@@ -8,6 +8,7 @@
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{read.neurons}, \link{fileformats}}
 #' @examples
+#' \dontrun{
 #' # note that we override the default NeuronName field
 #' n=read.neuron(system.file("testdata","neuron","EBT7R.CNG.swc",package='nat'),
 #'   NeuronName="EBT7R")
@@ -16,6 +17,7 @@
 #'   NeuronName=function(x) sub("\\..*","",x))
 #' # show the currently registered file formats that we can read
 #' fileformats(class='neuron', read=TRUE)
+#' }
 read.neuron<-function(f, ...){
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   ext=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
