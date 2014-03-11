@@ -39,8 +39,10 @@ defining this to be NA or the midpoint of the orginal axis
 would be better justified.
 }
 \examples{
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+\dontrun{
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 image(projection(LHMask),asp=TRUE)
+}
 }
 \seealso{
 \code{\link{groupGeneric}}
