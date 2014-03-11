@@ -52,12 +52,11 @@ Other im3d: \code{\link{boundingbox}},
 \code{\link{boundingbox.im3d}},
 \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
 \code{\link{ijkpos}}, \code{\link{im3d-coords}},
-\code{\link{im3d-coords}}, \code{\link{im3d-coords}},
-\code{\link{xyzpos}}; \code{\link{im3d-io}},
-\code{\link{read.im3d}}, \code{\link{write.im3d}};
-\code{\link{im3d}}; \code{\link{imexpand.grid}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{unmask}}; \code{\link{voxdims}},
-\code{\link{voxdims.default}}
+\code{\link{im3d-coords}}, \code{\link{xyzpos}};
+\code{\link{im3d-io}}, \code{\link{read.im3d}},
+\code{\link{write.im3d}}; \code{\link{im3d}};
+\code{\link{imexpand.grid}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{unmask}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 
