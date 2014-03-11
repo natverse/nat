@@ -821,7 +821,7 @@ xyzpos<-function(d, ijk)
 #'   nearest integer value (i.e. nearest pixel). default: \code{TRUE}
 #' @return Nx3 matrix of physica l or pixel coordinates
 #' @rdname im3d-coords
-#' @aliases im3d-coords ijkpos
+#' @aliases ijkpos
 #' @export
 #' @examples
 #' # make an emty im3d
