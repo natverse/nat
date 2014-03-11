@@ -34,13 +34,13 @@ test_that("We can read neurons in rda or rds format", {
 })
 
 test_that("We can read neurons in swc format", {
-  swc='../testdata/neuron/EBT7R.CNG.swc'
+  swc='testdata/neuron/EBT7R.CNG.swc'
   expect_is(n<-read.neuron(swc),'neuron')
   expect_equal(n$NeuronName,'EBT7R.CNG')
 })
 
 test_that("We can set the NeuronName field", {
-  swc='../testdata/neuron/EBT7R.CNG.swc'
+  swc='testdata/neuron/EBT7R.CNG.swc'
   n<-read.neuron(swc, NeuronName="rhubarb")
   expect_equal(n$NeuronName,'rhubarb')
   # check that we can use a user defined function to define the NeuronName
@@ -50,14 +50,14 @@ test_that("We can set the NeuronName field", {
 })
 
 test_that("We can read in neurons as a neuronlist",{
-  expect_is(nl<-read.neurons(paths='../testdata/neuron/',pattern='\\.CNG\\.swc$',
+  expect_is(nl<-read.neurons(paths='testdata/neuron/',pattern='\\.CNG\\.swc$',
                neuronnames=function(x) sub("\\..*","",basename(x))),'neuronlist')
   expect_equal(length(nl),2)
 })
 
 test_that("We can read hxlineset format neurons",{
   
-  ebt7=structure(list(NeuronName = "EBT7R", InputFileName = "inst/testdata/neuron/EBT7R.am", 
+  ebt7=structure(list(NeuronName = "EBT7R", InputFileName = "testdata/neuron/EBT7R.am", 
       CreatedAt = structure(1391870899.00482, class = c("POSIXct", 
       "POSIXt")), NodeName = structure("mac1041-14.lmb.internal", .Names = "nodename"), 
       InputFileStat = structure(list(size = 9870, isdir = FALSE, 
@@ -67,8 +67,8 @@ test_that("We can read hxlineset format neurons",{
           "POSIXt")), uid = 501L, gid = 80L, uname = "jefferis", 
           grname = "admin"), .Names = c("size", "isdir", "mode", 
       "mtime", "ctime", "atime", "uid", "gid", "uname", "grname"
-      ), row.names = "inst/testdata/neuron/EBT7R.am", class = "data.frame"), 
-      InputFileMD5 = structure("9e5016e8722314537bb4344ab2877f03", .Names = "inst/testdata/neuron/EBT7R.am"), 
+      ), row.names = "testdata/neuron/EBT7R.am", class = "data.frame"), 
+      InputFileMD5 = structure("9e5016e8722314537bb4344ab2877f03", .Names = "testdata/neuron/EBT7R.am"), 
       NumPoints = 343L, StartPoint = 1L, BranchPoints = c(26L, 
       38L, 56L, 65L, 77L, 90L, 92L, 117L, 121L, 127L, 135L, 141L, 
       153L, 154L, 158L, 173L, 191L, 195L, 206L, 211L, 214L, 234L, 
@@ -329,12 +329,12 @@ test_that("We can read hxlineset format neurons",{
   "BranchPoints", "EndPoints", "nTrees", "NumSegs", "SegList", 
   "d"), class = c("neuron", "list"))
   
-  expect_equal(read.neuron('../testdata/neuron/EBT7R.am'), ebt7)
+  expect_equal(read.neuron('testdata/neuron/EBT7R.am'), ebt7)
 })
 
 test_that("we can read hxskel format neurons",{
   
-  Neurites=structure(list(NeuronName = "Neurites", InputFileName = "../testdata/neuron/Neurites.am", 
+  Neurites=structure(list(NeuronName = "Neurites", InputFileName = "testdata/neuron/Neurites.am", 
       CreatedAt = structure(1391883985.19409, class = c("POSIXct", 
       "POSIXt")), NodeName = structure("mac1041-14.lmb.internal", .Names = "nodename"), 
       InputFileStat = structure(list(size = 16617, isdir = FALSE, 
@@ -344,8 +344,8 @@ test_that("we can read hxskel format neurons",{
           "POSIXt")), uid = 501L, gid = 80L, uname = "jefferis", 
           grname = "admin"), .Names = c("size", "isdir", "mode", 
       "mtime", "ctime", "atime", "uid", "gid", "uname", "grname"
-      ), row.names = "../testdata/neuron/Neurites.am", class = "data.frame"), 
-      InputFileMD5 = structure("11c837b13f2f0814fffaf94a58912e16", .Names = "../testdata/neuron/Neurites.am"), 
+      ), row.names = "testdata/neuron/Neurites.am", class = "data.frame"), 
+      InputFileMD5 = structure("11c837b13f2f0814fffaf94a58912e16", .Names = "testdata/neuron/Neurites.am"), 
       NumPoints = 291L, StartPoint = 1L, BranchPoints = c(98L, 
       256L, 272L), EndPoints = c(1L, 54L, 202L, 257L, 274L), nTrees = 1, 
       NumSegs = 7L, SegList = structure(list(c(1L, 3L, 4L, 5L, 
@@ -619,64 +619,64 @@ test_that("we can read hxskel format neurons",{
   "NodeName", "InputFileStat", "InputFileMD5", "NumPoints", "StartPoint", 
   "BranchPoints", "EndPoints", "nTrees", "NumSegs", "SegList", 
   "d"), class = c("neuron", "list"))
-  expect_is(n<-read.neuron('../testdata/neuron/Neurites.am'),'neuron')
+  expect_is(n<-read.neuron('testdata/neuron/Neurites.am'),'neuron')
   g1<-as.ngraph(Neurites)
   g2<-as.ngraph(n)
   expect_true(igraph::graph.isomorphic(g1,g2))
   expect_equal(n, Neurites)
   tmpfile=tempfile(fileext='.wurgle')
   on.exit(unlink(tmpfile))
-  file.copy('../testdata/neuron/Neurites.am',tmpfile)
+  file.copy('testdata/neuron/Neurites.am',tmpfile)
   
   expect_equal(read.neuron(tmpfile), n, fieldsToExclude='NeuronName')
 })
 
 test_that("we can identify amira hxskel neurons",{
   # hxlineset neuron
-  expect_false(is.hxskel('../testdata/neuron/EBT7R.am'))
+  expect_false(is.hxskel('testdata/neuron/EBT7R.am'))
   # swc neuron
-  expect_false(is.hxskel('../testdata/neuron/EBT7R.CNG.swc'))
+  expect_false(is.hxskel('testdata/neuron/EBT7R.CNG.swc'))
   # hxskel neuron
-  expect_true(is.hxskel('../testdata/neuron/Neurites.am'))
+  expect_true(is.hxskel('testdata/neuron/Neurites.am'))
   # hxskel
-  p='../testdata/neuron/Neurites.am'
+  p='testdata/neuron/Neurites.am'
   expect_true(is.hxskel(p,bytes=readBin(p,what=raw(),n=80)))
 })
 
 test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
-  expect_is(l<-read.neuron("../testdata/neuron/testneuron_lineset.am"),'neuron')
-  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d.am"),
+  expect_is(l<-read.neuron("testdata/neuron/testneuron_lineset.am"),'neuron')
+  expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d.am"),
                fieldsToExclude='NeuronName')
-  expect_equal(l,read.neuron("../testdata/neuron/testneuron_am3d_ascii.am.gz"),
+  expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d_ascii.am.gz"),
                fieldsToExclude='NeuronName')
   # FIXME see https://github.com/jefferis/nat/issues/14
-  expect_error(read.neuron("../testdata/neuron/testneuron_am3d.am.gz"))
+  expect_error(read.neuron("testdata/neuron/testneuron_am3d.am.gz"))
 })
 
 test_that("we can identify amira hxlineset neurons",{
   # hxlineset neuron
-  expect_true(is.hxlineset('../testdata/neuron/EBT7R.am'))
+  expect_true(is.hxlineset('testdata/neuron/EBT7R.am'))
   # swc neuron
-  expect_false(is.hxlineset('../testdata/neuron/EBT7R.CNG.swc'))
+  expect_false(is.hxlineset('testdata/neuron/EBT7R.CNG.swc'))
   # hxskel neuron
-  expect_false(is.hxlineset('../testdata/neuron/Neurites.am'))
+  expect_false(is.hxlineset('testdata/neuron/Neurites.am'))
   # hxlineset via byte array
-  p='../testdata/neuron/EBT7R.am'
+  p='testdata/neuron/EBT7R.am'
   expect_true(is.hxlineset(p,bytes=readBin(p,what=raw(),n=80)))
-  q='../testdata/neuron/Neurites.am'
+  q='testdata/neuron/Neurites.am'
   expect_false(is.hxlineset(q,bytes=readBin(p,what=raw(),n=80)))
   # gzipped direct
-  expect_true(is.hxlineset('../testdata/neuron/testneuron_fclineset.am.gz'))
+  expect_true(is.hxlineset('testdata/neuron/testneuron_fclineset.am.gz'))
   # gzipped via byte array
   # nb this relies on decompression which is looked after by getformatfuns
-  r='../testdata/neuron/testneuron_fclineset.am.gz'
+  r='testdata/neuron/testneuron_fclineset.am.gz'
   gzf=gzfile(r, open='rb')
   on.exit(close(gzf))
   expect_true(is.hxlineset(r,bytes=readBin(gzf,what=raw(),n=80)))
 })
 
 test_that("read a flycircuit lineset neuron w/o radius info",{
-  f="../testdata/neuron/testneuron_fclineset.am.gz"
+  f="testdata/neuron/testneuron_fclineset.am.gz"
   expect_is(n<-read.neuron(f),'neuron')
 })
 

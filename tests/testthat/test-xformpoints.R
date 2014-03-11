@@ -25,9 +25,9 @@ test_that("xformpoints can use a matrix to define a registration", {
 
 if(!is.null(cmtk.bindir())){
 test_that("xformpoints.cmtkreg works ok", {
-  reg2="../testdata/cmtk/dofv1.1wshears.list"
+  reg2="testdata/cmtk/dofv1.1wshears.list"
   creg2=cmtkreg(reg2)
-  reg3 <- "../testdata/cmtk/dofv2.4wshears.list"
+  reg3 <- "testdata/cmtk/dofv2.4wshears.list"
   creg3 <- cmtkreg(reg3)
   xyz=matrix(1:24,ncol=3,byrow=TRUE)
   xformpoints(creg2,points=xyz)

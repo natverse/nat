@@ -43,7 +43,7 @@ test_that("test cmtk.mat2dof with shears", {
 })
 
 test_that("test cmtk.dof2mat with v2.4 registration or in memory parameters", {
-  reg=file.path('..','testdata','cmtk','dofv2.4wshears.list')
+  reg=file.path('testdata','cmtk','dofv2.4wshears.list')
   params=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                 byrow=T)
   m_base=structure(c(0.993768, -0.0869434, -0.0697565, 0, 0.199117, 1.08527, 
@@ -55,7 +55,7 @@ test_that("test cmtk.dof2mat with v2.4 registration or in memory parameters", {
 })
 
 test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
-  reg=file.path('..','testdata','cmtk','dofv1.1wshears.list')
+  reg=file.path('testdata','cmtk','dofv1.1wshears.list')
   params=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                 byrow=T)
   m_base=matrix(c(0.993768017875764, 0.0124333660488193, 0.1029140991094, 

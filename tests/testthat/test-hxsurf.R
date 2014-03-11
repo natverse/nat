@@ -1,6 +1,6 @@
 context("hxsurf (amira) surfaces")
 
-surf_file="../testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
+surf_file="testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
 surf=read.hxsurf(surf_file)
 
 test_that("can read hxsurf object", {
@@ -31,7 +31,7 @@ test_that("can xform hxsurf object", {
 
 if(!is.null(cmtk.bindir())){
 test_that("can xform hxsurf object using registration", {
-  reg="../testdata/cmtk/FCWB_JFRC2_01_warp_m0g80c8e1e-1x26r4.list/level-01.list"
+  reg="testdata/cmtk/FCWB_JFRC2_01_warp_m0g80c8e1e-1x26r4.list/level-01.list"
   xform(surf, reg)
 })
 }

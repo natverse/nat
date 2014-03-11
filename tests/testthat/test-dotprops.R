@@ -1,7 +1,7 @@
 context("dotprops objects")
 
 test_that("dotprops gives same result as matlab original", {
-  dotdir="../testdata/dotprops/masse"
+  dotdir="testdata/dotprops/masse"
   
   # We have some matlab data from Masse et al 2011 that was read in like this:
   #   dots4=t(readMat(file.path(TestDir,"Geometry","SAKW13-1_dots4.mat"))[[1]])
