@@ -15,7 +15,7 @@ test_that("write.cmtk can write an empty CMTK TypedStream file", {
 })
 
 test_that("read.cmtk and write.cmtk can round-trip a registration file", {
-  reg="../testdata/cmtk/dofv1.1wshears.list"
+  reg="testdata/cmtk/dofv1.1wshears.list"
   reglist=read.cmtkreg(reg)
   tf=tempfile('dofv1.1wshears_copy',fileext='.list')
   on.exit(unlink(tf,recursive=TRUE))
@@ -27,7 +27,7 @@ test_that("read.cmtk and write.cmtk can round-trip a registration file", {
 })
 
 test_that("read cmtk warping registration", {
-  reg="../testdata/cmtk/FCWB_JFRC2_01_warp_m0g80c8e1e-1x26r4.list/level-01.list"
+  reg="testdata/cmtk/FCWB_JFRC2_01_warp_m0g80c8e1e-1x26r4.list/level-01.list"
   aff_base=structure(list(xlate = c(40.36793081, -1.083886192, 20.60925626),
                  rotate = c(2.066985174, 0.1277418389, 1.346021698),
                  scale = c(1.10115207, 1.112225643, 1.398342945),

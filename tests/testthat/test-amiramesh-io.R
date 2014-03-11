@@ -1,18 +1,18 @@
 context("amiramesh-io")
 
 test_that("check basic reading of amiramesh header",{
-  am='../testdata/neuron/EBT7R.am'
+  am='testdata/neuron/EBT7R.am'
   expect_is(read.amiramesh.header(am),'list')
 })
 
 test_that("check basic reading of amiramesh file (neuron)",{
-  am='../testdata/neuron/EBT7R.am'
+  am='testdata/neuron/EBT7R.am'
   expect_is(read.amiramesh(am),'list')
 })
 
 test_that("check reading amiramesh in zlib and rle formats",{
-  rleam='../testdata/amira/LHMask.Labels.rle.am'
-  zipam='../testdata/amira/LHMask.zip.am'
+  rleam='testdata/amira/LHMask.Labels.rle.am'
+  zipam='testdata/amira/LHMask.zip.am'
   expect_is(rle<-read.amiramesh(rleam), 'array')
   expect_that(dim(rle), is_equivalent_to(c(50, 50, 50)))
   expect_is(zip<-read.amiramesh(zipam), 'array')
@@ -21,7 +21,7 @@ test_that("check reading amiramesh in zlib and rle formats",{
 })
 
 test_that("we can avoid reading data sections",{
-  zipam='../testdata/amira/LHMask.zip.am'
+  zipam='testdata/amira/LHMask.zip.am'
   expect_is(d<-read.amiramesh(zipam), 'array')
   expect_equal(attr(d,'BoundingBox'), c(95.7, 164.3, 60.7, 129.3, 0.7, 69.3))
 })
@@ -34,7 +34,7 @@ test_that("read.zlib works in memory",{
 })
 
 test_that("read.amiramesh can read an 8 bit amira file",{
-  amfile="../testdata/amira/AL-a_M.am"
+  amfile="testdata/amira/AL-a_M.am"
   x=read.amiramesh(amfile)
   # count non-zero elements
   counts=c(6623L, 3304L, 2046L, 1529L, 1257L, 1054L, 907L, 706L, 657L, 
@@ -60,7 +60,7 @@ test_that("read.amiramesh can read an 8 bit amira file",{
 })
 
 test_that("is.amiramesh and amiratype",{
-  amfile="../testdata/amira/AL-a_M.am"
+  amfile="testdata/amira/AL-a_M.am"
   expect_true(is.amiramesh(amfile))
   # not enough to have a file ending
   tf=tempfile(fileext='.am')
@@ -70,5 +70,5 @@ test_that("is.amiramesh and amiratype",{
 
   expect_equal(amiratype(amfile),'uniform.field')
   
-  expect_equal(amiratype("../testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
+  expect_equal(amiratype("testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
 })

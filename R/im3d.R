@@ -311,10 +311,12 @@ dim.im3d<-function(x){
 #'   
 #'   \item{colors}{ A character vector of colours} }
 #' @examples
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' \dontrun{
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(imslice(LHMask,10), asp=TRUE)
 #' # useRaster is appreciably quicker in most cases
 #' image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)
+#' }
 image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
                        plotdims=NULL,flipdims='y', filled.contour=FALSE, asp=NA,
                        axes=FALSE, xlab=NULL, ylab=NULL,
@@ -414,8 +416,10 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #' @export
 #' @family im3d
 #' @examples
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' \dontrun{
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(projection(LHMask),asp=TRUE)
+#' }
 projection<-function(a, projdim='z', projfun=c('integrate','mean','sum'), 
                      na.rm=T, mask=NULL, ...){
   ndims=length(dim(a))
@@ -639,8 +643,9 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
 #' @export
 #' @family im3d
 #' @examples
+#' \dontrun{
 #' # read in a mask
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd', package='nat'))
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd', package='nat'))
 #' # pick out all the non zero values
 #' inmask=LHMask[LHMask!=0]
 #' # fill the non-zero elements of the mask with a vector that iterates over the
@@ -648,6 +653,7 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
 #' stripes=unmask(seq(inmask)%%10, LHMask)
 #' # make an image from one slice of that result array
 #' image(imslice(stripes,11), asp=TRUE)
+#' }
 unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
                 copyAttributes=TRUE){
   rval=vector(mode=mode(x),length=length(mask))
@@ -664,12 +670,14 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
 #' @return A function with signature \code{f(x, ..., na.rm)}
 #' @export
 #' @examples
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' \dontrun{
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
 #' op=par(mfrow=c(1,2))
 #' rval=image(projection(d,projfun=max))
 #' image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)
 #' par(op)
+#' }
 clampmax<-function(xmin,xmax) {
   # this fn returns a new function that will find the maximum of its inputs
   # and then clamp the return value between xmin and xmax
@@ -709,12 +717,14 @@ clampmax<-function(xmin,xmax) {
 #' @importFrom graphics rect
 #' @export
 #' @examples
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' \dontrun{
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' op=par()
 #' layout(matrix(c(1, 2), ncol = 2L), widths = c(1, 0.2))
 #' rval=image(imslice(LHMask,10), asp=TRUE)
 #' imscalebar(rval)
 #' par(op)
+#' }
 imscalebar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="Density",
                        mar=c(4,2,2,2)+0.1,border=NULL, ...){
   if(!is.null(zlim) ){

@@ -5,7 +5,7 @@ test_that('is.nrrd works',{
   dir.create(tmpdir)
   on.exit(unlink(tmpdir,recursive=TRUE))
   
-  origlhmaskfile="../testdata/nrrd/LHMask.nrrd"
+  origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   lhmaskfile=file.path(tmpdir,
                        sub("\\.nrrd$", '.something', basename(origlhmaskfile)))
   file.copy(origlhmaskfile,lhmaskfile)
@@ -21,7 +21,7 @@ test_that('is.nrrd works',{
 })
 
 test_that('read.nrrd.header',{
-  origlhmaskfile="../testdata/nrrd/LHMask.nrrd"
+  origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   expect_is(h<-read.nrrd.header(origlhmaskfile),'list')
   
   baseh=structure(list(type = "uint8", encoding = "gzip", endian = "big", 
@@ -38,7 +38,7 @@ test_that('read.nrrd.header',{
 
 
 test_that('read-write.nrrd',{
-  origlhmaskfile="../testdata/nrrd/LHMask.nrrd"
+  origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   expect_is(d<-read.nrrd(origlhmaskfile),'array')
   expect_true(is.raw(d))
   expect_equal(sum(d!=0), 28669)

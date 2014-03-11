@@ -39,8 +39,9 @@ standard R linear subscripting of arrays (see e.g.
 \code{\link{arrayInd}}).
 }
 \examples{
+\dontrun{
 # read in a mask
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd', package='nat'))
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd', package='nat'))
 # pick out all the non zero values
 inmask=LHMask[LHMask!=0]
 # fill the non-zero elements of the mask with a vector that iterates over the
@@ -48,6 +49,7 @@ inmask=LHMask[LHMask!=0]
 stripes=unmask(seq(inmask)\%\%10, LHMask)
 # make an image from one slice of that result array
 image(imslice(stripes,11), asp=TRUE)
+}
 }
 \seealso{
 Other im3d: \code{\link{boundingbox}},
