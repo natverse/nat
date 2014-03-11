@@ -312,7 +312,7 @@ dim.im3d<-function(x){
 #'   \item{colors}{ A character vector of colours} }
 #' @examples
 #' \dontrun{
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(imslice(LHMask,10), asp=TRUE)
 #' # useRaster is appreciably quicker in most cases
 #' image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)
@@ -417,7 +417,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #' @family im3d
 #' @examples
 #' \dontrun{
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(projection(LHMask),asp=TRUE)
 #' }
 projection<-function(a, projdim='z', projfun=c('integrate','mean','sum'), 
@@ -645,7 +645,7 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
 #' @examples
 #' \dontrun{
 #' # read in a mask
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd', package='nat'))
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd', package='nat'))
 #' # pick out all the non zero values
 #' inmask=LHMask[LHMask!=0]
 #' # fill the non-zero elements of the mask with a vector that iterates over the
@@ -671,7 +671,7 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
 #' @export
 #' @examples
 #' \dontrun{
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
 #' op=par(mfrow=c(1,2))
 #' rval=image(projection(d,projfun=max))
@@ -718,7 +718,7 @@ clampmax<-function(xmin,xmax) {
 #' @export
 #' @examples
 #' \dontrun{
-#' LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' op=par()
 #' layout(matrix(c(1, 2), ncol = 2L), widths = c(1, 0.2))
 #' rval=image(imslice(LHMask,10), asp=TRUE)

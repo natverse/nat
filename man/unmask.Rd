@@ -41,7 +41,7 @@ standard R linear subscripting of arrays (see e.g.
 \examples{
 \dontrun{
 # read in a mask
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd', package='nat'))
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd', package='nat'))
 # pick out all the non zero values
 inmask=LHMask[LHMask!=0]
 # fill the non-zero elements of the mask with a vector that iterates over the

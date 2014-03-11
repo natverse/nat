@@ -36,7 +36,7 @@ Make a scalebar to accompany an image.im3d plot
 }
 \examples{
 \dontrun{
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 op=par()
 layout(matrix(c(1, 2), ncol = 2L), widths = c(1, 0.2))
 rval=image(imslice(LHMask,10), asp=TRUE)

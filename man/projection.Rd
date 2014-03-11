@@ -40,7 +40,7 @@ would be better justified.
 }
 \examples{
 \dontrun{
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 image(projection(LHMask),asp=TRUE)
 }
 }

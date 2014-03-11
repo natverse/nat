@@ -82,7 +82,7 @@ Method to plot spatially calibrated image arrays
 }
 \examples{
 \dontrun{
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 image(imslice(LHMask,10), asp=TRUE)
 # useRaster is appreciably quicker in most cases
 image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)

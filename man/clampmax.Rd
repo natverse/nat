@@ -17,7 +17,7 @@ clamping range
 }
 \examples{
 \dontrun{
-LHMask=read.im3d(system.file('testdata/nrrd/LHMask.nrrd',package='nat'))
+LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
 op=par(mfrow=c(1,2))
 rval=image(projection(d,projfun=max))
