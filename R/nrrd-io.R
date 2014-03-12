@@ -303,6 +303,7 @@ write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
     if(length(origin)){
       # we need to write out as space origin + space directions
       nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+      cat("space dimension:", length(dim(x)), "\n", file=file, append=TRUE)
       cat("space origin:", nrrdvec(origin),"\n", file=file, append=TRUE)
       cat("space directions:",
           nrrdvec(c(voxdims[1], 0, 0)),
