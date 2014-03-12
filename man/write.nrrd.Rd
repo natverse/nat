@@ -2,7 +2,7 @@
 \alias{write.nrrd}
 \title{Write a 3d array to a NRRD file}
 \usage{
-write.nrrd(x, file, enc = c("raw", "text", "gzip"), dtype = c("float",
+write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   "byte", "short", "ushort", "int", "double"), endian = .Platform$endian)
 }
 \arguments{
@@ -10,8 +10,8 @@ write.nrrd(x, file, enc = c("raw", "text", "gzip"), dtype = c("float",
 
   \item{file}{Character string naming a file}
 
-  \item{enc}{One of three supported nrrd encodings ("raw",
-  "text", "gzip")}
+  \item{enc}{One of three supported nrrd encodings ("gzip",
+  "raw", "text")}
 
   \item{dtype}{The data type to write. One of
   "float","byte", "short", "ushort", "int", "double"}

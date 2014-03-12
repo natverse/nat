@@ -272,13 +272,13 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #' Produces a lattice format file i.e. one with a regular x,y,z grid
 #' @param x A 3d data array
 #' @param file Character string naming a file
-#' @param enc One of three supported nrrd encodings ("raw", "text", "gzip")
+#' @param enc One of three supported nrrd encodings ("gzip", "raw", "text")
 #' @param dtype The data type to write. One of "float","byte", "short", 
 #'   "ushort", "int", "double"
 #' @param endian One of "big" or "little". Defaults to \code{.Platform$endian}.
 #' @export
 #' @seealso \code{\link{read.nrrd}, \link{.Platform}}
-write.nrrd<-function(x, file, enc=c("raw","text","gzip"),
+write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
                      dtype=c("float","byte", "short", "ushort", "int", "double"),
                      endian=.Platform$endian){
   enc=match.arg(enc)
