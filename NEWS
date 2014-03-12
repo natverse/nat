@@ -1,4 +1,11 @@
+nat 1.4.1
+=========
+* fix bug in write.nrrd - was failing to write essential space dimensions field.
+* make gzip the default encoding for nrrd images - this is pretty much always
+  what one wants.
+
 nat 1.4.0
+=========
 * add cmtk.reformatx command for reformatting images using CMTK registrations
 * new function remotesync to synchronise a neuronlistfh object with its remote
   source.
@@ -7,7 +14,7 @@ nat 1.4.0
 * option to write missing (or no) neurons when using as.neuronlistfh.neuronlist
   this makes it _much_ faster to re-export these objects or prepare neuronlistfh
   for subsets of an existing group of neurons
-* fix hashmap functionality of neuronlistfh (speeds up access)
+* fix hashmap functionality of neuronlistfh (speeds up access to single neurons)
 
 nat 1.3.2
 =========
