@@ -377,7 +377,10 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
       obj <- readRDS(tmpFile)
       
       # fix paths in our new object
-      attr(obj, 'db')@dir <- file.path(localdir,'data')
+      dbdir<- file.path(localdir,'data')
+      attr(obj, 'db')@dir <- dbdir
+      # make the local directory that will contain in
+      if(!file.exists(dbdir)) dir.create(dbdir, recursive=TRUE)
       attr(obj, 'remote') <- paste0(dirname(file), '/data/')
       attr(obj, 'file') <- cached.neuronlistfh
       
@@ -402,7 +405,9 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
     dbdir2 <- file.path(dirname(file),'data')
     if(!isTRUE(file.info(dbdir2)$isdir))
       stop("Unable to locate data directory at: ", dbdir, ' or: ', dbdir2)
-    dbdir=attr(obj, 'db')@dir <- dbdir2
+    warning("setting new location of filehash database directory: ", dbdir2,
+            "\nConsider resaving neuronlistfh object with write.neuronlistfh!")
+    attr(obj, 'db')@dir <- dbdir2
   }
   
   attr(obj, 'file') <- file
