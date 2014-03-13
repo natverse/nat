@@ -323,7 +323,9 @@ fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5
 #'   appropriate location and \code{update=TRUE} then the md5sums are checked 
 #'   and the downloaded file will be copied on top of the original copy if they 
 #'   are different; if \code{udpate=FALSE}, the default, then no action will be 
-#'   taken.
+#'   taken. After downloading a remote \code{neuronlistfh} object, a check is 
+#'   made for the existence of the \code{data} directory that will be used to 
+#'   individual objects. If this does not exist it will be created.
 #'   
 #'   Note also that there is a \emph{strict convention} for the layout of the 
 #'   files on disk. The neuronlistfh object will be saved in R's \code{RDS} 
@@ -348,10 +350,10 @@ fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5
 #'   Given this arrangment, the data directory should always be at a fixed 
 #'   location with respect to the saved neuronlistfh object and this is enforced
 #'   on download and the default behaviour on read and write. However it does 
-#'   remain possible (if not recommended) to site the neuronlistfh and filehash
-#'   database directory in different relative locations; if the neuronlistfh
-#'   object specified by file does not have a filehash database with a valid
-#'   \code{dir} slot and there is no 'data' directory adjacent to the
+#'   remain possible (if not recommended) to site the neuronlistfh and filehash 
+#'   database directory in different relative locations; if the neuronlistfh 
+#'   object specified by file does not have a filehash database with a valid 
+#'   \code{dir} slot and there is no 'data' directory adjacent to the 
 #'   neuronlistfh object, an error will result.
 #' @param file The file path of the neuronlistfh object. Can be local, or remote
 #'   (via http or ftp).
@@ -377,7 +379,10 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
       obj <- readRDS(tmpFile)
       
       # fix paths in our new object
-      attr(obj, 'db')@dir <- file.path(localdir,'data')
+      dbdir<- file.path(localdir,'data')
+      attr(obj, 'db')@dir <- dbdir
+      # make the local directory that will contain in
+      if(!file.exists(dbdir)) dir.create(dbdir, recursive=TRUE)
       attr(obj, 'remote') <- paste0(dirname(file), '/data/')
       attr(obj, 'file') <- cached.neuronlistfh
       
@@ -402,7 +407,9 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
     dbdir2 <- file.path(dirname(file),'data')
     if(!isTRUE(file.info(dbdir2)$isdir))
       stop("Unable to locate data directory at: ", dbdir, ' or: ', dbdir2)
-    dbdir=attr(obj, 'db')@dir <- dbdir2
+    warning("setting new location of filehash database directory: ", dbdir2,
+            "\nConsider resaving neuronlistfh object with write.neuronlistfh!")
+    attr(obj, 'db')@dir <- dbdir2
   }
   
   attr(obj, 'file') <- file
