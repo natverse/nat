@@ -15,7 +15,8 @@ ndigest<-function(x, ...) UseMethod('ndigest')
 ndigest.neuronlistfh<-function(x, ...){
   attr(x,'remote')=NULL
   attr(x,'file')=NULL
-  attr(x,'db')@dir=NULL
+  attr(x,'db')=NULL
+  digest(x, ...)
   digest(x, ...)
 }
 
