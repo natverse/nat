@@ -1,3 +1,9 @@
+nat 1.4.2
+=========
+* fix bug in read.neuronlistfh resulting in error if a remote file was
+  downloaded and then read back in (using cached copy) before any neurons were
+  downloaded.
+
 nat 1.4.1
 =========
 * fix bug in write.nrrd - was failing to write essential space dimensions field.
