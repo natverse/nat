@@ -29,7 +29,11 @@ already a cached file at the appropriate location and
 \code{update=TRUE} then the md5sums are checked and the
 downloaded file will be copied on top of the original copy
 if they are different; if \code{udpate=FALSE}, the default,
-then no action will be taken.
+then no action will be taken. After downloading a remote
+\code{neuronlistfh} object, a check is made for the
+existence of the \code{data} directory that will be used to
+individual objects. If this does not exist it will be
+created.
 
 Note also that there is a \emph{strict convention} for the
 layout of the files on disk. The neuronlistfh object will
