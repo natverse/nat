@@ -132,10 +132,31 @@ test_that("set bounding box",{
 
 test_that("unmask",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
-  # unmask a vector ofim3d contents by original im3d returns original
+  # unmask a vector of im3d contents by original im3d returns original
   expect_equal(unmask(as.vector(i),i),i)
 })
 
+test_that("threshold",{
+  i=im3d(array(rep(TRUE, 6), 1:3),voxdims=c(2, 3, 4))
+  # threshold a vector of logicals gives back the vector
+  expect_equal(threshold(i, 0), i)
+  
+  # threshold a vector of integers gives appropriate logical vector
+  i2=im3d(array(1:6, 1:3), voxdims=c(2, 3, 4))
+  expect_equal(threshold(i2, 0), i)
+  
+  # also works with logica input
+  expect_equal(threshold(i2, i2>0), i)
+  
+  # can also use integer or raw modes
+  iraw=i
+  mode(iraw)='raw'
+  expect_equal(threshold(i2, 0, mode='raw'), iraw)
+  
+  iint=i
+  mode(iint)='integer'
+  expect_equal(threshold(i2, 0, mode='integer'), iint)
+})
 
 test_that("xyzpos, ijkpos and imexpand.grid",{
   d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
