@@ -130,6 +130,17 @@ test_that("set bounding box",{
   expect_equal(boundingbox(z4), boundingbox(d))
 })
 
+test_that("construct an im3d using an im3d to supply attributes",{
+  d=rnorm(1000)
+  x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300))
+  expect_equal(x, im3d(x))
+  expect_equal(x, im3d(d, x))
+  x2=x
+  boundingbox(x2)=boundingbox(x)*2
+  # override bounding box
+  expect_equal(x2, im3d(x, BoundingBox=c(20,200,100,200,200,300)*2))
+})
+
 test_that("unmask",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
   # unmask a vector of im3d contents by original im3d returns original

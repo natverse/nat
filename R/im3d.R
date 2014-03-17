@@ -4,11 +4,14 @@
 #' spatial positions at which the voxels are located. There should always be a 
 #' \code{BoundingBox} attribute which defines the physical extent of the volume 
 #' in the same manner as the Amira 3d visualisation and analysis software. This 
-#' corresponds to the \strong{node} centers option in the
+#' corresponds to the \strong{node} centers option in the 
 #' \href{http://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
 #' @param x The object to turn into an im3d
-#' @param dims The dimensions of the image array - may be overridden when 
-#'   constructing an im3d in which the data block has been omitted
+#' @param dims The dimensions of the image array either as an integer vector 
+#'   \emph{or} as an im3d object, whose attributes will provide defaults for 
+#'   \code{dims, origin, BoundingBox, bounds} arguments. The default 
+#'   (\code{dims=NULL}) will result in \code{dims} being set to \code{x} if 
+#'   \code{x} is an \code{im3d} object or \code{dim(x)} otherwise.
 #' @param voxdims The voxel dimensions
 #' @param origin the location (or centre) of the first voxel
 #' @param BoundingBox,bounds Physical extent of image. See the details section 
@@ -18,10 +21,23 @@
 #'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @family im3d
-im3d<-function(x=numeric(0), dims=dim(x), voxdims=NULL, origin=NULL,
+im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
                BoundingBox=NULL, bounds=NULL){
-  if(!inherits(x,'im3d'))
-    class(x)<-c("im3d",class(x))
+  if(inherits(x,'im3d')){
+    if(is.null(dims)) dims=x
+  } else class(x)<-c("im3d",class(x))
+  
+  # if dims is an im3d object then use that to set 
+  if(is.null(dims)) {
+    dims=dim(x)
+  } else if(inherits(dims,"im3d")){
+    atts=attributes(dims)
+    dims=dim(dims)
+    if(is.null(BoundingBox)) BoundingBox=atts[["BoundingBox"]]
+    if(is.null(bounds)) bounds=atts[["bounds"]]
+    if(is.null(origin)) origin=atts[["origin"]]
+  }
+  
   # add extra singleton dimension if we have 2d data
   if(length(dims)==2) dims=c(dims,1)
   # think about this - add 0 dimension if required

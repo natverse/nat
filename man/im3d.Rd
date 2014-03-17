@@ -2,15 +2,19 @@
 \alias{im3d}
 \title{Construct an im3d object representing 3D image data, densities etc}
 \usage{
-im3d(x = numeric(0), dims = dim(x), voxdims = NULL, origin = NULL,
+im3d(x = numeric(0), dims = NULL, voxdims = NULL, origin = NULL,
   BoundingBox = NULL, bounds = NULL)
 }
 \arguments{
   \item{x}{The object to turn into an im3d}
 
-  \item{dims}{The dimensions of the image array - may be
-  overridden when constructing an im3d in which the data
-  block has been omitted}
+  \item{dims}{The dimensions of the image array either as
+  an integer vector \emph{or} as an im3d object, whose
+  attributes will provide defaults for \code{dims, origin,
+  BoundingBox, bounds} arguments. The default
+  (\code{dims=NULL}) will result in \code{dims} being set
+  to \code{x} if \code{x} is an \code{im3d} object or
+  \code{dim(x)} otherwise.}
 
   \item{voxdims}{The voxel dimensions}
 
