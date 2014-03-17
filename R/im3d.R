@@ -663,6 +663,23 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
   rval
 }
 
+MakeMaskFromDensity<-function(d,bounds=attr(d,"bounds"),BoundingBox=attr(d,"BoundingBox"),threshold=-1){
+  # function that makes a mask object of the same size as
+  # a particular density and sets values to 0 or 1 depending
+  # on whether they exceed a threshold
+  
+  # Threshold could perhaps also be a plugin function
+  # to allow fancier setting of levels
+  
+  m=integer(length(d))
+  dim(m)<-dim(d)
+  if(missing(BoundingBox))
+    attr(m,"BoundingBox")=BoundingBox
+  attr(m,"BoundingBox")=bounds
+  m[d>threshold]=1
+  m
+}
+
 #' Return function that finds maximum of its inputs within a clamping range
 #' 
 #' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
