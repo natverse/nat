@@ -1,3 +1,13 @@
+nat 1.4.3
+=========
+* new ndigest (normalised digest) function to compute hash values. Methods for
+  neuronlistfh and dotprops objects. Can be used e.g. to compute a hash value
+  for a standard dps object to determine if a data.
+* new threshold function with a method for im3d objects. Can be used to make
+  masks.
+* more flexible im3d constructor can use an existing im3d object to supply
+  spatial attributes.
+
 nat 1.4.2
 =========
 * fix bug in read.neuronlistfh resulting in error if a remote file was
