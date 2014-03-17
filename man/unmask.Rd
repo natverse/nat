@@ -62,6 +62,7 @@ Other im3d: \code{\link{boundingbox}},
 \code{\link{write.im3d}}; \code{\link{im3d}};
 \code{\link{imexpand.grid}}; \code{\link{imslice}};
 \code{\link{origin}}; \code{\link{projection}};
+\code{\link{threshold}}, \code{\link{threshold.im3d}};
 \code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 
