@@ -679,6 +679,7 @@ threshold<-function(x, ...) UseMethod("threshold")
 #'   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, }
 #' @rdname threshold
 #' @family im3d
+#' @export
 #' @examples
 #' x=im3d(rnorm(1000),dim)
 #' stopifnot(all.equal(threshold(x, 0), threshold(x, x>0)))
