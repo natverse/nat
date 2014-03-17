@@ -663,21 +663,31 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
   rval
 }
 
-MakeMaskFromDensity<-function(d,bounds=attr(d,"bounds"),BoundingBox=attr(d,"BoundingBox"),threshold=-1){
-  # function that makes a mask object of the same size as
-  # a particular density and sets values to 0 or 1 depending
-  # on whether they exceed a threshold
-  
-  # Threshold could perhaps also be a plugin function
-  # to allow fancier setting of levels
-  
-  m=integer(length(d))
-  dim(m)<-dim(d)
-  if(missing(BoundingBox))
-    attr(m,"BoundingBox")=BoundingBox
-  attr(m,"BoundingBox")=bounds
-  m[d>threshold]=1
-  m
+#' Threshold an object, typically to produce a mask
+#' @param x Object to be thresholded
+#' @param \dots Additional arguments passed to methods
+#' @export
+threshold<-function(x, ...) UseMethod("threshold")
+
+#' @method threshold im3d
+#' @param threshold Either a numeric value that pixels must \strong{exceed} in 
+#'   order to be included in the mask \emph{or} a \code{logical} vector defining
+#'   foreground pixels.
+#' @param mode The storage mode of the resultant object (see 
+#'   \code{\link{vector}})
+#' @return an oject with attributes matching \code{x} and the value 
+#'   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, }
+#' @rdname threshold
+#' @family im3d
+#' @examples
+#' x=im3d(rnorm(1000),dim)
+#' stopifnot(all.equal(threshold(x, 0), threshold(x, x>0)))
+threshold.im3d<-function(x, threshold=0,
+                         mode=c("logical","integer","raw","numeric"),
+                         BoundingBox=boundingbox(x)){
+  mode=match.arg(mode)
+  m=as.vector(if(is.logical(threshold)) threshold else x>threshold, mode=mode)
+  im3d(m, dim(x), BoundingBox=BoundingBox, origin=origin(x))
 }
 
 #' Return function that finds maximum of its inputs within a clamping range
