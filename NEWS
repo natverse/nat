@@ -1,3 +1,7 @@
+* fix handling of logical expressions including NAs by subset.neuronlist
+* add soma argument to plot3d.neuron
+* fix: boundingbox.im3d() returns NULL when bounding box is not defined
+
 nat 1.4.3
 =========
 * new ndigest (normalised digest) function to compute hash values. Methods for
