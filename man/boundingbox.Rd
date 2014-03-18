@@ -32,6 +32,10 @@ boundingbox(x) <- value
   \item{dims}{The number of voxels in each dimension when x
   is a BoundingBox matrix.}
 }
+\value{
+a \code{matrix} with 2 rows and 3 columns \emph{NULL} when
+missing.
+}
 \description{
 Get the bounding box of an im3d volume or other compatible
 object

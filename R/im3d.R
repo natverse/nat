@@ -174,11 +174,12 @@ voxdims.default<-function(x, dims, ...){
 #'   is assumed to have a single position (sometimes thought of as its centre) 
 #'   \strong{and no physical extent.}} When written as a vector it should look 
 #'   like: \code{c(x0,x1,y0,y1,z0,z1)}. When written as a matrix it should look 
-#'   like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position
+#'   like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position 
 #'   of the origin.
 #' @param x A vector or matrix specifying a bounding box, an \code{im3d} object 
 #'   or, for \code{boundingbox.character}, a character vector specifying a file.
 #' @inheritParams voxdims
+#' @return a \code{matrix} with 2 rows and 3 columns \emph{NULL} when missing.
 #' @export
 #' @family im3d
 #' @examples
@@ -190,18 +191,19 @@ boundingbox<-function(x, ...) UseMethod("boundingbox")
 #' @export
 #' @rdname boundingbox
 boundingbox.im3d<-function(x, dims=dim(x), ...) {
-  if(!is.null(attr(x,"BoundingBox"))) attr(x,"BoundingBox")
-  else if(!is.null(b<-attr(x,"bounds"))) {
-    boundingbox(b, dims, ...)
-  } else {
+  atts=attributes(x)
+  if(!is.null(atts$BoundingBox)) atts$BoundingBox
+  else if(!is.null(atts$bounds)) {
+    boundingbox(atts$bounds, dims, ...)
+  } else if(isTRUE(all(c('x','y','z') %in% names(atts)))){
     # Use the locations of sample points. Note there is one special case we need
     # to consider, when dims=1 in any axis When this is the case the BoundingBox
     # found by this method will not match that determined by making the
     # calculationg using e.g. origin+voxdims.
     bb=sapply(c('x','y','z'),
-                  function(d) {ll=attr(x,d);c(ll[1],ll[length(ll)])}, USE.NAMES=F)
+                  function(d) {ll=atts[[d]];c(ll[1],ll[length(ll)])}, USE.NAMES=F)
     boundingbox(bb, dims)
-  }
+  } else NULL
 }
 
 #' Return the space origin of a 3d image object
