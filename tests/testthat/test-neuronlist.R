@@ -26,6 +26,16 @@ test_that("subset.neuronlist works with various indexing forms", {
   expect_equal(subset(Cell07PNs, names(Cell07PNs), rval='names'), names(Cell07PNs))
 })
 
+test_that("subset.neuronlist drops NA rows", {
+  # make a copy of original
+  x=Cell07PNs
+  # set one entry to NA
+  attr(x,'df')$Glomerulus[1]=NA
+  
+  expect_equal(subset(Cell07PNs, Glomerulus=='DL3'), 
+               subset(x, Glomerulus=='DL3'))
+})
+
 aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
 
 test_that("subset.neuronlist works with function", {

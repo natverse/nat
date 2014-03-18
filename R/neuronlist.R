@@ -389,7 +389,7 @@ subset.neuronlist<-function(x, subset, filterfun,
     if(is.function(r)) stop("Use of subset with functions is deprecated. ",
                             "Please use filterfun argument")
     if(is.logical(r) || is.integer(r) ){
-      r=nx[r]
+      r=nx[r & !is.na(r)]
     } else if(is.character(r)) {
       # check against names
       missing_names=setdiff(r,nx)
