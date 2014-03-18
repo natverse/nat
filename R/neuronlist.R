@@ -392,27 +392,29 @@ subset.neuronlist<-function(x, subset, filterfun,
       r=nx[r & !is.na(r)]
     } else if(is.character(r)) {
       # check against names
-      missing_names=setdiff(r,nx)
-      if(length(missing_names)) warning("There are ",length(missing_names),' missing names.')
-      r=setdiff(r,missing_names)
+      missing_names=setdiff(r, nx)
+      if(length(missing_names))
+        warning("There are ",length(missing_names),' missing names.')
+      r=setdiff(r, missing_names)
     }
   }
   # now apply filterfun to remaining neurons
   if(length(r) && !missing(filterfun)) {
-    filter_results=rep(NA,length(r))
+    filter_results=rep(NA, length(r))
     # use for loop because neuronlists are normally large but not long
     for(i in seq_along(r)){
       tf=try(filterfun(x[[r[i]]]))
-      if(!inherits(tf,'try-error')) filter_results[i]=tf
+      if(!inherits(tf, 'try-error')) filter_results[i]=tf
     }
     r=r[filter_results]
     if(any(is.na(filter_results))) {
-      warning("filterfun failed to evaluate for",sum(is.na(r)),'entries in neuronlist')
+      warning("filterfun failed to evaluate for ", sum(is.na(r)),
+              ' entries in neuronlist')
       r=na.omit(r)
     }
   }
   
-  switch(rval,neuronlist=x[r],names=r,data.frame=df[r,])
+  switch(rval, neuronlist=x[r], names=r, data.frame=df[r, ])
 }
 
 #' Find names of neurons within a 3d selection box (usually drawn in rgl window)
