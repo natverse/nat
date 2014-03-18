@@ -4,7 +4,7 @@
 \usage{
 \method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
   WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
-  PlotSubTrees = TRUE, add = TRUE, col = NULL, ...)
+  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...)
 }
 \arguments{
   \item{x}{A neuron to plot}
@@ -33,6 +33,10 @@
 
   \item{col}{Colour specification (see rgl materials)}
 
+  \item{soma}{Whether to plot a sphere at neuron's origin
+  representing the soma. Either a logical value or a
+  numeric indicating the radius.}
+
   \item{...}{Additional arguments passed to rgl::lines3d}
 }
 \value{
@@ -52,6 +56,9 @@ plot3d(Cell07PNs[[2]],col='green')
 plot3d(Cell07PNs[[2]],col='blue',add=FALSE)
 # plot the number of all nodes
 plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
+# include cell bodies
+plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
+plot3d(Cell07PNs[5], col='red', soma=3)
 rgl.close()
 }
 \seealso{
