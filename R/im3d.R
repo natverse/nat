@@ -312,9 +312,11 @@ dim.im3d<-function(x){
 #'   \code{\link{terrain.colors}} or similar functions.
 #' @param color.palette The colour palette from which \code{col} will be 
 #'   selected.
+#' @param useRaster Whether to use rasterImage function to plot image as a
+#'   bitmap. This is much faster than the default for large images.
 #' @param \dots graphical parameters for \code{\link{plot}} or 
-#'   \code{\link{image}} may also be passed as arguments to this function. See 
-#'   \code{\link{image.default}}.
+#'   \code{\link[graphics]{image}} may also be passed as arguments to this
+#'   function.
 #' @return A \code{list} with elements:
 #'   
 #'   \itemize{
@@ -336,11 +338,12 @@ dim.im3d<-function(x){
 #' image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)
 #' }
 image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
-                       plotdims=NULL,flipdims='y', filled.contour=FALSE, asp=NA,
-                       axes=FALSE, xlab=NULL, ylab=NULL,
-                       nlevels=20, levels = pretty(zlim, nlevels+1),
-                       color.palette=colorRampPalette(c('navy','cyan','yellow','red')),
-                       col = color.palette(length(levels) - 1), ...){
+                     plotdims=NULL,flipdims='y', filled.contour=FALSE, asp=NA,
+                     axes=FALSE, xlab=NULL, ylab=NULL,
+                     nlevels=20, levels = pretty(zlim, nlevels+1),
+                     color.palette=colorRampPalette(c('navy','cyan','yellow','red')),
+                     col = color.palette(length(levels) - 1), 
+                     useRaster, ...){
   # we will call the data object z for consistency with original image function
   z=x
   # don't try and plot anything if we have malformed zlims
@@ -398,8 +401,13 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
     if (!is.double(z)) storage.mode(z) <- "double"
     .filled.contour(x, y, z, levels, col = col)
   } else {
+    if(missing(useRaster)) {
+      # prefer to render images with rasters but leave image to check if we can
+      op=options(preferRaster=TRUE)
+      on.exit(options(op))
+    }
     image(x=x, y=y, z=z, zlim=zlim, xlim=xlim, ylim=ylim, col=col, asp=asp,
-          axes=FALSE, xlab=plotdims[1], ylab=plotdims[2], ...)
+          axes=FALSE, xlab=plotdims[1], ylab=plotdims[2], useRaster=useRaster, ...)
   }
   if(axes){
     axis(2,pretty(par("usr")[3:4]),abs(pretty(par("usr")[3:4])))

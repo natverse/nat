@@ -7,7 +7,7 @@
   axes = FALSE, xlab = NULL, ylab = NULL, nlevels = 20,
   levels = pretty(zlim, nlevels + 1),
   color.palette = colorRampPalette(c("navy", "cyan", "yellow", "red")),
-  col = color.palette(length(levels) - 1), ...)
+  col = color.palette(length(levels) - 1), useRaster, ...)
 }
 \arguments{
   \item{x}{The im3d object containing the data to be
@@ -57,9 +57,13 @@
   \item{color.palette}{The colour palette from which
   \code{col} will be selected.}
 
+  \item{useRaster}{Whether to use rasterImage function to
+  plot image as a bitmap. This is much faster than the
+  default for large images.}
+
   \item{\dots}{graphical parameters for \code{\link{plot}}
-  or \code{\link{image}} may also be passed as arguments to
-  this function. See \code{\link{image.default}}.}
+  or \code{\link[graphics]{image}} may also be passed as
+  arguments to this function.}
 }
 \value{
 A \code{list} with elements:
