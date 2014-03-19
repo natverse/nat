@@ -39,8 +39,12 @@ Synchronise a remote object
 }
 \examples{
 \dontrun{
-kcs20=read.neuronlistfh('kcs20.rds')
+kcs20=read.neuronlistfh('http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds')
+# update object from the web
 kcs20=remotesync(kcs20)
+# download all neurons with significant innervation of the vertical lobe
+mbvl_neurons=subset(kcs20, (MB_VL_R+MB_VL_L)>200, rval='names')
+kcs20=remotesync(kcs20, indices=mbvl_neurons, download.missing=TRUE)
 }
 }
 \seealso{
