@@ -482,7 +482,9 @@ remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
 }
 
 #' @S3method remotesync neuronlistfh
-#' @param update.object Whether to update the \code{neuronlistfh} object itself
+#' @param indices Character vector naming neurons to update (default
+#'   \code{indices=NULL} implies all neurons).
+#' @param update.object Whether to update the \code{neuronlistfh} object itself 
 #'   on disk (default TRUE). Note that this assumes that the \code{neuronlistfh}
 #'   object has not been renamed after it was downloaded.
 #' @return The updated \code{neuronlistfh} object (invisibly)
@@ -494,7 +496,7 @@ remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
 #' }
 remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
                                   download.missing=FALSE, delete.extra=FALSE,
-                                  update.object=TRUE, ...) {
+                                  indices=NULL, update.object=TRUE, ...) {
   # first update the neuronlist object on disk
   if(update.object){
     # construct url to neuronlistfh object from remote data directory
@@ -505,6 +507,8 @@ remotesync.neuronlistfh<-function(x, remote=attr(x,'remote'),
   if(download.missing || delete.extra) {
     db=attr(x, 'db')
     keyfilemap=attr(x, 'keyfilemap')
+    if(!is.null(indices))
+      keyfilemap=keyfilemap[intersect(names(keyfilemap), indices)]
     objects_present=dir(db@dir)
 
     if(download.missing){

@@ -42,6 +42,15 @@ test_that("Can synchronise a neuronlistfh object with its remote", {
   remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE)
   expect_equal(files_before,dir(dbdir))
   
+  # delete a file and check that we can sync when specifying indices
+  unlink(file.path(dbdir,files_before[1]))
+  remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE, 
+             indices='rhubarb')
+  expect_equal(files_before[-1],dir(dbdir))
+  remotesync(kcs20fh.remote, update.object=FALSE, download.missing=TRUE, 
+             indices=names(kcs20fh.remote))
+  expect_equal(files_before,dir(dbdir))
+    
   # add an extra file and check it is deleted
   tf=tempfile(tmpdir=dbdir)
   writeLines('rhubarb',con=tf)

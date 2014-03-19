@@ -7,8 +7,8 @@ remotesync(x, remote = attr(x, "remote"), download.missing = TRUE,
   delete.extra = FALSE, ...)
 
 \method{remotesync}{neuronlistfh}(x, remote = attr(x, "remote"),
-  download.missing = FALSE, delete.extra = FALSE, update.object = TRUE,
-  ...)
+  download.missing = FALSE, delete.extra = FALSE, indices = NULL,
+  update.object = TRUE, ...)
 }
 \arguments{
   \item{x}{Object to synchronise with a remote URL}
@@ -22,6 +22,9 @@ remotesync(x, remote = attr(x, "remote"), download.missing = TRUE,
   TRUE)}
 
   \item{\dots}{Additional arguments passed to methods}
+
+  \item{indices}{Character vector naming neurons to update
+  (default \code{indices=NULL} implies all neurons).}
 
   \item{update.object}{Whether to update the
   \code{neuronlistfh} object itself on disk (default TRUE).
