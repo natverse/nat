@@ -1,6 +1,7 @@
 \name{ndigest}
 \alias{ndigest}
 \alias{ndigest.dotprops}
+\alias{ndigest.neuron}
 \alias{ndigest.neuronlistfh}
 \title{Calculated normalised digest value for an object}
 \usage{
@@ -9,6 +10,9 @@ ndigest(x, ...)
 \method{ndigest}{neuronlistfh}(x, ...)
 
 \method{ndigest}{dotprops}(x, absoluteVectors = TRUE, ...)
+
+\method{ndigest}{neuron}(x, fieldsToExclude = c("InputFileName", "CreatedAt",
+  "NodeName", "InputFileStat", "InputFileMD5"), ...)
 }
 \arguments{
   \item{x}{Object for which a normalised digest will be
@@ -16,6 +20,9 @@ ndigest(x, ...)
 
   \item{...}{Additional arguments passed to methods and
   then on to \code{\link{digest}}}
+
+  \item{fieldsToExclude}{Character vector naming the neuron
+  fields to exclude}
 
   \item{absoluteVectors}{Whether to check only the absolute
   value of eigenvectors for equality (default TRUE, see
@@ -46,6 +53,22 @@ decomposition where the sign of the eigenvector is
 essentially random and subject to small numerical
 instabilities. Therefore it does not usually make sense to
 rely on the value of vect exactly.
+
+\code{ndigest.neuron} ignores the following fields:
+
+\itemize{
+
+\item InputFileName
+
+\item CreatedAt
+
+\item NodeName
+
+\item InputFileStat
+
+\item InputFileMD5
+
+}
 }
 \examples{
 stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))
@@ -54,5 +77,7 @@ stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))
 \code{\link{digest}}
 
 \code{\link{all.equal.dotprops}}
+
+\code{\link{all.equal.neuron}}
 }
 

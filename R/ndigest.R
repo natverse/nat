@@ -49,6 +49,32 @@ ndigest.dotprops<-function(x, absoluteVectors=TRUE, ...){
   digest(x, ...)
 }
 
+#' @details \code{ndigest.neuron} ignores the following fields:
+#'   
+#'   \itemize{
+#'   
+#'   \item InputFileName
+#'   
+#'   \item CreatedAt
+#'   
+#'   \item NodeName
+#'   
+#'   \item InputFileStat
+#'   
+#'   \item InputFileMD5
+#'   
+#'   }
+#' @param fieldsToExclude Character vector naming the neuron fields to exclude
+#' @rdname ndigest
+#' @export
+#' @seealso \code{\link{all.equal.neuron}}
+ndigest.neuron<-function(x, fieldsToExclude=c("InputFileName","CreatedAt",
+                                              "NodeName","InputFileStat",
+                                              "InputFileMD5"), ...){
+  fieldsToKeep=setdiff(names(x), fieldsToExclude)
+  digest(x[fieldsToKeep], ...)
+}
+
 #' @export
 ndigest.default<-function(x, ...){
   digest(x, ...)
