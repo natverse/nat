@@ -47,6 +47,9 @@ essentially random and subject to small numerical
 instabilities. Therefore it does not usually make sense to
 rely on the value of vect exactly.
 }
+\examples{
+stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))
+}
 \seealso{
 \code{\link{digest}}
 

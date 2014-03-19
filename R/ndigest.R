@@ -37,6 +37,9 @@ ndigest.neuronlistfh<-function(x, ...){
 #' @inheritParams all.equal.dotprops
 #' @rdname ndigest
 #' @seealso \code{\link{all.equal.dotprops}}
+#' @export
+#' @examples
+#' stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))
 ndigest.dotprops<-function(x, absoluteVectors=TRUE, ...){
   # remove mtime and file attributes
   atts=attributes(x)
