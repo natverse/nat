@@ -7,7 +7,7 @@
   axes = FALSE, xlab = NULL, ylab = NULL, nlevels = 20,
   levels = pretty(zlim, nlevels + 1),
   color.palette = colorRampPalette(c("navy", "cyan", "yellow", "red")),
-  col = color.palette(length(levels) - 1), useRaster, ...)
+  col = color.palette(length(levels) - 1), useRaster = NULL, ...)
 }
 \arguments{
   \item{x}{The im3d object containing the data to be
@@ -57,9 +57,11 @@
   \item{color.palette}{The colour palette from which
   \code{col} will be selected.}
 
-  \item{useRaster}{Whether to use rasterImage function to
-  plot image as a bitmap. This is much faster than the
-  default for large images.}
+  \item{useRaster}{Whether to use \code{\link{rasterImage}}
+  to plot images as a bitmap (much faster for large
+  images). default \code{useRaster=NULL} checks
+  \code{\link{dev.capabilities}} to see if raster images
+  are supported.}
 
   \item{\dots}{graphical parameters for \code{\link{plot}}
   or \code{\link[graphics]{image}} may also be passed as

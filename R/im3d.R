@@ -312,10 +312,11 @@ dim.im3d<-function(x){
 #'   \code{\link{terrain.colors}} or similar functions.
 #' @param color.palette The colour palette from which \code{col} will be 
 #'   selected.
-#' @param useRaster Whether to use rasterImage function to plot image as a
-#'   bitmap. This is much faster than the default for large images.
+#' @param useRaster Whether to use \code{\link{rasterImage}} to plot images as a
+#'   bitmap (much faster for large images). default \code{useRaster=NULL} checks
+#'   \code{\link{dev.capabilities}} to see if raster images are supported.
 #' @param \dots graphical parameters for \code{\link{plot}} or 
-#'   \code{\link[graphics]{image}} may also be passed as arguments to this
+#'   \code{\link[graphics]{image}} may also be passed as arguments to this 
 #'   function.
 #' @return A \code{list} with elements:
 #'   
@@ -343,7 +344,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
                      nlevels=20, levels = pretty(zlim, nlevels+1),
                      color.palette=colorRampPalette(c('navy','cyan','yellow','red')),
                      col = color.palette(length(levels) - 1), 
-                     useRaster, ...){
+                     useRaster=NULL, ...){
   # we will call the data object z for consistency with original image function
   z=x
   # don't try and plot anything if we have malformed zlims
@@ -401,10 +402,12 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
     if (!is.double(z)) storage.mode(z) <- "double"
     .filled.contour(x, y, z, levels, col = col)
   } else {
-    if(missing(useRaster)) {
-      # prefer to render images with rasters but leave image to check if we can
-      op=options(preferRaster=TRUE)
-      on.exit(options(op))
+    if(is.null(useRaster)) {
+      # render images with rasters if we can
+      useRaster <- FALSE
+      ras <- unlist(dev.capabilities("raster"), use.names=FALSE)
+      if(identical(ras, "yes")) useRaster <- TRUE
+      if(identical(ras, "non-missing")) useRaster <- all(!is.na(z))
     }
     image(x=x, y=y, z=z, zlim=zlim, xlim=xlim, ylim=ylim, col=col, asp=asp,
           axes=FALSE, xlab=plotdims[1], ylab=plotdims[2], useRaster=useRaster, ...)
