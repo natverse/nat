@@ -15,7 +15,11 @@ notifications:
     on_success: change
     on_failure: change
 env:
-  - global:
+  global:
+    - secure: U5L4JHPa5/mpcDjL60XZVDXtT/nQe4lyhCG6pIj7dF8N6iLRO/vh0ChPxZsBhunKaNMnu59MEqn9nvp09kodV7DzW1nNV+UVi2ZtXpAFejHOK6T4d31vGShCnoM5BkTeMp7exX8yfKWw3Zw0JY47sHTLFihYbwUFqsus0aqT0hIK
     - WARNINGS_ARE_ERRORS=1
     - _R_CHECK_FORCE_SUGGESTS_=0
     - DISPLAY=:99.0
+after_success:
+  - chmod 755 ./travisbuildflycircuit.sh
+  - ./travisbuildflycircuit.sh
