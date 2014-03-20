@@ -1,6 +1,13 @@
+nat 1.4.4
+=========
 * fix handling of logical expressions including NAs by subset.neuronlist
 * add soma argument to plot3d.neuron
 * fix: boundingbox.im3d() returns NULL when bounding box is not defined
+* give remotesync.neuronlistfh an indices argument to allow download/update
+  from the web of a selected population of neurons
+* add ndigest.neuron method
+* fix: export ndigest.dotprops method
+* give image.im3d a useRaster option, which defaults to TRUE when possible.
 
 nat 1.4.3
 =========
