@@ -1,0 +1,31 @@
+\name{pan3d}
+\alias{pan3d}
+\title{Some useful extensions / changes to rgl defaults}
+\usage{
+pan3d(button)
+}
+\arguments{
+  \item{button}{Integer from 1 to 3 indicating mouse
+  button}
+}
+\description{
+Set up pan call back for current rgl device
+}
+\details{
+Copied verbatim from ?rgl.setMouseCallbacks for rgl version
+0.92.892 Mouse button 2 is right and button 3 is middle
+(accessed by meta/alt key)
+}
+\examples{
+\dontrun{
+ open3d()
+ pan3d(2)
+}
+}
+\author{
+Duncan Murdoch
+}
+\seealso{
+\code{\link{rgl.setMouseCallbacks}}
+}
+
