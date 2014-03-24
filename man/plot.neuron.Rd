@@ -3,11 +3,11 @@
 \title{Plot a 2D project of a neuron}
 \usage{
 \method{plot}{neuron}(x, WithLine = TRUE, NodesOnly = TRUE,
-  EPsOnly = FALSE, BPsOnly = FALSE, WithText = FALSE,
-  UseCurPalette = FALSE, PlotAxes = c("XY", "YZ", "XZ", "ZY"),
-  Axes = TRUE, asp = 1, MainTitle = x$NeuronName, xlim = NULL,
-  ylim = NULL, AxisDirections = c(1, -1, 1), Superimpose = F,
-  LineCol = NULL, PointAlpha = 1, tck = NA, lwd = par("lwd"), ...)
+  EPsOnly = FALSE, BPsOnly = FALSE, WithText = FALSE, PlotAxes = c("XY",
+  "YZ", "XZ", "ZY"), Axes = TRUE, asp = 1, MainTitle = x$NeuronName,
+  xlim = NULL, ylim = NULL, AxisDirections = c(1, -1, 1),
+  Superimpose = F, LineCol = NULL, PointAlpha = 1, tck = NA,
+  lwd = par("lwd"), ...)
 }
 \arguments{
   \item{x}{a neuron to plot.}
@@ -26,9 +26,6 @@
 
   \item{WithText}{whether to label plotted points with
   their id.}
-
-  \item{UseCurPalette}{whether the current palette should
-  be used for colors.}
 
   \item{PlotAxes}{the axes for the plot.}
 
