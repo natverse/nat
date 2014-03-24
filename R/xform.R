@@ -183,14 +183,14 @@ xyzmatrix.igraph<-function(x, ...){
 #'   asymmetry. between brain hemispheres
 #'   
 #' @details This function is agnostic re node vs cell data, but for node data 
-#'   boundingBox should be supplied while for cell, it should be bounds See 
-#'   getBounds/getBoundingBox for details of bounds vs bounding box.
+#'   BoundingBox should be supplied while for cell, it should be bounds. See 
+#'   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
 #' @param x Object with 3d points (with named cols X,Y,Z)
 #' @param ... additional arguments passed to methods or eventually to
 #'   \code{xform}
 #' @return Object with transformed points
 #' @export
-#' @seealso \code{\link{xform}}, \code{nat.as::getBounds, nat.as::getBoundingBox}
+#' @seealso \code{\link{xform}, \link{boundingbox}}
 #' @examples
 #' x=Cell07PNs[[1]]
 #' plot3d(x,col='red')

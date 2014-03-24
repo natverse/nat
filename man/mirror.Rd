@@ -50,7 +50,6 @@ plot3d(mirror(y,564.2532,transform='flip'),col='red')
 plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'),col='blue')
 }
 \seealso{
-\code{\link{xform}}, \code{nat.as::getBounds,
-nat.as::getBoundingBox}
+\code{\link{xform}, \link{boundingbox}}
 }
 
