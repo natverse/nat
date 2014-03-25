@@ -121,7 +121,7 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
 #' @return current rgl device
 #' @export
 #' @seealso \code{\link{open3d},\link{pan3d}}
-neuronviewer<- function(bgcol='white', FOV=0, ...){
+nopen3d<- function(bgcol='white', FOV=0, ...){
   res=open3d(mouseMode=c("trackball","user","zoom"), FOV=FOV, ...)
   bg3d(col=bgcol)
   pan3d(2)
