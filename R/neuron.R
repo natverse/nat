@@ -83,11 +83,11 @@ is.neuron<-function(x,Strict=FALSE) {
 #' @rdname neuron
 as.neuron<-function(x, ...) UseMethod('as.neuron')
 
-#' @S3method as.neuron neuron
+#' @export
 as.neuron.neuron<-function(x, ...) x
 
 #' @rdname neuron
-#' @S3method as.neuron data.frame
+#' @export
 #' @details Columns will be ordered c('PointNo','Label','X','Y','Z','W','Parent')
 #' @description \code{as.neuron.data.frame} expects a block of SWC format data
 as.neuron.data.frame<-function(x, ...) {
@@ -226,7 +226,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
 #' @description \code{as.neuron.default} will add class "neuron" to a neuron-like
 #'   object.
 #' @rdname neuron
-#' @S3method as.neuron default
+#' @export
 as.neuron.default<-function(x, ...){
   if(is.null(x)) return (NULL)
   if(is.neuron(x,Strict=FALSE)) class(x)=c("neuron",class(x))

@@ -43,12 +43,12 @@ rootpoints<-function (x, ...)
   UseMethod("rootpoints")
 
 #' @rdname rootpoints
-#' @S3method rootpoints default
+#' @export
 rootpoints.default<-function(x, ...) rootpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
 #' @method rootpoints neuron
-#' @S3method rootpoints neuron
+#' @export
 #' @param subtrees Integer index of the fully connected subtree in
 #'   \code{x$SubTrees}. Only applicable when a \code{neuron} consists of
 #'   multiple unconnected subtrees.
@@ -61,7 +61,7 @@ rootpoints.neuron<-function(x, subtrees=1, ...){
 
 #' @rdname rootpoints
 #' @method rootpoints igraph
-#' @S3method rootpoints igraph
+#' @export
 rootpoints.igraph<-function(x, ...) graph.nodes(x, type='root', ...)
 
 #' Return the branchpoints of a neuron or graph
@@ -72,14 +72,14 @@ branchpoints<-function (x, ...)
   UseMethod("branchpoints")
 
 #' @rdname rootpoints
-#' @S3method branchpoints default
+#' @export
 #' @method branchpoints default
 branchpoints.default<-function(x, ...) branchpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
 #' @details \code{branchpoints.neuron} returns a list if more than one subtree is
 #'   specified
-#' @S3method branchpoints neuron
+#' @export
 #' @method branchpoints neuron
 branchpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$BranchPoints)
@@ -91,7 +91,7 @@ branchpoints.neuron<-function(x, subtrees=1, ...){
 
 #' @rdname rootpoints
 #' @method branchpoints igraph
-#' @S3method branchpoints igraph
+#' @export
 branchpoints.igraph<-function(x, ...) graph.nodes(x, type='branch', ...)
 
 #' @rdname rootpoints
@@ -100,7 +100,7 @@ endpoints<-function (x, ...) UseMethod("endpoints")
 
 #' @rdname rootpoints
 #' @method endpoints neuron
-#' @S3method endpoints neuron
+#' @export
 endpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(endpoints=x$EndPoints)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
@@ -111,10 +111,10 @@ endpoints.neuron<-function(x, subtrees=1, ...){
 
 #' @rdname rootpoints
 #' @method endpoints igraph
-#' @S3method endpoints igraph
+#' @export
 endpoints.igraph<-function(x, ...) graph.nodes(x, type='end', ...)
 
 #' @rdname rootpoints
-#' @S3method endpoints default
+#' @export
 #' @method endpoints default
 endpoints.default<-function(x, ...) endpoints(as.ngraph(x), ...)
