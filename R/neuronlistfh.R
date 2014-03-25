@@ -185,7 +185,7 @@ as.neuronlistfh<-function(x, df, ...)
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
 #' @method as.neuronlistfh neuronlist
-#' @S3method as.neuronlistfh neuronlist
+#' @export
 #' @importFrom digest digest
 #' @rdname neuronlistfh
 as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
@@ -225,14 +225,14 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
 #' @method as.neuronlist neuronlistfh
-#' @S3method as.neuronlist neuronlistfh
+#' @export
 #' @inheritParams as.neuronlist
 as.neuronlist.neuronlistfh<-function(l, ...){
   # get the overloaded subscripting operator to do the work
   l[names(l)]
 }
 
-#' @S3method [[ neuronlistfh
+#' @export
 "[[.neuronlistfh"<-function(x,i,...){
 
   # we need to translate the incoming key to the md5 hash
@@ -272,7 +272,7 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   })
 }
 
-#' @S3method as.list neuronlistfh
+#' @export
 as.list.neuronlistfh<-function(x, ...) x
 
 #' extract a sublist from a neuronlistfh, converting to regular in memory list
@@ -469,7 +469,7 @@ write.neuronlistfh<-function(x, file=attr(x,'file'), overwrite=FALSE, ...){
 remotesync<-function(x, remote=attr(x,'remote'), download.missing=TRUE, 
                      delete.extra=FALSE, ...) UseMethod("remotesync")
 
-#' @S3method remotesync default
+#' @export
 remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
                              delete.extra=FALSE, ...){
   if(is.character(x)) x=read.neuronlistfh(x)
@@ -481,7 +481,7 @@ remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
              delete.extra=delete.extra, ...)
 }
 
-#' @S3method remotesync neuronlistfh
+#' @export
 #' @param indices Character vector naming neurons to update (default
 #'   \code{indices=NULL} implies all neurons).
 #' @param update.object Whether to update the \code{neuronlistfh} object itself 

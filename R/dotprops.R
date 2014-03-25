@@ -95,28 +95,28 @@ scale.dotprops<-function(x,center=TRUE,scale=TRUE){
 dotprops<-function(x, ...) UseMethod('dotprops')
 
 #' @method dotprops dotprops
-#' @S3method dotprops dotprops
+#' @export
 #' @export
 #' @rdname dotprops
 dotprops.dotprops<-function(x, k=attr(x,'k'), ...) {
   dotprops(xyzmatrix(x), k=k, ...)
 }
 
-#' @S3method dotprops list
+#' @export
 dotprops.list<-function(x, ...) {
   # FIXME - change to an abstract base class for objects with 3d vertices
   # rather than the completely generic list
   dotprops(xyzmatrix(x), ...)
 }
 
-#' @S3method dotprops neuronlist
+#' @export
 #' @method dotprops neuronlist
 #' @rdname dotprops
 dotprops.neuronlist<-function(x, ...) {
   nlapply(x, dotprops, ...)
 }
 
-#' @S3method dotprops neuron
+#' @export
 #' @method dotprops neuron
 #' @rdname dotprops
 dotprops.neuron<-function(x, Labels=NULL, ...) {

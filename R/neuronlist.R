@@ -47,7 +47,7 @@ neuronlist <- function(..., DATAFRAME=NULL) as.neuronlist(list(...), df=DATAFRAM
 #' @seealso \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
 as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
 
-#' @S3method as.neuronlist default
+#' @export
 #' @method as.neuronlist default
 as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
   if(is.neuron(l)) {
@@ -74,7 +74,7 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
 }
 
 #' @method [ neuronlist
-#' @S3method [ neuronlist
+#' @export
 "[.neuronlist" <- function(x,i,...) {
   nl2=structure(NextMethod("["), class = class(x))
   df=attr(x,'df')
@@ -234,7 +234,7 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
 
 #' @rdname plot3d.neuronlist
 #' @method plot3d character
-#' @S3method plot3d character
+#' @export
 #' @description \code{plot3d.character} is a convenience method intended for
 #'   exploratory work on the command line.
 #' @details plot3d.character will check if options('nat.default.neuronlist') has
@@ -286,7 +286,7 @@ plot3d.character<-function(x, ...) {
 #' @description \code{droplevels} Remove redundant factor levels in dataframe 
 #'   attached to neuronlist
 #' @inheritParams base::droplevels.data.frame
-#' @S3method droplevels neuronlist
+#' @export
 #' @name neuronlist-dataframe-methods
 #' @aliases droplevels.neuronlist
 #' @return the attached dataframe with levels dropped (NB \strong{not} the
@@ -302,7 +302,7 @@ droplevels.neuronlist<-function(x, except, ...){
 #' @param data A neuronlist object
 #' @param expr The expression to evaluate
 #' @rdname neuronlist-dataframe-methods
-#' @S3method with neuronlist
+#' @export
 #' @method with neuronlist
 #' @seealso with
 with.neuronlist<-function(data, expr, ...) {
@@ -315,7 +315,7 @@ with.neuronlist<-function(data, expr, ...) {
 #' @param x A neuronlist object
 #' @param ... Further arguments passed to default methods (and usually ignored)
 #' @rdname neuronlist-dataframe-methods
-#' @S3method head neuronlist
+#' @export
 #' @importFrom utils head
 #' @seealso head
 head.neuronlist<-function(x, ...) {
