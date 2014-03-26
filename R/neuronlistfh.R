@@ -238,9 +238,12 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   # we need to translate the incoming key to the md5 hash
   # if a hashmap is available, that will be faster for lookup by names
   if(is.character(i) && !is.null(hm<-attr(x,'hashmap'))){
-    i = get(i,envir=hm)
+    i = mget(i,envir=hm, inherits=FALSE, ifnotfound = list(NA))[[1]]
   } else i = attr(x,'keyfilemap')[i]
 
+  if(is.na(i))
+    return(NULL)
+  
   if(is.null(attr(x,'remote'))){
     # no remote specified, just treat as normal
     return(attr(x,'db')[[i,...]])
