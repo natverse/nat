@@ -24,6 +24,7 @@ xform<-function(x, reg, ...) UseMethod('xform')
 #' @details TODO get this to work for matrices with more than 3 columns by
 #'   working on xyzmatrix definition.
 #' @method xform default
+#' @S3method xform default
 #' @param na.action How to handle NAs. NB drop may not work for some classes.
 #' @rdname xform
 xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
