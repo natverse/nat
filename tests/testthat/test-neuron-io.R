@@ -88,6 +88,10 @@ test_that("We can read in neurons as a neuronlist",{
                neuronnames=function(x) sub("\\..*","",basename(x))),'neuronlist')
   expect_equal(length(nl),2)
   expect_true('InputFileName'%in%names(nl[[1]]))
+  
+  # check that problem files are named on error/warning
+  expect_message(read.neurons('testdata/neuron/Neurites.am'),
+                 regexp = 'While reading file.*Neurites\\.am')
 })
 
 test_that("We can read hxlineset format neurons",{

@@ -143,10 +143,15 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
       stop("Dataframe rownames do not match neuron names.")
     }
   }
-  # Actually read in the neurons
+  # Actually read in the neurons, making sure that warnings/errors are thrown
+  # immediately so that we can tell which neuron generated them
+  ow=options(warn=1)
+  on.exit(options(ow), add = TRUE)
   for(n in names(paths)){
     f=unname(paths[n])
-    x=try(read.neuron(f, format=format, ...))
+    x=withCallingHandlers(try(read.neuron(f, format=format, ...)),
+                          warning = function(w) message("While reading file: ",f),
+                          error=function(e) message("While reading file: ",f))
     if(inherits(x,'try-error')){
       if(OmitFailures) x=NULL
       else x=NA
