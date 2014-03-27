@@ -724,7 +724,8 @@ test_that("we can identify amira hxlineset neurons",{
 
 test_that("read a flycircuit lineset neuron w/o radius info",{
   f="testdata/neuron/testneuron_fclineset.am.gz"
-  expect_is(n<-read.neuron(f),'neuron')
+  expect_warning(n<-read.neuron(f), regexp = 'No width data')
+  expect_is(n, 'neuron')
 })
 
 test_that("write neuron/dotprops to rds file",{
