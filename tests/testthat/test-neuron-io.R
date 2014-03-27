@@ -668,7 +668,10 @@ test_that("we can read hxskel format neurons",{
   "NodeName", "InputFileStat", "InputFileMD5", "NumPoints", "StartPoint", 
   "BranchPoints", "EndPoints", "nTrees", "NumSegs", "SegList", 
   "d"), class = c("neuron", "list"))
-  expect_is(n<-read.neuron('testdata/neuron/Neurites.am'),'neuron')
+  # NB this neuron does not have an origin set
+  expect_warning(n<-read.neuron('testdata/neuron/Neurites.am'), 
+                 regexp = 'No valid origin found')
+  expect_is(n,'neuron')
   g1<-as.ngraph(Neurites)
   g2<-as.ngraph(n)
   expect_true(igraph::graph.isomorphic(g1,g2))
@@ -677,7 +680,8 @@ test_that("we can read hxskel format neurons",{
   on.exit(unlink(tmpfile))
   file.copy('testdata/neuron/Neurites.am',tmpfile)
   
-  expect_equal(read.neuron(tmpfile), n, fieldsToExclude='NeuronName')
+  expect_equal(suppressWarnings(read.neuron(tmpfile)), n,
+               fieldsToExclude='NeuronName')
 })
 
 test_that("we can identify amira hxskel neurons",{
@@ -693,7 +697,9 @@ test_that("we can identify amira hxskel neurons",{
 })
 
 test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
-  expect_is(l<-read.neuron("testdata/neuron/testneuron_lineset.am"),'neuron')
+  expect_warning(l<-read.neuron("testdata/neuron/testneuron_lineset.am"),
+                 regexp = 'Data section 3 .* specifies radius')
+  expect_is(l,'neuron')
   expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d.am"),
                fieldsToExclude='NeuronName')
   expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d_ascii.am.gz"),
