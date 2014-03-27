@@ -740,8 +740,9 @@ test_that("write neuron/dotprops to rds file",{
   
   expect_equal(f<-write.neuron(x, dir=td), 
                file.path(td,'FruMARCM-M001205_seg002_03.rds'))
-  # can't overwrite get an NA back
-  expect_true(is.na(write.neuron(x, f)))
+  # can't overwrite get a warning and an NA back
+  expect_warning(f2<-write.neuron(x, f))
+  expect_true(is.na(f2))
   # can overwrite with force
   expect_equal(write.neuron(x, f, Force=TRUE), f)
   unlink(f)
