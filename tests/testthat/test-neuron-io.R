@@ -1,4 +1,4 @@
-context("basic input output for neurons")
+context("neuron fileformats")
 
 test_that("We can query fileformats",{
   expect_equal(fileformats(ext='swc',rval='names'),'swc')
@@ -20,6 +20,8 @@ test_that("We can query fileformats",{
   expect_equal(fileformats(format='hxl', ext='_skel.am', class='neuron'),
                'hxlineset')
 })
+
+context("read neurons")
 
 test_that("We can read single neurons in rda or rds format", {
   rda=tempfile(fileext='.rda')
@@ -727,6 +729,8 @@ test_that("read a flycircuit lineset neuron w/o radius info",{
   expect_warning(n<-read.neuron(f), regexp = 'No width data')
   expect_is(n, 'neuron')
 })
+
+context("write neurons")
 
 test_that("write neuron/dotprops to rds file",{
   x=kcs20[[1]]
