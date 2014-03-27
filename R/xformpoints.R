@@ -69,7 +69,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   inverseflags <- unlist(lapply(direction, function(x) ifelse(x == 'forward', '', '--inverse')))
   regcmd <- paste(c(rbind(inverseflags, shQuote(path.expand(reg)))), collapse=" ")
   outfile=tempfile()
-  on.exit(unlink(outfile))
+  on.exit(unlink(outfile), add=TRUE)
   cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''), '--',
             regcmd,'<',shQuote(pointsfile),">",shQuote(outfile))
   if(system(cmd,ignore.stderr=TRUE)!=0) stop("Error running CMTK streamxform!")
