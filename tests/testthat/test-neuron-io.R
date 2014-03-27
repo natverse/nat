@@ -87,7 +87,15 @@ test_that("We can read in neurons as a neuronlist",{
   expect_is(nl<-read.neurons(paths='testdata/neuron/',pattern='\\.CNG\\.swc$',
                neuronnames=function(x) sub("\\..*","",basename(x))),'neuronlist')
   expect_equal(length(nl),2)
+  
+  # check that InputFileName field is not mangled
   expect_true('InputFileName'%in%names(nl[[1]]))
+  
+  # add check for exact quality for file read in by read.neuron/read.neurons
+  a=nl[[1]][setdiff(names(nl[[1]]),"CreatedAt")]
+  b=read.neuron(nl[[1]]$InputFileName)
+  b=b[setdiff(names(b),"CreatedAt")]
+  expect_equal(unclass(a),unclass(b))
   
   # check that problem files are named on error/warning
   expect_message(read.neurons('testdata/neuron/Neurites.am'),
