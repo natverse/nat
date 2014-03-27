@@ -4,7 +4,7 @@ test_that("write.cmtk can write an empty CMTK TypedStream file", {
   tf=tempfile('EmptyTypedStream')
   tf2=tempfile('EmptyTypedStream',fileext='.gz')
   tf3=tempfile('EmptyTypedStreamv2.4')
-  on.exit(unlink(c(tf,tf2)))
+  on.exit(unlink(c(tf,tf2,tf3)))
   write.cmtk(list(),tf)
   expect_equal(readLines(tf),c("! TYPEDSTREAM 1.1", ""))
   write.cmtk(list(),tf2,gzip=TRUE)

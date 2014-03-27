@@ -25,6 +25,7 @@ test_that("can read hxsurf object", {
 })
 
 test_that("can save and re-read hxsurf object", {
+  on.exit(unlink(surffile))
   surffile <- tempfile()
   write.hxsurf(surf, surffile)
   newsurf <- read.hxsurf(surffile)
