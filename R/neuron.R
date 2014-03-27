@@ -220,7 +220,12 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
          NumSegs=length(sl),
          SegList=sl)
   if(nTrees>1) n=c(n,list(SubTrees=subtrees))
-  do.call(neuron, c(n, ...))
+  # NB unname is a guard against named fields coming in.
+  # The name would otherwise turn into a suffix in the neuron that would cause
+  # trouble when constructing the neuron
+  # e.g. InputFileName->InputFileName.XT23L1
+  if(!missing(...)) n=c(n, lapply(pairlist(...), unname))
+  do.call(neuron, n)
 }
 
 #' @description \code{as.neuron.default} will add class "neuron" to a neuron-like

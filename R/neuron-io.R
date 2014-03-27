@@ -145,7 +145,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
   }
   # Actually read in the neurons
   for(n in names(paths)){
-    f=paths[n]
+    f=unname(paths[n])
     x=try(read.neuron(f, format=format, ...))
     if(inherits(x,'try-error')){
       if(OmitFailures) x=NULL

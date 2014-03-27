@@ -87,6 +87,7 @@ test_that("We can read in neurons as a neuronlist",{
   expect_is(nl<-read.neurons(paths='testdata/neuron/',pattern='\\.CNG\\.swc$',
                neuronnames=function(x) sub("\\..*","",basename(x))),'neuronlist')
   expect_equal(length(nl),2)
+  expect_true('InputFileName'%in%names(nl[[1]]))
 })
 
 test_that("We can read hxlineset format neurons",{
