@@ -104,10 +104,13 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
       if(ndims>1) dim(x)=dims
       if(ndims==2) x=t(x) # this feels like a hack, but ...
       l[[df$DataName[i]]]=x
-    }  	
-    readLines(con,n=1) # Skip return at end of section
-    nextSectionHeader=readLines(con,n=1)
-    if(Verbose) cat("nextSectionHeader = ",nextSectionHeader,"\n")
+    }
+    if(df$SimpleDataLength[i]){
+      # Skip return at end of section iff we had some data to read
+      readLines(con,n=1)
+      nextSectionHeader=readLines(con,n=1)
+      if(Verbose) cat("nextSectionHeader = ",nextSectionHeader,"\n")
+    }
   }
   l
 }
