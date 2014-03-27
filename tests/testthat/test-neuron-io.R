@@ -699,7 +699,7 @@ test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
   expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d_ascii.am.gz"),
                fieldsToExclude='NeuronName')
   # FIXME see https://github.com/jefferis/nat/issues/14
-  expect_error(read.neuron("testdata/neuron/testneuron_am3d.am.gz"))
+  expect_error(suppressWarnings(read.neuron("testdata/neuron/testneuron_am3d.am.gz")))
 })
 
 test_that("we can identify amira hxlineset neurons",{
