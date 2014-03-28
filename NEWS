@@ -1,3 +1,19 @@
+nat 1.4.5
+=========
+* add plot.neuron for 2d plots (ajdm, from code in AnalysisSuite)
+* add nopen3d() which opens an rgl viewer that allows panning. See ?nopen3d for
+  details of how to use this.
+* teach read.neurons to report files that have problems as they are read
+* fix temp file left behind by xform.cmtkreg
+* fix dangerous looking warning when amira binary files have empty sections
+* fix ability of read.neurons to set InputFileName and therefore retain
+  status information for the file along with its MD5 hash
+* fix bug exporting xform.default (so that xform(matrix()) works)
+* docs: improve coverage of BoundingBox vs bounds
+* tests: simple tests for plot(3d).neuron
+* tests: clear up temp files and suppress most warnings
+* dev: restart travis build of flycircuit package when nat is pushed to github
+
 nat 1.4.4
 =========
 * fix handling of logical expressions including NAs by subset.neuronlist
