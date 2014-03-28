@@ -49,9 +49,9 @@ Note: Windows users need [Rtools](http://www.murdoch-sutherland.com/Rtools/) and
 **nat** is self sufficient for core functionality, but the transformation of 3d
 data using Computational Morphometry Toolkit (CMTK) registrations depends on an
 external installation of that toolkit. CMTK binaries can be downloaded for
-Windows, Linux and Mac at http://www.nitrc.org/projects/cmtk/. Source code is 
+Windows, Linux and Mac at <http://www.nitrc.org/projects/cmtk/>. Source code is 
 available from the same site or an unofficial mirror repository at 
-https://github.com/jefferis/cmtk. We have extensive experience of using CMTK
+<https://github.com/jefferis/cmtk>. We have extensive experience of using CMTK
 under linux (where we compile from source) and mac (where we compile or use the
 MacOSX-10.6-x86_64.dmg binary installers). We have also used 
 [neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
