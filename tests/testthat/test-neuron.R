@@ -12,6 +12,14 @@ testd=data.frame(PointNo=1:6,Label=2,
 
 testn=as.neuron(testd)
 
+# wrapper for as.neuron that adds some fake vertex data to avoid warning
+# (real neurons will always have vertex data so as.neuron.ngraph expects this)
+as.neuron2<-function(ng, ...) {
+  fakeVertexData=matrix(1,ncol=4,nrow=igraph::vcount(ng))
+  colnames(fakeVertexData)=c("X","Y","Z","W")
+  as.neuron(ng, vertexData = fakeVertexData, ...)
+}
+
 test_that("as.neuron.ngraph",{
   g<-as.ngraph(testn)
   cn=as.neuron(g,vertexData=testd,origin=1)
@@ -22,17 +30,17 @@ test_that("as.neuron.ngraph",{
   g=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(2:4,6,7,9))
   sl=seglist(c(1,3,2,4),c(4,5),c(4,6))
   expect_equal(as.seglist(g,origin=1),sl)
-  expect_equal(as.neuron(g,origin=2)$SegList,sl)
+  expect_equal(as.neuron2(g,origin=2)$SegList,sl)
   # same but no origin specified (should give same result)
-  expect_equal(as.neuron(g)$SegList,sl)
+  expect_equal(as.neuron2(g)$SegList,sl)
   
   # same but different origin
   sl2=seglist(c(3,1),c(3,2,4),c(4,5),c(4,6))
-  expect_equal(as.neuron(g,origin=4)$SegList,sl2)
+  expect_equal(as.neuron2(g,origin=4)$SegList,sl2)
   
   # same connectivity but one extra (floating) point at end
   g=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(2:4,6,7,9,10))
-  n=as.neuron(g,origin=4)
+  n=as.neuron2(g,origin=4)
   expect_equal(n$SegList,sl2)
   expect_equal(n$nTrees,2)
   expect_equal(n$SubTrees,list(sl2,seglist(7)))
@@ -41,21 +49,21 @@ test_that("as.neuron.ngraph",{
   g=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(1:4,6,7,9,10))
   # this will shift all vertex ids by 1
   sl3=as.seglist(lapply(sl2,'+',1))
-  n=as.neuron(g,origin=4)
+  n=as.neuron2(g,origin=4)
   expect_equal(n$SegList,sl3)
   expect_equal(n$nTrees,3)
   expect_equal(n$SubTrees,list(sl3,seglist(1),seglist(8)))
   
   # 3 separate subgraphs of length 3,4,5
   g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
-  n=as.neuron(g,origin=0)
+  n=as.neuron2(g,origin=0)
   expect_equal(n$SegList,seglist(c(1,2,3)))
-  n2=as.neuron(g,origin=3)
+  n2=as.neuron2(g,origin=3)
   expect_equal(n2$SegList,seglist(c(4,5,6,7)))
-  n3=as.neuron(g,origin=7)
+  n3=as.neuron2(g,origin=7)
   expect_equal(n3$SegList,seglist(c(8,9,10,11,12)))
   # check that it picks largest subgraph when no origin specified
-  n4=as.neuron(g)
+  n4=as.neuron2(g)
   expect_equal(n4,n3)
 })
 
