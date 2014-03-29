@@ -93,11 +93,13 @@ test_that("We can read in neurons as a neuronlist",{
   # check that InputFileName field is not mangled
   expect_true('InputFileName'%in%names(nl[[1]]))
   
-  # add check for exact quality for file read in by read.neuron/read.neurons
-  a=nl[[1]][setdiff(names(nl[[1]]),"CreatedAt")]
-  b=read.neuron(nl[[1]]$InputFileName)
-  b=b[setdiff(names(b),"CreatedAt")]
-  expect_equal(unclass(a),unclass(b))
+  fieldsToIgnore=c("CreatedAt",'InputFileStat')
+  n.read.neurons=nl[[1]]
+  n.read.neurons[fieldsToIgnore]=NULL
+  n.read.neuron=read.neuron(n.read.neurons$InputFileName)
+  n.read.neuron[fieldsToIgnore]=NULL
+  expect_equal(unclass(n.read.neuron),unclass(n.read.neurons), 
+               info = 'check equality of neuron read by read.neuron & read.neurons')
   
   # check that problem files are named on error/warning
   expect_message(read.neurons('testdata/neuron/Neurites.am'),
