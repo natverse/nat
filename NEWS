@@ -1,3 +1,9 @@
+nat 1.4.6
+=========
+* fix bug in handling vertexData argument in as.neuron.ngraph
+* fix test error on Solaris (thanks to Brian Ripley)
+* dev: fix remaining warnings in tests
+
 nat 1.4.5
 =========
 * add plot.neuron for 2d plots (ajdm, from code in AnalysisSuite)
