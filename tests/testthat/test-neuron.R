@@ -65,6 +65,9 @@ test_that("as.neuron.ngraph",{
   # check that it picks largest subgraph when no origin specified
   n4=as.neuron2(g)
   expect_equal(n4,n3)
+  
+  expect_error(as.neuron(g, vertexData=matrix(ncol=4,nrow=igraph::vcount(g)+1)),
+               info="as.neuron.ngraph fails when vertexData has too many rows")
 })
 
 context("neuron plotting")

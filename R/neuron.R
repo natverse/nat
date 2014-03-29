@@ -206,7 +206,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
       if(nrow(d)!=nrow(vertexData))
         stop("vertexData does not have PointNo column and does not have as",
              "many rows as there are points in the graph.")
-      d=cbind(c, vertexData[ids,])
+      d=cbind(d, vertexData)
     }
   }
   
