@@ -21,5 +21,5 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=0
     - DISPLAY=:99.0
 after_success:
-  - chmod 755 ./travisbuildflycircuit.sh
-  - ./travisbuildflycircuit.sh
+  - chmod 755 ./travisbuildchildren.sh
+  - ./travisbuildchildren.sh
