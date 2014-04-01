@@ -201,7 +201,7 @@ test_that("clampmax",{
   expect_is(cf2<-clampmax(-10, 10, replace.infinite = FALSE),'function')
   expect_equal(cf2(10, 20, Inf), 10)
   expect_equal(cf2(10, 20, NA, Inf, na.rm=TRUE), 10)
-  expect_equal(cf2(10, 20, NA, Inf, na.rm=FALSE), NA)
+  expect_equal(cf2(10, 20, NA, Inf, na.rm=FALSE), NA_real_)
   
   # in combination with projection
   LHMask=read.im3d('testdata/nrrd/LHMask.nrrd')
