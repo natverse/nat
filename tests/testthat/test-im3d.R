@@ -193,6 +193,17 @@ test_that("xyzpos, ijkpos and imexpand.grid",{
 })
 
 test_that("clampmax",{
+  # basic tests
+  expect_is(cf<-clampmax(-10, 10),'function')
+  expect_equal(cf(10, 20, Inf), NA_real_)
+  expect_equal(cf(5, 10, 20, Inf, na.rm = TRUE), 10)
+  expect_equal(cf(c(5, 10, 20, Inf), na.rm = TRUE), 10)
+  expect_is(cf2<-clampmax(-10, 10, replace.infinite = FALSE),'function')
+  expect_equal(cf2(10, 20, Inf), 10)
+  expect_equal(cf2(10, 20, NA, Inf, na.rm=TRUE), 10)
+  expect_equal(cf2(10, 20, NA, Inf, na.rm=FALSE), NA)
+  
+  # in combination with projection
   LHMask=read.im3d('testdata/nrrd/LHMask.nrrd')
   d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
   p=projection(d,projfun=clampmax(0,10))
