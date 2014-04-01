@@ -739,8 +739,14 @@ threshold.im3d<-function(x, threshold=0,
 
 #' Return function that finds maximum of its inputs within a clamping range
 #' 
+#' @details Note that by default infinite values in the input vector are 
+#'   converted to \code{NA}s before the being compared with the clampmax range.
 #' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
 #'   of length 2.
+#' @param replace.infinite The value with which to replace non-finite values 
+#'   \emph{in the input vector}. When code{replace.infinite=FALSE} no action is 
+#'   taken. The default value of \code{NA} will result in e.g. \code{Inf} being 
+#'   mapped to \code{NA}.
 #' @return A function with signature \code{f(x, ..., na.rm)}
 #' @export
 #' @examples
@@ -752,21 +758,20 @@ threshold.im3d<-function(x, threshold=0,
 #' image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)
 #' par(op)
 #' }
-clampmax<-function(xmin,xmax) {
-  # this fn returns a new function that will find the maximum of its inputs
-  # and then clamp the return value between xmin and xmax
-  # +/- Inf are converted to NA
+clampmax<-function(xmin, xmax, replace.infinite=NA_real_) {
   if(missing(xmax)) {
     xmax=xmin[2]
     xmin=xmin[1]
   }
   function(x, ..., na.rm=FALSE){
-    r=suppressWarnings(max(x, ..., na.rm=na.rm))
-    if(!is.finite(r))
-      NA
-    else if(r<xmin)
+    if(!missing(...)) x=c(x, unlist(pairlist(...)))
+    if(!is.logical(replace.infinite) || !isTRUE(!replace.infinite)){
+      x[!is.finite(x)]=replace.infinite
+    }
+    r=suppressWarnings(max(x, na.rm=na.rm))
+    if(isTRUE(r<xmin))
       xmin 
-    else if(r>xmax)
+    else if(isTRUE(r>xmax))
       xmax
     else r
   }
