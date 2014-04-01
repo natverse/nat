@@ -211,9 +211,6 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
                         PointAlpha=1, tck=NA, lwd=par("lwd"), ...) {
   
   # R uses the bottom-left as the origin, while we want the top-left
-  if(any(AxisDirections!=1)) {
-    x$d[,c("X","Y","Z")]=t(t(x$d[,c("X","Y","Z")])*AxisDirections)
-  }
   PlotAxes <- match.arg(PlotAxes)
   if(PlotAxes=="XY") {PlotAxes<-c("X","Y");NumPlotAxes<-c(1,2)} else
     if(PlotAxes=="YZ") {PlotAxes<-c("Y","Z");NumPlotAxes<-c(2,3)} else
@@ -225,9 +222,10 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
     palette(c("black",rainbow(6)))
   }
     
-  # Set limits for axes
-  myxlims<-range(x$d[PlotAxes[1]],na.rm = TRUE)
-  myylims<-range(x$d[PlotAxes[2]],na.rm = TRUE)
+  # Set limits for axes (inverting y axis if necessary due to differing handedness)
+  myxlims <- range(x$d[PlotAxes[1]],na.rm = TRUE)
+  myylims <- if(PlotAxes[2] == "Y") rev(range(x$d[PlotAxes[2]],na.rm = TRUE)) else range(x$d[PlotAxes[2]],na.rm = TRUE)
+    
   if (!is.null(xlim)) {
     myxlims=xlim
   }
@@ -260,21 +258,12 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
   if(Superimpose) points(PlottedPoints[,PlotAxes],col=mycols,pch=20,asp=asp,...) 
   else plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
             main=MainTitle,asp=asp,axes=Axes && all(AxisDirections==1),tck=tck,...) 
-  if(Axes && !all(AxisDirections==1) && !Superimpose) {
-    # Need to provide special treatment for axes
+  
+  # Draw the axes and surrounding box
+  if(Axes) {
     box()
-    if(AxisDirections[NumPlotAxes][1]!=1) {
-      axis(1, at=axTicks(1),tck=tck,
-           labels=axTicks(1)*AxisDirections[NumPlotAxes][1])
-    } else {
-      axis(tck=tck,1)
-    }
-    if(AxisDirections[NumPlotAxes][2]!=1) {
-      axis(2, at=axTicks(2),tck=tck,
-           labels=axTicks(2)*AxisDirections[NumPlotAxes][2])
-    } else {
-      axis(tck=tck,2)
-    }
+    axis(2, tck=tck)
+    axis(1, tck=tck)
   }
   
   if(WithText) {
