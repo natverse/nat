@@ -456,10 +456,18 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #'   location and the BoundingBox extremes are set to 0 after a projection is
 #'   made but FIXME this is not completely satisfactory. Perhaps defining this
 #'   to be NA or the midpoint of the orginal axis would be better justified.
-#' @seealso \code{\link{groupGeneric}}
+#' @seealso \code{\link{groupGeneric}}, \code{\link{clampmax}}
 #' @export
 #' @family im3d
 #' @examples
+#' \dontrun{
+#' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
+#' d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)
+#' op=par(mfrow=c(1,2))
+#' rval=image(projection(d,projfun=max))
+#' image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)
+#' par(op)
+#' }
 #' \dontrun{
 #' LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))
 #' image(projection(LHMask),asp=TRUE)
