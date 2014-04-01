@@ -741,6 +741,7 @@ threshold.im3d<-function(x, threshold=0,
 #' 
 #' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
 #'   of length 2.
+#' @param nf.conv the value with which to replace non-finite values.
 #' @return A function with signature \code{f(x, ..., na.rm)}
 #' @export
 #' @examples
@@ -752,7 +753,7 @@ threshold.im3d<-function(x, threshold=0,
 #' image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)
 #' par(op)
 #' }
-clampmax<-function(xmin,xmax) {
+clampmax<-function(xmin,xmax,nf.conv=NA) {
   # this fn returns a new function that will find the maximum of its inputs
   # and then clamp the return value between xmin and xmax
   # +/- Inf are converted to NA
@@ -763,7 +764,7 @@ clampmax<-function(xmin,xmax) {
   function(x, ..., na.rm=FALSE){
     r=suppressWarnings(max(x, ..., na.rm=na.rm))
     if(!is.finite(r))
-      NA
+      nf.conv
     else if(r<xmin)
       xmin 
     else if(r>xmax)
