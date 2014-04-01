@@ -2,11 +2,14 @@
 \alias{clampmax}
 \title{Return function that finds maximum of its inputs within a clamping range}
 \usage{
-clampmax(xmin, xmax)
+clampmax(xmin, xmax, nf.conv = NA)
 }
 \arguments{
   \item{xmin,xmax}{clamping range. If xmax is missing xmin
   should be a vector of length 2.}
+
+  \item{nf.conv}{the value with which to replace non-finite
+  values.}
 }
 \value{
 A function with signature \code{f(x, ..., na.rm)}
