@@ -32,6 +32,8 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
     else endian='big'
   }
   
+  # Check if file is gzipped
+  if(R.utils::isGzipped(file)) file <- R.utils::gunzip(file, temporary=TRUE, overwrite=TRUE, remove=FALSE)
   con=if(binaryfile) file(file,open='rb') else file(file,open='rt')
   on.exit(try(close(con),silent=TRUE))
   h=read.amiramesh.header(con,Verbose=Verbose)
