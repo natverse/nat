@@ -471,6 +471,14 @@ write.zlib<-function(uncompressed, con=raw()){
   writeBin(object=d,con=con)
 }
 
+# Simple function to test if file is gzipped
+# TODO move this to the next release of nat.utils
+is.gzip<-function(f) {
+  x=file(f)
+  on.exit(close(x))
+  isTRUE(summary(x)$class=='gzfile')
+}
+
 #' Check if file is amiramesh format
 #' 
 #' @details Tries to be as fast as possible by reading only first 11 bytes and 
