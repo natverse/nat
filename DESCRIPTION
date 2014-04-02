@@ -31,8 +31,7 @@ Imports:
     methods,
     filehash,
     digest,
-    nat.utils,
-    R.utils
+    nat.utils
 Suggests:
     testthat
 License: GPL-3
