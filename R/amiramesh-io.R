@@ -32,7 +32,9 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
     else endian='big'
   }
   
-  con=if(binaryfile) file(file,open='rb') else file(file,open='rt')
+  # Check if file is gzipped
+  con=if(is.gzip(file)) gzfile(file) else file(file)
+  open(con, open=ifelse(binaryfile, 'rb', 'rt'))
   on.exit(try(close(con),silent=TRUE))
   h=read.amiramesh.header(con,Verbose=Verbose)
   parsedHeader=h[["dataDef"]]
@@ -467,6 +469,14 @@ write.zlib<-function(uncompressed, con=raw()){
   d=memCompress(uncompressed, type='gzip')
   if(is.raw(con)) return(d)
   writeBin(object=d,con=con)
+}
+
+# Simple function to test if file is gzipped
+# TODO move this to the next release of nat.utils
+is.gzip<-function(f) {
+  x=file(f)
+  on.exit(close(x))
+  isTRUE(summary(x)$class=='gzfile')
 }
 
 #' Check if file is amiramesh format
