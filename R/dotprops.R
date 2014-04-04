@@ -94,20 +94,16 @@ scale.dotprops<-function(x,center=TRUE,scale=TRUE){
 #' @rdname dotprops
 dotprops<-function(x, ...) UseMethod('dotprops')
 
-#' @param SetFileInfo logical indicating whether information about the source
-#' file (path, modification time, size) should be saved as attributes in the
-#' returned object.
 #' @S3method dotprops character
 #' @rdname dotprops
-dotprops.character <- function(x, SetFileInfo=TRUE, ...) {
+dotprops.character <- function(x, ...) {
+  fileName <- x
   x <- read.im3d(x)
   l <- dotprops(x, ...)
-  if(SetFileInfo) {
-    attr(l,'file') <- x
-    fi <- file.info(x)
-    attr(l, 'mtime') <- fi$mtime
-    attr(l, 'size') <- fi$size
-  }
+  attr(l,'file') <- fileName
+  fi <- file.info(fileName)
+  attr(l, 'mtime') <- fi$mtime
+  attr(l, 'size') <- fi$size
   l
 }
 
