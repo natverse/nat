@@ -172,7 +172,6 @@ pan3d <- function(button) {
 #' @param EPsOnly whether points should only be drawn for end points.
 #' @param BPsOnly whether points should only be drawn for branch points.
 #' @param WithText whether to label plotted points with their id.
-#' @param UseCurPalette whether the current palette should be used for colors.
 #' @param PlotAxes the axes for the plot.
 #' @param Axes whether axes should be drawn.
 #' @param asp the \code{y/x} aspect ratio, see \code{\link{plot.window}}.
@@ -204,7 +203,7 @@ pan3d <- function(button) {
 #' # Just plot the end points for the fourth example neuron
 #' plot(Cell07PNs[[4]], EPsOnly=TRUE)
 plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
-                        BPsOnly=FALSE, WithText=FALSE, UseCurPalette=FALSE,
+                        BPsOnly=FALSE, WithText=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), Axes=TRUE, asp=1,
                         MainTitle=x$NeuronName, xlim=NULL, ylim=NULL,
                         AxisDirections=c(1,-1,1), Superimpose=F, LineCol=NULL,
@@ -216,11 +215,6 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
     if(PlotAxes=="YZ") {PlotAxes<-c("Y","Z");NumPlotAxes<-c(2,3)} else
       if(PlotAxes=="XZ") {PlotAxes<-c("X","Z");NumPlotAxes<-c(1,3)} else 
         if(PlotAxes=="ZY") {PlotAxes<-c("Z","Y");NumPlotAxes<-c(3,2)}
-  
-  OldPalette<-palette()
-  if(!UseCurPalette) {
-    palette(c("black",rainbow(6)))
-  }
     
   # Set limits for axes (inverting y axis if necessary due to differing handedness)
   myxlims <- range(x$d[PlotAxes[1]],na.rm = TRUE)
@@ -239,15 +233,16 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
     PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
   } else if(BPsOnly) {
     NodesOnly<-x$BranchPoints
-    mycols<-rep("red",length(x$BranchPoints))
+    mycols<-rep(rgb(1,0,0,PointAlpha),length(x$BranchPoints))
     PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
   } else if(NodesOnly) {
     NodesOnly<-c(x$BranchPoints,x$EndPoints,x$StartPoint)
-    mycols<-c(rep("red",length(x$BranchPoints)),
-              rep("green",length(x$EndPoints)),"purple" )
+    mycols<-c(rep(rgb(1,0,0,PointAlpha),length(x$BranchPoints)),
+              rep(rgb(0,1,0,PointAlpha),length(x$EndPoints)),
+              rgb(t(col2rgb('purple')/255),alpha=PointAlpha) )
     PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
   } else {
-    mycols<-rep("black",x$NumPoints)
+    mycols<-rep("red",x$NumPoints)
     mycols[x$BranchPoints]<-"red"
     mycols[x$EndPoints]<-"green"
     mycols[x$StartPoint]<-"purple"
@@ -292,6 +287,5 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
            x$c$GrandCent[NumPlotAxes[2]],col="red",bg="red",pch=22)
   }
   
-  palette(OldPalette)
   invisible(PlottedPoints)
 }
