@@ -1,0 +1,16 @@
+\name{sub2ind}
+\alias{sub2ind}
+\title{Find 1D index given n-dimensional indices}
+\usage{
+sub2ind(dims, indices)
+}
+\arguments{
+  \item{dims}{vector of dimensions of object to index
+  into.}
+
+  \item{indices}{vector of n-dimensional indices.}
+}
+\description{
+Emulates the MATLAB function \code{sub2ind}.
+}
+
