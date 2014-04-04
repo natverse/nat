@@ -1,3 +1,80 @@
+#' Find XYZ coords corresponding to 1D indices into a 3D image
+#' 
+#' @param inds indices into an image array (either 1D, for which \code{dims}
+#'   must be present, or a logical array).
+#' @seealso \code{\link{coord2ind}}, \code{\link{ind2sub}}
+#' @export
+ind2coord<-function(inds, ...) UseMethod("ind2coord")
+
+
+#' @param dims dimensions of 3d image array.
+#' @param voxdims vector of 3 voxel dimensions (width, height, depth).
+#' @param origin the origin.
+#' @S3method ind2coord default
+#' @rdname ind2coord
+ind2coord.default<-function(inds, dims, voxdims, origin){
+  if(length(dims) != 3 )
+    stop('coords2ind only handles 3d data')
+  if(is.matrix(voxdims))
+    voxdims=as.numeric(voxdims)
+  if(length(voxdims)!=length(dims))
+    stop('number of voxel dimensions must match dimensionality of data')
+  
+  if(is.array(inds)){
+    if(is.logical(inds))
+      pixcoords = which(inds, arr.ind=TRUE)
+    else if(is.integer(inds) || is.raw(inds))
+      pixcoords = which(inds>0, arr.ind=TRUE)
+    else stop("cannot handle numeric arrays - make a logical")
+  } else if(is.logical(inds)){
+    # 1d logical
+    pixcoords=arrayInd(which(inds),.dim=dims)
+  } else {
+    # numbers 
+    pixcoords=arrayInd(inds,.dim=dims)
+  }
+  
+  if(nrow(pixcoords)==0) return(NULL)
+  
+  # then convert from pixel coords to physical coords
+  # transpose to allow multiplication, then back again to give 3 cols
+  # note that we must subtract 1 from 1-indexed pixcoords
+  rval = if(missing(origin))
+    t(t(pixcoords-1)*voxdims)
+  else
+    t(t(pixcoords-1)*voxdims+origin)
+  colnames(rval)=c("X","Y","Z")
+  rval
+}
+
+
+#' @param ... extra arguments to pass to \code{ind2coords.default}.
+#' @S3method ind2coord array
+#' @rdname ind2coord
+ind2coord.array<-function(inds, voxdims=NULL, origin=NULL, ...){
+  dims=dim(inds)
+  if(is.null(voxdims)){
+      stop("no voxdims supplied and inds has no physical dimension attributes")
+  } else if(inherits(voxdims,'im3d')){
+    if(is.null(origin))
+      origin=origin(voxdims)
+    voxdims=voxdims(voxdims)
+  }
+  
+  if(is.null(origin))
+    origin=rep(0,length(dims))
+  
+  ind2coord.default(inds, dims=dims, voxdims=voxdims, origin=origin, ...)
+}
+
+
+ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
+  if(is.null(voxdims)) voxdims=voxdims(inds)
+  if(is.null(origin)) origin=origin(inds)
+  NextMethod("ind2coord", voxdims=voxdims, origin=origin)
+}
+
+
 #' Find 1D indices into a 3D image given spatial coordinates
 #' 
 #' @param coords spatial coordinates of image voxels.
