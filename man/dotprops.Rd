@@ -16,7 +16,7 @@ as.dotprops(x, ...)
 
 dotprops(x, ...)
 
-\method{dotprops}{character}(x, ...)
+\method{dotprops}{character}(x, SetFileInfo = TRUE, ...)
 
 \method{dotprops}{dotprops}(x, k = attr(x, "k"), ...)
 
@@ -32,6 +32,10 @@ dotprops(x, ...)
   \item{x}{Object to be tested/converted}
 
   \item{...}{Additional arguments passed to methods}
+
+  \item{SetFileInfo}{logical indicating whether information
+  about the source file (path, modification time, size)
+  should be saved as attributes in the returned object.}
 
   \item{k}{Number of nearest neighbours to use for tangent
   vector calculation (set to k=20 when passed NULL)}
