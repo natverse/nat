@@ -6,7 +6,7 @@
 \usage{
 ind2coord(inds, ...)
 
-\method{ind2coord}{default}(inds, dims, voxdims, origin)
+\method{ind2coord}{default}(inds, dims, voxdims, origin, ...)
 
 \method{ind2coord}{array}(inds, voxdims = NULL, origin = NULL, ...)
 }
@@ -14,20 +14,19 @@ ind2coord(inds, ...)
   \item{inds}{indices into an image array (either 1D, for
   which \code{dims} must be present, or a logical array).}
 
+  \item{...}{extra arguments passed to methods.}
+
   \item{dims}{dimensions of 3d image array.}
 
   \item{voxdims}{vector of 3 voxel dimensions (width,
   height, depth).}
 
   \item{origin}{the origin.}
-
-  \item{...}{extra arguments to pass to
-  \code{ind2coords.default}.}
 }
 \description{
 Find XYZ coords corresponding to 1D indices into a 3D image
 }
 \seealso{
-\code{\link{coord2ind}}, \code{\link{ind2sub}}
+\code{\link{coord2ind}}, \code{\link{sub2ind}}
 }
 

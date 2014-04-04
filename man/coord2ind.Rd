@@ -6,15 +6,19 @@
 coord2ind(coords, ...)
 
 \method{coord2ind}{default}(coords, imdims, voxdims = NULL, origin = NULL,
-  aperm, Clamp = FALSE, CheckRanges = !Clamp)
+  aperm, Clamp = FALSE, CheckRanges = !Clamp, ...)
 }
 \arguments{
   \item{coords}{spatial coordinates of image voxels.}
+
+  \item{...}{extra arguments passed to methods.}
 
   \item{imdims}{array dimensions of 3D image.}
 
   \item{voxdims}{vector of 3 voxels dimensions (width,
   height, depth).}
+
+  \item{origin}{the origin of the 3D image.}
 
   \item{aperm}{permutation order for axes.}
 
@@ -27,6 +31,6 @@ coord2ind(coords, ...)
 Find 1D indices into a 3D image given spatial coordinates
 }
 \seealso{
-\code{\link{ind2coord}}, \code{\link{ind2sub}}
+\code{\link{ind2coord}}, \code{\link{sub2ind}}
 }
 

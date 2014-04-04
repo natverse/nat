@@ -2,7 +2,8 @@
 #' 
 #' @param inds indices into an image array (either 1D, for which \code{dims}
 #'   must be present, or a logical array).
-#' @seealso \code{\link{coord2ind}}, \code{\link{ind2sub}}
+#' @param ... extra arguments passed to methods.
+#' @seealso \code{\link{coord2ind}}, \code{\link{sub2ind}}
 #' @export
 ind2coord<-function(inds, ...) UseMethod("ind2coord")
 
@@ -12,7 +13,7 @@ ind2coord<-function(inds, ...) UseMethod("ind2coord")
 #' @param origin the origin.
 #' @S3method ind2coord default
 #' @rdname ind2coord
-ind2coord.default<-function(inds, dims, voxdims, origin){
+ind2coord.default<-function(inds, dims, voxdims, origin, ...){
   if(length(dims) != 3 )
     stop('coords2ind only handles 3d data')
   if(is.matrix(voxdims))
@@ -48,7 +49,6 @@ ind2coord.default<-function(inds, dims, voxdims, origin){
 }
 
 
-#' @param ... extra arguments to pass to \code{ind2coords.default}.
 #' @S3method ind2coord array
 #' @rdname ind2coord
 ind2coord.array<-function(inds, voxdims=NULL, origin=NULL, ...){
@@ -78,19 +78,21 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 #' Find 1D indices into a 3D image given spatial coordinates
 #' 
 #' @param coords spatial coordinates of image voxels.
+#' @param ... extra arguments passed to methods.
 #' @export
 coord2ind <- function(coords, ...) UseMethod("coord2ind")
 
 
 #' @param imdims array dimensions of 3D image.
 #' @param voxdims vector of 3 voxels dimensions (width, height, depth).
+#' @param origin the origin of the 3D image.
 #' @param aperm permutation order for axes.
 #' @param Clamp ???
 #' @param CheckRanges whether to check if coordinates are out of range.
-#' @seealso \code{\link{ind2coord}}, \code{\link{ind2sub}}
+#' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}
 #' @S3method coord2ind default
 #' @rdname coord2ind
-coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp){
+coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp, ...){
   if(inherits(imdims, 'im3d')) {
     voxdims <- voxdims(imdims)
     origin <- origin(imdims)
@@ -98,9 +100,9 @@ coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=F
   }
   else if(is.array(imdims)){
     if(missing(voxdims))
-      voxdims=as.numeric(voxdim(imdims))
+      voxdims=as.numeric(voxdims(imdims))
     if(missing(origin))
-      origin=getBoundingBox(imdims)[c(1,3,5)]
+      origin=boundingbox(imdims)[c(1,3,5)]
     imdims=dim(imdims)
   }
   
