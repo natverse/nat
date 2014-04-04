@@ -94,12 +94,32 @@ scale.dotprops<-function(x,center=TRUE,scale=TRUE){
 #' @rdname dotprops
 dotprops<-function(x, ...) UseMethod('dotprops')
 
+#' @S3method dotprops character
+#' @rdname dotprops
+dotprops.character <- function(x, ...) {
+  x <- read.im3d(x)
+  dotprops(x, ...)
+}
+
 #' @method dotprops dotprops
 #' @S3method dotprops dotprops
 #' @export
 #' @rdname dotprops
 dotprops.dotprops<-function(x, k=attr(x,'k'), ...) {
   dotprops(xyzmatrix(x), k=k, ...)
+}
+
+#' @S3method dotprops im3d
+#' @rdname dotprops
+dotprops.im3d <- function(x, ...) {
+  fileName <- x
+  l <- ind2coord(x)
+  l <- dotprops(l, ...)
+  attr(l,'file') <- fileName
+  #fi <- file.info(fileName)
+  #attr(l,'mtime') <- fi$mtime
+  #attr(l,'size') <- fi$size
+  l
 }
 
 #' @S3method dotprops list
