@@ -228,12 +228,10 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   
   # then 
   if(is.null(warpfile) || transform=='flip') {
-    x.new <- xform(x, reg=diag(4), transformtype=transform, ...)
+    xform(x, reg=diag(4), transformtype=transform, ...)
   } else {
-    x.new <- xform(x, reg=warpfile, transformtype=transform, ...)
+    xform(x, reg=warpfile, transformtype=transform, ...)
   }
-  mostattributes(x.new) <- attributes(x)
-  x.new
 }
 #' @method mirror neuronlist
 #' @S3method mirror neuronlist
