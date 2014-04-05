@@ -1,8 +1,10 @@
 \name{is.dotprops}
 \alias{as.dotprops}
 \alias{dotprops}
+\alias{dotprops.character}
 \alias{dotprops.default}
 \alias{dotprops.dotprops}
+\alias{dotprops.im3d}
 \alias{dotprops.neuron}
 \alias{dotprops.neuronlist}
 \alias{is.dotprops}
@@ -14,7 +16,11 @@ as.dotprops(x, ...)
 
 dotprops(x, ...)
 
+\method{dotprops}{character}(x, ...)
+
 \method{dotprops}{dotprops}(x, k = attr(x, "k"), ...)
+
+\method{dotprops}{im3d}(x, ...)
 
 \method{dotprops}{neuronlist}(x, ...)
 
