@@ -26,3 +26,10 @@ test_that("dotprops gives same result as matlab original", {
   
   expect_equal(props4.new,props4.dotprops,tol=1e-6)
 })
+
+test_that("a dotprops object can be made from a nrrd, via im3d", {
+  imageFile <- "testdata/nrrd/LHMask.nrrd"
+  dps <- dotprops(imageFile)
+  points.expected <- structure(c(40.6, 42, 36.4, 37.8, 39.2, 29.4, 29.4, 30.8, 30.8, 30.8, 5.6, 5.6, 5.6, 5.6, 5.6), .Dim = c(5L, 3L), .Dimnames = list(NULL, c("X", "Y", "Z")))
+  expect_equal(dps$points[1:5, ], points.expected)
+})
