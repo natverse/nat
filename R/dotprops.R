@@ -94,12 +94,20 @@ scale.dotprops<-function(x,center=TRUE,scale=TRUE){
 #' @rdname dotprops
 dotprops<-function(x, ...) UseMethod('dotprops')
 
+#' @details \code{dotprops.dotprops} will deafult to the original vale of 
+#'   \code{k} and copy over all attributes that are not set by
+#'   \code{dotprops.default}.
 #' @method dotprops dotprops
 #' @S3method dotprops dotprops
 #' @export
 #' @rdname dotprops
 dotprops.dotprops<-function(x, k=attr(x,'k'), ...) {
-  dotprops(xyzmatrix(x), k=k, ...)
+  y=dotprops(xyzmatrix(x), k=k, ...)
+  # copy over attributes, taking care not to overwrite any
+  attin=attributes(x)
+  attout=attributes(y)
+  attributes(y)<-c(attout, attin[setdiff(names(attin), names(attout))])
+  y
 }
 
 #' @S3method dotprops list

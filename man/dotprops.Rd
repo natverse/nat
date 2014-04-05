@@ -50,6 +50,10 @@ points (extracting vertices from S3 objects that have them)
 \code{k} will default to 20 nearest neighbours when unset
 (i.e. when it has default value of NA) unless \code{x} is a
 dotprops object.
+
+\code{dotprops.dotprops} will deafult to the original vale
+of \code{k} and copy over all attributes that are not set
+by \code{dotprops.default}.
 }
 \references{
 The dotprops format is essentially identical to that
