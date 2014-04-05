@@ -228,7 +228,7 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   
   # then 
   if(is.null(warpfile) || transform=='flip') {
-    x
+    xform(x, reg=diag(4), transformtype=transform, ...)
   } else {
     xform(x, reg=warpfile, transformtype=transform, ...)
   }
