@@ -23,7 +23,9 @@ mirror(x, ...)
   \item{mirrorAxis}{Axis to mirror (default \code{"X"}).
   Can also be an integer in range \code{1:3}.}
 
-  \item{warpfile}{Path to (optional) CMTK registration}
+  \item{warpfile}{Path to (optional) CMTK registration that
+  specifies a (usually non-rigid) transformation to be
+  applied \emph{after} the simple mirroring.}
 
   \item{transform}{whether to use warp (default) or affine
   component of registration, or simply flip about midplane

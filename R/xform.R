@@ -205,7 +205,9 @@ mirror<-function(x, ...) UseMethod('mirror')
 #' @param mirrorAxisSize The bounding box of the axis to mirror
 #' @param mirrorAxis Axis to mirror (default \code{"X"}). Can also be an integer
 #'   in range \code{1:3}.
-#' @param warpfile Path to (optional) CMTK registration
+#' @param warpfile Path to (optional) CMTK registration that specifies a
+#'   (usually non-rigid) transformation to be applied \emph{after} the simple
+#'   mirroring.
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
 #' @method mirror default
