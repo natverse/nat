@@ -1,3 +1,15 @@
+nat 1.4.7
+=========
+* add ability to make a dotprops object directly from an image file on disk or
+  an im3d object in memory.
+* port ind2coord, coord2ind and sub2ind functions from AnalysisSuite
+* fix clampmax function so that it removes Infinite values
+* fix reading of gzip encoded amiramesh files
+* fix mirror so that dotprops are recalculated for a simple flip
+* make plot(3d).neuron colour settings more consistent
+* simplify axis handling in plot.neuron
+* dev: build nat.flybrains (as well as nat) after flycircuit build
+
 nat 1.4.6
 =========
 * fix bug in handling vertexData argument in as.neuron.ngraph
