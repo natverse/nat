@@ -221,15 +221,17 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   if(length(mirrorAxis)!=1 || is.na(mirrorAxis) || mirrorAxis<0 || mirrorAxis>3)
     stop("Invalid mirror axis")
   
-  # start by flipping along mirror axis
-  xyz=xyzmatrix(x)
-  xyz[,mirrorAxis]=mirrorAxisSize-1*xyz[,mirrorAxis]
-  xyzmatrix(x)=xyz
+  # construct homogeneous affine mirroring transform
+  mirrormat=diag(4)
+  mirrormat[mirrorAxis, 4]=mirrorAxisSize
+  mirrormat[mirrorAxis, mirrorAxis]=-1
   
-  # then 
   if(is.null(warpfile) || transform=='flip') {
-    xform(x, reg=diag(4), transformtype=transform, ...)
+    xform(x, reg=mirrormat, ...)
   } else {
+    # only apply xform once since this looks after e.g. recalculating dotprops
+    # vectors
+    xyzmatrix(x)=xformpoints(xyzmatrix(x), reg = mirrormat)
     xform(x, reg=warpfile, transformtype=transform, ...)
   }
 }
