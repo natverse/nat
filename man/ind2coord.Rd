@@ -2,6 +2,7 @@
 \alias{ind2coord}
 \alias{ind2coord.array}
 \alias{ind2coord.default}
+\alias{ind2coord.im3d}
 \title{Find XYZ coords corresponding to 1D indices into a 3D image}
 \usage{
 ind2coord(inds, ...)
@@ -9,6 +10,8 @@ ind2coord(inds, ...)
 \method{ind2coord}{default}(inds, dims, voxdims, origin, ...)
 
 \method{ind2coord}{array}(inds, voxdims = NULL, origin = NULL, ...)
+
+\method{ind2coord}{im3d}(inds, voxdims = NULL, origin = NULL, ...)
 }
 \arguments{
   \item{inds}{indices into an image array (either 1D, for

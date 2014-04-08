@@ -67,7 +67,8 @@ ind2coord.array<-function(inds, voxdims=NULL, origin=NULL, ...){
   ind2coord.default(inds, dims=dims, voxdims=voxdims, origin=origin, ...)
 }
 
-
+#' @S3method ind2coord im3d
+#' @rdname ind2coord
 ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
   if(is.null(voxdims)) voxdims=voxdims(inds)
   if(is.null(origin)) origin=origin(inds)
