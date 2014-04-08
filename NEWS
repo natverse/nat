@@ -1,3 +1,7 @@
+nat 1.4.8
+=========
+* bugfix: ensure ind2coords.im3d is exported
+
 nat 1.4.7
 =========
 * add ability to make a dotprops object directly from an image file on disk or
