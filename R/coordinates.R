@@ -72,7 +72,7 @@ ind2coord.array<-function(inds, voxdims=NULL, origin=NULL, ...){
 ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
   if(is.null(voxdims)) voxdims=voxdims(inds)
   if(is.null(origin)) origin=origin(inds)
-  NextMethod("ind2coord", voxdims=voxdims, origin=origin)
+  NextMethod("ind2coord", voxdims=voxdims, origin=origin, ...)
 }
 
 
