@@ -125,3 +125,49 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   dg=igraph::add.edges(dg,t(el[edges_to_flip,2:1]))
   dg
 }
+
+
+#' The longest path along a neuron
+#' 
+#' @param n the neuron to consider.
+#' @param SpatialWeights logical indicating whether spatial distances (default)
+#'   should be used to weight segments instead of weighting each equally.
+#' @param ReturnPath logical indicating whether the length of the path (default)
+#'   or the sequence of vertices along the path should be returned.
+#' @return Either the length of the longest path along the neuron (if
+#'   \code{ReturnPath == FALSE}) or a list of vertices.
+#' @export
+getLongestPath <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE) {
+  spatialWeight <- function(ng, n) {
+    getDist <- function(startInd, endInd, n) {
+      startXYZ <- n$d[n$d$PointNo == startInd, c('X', 'Y', 'Z')]
+      endXYZ <- n$d[n$d$PointNo == endInd, c('X', 'Y', 'Z')]
+      dist <- sqrt(sum((endXYZ-startXYZ)^2))
+      dist
+    }
+    
+    edgeVertexTable <- get.edges(ng, E(ng))
+    weights <- apply(edgeVertexTable, 1, function(x) getDist(x[1], x[2], n))
+    weights
+  }
+  
+  ng <- as.ngraph(n)
+  if(ReturnPath)
+    return(get.diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL))
+  diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)
+}
+
+#' Draw the longest path along a neuron
+#' 
+#' @param n the neuron to consider.
+#' @param SpatialWeights logical indicating whether spatial distances (default)
+#'   should be used to weight segments instead of weighting each equally.
+#' @param lw the width of the line used to draw the path.
+#' @param ... extra arguments passed to \code{\link[rgl]{lines3d}}.
+#' @return A list of plotted objects (invisibly).
+#' @seealso \code{\link[rgl]{lines3d}}
+#' @export
+drawLongestPath <- function(n, SpatialWeights=TRUE, lw=4, ...) {
+  points <- t(sapply(getLongestPath(n, SpatialWeights=SpatialWeights, ReturnPath=TRUE), function(x) n$d[n$d$PointNo == x, c('X', 'Y', 'Z')]))
+  lines3d(points, lw=lw, ...)
+}
