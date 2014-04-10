@@ -67,6 +67,13 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
   x
 }
 
+#' @description \code{as.im3d} will convert a suitable object to an im3d object.
+#' @param ... addition arguments to pass to methods.
+#' @export
+#' @rdname im3d
+as.im3d <- function(x, ...) UseMethod("as.im3d")
+
+
 #' Read/Write calibrated 3D blocks of image data
 #' 
 #' @details Currently only nrrd and amira formats are implemented. Furthermore 

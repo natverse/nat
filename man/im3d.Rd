@@ -1,9 +1,12 @@
 \name{im3d}
+\alias{as.im3d}
 \alias{im3d}
 \title{Construct an im3d object representing 3D image data, densities etc}
 \usage{
 im3d(x = numeric(0), dims = NULL, voxdims = NULL, origin = NULL,
   BoundingBox = NULL, bounds = NULL)
+
+as.im3d(x, ...)
 }
 \arguments{
   \item{x}{The object to turn into an im3d}
@@ -24,6 +27,8 @@ im3d(x = numeric(0), dims = NULL, voxdims = NULL, origin = NULL,
   \item{BoundingBox,bounds}{Physical extent of image. See
   the details section of \code{\link{boundingbox}}'s help
   for the distinction.}
+
+  \item{...}{addition arguments to pass to methods.}
 }
 \value{
 An array with additional class \code{im3d}
@@ -38,6 +43,9 @@ analysis software. This corresponds to the \strong{node}
 centers option in the
 \href{http://teem.sourceforge.net/nrrd/format.html}{NRRD
 format}.
+
+\code{as.im3d} will convert a suitable object to an im3d
+object.
 }
 \details{
 We follow Amira's convention of setting the bounding box
