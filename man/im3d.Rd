@@ -27,6 +27,8 @@ as.im3d(x, ...)
   \item{BoundingBox,bounds}{Physical extent of image. See
   the details section of \code{\link{boundingbox}}'s help
   for the distinction.}
+
+  \item{...}{addition arguments to pass to methods.}
 }
 \value{
 An array with additional class \code{im3d}
