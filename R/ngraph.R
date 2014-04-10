@@ -125,3 +125,49 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   dg=igraph::add.edges(dg,t(el[edges_to_flip,2:1]))
   dg
 }
+
+
+#' The longest path along a neuron
+#' 
+#' @param n the neuron to consider.
+#' @param SpatialWeights logical indicating whether spatial distances (default)
+#'   should be used to weight segments instead of weighting each equally.
+#' @param ReturnPath logical indicating whether the length of the path (default)
+#'   or the sequence of vertices along the path should be returned.
+#' @param PlotPath logical indicating whether the path should be plotted in 3D
+#' (default == TRUE).
+#' @return Either the length of the longest path along the neuron (if
+#'   \code{ReturnPath == FALSE}) or a neuron object corresponding to the
+#'   longest path.
+#' @export
+spine <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE, PlotPath=FALSE) {
+  spatialWeight <- function(ng, n) {
+    edgeVertexTable <- get.edges(ng, E(ng))
+    pointTable <- n$d[, c('PointNo', 'X', 'Y', 'Z')]
+    pointTable <- pointTable[order(pointTable$PointNo), ]
+    startVertices <- pointTable[edgeVertexTable[, 1], c('X', 'Y', 'Z')]
+    endVertices <- pointTable[edgeVertexTable[, 2], c('X', 'Y', 'Z')]
+    dists <- sqrt(rowSums((endVertices - startVertices)^2))
+    dists
+  }
+  
+  spineify <- function(n, ng) {
+    spineGraph <- delete.vertices(ng, setdiff(V(ng), get.diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)))
+    spine <- as.neuron.ngraph(spineGraph, vertexData=n$d[V(spineGraph)$label, ])
+    spine
+  }
+  
+  ng <- as.ngraph(n)
+  if(ReturnPath) {
+    obj.return <- spineify(n, ng)
+  } else {
+    obj.return <- diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)
+  }
+  
+  if(PlotPath) {
+    toplot = if(ReturnPath) obj.return else spineify(n, ng)
+    plot3d(toplot, lwd=4, col='black')
+  }
+  
+  obj.return
+}

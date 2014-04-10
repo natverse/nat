@@ -65,6 +65,20 @@ test_that("equivalence of seglist and swc methods for as.ngraph.neuron",{
   expect_equal(g3,g3s)
 })
 
+test_that("can find the length of the spine of a neuron", {
+  n <- Cell07PNs[[1]]
+  spine.length <- spine(n)
+  spine.length.expected <- 186.085903694106
+  expect_equal(spine.length, spine.length.expected)
+})
+
+test_that("can find the path of the spine of a neuron", {
+  n <- Cell07PNs[[1]]
+  spine <- spine(n, ReturnPath=TRUE)
+  spine.expected <- readRDS('testdata/neuron/testCell07PNs1_spine.rds')
+  expect_equal(spine, spine.expected)
+})
+
 test_that("setting of graph attributes",{
   gatts=list(name='testneuron',nclass="PN")
   expect_is(testg <- as.ngraph(testd, graph.attributes = gatts), 'ngraph')
