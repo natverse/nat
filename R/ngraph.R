@@ -166,7 +166,7 @@ spine <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE, PlotPath=FALSE) {
   
   if(PlotPath) {
     toplot = if(ReturnPath) obj.return else spineify(n, ng)
-    plot3d(toplot, lw=4, col='black')
+    plot3d(toplot, lwd=4, col='black')
   }
   
   obj.return
