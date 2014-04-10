@@ -22,7 +22,7 @@ test_that("reformatx can reformat a volume", {
 
 }
 
-test_that('cmtk.targetvolume works',{
+test_that("cmtk.targetvolume works",{
   expect_equal(cmtk.targetvolume('target.nrrd'),shQuote('target.nrrd'))
   # Nx,Ny,Nz:dX,dY,dZ[:Ox,Oy,Oz]
   expect_equal(cmtk.targetvolume(

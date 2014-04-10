@@ -1,6 +1,6 @@
 context("neuron fileformats")
 
-test_that("We can query fileformats",{
+test_that("we can query fileformats",{
   expect_equal(fileformats(ext='swc',rval='names'),'swc')
   expect_equal(fileformats(ext='am', class='neuron', rval='names'),
                c('hxlineset','hxskel'))
@@ -21,9 +21,9 @@ test_that("We can query fileformats",{
                'hxlineset')
 })
 
-context("read neurons")
+context("neurons writing")
 
-test_that("We can read single neurons in rda or rds format", {
+test_that("we can read single neurons in rda or rds format", {
   rda=tempfile(fileext='.rda')
   rds=tempfile(fileext='.rds')
   on.exit(unlink(c(rda,rds)))
@@ -47,7 +47,7 @@ test_that("We can read single neurons in rda or rds format", {
   expect_equivalent(n,read.neurons(tfrds,format='rds')[[1]])
 })
 
-test_that("We can read single dotprops objects in rda or rds format", {
+test_that("we can read single dotprops objects in rda or rds format", {
   rda=tempfile(fileext='.rda')
   rds=tempfile(fileext='.rds')
   on.exit(unlink(c(rda,rds)))
@@ -69,13 +69,13 @@ test_that("We can read single dotprops objects in rda or rds format", {
   expect_equivalent(n,read.neurons(tfrds,format='rds')[[1]])
 })
 
-test_that("We can read neurons in swc format", {
+test_that("we can read neurons in swc format", {
   swc='testdata/neuron/EBT7R.CNG.swc'
   expect_is(n<-read.neuron(swc),'neuron')
   expect_equal(n$NeuronName,'EBT7R.CNG')
 })
 
-test_that("We can set the NeuronName field", {
+test_that("we can set the NeuronName field", {
   swc='testdata/neuron/EBT7R.CNG.swc'
   n<-read.neuron(swc, NeuronName="rhubarb")
   expect_equal(n$NeuronName,'rhubarb')
@@ -85,7 +85,7 @@ test_that("We can set the NeuronName field", {
   expect_equal(n$NeuronName,'EBT7R')
 })
 
-test_that("We can read in neurons as a neuronlist",{
+test_that("we can read in neurons as a neuronlist",{
   expect_is(nl<-read.neurons(paths='testdata/neuron/',pattern='\\.CNG\\.swc$',
                neuronnames=function(x) sub("\\..*","",basename(x))),'neuronlist')
   expect_equal(length(nl),2)
@@ -106,7 +106,7 @@ test_that("We can read in neurons as a neuronlist",{
                  regexp = 'While reading file.*Neurites\\.am')
 })
 
-test_that("We can read hxlineset format neurons",{
+test_that("we can read hxlineset format neurons",{
   
   ebt7=structure(list(NeuronName = "EBT7R", InputFileName = "testdata/neuron/EBT7R.am", 
       CreatedAt = structure(1391870899.00482, class = c("POSIXct", 
@@ -709,7 +709,7 @@ test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
   expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d.am.gz"),fieldsToExclude='NeuronName')
 })
 
-test_that("reading gzipped binary format amiramesh neurons",{
+test_that("reading gzipped binary format amiramesh neurons works",{
   expect_true(is.gzip("testdata/neuron/testneuron_am3d_ascii.am.gz"))
   expect_true(is.gzip("testdata/neuron/testneuron_am3d.am.gz"))
   expect_false(is.gzip("testdata/neuron/testneuron_am3d.am"))
@@ -737,15 +737,15 @@ test_that("we can identify amira hxlineset neurons",{
   expect_true(is.hxlineset(r,bytes=readBin(gzf,what=raw(),n=80)))
 })
 
-test_that("read a flycircuit lineset neuron w/o radius info",{
+test_that("we can read a flycircuit lineset neuron w/o radius info",{
   f="testdata/neuron/testneuron_fclineset.am.gz"
   expect_warning(n<-read.neuron(f), regexp = 'No width data')
   expect_is(n, 'neuron')
 })
 
-context("write neurons")
+context("neurons writing")
 
-test_that("write neuron/dotprops to rds file",{
+test_that("we can write neuron/dotprops to rds file",{
   x=kcs20[[1]]
   td=tempfile()
   dir.create(td)
@@ -772,7 +772,7 @@ test_that("write neuron/dotprops to rds file",{
   
 })
 
-test_that("write neuron to swc file",{
+test_that("we can write neuron to swc file",{
   y=Cell07PNs[[1]]
   td=tempfile()
   dir.create(td)
@@ -785,7 +785,7 @@ test_that("write neuron to swc file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
-test_that("write neuron to amira hxskel file",{
+test_that("we can write neuron to amira hxskel file",{
   y=Cell07PNs[[1]]
   td=tempfile()
   dir.create(td)
@@ -796,7 +796,7 @@ test_that("write neuron to amira hxskel file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
-test_that("write neuron to amira hxlineset file",{
+test_that("we can write neuron to amira hxlineset file",{
   y=Cell07PNs[[1]]
   td=tempfile()
   dir.create(td)
@@ -807,11 +807,11 @@ test_that("write neuron to amira hxlineset file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
-test_that("write neuron to unknown format",{
+test_that("we can write neuron to unknown format",{
   expect_error(write.neuron(Cell07PNs[[1]], dir=td, format='rhubarb'))
 })
 
-test_that("write.neurons",{
+test_that("write.neurons works",{
   td=tempfile()
   dir.create(td)
   on.exit(unlink(td,recursive=TRUE))

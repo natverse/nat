@@ -28,7 +28,7 @@ test_that("neuronlistfh behaves like a neuronlist",{
   expect_equal(kcs20t,kcs20fht)
 })
 
-test_that("Can load a previously created on disk neuronlistfh representation",{
+test_that("we can load a previously created on disk neuronlistfh representation",{
   # create on disk filehash with one file per neuron
   fhpath=tempfile(pattern='kcs20fh')
   dir.create(file.path(fhpath,'data'),recursive=T)
@@ -52,7 +52,7 @@ test_that("Can load a previously created on disk neuronlistfh representation",{
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
 })
 
-test_that("Can create a neuronlistfh with a hashmap",{
+test_that("we can create a neuronlistfh with a hashmap",{
   fhpath=tempfile(pattern='kcs20fh')
   on.exit(unlink(fhpath,recursive=TRUE))
   expect_is(kcs20fh<-as.neuronlistfh(kcs20, dbdir=fhpath, hashmap=TRUE),
@@ -63,7 +63,7 @@ test_that("Can create a neuronlistfh with a hashmap",{
   expect_equal(sapply(kcs20fh,length),sapply(kcs20,length))
 })
 
-test_that("We can create a neuronlistfh without rewriting objects",{
+test_that("we can create a neuronlistfh without rewriting objects",{
   # make a neuronlistfh
   fhpath=tempfile(pattern='kcs20fh')
   fhdatapath=file.path(fhpath,'data')

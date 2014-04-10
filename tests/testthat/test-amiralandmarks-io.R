@@ -1,6 +1,6 @@
-context("test amira landmarks io")
+context("amira landmarks io")
 
-test_that("Read unpaired Amira landmarks",{
+test_that("we can read unpaired Amira landmarks",{
   testData=matrix(rnorm(15),ncol=3)
   tmpfile=tempfile()
   write.amiralandmarks(testData,tmpfile)
@@ -10,7 +10,7 @@ test_that("Read unpaired Amira landmarks",{
   expect_equal(testData,testData.new,tol=1e-6)
 })
 
-test_that("Read Write paired Amira Landmarks",{
+test_that("we can read/write paired Amira Landmarks",{
   testData=replicate(2,matrix(rnorm(15),ncol=3),simplify=FALSE)
   tmpfile=tempfile()
   

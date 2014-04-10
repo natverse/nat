@@ -1,4 +1,4 @@
-context("Verify cmtkreg functions")
+context("cmtkreg functions")
 require(testthat)
 
 test_that("as.cmtkreg behaves",{

@@ -1,4 +1,4 @@
-context("test seglist methods")
+context("seglist methods")
 
 test_that("make a seglist directly",{
   expect_is(seglist(),'seglist')

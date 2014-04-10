@@ -1,17 +1,17 @@
 context("neuronlistfh remote")
 
-test_that("Can download a neuronlistfh object with MD5'd objects", {
+test_that("we can download a neuronlistfh object with MD5'd objects", {
   localdir <- tempfile()
   dir.create(localdir)
   on.exit(unlink(localdir, recursive=TRUE))
-  kcs20md5 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir)
+  kcs20md5 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir, quiet=TRUE)
   # test trying to read in neuronlistfh object which is now available locally
   # before we have downloaded any data objects
-  kcs20md5.2 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir)
+  kcs20md5.2 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir, quiet=TRUE)
   expect_equal(dim(kcs20md5[[1]]$points), c(284, 3))
 })
 
-test_that("Can synchronise a neuronlistfh object with its remote", {
+test_that("we can synchronise a neuronlistfh object with its remote", {
   localdir <- tempfile()
   dir.create(localdir)
   on.exit(unlink(localdir, recursive=TRUE))

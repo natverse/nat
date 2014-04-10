@@ -1,4 +1,4 @@
-context("Verify xformpoints methods")
+context("xformpoints")
 require(testthat)
 
 test_that("xformpoints can use a function to define a registration", {
