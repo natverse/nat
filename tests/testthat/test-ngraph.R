@@ -92,6 +92,8 @@ test_that("graph weights can be calculated and set",{
   expect_is(g2 <- as.ngraph(testd, weights=FALSE), 'ngraph')
   expect_equal(igraph::E(g1)$weight, rep(1, 5))
   expect_equal(igraph::diameter(g1), igraph::diameter(g2))
+  g1=as.ngraph(testd, weights=rep(2,5))
+  expect_equal(igraph::E(g1)$weight, rep(2, 5))
   
   g3=as.ngraph(Cell07PNs[[1]], weights=TRUE)
   expect_equal(sum(igraph::E(g3)$weight), 297.1763, tolerance=1e-4)
