@@ -69,12 +69,12 @@ test_that("can find the length of the spine of a neuron", {
   n <- Cell07PNs[[1]]
   spine.length <- spine(n)
   spine.length.expected <- 186.085903694106
-  expect_equal(spine.length, spine.length.expected)
+  expect_equal(spine.length, spine.length.expected, tolerance=1e-4)
 })
 
 test_that("can find the path of the spine of a neuron", {
   n <- Cell07PNs[[1]]
-  spine <- spine(n, ReturnPath=TRUE)
+  expect_is(spine <- spine(n, ReturnPath=TRUE), 'neuron')
   spine.expected <- readRDS('testdata/neuron/testCell07PNs1_spine.rds')
   expect_equal(spine, spine.expected)
 })
