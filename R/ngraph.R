@@ -105,7 +105,7 @@ as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
     if(is.directed(x)==directed) return(x)
   
   if(is.directed(x) && !directed) x=as.undirected(x, ...)
-  else if(directed) x=as.directed.usingroot(x, root, mode=mode, ...)
+  else if(!is.directed(x) && directed) x=as.directed.usingroot(x, root, mode=mode, ...)
   
   if(!inherits(x,'ngraph')){
     class(x)=c("ngraph",class(x))
@@ -141,37 +141,29 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 }
 
 
-#' The longest path along a neuron
+#' Compute the longest path (aka spine or backbone) of a neuron
 #' 
 #' @param n the neuron to consider.
-#' @param SpatialWeights logical indicating whether spatial distances (default)
-#'   should be used to weight segments instead of weighting each equally.
-#' @param ReturnPath logical indicating whether the length of the path (default)
-#'   or the sequence of vertices along the path should be returned.
-#' @param PlotPath logical indicating whether the path should be plotted in 3D
-#' (default == TRUE).
-#' @return Either the length of the longest path along the neuron (if
-#'   \code{ReturnPath == FALSE}) or a neuron object corresponding to the
-#'   longest path.
+#' @param SpatialWeights logical indicating whether spatial distances (default) 
+#'   should be used to weight segments instead of weighting each edge equally.
+#' @param LengthOnly logical indicating whether only the length of the longest 
+#'   path should be returned (when \code{TRUE}) or whether a neuron pruned down 
+#'   to the the sequence of vertices along the path should be returned 
+#'   (\code{FALSE}, the default).
+#' @return Either a neuron object corresponding to the longest path \emph{or}
+#'   the length of the longest path when \code{LengthOnly=TRUE}).
+#' @seealso \code{\link[igraph]{diameter}}
 #' @export
-spine <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE, PlotPath=FALSE) {
-  spineify <- function(n, ng) {
-    spineGraph <- delete.vertices(ng, setdiff(V(ng), get.diameter(ng, directed=FALSE)))
-    spine <- as.neuron.ngraph(spineGraph, vertexData=n$d[V(spineGraph)$label, ])
-    spine
-  }
-  
+#' @examples
+#' plot3d(Cell07PNs[[1]])
+#' plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
+spine <- function(n, SpatialWeights=TRUE, LengthOnly=FALSE) {
   ng <- as.ngraph(n, weights=SpatialWeights)
-  if(ReturnPath) {
-    obj.return <- spineify(n, ng)
+  if(LengthOnly) {
+    diameter(ng, directed=FALSE)
   } else {
-    obj.return <- diameter(ng, directed=FALSE)
+    longestpath=get.diameter(ng, directed=FALSE)
+    spineGraph <- delete.vertices(ng, setdiff(V(ng), longestpath))
+    as.neuron(as.ngraph(spineGraph), vertexData=n$d[V(spineGraph)$label, ])
   }
-  
-  if(PlotPath) {
-    toplot = if(ReturnPath) obj.return else spineify(n, ng)
-    plot3d(toplot, lwd=4, col='black')
-  }
-  
-  obj.return
 }

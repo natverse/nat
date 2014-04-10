@@ -1,29 +1,36 @@
 \name{spine}
 \alias{spine}
-\title{The longest path along a neuron}
+\title{Compute the longest path (aka spine or backbone) of a neuron}
 \usage{
-spine(n, SpatialWeights = TRUE, ReturnPath = FALSE, PlotPath = FALSE)
+spine(n, SpatialWeights = TRUE, LengthOnly = FALSE)
 }
 \arguments{
   \item{n}{the neuron to consider.}
 
   \item{SpatialWeights}{logical indicating whether spatial
   distances (default) should be used to weight segments
-  instead of weighting each equally.}
+  instead of weighting each edge equally.}
 
-  \item{ReturnPath}{logical indicating whether the length
-  of the path (default) or the sequence of vertices along
-  the path should be returned.}
-
-  \item{PlotPath}{logical indicating whether the path
-  should be plotted in 3D (default == TRUE).}
+  \item{LengthOnly}{logical indicating whether only the
+  length of the longest path should be returned (when
+  \code{TRUE}) or whether a neuron pruned down to the the
+  sequence of vertices along the path should be returned
+  (\code{FALSE}, the default).}
 }
 \value{
-Either the length of the longest path along the neuron (if
-\code{ReturnPath == FALSE}) or a neuron object
-corresponding to the longest path.
+Either a neuron object corresponding to the longest path
+\emph{or} the length of the longest path when
+\code{LengthOnly=TRUE}).
 }
 \description{
-The longest path along a neuron
+Compute the longest path (aka spine or backbone) of a
+neuron
+}
+\examples{
+plot3d(Cell07PNs[[1]])
+plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
+}
+\seealso{
+\code{\link[igraph]{diameter}}
 }
 
