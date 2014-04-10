@@ -39,17 +39,18 @@ x=im3d(rnorm(1000),dims=c(10,10,10), BoundingBox=c(20,200,100,200,200,300))
 stopifnot(all.equal(threshold(x, 0), threshold(x, x>0)))
 }
 \seealso{
-Other im3d: \code{\link{boundingbox}},
+Other im3d: \code{\link{as.im3d}},
+\code{\link{as.im3d.im3d}}, \code{\link{im3d}};
+\code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
 \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
 \code{\link{ijkpos}}, \code{\link{im3d-coords}},
 \code{\link{im3d-coords}}, \code{\link{xyzpos}};
 \code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imexpand.grid}}; \code{\link{imslice}};
-\code{\link{origin}}; \code{\link{projection}};
-\code{\link{unmask}}; \code{\link{voxdims}},
-\code{\link{voxdims.default}}
+\code{\link{write.im3d}}; \code{\link{imexpand.grid}};
+\code{\link{imslice}}; \code{\link{origin}};
+\code{\link{projection}}; \code{\link{unmask}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 
