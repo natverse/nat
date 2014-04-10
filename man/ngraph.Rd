@@ -5,7 +5,7 @@
 \alias{ngraph}
 \title{ngraph: a graph to encode a neuron's connectivity}
 \usage{
-ngraph(el, vertexlabels, xyz = NULL, directed = TRUE,
+ngraph(el, vertexlabels, xyz = NULL, directed = TRUE, weights = FALSE,
   graph.attributes = NULL)
 
 as.ngraph(x, ...)
@@ -24,6 +24,11 @@ as.ngraph(x, ...)
 
   \item{xyz}{3D coordinates of vertices (optional, Nx3
   matrix)}
+
+  \item{weights}{Logical value indicating whether edge
+  weights defined by the 3D distance between points should
+  be added to graph (default \code{FALSE}) \emph{or} a
+  numeric vector of weights.}
 
   \item{directed}{Whether the resultant graph should be
   directed (default TRUE)}
