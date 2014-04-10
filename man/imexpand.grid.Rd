@@ -20,17 +20,19 @@ imexpand.grid(d)
 \seealso{
 expand.grid
 
-Other im3d: \code{\link{boundingbox}},
+Other im3d: \code{\link{as.im3d}},
+\code{\link{as.im3d.im3d}}, \code{\link{im3d}};
+\code{\link{boundingbox}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
 \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
 \code{\link{ijkpos}}, \code{\link{im3d-coords}},
 \code{\link{im3d-coords}}, \code{\link{xyzpos}};
 \code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{projection}}; \code{\link{threshold}},
-\code{\link{threshold.im3d}}; \code{\link{unmask}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+\code{\link{write.im3d}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{projection}};
+\code{\link{threshold}}, \code{\link{threshold.im3d}};
+\code{\link{unmask}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
 }
 
