@@ -134,10 +134,13 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #'   should be used to weight segments instead of weighting each equally.
 #' @param ReturnPath logical indicating whether the length of the path (default)
 #'   or the sequence of vertices along the path should be returned.
+#' @param PlotPath logical indicating whether the path should be plotted in 3D
+#' (default == TRUE).
 #' @return Either the length of the longest path along the neuron (if
-#'   \code{ReturnPath == FALSE}) or a list of vertices.
+#'   \code{ReturnPath == FALSE}) or a neuron object corresponding to the
+#'   longest path.
 #' @export
-getLongestPath <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE) {
+spine <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE, PlotPath=FALSE) {
   spatialWeight <- function(ng, n) {
     edgeVertexTable <- get.edges(ng, E(ng))
     pointTable <- n$d[, c('PointNo', 'X', 'Y', 'Z')]
@@ -148,24 +151,23 @@ getLongestPath <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE) {
     dists
   }
   
+  spineify <- function(n, ng) {
+    spineGraph <- delete.vertices(ng, setdiff(V(ng), get.diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)))
+    spine <- as.neuron.ngraph(spineGraph, vertexData=n$d[V(spineGraph)$label, ])
+    spine
+  }
+  
   ng <- as.ngraph(n)
-  if(ReturnPath)
-    return(get.diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL))
-  diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)
-}
-
-
-#' Draw the longest path along a neuron
-#' 
-#' @param n the neuron to consider.
-#' @param SpatialWeights logical indicating whether spatial distances (default)
-#'   should be used to weight segments instead of weighting each equally.
-#' @param lw the width of the line used to draw the path.
-#' @param ... extra arguments passed to \code{\link[rgl]{lines3d}}.
-#' @return A list of plotted objects (invisibly).
-#' @seealso \code{\link[rgl]{lines3d}}
-#' @export
-drawLongestPath <- function(n, SpatialWeights=TRUE, lw=4, ...) {
-  points <- t(sapply(getLongestPath(n, SpatialWeights=SpatialWeights, ReturnPath=TRUE), function(x) n$d[n$d$PointNo == x, c('X', 'Y', 'Z')]))
-  lines3d(points, lw=lw, ...)
+  if(ReturnPath) {
+    obj.return <- spineify(n, ng)
+  } else {
+    obj.return <- diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)
+  }
+  
+  if(PlotPath) {
+    toplot = if(ReturnPath) obj.return else spineify(n, ng)
+    plot3d(toplot, lw=4, col='black')
+  }
+  
+  obj.return
 }

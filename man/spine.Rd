@@ -1,8 +1,8 @@
-\name{getLongestPath}
-\alias{getLongestPath}
+\name{spine}
+\alias{spine}
 \title{The longest path along a neuron}
 \usage{
-getLongestPath(n, SpatialWeights = TRUE, ReturnPath = FALSE)
+spine(n, SpatialWeights = TRUE, ReturnPath = FALSE, PlotPath = FALSE)
 }
 \arguments{
   \item{n}{the neuron to consider.}
@@ -14,10 +14,14 @@ getLongestPath(n, SpatialWeights = TRUE, ReturnPath = FALSE)
   \item{ReturnPath}{logical indicating whether the length
   of the path (default) or the sequence of vertices along
   the path should be returned.}
+
+  \item{PlotPath}{logical indicating whether the path
+  should be plotted in 3D (default == TRUE).}
 }
 \value{
 Either the length of the longest path along the neuron (if
-\code{ReturnPath == FALSE}) or a list of vertices.
+\code{ReturnPath == FALSE}) or a neuron object
+corresponding to the longest path.
 }
 \description{
 The longest path along a neuron
