@@ -139,16 +139,13 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' @export
 getLongestPath <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE) {
   spatialWeight <- function(ng, n) {
-    getDist <- function(startInd, endInd, n) {
-      startXYZ <- n$d[n$d$PointNo == startInd, c('X', 'Y', 'Z')]
-      endXYZ <- n$d[n$d$PointNo == endInd, c('X', 'Y', 'Z')]
-      dist <- sqrt(sum((endXYZ-startXYZ)^2))
-      dist
-    }
-    
     edgeVertexTable <- get.edges(ng, E(ng))
-    weights <- apply(edgeVertexTable, 1, function(x) getDist(x[1], x[2], n))
-    weights
+    pointTable <- n$d[, c('PointNo', 'X', 'Y', 'Z')]
+    pointTable <- pointTable[order(pointTable$PointNo), ]
+    startVertices <- pointTable[edgeVertexTable[, 1], c('X', 'Y', 'Z')]
+    endVertices <- pointTable[edgeVertexTable[, 2], c('X', 'Y', 'Z')]
+    dists <- sqrt(rowSums((endVertices - startVertices)^2))
+    dists
   }
   
   ng <- as.ngraph(n)
@@ -156,6 +153,7 @@ getLongestPath <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE) {
     return(get.diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL))
   diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)
 }
+
 
 #' Draw the longest path along a neuron
 #' 
