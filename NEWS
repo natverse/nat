@@ -1,3 +1,11 @@
+nat 1.4.9
+=========
+* add spine() function to find longest path (aka backbone) of a neuron
+* give ngraph (and therefore as.ngraph methods) a weights argument so that 
+  resultant ngraph objects have edge weights defined by segment lengths.
+* add as.im3d generic and as.im3d.im3d method
+* fix bug in setting graph attributes in ngraph
+
 nat 1.4.8
 =========
 * bugfix: ensure ind2coords.im3d is exported
