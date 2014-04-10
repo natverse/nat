@@ -155,27 +155,17 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #'   longest path.
 #' @export
 spine <- function(n, SpatialWeights=TRUE, ReturnPath=FALSE, PlotPath=FALSE) {
-  spatialWeight <- function(ng, n) {
-    edgeVertexTable <- get.edges(ng, E(ng))
-    pointTable <- n$d[, c('PointNo', 'X', 'Y', 'Z')]
-    pointTable <- pointTable[order(pointTable$PointNo), ]
-    startVertices <- pointTable[edgeVertexTable[, 1], c('X', 'Y', 'Z')]
-    endVertices <- pointTable[edgeVertexTable[, 2], c('X', 'Y', 'Z')]
-    dists <- sqrt(rowSums((endVertices - startVertices)^2))
-    dists
-  }
-  
   spineify <- function(n, ng) {
-    spineGraph <- delete.vertices(ng, setdiff(V(ng), get.diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)))
+    spineGraph <- delete.vertices(ng, setdiff(V(ng), get.diameter(ng, directed=FALSE)))
     spine <- as.neuron.ngraph(spineGraph, vertexData=n$d[V(spineGraph)$label, ])
     spine
   }
   
-  ng <- as.ngraph(n)
+  ng <- as.ngraph(n, weights=SpatialWeights)
   if(ReturnPath) {
     obj.return <- spineify(n, ng)
   } else {
-    obj.return <- diameter(ng, directed=FALSE, weights=if(SpatialWeights) spatialWeight(ng, n) else NULL)
+    obj.return <- diameter(ng, directed=FALSE)
   }
   
   if(PlotPath) {
