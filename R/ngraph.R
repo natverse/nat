@@ -45,7 +45,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE,
   igraph::V(g)$label=vertexlabels
   if(!is.null(xyz)) xyzmatrix(g)<-xyz
   for(n in names(graph.attributes)){
-    g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[g]])
+    g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[n]])
   }
   class(g)=c("ngraph",class(g))
   g

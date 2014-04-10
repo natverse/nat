@@ -64,3 +64,10 @@ test_that("equivalence of seglist and swc methods for as.ngraph.neuron",{
   expect_equal(g2,g2s)
   expect_equal(g3,g3s)
 })
+
+test_that("setting of graph attributes",{
+  gatts=list(name='testneuron',nclass="PN")
+  expect_is(testg <- as.ngraph(testd, graph.attributes = gatts), 'ngraph')
+  expect_equal(get.graph.attribute(testg, name = 'class'), gatts$class)
+  expect_equal(get.graph.attribute(testg, name = 'name'), gatts$name)
+})
