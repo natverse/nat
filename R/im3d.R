@@ -73,6 +73,9 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
 #' @rdname im3d
 as.im3d <- function(x, ...) UseMethod("as.im3d")
 
+#' @export
+#' @rdname im3d
+as.im3d.im3d <- function(x, ...) x
 
 #' Read/Write calibrated 3D blocks of image data
 #' 

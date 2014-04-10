@@ -1,5 +1,6 @@
 \name{im3d}
 \alias{as.im3d}
+\alias{as.im3d.im3d}
 \alias{im3d}
 \title{Construct an im3d object representing 3D image data, densities etc}
 \usage{
@@ -7,6 +8,8 @@ im3d(x = numeric(0), dims = NULL, voxdims = NULL, origin = NULL,
   BoundingBox = NULL, bounds = NULL)
 
 as.im3d(x, ...)
+
+\method{as.im3d}{im3d}(x, ...)
 }
 \arguments{
   \item{x}{The object to turn into an im3d}
