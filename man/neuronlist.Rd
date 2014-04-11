@@ -1,24 +1,18 @@
-\name{is.neuronlist}
-\alias{is.neuronlist}
+\name{neuronlist}
 \alias{neuronlist}
-\title{Create and test objects of neuronlist class to store multiple neurons}
+\title{Create a neuronlist from zero or more neurons}
 \usage{
-is.neuronlist(x)
-
 neuronlist(..., DATAFRAME = NULL)
 }
 \arguments{
-  \item{x}{A neuronlist object}
-
   \item{...}{objects to be turned into a list}
 
-  \item{DATAFRAME}{an optional data.frame to attach to the
-  neuronlist containing information about each neuron.}
+  \item{DATAFRAME}{an optional \code{data.frame} to attach
+  to the neuronlist containing information about each
+  neuron.}
 }
 \value{
-return value
-
-return value
+A new neuronlist object.
 }
 \description{
 \code{neuronlist} objects consist of a list of neuron
@@ -32,11 +26,6 @@ subsetted.
 It is perfectly acceptable not to pass any parameters,
 generating an empty neuronlist
 }
-\details{
-\code{is.neuronlist} Uses a relaxed definition to cope with
-older lists of neurons that do not have a class attribute
-of neuronlist
-}
 \examples{
 # generate an empty neuronlist
 nl=neuronlist()
@@ -47,7 +36,8 @@ kcs5=kcs20[1:5]
 Other neuronlist: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}; \code{\link{nlapply}};
-\code{\link{read.neurons}}; \code{\link{write.neurons}}
+\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}};
+\code{\link{nlapply}}; \code{\link{read.neurons}};
+\code{\link{write.neurons}}
 }
 

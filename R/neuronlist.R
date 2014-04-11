@@ -1,32 +1,18 @@
-#' Create and test objects of neuronlist class to store multiple neurons
+#' Create a neuronlist from zero or more neurons
 #' 
 #' @description \code{neuronlist} objects consist of a list of neuron objects 
 #'   along with an optional attached dataframe containing information about the 
 #'   neurons. \code{neuronlist} objects can be indexed using their name or the 
 #'   number of the neuron like a regular list. If the \code{[} operator is used
 #'   to index the list, the attached dataframe will also be subsetted.
-#' @rdname neuronlist
-#' @family neuronlist
-#' @description \code{is.neuronlist} Test if object is a neuronlist
-#'   
-#' @details  \code{is.neuronlist} Uses a relaxed definition to cope with older 
-#'   lists of neurons that do not have a class attribute of neuronlist
-#' @param x A neuronlist object
-#' @return return value
-#' @export
-is.neuronlist<-function(x) {
-  inherits(x,"neuronlist") ||
-    (is.list(x) && length(x)>1 && is.neuron(x[[1]]))
-}
-
-#' Create a neuronlist from zero or more neurons
 #' 
 #' It is perfectly acceptable not to pass any parameters, generating an empty 
 #' neuronlist
 #' @param ... objects to be turned into a list
-#' @param DATAFRAME an optional data.frame to attach to the neuronlist
+#' @param DATAFRAME an optional \code{data.frame} to attach to the neuronlist
 #'   containing information about each neuron.
-#' @return return value
+#' @return A new neuronlist object.
+#' @family neuronlist
 #' @export
 #' @examples
 #' # generate an empty neuronlist
@@ -34,6 +20,21 @@ is.neuronlist<-function(x) {
 #' # slice an existing neuronlist with regular indexing
 #' kcs5=kcs20[1:5]
 neuronlist <- function(..., DATAFRAME=NULL) as.neuronlist(list(...), df=DATAFRAME)
+
+#' Test objects of neuronlist class to store multiple neurons
+#' 
+#' Tests if object is a neuronlist.
+#' 
+#' @details \code{is.neuronlist} uses a relaxed definition to cope with older 
+#'   lists of neurons that do not have a class attribute of neuronlist.
+#' @param x the object to test
+#' @return A logical indicating whether the object is a neuronlist.
+#' @family neuronlist
+#' @export
+is.neuronlist<-function(x) {
+  inherits(x,"neuronlist") ||
+    (is.list(x) && length(x)>1 && is.neuron(x[[1]]))
+}
 
 #' Make a list of neurons that can be used for coordinate plotting/analysis
 #'
