@@ -435,7 +435,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
       if(identical(ras, "non-missing")) useRaster <- all(!is.na(z))
     }
     image(x=x, y=y, z=z, zlim=zlim, xlim=xlim, ylim=ylim, col=col, asp=asp,
-          axes=FALSE, xlab=plotdims[1], ylab=plotdims[2], useRaster=useRaster, ...)
+          axes=FALSE, xlab=if(is.null(xlab)) plotdims[1] else xlab, ylab=if(is.null(xlab)) plotdims[2] else ylab, useRaster=useRaster, ...)
   }
   if(axes){
     axis(2,pretty(par("usr")[3:4]),abs(pretty(par("usr")[3:4])))
