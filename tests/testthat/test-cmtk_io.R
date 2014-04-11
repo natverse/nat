@@ -1,4 +1,4 @@
-context("test CMTK input/output functions")
+context("CMTK input/output functions")
 
 test_that("write.cmtk can write an empty CMTK TypedStream file", {
   tf=tempfile('EmptyTypedStream')

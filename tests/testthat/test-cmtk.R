@@ -82,7 +82,7 @@ test_that("cmtk.call",{
 
 }
 
-test_that('cmtk.arg.names works',{
+test_that("cmtk.arg.names works",{
   expect_equal(cmtk.arg.name('mask'),'--mask')
   expect_equal(cmtk.arg.name('target.grid'),'--target-grid')
   expect_equal(cmtk.arg.name('target.offset.pixels'),'--target-offset-pixels')

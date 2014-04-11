@@ -3,7 +3,7 @@ context("hxsurf (amira) surfaces")
 surf_file="testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
 surf=read.hxsurf(surf_file)
 
-test_that("can read hxsurf object", {
+test_that("we can read hxsurf object", {
   expect_equal(nrow(surf$Vertices),2549L)
   expect_equal(surf$RegionList,names(surf$Regions))
   expect_equal(surf$RegionList,
@@ -24,7 +24,7 @@ test_that("can read hxsurf object", {
   rgl.close()
 })
 
-test_that("can save and re-read hxsurf object", {
+test_that("we can save and re-read hxsurf object", {
   on.exit(unlink(surffile))
   surffile <- tempfile()
   write.hxsurf(surf, surffile)
@@ -32,13 +32,13 @@ test_that("can save and re-read hxsurf object", {
   expect_equal(newsurf, surf)
 })
 
-test_that("can xform hxsurf object", {
+test_that("we can xform hxsurf object", {
   #' tests both mirror, xform and xyzmatrix methods all in one go
   expect_equal(mirror(mirror(surf,mirrorAxisSize=100),mirrorAxisSize=100),surf)
 })
 
 if(!is.null(cmtk.bindir())){
-test_that("can xform hxsurf object using registration", {
+test_that("we can xform hxsurf object using registration", {
   reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
   xform(surf, reg)
 })

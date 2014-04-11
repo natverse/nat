@@ -1,4 +1,4 @@
-context("Test xform")
+context("xform")
 
 test_that("xform can use a function to define a registration", {
   n=Cell07PNs[[1]]
@@ -43,28 +43,28 @@ test_that("mirroring twice returns original object", {
   expect_equal(g(g(k12)),k12)
 })
 
-test_that("can mirror raw points", {
+test_that("we can mirror raw points", {
   k=kcs20[[1]]
   g=function(x) mirror(x,mirrorAxisSize=564.2532)
   xyz=data.matrix(k$points)
   expect_equal(g(g(xyz)),xyz)
 })
 
-test_that("can mirror using different forms of axis specification", {
+test_that("we can mirror using different forms of axis specification", {
   n=Cell07PNs[[1]]
   expect_equal(mirror(n,mirrorAxisSize=0,mirrorAxis=1),mirror(n,mirrorAxisSize=0))
   expect_equal(mirror(n,mirrorAxisSize=0,mirrorAxis=2),mirror(n,mirrorAxisSize=0,mirrorAxis="Y"))
   expect_error(mirror(n,mirrorAxisSize=0,mirrorAxis=1:2))
 })
 
-test_that("can mirror a neuron list", {
+test_that("we can mirror a neuron list", {
   k5=kcs20[1:5]
   expect_equal(mirror(mirror(k5,mirrorAxisSize=0),mirrorAxisSize=0),k5)
 })
 
 context('xyzmatrix')
 
-test_that('can extract xyz coords from a matrix',{
+test_that("can extract xyz coords from a matrix",{
   mx=matrix(1:24,ncol=3)
   expect_equivalent(xyzmatrix(mx),mx)
   colnames(mx)=c("X","Y","Z")

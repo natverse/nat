@@ -1,6 +1,6 @@
 context("im3d")
 
-test_that("can read im3d files",{
+test_that("we can read im3d files",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"),'im3d')
   expect_is(d,'array')
   expect_true(is.integer(d))
@@ -20,7 +20,7 @@ test_that("can read im3d files",{
   expect_error(read.im3d("testdata/nrrd/LHMask.rhubarb"))
 })
 
-test_that("round trip test for im3d",{
+test_that("round trip test for im3d is successful",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"),'im3d')
   tf=tempfile(fileext='.nrrd')
   on.exit(unlink(tf))
@@ -32,7 +32,7 @@ test_that("round trip test for im3d",{
   expect_error(write.im3d(d, tf2))
 })
 
-test_that("dim, voxdims and boundingbox",{
+test_that("dim, voxdims and boundingbox work",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"), 'im3d')
   expect_equal(dim(d),c(50,50,50))
   
@@ -71,7 +71,7 @@ test_that("dim, voxdims and boundingbox",{
   expect_equal(nrrdraw, amraw)
 })
 
-test_that("can flip arrays",{
+test_that("we can flip arrays",{
   m=matrix(1:4, ncol=2, nrow=2, byrow=TRUE)
   # NB the orientation is determined by matching x to 
   mf1=rbind(c(3,4),c(1,2))
@@ -88,7 +88,7 @@ test_that("can flip arrays",{
   expect_equal(flip(a6, 3), array(c(5,6,3,4,1,2),1:3))
 })
 
-test_that("can slice out subarray from image",{
+test_that("we can slice out subarray from image",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
   i2=im3d(array(1:4,c(1,2,2)),voxdims=c(2,3,4))
   expect_equal(imslice(i, 1:2, drop=FALSE), i2)
@@ -100,7 +100,7 @@ test_that("can slice out subarray from image",{
   expect_equal(imslice(i, 1:2), i3)
 })
 
-test_that("can make projections",{
+test_that("we can make projections",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"), 'im3d')
   expect_equal(dim(d),c(50,50,50))
   
@@ -109,7 +109,7 @@ test_that("can make projections",{
   expect_equal(pd, sd)
 })
 
-test_that("set bounding box",{
+test_that("we can set bounding box",{
   z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))
   
   z1=z
@@ -132,7 +132,7 @@ test_that("set bounding box",{
   expect_equal(boundingbox(z4), boundingbox(d))
 })
 
-test_that("construct an im3d using an im3d to supply attributes",{
+test_that("we can construct an im3d using an im3d to supply attributes",{
   d=rnorm(1000)
   x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300))
   expect_equal(x, im3d(x))
@@ -143,13 +143,13 @@ test_that("construct an im3d using an im3d to supply attributes",{
   expect_equal(x2, im3d(x, BoundingBox=c(20,200,100,200,200,300)*2))
 })
 
-test_that("unmask",{
+test_that("unmask works",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
   # unmask a vector of im3d contents by original im3d returns original
   expect_equal(unmask(as.vector(i),i),i)
 })
 
-test_that("threshold",{
+test_that("threshold works",{
   i=im3d(array(rep(TRUE, 6), 1:3),voxdims=c(2, 3, 4))
   # threshold a vector of logicals gives back the vector
   expect_equal(threshold(i, 0), i)
@@ -171,7 +171,7 @@ test_that("threshold",{
   expect_equal(threshold(i2, 0, mode='integer'), iint)
 })
 
-test_that("xyzpos, ijkpos and imexpand.grid",{
+test_that("xyzpos, ijkpos and imexpand.grid work",{
   d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
   o=origin(d)
   expect_equal(ijkpos(d,o), c(1,1,1))
@@ -192,7 +192,7 @@ test_that("xyzpos, ijkpos and imexpand.grid",{
   expect_equal(imexpand.grid(d), xyzpos(d,all_ijks))
 })
 
-test_that("clampmax",{
+test_that("clampmax works",{
   # basic tests
   expect_is(cf<-clampmax(-10, 10),'function')
   expect_equal(cf(10, 20, Inf), NA_real_)

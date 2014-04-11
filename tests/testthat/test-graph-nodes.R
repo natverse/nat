@@ -1,24 +1,24 @@
-context("identify nodes in neurons/graphs")
+context("neuron/graph node identification")
 
 testd=data.frame(PointNo=1:6,Label=2,
                  X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
                  Parent=c(-1,1:4,3))
 
 testn=as.neuron(testd)
-test_that("can identify nodes (root,branch,endpoints) from a graph",{
+test_that("we can identify nodes (root,branch,endpoints) from a graph",{
   g1=as.ngraph(testd)  
   expect_equal(rootpoints(g1),1)
   expect_equal(endpoints(g1),c(1,5,6))
   expect_equal(branchpoints(g1),3)
 })
 
-test_that("can identify nodes (root,branch,endpoints) from SWC data",{
+test_that("we can identify nodes (root,branch,endpoints) from SWC data",{
   expect_equal(rootpoints(testd),1)
   expect_equal(endpoints(testd),c(1,5,6))
   expect_equal(branchpoints(testd),3)
 })
 
-test_that("can identify nodes (root,branch,endpoints) from neuron",{
+test_that("we can identify nodes (root,branch,endpoints) from neuron",{
   n=Cell07PNs[['TKC8R']]
   expect_equal(rootpoints(n),2L)
   expect_equal(endpoints(n),c(2L, 286L, 307L, 315L, 323L, 333L, 496L, 548L))
@@ -41,7 +41,7 @@ test_that("can identify nodes (root,branch,endpoints) from neuron",{
   expect_equal(branchpoints(n2),branchpoints(g2))
 })
 
-test_that("can find nodes in more complicated neurons",{
+test_that("we can find nodes in more complicated neurons",{
   expect_error(rootpoints(testn,subtrees=2))
   # now check that we can cope if nTrees is not set
   # (as is sometimes true for old neurons)

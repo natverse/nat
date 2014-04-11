@@ -1,6 +1,6 @@
 context("nrrd IO")
 
-test_that('is.nrrd works',{
+test_that("is.nrrd works",{
   tmpdir=tempfile()
   dir.create(tmpdir)
   on.exit(unlink(tmpdir,recursive=TRUE))
@@ -20,7 +20,7 @@ test_that('is.nrrd works',{
   expect_false(is.nrrd(lhmaskfile, TrustSuffix=TRUE))
 })
 
-test_that('read.nrrd.header',{
+test_that("read.nrrd.header works",{
   origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   expect_is(h<-read.nrrd.header(origlhmaskfile),'list')
   
@@ -37,7 +37,7 @@ test_that('read.nrrd.header',{
 })
 
 
-test_that('read-write.nrrd',{
+test_that("read-write.nrrd works",{
   origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   expect_is(d<-read.nrrd(origlhmaskfile),'array')
   expect_true(is.raw(d))
