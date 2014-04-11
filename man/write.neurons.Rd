@@ -43,7 +43,7 @@ jefferis
 Other neuronlist: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}},
+\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}};
 \code{\link{neuronlist}}; \code{\link{nlapply}};
 \code{\link{read.neurons}}
 }

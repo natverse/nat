@@ -1,0 +1,29 @@
+\name{is.neuronlist}
+\alias{is.neuronlist}
+\title{Test objects of neuronlist class to store multiple neurons}
+\usage{
+is.neuronlist(x)
+}
+\arguments{
+  \item{x}{the object to test}
+}
+\value{
+A logical indicating whether the object is a neuronlist.
+}
+\description{
+Tests if object is a neuronlist.
+}
+\details{
+\code{is.neuronlist} uses a relaxed definition to cope with
+older lists of neurons that do not have a class attribute
+of neuronlist.
+}
+\seealso{
+Other neuronlist: \code{\link{as.neuronlistfh}},
+\code{\link{as.neuronlistfh.neuronlist}},
+\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
+\code{\link{neuronlistfh}}; \code{\link{neuronlist}};
+\code{\link{nlapply}}; \code{\link{read.neurons}};
+\code{\link{write.neurons}}
+}
+

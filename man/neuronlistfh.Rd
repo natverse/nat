@@ -197,7 +197,7 @@ plot3d(subset(kcs20fh, type=='gamma'))
 \seealso{
 \code{\link[filehash]{filehash-class}}
 
-Other neuronlist: \code{\link{is.neuronlist}},
+Other neuronlist: \code{\link{is.neuronlist}};
 \code{\link{neuronlist}}; \code{\link{nlapply}};
 \code{\link{read.neurons}}; \code{\link{write.neurons}}
 
