@@ -337,3 +337,51 @@ subset.dotprops<-function(x, subset, ...){
   if(!is.null(x$labels)) x$labels=x$labels[r]
   x
 }
+
+#' prune an object by removing points near (or far) from a target object
+#' @export
+#' @param x The object to prune. (e.g. \code{dotprops} object, see details)
+#' @param target Another object with 3d points that will determine which points 
+#'   in x are kept.
+#' @param ... Additional arguments for methods
+#' @examples
+#' plot3d(kcs20[[1]],col='blue')
+#' plot3d(kcs20[[2]],col='red')
+#' # prune neuron 2 down to points that are close to neuron 1
+#' neuron2_close=prune(kcs20[[2]], target=kcs20[[1]], maxdist=10)
+#' plot3d(neuron2_close, col='cyan', lwd=3)
+#' neuron2_far=prune(kcs20[[2]], target=kcs20[[1]], maxdist=10, keep='far')
+#' plot3d(neuron2_far, col='magenta', lwd=3)
+prune<-function(x, target, ...) UseMethod("prune")
+
+#' @export
+#' @method prune neuron
+#' @rdname prune
+prune.neuron<-function(x, target, ...){
+  stop("prune.neuron is not yet implemented!")
+}
+
+#' @export
+#' @method prune dotprops
+#' @rdname prune
+#' @seealso \code{\link{subset.dotprops}}
+prune.dotprops<-function(x, target, ...){
+  inds=NextMethod(return.indices=TRUE)
+  subset(x, inds)
+}
+
+#' @export
+#' @method prune default
+#' @rdname prune
+#' @param maxdist The threshold distance for keeping points
+#' @param keep Whether to keep points in x that are near or far from the target
+#' @param return.indices Whether to return the indices that pass the test rather
+#'   than the 3d object/points (default FALSE)
+prune.default<-function(x, target, maxdist, keep=c("near","far"), 
+                        return.indices=FALSE, ...){
+  keep=match.arg(keep, c("near", "far"))
+  xyzx=xyzmatrix(x)
+  nn_result=nn2(xyzmatrix(target), xyzx, k=1)
+  inds=if(keep=="near") nn_result$nn.dists<=maxdist else nn_result$nn.dists>maxdist
+  if(return.indices) inds else xyzx[inds, drop=FALSE]
+}
