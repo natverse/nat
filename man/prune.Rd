@@ -3,11 +3,14 @@
 \alias{prune.default}
 \alias{prune.dotprops}
 \alias{prune.neuron}
+\alias{prune.neuronlist}
 \title{prune an object by removing points near (or far) from a target object}
 \usage{
 prune(x, target, ...)
 
 \method{prune}{neuron}(x, target, ...)
+
+\method{prune}{dotprops}(x, target, ...)
 
 \method{prune}{dotprops}(x, target, ...)
 

@@ -371,6 +371,13 @@ prune.dotprops<-function(x, target, ...){
 }
 
 #' @export
+#' @method prune dotprops
+#' @rdname prune
+prune.neuronlist<-function(x, target, ...){
+  nlapply(x, prune, target=target, ...)
+}
+
+#' @export
 #' @method prune default
 #' @rdname prune
 #' @param maxdist The threshold distance for keeping points

@@ -58,3 +58,11 @@ test_that("pruning with different output types behaves", {
   expect_true(all(xor(inds1, inds2)),
               info = "xor of near and far indices includes all points")
 })
+
+test_that("We can prune a neuronlist",{
+  expect_is(pruned<-prune(kcs20[1:2], kcs20[[2]], maxdist=5), 'neuronlist')
+  expect_equal(pruned[[1]], prune(kcs20[[1]], kcs20[[2]], maxdist=5),
+               info='pruning a neuronlist gives same result as individual neurons')
+  expect_equal(pruned[[2]], prune(kcs20[[2]], kcs20[[2]], maxdist=5),
+               info='pruning a neuronlist gives same result as individual neurons')
+})
