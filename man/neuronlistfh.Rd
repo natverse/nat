@@ -198,8 +198,9 @@ plot3d(subset(kcs20fh, type=='gamma'))
 \code{\link[filehash]{filehash-class}}
 
 Other neuronlist: \code{\link{is.neuronlist}};
-\code{\link{neuronlist}}; \code{\link{nlapply}};
-\code{\link{read.neurons}}; \code{\link{write.neurons}}
+\code{\link{neuronlist}}; \code{\link{nlapply}},
+\code{\link{nmapply}}; \code{\link{read.neurons}};
+\code{\link{write.neurons}}
 
 Other neuronlistfh: \code{\link{read.neuronlistfh}};
 \code{\link{remotesync}},
