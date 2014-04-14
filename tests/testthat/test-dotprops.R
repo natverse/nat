@@ -66,3 +66,8 @@ test_that("We can prune a neuronlist",{
   expect_equal(pruned[[2]], prune(kcs20[[2]], kcs20[[2]], maxdist=5),
                info='pruning a neuronlist gives same result as individual neurons')
 })
+
+test_that("We can prune a neuronlist with a neuronlist",{
+  expect_is(pruned<-prune(kcs20[1:2], kcs20[1:2], maxdist=0), 'neuronlist')
+  expect_equal(pruned, kcs20[1:2])
+})
