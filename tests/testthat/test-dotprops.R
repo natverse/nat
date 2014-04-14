@@ -36,3 +36,15 @@ test_that("a dotprops object can be made from a nrrd, via im3d", {
                                  33, 33, 33), .Dim = c(5L, 3L), .Dimnames = list(NULL, c("X", "Y", "Z")))
   expect_equal(dp$points[1:5, ], points.expected, tol=1e-4)
 })
+
+test_that("pruning a dotprops object with itself results in no change", {
+  kc1=kcs20[[1]]
+  expect_equal(prune(kc1, kc1, maxdist=0), kc1)
+})
+
+test_that("pruning with different input types behaves", {
+  kc1=kcs20[[1]]
+  xyz=xyzmatrix(kc1)
+  expect_equal(prune(kc1, xyz, maxdist=0), kc1)
+  expect_equal(prune(xyz, kc1+1, maxdist=4), xyz)
+})
