@@ -381,7 +381,7 @@ prune.default<-function(x, target, maxdist, keep=c("near","far"),
                         return.indices=FALSE, ...){
   keep=match.arg(keep, c("near", "far"))
   xyzx=xyzmatrix(x)
-  nn_result=nn2(xyzmatrix(target), xyzx, k=1)
-  inds=if(keep=="near") nn_result$nn.dists<=maxdist else nn_result$nn.dists>maxdist
+  nn_dists=drop(nn2(xyzmatrix(target), xyzx, k=1)$nn.dists)
+  inds=if(keep=="near") nn_dists<=maxdist else nn_dists>maxdist
   if(return.indices) inds else xyzx[inds, , drop=FALSE]
 }

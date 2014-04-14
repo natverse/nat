@@ -48,3 +48,13 @@ test_that("pruning with different input types behaves", {
   expect_equal(prune(kc1, xyz, maxdist=0), kc1)
   expect_equal(prune(xyz, kc1+1, maxdist=4), xyz)
 })
+
+test_that("pruning with different output types behaves", {
+  kc1=kcs20[[1]]
+  xyz=xyzmatrix(kc1)
+  xyzn=xyz+matrix(rnorm(mean = 2, prod(dim(xyz))), ncol=ncol(xyz))
+  inds1=prune(xyz, xyzn, maxdist=2, return.indices = TRUE)
+  inds2=prune(xyz, xyzn, maxdist=2, keep = 'far', return.indices = TRUE)
+  expect_true(all(xor(inds1, inds2)),
+              info = "xor of near and far indices includes all points")
+})
