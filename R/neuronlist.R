@@ -96,10 +96,10 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
 #' @seealso \code{\link{lapply}}
 #' @family neuronlist
 #' @examples
-#' kcs.flipped=nlapply(kcs20,xform,reg=function(x, ...) x*c(-1,1,1) )
+#' kcs.reduced=nlapply(kcs20,function(x) subset(x,sample(nrow(x$points),50)))
 #' open3d()
-#' plot3d(kcs20,col='red')
-#' plot3d(kcs.flipped,col='green')
+#' plot3d(kcs.reduced,col='red', lwd=2)
+#' plot3d(kcs20,col='grey')
 #' rgl.close()
 nlapply<-function (X, FUN, ...){
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) else c("neuronlist",'list')
