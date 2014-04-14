@@ -36,3 +36,38 @@ test_that("a dotprops object can be made from a nrrd, via im3d", {
                                  33, 33, 33), .Dim = c(5L, 3L), .Dimnames = list(NULL, c("X", "Y", "Z")))
   expect_equal(dp$points[1:5, ], points.expected, tol=1e-4)
 })
+
+test_that("pruning a dotprops object with itself results in no change", {
+  kc1=kcs20[[1]]
+  expect_equal(prune(kc1, kc1, maxdist=0), kc1)
+})
+
+test_that("pruning with different input types behaves", {
+  kc1=kcs20[[1]]
+  xyz=xyzmatrix(kc1)
+  expect_equal(prune(kc1, xyz, maxdist=0), kc1)
+  expect_equal(prune(xyz, kc1+1, maxdist=4), xyz)
+})
+
+test_that("pruning with different output types behaves", {
+  kc1=kcs20[[1]]
+  xyz=xyzmatrix(kc1)
+  xyzn=xyz+matrix(rnorm(mean = 2, prod(dim(xyz))), ncol=ncol(xyz))
+  inds1=prune(xyz, xyzn, maxdist=2, return.indices = TRUE)
+  inds2=prune(xyz, xyzn, maxdist=2, keep = 'far', return.indices = TRUE)
+  expect_true(all(xor(inds1, inds2)),
+              info = "xor of near and far indices includes all points")
+})
+
+test_that("We can prune a neuronlist",{
+  expect_is(pruned<-prune(kcs20[1:2], kcs20[[2]], maxdist=5), 'neuronlist')
+  expect_equal(pruned[[1]], prune(kcs20[[1]], kcs20[[2]], maxdist=5),
+               info='pruning a neuronlist gives same result as individual neurons')
+  expect_equal(pruned[[2]], prune(kcs20[[2]], kcs20[[2]], maxdist=5),
+               info='pruning a neuronlist gives same result as individual neurons')
+})
+
+test_that("We can prune a neuronlist with a neuronlist",{
+  expect_is(pruned<-prune(kcs20[1:2], kcs20[1:2], maxdist=0), 'neuronlist')
+  expect_equal(pruned, kcs20[1:2])
+})

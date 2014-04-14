@@ -99,6 +99,14 @@ xform.neuronlist<-function(x, reg, ...){
 #' @export
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
+
+#' @method xyzmatrix neuronlist
+#' @export
+xyzmatrix.neuronlist<-function(x, ...) {
+  coords=lapply(x, xyzmatrix, ...)
+  do.call(rbind, coords)
+}
+
 #' @S3method xyzmatrix neuron
 xyzmatrix.neuron<-function(x, ...) x$d[,c("X","Y","Z")]
 
