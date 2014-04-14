@@ -85,25 +85,55 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
   nl2
 }
 
-#' lapply for neuronlists
-#'
+#' lapply and mapply for neuronlists
+#' 
 #' Looks after class and any attached dataframe.
 #' @param X A neuronlist
 #' @param FUN Function to be applied to each element of X
-#' @param ... Additional arguments for FUN
+#' @param ... Additional arguments for FUN (see details)
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
 #' @family neuronlist
 #' @examples
+#' ## nlapply example
 #' kcs.reduced=nlapply(kcs20,function(x) subset(x,sample(nrow(x$points),50)))
 #' open3d()
 #' plot3d(kcs.reduced,col='red', lwd=2)
 #' plot3d(kcs20,col='grey')
 #' rgl.close()
+#' 
+#' ## nmapply example
+#' # flip first neuron in X, second in Y and 3rd in Z
+#' xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
+#'  mirrorAxisSize=c(400,20,30))
+#' open3d()
+#' plot3d(kcs20[1:3])
+#' plot3d(xyzflip)
+#' rgl.close()
 nlapply<-function (X, FUN, ...){
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) else c("neuronlist",'list')
   structure(lapply(X,FUN,...),class=cl,df=attr(X,'df'))
+}
+
+#' @inheritParams base::mapply
+#' @details Note that for \code{nmapply} the first argument in \dots must be a
+#'   \code{neuronlist}
+#' @rdname nlapply
+#' @seealso \code{\link{mapply}}
+#' @export
+nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE){
+  if(missing(...))
+    stop("First argument in ... must be a neuronlist!")
+  
+  X<-pairlist(...)[[1]]
+  if(!is.neuronlist(X))
+    stop("First argument in ... must be a neuronlist!")
+  cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X)
+  else c("neuronlist",'list')
+  
+  structure(mapply(FUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
+                   USE.NAMES = USE.NAMES), class=cl, df=attr(X, 'df'))
 }
 
 #' 3D plots of the elements in a neuronlist, optionally using a subset 

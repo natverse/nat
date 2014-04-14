@@ -51,3 +51,17 @@ test_that("subset can combine dataframe columns and global variables", {
 #   expect_equal(subset(kcs20,type=='gamma' & odds),
 #                subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10)))
 })
+
+test_that("nmapply with identity function returns its arguments",{
+  kcs3=kcs20[1:3]
+  expect_equal(nmapply(function(x) x, kcs3), kcs3)
+})
+
+test_that("nmapply can vectorise more than one argument",{
+  kcs3=kcs20[1:3]
+  masizes=c(400,20,30)
+  expect_is(xyzflip<-nmapply(mirror, kcs3, mirrorAxis = c("X","Y","Z"), 
+                             mirrorAxisSize=masizes), 'neuronlist')
+  expect_equal(mirror(kcs20[[3]], mirrorAxisSize = masizes[3], mirrorAxis = 'Z'),
+               xyzflip[[3]])
+})
