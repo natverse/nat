@@ -73,14 +73,19 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
   x
 }
 
-#' @description \code{as.im3d} will convert a suitable object to an im3d object.
-#' @param ... addition arguments to pass to methods.
+#' Convert a suitable object to an im3d object.
+#' 
+#' This is a largely a placeholder function with the expectation that other 
+#' packages may wish to provide suitable methods.
+#' @param x Object to turn into an im3d
+#' @param ... Additional arguments to pass to methods.
 #' @export
-#' @rdname im3d
+#' @seealso im3d
+#' @family im3d
 as.im3d <- function(x, ...) UseMethod("as.im3d")
 
 #' @export
-#' @rdname im3d
+#' @rdname as.im3d
 as.im3d.im3d <- function(x, ...) x
 
 #' Read/Write calibrated 3D blocks of image data

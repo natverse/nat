@@ -1,0 +1,37 @@
+\name{as.im3d}
+\alias{as.im3d}
+\alias{as.im3d.im3d}
+\title{Convert a suitable object to an im3d object.}
+\usage{
+as.im3d(x, ...)
+
+\method{as.im3d}{im3d}(x, ...)
+}
+\arguments{
+  \item{x}{Object to turn into an im3d}
+
+  \item{...}{Additional arguments to pass to methods.}
+}
+\description{
+This is a largely a placeholder function with the
+expectation that other packages may wish to provide
+suitable methods.
+}
+\seealso{
+im3d
+
+Other im3d: \code{\link{boundingbox}},
+\code{\link{boundingbox.default}},
+\code{\link{boundingbox.im3d}},
+\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
+\code{\link{ijkpos}}, \code{\link{im3d-coords}},
+\code{\link{im3d-coords}}, \code{\link{xyzpos}};
+\code{\link{im3d-io}}, \code{\link{read.im3d}},
+\code{\link{write.im3d}}; \code{\link{im3d}};
+\code{\link{imexpand.grid}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{projection}};
+\code{\link{threshold}}, \code{\link{threshold.im3d}};
+\code{\link{unmask}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
+}
+
