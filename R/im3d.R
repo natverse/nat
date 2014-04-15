@@ -953,3 +953,40 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
   }
   if(is.matrix(ijk)) t(ijk) else ijk
 }
+
+#' Extract the materials for an object
+#' @param x An object in memory or, for \code{materials.character}, an image on 
+#'   disk.
+#' @param \dots additional parameters passed to methods (presently ignored)
+#' @return A \code{data.frame} with columns \code{name, id, col}
+#' @export
+materials<-function(x, ...) UseMethod("materials")
+
+#' @export
+#' @rdname materials
+#' @method materials im3d
+materials.im3d<-function(x, ...) {
+  m=attr(x,'materials')
+}
+
+#' @description \code{materials.character} will read the materials from an im3d
+#'   compatible image file on disk.
+#' @export
+#' @rdname materials
+#' @method materials character
+materials.character<-function(x, ...) {
+  i=read.im3d(x, ..., ReadData = FALSE)
+  materials(i)
+}
+
+#' @description \code{materials.character} will read the materials from an im3d 
+#'   compatible image file.
+#' @export
+#' @rdname materials
+#' @method materials hxsurf
+materials.hxsurf<-function(x, ...) {
+  m=data.frame(name=names(x$Regions),id=seq_along(x$Regions),
+                col=x$RegionColourList, stringsAsFactors = FALSE)
+  rownames(m)=m$name
+  m
+}
