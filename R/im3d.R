@@ -16,13 +16,14 @@
 #' @param origin the location (or centre) of the first voxel
 #' @param BoundingBox,bounds Physical extent of image. See the details section 
 #'   of \code{\link{boundingbox}}'s help for the distinction.
+#' @param ... Additional attributes such as units or materials
 #' @return An array with additional class \code{im3d}
 #' @details We follow Amira's convention of setting the bounding box equal to 
 #'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @family im3d
 im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
-               BoundingBox=NULL, bounds=NULL){
+               BoundingBox=NULL, bounds=NULL, ...){
   if(inherits(x,'im3d')){
     if(is.null(dims)) dims=x
   } else class(x)<-c("im3d",class(x))
@@ -64,17 +65,27 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
   attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
   attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
   attr(x,"z")<-seq(BoundingBox[5],BoundingBox[6],len=dims[3])
+  # add any additional attributes
+  if(!missing(...)){
+    pl<-pairlist(...)
+    for(n in names(pl)) attr(x,n)=pl[[n]]
+  }
   x
 }
 
-#' @description \code{as.im3d} will convert a suitable object to an im3d object.
-#' @param ... addition arguments to pass to methods.
+#' Convert a suitable object to an im3d object.
+#' 
+#' This is a largely a placeholder function with the expectation that other 
+#' packages may wish to provide suitable methods.
+#' @param x Object to turn into an im3d
+#' @param ... Additional arguments to pass to methods.
 #' @export
-#' @rdname im3d
+#' @seealso im3d
+#' @family im3d
 as.im3d <- function(x, ...) UseMethod("as.im3d")
 
 #' @export
-#' @rdname im3d
+#' @rdname as.im3d
 as.im3d.im3d <- function(x, ...) x
 
 #' Read/Write calibrated 3D blocks of image data
@@ -941,4 +952,41 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
     if(any(ijk<1) || any(ijk>dim(d))) warning("pixel coordinates outside image data")
   }
   if(is.matrix(ijk)) t(ijk) else ijk
+}
+
+#' Extract the materials for an object
+#' @param x An object in memory or, for \code{materials.character}, an image on 
+#'   disk.
+#' @param \dots additional parameters passed to methods (presently ignored)
+#' @return A \code{data.frame} with columns \code{name, id, col}
+#' @export
+materials<-function(x, ...) UseMethod("materials")
+
+#' @export
+#' @rdname materials
+#' @method materials im3d
+materials.im3d<-function(x, ...) {
+  m=attr(x,'materials')
+}
+
+#' @description \code{materials.character} will read the materials from an im3d
+#'   compatible image file on disk.
+#' @export
+#' @rdname materials
+#' @method materials character
+materials.character<-function(x, ...) {
+  i=read.im3d(x, ..., ReadData = FALSE)
+  materials(i)
+}
+
+#' @description \code{materials.character} will read the materials from an im3d 
+#'   compatible image file.
+#' @export
+#' @rdname materials
+#' @method materials hxsurf
+materials.hxsurf<-function(x, ...) {
+  m=data.frame(name=names(x$Regions),id=seq_along(x$Regions),
+                col=x$RegionColourList, stringsAsFactors = FALSE)
+  rownames(m)=m$name
+  m
 }

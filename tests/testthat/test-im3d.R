@@ -32,6 +32,51 @@ test_that("round trip test for im3d is successful",{
   expect_error(write.im3d(d, tf2))
 })
 
+test_that("we can set bounding box",{
+  z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))
+  
+  z1=z
+  boundingbox(z1)<-boundingbox(z)
+  expect_equal(z, z1)
+  # set bounding box with an im3d object
+  z2=z
+  boundingbox(z2)<-z
+  expect_equal(z, z2)
+  
+  boundingbox(z2)<-NULL
+  expect_true(is.null(attr(z2,'BoundingBox')))
+  
+  expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"),'im3d')
+  z3=z
+  boundingbox(z3)<-boundingbox(d)
+  expect_equal(boundingbox(z3), boundingbox(d))
+  z4=z
+  boundingbox(z4)<-boundingbox("testdata/nrrd/LHMask.nrrd")
+  expect_equal(boundingbox(z4), boundingbox(d))
+})
+
+test_that("we can construct an im3d using an im3d to supply attributes",{
+  d=rnorm(1000)
+  x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300))
+  expect_equal(x, im3d(x))
+  expect_equal(x, im3d(d, x))
+  x2=x
+  boundingbox(x2)=boundingbox(x)*2
+  # override bounding box
+  expect_equal(x2, im3d(x, BoundingBox=c(20,200,100,200,200,300)*2))
+})
+
+test_that("we can construct an im3d with additional attributes",{
+  d=rnorm(1000)
+  x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300),
+         units='microns',
+         materials=data.frame(name='Exterior',id=0,col=rgb(1,0,0)))
+  expect_is(x, "im3d")
+  expect_equal(attr(x, 'units'), 'microns')
+})
+
+context("im3d boundingbox and friends")
+
 test_that("dim, voxdims and boundingbox work",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"), 'im3d')
   expect_equal(dim(d),c(50,50,50))
@@ -71,6 +116,8 @@ test_that("dim, voxdims and boundingbox work",{
   expect_equal(nrrdraw, amraw)
 })
 
+context("im3d flip, slice and projection")
+
 test_that("we can flip arrays",{
   m=matrix(1:4, ncol=2, nrow=2, byrow=TRUE)
   # NB the orientation is determined by matching x to 
@@ -109,39 +156,7 @@ test_that("we can make projections",{
   expect_equal(pd, sd)
 })
 
-test_that("we can set bounding box",{
-  z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))
-  
-  z1=z
-  boundingbox(z1)<-boundingbox(z)
-  expect_equal(z, z1)
-  # set bounding box with an im3d object
-  z2=z
-  boundingbox(z2)<-z
-  expect_equal(z, z2)
-  
-  boundingbox(z2)<-NULL
-  expect_true(is.null(attr(z2,'BoundingBox')))
-  
-  expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"),'im3d')
-  z3=z
-  boundingbox(z3)<-boundingbox(d)
-  expect_equal(boundingbox(z3), boundingbox(d))
-  z4=z
-  boundingbox(z4)<-boundingbox("testdata/nrrd/LHMask.nrrd")
-  expect_equal(boundingbox(z4), boundingbox(d))
-})
-
-test_that("we can construct an im3d using an im3d to supply attributes",{
-  d=rnorm(1000)
-  x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300))
-  expect_equal(x, im3d(x))
-  expect_equal(x, im3d(d, x))
-  x2=x
-  boundingbox(x2)=boundingbox(x)*2
-  # override bounding box
-  expect_equal(x2, im3d(x, BoundingBox=c(20,200,100,200,200,300)*2))
-})
+context("im3d unmask, threshold")
 
 test_that("unmask works",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
@@ -171,6 +186,8 @@ test_that("threshold works",{
   expect_equal(threshold(i2, 0, mode='integer'), iint)
 })
 
+context("im3d coordinate utilities")
+
 test_that("xyzpos, ijkpos and imexpand.grid work",{
   d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
   o=origin(d)
@@ -191,6 +208,8 @@ test_that("xyzpos, ijkpos and imexpand.grid work",{
   all_ijks=arrayInd(seq.int(prod(dim(d))), dim(d))
   expect_equal(imexpand.grid(d), xyzpos(d,all_ijks))
 })
+
+context("clampmax")
 
 test_that("clampmax works",{
   # basic tests
