@@ -16,13 +16,14 @@
 #' @param origin the location (or centre) of the first voxel
 #' @param BoundingBox,bounds Physical extent of image. See the details section 
 #'   of \code{\link{boundingbox}}'s help for the distinction.
+#' @param ... Additional attributes such as units or materials
 #' @return An array with additional class \code{im3d}
 #' @details We follow Amira's convention of setting the bounding box equal to 
 #'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @family im3d
 im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
-               BoundingBox=NULL, bounds=NULL){
+               BoundingBox=NULL, bounds=NULL, ...){
   if(inherits(x,'im3d')){
     if(is.null(dims)) dims=x
   } else class(x)<-c("im3d",class(x))
@@ -64,6 +65,11 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
   attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
   attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
   attr(x,"z")<-seq(BoundingBox[5],BoundingBox[6],len=dims[3])
+  # add any additional attributes
+  if(!missing(...)){
+    pl<-pairlist(...)
+    for(n in names(pl)) attr(x,n)=pl[[n]]
+  }
   x
 }
 

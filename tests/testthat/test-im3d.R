@@ -66,6 +66,15 @@ test_that("we can construct an im3d using an im3d to supply attributes",{
   expect_equal(x2, im3d(x, BoundingBox=c(20,200,100,200,200,300)*2))
 })
 
+test_that("we can construct an im3d with additional attributes",{
+  d=rnorm(1000)
+  x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300),
+         units='microns',
+         materials=data.frame(name='Exterior',id=0,col=rgb(1,0,0)))
+  expect_is(x, "im3d")
+  expect_equal(attr(x, 'units'), 'microns')
+})
+
 context("im3d boundingbox and friends")
 
 test_that("dim, voxdims and boundingbox work",{
