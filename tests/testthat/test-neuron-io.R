@@ -21,7 +21,7 @@ test_that("we can query fileformats",{
                'hxlineset')
 })
 
-context("neurons writing")
+context("neurons reading")
 
 test_that("we can read single neurons in rda or rds format", {
   rda=tempfile(fileext='.rda')
