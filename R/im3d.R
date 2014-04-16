@@ -152,7 +152,13 @@ read.im3d.amiramesh<-function(file, ...){
   # BoundingBox
   bb=attr(d,'Parameters')$BoundingBox
   origin <- if(length(bb)) bb[c(1,3,5)] else NULL
-  im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin)
+  materials <-attr(d,'Parameters')$Materials
+  if(!is.null(materials)) {
+    materials=data.frame(name=names(materials), id=seq_along(materials),
+                         stringsAsFactors = FALSE)
+  }
+  im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin,
+       materials=materials)
 }
 
 #' Return voxel dimensions of an object
@@ -954,7 +960,10 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
   if(is.matrix(ijk)) t(ijk) else ijk
 }
 
-#' Extract the materials for an object
+#' Extract or set the materials for an object
+#' @details Note that the id column will be the 1-indexed order that the
+#'   material appears in the \code{surf$Region} list for \code{hxsurf} objects
+#'   and the 0-indexed mask values for a nrrd
 #' @param x An object in memory or, for \code{materials.character}, an image on 
 #'   disk.
 #' @param \dots additional parameters passed to methods (presently ignored)
@@ -964,8 +973,8 @@ materials<-function(x, ...) UseMethod("materials")
 
 #' @export
 #' @rdname materials
-#' @method materials im3d
-materials.im3d<-function(x, ...) {
+#' @method materials default
+materials.default<-function(x, ...) {
   m=attr(x,'materials')
 }
 
@@ -989,4 +998,19 @@ materials.hxsurf<-function(x, ...) {
                 col=x$RegionColourList, stringsAsFactors = FALSE)
   rownames(m)=m$name
   m
+}
+
+`materials<-`<-function(x, value) UseMethod("materials<-")
+
+`materials<-.hxsurf`<-function(x, value) {
+  stop("materials<-.hxsurf is not implemented")
+}
+
+`materials<-.default`<-function(x, value) {
+  if(!is.data.frame(value))
+    stop("materials<- expects a data.frame")
+  if(!all(c("name",'id') %in% names(value)))
+    stop("must supply a data.frame with columns name, id")
+  attr(x,'materials') <- value
+  x
 }
