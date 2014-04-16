@@ -1,13 +1,13 @@
 \name{materials}
 \alias{materials}
 \alias{materials.character}
+\alias{materials.default}
 \alias{materials.hxsurf}
-\alias{materials.im3d}
 \title{Extract the materials for an object}
 \usage{
 materials(x, ...)
 
-\method{materials}{im3d}(x, ...)
+\method{materials}{default}(x, ...)
 
 \method{materials}{character}(x, ...)
 
