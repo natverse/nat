@@ -152,7 +152,13 @@ read.im3d.amiramesh<-function(file, ...){
   # BoundingBox
   bb=attr(d,'Parameters')$BoundingBox
   origin <- if(length(bb)) bb[c(1,3,5)] else NULL
-  im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin)
+  materials <-attr(d,'Parameters')$Materials
+  if(!is.null(materials)) {
+    materials=data.frame(name=names(materials), id=seq_along(materials),
+                         stringsAsFactors = FALSE)
+  }
+  im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin,
+       materials=materials)
 }
 
 #' Return voxel dimensions of an object
