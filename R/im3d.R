@@ -990,3 +990,18 @@ materials.hxsurf<-function(x, ...) {
   rownames(m)=m$name
   m
 }
+
+`materials<-`<-function(x, value) UseMethod("materials<-")
+
+`materials<-.hxsurf`<-function(x, value) {
+  stop("materials<-.hxsurf is not implemented")
+}
+
+`materials<-.default`<-function(x, value) {
+  if(!is.data.frame(value))
+    stop("materials<- expects a data.frame")
+  if(!all(c("name",'id') %in% names(value)))
+    stop("must supply a data.frame with columns name, id")
+  attr(x,'materials') <- value
+  x
+}
