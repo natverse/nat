@@ -960,7 +960,10 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
   if(is.matrix(ijk)) t(ijk) else ijk
 }
 
-#' Extract the materials for an object
+#' Extract or set the materials for an object
+#' @details Note that the id column will be the 1-indexed order that the
+#'   material appears in the \code{surf$Region} list for \code{hxsurf} objects
+#'   and the 0-indexed mask values for a nrrd
 #' @param x An object in memory or, for \code{materials.character}, an image on 
 #'   disk.
 #' @param \dots additional parameters passed to methods (presently ignored)
