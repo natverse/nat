@@ -964,8 +964,8 @@ materials<-function(x, ...) UseMethod("materials")
 
 #' @export
 #' @rdname materials
-#' @method materials im3d
-materials.im3d<-function(x, ...) {
+#' @method materials default
+materials.default<-function(x, ...) {
   m=attr(x,'materials')
 }
 
