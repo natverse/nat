@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat)
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
-single neurons. See [nat.examples](https://github.com/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
+single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
 
 **nat** is a cleaned up version of [code](https://github.com/AnalysisSuite) that has been used in a number of papers from our group including:
 
