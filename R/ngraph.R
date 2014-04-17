@@ -39,6 +39,7 @@
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
 #' @seealso \code{\link{igraph}}
+#' @export
 ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
                  graph.attributes=NULL){
   if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")
