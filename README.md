@@ -2,7 +2,13 @@
 [![Build Status](https://travis-ci.org/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat)
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
-single neurons.
+single neurons. See [nat.examples](https://github.com/nat.examples) for sample code.
+
+**nat** is a cleaned up version of [AnalysisSuite](https://github.com/AnalysisSuite) code that has been used in a number of papers from our group including:
+
+[![Cell 2007 Cover](http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif "Olfactory Projection Neuron Mapping")](http://dx.doi.org/10.1016/j.cell.2007.01.040)
+[![CB 2010 Cover](http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif "fruitless Circuit Mapping")](http://dx.doi.org/10.1016/j.cub.2010.07.045)
+[<img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"/>](http://dx.doi.org/10.1016/j.cell.2013.11.025)
 
 Quick Start
 ===========
