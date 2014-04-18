@@ -47,7 +47,9 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
              NumSegs=length(SegList)))
   n=n[intersect(coreFieldOrder,names(n))]
   n=lapply(n, eval)
-  if(!is.null(InputFileName)){
+  if(is.null(InputFileName)){
+    n$NeuronName=NeuronName
+  } else {
     if(is.null(NeuronName)) NeuronName=sub("\\.[^.]+$","",basename(InputFileName))
     else if(is.function(NeuronName)) NeuronName=NeuronName(InputFileName)
     neuron_extra=list(NeuronName=NeuronName,

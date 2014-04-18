@@ -75,7 +75,7 @@ test_that("we can read neurons in swc format", {
   expect_equal(n$NeuronName,'EBT7R.CNG')
 })
 
-test_that("we can set the NeuronName field", {
+test_that("we can set the NeuronName field when reading a file", {
   swc='testdata/neuron/EBT7R.CNG.swc'
   n<-read.neuron(swc, NeuronName="rhubarb")
   expect_equal(n$NeuronName,'rhubarb')

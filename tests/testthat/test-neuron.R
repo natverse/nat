@@ -70,6 +70,12 @@ test_that("as.neuron.ngraph works",{
                info="as.neuron.ngraph fails when vertexData has too many rows")
 })
 
+test_that("we can set NeuronName when there is no input file",{
+  g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
+  n=as.neuron2(g, origin=0, NeuronName="MySpecialNeuron")
+  expect_equal(n$NeuronName, "MySpecialNeuron")
+})
+
 context("neuron plotting")
 
 test_that("we can plot neurons in 2D", {
