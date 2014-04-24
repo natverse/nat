@@ -248,6 +248,7 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
   # Speed up drawing when there are lots of neurons
   if(is.numeric(skipRedraw)) skipRedraw=ifelse(length(x)>skipRedraw,TRUE,FALSE)
   if(is.logical(skipRedraw)) {
+    if(par3d()$skipRedraw) skipRedraw=TRUE
     op=par3d(skipRedraw=skipRedraw)
     on.exit(par3d(op))
   }
