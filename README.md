@@ -24,6 +24,7 @@ For the impatient ...
     # plot some test data (?kcs20 for details)
     # Drosophila Kenyon cells processed from raw data at http://flycircuit.tw
     head(kcs20)
+    open3d()
     plot3d(kcs20, col=type)
     # get help
     ?nat
