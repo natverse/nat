@@ -5,8 +5,8 @@
 \usage{
 cmtk.bindir(firstdir = getOption("nat.cmtk.bindir"), extradirs = c("~/bin",
   "/usr/local/lib/cmtk/bin", "/usr/local/bin", "/opt/local/bin",
-  "/Applications/IGSRegistrationTools/bin"), set = FALSE, check = FALSE,
-  cmtktool = "gregxform")
+  "/opt/local/lib/cmtk/bin/", "/Applications/IGSRegistrationTools/bin"),
+  set = FALSE, check = FALSE, cmtktool = "gregxform")
 }
 \arguments{
   \item{firstdir}{Character vector specifying path

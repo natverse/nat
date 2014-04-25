@@ -116,6 +116,7 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/usr/local/lib/cmtk/bin',
                                   '/usr/local/bin','/opt/local/bin',
+                                  '/opt/local/lib/cmtk/bin/',
                                   '/Applications/IGSRegistrationTools/bin'),
                       set=FALSE, check=FALSE, cmtktool='gregxform'){
   bindir=NULL
