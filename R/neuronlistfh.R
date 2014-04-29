@@ -361,7 +361,9 @@ fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5
 #' @param file The file path of the neuronlistfh object. Can be local, or remote
 #'   (via http or ftp).
 #' @param localdir If the file is to be fetched from a remote location, this is 
-#'   the folder in which downloaded RDS file will be saved. See details.
+#'   the folder in which downloaded RDS file will be saved. The default value of
+#'   \code{NULL} will save to a folder in the current R sessions temporary
+#'   folder. See details.
 #' @param update Whether to update local copy of neuronlistfh (default: FALSE, 
 #'   see details)
 #' @param ... Extra arguments to pass to \code{download.file}.
@@ -370,7 +372,10 @@ fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5
 #' @family neuronlistfh
 read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   if (substr(file, 1, 7) == "http://" || substr(file, 1, 6) == "ftp://") {
-    if(is.null(localdir)) stop("localdir must be specified.")
+    if(is.null(localdir)) {
+      localdir=file.path(tempdir(), 'nat')
+      message("localdir not specified. Using a temporary folder for this R session!")
+    }
     if(!file.exists(localdir)) dir.create(localdir, recursive=TRUE)
 
     cached.neuronlistfh<-file.path(localdir,basename(file))

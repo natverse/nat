@@ -30,7 +30,8 @@
   \code{target}.}
 
   \item{tolerance}{numeric \eqn{\ge} 0.  Differences
-  smaller than \code{tolerance} are not considered.}
+  smaller than \code{tolerance} are not reported.  The
+  default value is close to \code{1.5e-8}.}
 
   \item{check.attributes}{logical indicating if the
   \code{\link{attributes}} of \code{target} and

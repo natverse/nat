@@ -10,7 +10,9 @@ read.neuronlistfh(file, localdir = NULL, update = FALSE, ...)
 
   \item{localdir}{If the file is to be fetched from a
   remote location, this is the folder in which downloaded
-  RDS file will be saved. See details.}
+  RDS file will be saved. The default value of \code{NULL}
+  will save to a folder in the current R sessions temporary
+  folder. See details.}
 
   \item{update}{Whether to update local copy of
   neuronlistfh (default: FALSE, see details)}
