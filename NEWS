@@ -1,3 +1,21 @@
+nat 1.4.10
+==========
+* add function to prune objects by removing points close to or far from another
+  object
+* add nmapply function for neuronlists
+* add xyzmatrix method for neuronlists
+* add materials function with methods for im3d and hxsurf objects
+* enh: read.im3d can read materials from amiramesh files
+* enh: download neurnonlistfh objects to session temp directory if no localdir
+  is specified
+* fix: find CMTK in its new default location on macosx
+* fix: plot3d should skip redrawing if par3d() skipRedraw is set
+* fix: failure to export ngraph constructor function
+* fix: set NeuronName when no InputFile argument is passed to neuron
+  constructor
+* fix: im3d axis labels
+* doc: numerous small documentation improvements
+
 nat 1.4.9
 =========
 * add spine() function to find longest path (aka backbone) of a neuron
