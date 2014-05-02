@@ -136,7 +136,7 @@ read.amiramesh.ascii<-function(file, df, sections, Verbose=FALSE){
     if(df$DataLength[i]>0){
       # read some lines until we get to a data section
       nskip=0
-      while( substring(t<-readLines(con,1),1,1)!="@"){nskip=nskip+1}
+      while( substring(readLines(con,1),1,1)!="@"){nskip=nskip+1}
       if(Verbose) cat("Skipped",nskip,"lines to reach next data section")
       if(Verbose) cat("Reading ",df$DataLength[i],"lines in file",file,"\n")
       
@@ -287,11 +287,9 @@ read.amiramesh.header<-function(file, Parse=TRUE, Verbose=FALSE){
 .ParseAmirameshParameters<-function(textArray, CheckLabel=TRUE,ParametersOnly=FALSE){
   
   # First check what kind of input we have
-  closeConnectionWhenDone=TRUE
   if(is.character(textArray)) con=textConnection(textArray,open='r')
   else {
     con=textArray
-    closeConnectionWhenDone=FALSE
   }
   # empty list to store results
   l=list()

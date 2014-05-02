@@ -281,7 +281,7 @@ write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
   cat("\n@",sectionNumbers['LineIdx']," #",nLinePoints,"line segments\n",sep="",file=fc)
   # nb have to -1 from each point because amira is 0 indexed
   # AND add -1 to each segment as a terminator
-  tmp=lapply(SegList,function(x) cat(x-1,"-1 \n",file=fc) )
+  lapply(SegList,function(x) cat(x-1,"-1 \n",file=fc))
   if(WriteAllSubTrees) {
     cat("\n@",sectionNumbers['Data2']," # subtrees\n",sep="",file=fc)
     if(ScaleSubTreeNumsTo1) x$d$SubTree=x$d$SubTree/max(x$d$SubTree)
