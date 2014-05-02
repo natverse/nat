@@ -676,8 +676,6 @@ all.equal.im3d<-function(target, current, tolerance=1e-6,
                          CheckSharedAttrsOnly=FALSE, ...){
   atarget=attributes(target)
   acurrent=attributes(current)
-  if(length(attrsToCheck)==1 && is.na(attrsToCheck))
-    fieldsToCheck=names(atarget)
   
   if(!inherits(current,'im3d'))
     return ("target and current must both be im3d objects")
