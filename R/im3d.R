@@ -975,7 +975,7 @@ materials<-function(x, ...) UseMethod("materials")
 #' @rdname materials
 #' @method materials default
 materials.default<-function(x, ...) {
-  m=attr(x,'materials')
+  attr(x,'materials')
 }
 
 #' @description \code{materials.character} will read the materials from an im3d
