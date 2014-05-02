@@ -287,11 +287,9 @@ read.amiramesh.header<-function(file, Parse=TRUE, Verbose=FALSE){
 .ParseAmirameshParameters<-function(textArray, CheckLabel=TRUE,ParametersOnly=FALSE){
   
   # First check what kind of input we have
-  closeConnectionWhenDone=TRUE
   if(is.character(textArray)) con=textConnection(textArray,open='r')
   else {
     con=textArray
-    closeConnectionWhenDone=FALSE
   }
   # empty list to store results
   l=list()
