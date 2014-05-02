@@ -86,14 +86,13 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
       if( is.null(RegionNames) || RegionName%in%RegionNames ){
         # Ensure we do not try to add no triangles, or the exterior region
         if(nTriangles == 0 || RegionName == "Exterior") next
-        start_of_patch=linesSkipped+TriangleDeflines[i]+1
         thispatch=read.table(filename,skip=linesSkipped+TriangleDeflines[i],nrows=nTriangles,
                              quote='',colClasses='integer',blank.lines.skip=FALSE,
                              fill=FALSE,comment.char="",
                              col.names=c("V1","V2","V3"))
         # scan no quicker in these circs, problem is repeated file access
         # specifying text directly also does not help dues to very slow textConnection
-        # thispatch=matrix(scan(text=t[start_of_patch:(start_of_patch+nTriangles-1)],nlines=nTriangles),ncol=3,byrow=T)
+
         # check if we have already loaded a patch in this name
         if(RegionName%in%names(d$Regions)){
           # add to the old patch
