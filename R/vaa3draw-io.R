@@ -11,12 +11,13 @@
 #'   24 bytes.
 #' @export
 is.vaa3draw<-function(f){
-
-  if(length(f)>1)
-    return(sapply(f, is.vaa3draw))
-  
-  if(!file.exists(f)){
-    stop("file does not exist")
+  if(!is.raw(f)){
+    if(length(f)>1)
+      return(sapply(f, is.vaa3draw))
+    
+    if(!file.exists(f)){
+      stop("file does not exist")
+    }
   }
   
   # dput(charToRaw("raw_image_stack_by_hpeng"))
