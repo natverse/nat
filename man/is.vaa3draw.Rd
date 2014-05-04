@@ -1,0 +1,20 @@
+\name{is.vaa3draw}
+\alias{is.vaa3draw}
+\title{Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D}
+\usage{
+is.vaa3draw(f)
+}
+\arguments{
+  \item{f}{A character vector specifying the path or a raw
+  vector with at least 24 bytes.}
+}
+\description{
+See http://www.vaa3d.org/
+https://svn.janelia.org/penglab/projects/vaa3d/trunk/imagej_io/v3draw_io_imagej/raw_reader.java
+}
+\details{
+Note that multiple files can be checked when a character
+vector of length > 1 is provided, but only one file can be
+checked when a raw byte array is provided.
+}
+
