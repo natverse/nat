@@ -408,3 +408,102 @@ seglength=function(ThisSeg){
   Squared.ds<-ds*ds
   sum(sqrt(rowSums(Squared.ds)))
 }
+
+#' Resample an object with a new spacing
+resample<-function(x, ...) UseMethod("resample")
+
+resample.neuron<-function(x, stepsize, ...) {
+  d=matrix(unlist(x$d[,c("X","Y","Z")]),ncol=3)
+  
+  # calculate seglengths if we haven't 
+  if(is.null(x$SegLengths)){
+    warning(paste("Calculating SegLengths for",x$NeuronName))
+    x$SegLengths=SegLengths(x)
+  }
+  
+  oldID=NULL; newID=NULL
+  newseglist=x$SegList
+  
+  totalPoints=sum(sapply(x$SegLengths,function(x) 2+floor((x-1e-9)/stepSize)))
+  pointsSoFar=0
+  pointArray=matrix(0,ncol=3,nrow=totalPoints)
+  for(i in seq(len=length(x$SegList))){
+    
+    # length in microns of this segment
+    l=x$SegLengths[i]
+    
+    if(l>stepSize){
+      # new internal points, measured in length along segment
+      internalPoints=seq(stepSize,l,by=stepSize)
+      nInternalPoints=length(internalPoints)
+      # if the last generated one is actually in exactly the same place 
+      # as the endpoint then discard it
+      if(internalPoints[nInternalPoints]==l) internalPoints=internalPoints[-length(internalPoints)]
+      
+      # find lengths between each original point on the segment
+      diffs=diff(d[x$SegList[[i]],])
+      indSegLens=sqrt(rowSums(diffs*diffs))
+      cs=c(0,cumsum(indSegLens))
+      
+      #idxs=sapply(internalPoints,function(x) max(which(x>=cs)))
+      #startPos=0;nextPos=internalPoints[1]
+      idxs=rep(0,length(internalPoints))
+      for(j in seq(len=length(cs))){
+        idxs[idxs==0 & internalPoints<cs[j]]=j-1
+      }
+      
+      newPoints=matrix(0,ncol=3,nrow=nInternalPoints+2)
+      newPoints[1,]= d[x$SegList[[i]][1],]
+      
+      froms=d[x$SegList[[i]][idxs],]
+      deltas=diffs[idxs,]
+      fracs=(internalPoints-cs[idxs])/indSegLens[idxs]
+      newPoints[-c(1,nrow(newPoints)),]=froms+(deltas*fracs)
+      nNewPoints=nrow(newPoints)
+      newPoints[nNewPoints,]=d[x$SegList[[i]][length(x$SegList[[i]])],]
+    } else {
+      nNewPoints=2
+      newPoints=d[x$SegList[[i]][c(1,length(x$SegList[[i]]))],]
+    }
+    
+    newseg=NULL
+    # have we seen the headpoint of this seg before?
+    if(any(x$SegList[[i]][1]==oldID)){
+      # yes 
+      nNewPoints=nNewPoints-1
+      newPoints=newPoints[-1,] # prevent this head from being readded to point array
+      newseg=c(newID[x$SegList[[i]][1]==oldID],
+               seq(from=pointsSoFar+1,by=1,len=nNewPoints))
+    } else {
+      # no, make a note of it and add it to the array
+      oldID=c(oldID,x$SegList[[i]][1])
+      newID[length(oldID)]=pointsSoFar+1
+      newseg=seq(from=pointsSoFar+1,by=1,len=nNewPoints)
+    }
+    
+    # add the tail to the table we are keeping track of
+    oldID=c(oldID,x$SegList[[i]][length(x$SegList[[i]])])
+    newID=c(newID,pointsSoFar+nNewPoints)
+    
+    newseglist[[i]]=newseg
+    pointArray[(pointsSoFar+1):(pointsSoFar+nNewPoints),]=newPoints
+    pointsSoFar=pointsSoFar+nNewPoints
+  }
+  pointArray=pointArray[1:pointsSoFar,]
+  colnames(pointArray)=c("X","Y","Z")
+  
+  #return(oldID,newID,pointArray,newseglist)
+  # OK now return a new neuron
+  x$NumPoints=pointsSoFar
+  x$StartPoint=newID[oldID==x$StartPoint]
+  x$BranchPoints=newID[match(x$BranchPoints,oldID)]
+  x$EndPoints=newID[match(x$EndPoints,oldID)]
+  if(any(is.na(c(x$EndPoints,x$BranchPoints)))){
+    stop("Problem matching up old & new end/branchpoints")
+  }
+  
+  x$SegList=newseglist
+  x$d=data.frame(PointNo=1:pointsSoFar,X=pointArray[,1],Y=pointArray[,2],Z=pointArray[,3])
+  
+  return(x)
+}
