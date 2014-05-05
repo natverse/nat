@@ -410,21 +410,28 @@ seglength=function(ThisSeg){
 }
 
 #' Resample an object with a new spacing
+#' @param x An object to resample
+#' @param ... Additional arguments passed to methods
+#' @export
 resample<-function(x, ...) UseMethod("resample")
 
+#' resample a neuron with a new spacing
+#' @param stepsize The new spacing along the tracing
+#' @export
+#' @rdname resample
 resample.neuron<-function(x, stepsize, ...) {
   d=matrix(unlist(x$d[,c("X","Y","Z")]),ncol=3)
   
   # calculate seglengths if we haven't 
   if(is.null(x$SegLengths)){
     warning(paste("Calculating SegLengths for",x$NeuronName))
-    x$SegLengths=SegLengths(x)
+    x$SegLengths=seglengths(x)
   }
   
   oldID=NULL; newID=NULL
   newseglist=x$SegList
   
-  totalPoints=sum(sapply(x$SegLengths,function(x) 2+floor((x-1e-9)/stepSize)))
+  totalPoints=sum(sapply(x$SegLengths,function(x) 2+floor((x-1e-9)/stepsize)))
   pointsSoFar=0
   pointArray=matrix(0,ncol=3,nrow=totalPoints)
   for(i in seq(len=length(x$SegList))){
@@ -432,9 +439,9 @@ resample.neuron<-function(x, stepsize, ...) {
     # length in microns of this segment
     l=x$SegLengths[i]
     
-    if(l>stepSize){
+    if(l>stepsize){
       # new internal points, measured in length along segment
-      internalPoints=seq(stepSize,l,by=stepSize)
+      internalPoints=seq(stepsize,l,by=stepsize)
       nInternalPoints=length(internalPoints)
       # if the last generated one is actually in exactly the same place 
       # as the endpoint then discard it
