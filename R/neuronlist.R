@@ -230,6 +230,56 @@ plot3d.character<-function(x, ...) {
   plot3d(nl, pmatch(x, names(nl)), ...)
 }
 
+#' 2D plots of the elements in a neuronlist, optionally using a subset 
+#' expression
+#' 
+#' @details The col and subset parameters are evaluated in the context of the 
+#'   dataframe attribute of the neuronlist. If col evaluates to a factor and 
+#'   colpal is a named vector then colours will be assigned by matching factor 
+#'   levels against the named elements of colpal. If col evaluates to a factor 
+#'   and colpal is a function then it will be used to generate colours with the 
+#'   same number of levels as are used in col.
+#' @param x a neuron list or, for \code{plot3d.character}, a character vector of
+#'   neuron names. The default neuronlist used by plot3d.character can be set by
+#'   using \code{options(nat.default.neuronlist='mylist')}. See
+#'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
+#' @param LineCol An expression specifying a colour evaluated in the context of the 
+#'   dataframe attached to nl (after any subsetting). See details.
+#' @param ... options passed on to plot (such as colours, line width etc)
+#' @inheritParams plot3d.neuronlist
+#' @return list of values of \code{plot} with subsetted dataframe as attribute
+#'   \code{'df'}
+#' @export
+#' @method plot neuronlist
+#' @seealso \code{\link{nat-package}, \link{plot3d.neuronlist}}
+plot.neuronlist<-function(x,subset,LineCol=NULL,colpal=rainbow,...){
+  # Handle Subset
+  if(!missing(subset)){
+    # handle the subset expression - we still need to evaluate right away to
+    # avoid tricky issues with parent.frame etc, but we can then leave 
+    # subset.neuronlist to do the rest of the work
+    e <- substitute(subset)
+    r <- eval(e, attr(x,'df'), parent.frame())
+    x <- subset.neuronlist(x, r, parent.generations=1)
+  }
+  
+  # Handle Colours
+  col.sub <- substitute(LineCol)
+  cols <- eval(col.sub, attr(x,'df'), parent.frame())
+  cols=makecols(cols, colpal, length(x))
+  
+  rval=mapply(plot, x, LineCol=cols,...)
+  df=attr(x,'df')
+  if(is.null(df)) {
+    keys=names(x)
+    if(is.null(keys)) keys=seq_along(x)
+    df=data.frame(key=keys,stringsAsFactors=FALSE)
+  }
+  df$col=cols
+  attr(rval,'df')=df
+  invisible(rval)
+}
+
 # internal utility function to handle colours for plot(3d).neuronlist
 # see plot3d.neuronlist for details
 # @param nitems Number of items for which colours must be made
