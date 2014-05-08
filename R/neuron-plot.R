@@ -196,7 +196,7 @@ pan3d <- function(button) {
 #' # Draw first example neuron
 #' plot(Cell07PNs[[1]])
 #' # Overlay second example neuron
-#' plot(Cell07PNs[[2]], Superimpose=TRUE)
+#' plot(Cell07PNs[[2]], add=TRUE)
 #' # Clear the current plot and draw the third neuron from a different view
 #' plot(Cell07PNs[[3]], PlotAxes="YZ")
 #' # Just plot the end points for the fourth example neuron
@@ -205,7 +205,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
                         WithText=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,
                         main=x$NeuronName, xlim=NULL, ylim=NULL,
-                        AxisDirections=c(1,-1,1), add=F, col=NULL,
+                        AxisDirections=c(1,-1,1), add=FALSE, col=NULL,
                         PointAlpha=1, tck=NA, lwd=par("lwd"), ...) {
   
   # R uses the bottom-left as the origin, while we want the top-left
@@ -238,21 +238,25 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
               rep(rgb(0,1,0,PointAlpha),length(x$EndPoints)),
               rgb(t(col2rgb('purple')/255),alpha=PointAlpha) )
     PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
+  } else {
+    PlottedPoints <- x$d[integer(),c("PointNo",PlotAxes)]
+    mycols<-NULL
   }
   
   # Draw the plot
   if(add) points(PlottedPoints[,PlotAxes],col=mycols,pch=20,asp=asp,...)
-  else plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
+  else {
+    plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
             main=main,asp=asp,axes=axes && all(AxisDirections==1),tck=tck,...)
-  
-  # Draw the axes and surrounding box
-  if(axes) {
-    box()
-    axis(2, tck=tck)
-    axis(1, tck=tck)
+    # Draw the axes and surrounding box
+    if(axes) {
+      box()
+      axis(2, tck=tck)
+      axis(1, tck=tck)
+    }
   }
   
-  if(WithText) {
+  if(WithText && !is.null(PlottedPoints)) {
     text(PlottedPoints[,PlotAxes[1]],PlottedPoints[,PlotAxes[2]],
          PlottedPoints[,"PointNo"],col=mycols,pos=3)
   }

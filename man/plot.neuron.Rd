@@ -5,7 +5,7 @@
 \method{plot}{neuron}(x, WithLine = TRUE, WithNodes = TRUE,
   WithAllPoints = FALSE, WithText = FALSE, PlotAxes = c("XY", "YZ", "XZ",
   "ZY"), axes = TRUE, asp = 1, main = x$NeuronName, xlim = NULL,
-  ylim = NULL, AxisDirections = c(1, -1, 1), add = F, col = NULL,
+  ylim = NULL, AxisDirections = c(1, -1, 1), add = FALSE, col = NULL,
   PointAlpha = 1, tck = NA, lwd = par("lwd"), ...)
 }
 \arguments{
@@ -70,11 +70,11 @@ Plot a 2D project of a neuron
 # Draw first example neuron
 plot(Cell07PNs[[1]])
 # Overlay second example neuron
-plot(Cell07PNs[[2]], Superimpose=TRUE)
+plot(Cell07PNs[[2]], add=TRUE)
 # Clear the current plot and draw the third neuron from a different view
 plot(Cell07PNs[[3]], PlotAxes="YZ")
 # Just plot the end points for the fourth example neuron
-plot(Cell07PNs[[4]], EPsOnly=TRUE)
+plot(Cell07PNs[[4]], WithNodes=FALSE)
 }
 \seealso{
 \code{\link{plot3d.neuron}}
