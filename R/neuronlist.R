@@ -180,39 +180,15 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #' }
 plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...){
   # Handle Subset
-  df=attr(x,'df')
   if(!missing(subset)){
-    if(is.null(df)) stop("Can't use a subset unless neuronlist has an attached dataframe")
-    # convert subset (which may a language expression) into an expression that won't get
-    # evaluated until we say so
+    # handle the subset expression - we still need to evaluate right away to
+    # avoid tricky issues with parent.frame etc, but we can then leave 
+    # subset.neuronlist to do the rest of the work
     e <- substitute(subset)
-    # now evaluate it looking for variables first in the attached data frame and then 
-    # in the environment of the function
-    r <- eval(e, df, parent.frame())
-    # match characters against neuron names
-    if(is.character(r)){
-      r=match(r,names(x))
-      if(any(is.na(r))) {
-        warning(sum(is.na(r)),' identifiers could not be',
-                ' matched against names of neuronlist')
-        r=na.omit(r)
-      }
-    }
-    # check we got something back
-    if((is.logical(r) && sum(r)==0) || length(r)==0){
-      # no neurons left, so just return
-      return()
-    }
-    # check that subset expression produced sensible result
-    if(is.logical(r)){
-      if(length(r)!=length(x)) stop("Subset result does not have same length as neuronlist x")
-    } else if(is.integer(r)){
-      if(any(r>length(x) | r<0)) stop("Subset evaluated to invalid integer index")
-    } else stop("Subset did not evaluate to logical or character vector")
-    # now just select the neurons we want
-    x=x[r]
-    df=df[r,]
+    r <- eval(e, attr(x,'df'), parent.frame())
+    x <- subset.neuronlist(x, r, parent.generations=1)
   }
+  
   # Handle Colours
   col.sub <- substitute(col)
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
