@@ -167,27 +167,26 @@ pan3d <- function(button) {
 #' @method plot neuron
 #' @param x a neuron to plot.
 #' @param WithLine whether to plot lines for all segments in neuron.
-#' @param NodesOnly whether points should only be drawn for nodes, not all
-#'   points in neuron.
-#' @param EPsOnly whether points should only be drawn for end points.
-#' @param BPsOnly whether points should only be drawn for branch points.
+#' @param WithNodes whether points should only be drawn for nodes (branch/end
+#'   points)
+#' @param WithAllPoints whether points should be drawn for all points in neuron.
 #' @param WithText whether to label plotted points with their id.
 #' @param PlotAxes the axes for the plot.
-#' @param Axes whether axes should be drawn.
+#' @param axes whether axes should be drawn.
 #' @param asp the \code{y/x} aspect ratio, see \code{\link{plot.window}}.
-#' @param MainTitle the title for the plot.
+#' @param main the title for the plot.
 #' @param xlim limits for the horizontal axis.
 #' @param ylim limits for the vertical axis.
-#' @param AxisDirections the directions for the axes. By default, R uses the
-#'   bottom-left for the origin, whilst most graphics software uses the
-#'   top-left. The default value of \code{c(1, -1, 1)} makes the produced plot
+#' @param AxisDirections the directions for the axes. By default, R uses the 
+#'   bottom-left for the origin, whilst most graphics software uses the 
+#'   top-left. The default value of \code{c(1, -1, 1)} makes the produced plot 
 #'   consistent with the latter.
-#' @param Superimpose whether the plot should be superimposed on one already
-#'   present.
-#' @param LineCol the color in which to draw the lines between nodes.
+#' @param add Whether the plot should be superimposed on one already 
+#'   present (default: \code{FALSE}).
+#' @param col the color in which to draw the lines between nodes.
 #' @param PointAlpha the value of alpha to use in plotting the nodes.
-#' @param tck length of tick mark as fraction of plotting region (negative
-#'   number is outside graph, positive number is inside, 0 suppresses ticks, 1
+#' @param tck length of tick mark as fraction of plotting region (negative 
+#'   number is outside graph, positive number is inside, 0 suppresses ticks, 1 
 #'   creates gridlines).
 #' @param lwd line width relative to the default (default=1).
 #' @param ... additional arguments passed to plot
@@ -197,16 +196,16 @@ pan3d <- function(button) {
 #' # Draw first example neuron
 #' plot(Cell07PNs[[1]])
 #' # Overlay second example neuron
-#' plot(Cell07PNs[[2]], Superimpose=TRUE)
+#' plot(Cell07PNs[[2]], add=TRUE)
 #' # Clear the current plot and draw the third neuron from a different view
 #' plot(Cell07PNs[[3]], PlotAxes="YZ")
 #' # Just plot the end points for the fourth example neuron
-#' plot(Cell07PNs[[4]], EPsOnly=TRUE)
-plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
-                        BPsOnly=FALSE, WithText=FALSE,
-                        PlotAxes=c("XY", "YZ", "XZ", "ZY"), Axes=TRUE, asp=1,
-                        MainTitle=x$NeuronName, xlim=NULL, ylim=NULL,
-                        AxisDirections=c(1,-1,1), Superimpose=F, LineCol=NULL,
+#' plot(Cell07PNs[[4]], WithNodes=FALSE)
+plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
+                        WithText=FALSE,
+                        PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,
+                        main=x$NeuronName, xlim=NULL, ylim=NULL,
+                        AxisDirections=c(1,-1,1), add=FALSE, col=NULL,
                         PointAlpha=1, tck=NA, lwd=par("lwd"), ...) {
   
   # R uses the bottom-left as the origin, while we want the top-left
@@ -227,52 +226,48 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
     myylims=ylim
   }    
   
-  if(EPsOnly) {
-    NodesOnly=setdiff(x$EndPoints,x$StartPoint)
-    mycols<-rep(rgb(0,1,0,PointAlpha),length(x$EndPoints))
-    PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
-  } else if(BPsOnly) {
-    NodesOnly<-x$BranchPoints
-    mycols<-rep(rgb(1,0,0,PointAlpha),length(x$BranchPoints))
-    PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
-  } else if(NodesOnly) {
+  if(WithAllPoints){
+    mycols<-rep("red",x$NumPoints)
+    mycols[x$BranchPoints]<-"red"
+    mycols[x$EndPoints]<-"green"
+    mycols[x$StartPoint]<-"purple"
+    PlottedPoints<-x$d[,c("PointNo",PlotAxes)]
+  } else if(WithNodes){
     NodesOnly<-c(x$BranchPoints,x$EndPoints,x$StartPoint)
     mycols<-c(rep(rgb(1,0,0,PointAlpha),length(x$BranchPoints)),
               rep(rgb(0,1,0,PointAlpha),length(x$EndPoints)),
               rgb(t(col2rgb('purple')/255),alpha=PointAlpha) )
     PlottedPoints<-x$d[NodesOnly,c("PointNo",PlotAxes)]
   } else {
-    mycols<-rep("red",x$NumPoints)
-    mycols[x$BranchPoints]<-"red"
-    mycols[x$EndPoints]<-"green"
-    mycols[x$StartPoint]<-"purple"
-    PlottedPoints<-x$d[,c("PointNo",PlotAxes)]
+    PlottedPoints <- x$d[integer(),c("PointNo",PlotAxes)]
+    mycols<-NULL
   }
   
   # Draw the plot
-  if(Superimpose) points(PlottedPoints[,PlotAxes],col=mycols,pch=20,asp=asp,...) 
-  else plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
-            main=MainTitle,asp=asp,axes=Axes && all(AxisDirections==1),tck=tck,...) 
-  
-  # Draw the axes and surrounding box
-  if(Axes) {
-    box()
-    axis(2, tck=tck)
-    axis(1, tck=tck)
+  if(add) points(PlottedPoints[,PlotAxes],col=mycols,pch=20,asp=asp,...)
+  else {
+    plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
+            main=main,asp=asp,axes=axes && all(AxisDirections==1),tck=tck,...)
+    # Draw the axes and surrounding box
+    if(axes) {
+      box()
+      axis(2, tck=tck)
+      axis(1, tck=tck)
+    }
   }
   
-  if(WithText) {
+  if(WithText && !is.null(PlottedPoints)) {
     text(PlottedPoints[,PlotAxes[1]],PlottedPoints[,PlotAxes[2]],
          PlottedPoints[,"PointNo"],col=mycols,pos=3)
   }
   
   if (WithLine) {
-    if(!is.null(LineCol) && length(LineCol==1)) {
-      MyCols=rep(LineCol,x$NumSegs)
+    if(!is.null(col) && length(col==1)) {
+      MyCols=rep(col,x$NumSegs)
     } else {
       MyCols<-rep(1,x$NumSegs)
-      if(!is.null(LineCol)) {
-        MyCols=LineCol[MyCols]
+      if(!is.null(col)) {
+        MyCols=col[MyCols]
       }
     }
     for(thisCol in unique(MyCols)) {
@@ -281,11 +276,6 @@ plot.neuron <- function(x, WithLine=TRUE, NodesOnly=TRUE, EPsOnly=FALSE,
       lines(x$d[LinesToPlot,PlotAxes],col=thisCol,lwd=lwd)
     }
   }
-  
-  if(!is.null(x$c$GrandCent)) {
-    points(x$c$GrandCent[NumPlotAxes[1]],
-           x$c$GrandCent[NumPlotAxes[2]],col="red",bg="red",pch=22)
-  }
-  
+    
   invisible(PlottedPoints)
 }
