@@ -3,7 +3,7 @@
 \title{2D plots of the elements in a neuronlist, optionally using a subset
 expression}
 \usage{
-\method{plot}{neuronlist}(x, subset, LineCol = NULL, colpal = rainbow, ...)
+\method{plot}{neuronlist}(x, subset, col = NULL, colpal = rainbow, ...)
 }
 \arguments{
   \item{x}{a neuron list or, for \code{plot3d.character}, a
@@ -13,9 +13,9 @@ expression}
   ?\code{\link{nat}} for details.
   \code{\link{nat-package}}.}
 
-  \item{LineCol}{An expression specifying a colour
-  evaluated in the context of the dataframe attached to nl
-  (after any subsetting). See details.}
+  \item{col}{An expression specifying a colour evaluated in
+  the context of the dataframe attached to nl (after any
+  subsetting). See details.}
 
   \item{...}{options passed on to plot (such as colours,
   line width etc)}

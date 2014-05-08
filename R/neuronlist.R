@@ -243,7 +243,7 @@ plot3d.character<-function(x, ...) {
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See
 #'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
-#' @param LineCol An expression specifying a colour evaluated in the context of the 
+#' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param ... options passed on to plot (such as colours, line width etc)
 #' @inheritParams plot3d.neuronlist
@@ -252,7 +252,7 @@ plot3d.character<-function(x, ...) {
 #' @export
 #' @method plot neuronlist
 #' @seealso \code{\link{nat-package}, \link{plot3d.neuronlist}}
-plot.neuronlist<-function(x,subset,LineCol=NULL,colpal=rainbow,...){
+plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, ...){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -264,11 +264,11 @@ plot.neuronlist<-function(x,subset,LineCol=NULL,colpal=rainbow,...){
   }
   
   # Handle Colours
-  col.sub <- substitute(LineCol)
+  col.sub <- substitute(col)
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
-  rval=mapply(plot, x, LineCol=cols,...)
+  rval=mapply(plot, x, col=cols,...)
   df=attr(x,'df')
   if(is.null(df)) {
     keys=names(x)
