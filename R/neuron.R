@@ -372,3 +372,32 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
   all.equal(target[fieldsToCheck],current[fieldsToCheck],
             tolerance=tolerance, check.attributes=check.attributes, ...)
 }
+
+#' Calculate length of all segments in neuron
+#' 
+#' @param x A neuron
+#' @details Only segments in x$SegList will be calculated. Segments containing
+#'   only one point will have 0 length.
+#' @return A vector of lengths for each segment.
+#' @seealso \code{\link{resample}}
+#' @export
+#' @examples
+#' summary(seglengths(Cell07PNs[[1]]))
+seglengths=function(x){
+  # convert to numeric matrix without row names
+  d=data.matrix(x$d[, c("X", "Y", "Z")])
+  sapply(x$SegList, function(s) seglength(d[s, ]))
+}
+
+# Calculate length of single segment in neuron
+seglength=function(ThisSeg){
+  #ThisSeg is an array of x,y and z data points
+  #In order to calculate the length
+  #Need to find dx,dy,dz
+  #Then find sqrt(dx^2+...)
+  #Then sum over the path
+  if(nrow(ThisSeg)==1) return(0)
+  ds=diff(ThisSeg)
+  Squared.ds<-ds*ds
+  sum(sqrt(rowSums(Squared.ds)))
+}

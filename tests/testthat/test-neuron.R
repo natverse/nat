@@ -93,3 +93,8 @@ test_that("we can plot dotprops in 3D", {
   plottedSegments <- plot3d(kcs20[[1]])$segments
   expect_more_than(plottedSegments, 0)
 })
+
+test_that("we can calculate seglengths of neuron", {
+  expect_equal(seglengths(testn), c(2, 2, 1))
+  expect_equal(seglength(matrix(1:3,ncol=3)), 0)
+})
