@@ -192,35 +192,8 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
   # Handle Colours
   col.sub <- substitute(col)
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
-  if(!is.character(cols)){
-    if(is.null(cols)) {
-      if(is.function(colpal)) colpal=colpal(length(x))
-      cols=colpal[seq(x)]
-    }
-    else if(is.function(cols)) cols=cols(length(x))
-    else if(is.numeric(cols)) {
-      if(is.function(colpal)) colpal=colpal(max(cols))
-      cols=colpal[cols]
-    }
-    else if (is.factor(cols)) {
-      # I think dropping missing levels is what we will always want
-      cols=droplevels(cols)
-      if(!is.null(names(colpal))) {
-        # we have a named palette
-        cols=colpal[as.character(cols)]
-        if(any(is.na(cols))){
-          # handle missing colours
-          # first check if there is an unnamed entry in palette
-          unnamed=which(names(colpal)=="")
-          cols[is.na(cols)] = if(length(unnamed)) unnamed[1] else 'black'
-        }
-      } else {
-        if(is.function(colpal)) colpal=colpal(nlevels(cols))
-        cols=colpal[cols]
-      }
-    }
-    else stop("Cannot evaluate col")
-  }
+  cols=makecols(cols, colpal, length(x))
+  
   # Speed up drawing when there are lots of neurons
   if(is.numeric(skipRedraw)) skipRedraw=ifelse(length(x)>skipRedraw,TRUE,FALSE)
   if(is.logical(skipRedraw)) {
@@ -228,6 +201,7 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
     op=par3d(skipRedraw=skipRedraw)
     on.exit(par3d(op))
   }
+  
   rval=mapply(plot3d,x,col=cols,...)
   df=attr(x,'df')
   if(is.null(df)) {
@@ -254,6 +228,42 @@ plot3d.character<-function(x, ...) {
     stop("Please set options(nat.default.neuronlist='myfavneuronlist'). ',
          'See ?nat for details.")
   plot3d(nl, pmatch(x, names(nl)), ...)
+}
+
+# internal utility function to handle colours for plot(3d).neuronlist
+# see plot3d.neuronlist for details
+# @param nitems Number of items for which colours must be made
+makecols<-function(cols, colpal, nitems) {
+  if(!is.character(cols)){
+    if(is.null(cols)) {
+      if(is.function(colpal)) colpal=colpal(nitems)
+      cols=colpal[seq_len(nitems)]
+    }
+    else if(is.function(cols)) cols=cols(nitems)
+    else if(is.numeric(cols)) {
+      if(is.function(colpal)) colpal=colpal(max(cols))
+      cols=colpal[cols]
+    }
+    else if (is.factor(cols)) {
+      # I think dropping missing levels is what we will always want
+      cols=droplevels(cols)
+      if(!is.null(names(colpal))) {
+        # we have a named palette
+        cols=colpal[as.character(cols)]
+        if(any(is.na(cols))){
+          # handle missing colours
+          # first check if there is an unnamed entry in palette
+          unnamed=which(names(colpal)=="")
+          cols[is.na(cols)] = if(length(unnamed)) unnamed[1] else 'black'
+        }
+      } else {
+        if(is.function(colpal)) colpal=colpal(nlevels(cols))
+        cols=colpal[cols]
+      }
+    }
+    else stop("Cannot evaluate col")
+  }
+  cols
 }
 
 #' Arithmetic for neuron coordinates applied to neuronlists
