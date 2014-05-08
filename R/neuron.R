@@ -417,16 +417,17 @@ resample<-function(x, ...) UseMethod("resample")
 
 #' resample a neuron with a new spacing
 #' @param stepsize The new spacing along the tracing
+#' @details \code{resample.neuron} calls seglengths to calculate the length of
+#'   each segment of the neuron before resampling.
 #' @export
 #' @rdname resample
+#' @seealso \code{\link{seglengths}}
 resample.neuron<-function(x, stepsize, ...) {
   d=matrix(unlist(x$d[,c("X","Y","Z")]),ncol=3)
   
-  # calculate seglengths if we haven't 
-  if(is.null(x$SegLengths)){
-    warning(paste("Calculating SegLengths for",x$NeuronName))
-    x$SegLengths=seglengths(x)
-  }
+  # Always calculate seglengths 
+  # otherwise this would lead to strange failures when they are not correct
+  x$SegLengths=seglengths(x)
   
   oldID=NULL; newID=NULL
   newseglist=x$SegList
@@ -452,8 +453,6 @@ resample.neuron<-function(x, stepsize, ...) {
       indSegLens=sqrt(rowSums(diffs*diffs))
       cs=c(0,cumsum(indSegLens))
       
-      #idxs=sapply(internalPoints,function(x) max(which(x>=cs)))
-      #startPos=0;nextPos=internalPoints[1]
       idxs=rep(0,length(internalPoints))
       for(j in seq(len=length(cs))){
         idxs[idxs==0 & internalPoints<cs[j]]=j-1

@@ -19,4 +19,11 @@ Resample an object with a new spacing
 
 resample a neuron with a new spacing
 }
+\details{
+\code{resample.neuron} calls seglengths to calculate the
+length of each segment of the neuron before resampling.
+}
+\seealso{
+\code{\link{seglengths}}
+}
 
