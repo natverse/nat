@@ -255,6 +255,10 @@ plot3d.character<-function(x, ...) {
 #' @export
 #' @method plot neuronlist
 #' @seealso \code{\link{nat-package}, \link{plot3d.neuronlist}}
+#' @examples
+#' plot(Cell07PNs[1:4], ylim=c(140, 85))
+#' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
+#'   ylim=c(140,75), WithNodes=FALSE)
 plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ...){
   # Handle Subset
   if(!missing(subset)){

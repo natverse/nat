@@ -49,6 +49,11 @@ the named elements of colpal. If col evaluates to a factor
 and colpal is a function then it will be used to generate
 colours with the same number of levels as are used in col.
 }
+\examples{
+plot(Cell07PNs[1:4], ylim=c(140, 85))
+plot(Cell07PNs, subset=Glomerulus\%in\%c("DA1", "DP1m"), col=Glomerulus,
+  ylim=c(140,75), WithNodes=FALSE)
+}
 \seealso{
 \code{\link{nat-package}, \link{plot3d.neuronlist}}
 }
