@@ -241,18 +241,21 @@ plot3d.character<-function(x, ...) {
 #'   same number of levels as are used in col.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
-#'   using \code{options(nat.default.neuronlist='mylist')}. See
+#'   using \code{options(nat.default.neuronlist='mylist')}. See 
 #'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
+#' @param add Logical specifying whether to add data to an existing plot or make
+#'   a new one. The default value of \code{NULL} creates a new plot with the
+#'   first neuron in the neuronlist and then adds the remaining neurons.
 #' @param ... options passed on to plot (such as colours, line width etc)
 #' @inheritParams plot3d.neuronlist
-#' @return list of values of \code{plot} with subsetted dataframe as attribute
+#' @return list of values of \code{plot} with subsetted dataframe as attribute 
 #'   \code{'df'}
 #' @export
 #' @method plot neuronlist
 #' @seealso \code{\link{nat-package}, \link{plot3d.neuronlist}}
-plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, ...){
+plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ...){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -268,7 +271,10 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, ...){
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
-  rval=mapply(plot, x, col=cols,...)
+  if(is.null(add)){
+    add=c(FALSE, rep(TRUE, length(x)-1))
+  }
+  rval=mapply(plot, x, col=cols, add=add, MoreArgs = list(...))
   df=attr(x,'df')
   if(is.null(df)) {
     keys=names(x)

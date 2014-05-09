@@ -3,7 +3,8 @@
 \title{2D plots of the elements in a neuronlist, optionally using a subset
 expression}
 \usage{
-\method{plot}{neuronlist}(x, subset, col = NULL, colpal = rainbow, ...)
+\method{plot}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
+  add = NULL, ...)
 }
 \arguments{
   \item{x}{a neuron list or, for \code{plot3d.character}, a
@@ -16,6 +17,11 @@ expression}
   \item{col}{An expression specifying a colour evaluated in
   the context of the dataframe attached to nl (after any
   subsetting). See details.}
+
+  \item{add}{Logical specifying whether to add data to an
+  existing plot or make a new one. The default value of
+  \code{NULL} creates a new plot with the first neuron in
+  the neuronlist and then adds the remaining neurons.}
 
   \item{...}{options passed on to plot (such as colours,
   line width etc)}
