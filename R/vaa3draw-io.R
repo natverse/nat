@@ -31,6 +31,25 @@ is.vaa3draw<-function(f){
   isTRUE(all(magic==raw_image_stack_by_hpeng))
 }
 
+# Read vaa3d raw images into im3d objects, optionally subsetting input array
+# @examples
+# \dontrun{
+# read.vaa3draw.im3d("L1DS1_crop_straight.raw",ReadData = F,chan=2)
+# }
+read.vaa3draw.im3d<-function(f, ReadData=TRUE, ..., chan=NA){
+  x=read.vaa3draw(f=f, ReadData = ReadData, ...)
+  dims=attr(x,'header')$sizes
+  dims=dims[dims>1]
+  if(is.na(chan)){
+    if(length(dims)>3) stop("im3d is restricted to 3D image data")
+  } else {
+    if(ReadData)
+      x=x[,,,chan]
+    dims=dims[1:3]
+  }
+  im3d(x, dims)
+}
+
 #' Read Vaa3d format image data
 #' 
 #' @param f Path to image to read

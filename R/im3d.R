@@ -110,6 +110,10 @@ as.im3d.im3d <- function(x, ...) x
 #' @aliases read.im3d
 #' @family im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
+#' @examples
+#' \dontrun{
+#' read.vaa3draw.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
+#' }
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
                     ReadByteAsRaw=FALSE, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
@@ -118,6 +122,8 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
   } else if(ext%in%c(".am",'.amiramesh')){
     if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
     else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
+  } else if(is.vaa3draw(file)){
+    read.vaa3draw.im3d(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else {
     stop("Unable to read data saved in format: ",ext)
   }

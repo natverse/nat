@@ -39,6 +39,11 @@ Currently only nrrd and amira formats are implemented.
 Furthermore implementing a registry to allow extension to
 arbitrary formats remains a TODO item.
 }
+\examples{
+\dontrun{
+read.vaa3draw.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
+}
+}
 \seealso{
 \code{\link{read.nrrd}, \link{read.amiramesh}}
 
