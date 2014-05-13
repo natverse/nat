@@ -19,7 +19,7 @@ test_that("read.cmtk and write.cmtk can round-trip a registration file", {
   reglist=read.cmtkreg(reg)
   tf=tempfile('dofv1.1wshears_copy',fileext='.list')
   on.exit(unlink(tf,recursive=TRUE))
-  write.cmtkreg(reglist,foldername=tf)
+  write.cmtkreg(reglist,foldername=tf,version=1.1)
   ctf=cmtkreg(tf,returnDir=TRUE)
   # equivalent because we are not interested in the file.info attributes
   # though this also removes version attribute which might be worth a thought
