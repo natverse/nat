@@ -90,8 +90,6 @@ test_that("dim, voxdims and boundingbox work",{
   expect_equal(boundingbox(d), bb_base)
   expect_equal(boundingbox.character("testdata/nrrd/LHMask.nrrd"), bb_base)
   
-  expect_null(boundingbox(im3d(dims=c(2,3,4))))
-  
   expect_is(am<-read.im3d("testdata/amira/VerySmallLabelField.am", 
                           SimplifyAttributes=TRUE), 'im3d')
   expect_equivalent(dim(am),c(2L,2L,1L))
