@@ -31,6 +31,14 @@ is.vaa3draw<-function(f){
   isTRUE(all(magic==raw_image_stack_by_hpeng))
 }
 
+#' Read Vaa3d format image data
+#' 
+#' @param f Path to image to read
+#' @param ReadData Whether to read in data or just parse header
+#' @param Verbose Whether to print status messages
+#' @param ReadByteAsRaw Can reduce memory footprint by reading 8 bit data as a 
+#'   raw rather than 4 byte interegers.
+#' @export
 read.vaa3draw<-function(f, ReadData=TRUE, Verbose=FALSE, ReadByteAsRaw=FALSE){
   # datatype has 2 bytes, and sz has 4*4 bytes and endian flag has 1 byte.
   fc=file(f,'rb')
@@ -79,12 +87,13 @@ read.vaa3draw<-function(f, ReadData=TRUE, Verbose=FALSE, ReadByteAsRaw=FALSE){
   if(Verbose) message("Image dims are: ", paste(nh$sizes,collapse=' x '))
   nh$datafile=f
   
+  dims=nh$sizes[nh$sizes>1]
   if(ReadData){
     dens=readBin(fc,what=datamode,n=prod(nh$sizes),size=dataTypeSize,endian=nh$endian)
     # Keep only dimensions with more than 1 voxel.
-    dim(dens)<-nh$sizes[nh$sizes>1]
-    im3d(dens, header=nh)
+    dim(dens)<-dims
+    attr(dens,'header')=nh
   } else {
-    im3d(vector(mode=datamode), dims=nh$sizes, header=nh)
+    structure(vector(mode=datamode), header=nh)
   }
 }
