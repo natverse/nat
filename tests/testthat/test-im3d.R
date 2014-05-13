@@ -21,9 +21,11 @@ test_that("we can read im3d files",{
   
   v3drawfile1ch='testdata/v3draw/L1DS1_crop_straight_crop_ch1.v3draw'
   v3drawfile2ch='testdata/v3draw/L1DS1_crop_straight_crop.v3draw'
+  v3drawfile2chslice='testdata/v3draw/L1DS1_crop_straight_crop_slice.v3draw'
   
   expect_error(read.im3d(v3drawfile2ch))
-  expect_equal(read.im3d(v3drawfile2ch, chan=1), read.im3d(v3drawfile1ch))
+  expect_equal(x<-read.im3d(v3drawfile2ch, chan=1), y<-read.im3d(v3drawfile1ch))
+  expect_equal(x[,,1], read.im3d(v3drawfile2chslice)[,,1])
 })
 
 test_that("round trip test for im3d is successful",{
