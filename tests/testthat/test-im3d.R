@@ -18,6 +18,12 @@ test_that("we can read im3d files",{
   expect_equivalent(dim(d0), c(154L, 154L, 87L))
   
   expect_error(read.im3d("testdata/nrrd/LHMask.rhubarb"))
+  
+  v3drawfile1ch='testdata/v3draw/L1DS1_crop_straight_crop_ch1.v3draw'
+  v3drawfile2ch='testdata/v3draw/L1DS1_crop_straight_crop.v3draw'
+  
+  expect_error(read.im3d(v3drawfile2ch))
+  expect_equal(read.im3d(v3drawfile2ch, chan=1), read.im3d(v3drawfile1ch))
 })
 
 test_that("round trip test for im3d is successful",{
