@@ -77,7 +77,7 @@ read.vaa3draw<-function(f, ReadData=TRUE, Verbose=FALSE, ReadByteAsRaw=FALSE){
     if(Verbose) message("Checking if image dims are stored as int64")
     # try again assuming dims are in 4 byte integers
     # read in another 8 bytes (i.e. 4)
-    header=c(header, what='raw', n=8)
+    header=c(header, readBin(fc, what='raw', n=8))
     nh$sizes=readBin(header[28:headerLength.long],what=integer(),n=4,size=4,endian=nh$endian)
     if((prod(nh$sizes)+headerLength.long) != filesize) stop("image dimensions do not match")
     nh$byteskip=headerLength.long
@@ -93,6 +93,7 @@ read.vaa3draw<-function(f, ReadData=TRUE, Verbose=FALSE, ReadByteAsRaw=FALSE){
     # Keep only dimensions with more than 1 voxel.
     dim(dens)<-dims
     attr(dens,'header')=nh
+    dens
   } else {
     structure(vector(mode=datamode), header=nh)
   }
