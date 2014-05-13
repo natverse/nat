@@ -38,14 +38,16 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
     if(is.null(bounds)) bounds=atts[["bounds"]]
     if(is.null(origin)) origin=atts[["origin"]]
   }
-  
+  if(length(dims)>3) stop("im3d is presently strictly limited to 3D image data")
   # add extra singleton dimension if we have 2d data
   if(length(dims)==2) dims=c(dims,1)
   # think about this - add 0 dimension if required
   if(length(voxdims)==2) voxdims=c(voxdims,0)
   boundSpecs=!c(is.null(BoundingBox), is.null(bounds), is.null(voxdims))
   if(sum(boundSpecs)<1){
-    return(x)
+    # we don't have any bounding box information, but we need to do something to 
+    # indicate image dimensions
+    BoundingBox=c(0,dims[1]-1,0,dims[2]-1,0,dims[3]-1)
   } else if(sum(boundSpecs)>1)
     stop("only 1 of boundingBox, bounds or voxdims can be supplied")
   if(!is.null(BoundingBox)){
@@ -108,6 +110,10 @@ as.im3d.im3d <- function(x, ...) x
 #' @aliases read.im3d
 #' @family im3d
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
+#' @examples
+#' \dontrun{
+#' read.vaa3draw.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
+#' }
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
                     ReadByteAsRaw=FALSE, ...){
   ext=sub(".*(\\.[^.])","\\1",file)
@@ -116,6 +122,8 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
   } else if(ext%in%c(".am",'.amiramesh')){
     if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
     else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
+  } else if(is.vaa3draw(file)){
+    read.vaa3draw.im3d(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else {
     stop("Unable to read data saved in format: ",ext)
   }

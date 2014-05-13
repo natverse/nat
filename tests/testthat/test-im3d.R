@@ -18,6 +18,14 @@ test_that("we can read im3d files",{
   expect_equivalent(dim(d0), c(154L, 154L, 87L))
   
   expect_error(read.im3d("testdata/nrrd/LHMask.rhubarb"))
+  
+  v3drawfile1ch='testdata/v3draw/L1DS1_crop_straight_crop_ch1.v3draw'
+  v3drawfile2ch='testdata/v3draw/L1DS1_crop_straight_crop.v3draw'
+  v3drawfile2chslice='testdata/v3draw/L1DS1_crop_straight_crop_slice.v3draw'
+  
+  expect_error(read.im3d(v3drawfile2ch))
+  expect_equal(x<-read.im3d(v3drawfile2ch, chan=1), y<-read.im3d(v3drawfile1ch))
+  expect_equal(x[,,1], read.im3d(v3drawfile2chslice)[,,1])
 })
 
 test_that("round trip test for im3d is successful",{
@@ -89,8 +97,6 @@ test_that("dim, voxdims and boundingbox work",{
   bb_base=structure(c(0, 68.6, 0, 68.6, 0, 68.6), .Dim = 2:3)
   expect_equal(boundingbox(d), bb_base)
   expect_equal(boundingbox.character("testdata/nrrd/LHMask.nrrd"), bb_base)
-  
-  expect_null(boundingbox(im3d(dims=c(2,3,4))))
   
   expect_is(am<-read.im3d("testdata/amira/VerySmallLabelField.am", 
                           SimplifyAttributes=TRUE), 'im3d')
