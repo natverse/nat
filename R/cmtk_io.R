@@ -177,6 +177,7 @@ read.cmtk<-function(con, CheckLabel=TRUE){
 #' @export
 #' @family cmtk-io
 write.cmtkreg<-function(reglist, foldername, version="2.4"){
+  if(!is.null(attr(reglist, 'version')) && (attr(reglist, 'version') != version)) warning("Specified version (", version, ") is not the same as the version stored in the reglist object (", attr(reglist, 'version'), ").")
   dir.create(foldername, showWarnings=FALSE, recursive=TRUE)
   if(!is.list(reglist)) reglist=cmtkreglist(reglist)
   write.cmtk(reglist,file.path(foldername, "registration"),
