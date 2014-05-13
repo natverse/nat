@@ -389,7 +389,7 @@ dim.im3d<-function(x){
 #' image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)
 #' }
 image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
-                     plotdims=NULL,flipdims='y', filled.contour=FALSE, asp=NA,
+                     plotdims=NULL,flipdims='y', filled.contour=FALSE, asp=1,
                      axes=FALSE, xlab=NULL, ylab=NULL,
                      nlevels=20, levels = pretty(zlim, nlevels+1),
                      color.palette=colorRampPalette(c('navy','cyan','yellow','red')),
