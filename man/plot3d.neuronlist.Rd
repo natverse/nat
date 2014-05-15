@@ -5,7 +5,7 @@
 expression}
 \usage{
 \method{plot3d}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
-  skipRedraw = 200, ...)
+  skipRedraw = 200, WithNodes = FALSE, ...)
 
 \method{plot3d}{character}(x, ...)
 }
@@ -33,6 +33,9 @@ expression}
   also accept logical values TRUE (always skip) FALSE
   (never skip).}
 
+  \item{WithNodes}{Whether to plot points for end/branch
+  points. Default: \code{FALSE}.}
+
   \item{...}{options passed on to plot3d (such as colours,
   line width etc)}
 }
@@ -55,6 +58,12 @@ colours will be assigned by matching factor levels against
 the named elements of colpal. If col evaluates to a factor
 and colpal is a function then it will be used to generate
 colours with the same number of levels as are used in col.
+
+WithNodes is \code{FALSE} by default when using
+\code{plot3d.neuronlist} but remains \code{TRUE} by default
+when plotting single neurons with
+\code{\link{plot3d.neuron}}. This is because the nodes
+quickly make plots with multiple neurons rather busy.
 
 plot3d.character will check if
 options('nat.default.neuronlist') has been set and then use

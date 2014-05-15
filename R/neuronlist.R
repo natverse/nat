@@ -145,9 +145,14 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #'   levels against the named elements of colpal. If col evaluates to a factor 
 #'   and colpal is a function then it will be used to generate colours with the 
 #'   same number of levels as are used in col.
+#'   
+#'   WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist}
+#'   but remains \code{TRUE} by default when plotting single neurons with 
+#'   \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots
+#'   with multiple neurons rather busy.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
-#'   using \code{options(nat.default.neuronlist='mylist')}. See
+#'   using \code{options(nat.default.neuronlist='mylist')}. See 
 #'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
 #' @param subset Expression evaluating to logical mask for neurons. See details.
 #' @param col An expression specifying a colour evaluated in the context of the 
@@ -157,6 +162,8 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #'   skip redraw for individual neurons (this is much faster for large number of
 #'   neurons). Can also accept logical values TRUE (always skip) FALSE (never 
 #'   skip).
+#' @param WithNodes Whether to plot points for end/branch points. Default: 
+#'   \code{FALSE}.
 #' @param ... options passed on to plot3d (such as colours, line width etc)
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
 #'   \code{'df'}
@@ -178,7 +185,7 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #' plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
 #' plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...){
+plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,WithNodes=FALSE,...){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -202,7 +209,7 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,...)
     on.exit(par3d(op))
   }
   
-  rval=mapply(plot3d,x,col=cols,...)
+  rval=mapply(plot3d,x,col=cols,...,MoreArgs = list(WithNodes=WithNodes))
   df=attr(x,'df')
   if(is.null(df)) {
     keys=names(x)
