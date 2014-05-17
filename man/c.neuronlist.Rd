@@ -1,0 +1,24 @@
+\name{c.neuronlist}
+\alias{c.neuronlist}
+\title{Combine multiple neuronlists into a single list}
+\usage{
+\method{c}{neuronlist}(..., recursive = FALSE)
+}
+\arguments{
+  \item{...}{neuronlists to combine}
+
+  \item{recursive}{Presently ignored}
+}
+\description{
+Uses rbind.dataframe to merge any dataframes. This means
+that all attached data.frames must have compatible columns
+with the same names (though not necessarily in the same
+order).
+}
+\examples{
+stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))
+}
+\seealso{
+\code{\link[base]{c}}
+}
+

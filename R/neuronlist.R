@@ -85,6 +85,35 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
   nl2
 }
 
+#' Combine multiple neuronlists into a single list
+#' 
+#' Uses rbind.dataframe to merge any dataframes. This means that all attached
+#' data.frames must have compatible columns with the same names (though not
+#' necessarily in the same order).
+#' @param ... neuronlists to combine
+#' @param recursive Presently ignored
+#' @export
+#' @seealso \code{\link[base]{c}}
+#' @examples
+#' stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))
+c.neuronlist<-function(..., recursive = FALSE){
+  args=list(...)
+  if(!all(sapply(args, inherits, "neuronlist")))
+    stop("method only applicable to multiple neuronlist objects")
+  
+  old.dfs=lapply(args, attr, 'df')
+  null_dfs=sapply(old.dfs, is.null)
+  if(any(null_dfs)){
+    if(all(null_dfs)){
+      new.df=NULL
+    } else {
+      stop("Cannot join neuronlists with attached data.frames to neuronlists without")
+    }
+  } else new.df=do.call(rbind, old.dfs)
+  
+  as.neuronlist(NextMethod(...), df = new.df)
+}
+
 #' lapply and mapply for neuronlists
 #' 
 #' Looks after class and any attached dataframe.

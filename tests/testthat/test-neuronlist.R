@@ -1,5 +1,12 @@
 context("neuronlist")
 
+test_that("c.neuronlist behaves", {
+  expect_equal(c(Cell07PNs), Cell07PNs)
+  
+  expect_equal(c(Cell07PNs[1:5], Cell07PNs[6:10]), Cell07PNs[1:10])
+  expect_error(c(Cell07PNs[1:5], NULL))
+})
+
 test_that("head.neuronlist behaves", {
   expect_is(h<-head(Cell07PNs),class='data.frame')
   expect_that(nrow(h),equals(6L))
