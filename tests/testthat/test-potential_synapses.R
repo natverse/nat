@@ -8,6 +8,8 @@ test_that("can call potential synapses on some neurons",{
 test_that("can calculat potential synapses with bounding box",{
   potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s=2, bounds=c(250, 320, 60, 130, 90, 160))
   potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s=2, bounds=c(250, 320, 60, 130, 90, 160), method='approx')
+  
+  expect_equal(potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s=2, bounds=rep(0, 6)), 0)
 })
 
 test_that("can call potential synapses on neuron list",{

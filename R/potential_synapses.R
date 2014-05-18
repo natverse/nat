@@ -40,6 +40,7 @@ potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct",
     a.sel=restrictToBounds(a.sel,bounds)
     b.sel=restrictToBounds(b.sel,bounds)
   }
+  if(nrow(a.sel)==0 || nrow(b.sel)==0) return(0)
   if(method=="direct"){
     DirectPotentialSynapses(a.sel,b.sel,s,...)
   } else if (method=="approx") {
