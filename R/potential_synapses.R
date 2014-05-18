@@ -159,3 +159,34 @@ dotprod=function(a,b){
   if(length(dim(c))>1) 	rowSums(c)
   else sum(c)
 }
+
+# note use of zapsmall in case of rounding error
+thetaBetween=function(a,b) {
+  if(is.vector(a) && is.matrix(b)){
+    a=matrix(a,nrow=nrow(b),ncol=length(a),byrow=T)
+  } else if(is.vector(b) && is.matrix(a)){
+    b=matrix(b,nrow=nrow(a),ncol=length(b),byrow=T)
+  }
+  acos(zapsmall(dotprod(a,b)/(normbyrow(a)*normbyrow(b))))
+}
+
+normbyrow=function(a){
+  # returns euclidean norm (by row if reqd)
+  c=a*a
+  if(length(dim(c))>1) 	sqrt(rowSums(c))
+  else sqrt(sum(c))
+}
+
+rowbyrow<-function(X,Y,FUN="-",...){
+  if(ncol(X)!=ncol(Y)) return(NA)
+  FUN=match.fun(FUN)
+  rX=nrow(X)
+  rY=nrow(Y)
+  #dX=dim(X)
+  #dY=dim(Y)
+  X=matrix(t(X),nrow=rX*rY,ncol=ncol(X),byrow=T)
+  Y <- matrix(rep(Y, rep.int(rX, length(Y))),ncol=ncol(X))
+  #Y=matrix(Y,nrow=rX*rY,ncol=ncol(Y),byrow=T)
+  FUN(X,Y,...)
+  #list(X=X,Y=Y)
+}
