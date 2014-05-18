@@ -203,3 +203,12 @@ rowbyrow<-function(X,Y,FUN="-",...){
   Y <- matrix(rep(Y, rep.int(rX, length(Y))),ncol=ncol(X))
   FUN(X,Y,...)
 }
+
+# restrict points to a bounding box
+# @param a Nx3 matrix of points
+# @param bounds bounding box vector (x0,x1,y0,y1,z0,z1)
+restrictToBounds<-function(a, bounds){
+  a[  a[,1]>=bounds[1] & a[,1]<=bounds[2] &
+        a[,2]>=bounds[3] & a[,2]<=bounds[4] &
+        a[,3]>=bounds[5] & a[,3]<=bounds[6], ]
+}
