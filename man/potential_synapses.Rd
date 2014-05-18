@@ -37,6 +37,7 @@ potential_synapses(Cell07PNs[1], Cell07PNs[1:3], s=2)
 \references{
 Neurogeometry and potential synaptic connectivity.
 Stepanyants A, Chklovskii DB. Trends Neurosci. 2005
-Jul;28(7):387-94.
+Jul;28(7):387-94. doi:
+\url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
 }
 
