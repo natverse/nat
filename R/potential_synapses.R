@@ -1,10 +1,33 @@
+#' Calculate number of potential synapses between two neurons
+#' 
+#' This implements the method of Stepanyants and Chklovskii
+#' 
+#' @param a,b neurons or neuronlists
+#' @param s the approach distance to consider a potential synapse
+#' @param sigma the smoothing parameter in the approximate method (see details)
+#' @param method Whether to use the direct or approximate method (see details)
+#' @param bounds Optional bounding box to restrict comparison
+#' @param ... Additional arguments passed to methods
+#' @export
+#' @references
+#' Neurogeometry and potential synaptic connectivity.
+#' Stepanyants A, Chklovskii DB.
+#' Trends Neurosci. 2005 Jul;28(7):387-94.
+#' @examples
+#' potential_synapses(Cell07PNs[1], Cell07PNs[1:3], s=2)
 potential_synapses<-function(a, b, s, ...) UseMethod('potential_synapses')
 
+#' @method potential_synapses neuronlist
+#' @export
+#' @rdname potential_synapses
 potential_synapses.neuronlist<-function(a, b, s, ...) {
   sapply(a, potential_synapses, b, s, ...)
 }
 
-potential_synapses.neuron<-function(a, b, s, bounds, method=c("direct", "approx"), ...) {
+#' @method potential_synapses neuron
+#' @export
+#' @rdname potential_synapses
+potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct", "approx"), ...) {
   method=match.arg(method, c("direct","approx"))
   
   if(is.neuronlist(b)) 
@@ -19,12 +42,10 @@ potential_synapses.neuron<-function(a, b, s, bounds, method=c("direct", "approx"
   if(method=="direct"){
     DirectPotentialSynapses(a.sel,b.sel,s,...)
   } else if (method=="approx") {
-    PotentialSynapses(a.sel,b.sel,s, ...)
-  }  
+    PotentialSynapses(a.sel,b.sel,s, sigma=sigma, ...)
+  }
 }
 
-#@-node:jefferis.20060305214152.2:PotentialSynapses.neuron
-#@+node:jefferis.20060305214152.3:PotentialSynapses
 PotentialSynapses<-function(a,b,s=2,sigma=2){
   #Compare for matrices of input data rather than neurons
   
@@ -178,11 +199,7 @@ rowbyrow<-function(X,Y,FUN="-",...){
   FUN=match.fun(FUN)
   rX=nrow(X)
   rY=nrow(Y)
-  #dX=dim(X)
-  #dY=dim(Y)
   X=matrix(t(X),nrow=rX*rY,ncol=ncol(X),byrow=T)
   Y <- matrix(rep(Y, rep.int(rX, length(Y))),ncol=ncol(X))
-  #Y=matrix(Y,nrow=rX*rY,ncol=ncol(Y),byrow=T)
   FUN(X,Y,...)
-  #list(X=X,Y=Y)
 }
