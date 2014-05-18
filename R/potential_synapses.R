@@ -7,7 +7,8 @@ potential_synapses.neuronlist<-function(a, b, s, ...) {
 potential_synapses.neuron<-function(a, b, s, bounds, method=c("direct", "approx"), ...) {
   method=match.arg(method, c("direct","approx"))
   
-  if(is.neuronlist(b)) return(potential_synapses(b, a, s, method=method, ...))
+  if(is.neuronlist(b)) 
+    return(sapply(b, function(x) potential_synapses(a, x, s, method=method, ...)))
   
   a.sel=MakeStartEndList(a)
   b.sel=MakeStartEndList(b)

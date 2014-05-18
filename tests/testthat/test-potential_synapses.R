@@ -7,5 +7,11 @@ test_that("can call potential synapses on some neurons",{
 
 test_that("can call potential synapses on neuron list",{
   expect_is(m1<-potential_synapses(Cell07PNs[1:3], Cell07PNs[4:6], s=2), 'matrix')
+  
+  expect_equal(names(Cell07PNs)[1:3],colnames(m1))
+  expect_equal(names(Cell07PNs)[4:6],rownames(m1))
+  
+  expect_equal(potential_synapses(Cell07PNs[[1]], Cell07PNs[[4]], s=2), m1[1,1])
+  
   potential_synapses(Cell07PNs[1:3], Cell07PNs[4:6], s=2, method='approx')
 })
