@@ -1,32 +1,27 @@
-PotentialSynapses.neuron<-function(a,b,bounds,method=c("direct","approx"),...){
-  method=match.arg(method)
-  if(!inherits(a,"list")){
-    if(length(a)>1){
-      cat("recursing a ... ")
-      return(sapply(a,PotentialSynapses.neuron,b,method=method,...))
-    } else a=GetNeuron(a)
-  }
+potential_synapses<-function(a, b, s, ...) UseMethod('potential_synapses')
+
+potential_synapses.neuronlist<-function(a, b, s, ...) {
+  sapply(a, potential_synapses, b, s, ...)
+}
+
+potential_synapses.neuron<-function(a, b, s, bounds, method=c("direct", "approx"), ...) {
+  method=match.arg(method, c("direct","approx"))
   
-  if(!inherits(b,"list")){
-    if(length(b)>1){
-      cat("recursing b ... ")
-      
-      return(sapply(b,PotentialSynapses.neuron,a,method=method,...))
-    } else b=GetNeuron(b)
-  }
+  if(is.neuronlist(b)) return(potential_synapses(b, a, s, method=method, ...))
+  
   a.sel=MakeStartEndList(a)
   b.sel=MakeStartEndList(b)
   if(!missing(bounds)){
-    if(is.character(bounds)) bounds=getBounds(bounds)
     a.sel=restrictToBounds(a.sel,bounds)
     b.sel=restrictToBounds(b.sel,bounds)
   }
   if(method=="direct"){
-    DirectPotentialSynapses(a.sel,b.sel,...)
+    DirectPotentialSynapses(a.sel,b.sel,s,...)
   } else if (method=="approx") {
-    PotentialSynapses(a.sel,b.sel,...)
-  }
+    PotentialSynapses(a.sel,b.sel,s, ...)
+  }  
 }
+
 #@-node:jefferis.20060305214152.2:PotentialSynapses.neuron
 #@+node:jefferis.20060305214152.3:PotentialSynapses
 PotentialSynapses<-function(a,b,s=2,sigma=2){
@@ -156,7 +151,7 @@ MakeStartEndList<-function(ANeuron,mask=seq(len=length(ANeuron$SegList))){
 dotprod=function(a,b){
   # expects 2 matrices with n cols each
   c=a*b
-  if(length(dim(c))>1) 	rowSums(c)
+  if(length(dim(c))>1)   rowSums(c)
   else sum(c)
 }
 
