@@ -12,7 +12,7 @@ prune(x, target, ...)
 
 \method{prune}{dotprops}(x, target, ...)
 
-\method{prune}{dotprops}(x, target, ...)
+\method{prune}{neuronlist}(x, target, ...)
 
 \method{prune}{default}(x, target, maxdist, keep = c("near", "far"),
   return.indices = FALSE, ...)

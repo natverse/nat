@@ -379,7 +379,7 @@ prune.dotprops<-function(x, target, ...){
 }
 
 #' @export
-#' @method prune dotprops
+#' @method prune neuronlist
 #' @rdname prune
 prune.neuronlist<-function(x, target, ...){
   nlapply(x, prune, target=target, ...)
