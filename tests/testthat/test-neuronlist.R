@@ -31,6 +31,10 @@ test_that("subset.neuronlist works with various indexing forms", {
   expect_equal(subset(Cell07PNs, rep(T,length(Cell07PNs)), rval='names'), 
                names(Cell07PNs))
   expect_equal(subset(Cell07PNs, names(Cell07PNs), rval='names'), names(Cell07PNs))
+  
+  expect_equal(subset(Cell07PNs, 1:2, rval='names'), names(Cell07PNs)[1:2])
+  expect_equal(subset(Cell07PNs, c(1:2, NA), rval='names'), names(Cell07PNs)[1:2])
+  expect_equal(subset(Cell07PNs, names(Cell07PNs)[1:3], rval='names'), names(Cell07PNs)[1:3])
 })
 
 test_that("subset.neuronlist drops NA rows", {
