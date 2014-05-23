@@ -507,8 +507,10 @@ subset.neuronlist<-function(x, subset, filterfun,
     r <- eval(e, df, parent.frame())
     if(is.function(r)) stop("Use of subset with functions is deprecated. ",
                             "Please use filterfun argument")
-    if(is.logical(r) || is.integer(r) ){
+    if(is.logical(r)){
       r=nx[r & !is.na(r)]
+    } else if(is.integer(r)){
+      r=nx[na.omit(r)]
     } else if(is.character(r)) {
       # check against names
       missing_names=setdiff(r, nx)
