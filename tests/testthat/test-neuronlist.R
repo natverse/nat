@@ -78,3 +78,10 @@ test_that("nmapply can vectorise more than one argument",{
   expect_equal(mirror(kcs20[[3]], mirrorAxisSize = masizes[3], mirrorAxis = 'Z'),
                xyzflip[[3]])
 })
+
+test_that("plot neuronlist contents",{
+  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs))
+  op=options(nat.default.neuronlist="Cell07PNs")
+  expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
+  options(op)
+})
