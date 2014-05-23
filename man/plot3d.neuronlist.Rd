@@ -7,7 +7,7 @@ expression}
 \method{plot3d}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
   skipRedraw = 200, WithNodes = FALSE, ...)
 
-\method{plot3d}{character}(x, ...)
+\method{plot3d}{character}(x, db, ...)
 }
 \arguments{
   \item{x}{a neuron list or, for \code{plot3d.character}, a
@@ -38,6 +38,10 @@ expression}
 
   \item{...}{options passed on to plot3d (such as colours,
   line width etc)}
+
+  \item{db}{A neuronlist to use as the source of objects to
+  plot. If missing, defaults to neuronlist specified by
+  options('nat.default.neuronlist')}
 }
 \value{
 list of values of \code{plot3d} with subsetted dataframe as
