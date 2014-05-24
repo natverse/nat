@@ -56,5 +56,10 @@ Other amira: \code{\link{amiratype}};
 \code{\link{read.amiramesh}},
 \code{\link{read.amiramesh.header}};
 \code{\link{write.hxsurf}}
+
+Other hxsurf: \code{\link{as.mesh3d}},
+\code{\link{as.mesh3d.hxsurf}};
+\code{\link{plot3d.hxsurf}}; \code{\link{subset.hxsurf}};
+\code{\link{write.hxsurf}}
 }
 

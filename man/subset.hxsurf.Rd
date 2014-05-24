@@ -18,4 +18,10 @@ subsetted hxsurf object
 \description{
 Subset hxsurf object to specified regions
 }
+\seealso{
+Other hxsurf: \code{\link{as.mesh3d}},
+\code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
+\code{\link{read.hxsurf}}; \code{\link{plot3d.hxsurf}};
+\code{\link{write.hxsurf}}
+}
 

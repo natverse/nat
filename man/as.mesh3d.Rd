@@ -22,5 +22,9 @@ Note that this provides a link to the Rvcg package
 }
 \seealso{
 \code{\link[rgl]{tmesh3d}}
+
+Other hxsurf: \code{\link{hxsurf}},
+\code{\link{read.hxsurf}}; \code{\link{plot3d.hxsurf}};
+\code{\link{subset.hxsurf}}; \code{\link{write.hxsurf}}
 }
 

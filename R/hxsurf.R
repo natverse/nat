@@ -26,6 +26,7 @@
 #' @seealso \code{\link{plot3d.hxsurf}, \link{rgb}}
 #' @aliases hxsurf
 #' @family amira
+#' @family hxsurf
 read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
                       FallbackRegionCol="grey",Verbose=FALSE){
   # Check for header confirming file type
@@ -137,6 +138,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
 #' @export
 #' @seealso \code{\link{plot3d.hxsurf}},\code{\link{read.hxsurf}}, \code{\link{rgb}}
 #' @family amira
+#' @family hxsurf
 write.hxsurf <- function(surf, filename) {
   fc <- file(filename, open="at")
   cat("# HyperSurface 0.1 ASCII\n\n", file=fc)
@@ -189,6 +191,7 @@ write.hxsurf <- function(surf, filename) {
 #' @method plot3d hxsurf
 #' @importFrom rgl plot3d par3d triangles3d
 #' @seealso \code{\link{read.hxsurf}}
+#' @family hxsurf
 plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
   skip <- par3d(skipRedraw = TRUE)
@@ -227,6 +230,7 @@ as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
 #' @rdname as.mesh3d
 #' @seealso \code{\link[rgl]{tmesh3d}}
 #' @importFrom rgl tmesh3d
+#' @family hxsurf
 as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
   if(is.null(Regions)) {
     Regions=x$RegionList
@@ -250,6 +254,7 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
 #' @return subsetted hxsurf object
 #' @method subset hxsurf
 #' @export
+#' @family hxsurf
 subset.hxsurf<-function(x, subset, ...){
   if(!is.character(subset) || !all(subset%in%x$RegionList)) stop("Invalid subset! See ?subset.hxsurf")
   tokeep=match(subset,x$RegionList)
