@@ -212,3 +212,32 @@ plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
   }
   invisible(rlist)
 }
+
+#' Convert an object to an rgl mesh3d
+#'
+#' Note that this provides a link to the Rvcg package 
+#' @export
+#' @param x Object to convert to mesh3d
+#' @param ... Additional arguments for methods
+as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
+
+#' @param Regions Character vector or regions to select from \code{hxsurf} object
+#' @param material rgl materials such as \code{color}
+#' @export
+#' @rdname as.mesh3d
+#' @seealso \code{\link[rgl]{tmesh3d}}
+#' @importFrom rgl tmesh3d
+as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
+  if(is.null(Regions)) {
+    Regions=x$RegionList
+  } else {
+    stop("don't yet know how to subset to specific regions")
+  }
+  if(length(Regions)==1 && is.null(material)){
+    # find colour
+    material=list(color=x$RegionColourList[match("Inside",x$RegionList)])
+  } 
+  verts=t(data.matrix(x$Vertices[,1:3]))
+  inds=t(data.matrix(do.call(rbind, x$Regions)))
+  tmesh3d(vertices=verts, indices=inds, homogeneous = FALSE, material = material, ...)
+}
