@@ -62,7 +62,7 @@ test_that("we can convert hxsurf to rgl::mesh3d",{
   expect_equal(tet.mesh3d, tetrahedron3d(color='#FF0000'))
   
   expect_equal(as.mesh3d(surf, Regions=c("LH_L","LH_R")),
-               as.mesh3d(subset(surf, c("LH_L","LH_R"))))
+               as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))
 })
 
 test_that("we can save and re-read hxsurf object", {

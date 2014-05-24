@@ -226,16 +226,17 @@ as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
 
 #' @param Regions Character vector or regions to select from \code{hxsurf} object
 #' @param material rgl materials such as \code{color}
+#' @param drop Whether to drop unused vertices
 #' @export
 #' @rdname as.mesh3d
 #' @seealso \code{\link[rgl]{tmesh3d}}
 #' @importFrom rgl tmesh3d
 #' @family hxsurf
-as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
+as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   if(is.null(Regions)) {
     Regions=x$RegionList
   } else {
-    x=subset(x, Regions)
+    x=subset(x, Regions, drop=drop)
   }
   if(length(Regions)==1 && is.null(material)){
     # find colour

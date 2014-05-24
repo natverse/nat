@@ -5,7 +5,8 @@
 \usage{
 as.mesh3d(x, ...)
 
-\method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL, ...)
+\method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL,
+  drop = TRUE, ...)
 }
 \arguments{
   \item{x}{Object to convert to mesh3d}
