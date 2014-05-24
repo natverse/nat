@@ -27,6 +27,13 @@ test_that("we can read hxsurf object", {
   rgl.close()
 })
 
+test_that("we can convert hxsurf to rgl::mesh3d",{
+  tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
+  expect_is(tet.hxsurf,'hxsurf')
+  expect_is(tet.mesh3d<-as.mesh3d(tet.hxsurf), 'mesh3d')
+  expect_equal(tet.mesh3d, tetrahedron3d(color='#FF0000'))
+})
+
 test_that("we can save and re-read hxsurf object", {
   on.exit(unlink(surffile))
   surffile <- tempfile()
