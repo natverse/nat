@@ -26,6 +26,7 @@
 #' @seealso \code{\link{plot3d.hxsurf}, \link{rgb}}
 #' @aliases hxsurf
 #' @family amira
+#' @family hxsurf
 read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
                       FallbackRegionCol="grey",Verbose=FALSE){
   # Check for header confirming file type
@@ -137,6 +138,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
 #' @export
 #' @seealso \code{\link{plot3d.hxsurf}},\code{\link{read.hxsurf}}, \code{\link{rgb}}
 #' @family amira
+#' @family hxsurf
 write.hxsurf <- function(surf, filename) {
   fc <- file(filename, open="at")
   cat("# HyperSurface 0.1 ASCII\n\n", file=fc)
@@ -189,6 +191,7 @@ write.hxsurf <- function(surf, filename) {
 #' @method plot3d hxsurf
 #' @importFrom rgl plot3d par3d triangles3d
 #' @seealso \code{\link{read.hxsurf}}
+#' @family hxsurf
 plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
   skip <- par3d(skipRedraw = TRUE)
@@ -211,4 +214,72 @@ plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
                              x[['Vertices']]$Z[tri],col=col[mat],...)
   }
   invisible(rlist)
+}
+
+#' Convert an object to an rgl mesh3d
+#'
+#' Note that this provides a link to the Rvcg package 
+#' @export
+#' @param x Object to convert to mesh3d
+#' @param ... Additional arguments for methods
+as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
+
+#' @param Regions Character vector or regions to select from \code{hxsurf} object
+#' @param material rgl materials such as \code{color}
+#' @param drop Whether to drop unused vertices
+#' @export
+#' @rdname as.mesh3d
+#' @seealso \code{\link[rgl]{tmesh3d}}
+#' @importFrom rgl tmesh3d
+#' @family hxsurf
+as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
+  if(is.null(Regions)) {
+    Regions=x$RegionList
+  } else {
+    x=subset(x, Regions, drop=drop)
+  }
+  if(length(Regions)==1 && is.null(material)){
+    # find colour
+    material=list(color=x$RegionColourList[match(Regions,x$RegionList)])
+  } 
+  verts=t(data.matrix(x$Vertices[,1:3]))
+  inds=t(data.matrix(do.call(rbind, x$Regions)))
+  tmesh3d(vertices=verts, indices=inds, homogeneous = FALSE, material = material, ...)
+}
+
+#' Subset hxsurf object to specified regions
+#' 
+#' @param x A dotprops object
+#' @param subset Character vector specifying regions to keep
+#' @param drop Whether to drop unused vertices after subsetting
+#' @param ... Additional parameters (currently ignored)
+#' @return subsetted hxsurf object
+#' @method subset hxsurf
+#' @export
+#' @family hxsurf
+subset.hxsurf<-function(x, subset=NULL, drop=FALSE, ...){
+  if(!is.null(subset)){
+    if(!is.character(subset) || !all(subset%in%x$RegionList))
+      stop("Invalid subset! See ?subset.hxsurf")
+    tokeep=match(subset,x$RegionList)
+    x$Regions=x$Regions[tokeep]
+    x$RegionList=x$RegionList[tokeep]
+    x$RegionColourList=x$RegionColourList[tokeep]    
+  }
+  if(drop){
+    # see if we need to drop any vertices
+    vertstokeep=sort(unique(unlist(x$Regions)))
+    # a vector where each position is the old vertex id and the value is the
+    # new one i.e. newid=vert_table[oldid]
+    vert_table=match(seq_len(nrow(x$Vertices)), vertstokeep)
+    # convert all vertex ids from old to new sequence
+    for(r in x$RegionList){
+      for(i in seq_len(ncol(x$Regions[[r]]))){
+        x$Regions[[r]][[i]]=vert_table[x$Regions[[r]][[i]]]
+      }
+    }
+    # drop unused vertices
+    x$Vertices=x$Vertices[vertstokeep, ]
+  }
+  x
 }

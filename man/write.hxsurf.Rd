@@ -26,5 +26,10 @@ Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
 \code{\link{write.amiralandmarks}};
 \code{\link{read.amiramesh}},
 \code{\link{read.amiramesh.header}}
+
+Other hxsurf: \code{\link{as.mesh3d}},
+\code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
+\code{\link{read.hxsurf}}; \code{\link{plot3d.hxsurf}};
+\code{\link{subset.hxsurf}}
 }
 
