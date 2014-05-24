@@ -241,3 +241,20 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
   inds=t(data.matrix(do.call(rbind, x$Regions)))
   tmesh3d(vertices=verts, indices=inds, homogeneous = FALSE, material = material, ...)
 }
+
+#' Subset hxsurf object to specified regions
+#' 
+#' @param x A dotprops object
+#' @param subset Character vector specifying regions to keep
+#' @param ... Additional parameters (currently ignored)
+#' @return subsetted hxsurf object
+#' @method subset hxsurf
+#' @export
+subset.hxsurf<-function(x, subset, ...){
+  if(!is.character(subset) || !all(subset%in%x$RegionList)) stop("Invalid subset! See ?subset.hxsurf")
+  tokeep=match(subset,x$RegionList)
+  x$Regions=x$Regions[tokeep]
+  x$RegionList=x$RegionList[tokeep]
+  x$RegionColourList=x$RegionColourList[tokeep]
+  x
+}

@@ -27,6 +27,11 @@ test_that("we can read hxsurf object", {
   rgl.close()
 })
 
+test_that("we can subset hxsurf object",{
+  expect_is(subset(surf,"LH_R"),'hxsurf')
+  expect_equal(subset(surf, surf$RegionList), surf)
+})
+
 test_that("we can convert hxsurf to rgl::mesh3d",{
   tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
   expect_is(tet.hxsurf,'hxsurf')
