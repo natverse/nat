@@ -235,11 +235,11 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
   if(is.null(Regions)) {
     Regions=x$RegionList
   } else {
-    stop("don't yet know how to subset to specific regions")
+    x=subset(x, Regions)
   }
   if(length(Regions)==1 && is.null(material)){
     # find colour
-    material=list(color=x$RegionColourList[match("Inside",x$RegionList)])
+    material=list(color=x$RegionColourList[match(Regions,x$RegionList)])
   } 
   verts=t(data.matrix(x$Vertices[,1:3]))
   inds=t(data.matrix(do.call(rbind, x$Regions)))
