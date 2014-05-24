@@ -226,7 +226,7 @@ as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
 
 #' @param Regions Character vector or regions to select from \code{hxsurf} object
 #' @param material rgl materials such as \code{color}
-#' @param drop Whether to drop unused vertices
+#' @param drop Whether to drop unused vertices (default TRUE)
 #' @export
 #' @rdname as.mesh3d
 #' @seealso \code{\link[rgl]{tmesh3d}}

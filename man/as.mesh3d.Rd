@@ -17,6 +17,9 @@ as.mesh3d(x, ...)
   \code{hxsurf} object}
 
   \item{material}{rgl materials such as \code{color}}
+
+  \item{drop}{Whether to drop unused vertices (default
+  TRUE)}
 }
 \description{
 Note that this provides a link to the Rvcg package
