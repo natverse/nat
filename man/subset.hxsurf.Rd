@@ -2,13 +2,16 @@
 \alias{subset.hxsurf}
 \title{Subset hxsurf object to specified regions}
 \usage{
-\method{subset}{hxsurf}(x, subset, ...)
+\method{subset}{hxsurf}(x, subset = NULL, drop = FALSE, ...)
 }
 \arguments{
   \item{x}{A dotprops object}
 
   \item{subset}{Character vector specifying regions to
   keep}
+
+  \item{drop}{Whether to drop unused vertices after
+  subsetting}
 
   \item{...}{Additional parameters (currently ignored)}
 }

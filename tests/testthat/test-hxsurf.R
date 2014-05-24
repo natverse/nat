@@ -28,8 +28,31 @@ test_that("we can read hxsurf object", {
 })
 
 test_that("we can subset hxsurf object",{
-  expect_is(subset(surf,"LH_R"),'hxsurf')
+  expect_is(lhr<-subset(surf,"LH_R"),'hxsurf')
   expect_equal(subset(surf, surf$RegionList), surf)
+  
+  expect_equal(subset(surf), surf)
+  expect_is(lhr.drop<-subset(surf,"LH_R", drop=TRUE), class = 'hxsurf')
+  
+  simple_surf=structure(list(Vertices = data.frame(X = 10, Y = 10, Z = 1, PointNo= 1:3), 
+                             Regions = structure(list(LH_L = data.frame(V1=1,V2=2,V3=3),
+                                                      LH_R = data.frame(V1=1,V2=2,V3=3))),
+                             RegionList = c("LH_L", "LH_R"),
+                             RegionColourList = c("red",'green')), 
+                        .Names = c("Vertices", "Regions", "RegionList", "RegionColourList"), 
+                        class = c("hxsurf", "list"))
+  simple_surf.subset=structure(list(Vertices = data.frame(X = 10, Y = 10, Z = 1, PointNo= 1:3), 
+                                    Regions = structure(list(LH_L = data.frame(V1=1,V2=2,V3=3))),
+                                    RegionList = c("LH_L"),
+                                    RegionColourList = c("red")),
+                               .Names = c("Vertices", "Regions", "RegionList", "RegionColourList"), 
+                               class = c("hxsurf", "list"))
+  
+  expect_equal(subset(simple_surf,"LH_L"), simple_surf.subset)
+  
+  simple_surf_4=simple_surf
+  simple_surf_4$Vertices=rbind(simple_surf_4$Vertices, c(12, 12, 2, 4))
+  expect_equal(subset(simple_surf_4, "LH_L", drop=TRUE), simple_surf.subset)
 })
 
 test_that("we can convert hxsurf to rgl::mesh3d",{

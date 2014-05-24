@@ -250,16 +250,35 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, ...){
 #' 
 #' @param x A dotprops object
 #' @param subset Character vector specifying regions to keep
+#' @param drop Whether to drop unused vertices after subsetting
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted hxsurf object
 #' @method subset hxsurf
 #' @export
 #' @family hxsurf
-subset.hxsurf<-function(x, subset, ...){
-  if(!is.character(subset) || !all(subset%in%x$RegionList)) stop("Invalid subset! See ?subset.hxsurf")
-  tokeep=match(subset,x$RegionList)
-  x$Regions=x$Regions[tokeep]
-  x$RegionList=x$RegionList[tokeep]
-  x$RegionColourList=x$RegionColourList[tokeep]
+subset.hxsurf<-function(x, subset=NULL, drop=FALSE, ...){
+  if(!is.null(subset)){
+    if(!is.character(subset) || !all(subset%in%x$RegionList))
+      stop("Invalid subset! See ?subset.hxsurf")
+    tokeep=match(subset,x$RegionList)
+    x$Regions=x$Regions[tokeep]
+    x$RegionList=x$RegionList[tokeep]
+    x$RegionColourList=x$RegionColourList[tokeep]    
+  }
+  if(drop){
+    # see if we need to drop any vertices
+    vertstokeep=sort(unique(unlist(x$Regions)))
+    # a vector where each position is the old vertex id and the value is the
+    # new one i.e. newid=vert_table[oldid]
+    vert_table=match(seq_len(nrow(x$Vertices)), vertstokeep)
+    # convert all vertex ids from old to new sequence
+    for(r in x$RegionList){
+      for(i in seq_len(ncol(x$Regions[[r]]))){
+        x$Regions[[r]][[i]]=vert_table[x$Regions[[r]][[i]]]
+      }
+    }
+    # drop unused vertices
+    x$Vertices=x$Vertices[vertstokeep, ]
+  }
   x
 }
