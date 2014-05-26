@@ -51,10 +51,21 @@ potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct",
 #' @method potential_synapses dotprops
 #' @export
 #' @rdname potential_synapses
-potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds, method=c("direct", "approx"), ...) {
+potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds=NULL, method=c("direct", "approx"), ...) {
   method=match.arg(method, c("direct","approx"))
   if(is.neuronlist(b))
     return(sapply(b, function(x) potential_synapses(a, x, s=s, sigma=sigma, seglength=seglength, bounds=bounds, method=method, ...)))
+
+  if(!is.null(bounds)){
+    a.new <- a
+    b.new <- b
+    a.new$points <- restrictToBounds(a$points, bounds)
+    b.new$points <- restrictToBounds(b$points, bounds)
+    a.new$vect <- a.new$vect[apply(a$points, 1, function(x) all(x %in% a.new$points)), ]
+    b.new$vect <- b.new$vect[apply(b$points, 1, function(x) all(x %in% b.new$points)), ]
+    a <- a.new
+    b <- b.new
+  }
 
   if(nrow(a$points)==0 || nrow(b$points)==0) return(0)
   if(method=="direct"){
