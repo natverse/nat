@@ -180,22 +180,24 @@ write.hxsurf <- function(surf, filename) {
 #' Plot amira surface objects in 3d using rgl
 #' 
 #' @param x An hxsurf surface object
-#' @param materials Character vector naming materials to plot (defaults to all 
-#'   materials in x)
+#' @param materials Character vector or \code{\link{regex}} naming materials to
+#'   plot (defaults to all materials in x). See \code{\link{subset.hxsurf}}.
 #' @param col Character vector specifying colors for the materials, or a 
-#'   function that will be called with the number of materials to plot. When
-#'   \code{NULL} (default) will use meterial colours defined in Amira (if
+#'   function that will be called with the number of materials to plot. When 
+#'   \code{NULL} (default) will use meterial colours defined in Amira (if 
 #'   available), or \code{rainbow} otherwise.
-#' @param ... Additional arguments passed to 
+#' @param ... Additional arguments passed to
 #' @export
 #' @method plot3d hxsurf
 #' @importFrom rgl plot3d par3d triangles3d
 #' @seealso \code{\link{read.hxsurf}}
 #' @family hxsurf
-plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
+plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
   skip <- par3d(skipRedraw = TRUE)
   on.exit(par3d(skip))
+  
+  materials=subset(x, subset = materials, rval='names')
   
   if(is.null(col)) {
     if(length(x$RegionColourList)){
