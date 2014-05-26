@@ -49,6 +49,7 @@ potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct",
 }
 
 #' @method potential_synapses dotprops
+#' @param seglength how long to consider each distance between points.
 #' @export
 #' @rdname potential_synapses
 potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds=NULL, method=c("direct", "approx"), ...) {
