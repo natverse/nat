@@ -235,9 +235,8 @@ as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
 as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   if(is.null(Regions)) {
     Regions=x$RegionList
-  } else {
-    x=subset(x, Regions, drop=drop)
   }
+  x=subset(x, Regions, drop=drop)
   if(length(Regions)==1 && is.null(material)){
     # find colour
     material=list(color=x$RegionColourList[match(Regions,x$RegionList)])
