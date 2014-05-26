@@ -381,7 +381,6 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' @details Only segments in x$SegList will be calculated. Segments containing 
 #'   only one point will have 0 length.
 #' @return A vector of lengths for each segment.
-#' @seealso \code{\link{resample}}
 #' @export
 #' @examples
 #' summary(seglengths(Cell07PNs[[1]]))

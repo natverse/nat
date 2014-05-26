@@ -23,7 +23,4 @@ containing only one point will have 0 length.
 \examples{
 summary(seglengths(Cell07PNs[[1]]))
 }
-\seealso{
-\code{\link{resample}}
-}
 
