@@ -58,7 +58,9 @@ potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds, met
 
   if(nrow(a$points)==0 || nrow(b$points)==0) return(0)
   if(method=="direct"){
-    stop("Direct method only currently implemented for neuron objects.")
+    a.sel <- cbind(a$points[-nrow(a$points), ], a$points[-1, ])
+    b.sel <- cbind(b$points[-nrow(b$points), ], b$points[-1, ])
+    DirectPotentialSynapses(a.sel,b.sel,s,...)
   } else if (method=="approx") {
     PotentialSynapses(a, b, s=s, sigma=sigma, seglength=seglength)
   }
