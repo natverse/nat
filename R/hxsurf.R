@@ -249,7 +249,8 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' Subset hxsurf object to specified regions
 #' 
 #' @param x A dotprops object
-#' @param subset Character vector specifying regions to keep
+#' @param subset Character vector specifying regions to keep. Interpreted as
+#'   \code{\link{regex}} if of length 1 and no fixed match.
 #' @param drop Whether to drop unused vertices after subsetting
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted hxsurf object
@@ -258,12 +259,20 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' @family hxsurf
 subset.hxsurf<-function(x, subset=NULL, drop=FALSE, ...){
   if(!is.null(subset)){
-    if(!is.character(subset) || !all(subset%in%x$RegionList))
+    tokeep=integer(0)
+    if(is.character(subset)){
+      tokeep=match(subset,x$RegionList)
+      if(is.na(tokeep[1]) && length(subset)==1){
+        # try as regex
+        tokeep=grep(subset,x$RegionList)
+      }
+    }
+    if(!length(tokeep) || any(is.na(tokeep)))
       stop("Invalid subset! See ?subset.hxsurf")
-    tokeep=match(subset,x$RegionList)
+    
     x$Regions=x$Regions[tokeep]
     x$RegionList=x$RegionList[tokeep]
-    x$RegionColourList=x$RegionColourList[tokeep]    
+    x$RegionColourList=x$RegionColourList[tokeep]
   }
   if(drop){
     # see if we need to drop any vertices

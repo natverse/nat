@@ -31,8 +31,11 @@ test_that("we can subset hxsurf object",{
   expect_is(lhr<-subset(surf,"LH_R"),'hxsurf')
   expect_equal(subset(surf, surf$RegionList), surf)
   
-  expect_equal(subset(surf), surf)
+  expect_equal(subset(surf, drop=TRUE), surf)
   expect_is(lhr.drop<-subset(surf,"LH_R", drop=TRUE), class = 'hxsurf')
+  expect_equal(subset(surf,"^LH"), subset(surf, c("LH_R",'LH_L')))
+  expect_error(subset(surf,"rhubarb"))
+  expect_error(subset(surf,c("rhubarb","and","LH_R")))
   
   simple_surf=structure(list(Vertices = data.frame(X = 10, Y = 10, Z = 1, PointNo= 1:3), 
                              Regions = structure(list(LH_L = data.frame(V1=1,V2=2,V3=3),
@@ -62,7 +65,7 @@ test_that("we can convert hxsurf to rgl::mesh3d",{
   expect_equal(tet.mesh3d, tetrahedron3d(color='#FF0000'))
   
   expect_equal(as.mesh3d(surf, Regions=c("LH_L","LH_R")),
-               as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))
+               as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))  
 })
 
 test_that("we can save and re-read hxsurf object", {
