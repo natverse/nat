@@ -994,8 +994,8 @@ materials.character<-function(x, ...) {
   materials(i)
 }
 
-#' @description \code{materials.character} will read the materials from an im3d 
-#'   compatible image file.
+#' @description \code{materials.hxsurf} will extract the materials from an
+#'   hxsurf object
 #' @export
 #' @rdname materials
 #' @method materials hxsurf
