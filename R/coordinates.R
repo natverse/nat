@@ -11,7 +11,7 @@ ind2coord<-function(inds, ...) UseMethod("ind2coord")
 #' @param dims dimensions of 3d image array.
 #' @param voxdims vector of 3 voxel dimensions (width, height, depth).
 #' @param origin the origin.
-#' @S3method ind2coord default
+#' @export
 #' @rdname ind2coord
 ind2coord.default<-function(inds, dims, voxdims, origin, ...){
   if(length(dims) != 3 )
@@ -49,7 +49,7 @@ ind2coord.default<-function(inds, dims, voxdims, origin, ...){
 }
 
 
-#' @S3method ind2coord array
+#' @export
 #' @rdname ind2coord
 ind2coord.array<-function(inds, voxdims=NULL, origin=NULL, ...){
   dims=dim(inds)
@@ -67,7 +67,7 @@ ind2coord.array<-function(inds, voxdims=NULL, origin=NULL, ...){
   ind2coord.default(inds, dims=dims, voxdims=voxdims, origin=origin, ...)
 }
 
-#' @S3method ind2coord im3d
+#' @export
 #' @rdname ind2coord
 ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
   if(is.null(voxdims)) voxdims=voxdims(inds)
@@ -91,7 +91,7 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @param Clamp ???
 #' @param CheckRanges whether to check if coordinates are out of range.
 #' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}
-#' @S3method coord2ind default
+#' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp, ...){
   if(inherits(imdims, 'im3d')) {

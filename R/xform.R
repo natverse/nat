@@ -24,7 +24,7 @@ xform<-function(x, reg, ...) UseMethod('xform')
 #' @details TODO get this to work for matrices with more than 3 columns by
 #'   working on xyzmatrix definition.
 #' @method xform default
-#' @S3method xform default
+#' @export
 #' @param na.action How to handle NAs. NB drop may not work for some classes.
 #' @rdname xform
 xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
@@ -44,7 +44,7 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
 }
 
 #' @method xform list
-#' @S3method xform list
+#' @export
 #' @rdname xform
 #' @param FallBackToAffine Whether to use an affine transform when a cmtk
 #'   warping transformation fails.
@@ -57,7 +57,7 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
 }
 
 #' @method xform dotprops
-#' @S3method xform dotprops
+#' @export
 #' @rdname xform
 #' @details the dotprops tangent vectors will be recalculated after the points
 #'   have been transformed (even though they could in theory be transformed more
@@ -80,7 +80,7 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 }
 
 #' @method xform neuronlist
-#' @S3method xform neuronlist
+#' @export
 #' @rdname xform
 xform.neuronlist<-function(x, reg, ...){
   if(length(reg)>1) stop("xform.neuronlist is currently only able to apply",
@@ -107,16 +107,16 @@ xyzmatrix.neuronlist<-function(x, ...) {
   do.call(rbind, coords)
 }
 
-#' @S3method xyzmatrix neuron
+#' @export
 xyzmatrix.neuron<-function(x, ...) x$d[,c("X","Y","Z")]
 
-#' @S3method xyzmatrix dotprops
+#' @export
 xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
 #' @rdname xyzmatrix
-#' @S3method xyzmatrix default
+#' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
   xyzn=c("X","Y","Z")
   if(is.neuron(x,Strict=FALSE)) {
@@ -134,7 +134,7 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
   mx
 }
 
-#' @S3method xyzmatrix hxsurf
+#' @export
 xyzmatrix.hxsurf<-function(x, ...) {
   # quick function that gives a generic way to extract coords from 
   # classes that we care about and returns a matrix
@@ -145,7 +145,7 @@ xyzmatrix.hxsurf<-function(x, ...) {
 }
 
 #' @rdname xyzmatrix
-#' @S3method xyzmatrix igraph
+#' @export
 xyzmatrix.igraph<-function(x, ...){
   igraph::get.graph.attribute(x, 'xyz')
 }
@@ -166,7 +166,7 @@ xyzmatrix.igraph<-function(x, ...){
 #' ))
 `xyzmatrix<-`<-function(x, value) UseMethod("xyzmatrix<-")
 
-#' @S3method xyzmatrix<- default
+#' @export
 `xyzmatrix<-.default`<-function(x, value){
   if(is.neuron(x)) x$d[,c("X","Y","Z")]=value
   else if(is.dotprops(x)) x$points[,c("X","Y","Z")]=value
@@ -175,13 +175,13 @@ xyzmatrix.igraph<-function(x, ...){
   x
 }
 
-#' @S3method xyzmatrix<- hxsurf
+#' @export
 `xyzmatrix<-.hxsurf`<-function(x, value){
   x$Vertices[,1:3]=value
   x
 }
 
-#' @S3method xyzmatrix<- igraph
+#' @export
 `xyzmatrix<-.igraph`<-function(x, value){
   igraph::set.graph.attribute(x, 'xyz', value)
 }
@@ -219,7 +219,7 @@ mirror<-function(x, ...) UseMethod('mirror')
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
 #' @method mirror default
-#' @S3method mirror default
+#' @export
 #' @rdname mirror
 mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
                          warpfile=NULL, transform=c("warp",'affine','flip'), ...){
@@ -246,7 +246,7 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
 }
 #' @method mirror neuronlist
-#' @S3method mirror neuronlist
+#' @export
 #' @rdname mirror
 mirror.neuronlist<-function(x, ...){
   nlapply(x,mirror,...)

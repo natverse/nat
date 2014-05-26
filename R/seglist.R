@@ -21,10 +21,10 @@ seglist<-function(...) {
 #' @seealso \code{\link{neuron}}
 as.seglist<-function(x, ...) UseMethod('as.seglist')
 
-#' @S3method as.seglist seglist
+#' @export
 as.seglist.seglist<-function(x, ...) x
 
-#' @S3method as.seglist list
+#' @export
 as.seglist.list<-function(x, ...) {
   if(isTRUE(class(x)=='list')) class(x)=c("seglist",class(x))
   x
@@ -36,7 +36,7 @@ as.seglist.list<-function(x, ...) {
 #'   \code{all=TRUE} but \code{flatten=FALSE} the result will be a list of
 #'   \code{seglist} objects.
 #' @method as.seglist neuron
-#' @S3method as.seglist neuron
+#' @export
 #' @param all Whether to include segments from all subtrees
 #' @param flatten When there are multiple subtrees, flatten the lists of lists 
 #'   into a one-level list.
@@ -51,7 +51,7 @@ as.seglist.neuron<-function(x, all=FALSE, flatten=FALSE, ...) {
   }
 }
 
-#' @S3method as.seglist default
+#' @export
 as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 
 #' @description \code{as.seglist.igraph} will convert a fully connected acyclic 
@@ -66,7 +66,7 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @param Verbose Whether to print progress updates to console (default FALSE)
 #' @return a \code{list} with one entry for each unbranched segment.
 #' @seealso \code{\link{ngraph},\link{igraph}}
-#' @S3method as.seglist igraph
+#' @export
 #' @method as.seglist igraph
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){

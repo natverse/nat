@@ -20,7 +20,7 @@ xformpoints<-function(reg, points, ...) {
 #'   performed in sequence order, such that
 #'   \code{xformpoints(c(a,b,c), x) == xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
 #' @method xformpoints character
-#' @S3method xformpoints character
+#' @export
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
     if (is.cmtkreg(reg[1], filecheck='magic')) xformpoints(as.cmtkreg(reg), points, ...)
@@ -89,7 +89,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
 }
 
 #' @method xformpoints default
-#' @S3method xformpoints default
+#' @export
 #' @rdname xformpoints
 xformpoints.default<-function(reg, points, ...){
   if(!is.matrix(points) && !is.data.frame(points)) stop("points must be a matrix or dataframe")

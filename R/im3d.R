@@ -184,12 +184,12 @@ read.im3d.amiramesh<-function(file, ...){
 #' @family im3d
 voxdims<-function(x, ...) UseMethod("voxdims")
 
-#' @S3method voxdims im3d
+#' @export
 voxdims.im3d<-function(x, ...){
   voxdims(boundingbox(x), dim(x), ...)
 }
 
-#' @S3method voxdims default
+#' @export
 #' @method voxdims default
 #' @param dims The number of voxels in each dimension when x is a BoundingBox 
 #'   matrix.
@@ -237,7 +237,7 @@ voxdims.default<-function(x, dims, ...){
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 
 #' @method boundingbox im3d
-#' @S3method boundingbox im3d
+#' @export
 #' @export
 #' @rdname boundingbox
 boundingbox.im3d<-function(x, dims=dim(x), ...) {
@@ -270,7 +270,7 @@ origin<-function(x, ...) {
   boundingbox(x, ...)[c(1, 3, 5)]
 }
 
-#' @S3method boundingbox character
+#' @export
 boundingbox.character<-function(x, ...) {
   if(!file.exists(x))
     stop("Unable to find a file at path: ",x)
@@ -279,7 +279,7 @@ boundingbox.character<-function(x, ...) {
 }
 
 #' @method boundingbox default
-#' @S3method boundingbox default
+#' @export
 #' @param input Whether \code{x} defines the boundingbox or bounds of the image 
 #'   (see details).
 #' @rdname boundingbox
@@ -313,13 +313,13 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
 #' @export
 `boundingbox<-`<-function(x, value) UseMethod("boundingbox<-")
 
-#' @S3method boundingbox<- default
+#' @export
 `boundingbox<-.default`<-function(x, value){
   attr(x,'BoundingBox')<-boundingbox(value)
   x
 }
 
-#' @S3method dim im3d
+#' @export
 dim.im3d<-function(x){
   dimx=NextMethod(generic='dim')
   if(is.null(dimx)){
@@ -607,10 +607,10 @@ flip.array=function(x, flipdim='X', ...){
   return (rval)
 }
 
-#' @S3method flip vector
+#' @export
 flip.vector=function(x, ...) rev(x)
 
-#' @S3method flip matrix
+#' @export
 flip.matrix=function(x, ...) flip.array(x, ...)
 
 #' Slice out a 3d subarray (or 2d matrix) from a 3d image array
