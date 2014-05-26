@@ -180,22 +180,24 @@ write.hxsurf <- function(surf, filename) {
 #' Plot amira surface objects in 3d using rgl
 #' 
 #' @param x An hxsurf surface object
-#' @param materials Character vector naming materials to plot (defaults to all 
-#'   materials in x)
+#' @param materials Character vector or \code{\link{regex}} naming materials to
+#'   plot (defaults to all materials in x). See \code{\link{subset.hxsurf}}.
 #' @param col Character vector specifying colors for the materials, or a 
-#'   function that will be called with the number of materials to plot. When
-#'   \code{NULL} (default) will use meterial colours defined in Amira (if
+#'   function that will be called with the number of materials to plot. When 
+#'   \code{NULL} (default) will use meterial colours defined in Amira (if 
 #'   available), or \code{rainbow} otherwise.
-#' @param ... Additional arguments passed to 
+#' @param ... Additional arguments passed to
 #' @export
 #' @method plot3d hxsurf
 #' @importFrom rgl plot3d par3d triangles3d
 #' @seealso \code{\link{read.hxsurf}}
 #' @family hxsurf
-plot3d.hxsurf<-function(x, materials=x$RegionList, col=NULL, ...){
+plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
   skip <- par3d(skipRedraw = TRUE)
   on.exit(par3d(skip))
+  
+  materials=subset(x, subset = materials, rval='names')
   
   if(is.null(col)) {
     if(length(x$RegionColourList)){
@@ -249,22 +251,35 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' Subset hxsurf object to specified regions
 #' 
 #' @param x A dotprops object
-#' @param subset Character vector specifying regions to keep
+#' @param subset Character vector specifying regions to keep. Interpreted as 
+#'   \code{\link{regex}} if of length 1 and no fixed match.
 #' @param drop Whether to drop unused vertices after subsetting
+#' @param rval Whether to return a new \code{hxsurf} object or just the names of
+#'   the matching regions
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted hxsurf object
 #' @method subset hxsurf
 #' @export
 #' @family hxsurf
-subset.hxsurf<-function(x, subset=NULL, drop=FALSE, ...){
+subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ...){
+  rval=match.arg(rval)
   if(!is.null(subset)){
-    if(!is.character(subset) || !all(subset%in%x$RegionList))
+    tokeep=integer(0)
+    if(is.character(subset)){
+      tokeep=match(subset,x$RegionList)
+      if(is.na(tokeep[1]) && length(subset)==1){
+        # try as regex
+        tokeep=grep(subset,x$RegionList)
+      }
+    }
+    if(!length(tokeep) || any(is.na(tokeep)))
       stop("Invalid subset! See ?subset.hxsurf")
-    tokeep=match(subset,x$RegionList)
+    if(rval=='names') return(x$RegionList[tokeep])
     x$Regions=x$Regions[tokeep]
     x$RegionList=x$RegionList[tokeep]
-    x$RegionColourList=x$RegionColourList[tokeep]    
-  }
+    x$RegionColourList=x$RegionColourList[tokeep]
+  } else if(rval=='names') return(x$RegionList)
+  
   if(drop){
     # see if we need to drop any vertices
     vertstokeep=sort(unique(unlist(x$Regions)))

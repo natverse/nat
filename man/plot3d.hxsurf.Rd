@@ -3,13 +3,14 @@
 \alias{plot3d.hxsurf}
 \title{Plot amira surface objects in 3d using rgl}
 \usage{
-\method{plot3d}{hxsurf}(x, materials = x$RegionList, col = NULL, ...)
+\method{plot3d}{hxsurf}(x, materials = NULL, col = NULL, ...)
 }
 \arguments{
   \item{x}{An hxsurf surface object}
 
-  \item{materials}{Character vector naming materials to
-  plot (defaults to all materials in x)}
+  \item{materials}{Character vector or \code{\link{regex}}
+  naming materials to plot (defaults to all materials in
+  x). See \code{\link{subset.hxsurf}}.}
 
   \item{col}{Character vector specifying colors for the
   materials, or a function that will be called with the
