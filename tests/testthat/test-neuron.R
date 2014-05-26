@@ -66,8 +66,21 @@ test_that("as.neuron.ngraph works",{
   n4=as.neuron2(g)
   expect_equal(n4,n3)
   
+  expect_equal(as.seglist(n), n$SegList)
+  
   expect_error(as.neuron(g, vertexData=matrix(ncol=4,nrow=igraph::vcount(g)+1)),
                info="as.neuron.ngraph fails when vertexData has too many rows")
+})
+
+test_that("use as.seglist with neurons",{
+  g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
+  n=as.neuron2(g,origin=0)
+  
+  full_seg_list=list(seglist(c(1,2,3)), seglist(c(8,9,10,11,12)), 
+                     seglist(c(4,5,6,7)))
+  full_seg_list_flat=seglist(c(1,2,3), c(8,9,10,11,12), c(4,5,6,7))
+  expect_equal(as.seglist(n, all=TRUE), full_seg_list)
+  expect_equal(as.seglist(n, all=TRUE, flatten = TRUE), full_seg_list_flat)
 })
 
 test_that("we can set NeuronName when there is no input file",{

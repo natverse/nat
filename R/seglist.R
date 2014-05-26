@@ -30,6 +30,27 @@ as.seglist.list<-function(x, ...) {
   x
 }
 
+#' @description \code{as.seglist.neuron} will extract the seglist from a neuron,
+#'   optionally extracting all subtrees (\code{all=TRUE}) and (in this case) 
+#'   flattening the list into a single hierarchy (\code{flatten=TRUE}). NB when
+#'   \code{all=TRUE} but \code{flatten=FALSE} the result will be a list of
+#'   \code{seglist} objects.
+#' @method as.seglist neuron
+#' @S3method as.seglist neuron
+#' @param all Whether to include segments from all subtrees
+#' @param flatten When there are multiple subtrees, flatten the lists of lists 
+#'   into a one-level list.
+#' @rdname seglist
+as.seglist.neuron<-function(x, all=FALSE, flatten=FALSE, ...) {
+  if(!all || is.null(x$SubTrees)){
+    as.seglist(x$SegList)
+  } else {
+    # nb ensure that everything has class seglist
+    if(flatten) as.seglist(unlist(x$SubTrees, recursive=FALSE))
+    else lapply(x$SubTrees, as.seglist)
+  }
+}
+
 #' @S3method as.seglist default
 as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 

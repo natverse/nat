@@ -1,12 +1,15 @@
 \name{seglist}
 \alias{as.seglist}
 \alias{as.seglist.igraph}
+\alias{as.seglist.neuron}
 \alias{seglist}
 \title{Make/convert neuron connectivity information into a seglist object}
 \usage{
 seglist(...)
 
 as.seglist(x, ...)
+
+\method{as.seglist}{neuron}(x, all = FALSE, flatten = FALSE, ...)
 
 \method{as.seglist}{igraph}(x, origin = NULL, Verbose = FALSE, ...)
 }
@@ -15,6 +18,11 @@ as.seglist(x, ...)
   to a seglist}
 
   \item{x}{object passed to be converted to seglist}
+
+  \item{all}{Whether to include segments from all subtrees}
+
+  \item{flatten}{When there are multiple subtrees, flatten
+  the lists of lists into a one-level list.}
 
   \item{origin}{The origin of the tree (see details)}
 
@@ -31,6 +39,13 @@ a \code{list} with one entry for each unbranched segment.
 integer vectors of raw vertex ids. As a convenience if a
 vector of numeric ids are passed these are assumed to
 specify a neuron with 1 segment.
+
+\code{as.seglist.neuron} will extract the seglist from a
+neuron, optionally extracting all subtrees
+(\code{all=TRUE}) and (in this case) flattening the list
+into a single hierarchy (\code{flatten=TRUE}). NB when
+\code{all=TRUE} but \code{flatten=FALSE} the result will be
+a list of \code{seglist} objects.
 
 \code{as.seglist.igraph} will convert a fully connected
 acyclic ngraph or igraph object into a seglist consisting
