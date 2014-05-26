@@ -1,0 +1,33 @@
+\name{segmentgraph}
+\alias{segmentgraph}
+\title{Return a simplified segment graph for a neuron}
+\usage{
+segmentgraph(x, exclude.isolated = FALSE, include.xyz = FALSE)
+}
+\arguments{
+  \item{x}{neuron}
+
+  \item{exclude.isolated}{Whether to eliminated isolated
+  nodes}
+
+  \item{include.xyz}{Whether to include 3d location as
+  vertex attribute}
+}
+\value{
+\code{igraph} object containing only nodes of neuron
+keeping original labels (\code{x$d$PointNo} =>
+\code{V(g)$label}) and vertex indices (\code{1:nrow(x$d)}
+=> \code{V(g)$vid)}.
+}
+\description{
+Return a simplified segment graph for a neuron
+}
+\details{
+The resultant graph will contain all branch and endpoints
+of the original neuron. This will be constructed from the
+SegList field, or where present, the SubTrees field
+(containing multiple SegLists for each isolated graph in
+the neuron). Each edge in the output graph will match one
+segment in the original SegList.
+}
+

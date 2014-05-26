@@ -98,3 +98,10 @@ test_that("graph weights can be calculated and set",{
   g3=as.ngraph(Cell07PNs[[1]], weights=TRUE)
   expect_equal(sum(igraph::E(g3)$weight), 297.1763, tolerance=1e-4)
 })
+
+test_that("we can find the segmentgraph of a neuron",{
+  testn=as.neuron(testd)
+  expect_is(sg<-segmentgraph(testn), 'igraph')
+  baseline=graph(c(1,2,2,3,2,4), directed=TRUE)
+  expect_true(graph.isomorphic(sg, baseline))
+})

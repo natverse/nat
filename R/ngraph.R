@@ -215,3 +215,17 @@ segmentgraph<-function(x, exclude.isolated=FALSE, include.xyz=FALSE){
   }
   g
 }
+
+# Construct EdgeList matrix with start and end points from SegList
+#
+# @param SegList from a \code{neuron}
+# @return A 2 column matrix, \code{cbind(starts,ends)}
+# @export
+EdgeListFromSegList<-function(SegList){
+  lsl=sapply(SegList,length)
+  sl=SegList[lsl>1]
+  lsl=lsl[lsl>1]
+  ends=unlist(lapply(sl,function(x) x[-1]))
+  starts=unlist(lapply(sl,function(x) x[-length(x)]))
+  cbind(starts,ends)
+}
