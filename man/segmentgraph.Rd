@@ -2,10 +2,14 @@
 \alias{segmentgraph}
 \title{Return a simplified segment graph for a neuron}
 \usage{
-segmentgraph(x, exclude.isolated = FALSE, include.xyz = FALSE)
+segmentgraph(x, weights = TRUE, exclude.isolated = FALSE,
+  include.xyz = FALSE)
 }
 \arguments{
   \item{x}{neuron}
+
+  \item{weights}{Whether to include the original segment
+  lengths as weights on the graph.}
 
   \item{exclude.isolated}{Whether to eliminated isolated
   nodes}

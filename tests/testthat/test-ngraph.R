@@ -102,6 +102,10 @@ test_that("graph weights can be calculated and set",{
 test_that("we can find the segmentgraph of a neuron",{
   testn=as.neuron(testd)
   expect_is(sg<-segmentgraph(testn), 'igraph')
+  
   baseline=graph(c(1,2,2,3,2,4), directed=TRUE)
   expect_true(graph.isomorphic(sg, baseline))
+    
+  expect_equal(E(sg)$weight, c(2, 2, 1))
+  expect_true(graph.isomorphic(segmentgraph(testn, weights=FALSE), sg))
 })
