@@ -136,8 +136,8 @@ PotentialSynapses.dotprops <- function(a, b, s, sigma, seglength) {
   # short circuit if there are no points to check in one list or other!
   if(nrow(a$points) * nrow(b$points) == 0) return(0)
 
-  la <- a$points[, 1] * 0 + seglength
-  lb <- b$points[, 1] * 0 + seglength
+  la <- rep(seglength, nrow(a$points))
+  lb <- rep(seglength, nrow(b$points))
 
   lab <- outer(la, lb)
 
