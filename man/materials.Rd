@@ -30,13 +30,19 @@ Extract or set the materials for an object
 \code{materials.character} will read the materials from an
 im3d compatible image file on disk.
 
-\code{materials.character} will read the materials from an
-im3d compatible image file.
+\code{materials.hxsurf} will extract the materials from an
+hxsurf object
 }
 \details{
 Note that the id column will be the 1-indexed order that
 the material appears in the \code{surf$Region} list for
 \code{hxsurf} objects and the 0-indexed mask values for a
 nrrd
+}
+\seealso{
+Other hxsurf: \code{\link{as.mesh3d}},
+\code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
+\code{\link{read.hxsurf}}; \code{\link{plot3d.hxsurf}};
+\code{\link{subset.hxsurf}}; \code{\link{write.hxsurf}}
 }
 

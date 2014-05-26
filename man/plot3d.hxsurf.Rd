@@ -27,7 +27,10 @@ Plot amira surface objects in 3d using rgl
 
 Other hxsurf: \code{\link{as.mesh3d}},
 \code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{subset.hxsurf}};
-\code{\link{write.hxsurf}}
+\code{\link{read.hxsurf}}; \code{\link{materials}},
+\code{\link{materials.character}},
+\code{\link{materials.default}},
+\code{\link{materials.hxsurf}};
+\code{\link{subset.hxsurf}}; \code{\link{write.hxsurf}}
 }
 

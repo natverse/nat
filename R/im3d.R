@@ -999,6 +999,7 @@ materials.character<-function(x, ...) {
 #' @export
 #' @rdname materials
 #' @method materials hxsurf
+#' @family hxsurf
 materials.hxsurf<-function(x, ...) {
   m=data.frame(name=names(x$Regions),id=seq_along(x$Regions),
                 col=x$RegionColourList, stringsAsFactors = FALSE)
