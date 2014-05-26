@@ -168,3 +168,72 @@ spine <- function(n, SpatialWeights=TRUE, LengthOnly=FALSE) {
     as.neuron(as.ngraph(spineGraph), vertexData=n$d[V(spineGraph)$label, ])
   }
 }
+
+#' Return a simplified segment graph for a neuron
+#' 
+#' @details The resultant graph will contain all branch and endpoints of the 
+#'   original neuron. This will be constructed from the SegList field, or where 
+#'   present, the SubTrees field (containing multiple SegLists for each isolated
+#'   graph in the neuron). Each edge in the output graph will match one segment 
+#'   in the original SegList.
+#' @param x neuron
+#' @param weights Whether to include the original segment lengths as weights on
+#'   the graph.
+#' @param exclude.isolated Whether to eliminated isolated nodes
+#' @param include.xyz Whether to include 3d location as vertex attribute
+#' @return \code{igraph} object containing only nodes of neuron keeping original
+#'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
+#'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
+segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALSE){
+  g=graph.empty()
+  pointnos=x$d$PointNo
+  sts<-if(is.null(x$SubTrees)) x$SegList else unlist(x$SubTrees,recursive=FALSE)
+  topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
+  # just get head and tail of each segment
+  simple_sts=lapply(sts,topntail)
+  all_nodes=sort(unique(unlist(simple_sts)))
+  # make empty graph with approriate nodes
+  g=graph.empty(n=length(all_nodes))
+  # store external pointnos
+  igraph::V(g)$label=pointnos[all_nodes]
+  # store original vertex ids
+  igraph::V(g)$vid=all_nodes
+  
+  # handle the edges - first make list full edgelist
+  el=EdgeListFromSegList(simple_sts)
+  # convert from original vertex ids to vids of reduced graph
+  elred=match(t(el),all_nodes)
+  
+  if(weights){
+    weights=seglengths(x, all=TRUE)
+    g=add.edges(g, elred, weight=weights)
+  } else {
+    g=add.edges(g, elred)
+  }
+  
+  if(include.xyz){
+    igraph::V(g)$x=x$d$X[all_nodes]
+    igraph::V(g)$y=x$d$Y[all_nodes]
+    igraph::V(g)$z=x$d$Z[all_nodes]
+  }
+  if(exclude.isolated){
+    # remove any points with no neighbours
+    isolated_vertices=igraph::V(g)[igraph::degree(g)==0]
+    g=igraph::delete.vertices(graph=g,isolated_vertices)
+  }
+  g
+}
+
+# Construct EdgeList matrix with start and end points from SegList
+#
+# @param SegList from a \code{neuron}
+# @return A 2 column matrix, \code{cbind(starts,ends)}
+# @export
+EdgeListFromSegList<-function(SegList){
+  lsl=sapply(SegList,length)
+  sl=SegList[lsl>1]
+  lsl=lsl[lsl>1]
+  ends=unlist(lapply(sl,function(x) x[-1]))
+  starts=unlist(lapply(sl,function(x) x[-length(x)]))
+  cbind(starts,ends)
+}

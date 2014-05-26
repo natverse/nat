@@ -376,17 +376,21 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' Calculate length of all segments in neuron
 #' 
 #' @param x A neuron
-#' @details Only segments in x$SegList will be calculated. Segments containing
+#' @param all Whether to calculate lengths for all segments when there are
+#'   multiple subtrees (default: \code{FALSE})
+#' @details Only segments in x$SegList will be calculated. Segments containing 
 #'   only one point will have 0 length.
 #' @return A vector of lengths for each segment.
-#' @seealso \code{\link{resample}}
 #' @export
 #' @examples
 #' summary(seglengths(Cell07PNs[[1]]))
-seglengths=function(x){
+seglengths=function(x, all=FALSE){
   # convert to numeric matrix without row names
+  sts<-if(!all || is.null(x$SubTrees)) x$SegList 
+  else unlist(x$SubTrees,recursive=FALSE)
+  
   d=data.matrix(x$d[, c("X", "Y", "Z")])
-  sapply(x$SegList, function(s) seglength(d[s, ]))
+  sapply(sts, function(s) seglength(d[s, ]))
 }
 
 # Calculate length of single segment in neuron

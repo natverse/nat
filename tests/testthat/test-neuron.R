@@ -96,5 +96,6 @@ test_that("we can plot dotprops in 3D", {
 
 test_that("we can calculate seglengths of neuron", {
   expect_equal(seglengths(testn), c(2, 2, 1))
+  expect_equal(seglengths(testn, all=TRUE), c(2, 2, 1))
   expect_equal(seglength(matrix(1:3,ncol=3)), 0)
 })
