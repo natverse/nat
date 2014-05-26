@@ -187,7 +187,7 @@ spine <- function(n, SpatialWeights=TRUE, LengthOnly=FALSE) {
 segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALSE){
   g=graph.empty()
   pointnos=x$d$PointNo
-  sts<-if(is.null(x$SubTrees)) x$SegList else unlist(x$SubTrees,recursive=FALSE)
+  sts=as.seglist(x, all=TRUE, flatten = TRUE)
   topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
   # just get head and tail of each segment
   simple_sts=lapply(sts,topntail)

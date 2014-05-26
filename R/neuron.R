@@ -386,9 +386,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' summary(seglengths(Cell07PNs[[1]]))
 seglengths=function(x, all=FALSE){
   # convert to numeric matrix without row names
-  sts<-if(!all || is.null(x$SubTrees)) x$SegList 
-  else unlist(x$SubTrees,recursive=FALSE)
-  
+  sts<-as.seglist(x, all=all, flatten=TRUE)  
   d=data.matrix(x$d[, c("X", "Y", "Z")])
   sapply(sts, function(s) seglength(d[s, ]))
 }

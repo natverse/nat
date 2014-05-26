@@ -225,15 +225,11 @@ write.neuron.hxskel<-function(x, file, WriteAllSubTrees=TRUE,
 write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
                                  ScaleSubTreeNumsTo1=TRUE, WriteRadius=TRUE){
   
-  # if asked & nTrees is present and >1
-  if(WriteAllSubTrees && !is.null(x$nTrees) && x$nTrees>1){	
-    WriteAllSubTrees=TRUE 
-    # nb recurs =F, so list of lists -> list (rather than vector)
-    SegList=unlist(x$SubTrees, recursive=F)
-  } else {
-    WriteAllSubTrees=FALSE
-    SegList=x$SegList
-  }
+  # Make a seglist containing main or all segments
+  SegList=as.seglist(x, all=WriteAllSubTrees, flatten=TRUE)
+  # only use WriteAllSubTrees when there actually are multiple subtrees
+  WriteAllSubTrees=WriteAllSubTrees && isTRUE(x$nTrees>1)
+
   chosenVertices=sort(unique(unlist(SegList)))
   nVertices=length(chosenVertices)
   # the number of points required to define the line segments

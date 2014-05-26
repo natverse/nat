@@ -161,9 +161,7 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
   if(missing(d)){
     if(!is.neuron(x)) stop("Must supply x=neuron or x=SegList and d=SWC data")
     d=x$d
-    if(isTRUE(x$nTrees>1))
-      sl=unlist(x$SubTrees, recursive=FALSE)
-    else sl=x$SegList
+    sl=as.seglist(x, all=TRUE, flatten=TRUE)
   } else {
     sl=x
     # is this a plain SegList or a list of seglists
