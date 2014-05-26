@@ -249,15 +249,18 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' Subset hxsurf object to specified regions
 #' 
 #' @param x A dotprops object
-#' @param subset Character vector specifying regions to keep. Interpreted as
+#' @param subset Character vector specifying regions to keep. Interpreted as 
 #'   \code{\link{regex}} if of length 1 and no fixed match.
 #' @param drop Whether to drop unused vertices after subsetting
+#' @param rval Whether to return a new \code{hxsurf} object or just the names of
+#'   the matching regions
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted hxsurf object
 #' @method subset hxsurf
 #' @export
 #' @family hxsurf
-subset.hxsurf<-function(x, subset=NULL, drop=FALSE, ...){
+subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ...){
+  rval=match.arg(rval)
   if(!is.null(subset)){
     tokeep=integer(0)
     if(is.character(subset)){
@@ -269,11 +272,12 @@ subset.hxsurf<-function(x, subset=NULL, drop=FALSE, ...){
     }
     if(!length(tokeep) || any(is.na(tokeep)))
       stop("Invalid subset! See ?subset.hxsurf")
-    
+    if(rval=='names') return(x$RegionList[tokeep])
     x$Regions=x$Regions[tokeep]
     x$RegionList=x$RegionList[tokeep]
     x$RegionColourList=x$RegionColourList[tokeep]
-  }
+  } else if(rval=='names') return(x$RegionList)
+  
   if(drop){
     # see if we need to drop any vertices
     vertstokeep=sort(unique(unlist(x$Regions)))

@@ -3,16 +3,21 @@
 \alias{subset.hxsurf}
 \title{Subset hxsurf object to specified regions}
 \usage{
-\method{subset}{hxsurf}(x, subset = NULL, drop = FALSE, ...)
+\method{subset}{hxsurf}(x, subset = NULL, drop = FALSE, rval = c("hxsurf",
+  "names"), ...)
 }
 \arguments{
   \item{x}{A dotprops object}
 
   \item{subset}{Character vector specifying regions to
-  keep}
+  keep. Interpreted as \code{\link{regex}} if of length 1
+  and no fixed match.}
 
   \item{drop}{Whether to drop unused vertices after
   subsetting}
+
+  \item{rval}{Whether to return a new \code{hxsurf} object
+  or just the names of the matching regions}
 
   \item{...}{Additional parameters (currently ignored)}
 }

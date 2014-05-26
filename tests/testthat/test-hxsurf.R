@@ -34,6 +34,8 @@ test_that("we can subset hxsurf object",{
   expect_equal(subset(surf, drop=TRUE), surf)
   expect_is(lhr.drop<-subset(surf,"LH_R", drop=TRUE), class = 'hxsurf')
   expect_equal(subset(surf,"^LH"), subset(surf, c("LH_R",'LH_L')))
+  expect_equal(subset(surf,"^LH",rval = 'names'), c("LH_R",'LH_L'))
+  expect_equal(subset(surf,rval = 'names'), surf$RegionList)
   expect_error(subset(surf,"rhubarb"))
   expect_error(subset(surf,c("rhubarb","and","LH_R")))
   
