@@ -1,3 +1,17 @@
+nat 1.5.1
+==========
+* add potential_synapses (from nat.as)
+* surfaces: add subset.hxsurf and as.mesh3d
+* Teach read.im3d to read Vaa3d raw format
+* add plot.neuronlist (for 2d plotting)
+* add c.neuronlist function to combine neuronlists
+* add db argument to plot3d.character
+* make WithNodes=FALSE the default for plot3d.neuronlist
+* make asp=1 the default for image.im3d
+* write.cmtkreg warns if versions specified by cmtkreg attribute and argument
+  differ (to avoid writing old registrations as if they were new or vice versa)
+* fix: prune.neuronlist method signature (and therefore dispatch)
+
 nat 1.4.10
 ==========
 * add function to prune objects by removing points close to or far from another
