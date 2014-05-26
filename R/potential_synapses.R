@@ -48,7 +48,26 @@ potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct",
   }
 }
 
-PotentialSynapses<-function(a,b,s=2,sigma=2){
+#' @method potential_synapses dotprops
+#' @export
+#' @rdname potential_synapses
+potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds, method=c("direct", "approx"), ...) {
+  method=match.arg(method, c("direct","approx"))
+  if(is.neuronlist(b))
+    return(sapply(b, function(x) potential_synapses(a, x, s=s, sigma=sigma, seglength=seglength, bounds=bounds, method=method, ...)))
+
+  if(nrow(a$points)==0 || nrow(b$points)==0) return(0)
+  if(method=="direct"){
+    stop("Direct method only currently implemented for neuron objects.")
+  } else if (method=="approx") {
+    PotentialSynapses(a, b, s=s, sigma=sigma, seglength=seglength)
+  }
+}
+
+PotentialSynapses <- function(a, b, s, sigma, ...) UseMethod("PotentialSynapses")
+
+#' @method PotentialSynapses default
+PotentialSynapses.default <- function(a, b, s=2, sigma=2) {
   #Compare for matrices of input data rather than neurons
   
   # short circuit if there are no points to check in one list or other!
@@ -97,6 +116,33 @@ PotentialSynapses<-function(a,b,s=2,sigma=2){
   #return(list(ra,rb,na,nb,la,lb,lab,sintheta,raminusrb,l2rab.old,l2rab,expterm,rval))
   return(rval)
 }
+
+#' @method PotentialSynapses dotprops
+PotentialSynapses.dotprops <- function(a, b, s, sigma, seglength) {
+  # short circuit if there are no points to check in one list or other!
+  if(nrow(a$points) * nrow(b$points) == 0) return(0)
+
+  la <- a$points[, 1] * 0 + seglength
+  lb <- b$points[, 1] * 0 + seglength
+
+  lab <- outer(la, lb)
+
+  sintheta <- lab
+  h <- nrow(a$points); w <- nrow(b$points)
+  for(j in 1:h) {
+    sintheta[j, ] <- thetaBetween(b$vect, a$vect[j, ])
+  }
+
+  raminusrb <- rowbyrow(a$points,b$points,"-")
+  l2rab <- rowSums(raminusrb * raminusrb)
+  dim(l2rab) <- dim(lab)
+  FourSigma2 <- 4 * sigma^2
+  denom <- (4 * pi * sigma^2)^(3 / 2)
+  expterm <- exp(-l2rab / FourSigma2) / (denom)
+  rval <- 2 * s * sum(lab * sintheta * expterm)
+  return(rval)
+}
+
 #@+node:jefferis.20060305214152.4:DirectPotentialSynapses
 DirectPotentialSynapses<-function(a,b,s=2,maxlineseglength=0.5,returnDistanceList=FALSE){
   # This takes a pair of matrices representing neuron segments
