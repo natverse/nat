@@ -252,12 +252,20 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' @details Tangent vectors are plotted by \code{segments3d} and centered on the
 #'   relevant point. Points are plotted by \code{points3d}.
 #'   
+#'   \code{color} will be recycled by \code{points3d} and \code{segments3d}. 
+#'   However in the special case that \code{color} has length equal to the 
+#'   number of points in \code{x}, then it will be duplicated before being 
+#'   passed to \code{segments3d} so that the result is that each vector is 
+#'   coloured uniformly according to \code{color} (since segments3d expects 2
+#'   colours for each line segment, blending them if they are different).
 #' @param x A dotprops object
 #' @param scalevecs Factor by which to scale unit vectors (numeric, default: 
 #'   1.0)
 #' @param alpharange Restrict plotting to points with \code{alpha} values in 
 #'   this range to plot (default: null => all points). See 
 #'   \code{\link{dotprops}} for definition of \code{alpha}.
+#' @param color Character or numeric vector specifying colours for 
+#'   points/vectors. See details.
 #' @param PlotPoints,PlotVectors Whether to plot points and/or tangent vectors 
 #'   (logical, default: tangent vectors only)
 #' @param UseAlpha Whether to scale tangent vector length by the value of 
@@ -278,21 +286,26 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' clear3d()
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
-plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL,
-                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE,...){
+plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black', 
+                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
   rlist=list()
-  if(PlotPoints)
-    rlist$points=points3d(x$points,...)
+  if(PlotPoints){
+    rlist$points=points3d(x$points, color=color, ...)
+  }
+    
   if(PlotVectors){
+    if(length(color)>1 && length(color)==nrow(x$points)){
+      color=rep(color,rep.int(2,length(color)))
+    }
     halfvect=x$vect/2*scalevecs
     if(UseAlpha) halfvect=halfvect*x$alpha
     starts=x$points-halfvect
     stops=x$points+halfvect
     interleaved=matrix(t(cbind(starts,stops)),ncol=3,byrow=T)
-    rlist$segments=segments3d(interleaved,...)
+    rlist$segments=segments3d(interleaved, color=color, ...)
   }
   invisible(rlist)
 }

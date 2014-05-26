@@ -4,7 +4,8 @@
 \title{3D plots of dotprops objects using rgl package}
 \usage{
 \method{plot3d}{dotprops}(x, scalevecs = 1, alpharange = NULL,
-  PlotPoints = FALSE, PlotVectors = TRUE, UseAlpha = FALSE, ...)
+  color = "black", PlotPoints = FALSE, PlotVectors = TRUE,
+  UseAlpha = FALSE, ...)
 }
 \arguments{
   \item{x}{A dotprops object}
@@ -16,6 +17,9 @@
   \code{alpha} values in this range to plot (default: null
   => all points). See \code{\link{dotprops}} for definition
   of \code{alpha}.}
+
+  \item{color}{Character or numeric vector specifying
+  colours for points/vectors. See details.}
 
   \item{PlotPoints,PlotVectors}{Whether to plot points
   and/or tangent vectors (logical, default: tangent vectors
@@ -37,6 +41,15 @@ invisible list of results of rgl plotting commands
 Tangent vectors are plotted by \code{segments3d} and
 centered on the relevant point. Points are plotted by
 \code{points3d}.
+
+\code{color} will be recycled by \code{points3d} and
+\code{segments3d}.  However in the special case that
+\code{color} has length equal to the number of points in
+\code{x}, then it will be duplicated before being passed to
+\code{segments3d} so that the result is that each vector is
+coloured uniformly according to \code{color} (since
+segments3d expects 2 colours for each line segment,
+blending them if they are different).
 }
 \examples{
 open3d()
