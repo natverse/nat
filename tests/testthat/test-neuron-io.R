@@ -822,6 +822,14 @@ test_that("write.neurons works",{
   files_found=dir(td,recursive=T,pattern='am$')
   expect_true(all(basename(written_files)%in%basename(files_found)))
   
+  expect_is(written_files<-write.neurons(Cell07PNs, dir=td, subdir="CellType",
+                                         INDICES=neurons_to_write,ext='.am3d',
+                                         format='hxskel'),'character')
+  files_found=dir(td,recursive=T,pattern='am3d$')
+  expect_true(all(basename(written_files)%in%basename(files_found)))
+  expect_equal(with(Cell07PNs[neurons_to_write],as.character(Glomerulus)),
+               basename(dirname(written_files)))
+  
   expect_is(written_files<-write.neurons(Cell07PNs, dir=td,
                 INDICES=neurons_to_write,
                 subdir=file.path(Glomerulus),format='swc'),'character')
