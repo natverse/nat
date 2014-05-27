@@ -817,6 +817,12 @@ test_that("write.neurons works",{
   on.exit(unlink(td,recursive=TRUE))
   neurons_to_write=subset(Cell07PNs,Scored.By%in%c("ACH","CJP"),rval='names')
   expect_is(written_files<-write.neurons(Cell07PNs, dir=td,
+                                         INDICES=neurons_to_write,
+                                         format='hxlineset'),'character')
+  files_found=dir(td,recursive=T,pattern='am$')
+  expect_true(all(basename(written_files)%in%basename(files_found)))
+  
+  expect_is(written_files<-write.neurons(Cell07PNs, dir=td,
                 INDICES=neurons_to_write,
                 subdir=file.path(Glomerulus),format='swc'),'character')
   files_found=dir(td,recursive=T,pattern='swc$')
