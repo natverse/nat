@@ -1,3 +1,16 @@
+nat 1.5.2
+==========
+* add seglengths function for neurons
+* add segmentgraph function to produced a simplified graph representation of
+  neurons with one edge per segment
+* add potential_synapses.dotprops method
+* add as.seglist.neuron method 
+* teach plot3d.hxsurf and subset.hxsurf to accept regexes
+* always drop unused vertices in as.mesh3d.hxsurf
+* fix bug in write.neurons when subdir not specified
+* fix colouring of vectors by plot3d.dotprops
+* dev: switch to roxygygen2 v4
+
 nat 1.5.1
 ==========
 * add potential_synapses (from nat.as)
