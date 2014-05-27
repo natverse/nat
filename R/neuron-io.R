@@ -497,8 +497,10 @@ write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), ...){
     n=nl[[nn]]
     thisdir=dir
     if(is.null(subdirs)){
-      propval=n[[subdir]]
-      if(!is.null(propval)) thisdir=file.path(dir, propval)
+      if(!is.null(subdir)){
+        propval=n[[subdir]]
+        if(!is.null(propval)) thisdir=file.path(dir, propval)
+      }
     } else {
       thisdir=subdirs[nn]
     }
