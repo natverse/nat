@@ -1,16 +1,11 @@
-citHeader("To cite nat.as in publications, please use:")
+citHeader("To cite nat in publications, please use:")
 
 citEntry(entry = 'article',
-	Author = c(person("Cachero, Sebastian"), person("Ostrovsky, Aaron D"), person("Yu, Jai Y") ,person("Dickson, Barry J"), person("Jefferis, Gregory S X E")),
-	Doi = "10.1016/j.cub.2010.07.045",
-	Journal = "Curr Biol",
-	Month = "Sep",
-	Number = "18",
-	Pages = "1589-601",
-	Pmid = "20832311",
-	Pst = "ppublish",
-	Title = "Sexual dimorphism in the fly brain",
-	Volume = "20",
-	Year = "2010",
-	textVersion = "Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E. (2010). Sexual dimorphism in the fly brain. Curr Biol 20 (18), 1589-1601."
+  Title = "{NeuroAnatomy Toolbox v1.5.2}",
+	Author = c(person("Jefferis, Gregory S X E"), person("Manton, James D")),
+	Doi = "10.5281/zenodo.10171",
+  Journal = "ZENODO",
+	Month = "May",
+	Year = "2014",
+	textVersion = "Gregory S X E Jefferis and James D Manton (2014). NeuroAnatomy Toolbox v1.5.2. ZENODO. 10.5281/zenodo.10171"
 )
