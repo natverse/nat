@@ -91,6 +91,11 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
                              quote='',colClasses='integer',blank.lines.skip=FALSE,
                              fill=FALSE,comment.char="",
                              col.names=c("V1","V2","V3"))
+        if(getfield(paste(RegChoice,"Region",sep=""),PatchHeader,1) == "OuterRegion") {
+          thispatch <- thispatch[, c(1,3,2)]
+          if(Verbose) message("Permuting vertices for ", RegionName, "...")
+          colnames(thispatch) <- c("V1","V2","V3")
+        }
         # scan no quicker in these circs, problem is repeated file access
         # specifying text directly also does not help dues to very slow textConnection
 
