@@ -302,3 +302,32 @@ subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ..
   }
   x
 }
+
+#' Find which points of an object are inside a surface
+#' 
+#' @details Note that \code{hxsurf} surface objects will be converted to 
+#'   \code{mesh3d} before being passed to  \code{Rvcg::vcgClost}, so if you are 
+#'   testing repeatedly against the same surface, it may make sense to 
+#'   pre-convert.
+#' @param x an object with 3D points.
+#' @param surf an \code{hxsurf} or \code{mesh3d} object defining the reference 
+#'   surface.
+#' @param ... additional arguments for methods, eventually passed to as.mesh3d.
+#' @export
+pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
+
+#' @export
+#' @param rval what to return.
+#' @return A vector of logical values or distances equal to the number of points
+#'   in x or the \code{mesh3d} object returned by \code{Rvcg::vcgClost}.
+#' @rdname pointsinside
+pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3d')) {
+  if(!require('Rvcg')) stop("Please install suggested library Rvcg to use pointsinside")
+  rval=match.arg(rval)
+  pts=xyzmatrix(x)
+  if(inherits(surf,'hxsurf')) {
+    surf=as.mesh3d(surf, ...)
+  }
+  rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
+  switch(rval, logical=rmesh$quality>0, distance=rmesh$quality, mesh3d=rmesh)
+}

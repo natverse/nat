@@ -89,3 +89,13 @@ test_that("we can xform hxsurf object using registration", {
   xform(surf, reg)
 })
 }
+
+if(require('Rvcg')){
+  test_that('check if points are inside a surface',{
+    # the surface and neuron are registered against different templates
+    # so cheat by using an approximate offset
+    n=kcs20[[1]]+c(40,-30,20)
+    MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
+    expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
+  })
+}

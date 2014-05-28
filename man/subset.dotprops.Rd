@@ -38,6 +38,6 @@ dp3=subset(dp,1:10)
 }
 }
 \seealso{
-\code{nat.as::prune.dotprops}
+\code{prune.dotprops}
 }
 

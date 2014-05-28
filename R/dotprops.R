@@ -322,7 +322,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' @return subsetted dotprops object
 #' @method subset dotprops
 #' @export
-#' @seealso \code{nat.as::prune.dotprops}
+#' @seealso \code{prune.dotprops}
 #' @examples
 #' \dontrun{
 #' s3d=select3d()

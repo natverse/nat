@@ -33,6 +33,7 @@ Imports:
     digest,
     nat.utils
 Suggests:
+    Rvcg,
     testthat
 License: GPL-3
 LazyData: yes
