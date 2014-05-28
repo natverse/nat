@@ -10,15 +10,15 @@ pointsinside(x, surf, ...)
   "mesh3d"))
 }
 \arguments{
-  \item{x}{An object with 3d points}
+  \item{x}{an object with 3D points.}
 
-  \item{surf}{An \code{hxsurf} or \code{mesh3d} object
-  defining the reference surface}
+  \item{surf}{an \code{hxsurf} or \code{mesh3d} object
+  defining the reference surface.}
 
-  \item{...}{Additional arguments for methods, eventually
-  passed to as.mesh3d}
+  \item{...}{additional arguments for methods, eventually
+  passed to as.mesh3d.}
 
-  \item{rval}{What to return}
+  \item{rval}{what to return.}
 }
 \value{
 A vector of logical values or distances equal to the number
@@ -26,10 +26,7 @@ of points in x or the \code{mesh3d} object returned by
 \code{Rvcg::vcgClost}.
 }
 \description{
-#FIXME Unfortunately this does not seem to work with the
-neuropil surfaces, perhaps because they are not smooth or
-because I have misunderstood the definition of signed
-distance.
+Find which points of an object are inside a surface
 }
 \details{
 Note that \code{hxsurf} surface objects will be converted
