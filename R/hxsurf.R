@@ -305,22 +305,19 @@ subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ..
 
 #' Find which points of an object are inside a surface
 #' 
-#' #FIXME Unfortunately this does not seem to work with the neuropil surfaces,
-#' perhaps because they are not smooth or because I have misunderstood the
-#' definition of signed distance.
 #' @details Note that \code{hxsurf} surface objects will be converted to 
 #'   \code{mesh3d} before being passed to  \code{Rvcg::vcgClost}, so if you are 
 #'   testing repeatedly against the same surface, it may make sense to 
 #'   pre-convert.
-#' @param x An object with 3d points
-#' @param surf An \code{hxsurf} or \code{mesh3d} object defining the reference 
-#'   surface
-#' @param ... Additional arguments for methods, eventually passed to as.mesh3d
+#' @param x an object with 3D points.
+#' @param surf an \code{hxsurf} or \code{mesh3d} object defining the reference 
+#'   surface.
+#' @param ... additional arguments for methods, eventually passed to as.mesh3d.
 #' @export
 pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 
 #' @export
-#' @param rval What to return
+#' @param rval what to return.
 #' @return A vector of logical values or distances equal to the number of points
 #'   in x or the \code{mesh3d} object returned by \code{Rvcg::vcgClost}.
 #' @rdname pointsinside
@@ -332,5 +329,5 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3
     surf=as.mesh3d(surf, ...)
   }
   rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
-  switch(rval, logical=rmesh$quality<0, distance=rmesh$quality, mesh3d=rmesh)
+  switch(rval, logical=rmesh$quality>0, distance=rmesh$quality, mesh3d=rmesh)
 }
