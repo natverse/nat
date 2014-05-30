@@ -83,6 +83,8 @@ test_that("use as.seglist with neurons",{
   expect_equal(as.seglist(n, all=TRUE), full_seg_list)
   expect_equal(as.seglist(n, all=TRUE, flatten = TRUE), full_seg_list_flat)
   
+  
+  
   g2=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(2:4,6,7,9))
   sl2=seglist(c(1,3,2,4),c(4,5),c(4,6))
   n2=as.neuron2(g2, origin=2)
@@ -117,8 +119,11 @@ test_that("we can plot dotprops in 3D", {
   expect_more_than(plottedSegments, 0)
 })
 
+context("neuron seglengths/resampling")
+
 test_that("we can calculate seglengths of neuron", {
   expect_equal(seglengths(testn), c(2, 2, 1))
   expect_equal(seglengths(testn, all=TRUE), c(2, 2, 1))
+  expect_equal(seglengths(testn, all=TRUE, flatten=FALSE), list(c(2, 2, 1)))
   expect_equal(seglength(matrix(1:3,ncol=3)), 0)
 })

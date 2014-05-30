@@ -3,13 +3,16 @@
 \alias{seglengths}
 \title{Calculate length of all segments in neuron}
 \usage{
-seglengths(x, all = FALSE)
+seglengths(x, all = FALSE, flatten = TRUE)
 }
 \arguments{
   \item{x}{A neuron}
 
   \item{all}{Whether to calculate lengths for all segments
   when there are multiple subtrees (default: \code{FALSE})}
+
+  \item{flatten}{Whether to flatten the lists of lists into
+  a single list when \code{all=TRUE}}
 }
 \value{
 A vector of lengths for each segment.
@@ -23,5 +26,8 @@ containing only one point will have 0 length.
 }
 \examples{
 summary(seglengths(Cell07PNs[[1]]))
+}
+\seealso{
+\code{\link{as.seglist.neuron}}
 }
 
