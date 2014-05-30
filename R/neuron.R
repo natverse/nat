@@ -416,9 +416,18 @@ seglength=function(ThisSeg){
 resample<-function(x, ...) UseMethod("resample")
 
 #' resample a neuron with a new spacing
+#' 
 #' @param stepsize The new spacing along the tracing
-#' @details \code{resample.neuron} calls seglengths to calculate the length of
-#'   each segment of the neuron before resampling.
+#' @details \code{resample.neuron} calls seglengths to calculate the length of 
+#'   each segment of the neuron before resampling. FIXME It presently has two 
+#'   deficiencies. \itemize{
+#'   
+#'   \item It does not interpolate neuron width
+#'   
+#'   \item It only handles the main subtree of a neuron, even if it has more 
+#'   than one.
+#'   
+#'   }
 #' @export
 #' @rdname resample
 #' @seealso \code{\link{seglengths}}
