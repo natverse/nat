@@ -127,3 +127,14 @@ test_that("we can calculate seglengths of neuron", {
   expect_equal(seglengths(testn, all=TRUE, flatten=FALSE), list(c(2, 2, 1)))
   expect_equal(seglength(matrix(1:3,ncol=3)), 0)
 })
+
+test_that("we can resample neurons", {
+  expect_is(resampled<-resample(testn, 1.2), 'neuron')
+  expect_equal(seglengths(resampled), seglengths(testn))
+
+  expect_is(resampled.5<-resample(testn, 0.5), 'neuron')
+  expect_equal(seglengths(resampled.5), seglengths(testn))
+
+  expect_is(resampled1<-resample(testn, 1), 'neuron')
+  expect_equal(seglengths(resampled1), seglengths(testn))
+})
