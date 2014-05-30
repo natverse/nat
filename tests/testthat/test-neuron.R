@@ -79,8 +79,18 @@ test_that("use as.seglist with neurons",{
   full_seg_list=list(seglist(c(1,2,3)), seglist(c(8,9,10,11,12)), 
                      seglist(c(4,5,6,7)))
   full_seg_list_flat=seglist(c(1,2,3), c(8,9,10,11,12), c(4,5,6,7))
+  expect_equal(as.seglist(n, all=FALSE), full_seg_list[[1]])
   expect_equal(as.seglist(n, all=TRUE), full_seg_list)
   expect_equal(as.seglist(n, all=TRUE, flatten = TRUE), full_seg_list_flat)
+  
+  g2=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(2:4,6,7,9))
+  sl2=seglist(c(1,3,2,4),c(4,5),c(4,6))
+  n2=as.neuron2(g2, origin=2)
+  
+  expect_false(inherits(as.seglist(n2, all=TRUE), 'seglist'),
+               info='should be a list of seglists')
+  expect_equal(as.seglist(n2, all=FALSE), sl2)
+  expect_equal(as.seglist(n2, all=TRUE, flatten=TRUE), as.seglist(n2, all=FALSE))
 })
 
 test_that("we can set NeuronName when there is no input file",{

@@ -22,8 +22,8 @@ as.seglist(x, ...)
 
   \item{all}{Whether to include segments from all subtrees}
 
-  \item{flatten}{When there are multiple subtrees, flatten
-  the lists of lists into a one-level list.}
+  \item{flatten}{When \code{all=TRUE} flatten the lists of
+  lists into a one-level list.}
 
   \item{origin}{The origin of the tree (see details)}
 
@@ -44,9 +44,11 @@ specify a neuron with 1 segment.
 \code{as.seglist.neuron} will extract the seglist from a
 neuron, optionally extracting all subtrees
 (\code{all=TRUE}) and (in this case) flattening the list
-into a single hierarchy (\code{flatten=TRUE}). NB when
-\code{all=TRUE} but \code{flatten=FALSE} the result will be
-a list of \code{seglist} objects.
+into a single hierarchy when \code{flatten=TRUE}.  n.b.
+when \code{all=TRUE} but \code{flatten=FALSE} the result
+will \emph{always} be a list of \code{seglist} objects
+(even if the neuron has only one subtree i.e. is fully
+connected).
 
 \code{as.seglist.igraph} will convert a fully connected
 acyclic ngraph or igraph object into a seglist consisting

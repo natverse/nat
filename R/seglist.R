@@ -32,18 +32,23 @@ as.seglist.list<-function(x, ...) {
 
 #' @description \code{as.seglist.neuron} will extract the seglist from a neuron,
 #'   optionally extracting all subtrees (\code{all=TRUE}) and (in this case) 
-#'   flattening the list into a single hierarchy (\code{flatten=TRUE}). NB when
-#'   \code{all=TRUE} but \code{flatten=FALSE} the result will be a list of
-#'   \code{seglist} objects.
+#'   flattening the list into a single hierarchy when \code{flatten=TRUE}.
+#'   n.b. when \code{all=TRUE} but \code{flatten=FALSE} the result will
+#'   \emph{always} be a list of \code{seglist} objects (even if the neuron has
+#'   only one subtree i.e. is fully connected).
 #' @method as.seglist neuron
 #' @export
 #' @param all Whether to include segments from all subtrees
-#' @param flatten When there are multiple subtrees, flatten the lists of lists 
-#'   into a one-level list.
+#' @param flatten When \code{all=TRUE} flatten the lists of lists into a 
+#'   one-level list.
 #' @rdname seglist
 as.seglist.neuron<-function(x, all=FALSE, flatten=FALSE, ...) {
-  if(!all || is.null(x$SubTrees)){
+  if(!all){
+    # we only want the main tree
     as.seglist(x$SegList)
+  } else if(is.null(x$SubTrees)){
+    # we want all trees but there is only one
+    if(flatten) x$SegList else list(x$SegList)
   } else {
     # nb ensure that everything has class seglist
     if(flatten) as.seglist(unlist(x$SubTrees, recursive=FALSE))
