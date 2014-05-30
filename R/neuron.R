@@ -446,7 +446,10 @@ resample.neuron<-function(x, stepsize, ...) {
       nInternalPoints=length(internalPoints)
       # if the last generated one is actually in exactly the same place 
       # as the endpoint then discard it
-      if(internalPoints[nInternalPoints]==l) internalPoints=internalPoints[-length(internalPoints)]
+      if(internalPoints[nInternalPoints]==l) {
+        internalPoints=internalPoints[-length(internalPoints)]
+        nInternalPoints=length(internalPoints)
+      }
       
       # find lengths between each original point on the segment
       diffs=diff(d[x$SegList[[i]],])
