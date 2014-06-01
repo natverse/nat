@@ -393,6 +393,8 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' @seealso \code{\link{as.seglist.neuron}}
 #' @examples
 #' summary(seglengths(Cell07PNs[[1]]))
+#' hist(unlist(seglengths(Cell07PNs[[1]], sumsegment = FALSE)),
+#'   br=20, main='histogram of edge lengths', xlab='edge lengths /microns')
 seglengths=function(x, all=FALSE, flatten=TRUE, sumsegment=TRUE){
   # convert to numeric matrix without row names
   sts<-as.seglist(x, all=all, flatten=flatten)

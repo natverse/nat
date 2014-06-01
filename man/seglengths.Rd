@@ -34,6 +34,8 @@ Segments containing only one point will have 0 length.
 }
 \examples{
 summary(seglengths(Cell07PNs[[1]]))
+hist(unlist(seglengths(Cell07PNs[[1]], sumsegment = FALSE)),
+  br=20, main='histogram of edge lengths', xlab='edge lengths /microns')
 }
 \seealso{
 \code{\link{as.seglist.neuron}}
