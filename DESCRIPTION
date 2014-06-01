@@ -34,7 +34,8 @@ Imports:
     nat.utils
 Suggests:
     Rvcg,
-    testthat
+    testthat,
+    httr
 License: GPL-3
 LazyData: yes
 Roxygen: list(wrap = TRUE)
