@@ -3,7 +3,7 @@
 \alias{seglengths}
 \title{Calculate length of all segments in neuron}
 \usage{
-seglengths(x, all = FALSE, flatten = TRUE)
+seglengths(x, all = FALSE, flatten = TRUE, sumsegment = TRUE)
 }
 \arguments{
   \item{x}{A neuron}
@@ -13,16 +13,24 @@ seglengths(x, all = FALSE, flatten = TRUE)
 
   \item{flatten}{Whether to flatten the lists of lists into
   a single list when \code{all=TRUE}}
+
+  \item{sumsegment}{Whether to return the length of each
+  segment (when {sumsegment=TRUE}, the default) or a list
+  of vectors of lengths of each individual edge in the
+  segment.}
 }
 \value{
-A vector of lengths for each segment.
+A \code{vector} of lengths for each segment or when
+\code{sumsegment=FALSE} a \code{list} of vectors
 }
 \description{
 Calculate length of all segments in neuron
 }
 \details{
-Only segments in x$SegList will be calculated. Segments
-containing only one point will have 0 length.
+A segment is an ubranched portion of neurite consisting of
+at least one vertex joined by edges.Only segments in
+x$SegList will be calculated unless \code{all=TRUE}.
+Segments containing only one point will have 0 length.
 }
 \examples{
 summary(seglengths(Cell07PNs[[1]]))

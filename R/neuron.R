@@ -378,26 +378,35 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' @param x A neuron
 #' @param all Whether to calculate lengths for all segments when there are 
 #'   multiple subtrees (default: \code{FALSE})
-#' @param flatten Whether to flatten the lists of lists into a single list when
+#' @param flatten Whether to flatten the lists of lists into a single list when 
 #'   \code{all=TRUE}
-#' @details Only segments in x$SegList will be calculated. Segments containing 
-#'   only one point will have 0 length.
-#' @return A vector of lengths for each segment.
+#' @param sumsegment Whether to return the length of each segment (when 
+#'   {sumsegment=TRUE}, the default) or a list of vectors of lengths of each
+#'   individual edge in the segment.
+#' @details A segment is an ubranched portion of neurite consisting of at least 
+#'   one vertex joined by edges.Only segments in x$SegList will be calculated 
+#'   unless \code{all=TRUE}. Segments containing only one point will have 0 
+#'   length.
+#' @return A \code{vector} of lengths for each segment or when 
+#'   \code{sumsegment=FALSE} a \code{list} of vectors
 #' @export
 #' @seealso \code{\link{as.seglist.neuron}}
 #' @examples
 #' summary(seglengths(Cell07PNs[[1]]))
-seglengths=function(x, all=FALSE, flatten=TRUE){
+seglengths=function(x, all=FALSE, flatten=TRUE, sumsegment=TRUE){
   # convert to numeric matrix without row names
   sts<-as.seglist(x, all=all, flatten=flatten)
   d=data.matrix(x$d[, c("X", "Y", "Z")])
   if(all && !flatten) {
-    lapply(sts, function(st) sapply(st, function(s) seglength(d[s, ])))
-  } else sapply(sts, function(s) seglength(d[s, ]))
+    lapply(sts, function(st) sapply(st, 
+                                    function(s) seglength(d[s, ], sum=sumsegment),
+                                    simplify=sumsegment, USE.NAMES = FALSE ))
+  } else sapply(sts, function(s) seglength(d[s, ], sum=sumsegment),
+                simplify=sumsegment, USE.NAMES = FALSE)
 }
 
 # Calculate length of single segment in neuron
-seglength=function(ThisSeg){
+seglength=function(ThisSeg, sum=TRUE){
   #ThisSeg is an array of x,y and z data points
   #In order to calculate the length
   #Need to find dx,dy,dz
@@ -405,8 +414,8 @@ seglength=function(ThisSeg){
   #Then sum over the path
   if(nrow(ThisSeg)==1) return(0)
   ds=diff(ThisSeg)
-  Squared.ds<-ds*ds
-  sum(sqrt(rowSums(Squared.ds)))
+  edgelengths=sqrt(rowSums(ds*ds))
+  if(sum) sum(edgelengths) else unname(edgelengths)
 }
 
 #' Resample an object with a new spacing

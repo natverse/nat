@@ -126,6 +126,17 @@ test_that("we can calculate seglengths of neuron", {
   expect_equal(seglengths(testn, all=TRUE), c(2, 2, 1))
   expect_equal(seglengths(testn, all=TRUE, flatten=FALSE), list(c(2, 2, 1)))
   expect_equal(seglength(matrix(1:3,ncol=3)), 0)
+  
+  # lengths of each sedge
+  expect_equal(seglengths(testn, sumsegment = FALSE, all=TRUE, flatten = FALSE),
+               list(list(c(1, 1), c(1, 1), 1)))  
+  
+  # single segment neuron
+  n=as.neuron(data.frame(PointNo=1:5,Label=2,
+                   X=c(1:5),Y=c(rep(1,5)),Z=0,W=NA,
+                   Parent=c(-1,1:4)))
+  expect_equal(seglengths(n), 4)
+  expect_equal(seglengths(n, sumsegment = FALSE), list(c(1,1,1,1)))
 })
 
 test_that("we can resample neurons", {
