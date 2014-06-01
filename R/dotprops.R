@@ -147,10 +147,13 @@ dotprops.neuronlist<-function(x, ...) {
 
 #' @export
 #' @method dotprops neuron
+#' @param resample When finite, a new length to which all segmented edges will
+#'   be resampled. See \code{\link{resample.neuron}}.
 #' @rdname dotprops
-dotprops.neuron<-function(x, Labels=NULL, ...) {
+dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
+  if(is.finite(resample)) x=resample(x, stepsize = resample)
   dotprops(xyzmatrix(x), Labels=Labels, ...)
 }
 

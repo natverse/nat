@@ -25,7 +25,7 @@ dotprops(x, ...)
 
 \method{dotprops}{neuronlist}(x, ...)
 
-\method{dotprops}{neuron}(x, Labels = NULL, ...)
+\method{dotprops}{neuron}(x, Labels = NULL, resample = NA, ...)
 
 \method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
 }
@@ -33,6 +33,10 @@ dotprops(x, ...)
   \item{x}{Object to be tested/converted}
 
   \item{...}{Additional arguments passed to methods}
+
+  \item{resample}{When finite, a new length to which all
+  segmented edges will be resampled. See
+  \code{\link{resample.neuron}}.}
 
   \item{k}{Number of nearest neighbours to use for tangent
   vector calculation (set to k=20 when passed NULL)}
