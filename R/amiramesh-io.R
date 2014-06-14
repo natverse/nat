@@ -14,6 +14,7 @@
 #'   \code{raw} vector rather than \code{integer} vector (default: FALSE).
 #' @param Verbose Print status messages
 #' @return list of named data chunks
+#' @importFrom nat.utils is.gzip
 #' @rdname amiramesh-io
 #' @export
 #' @seealso \code{\link{readBin}, \link{.Platform}}
@@ -467,14 +468,6 @@ write.zlib<-function(uncompressed, con=raw()){
   d=memCompress(uncompressed, type='gzip')
   if(is.raw(con)) return(d)
   writeBin(object=d,con=con)
-}
-
-# Simple function to test if file is gzipped
-# TODO move this to the next release of nat.utils
-is.gzip<-function(f) {
-  x=file(f)
-  on.exit(close(x))
-  isTRUE(summary(x)$class=='gzfile')
 }
 
 #' Check if file is amiramesh format

@@ -710,6 +710,7 @@ test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
 })
 
 test_that("reading gzipped binary format amiramesh neurons works",{
+  library(nat.utils)
   expect_true(is.gzip("testdata/neuron/testneuron_am3d_ascii.am.gz"))
   expect_true(is.gzip("testdata/neuron/testneuron_am3d.am.gz"))
   expect_false(is.gzip("testdata/neuron/testneuron_am3d.am"))
