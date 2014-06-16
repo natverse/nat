@@ -1,9 +1,13 @@
+nat 1.5.4
+==========
+* remove internal is.gzip function and depend on nat.utils >=0.4.2
+
 nat 1.5.3
 ==========
 * new function pointsinside to determine if points (e.g. neuron) are inside a
   closedd surface
-* resample.neuron implemented (no support for interpolating widths or multiple)
-  subtrees
+* resample.neuron implemented (no support for interpolating widths or multiple
+  subtrees)
 * dotprops.neuron can resample to a consistent segment length
 * consistent return values for as.seglist and seglengths when all subtrees are
   returned
