@@ -363,7 +363,8 @@ read.neuron.swc<-function(f, ...){
   ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
   d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",
                col.names=ColumnNames, check.names = TRUE, fill = FALSE,
-               strip.white = TRUE, blank.lines.skip = TRUE, comment.char = "#")
+               strip.white = TRUE, blank.lines.skip = TRUE, comment.char = "#",
+               colClasses=c("integer",'integer','numeric','numeric','numeric','numeric','integer'))
   # multiply by 2 to get diam which is what I work with internally
   d$W=d$W*2
   as.neuron(d, InputFileName=f, ...)
