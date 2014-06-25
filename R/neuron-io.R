@@ -452,7 +452,7 @@ write.neuron.swc<-function(x, file, ...){
   writeLines(c("# SWC format file",
                "# based on specifications at http://research.mssm.edu/cnic/swc.html"),
              con=file)
-  cat("# Created by nat::write.neuron.swc", file=file, append=TRUE)  
+  cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)  
   cat("#", colnames(df), "\n", file=file, append=TRUE)
   write.table(df, file, col.names=F, row.names=F, append=TRUE, ...)
 }
