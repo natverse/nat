@@ -127,6 +127,7 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
   } else {
     stop("Unable to read data saved in format: ",ext)
   }
+  attr(x,'file')=file
   if(SimplifyAttributes){
     coreattrs=c("BoundingBox",'origin','x','y','z')
     mostattributes(x)<-attributes(x)[coreattrs]
