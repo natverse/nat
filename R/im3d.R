@@ -124,7 +124,7 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
     read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else if(ext%in%c(".am",'.amiramesh')){
+  } else if(ext%in%c(".am",'.amiramesh') || is.amiramesh(file)){
     if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
     else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else if(is.vaa3draw(file)){
