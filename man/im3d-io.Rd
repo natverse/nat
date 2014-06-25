@@ -47,7 +47,8 @@ are the locations of samples in the x, y and z image axes
 }
 \examples{
 \dontrun{
-read.vaa3draw.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
+# read vaa3d raw file
+read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 }
 }
 \seealso{
