@@ -95,12 +95,16 @@ as.im3d.im3d <- function(x, ...) x
 #' @details Currently only nrrd and amira formats are implemented. Furthermore 
 #'   implementing a registry to allow extension to arbitrary formats remains a 
 #'   TODO item.
+#'   
+#'   The core attributes of an im3d object are \code{BoundingBox, origin, x, y ,
+#'   z} where \code{x, y, z} are the locations of samples in the x, y and z
+#'   image axes (which are assumed to be orthogonsl).
 #' @param file Character vector describing a single file
 #' @param ReadData Whether to read the data itself or return metadata only. 
 #'   Default: TRUE
 #' @param SimplifyAttributes When \code{TRUE} leave only core im3d attributes.
-#' @param ReadByteAsRaw Whether to read byte values as R \code{\link{raw}}
-#'   arrays. These occupy 1/4 memory but arithmetic is less convenient.
+#' @param ReadByteAsRaw Whether to read byte values as R \code{\link{raw}} 
+#'   arrays. These occupy 1/4 memory but arithmetic is less convenient. 
 #'   (default: FALSE)
 #' @param ... Arguments passed to methods
 #' @return For \code{read.im3d} an objecting inheriting from base \code{array} 
