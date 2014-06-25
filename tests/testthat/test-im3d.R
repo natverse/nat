@@ -17,6 +17,11 @@ test_that("we can read im3d files",{
   expect_is(d0<-read.im3d(amfile, ReadData=FALSE), 'im3d')
   expect_equivalent(dim(d0), c(154L, 154L, 87L))
   
+  amfilenoam=tempfile()
+  file.symlink(normalizePath(amfile),amfilenoam)
+  on.exit(unlink(amfilenoam))
+  expect_equal(d,read.im3d(amfilenoam))
+  
   expect_error(read.im3d("testdata/nrrd/LHMask.rhubarb"))
   
   v3drawfile1ch='testdata/v3draw/L1DS1_crop_straight_crop_ch1.v3draw'
