@@ -1,3 +1,11 @@
+nat 1.5.5
+==========
+* fix bug in reading swc files with many decimal places specific to R 3.1.0
+* fix bug in header when writing swc files [ajdm]
+* read.im3d now adds file as an attribute to output
+* read.im3d can now add amiramesh files without the standard file extension
+* doc: minor improvements to read.im3d docs and examples
+
 nat 1.5.4
 ==========
 * remove internal is.gzip function and depend on nat.utils >=0.4.2
