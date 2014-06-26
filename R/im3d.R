@@ -116,7 +116,7 @@ as.im3d.im3d <- function(x, ...) x
 #' @seealso \code{\link{read.nrrd}, \link{read.amiramesh}}
 #' @examples
 #' \dontrun{
-#' # read attriubtes of vaa3d raw file
+#' # read attributes of vaa3d raw file
 #' read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 #' }
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
