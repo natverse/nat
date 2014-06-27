@@ -488,8 +488,8 @@ write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), ...){
   # Construct subdirectory structure based on 
   ee=substitute(subdir)
   subdirs=NULL
-  if(is.call(ee) && !is.null(df)){
-    df=df[INDICES,]
+  if(is.call(ee)){
+    if(!is.null(df)) df=df[INDICES,]
     subdirs=file.path(dir, eval(ee, df, parent.frame()))
     names(subdirs)=INDICES
   }

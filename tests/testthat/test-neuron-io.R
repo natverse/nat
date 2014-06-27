@@ -831,9 +831,14 @@ test_that("write.neurons works",{
   expect_equal(with(Cell07PNs[neurons_to_write],as.character(Glomerulus)),
                basename(dirname(written_files)))
   
-  expect_is(written_files<-write.neurons(Cell07PNs, dir=td,
+  nldf=subset(Cell07PNs, neurons_to_write, rval="data.frame")
+  nl=Cell07PNs[neurons_to_write]
+  attr(nl,'df')=NULL
+  expect_is(written_files<-write.neurons(nl, dir=td,
                 INDICES=neurons_to_write,
-                subdir=file.path(Glomerulus),format='swc'),'character')
+                subdir=nldf$Glomerulus,format='swc'),'character')
   files_found=dir(td,recursive=T,pattern='swc$')
   expect_true(all(basename(written_files)%in%basename(files_found)))
+  
+  
 })
