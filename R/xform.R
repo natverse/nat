@@ -80,15 +80,26 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 }
 
 #' @method xform neuronlist
+#' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
+#'   that specify a subset of the members of \code{x} to be transformed.
 #' @export
 #' @rdname xform
-xform.neuronlist<-function(x, reg, ...){
+xform.neuronlist<-function(x, reg, subset=NULL, ...){
   if(length(reg)>1) stop("xform.neuronlist is currently only able to apply",
                          " a single registration to multiple neurons")
   # TODO if x is long there would be some performance benefits in chunking
   # all points from multiple neurons together. I strongly suspect that doing 10
   # at once would approach a 10x speedup.
-  nlapply(x, xform, reg, ...)
+  if(is.null(subset))
+    nlapply(x, xform, reg, ...)
+  else {
+    # this ensures that we convert e.g. logical indices into NL to names
+    nn=if(is.character(subset)) subset else subset(x, subset, rval='names')
+    for(n in nn){
+      x[[n]]=xform(x[[n]], reg, ...)
+    }
+    x
+  }
 }
 
 #' Get and assign coordinates for classes containing 3d vertex data

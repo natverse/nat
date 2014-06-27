@@ -17,7 +17,7 @@ xform(x, reg, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-\method{xform}{neuronlist}(x, reg, ...)
+\method{xform}{neuronlist}(x, reg, subset = NULL, ...)
 }
 \arguments{
   \item{x}{an object to transform}
@@ -34,6 +34,10 @@ xform(x, reg, ...)
 
   \item{FallBackToAffine}{Whether to use an affine
   transform when a cmtk warping transformation fails.}
+
+  \item{subset}{For \code{xform.neuronlist} indices
+  (character/logical/integer) that specify a subset of the
+  members of \code{x} to be transformed.}
 }
 \description{
 \code{xform} is designed to operate on a variety of data
