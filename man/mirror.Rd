@@ -10,7 +10,7 @@ mirror(x, ...)
 \method{mirror}{default}(x, mirrorAxisSize, mirrorAxis = c("X", "Y", "Z"),
   warpfile = NULL, transform = c("warp", "affine", "flip"), ...)
 
-\method{mirror}{neuronlist}(x, ...)
+\method{mirror}{neuronlist}(x, subset = NULL, ...)
 }
 \arguments{
   \item{x}{Object with 3d points (with named cols X,Y,Z)}
@@ -31,6 +31,10 @@ mirror(x, ...)
   \item{transform}{whether to use warp (default) or affine
   component of registration, or simply flip about midplane
   of axis.}
+
+  \item{subset}{For \code{mirror.neuronlist} indices
+  (character/logical/integer) that specify a subset of the
+  members of \code{x} to be transformed.}
 }
 \value{
 Object with transformed points

@@ -62,8 +62,9 @@ test_that("we can mirror a neuron list", {
   expect_equal(mirror(mirror(k5,mirrorAxisSize=0),mirrorAxisSize=0),k5)
   
   # some members of a list only
-  expect_equal(mirror(kcs20,subset=1:5,mirrorAxisSize=0)[1:5],
+  expect_equal((m<-mirror(kcs20,subset=1:5,mirrorAxisSize=0))[1:5],
                mirror(k5,mirrorAxisSize=0))
+  expect_equal(m[6:10],kcs20[6:10])
 })
 
 context('xyzmatrix')

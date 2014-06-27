@@ -257,8 +257,20 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
 }
 #' @method mirror neuronlist
+#' @param subset For \code{mirror.neuronlist} indices
+#'   (character/logical/integer) that specify a subset of the members of
+#'   \code{x} to be transformed.
 #' @export
 #' @rdname mirror
-mirror.neuronlist<-function(x, ...){
-  nlapply(x,mirror,...)
+mirror.neuronlist<-function(x, subset=NULL, ...){
+  if(is.null(subset))
+    nlapply(x, mirror, ...)
+  else {
+    # this ensures that we convert e.g. logical indices into NL to names
+    nn=if(is.character(subset)) subset else subset(x, subset, rval='names')
+    for(n in nn){
+      x[[n]]=mirror(x[[n]], ...)
+    }
+    x
+  }
 }
