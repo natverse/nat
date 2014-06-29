@@ -808,7 +808,7 @@ test_that("we can write neuron to amira hxlineset file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
-test_that("we can write neuron to unknown format",{
+test_that("we get an error when writing neuron to unknown format",{
   expect_error(write.neuron(Cell07PNs[[1]], dir=td, format='rhubarb'))
 })
 
@@ -836,9 +836,8 @@ test_that("write.neurons works",{
   attr(nl,'df')=NULL
   expect_is(written_files<-write.neurons(nl, dir=td,
                 INDICES=neurons_to_write,
-                subdir=nldf$Glomerulus,format='swc'),'character')
+                subdir=nldf$Glomerulus,format='swc'),'character',
+            info='use variable from calling environment to specify subdir')
   files_found=dir(td,recursive=T,pattern='swc$')
   expect_true(all(basename(written_files)%in%basename(files_found)))
-  
-  
 })
