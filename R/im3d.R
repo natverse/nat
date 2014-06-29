@@ -121,6 +121,7 @@ as.im3d.im3d <- function(x, ...) x
 #' }
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
                     ReadByteAsRaw=FALSE, ...){
+  if(!file.exists(file)) stop("file: ", file, " doesn't exist!")
   ext=sub(".*(\\.[^.])","\\1",file)
   x=if(ext%in%c('.nrrd','.nhdr')){
     read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
