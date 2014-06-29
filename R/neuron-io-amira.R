@@ -249,9 +249,15 @@ write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
   cat("}\n\n",file=fc)
   sectionNumbers=c(Coordinates=1,LineIdx=2)
   cat("Vertices { float[3] Coordinates } = @1\n",file=fc)
+
   if(WriteRadius){
-    cat("Vertices { float Data } = @2\n",file=fc)
-    sectionNumbers=c(Coordinates=1,Data=2,LineIdx=3)
+    if(any(is.na(x$d$W))) {
+      warning("Width has NAs. Omitting invalid width data from file:", file)
+      WriteRadius=FALSE
+    } else {
+      cat("Vertices { float Data } = @2\n",file=fc)
+      sectionNumbers=c(Coordinates=1,Data=2,LineIdx=3)
+    }
   }
   cat("Lines { int LineIdx } = @",sectionNumbers['LineIdx'],"\n",sep="",file=fc)
   if(WriteAllSubTrees) {
@@ -274,7 +280,7 @@ write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
   }
   
   # Write the segment information
-  cat("\n@",sectionNumbers['LineIdx']," #",nLinePoints,"line segments\n",sep="",file=fc)
+  cat("\n@",sectionNumbers['LineIdx']," #",nLinePoints," line segments\n",sep="",file=fc)
   # nb have to -1 from each point because amira is 0 indexed
   # AND add -1 to each segment as a terminator
   lapply(SegList,function(x) cat(x-1,"-1 \n",file=fc))

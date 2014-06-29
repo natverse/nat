@@ -806,6 +806,9 @@ test_that("we can write neuron to amira hxlineset file",{
   expect_equal(f<-write.neuron(y, dir=td, format='hxlineset'),
                file.path(td,'EBH11R.am'))
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+  
+  y$d$W[2]=NA
+  expect_warning(write.neuron(y, file=file.path(td,'EBH11R_narad.am'), format='hxlineset'))
 })
 
 test_that("we get an error when writing neuron to unknown format",{
