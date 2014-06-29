@@ -279,3 +279,26 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     
   invisible(PlottedPoints)
 }
+
+
+#' Plot a bounding box in 3D
+#' 
+#' @param x the \code{\link{boundingbox}} object to plot.
+#' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
+#' @return A list of RGL object IDs.
+#' 
+#' @method plot3d boundingbox
+#' @export
+plot3d.boundingbox <- function(x, ...) {
+  pts <- matrix(c(
+  c(x[1, 1], x[1, 2], x[1, 3]),
+  c(x[1, 1], x[1, 2], x[2, 3]),
+  c(x[1, 1], x[2, 2], x[1, 3]),
+  c(x[1, 1], x[2, 2], x[2, 3]),
+  c(x[2, 1], x[1, 2], x[1, 3]),
+  c(x[2, 1], x[1, 2], x[2, 3]),
+  c(x[2, 1], x[2, 2], x[1, 3]),
+  c(x[2, 1], x[2, 2], x[2, 3])
+  ), ncol=3, byrow=TRUE)
+  segments3d(pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ], ...)
+}
