@@ -60,6 +60,14 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   
   transformtype=match.arg(transformtype)
   direction=match.arg(direction,c("inverse",'forward'),several.ok=TRUE)
+  
+  # check for NAs
+  nas=is.na(points[,1])
+  if(sum(nas)) {
+    origpoints=points
+    points=points[!nas, , drop=FALSE]
+  }
+  
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile), add = TRUE)
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
@@ -84,8 +92,14 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
       pointst[naPoints, ] = affpoints
     }
   }
-  dimnames(pointst)=dimnames(points)
-  pointst
+  
+  if(sum(nas)){
+    origpoints[!nas, ]=pointst
+    origpoints
+  } else {
+    dimnames(pointst)=dimnames(points)
+    pointst
+  }
 }
 
 #' @method xformpoints default

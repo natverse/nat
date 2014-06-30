@@ -38,7 +38,11 @@ test_that("xformpoints.cmtkreg works ok", {
 
   # Check that xformpoints and streamxform give the same output
   expect_equal(xformpoints(creg2, points=xyz), streamxformpoints)
-
+  
+  xyz2 <- rbind(xyz, c(NA, NA, NA))
+  streamxformpoints2 <- rbind(streamxformpoints, c(NA, NA, NA))
+  expect_equal(xformpoints(creg2, points=xyz2), streamxformpoints2)
+  
   # Check that concatenated transformations work as expected
   autoConcat <- xformpoints(c(creg2, creg3), direction=c('forward', 'inverse'), points=xyz)
   manualConcat <- xformpoints(creg3, direction='inverse', points=xformpoints(creg2, direction='forward', points=xyz))
