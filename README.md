@@ -58,7 +58,8 @@ A larger data set, 300 olfactory projection neurons from [Grosjean et al 2011](h
 If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately – see section *External Dependencies* below. 
 
 ## Installation
-As of v1.0 there is a released version on CRAN.
+As of v1.0 there is a released version on CRAN. This is normally updated only
+every few months.
 
 ```r
 install.packages("nat")
@@ -67,36 +68,33 @@ install.packages("nat")
 It you wish to run the package tests, it is necessary to install with 
 `dependencies=TRUE`.
 
-### Released versions
-Interim **source code** packages for released versions are available from our 
-lab repository:
+### Development version
+**nat** remains under quite active development, so you may wish to install the
+development version directly from github. The recommended way to do this is to
+install Hadley Wickham's invaluable [devtools](http://CRAN.R-project.org/package=devtools)
+package (if you have not already done so) and then use that to install nat.
 
 ```r
-# when binary packages are preferred (e.g. mac/windows)
-install.packages("nat",repos=c("http://jefferislab.org/R",getOption("repos")),
-                 type="both")
-# when source packages are the default (e.g. linux)
-install.packages("nat",repos=c("http://jefferislab.org/R",getOption("repos")))
+# install devtools if required
+install.packages("devtools")
+# then install nat
+devtools::install_github("jefferis/nat")
 ```
 
-Note the specification of both the jefferislab.org repository and the default 
-CRAN repository in order to ensure that package dependencies are installed from 
-CRAN and the main package is installed from our repository. Note also that it is
-necessary to specify `type="both"` on platforms where binary packages are the
-norm (Windows/MacOS X) since **nat** is only provided as a source package on our
-repository.
-
-### Bleeding Edge
-You can, however, download the [tar ball](https://github.com/jefferis/nat/tarball/master),
-and run `R CMD INSTALL` on it, or use the **devtools** package to install the development version:
+**nat** deveolpemnt includes continuous integration using [travis](http://travis-ci.org/jefferis/nat)
+so the master branch is considered very stable. However, you can install
+the latest point release version as follows:
 
 ```r
-# install.packages("devtools")
-devtools::install_github("nat", "jefferis")
+devtools::install_github("jefferis/nat",ref="release")
 ```
+if you want to have the latest confirmed stable version. The same syntax can
+be used to install any arbitrary version that you want from github. See `?install_github`
+for details.
 
-Note: Windows users need [Rtools](http://www.murdoch-sutherland.com/Rtools/) and
-[devtools](http://CRAN.R-project.org/package=devtools) to install this way.
+Note: Windows users need [Rtools](http://www.murdoch-sutherland.com/Rtools/) to
+install in this way, but devtools should offer to install this for you if you
+do not already have it.
 
 ## External Dependencies
 **nat** is self sufficient for core functionality, but the transformation of 3d
