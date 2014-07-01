@@ -48,6 +48,15 @@ A larger data set, 300 olfactory projection neurons from [Grosjean et al 2011](h
     ?subset.neuronlist
 
 # Details
+## Prerequisites
+**nat** is an R package and therefore runs on Mac/Linux/Windows. The only pre-requisite for most functionality is a recent version of R (>=3.1.0 recommended).
+
+* http://www.r-project.org
+
+3D visualisation is provided by the rgl package based on OpenGL. On MacOSX you must have a copy of Xquartz, the X11 window manager installed. This is no longer a default install since MacOSX 10.8, but the OS should offer to it install it for you if something tries to use it. Altervatively you can get it directly from https://xquartz.macosforge.org/landing/
+
+If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately – see section *External Dependencies* below. 
+
 ## Installation
 As of v1.0 there is a released version on CRAN.
 
