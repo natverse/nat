@@ -5,7 +5,7 @@
 expression}
 \usage{
 \method{plot}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
-  add = NULL, ...)
+  add = NULL, ..., SUBSTITUTE = TRUE)
 }
 \arguments{
   \item{x}{a neuron list or, for \code{plot3d.character}, a
@@ -32,6 +32,11 @@ expression}
 
   \item{colpal}{A vector of colours or a function that
   generates colours}
+
+  \item{SUBSTITUTE}{Whether to \code{substitute} the
+  expressions passed as arguments \code{subset} and
+  \code{col}. Default: \code{TRUE}. For expert use only,
+  when calling from another function.}
 }
 \value{
 list of values of \code{plot} with subsetted dataframe as

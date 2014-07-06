@@ -85,3 +85,12 @@ test_that("plot neuronlist contents",{
   expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
   options(op)
 })
+
+test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
+  f=function(...) {
+    rhubarb='pink'
+    plot3d("EBH20L", col=substitute(rhubarb), db=Cell07PNs, ...)
+  }
+  expect_error(f())
+  expect_is(f(SUBSTITUTE = FALSE), 'list')
+})

@@ -175,9 +175,9 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #'   and colpal is a function then it will be used to generate colours with the 
 #'   same number of levels as are used in col.
 #'   
-#'   WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist}
+#'   WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist} 
 #'   but remains \code{TRUE} by default when plotting single neurons with 
-#'   \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots
+#'   \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots 
 #'   with multiple neurons rather busy.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
@@ -194,6 +194,9 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #' @param WithNodes Whether to plot points for end/branch points. Default: 
 #'   \code{FALSE}.
 #' @param ... options passed on to plot3d (such as colours, line width etc)
+#' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as 
+#'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
+#'   use only, when calling from another function.
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
 #'   \code{'df'}
 #' @export
@@ -214,19 +217,19 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #' plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
 #' plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,WithNodes=FALSE,...){
+plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,WithNodes=FALSE,..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
     # avoid tricky issues with parent.frame etc, but we can then leave 
     # subset.neuronlist to do the rest of the work
-    e <- substitute(subset)
+    e <- if(SUBSTITUTE) substitute(subset) else subset
     r <- eval(e, attr(x,'df'), parent.frame())
-    x <- subset.neuronlist(x, r, parent.generations=1)
+    x <- subset.neuronlist(x, r)
   }
   
   # Handle Colours
-  col.sub <- substitute(col)
+  col.sub <- if(SUBSTITUTE) substitute(col) else col
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
@@ -300,19 +303,19 @@ plot3d.character<-function(x, db, ...) {
 #' plot(Cell07PNs[1:4], ylim=c(140, 85))
 #' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
 #'   ylim=c(140,75), WithNodes=FALSE)
-plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ...){
+plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
     # avoid tricky issues with parent.frame etc, but we can then leave 
     # subset.neuronlist to do the rest of the work
-    e <- substitute(subset)
+    e <- if(SUBSTITUTE) substitute(subset) else subset
     r <- eval(e, attr(x,'df'), parent.frame())
-    x <- subset.neuronlist(x, r, parent.generations=1)
+    x <- subset.neuronlist(x, r)
   }
   
   # Handle Colours
-  col.sub <- substitute(col)
+  col.sub <- if(SUBSTITUTE) substitute(col) else col
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
@@ -524,7 +527,7 @@ subset.neuronlist<-function(x, subset, filterfun,
     filter_results=rep(NA, length(r))
     # use for loop because neuronlists are normally large but not long
     for(i in seq_along(r)){
-      tf=try(filterfun(x[[r[i]]]))
+      tf=try(filterfun(x[[r[i]]], ...))
       if(!inherits(tf, 'try-error')) filter_results[i]=tf
     }
     r=r[filter_results]
