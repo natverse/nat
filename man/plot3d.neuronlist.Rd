@@ -6,7 +6,7 @@
 expression}
 \usage{
 \method{plot3d}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
-  skipRedraw = 200, WithNodes = FALSE, ...)
+  skipRedraw = 200, WithNodes = FALSE, ..., SUBSTITUTE = TRUE)
 
 \method{plot3d}{character}(x, db, ...)
 }
@@ -39,6 +39,11 @@ expression}
 
   \item{...}{options passed on to plot3d (such as colours,
   line width etc)}
+
+  \item{SUBSTITUTE}{Whether to \code{substitute} the
+  expressions passed as arguments \code{subset} and
+  \code{col}. Default: \code{TRUE}. For expert use only,
+  when calling from another function.}
 
   \item{db}{A neuronlist to use as the source of objects to
   plot. If missing, defaults to neuronlist specified by
