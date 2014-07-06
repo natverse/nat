@@ -1,3 +1,13 @@
+nat 1.5.6
+=========
+* give mirror/xform.neuronlist subset arguments
+* add plot3d.boundingbox
+* give plot(3d).neuronlist a SUBSTITUTE argument that can be used to control
+  non-stadard evaluation. This is useful for people who wish to incoroporate
+  these funcitons inside other user-defined functions. See ?subset.neuronlist
+  for details.
+* fix: write.neurons into subdirs when df=NULL
+
 nat 1.5.5
 ==========
 * fix bug in reading swc files with many decimal places specific to R 3.1.0
