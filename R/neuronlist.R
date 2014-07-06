@@ -303,19 +303,19 @@ plot3d.character<-function(x, db, ...) {
 #' plot(Cell07PNs[1:4], ylim=c(140, 85))
 #' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
 #'   ylim=c(140,75), WithNodes=FALSE)
-plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ...){
+plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
     # avoid tricky issues with parent.frame etc, but we can then leave 
     # subset.neuronlist to do the rest of the work
-    e <- substitute(subset)
+    e <- if(SUBSTITUTE) substitute(subset) else subset
     r <- eval(e, attr(x,'df'), parent.frame())
     x <- subset.neuronlist(x, r, parent.generations=1)
   }
   
   # Handle Colours
-  col.sub <- substitute(col)
+  col.sub <- if(SUBSTITUTE) substitute(col) else col
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
