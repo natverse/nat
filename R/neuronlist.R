@@ -225,7 +225,7 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,With
     # subset.neuronlist to do the rest of the work
     e <- if(SUBSTITUTE) substitute(subset) else subset
     r <- eval(e, attr(x,'df'), parent.frame())
-    x <- subset.neuronlist(x, r, parent.generations=1)
+    x <- subset.neuronlist(x, r)
   }
   
   # Handle Colours
@@ -311,7 +311,7 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ..., SU
     # subset.neuronlist to do the rest of the work
     e <- if(SUBSTITUTE) substitute(subset) else subset
     r <- eval(e, attr(x,'df'), parent.frame())
-    x <- subset.neuronlist(x, r, parent.generations=1)
+    x <- subset.neuronlist(x, r)
   }
   
   # Handle Colours
