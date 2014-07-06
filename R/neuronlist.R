@@ -527,7 +527,7 @@ subset.neuronlist<-function(x, subset, filterfun,
     filter_results=rep(NA, length(r))
     # use for loop because neuronlists are normally large but not long
     for(i in seq_along(r)){
-      tf=try(filterfun(x[[r[i]]]))
+      tf=try(filterfun(x[[r[i]]], ...))
       if(!inherits(tf, 'try-error')) filter_results[i]=tf
     }
     r=r[filter_results]
