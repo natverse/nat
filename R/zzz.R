@@ -25,3 +25,6 @@
 
 # will store information about formats that we can read
 .fileformats <- new.env()
+
+# Will store stack of plotted rgl objects, ready for popping
+.plotted3d <- new.env()
