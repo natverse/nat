@@ -184,8 +184,13 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #'   appropriate), the values are used to plot cell bodies. For neurons the 
 #'   values are passed to \code{plot3d.neuron} for neurons. In contrast 
 #'   \code{dotprops} objects still need special handling. There must be columns 
-#'   called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then
+#'   called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then 
 #'   used directly by code in \code{plot3d.neuronlist}.
+#'   
+#'   Whenever plot3d.neuronlist is called, it will add an entry to an 
+#'   environment \code{.plotted3d} in \code{nat} that stores the ids of all the
+#'   plotted shapes (neurons, cell bodies) so that they can then be removed by a
+#'   call to \code{npop3d}.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See 
@@ -261,6 +266,7 @@ plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
     if(is.logical(soma)) soma=2
     rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
   }
+  assign(".last.plot3d", rval, envir=.plotted3d)
   df$col=cols
   attr(rval,'df')=df
   invisible(rval)
