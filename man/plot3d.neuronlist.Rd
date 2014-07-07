@@ -6,7 +6,8 @@
 expression}
 \usage{
 \method{plot3d}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
-  skipRedraw = 200, WithNodes = FALSE, ..., SUBSTITUTE = TRUE)
+  skipRedraw = 200, WithNodes = FALSE, soma = FALSE, ...,
+  SUBSTITUTE = TRUE)
 
 \method{plot3d}{character}(x, db, ...)
 }
@@ -48,6 +49,11 @@ expression}
   \item{db}{A neuronlist to use as the source of objects to
   plot. If missing, defaults to neuronlist specified by
   options('nat.default.neuronlist')}
+
+  \item{soma}{Whether to plot a sphere at neuron's origin
+  representing the soma. Either a logical value or a
+  numeric indicating the radius (default \code{FALSE}).
+  When \code{soma=TRUE} the radius is hard coded to 2.}
 }
 \value{
 list of values of \code{plot3d} with subsetted dataframe as
@@ -74,6 +80,15 @@ WithNodes is \code{FALSE} by default when using
 when plotting single neurons with
 \code{\link{plot3d.neuron}}. This is because the nodes
 quickly make plots with multiple neurons rather busy.
+
+When \code{soma} is \code{TRUE} or a vector of numeric
+values (recycled as appropriate), the values are used to
+plot cell bodies. For neurons the values are passed to
+\code{plot3d.neuron} for neurons. In contrast
+\code{dotprops} objects still need special handling. There
+must be columns called \code{X,Y,Z} in the data.frame
+attached to \code{x}, that are then used directly by code
+in \code{plot3d.neuronlist}.
 
 plot3d.character will check if
 options('nat.default.neuronlist') has been set and then use

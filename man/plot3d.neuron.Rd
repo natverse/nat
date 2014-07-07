@@ -36,7 +36,8 @@
 
   \item{soma}{Whether to plot a sphere at neuron's origin
   representing the soma. Either a logical value or a
-  numeric indicating the radius.}
+  numeric indicating the radius (default \code{FALSE}).
+  When \code{soma=TRUE} the radius is hard coded to 2.}
 
   \item{...}{Additional arguments passed to rgl::lines3d}
 }

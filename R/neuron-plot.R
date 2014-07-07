@@ -14,8 +14,9 @@
 #' @param add Whether to add the neuron to existing rgl plot rather than 
 #'   clearing the scene (default TRUE)
 #' @param col Colour specification (see rgl materials)
-#' @param soma Whether to plot a sphere at neuron's origin representing the
-#'   soma. Either a logical value or a numeric indicating the radius.
+#' @param soma Whether to plot a sphere at neuron's origin representing the 
+#'   soma. Either a logical value or a numeric indicating the radius (default 
+#'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
 #' @param ... Additional arguments passed to rgl::lines3d
 #' @return list of rgl plotting ids (invisibly) separated into 
 #'   \code{lines,points,texts} according to plot element. See 

@@ -179,6 +179,13 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #'   but remains \code{TRUE} by default when plotting single neurons with 
 #'   \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots 
 #'   with multiple neurons rather busy.
+#'   
+#'   When \code{soma} is \code{TRUE} or a vector of numeric values (recycled as 
+#'   appropriate), the values are used to plot cell bodies. For neurons the 
+#'   values are passed to \code{plot3d.neuron} for neurons. In contrast 
+#'   \code{dotprops} objects still need special handling. There must be columns 
+#'   called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then
+#'   used directly by code in \code{plot3d.neuronlist}.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See 
@@ -197,6 +204,7 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as 
 #'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
 #'   use only, when calling from another function.
+#' @inheritParams plot3d.neuron
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
 #'   \code{'df'}
 #' @export
@@ -217,7 +225,8 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
 #' plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
 #' plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,WithNodes=FALSE,..., SUBSTITUTE=TRUE){
+plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
+                            WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -241,12 +250,16 @@ plot3d.neuronlist<-function(x,subset,col=NULL,colpal=rainbow,skipRedraw=200,With
     on.exit(par3d(op))
   }
   
-  rval=mapply(plot3d,x,col=cols,...,MoreArgs = list(WithNodes=WithNodes))
+  rval=mapply(plot3d,x,col=cols,soma=soma,...,MoreArgs = list(WithNodes=WithNodes))
   df=attr(x,'df')
   if(is.null(df)) {
     keys=names(x)
     if(is.null(keys)) keys=seq_along(x)
     df=data.frame(key=keys,stringsAsFactors=FALSE)
+  } else if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
+               all(c("X","Y","Z") %in% colnames(df))){
+    if(is.logical(soma)) soma=2
+    rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
   }
   df$col=cols
   attr(rval,'df')=df
