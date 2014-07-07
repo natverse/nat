@@ -90,6 +90,12 @@ must be columns called \code{X,Y,Z} in the data.frame
 attached to \code{x}, that are then used directly by code
 in \code{plot3d.neuronlist}.
 
+Whenever plot3d.neuronlist is called, it will add an entry
+to an environment \code{.plotted3d} in \code{nat} that
+stores the ids of all the plotted shapes (neurons, cell
+bodies) so that they can then be removed by a call to
+\code{npop3d}.
+
 plot3d.character will check if
 options('nat.default.neuronlist') has been set and then use
 x as an identifier to find a neuron in that neuronlist.
