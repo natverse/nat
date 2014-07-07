@@ -1,3 +1,10 @@
+nat 1.5.7
+=========
+* teach plot3d.neuronlist and friends to plot soma locations.
+* add npop3d function to remove last plotted neurons 
+  (identical to flycircuit::pop3dfc, except that it works with any neurons
+  plotted by plot3d.neuronlist, rather than only those plotted by plot3dfc)
+
 nat 1.5.6
 =========
 * give mirror/xform.neuronlist subset arguments
