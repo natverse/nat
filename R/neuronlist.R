@@ -120,11 +120,11 @@ c.neuronlist<-function(..., recursive = FALSE){
 #'   
 #'   When \code{OmitFailures} is not \code{NA}, \code{FUN} will be wrapped in a 
 #'   call to \code{try} to ensure that failure for any single neuron does not 
-#'   abort the nlapply call. When \code{OmitFailures=TRUE} the resultant 
+#'   abort the nlapply/nmapply call. When \code{OmitFailures=TRUE} the resultant
 #'   neuronlist will be subsetted down to return values for which \code{FUN} 
 #'   evaluated successfully. When \code{OmitFailures=FALSE}, "try-error" objects
-#'   will be left in place. In either of the last 2 cases error messages will
-#'   not be printed because the call is wrapped as \code{try(expr,
+#'   will be left in place. In either of the last 2 cases error messages will 
+#'   not be printed because the call is wrapped as \code{try(expr, 
 #'   silent=TRUE)}.
 #'   
 #' @param X A neuronlist
@@ -177,7 +177,8 @@ nlapply<-function (X, FUN, ..., OmitFailures=NA){
 #' @rdname nlapply
 #' @seealso \code{\link{mapply}}
 #' @export
-nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE){
+nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
+                  USE.NAMES = TRUE, OmitFailures=NA){
   if(missing(...))
     stop("First argument in ... must be a neuronlist!")
   
@@ -187,8 +188,14 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X)
   else c("neuronlist",'list')
   
-  structure(mapply(FUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
-                   USE.NAMES = USE.NAMES), class=cl, df=attr(X, 'df'))
+  TFUN = if(is.na(OmitFailures)) FUN else function(...) try(FUN(...), silent=TRUE)
+  rval=structure(mapply(TFUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
+                        USE.NAMES = USE.NAMES), class=cl, df=attr(X, 'df'))
+  if(isTRUE(OmitFailures)){
+    failures=sapply(rval, inherits, 'try-error')
+    if(any(failures)) rval=rval[!failures]
+  }
+  rval
 }
 
 #' 3D plots of the elements in a neuronlist, optionally using a subset 

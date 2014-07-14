@@ -87,6 +87,15 @@ test_that("nmapply can vectorise more than one argument",{
                xyzflip[[3]])
 })
 
+test_that("nmapply can omit failures",{
+  kcs3=kcs20[1:3]
+  
+  expect_error(nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
+                  mirrorAxisSize=c(400,20,Inf)))
+  expect_equal(length(nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
+                       mirrorAxisSize=c(400,20,Inf), OmitFailures=TRUE)), 2)
+})
+
 test_that("plot neuronlist contents",{
   nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs))
   op=options(nat.default.neuronlist="Cell07PNs")
