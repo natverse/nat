@@ -17,6 +17,8 @@ test_that("with.neuronlist / droplevels behave", {
   expect_that(nlevels(droplevels(Cell07PNs)$Glomerulus),equals(4L))
 })
 
+context("neuronlist: subset")
+
 test_that("subset.neuronlist and [] do the same thing", {
   df=attr(Cell07PNs,'df')
   expect_is(s1<-Cell07PNs[df$Glomerulus=="DA1"],"neuronlist")
@@ -65,6 +67,8 @@ test_that("subset can combine dataframe columns and global variables", {
 #                subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10)))
 })
 
+context("neuronlist: nlapply/nmapply")
+
 test_that("nlapply can omit failures",{
   kcs3=kcs20[1:3]
   kcs3[[3]]=subset(kcs3[[3]],1:4)
@@ -95,6 +99,8 @@ test_that("nmapply can omit failures",{
   expect_equal(length(nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
                        mirrorAxisSize=c(400,20,Inf), OmitFailures=TRUE)), 2)
 })
+
+context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
   nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs))
