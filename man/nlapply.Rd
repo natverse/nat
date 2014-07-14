@@ -6,7 +6,8 @@
 \usage{
 nlapply(X, FUN, ..., OmitFailures = NA)
 
-nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
+nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
+  OmitFailures = NA)
 }
 \arguments{
   \item{X}{A neuronlist}
