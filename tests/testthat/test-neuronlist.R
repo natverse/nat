@@ -65,6 +65,14 @@ test_that("subset can combine dataframe columns and global variables", {
 #                subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10)))
 })
 
+test_that("nlapply can omit failures",{
+  kcs3=kcs20[1:3]
+  kcs3[[3]]=subset(kcs3[[3]],1:4)
+  expect_error(dotprops(kcs3, k=5))
+  expect_is(dotprops(kcs3, k=5, OmitFailures=FALSE)[[3]], 'try-error')
+  expect_equal(length(dotprops(kcs3, k=5, OmitFailures=TRUE)), 2)
+})
+
 test_that("nmapply with identity function returns its arguments",{
   kcs3=kcs20[1:3]
   expect_equal(nmapply(function(x) x, kcs3), kcs3)
