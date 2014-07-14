@@ -17,6 +17,8 @@ test_that("with.neuronlist / droplevels behave", {
   expect_that(nlevels(droplevels(Cell07PNs)$Glomerulus),equals(4L))
 })
 
+context("neuronlist: subset")
+
 test_that("subset.neuronlist and [] do the same thing", {
   df=attr(Cell07PNs,'df')
   expect_is(s1<-Cell07PNs[df$Glomerulus=="DA1"],"neuronlist")
@@ -65,6 +67,16 @@ test_that("subset can combine dataframe columns and global variables", {
 #                subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10)))
 })
 
+context("neuronlist: nlapply/nmapply")
+
+test_that("nlapply can omit failures",{
+  kcs3=kcs20[1:3]
+  kcs3[[3]]=subset(kcs3[[3]],1:4)
+  expect_error(dotprops(kcs3, k=5))
+  expect_is(dotprops(kcs3, k=5, OmitFailures=FALSE)[[3]], 'try-error')
+  expect_equal(length(dotprops(kcs3, k=5, OmitFailures=TRUE)), 2)
+})
+
 test_that("nmapply with identity function returns its arguments",{
   kcs3=kcs20[1:3]
   expect_equal(nmapply(function(x) x, kcs3), kcs3)
@@ -78,6 +90,17 @@ test_that("nmapply can vectorise more than one argument",{
   expect_equal(mirror(kcs20[[3]], mirrorAxisSize = masizes[3], mirrorAxis = 'Z'),
                xyzflip[[3]])
 })
+
+test_that("nmapply can omit failures",{
+  kcs3=kcs20[1:3]
+  
+  expect_error(nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
+                  mirrorAxisSize=c(400,20,Inf)))
+  expect_equal(length(nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
+                       mirrorAxisSize=c(400,20,Inf), OmitFailures=TRUE)), 2)
+})
+
+context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
   nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs))

@@ -116,10 +116,24 @@ c.neuronlist<-function(..., recursive = FALSE){
 
 #' lapply and mapply for neuronlists
 #' 
-#' Looks after class and any attached dataframe.
+#' @details Looks after class and any attached dataframe.
+#'   
+#'   When \code{OmitFailures} is not \code{NA}, \code{FUN} will be wrapped in a 
+#'   call to \code{try} to ensure that failure for any single neuron does not 
+#'   abort the nlapply/nmapply call. When \code{OmitFailures=TRUE} the resultant
+#'   neuronlist will be subsetted down to return values for which \code{FUN} 
+#'   evaluated successfully. When \code{OmitFailures=FALSE}, "try-error" objects
+#'   will be left in place. In either of the last 2 cases error messages will 
+#'   not be printed because the call is wrapped as \code{try(expr, 
+#'   silent=TRUE)}.
+#'   
 #' @param X A neuronlist
 #' @param FUN Function to be applied to each element of X
 #' @param ... Additional arguments for FUN (see details)
+#' @param OmitFailures Whether to omit neurons for which \code{FUN} gives an 
+#'   error. The default value (\code{NA}) will result in nlapply stopping with 
+#'   an error message the moment there is an eror. For other values, see 
+#'   details.
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -140,9 +154,21 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' plot3d(kcs20[1:3])
 #' plot3d(xyzflip)
 #' rgl.close()
-nlapply<-function (X, FUN, ...){
-  cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) else c("neuronlist",'list')
-  structure(lapply(X,FUN,...),class=cl,df=attr(X,'df'))
+nlapply<-function (X, FUN, ..., OmitFailures=NA){
+  cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) 
+  else c("neuronlist", 'list')
+  
+  if(is.na(OmitFailures)){
+    rval=structure(lapply(X, FUN, ...), class=cl, df=attr(X, 'df'))
+  } else {
+    TFUN=function(...) try(FUN(...), silent=TRUE)
+    rval=structure(lapply(X, TFUN, ...), class=cl, df=attr(X, 'df'))
+    if(OmitFailures){
+      failures=sapply(rval, inherits, 'try-error')
+      if(any(failures)) rval=rval[!failures]
+    }
+  }
+  rval
 }
 
 #' @inheritParams base::mapply
@@ -151,7 +177,8 @@ nlapply<-function (X, FUN, ...){
 #' @rdname nlapply
 #' @seealso \code{\link{mapply}}
 #' @export
-nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE){
+nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
+                  USE.NAMES = TRUE, OmitFailures=NA){
   if(missing(...))
     stop("First argument in ... must be a neuronlist!")
   
@@ -161,8 +188,14 @@ nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE)
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X)
   else c("neuronlist",'list')
   
-  structure(mapply(FUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
-                   USE.NAMES = USE.NAMES), class=cl, df=attr(X, 'df'))
+  TFUN = if(is.na(OmitFailures)) FUN else function(...) try(FUN(...), silent=TRUE)
+  rval=structure(mapply(TFUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
+                        USE.NAMES = USE.NAMES), class=cl, df=attr(X, 'df'))
+  if(isTRUE(OmitFailures)){
+    failures=sapply(rval, inherits, 'try-error')
+    if(any(failures)) rval=rval[!failures]
+  }
+  rval
 }
 
 #' 3D plots of the elements in a neuronlist, optionally using a subset 
