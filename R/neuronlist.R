@@ -120,10 +120,12 @@ c.neuronlist<-function(..., recursive = FALSE){
 #'   
 #'   When \code{OmitFailures} is not \code{NA}, \code{FUN} will be wrapped in a 
 #'   call to \code{try} to ensure that failure for any single neuron does not 
-#'   abort the nlapply call. When When \code{OmitFailures=TRUE} the resultant 
+#'   abort the nlapply call. When \code{OmitFailures=TRUE} the resultant 
 #'   neuronlist will be subsetted down to return values for which \code{FUN} 
 #'   evaluated successfully. When \code{OmitFailures=FALSE}, "try-error" objects
-#'   will be left in space.
+#'   will be left in place. In either of the last 2 cases error messages will
+#'   not be printed because the call is wrapped as \code{try(expr,
+#'   silent=TRUE)}.
 #'   
 #' @param X A neuronlist
 #' @param FUN Function to be applied to each element of X
@@ -159,7 +161,7 @@ nlapply<-function (X, FUN, ..., OmitFailures=NA){
   if(is.na(OmitFailures)){
     rval=structure(lapply(X, FUN, ...), class=cl, df=attr(X, 'df'))
   } else {
-    TFUN=function(...) try(FUN(...))
+    TFUN=function(...) try(FUN(...), silent=TRUE)
     rval=structure(lapply(X, TFUN, ...), class=cl, df=attr(X, 'df'))
     if(OmitFailures){
       failures=sapply(rval, inherits, 'try-error')
