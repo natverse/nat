@@ -74,7 +74,13 @@ test_that("nlapply can omit failures",{
   kcs3[[3]]=subset(kcs3[[3]],1:4)
   expect_error(dotprops(kcs3, k=5))
   expect_is(dotprops(kcs3, k=5, OmitFailures=FALSE)[[3]], 'try-error')
-  expect_equal(length(dotprops(kcs3, k=5, OmitFailures=TRUE)), 2)
+  expect_is(kcs3.dps<-dotprops(kcs3, k=5, OmitFailures=TRUE), 'neuronlist')
+  expect_equal(length(kcs3.dps),2L)
+  expect_equal(nrow(attr(kcs3.dps,'df')),2)
+  
+  # this time with subset and omit failures
+  expect_equal(length(dotprops(kcs3, k=5, subset=1:2, OmitFailures=TRUE)), 3)
+  expect_equal(length(dotprops(kcs3, k=5, subset=c(1,3), OmitFailures=TRUE)), 2)
 })
 
 test_that("nmapply with identity function returns its arguments",{

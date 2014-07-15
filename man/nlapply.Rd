@@ -4,7 +4,7 @@
 \alias{nmapply}
 \title{lapply and mapply for neuronlists}
 \usage{
-nlapply(X, FUN, ..., OmitFailures = NA)
+nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA)
 
 nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   OmitFailures = NA)
@@ -15,6 +15,11 @@ nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   \item{FUN}{Function to be applied to each element of X}
 
   \item{...}{Additional arguments for FUN (see details)}
+
+  \item{subset}{Character, numeric or logical vector
+  specifying on which subset of \code{X} the function
+  \code{FUN} should be applied. Elements outside the subset
+  are passed through unmodified.}
 
   \item{OmitFailures}{Whether to omit neurons for which
   \code{FUN} gives an error. The default value (\code{NA})

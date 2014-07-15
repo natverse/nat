@@ -130,6 +130,9 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' @param X A neuronlist
 #' @param FUN Function to be applied to each element of X
 #' @param ... Additional arguments for FUN (see details)
+#' @param subset Character, numeric or logical vector specifying on which subset
+#'   of \code{X} the function \code{FUN} should be applied. Elements outside the
+#'   subset are passed through unmodified.
 #' @param OmitFailures Whether to omit neurons for which \code{FUN} gives an 
 #'   error. The default value (\code{NA}) will result in nlapply stopping with 
 #'   an error message the moment there is an eror. For other values, see 
@@ -154,21 +157,35 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' plot3d(kcs20[1:3])
 #' plot3d(xyzflip)
 #' rgl.close()
-nlapply<-function (X, FUN, ..., OmitFailures=NA){
+nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) 
   else c("neuronlist", 'list')
   
-  if(is.na(OmitFailures)){
-    rval=structure(lapply(X, FUN, ...), class=cl, df=attr(X, 'df'))
-  } else {
-    TFUN=function(...) try(FUN(...), silent=TRUE)
-    rval=structure(lapply(X, TFUN, ...), class=cl, df=attr(X, 'df'))
-    if(OmitFailures){
-      failures=sapply(rval, inherits, 'try-error')
-      if(any(failures)) rval=rval[!failures]
-    }
+  if(!is.null(subset)){
+    if(!is.character(subset)) subset=names(X)[subset]
+    Y=X
+    X=X[subset]
   }
-  rval
+
+  TFUN = if(is.na(OmitFailures)) FUN 
+  else function(...) try(FUN(...), silent=TRUE)
+  rval=structure(lapply(X, TFUN, ...), class=cl, df=attr(X, 'df'))
+  
+  if(isTRUE(OmitFailures))
+    failures=sapply(rval, inherits, 'try-error')
+    
+  if(is.null(subset)){
+    if(isTRUE(OmitFailures) && any(failures)) rval[!failures]
+    else rval
+  } else {
+    if(isTRUE(OmitFailures) && any(failures)){
+      Y[subset[!failures]]=rval[!failures]
+      Y=Y[setdiff(names(Y),subset[failures])]
+    } else {
+      Y[subset]=rval
+    }
+    Y
+  }
 }
 
 #' @inheritParams base::mapply
