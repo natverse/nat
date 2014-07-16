@@ -1,6 +1,6 @@
 #' dotprops: Neurons as point clouds with tangent vectors (but no connectivity)
 #' @param x Object to be tested/converted
-#' @rdname dotprops
+#' @name dotprops
 #' @export
 is.dotprops<-function(x) inherits(x,"dotprops")
 
@@ -107,7 +107,7 @@ dotprops.character <- function(x, ...) {
   l
 }
 
-#' @details \code{dotprops.dotprops} will deafult to the original vale of 
+#' @description \code{dotprops.dotprops} will default to the original vale of 
 #'   \code{k} and copy over all attributes that are not set by
 #'   \code{dotprops.default}.
 #' @method dotprops dotprops
