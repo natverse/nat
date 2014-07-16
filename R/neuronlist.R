@@ -592,7 +592,7 @@ subset.neuronlist<-function(x, subset, filterfun,
                             "Please use filterfun argument")
     if(is.logical(r)){
       r=nx[r & !is.na(r)]
-    } else if(is.integer(r)){
+    } else if(is.numeric(r)){
       r=nx[na.omit(r)]
     } else if(is.character(r)) {
       # check against names

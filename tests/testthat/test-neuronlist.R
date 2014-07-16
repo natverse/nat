@@ -26,6 +26,8 @@ test_that("subset.neuronlist and [] do the same thing", {
   #' empty result
   expect_equal(subset(Cell07PNs,Glomerulus=="rhubarb"),
                Cell07PNs[rep(FALSE,length(Cell07PNs))])
+  # numeric indices
+  expect_equal(subset(Cell07PNs, c(1, 3)), Cell07PNs[c(1, 3)])
 })
 
 test_that("subset.neuronlist works with various indexing forms", {
