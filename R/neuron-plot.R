@@ -287,9 +287,25 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' @param x the \code{\link{boundingbox}} object to plot.
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
 #' @return A list of RGL object IDs.
-#' 
+#'   
 #' @method plot3d boundingbox
 #' @export
+#' @seealso \code{\link{boundingbox}}
+#' @examples
+#' # plot some neurons
+#' plot3d(kcs20)
+#' # plot the bounding box of all the neurons
+#' plot3d(boundingbox(kcs20))
+#' 
+#' \dontrun{
+#' plot3d(kcs20)
+#' # plot bounding box (in matching colours) for each neuron
+#' # NB makes used of nlapply/neuronlist in slightly unsusual context - 
+#' # plot3d.neuronlist can cope with lists containing anything with
+#' # a valid plot3d method.
+#' plot3d(nlapply(kcs20,boundingbox))
+#' }
+#' 
 plot3d.boundingbox <- function(x, ...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),

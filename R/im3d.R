@@ -239,6 +239,7 @@ voxdims.default<-function(x, dims, ...){
 #' @return a \code{matrix} with 2 rows and 3 columns with 
 #'   \code{class='boundingbox'} or \emph{NULL} when missing.
 #' @export
+#' @seealso \code{\link{plot3d.boundingbox}}
 #' @family im3d
 #' @examples
 #' boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))

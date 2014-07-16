@@ -87,6 +87,8 @@ argument \code{input='bounds'}.
 boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 }
 \seealso{
+\code{\link{plot3d.boundingbox}}
+
 Other im3d: \code{\link{as.im3d}},
 \code{\link{as.im3d.im3d}}; \code{\link{ijkpos}},
 \code{\link{im3d-coords}}, \code{\link{xyzpos}};

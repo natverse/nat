@@ -17,4 +17,22 @@ A list of RGL object IDs.
 \description{
 Plot a bounding box in 3D
 }
+\examples{
+# plot some neurons
+plot3d(kcs20)
+# plot the bounding box of all the neurons
+plot3d(boundingbox(kcs20))
+
+\dontrun{
+plot3d(kcs20)
+# plot bounding box (in matching colours) for each neuron
+# NB makes used of nlapply/neuronlist in slightly unsusual context -
+# plot3d.neuronlist can cope with lists containing anything with
+# a valid plot3d method.
+plot3d(nlapply(kcs20,boundingbox))
+}
+}
+\seealso{
+\code{\link{boundingbox}}
+}
 
