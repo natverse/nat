@@ -61,11 +61,11 @@ Note that there are two competing definitions for the
 physical extent of an image that are discussed e.g.
 \url{http://teem.sourceforge.net/nrrd/format.html}. The
 definition that makes most sense depends largely on whether
-you think of a pixel as a little cube with some defined
-area (and therefor a voxel as a cube with some defined
+you think of a pixel as a little square with some defined
+area (and therefore a voxel as a cube with some defined
 volume) \emph{or} you take the view that you can only
-define with the certainty the grid points at which image
-data was acquired. The first view implies a physical extent
+define with certainty the grid points at which image data
+was acquired. The first view implies a physical extent
 which we call the \code{bounds=dim(x) * c(dx,dy,dz)}; the
 second is defined as \code{BoundingBox=dim(x)-1 *
 c(dx,dy,dz)} and assumes that the extent of the image is
