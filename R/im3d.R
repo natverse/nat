@@ -287,6 +287,18 @@ boundingbox.character<-function(x, ...) {
   boundingbox(read.im3d(x, ReadData=FALSE))
 }
 
+#' @export
+#' @description \code{boundingbox.list} is designed to be used on objects that
+#'   contain 3d point information and for which \code{xyzmatrix} is defined.
+#' @rdname boundingbox
+boundingbox.list<-function(x, ...) {
+  # we don't want to do this for data.frame objects
+  if(is.data.frame(x)) NextMethod()
+  xyz=xyzmatrix(x)
+  bb=apply(xyz,2,range)
+  boundingbox(bb)
+}
+
 #' @method boundingbox default
 #' @export
 #' @param input Whether \code{x} defines the boundingbox or bounds of the image 

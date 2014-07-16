@@ -4,6 +4,7 @@
 \alias{boundingbox.character}
 \alias{boundingbox.default}
 \alias{boundingbox.im3d}
+\alias{boundingbox.list}
 \alias{boundingbox<-}
 \title{Get the bounding box of an im3d volume or other compatible object}
 \usage{
@@ -12,6 +13,8 @@ boundingbox(x, ...)
 \method{boundingbox}{im3d}(x, dims = dim(x), ...)
 
 \method{boundingbox}{character}(x, ...)
+
+\method{boundingbox}{list}(x, ...)
 
 \method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"),
   ...)
@@ -43,6 +46,10 @@ a \code{matrix} with 2 rows and 3 columns with
 \description{
 Get the bounding box of an im3d volume or other compatible
 object
+
+\code{boundingbox.list} is designed to be used on objects
+that contain 3d point information and for which
+\code{xyzmatrix} is defined.
 
 Set the bounding box of an im3d object
 }
