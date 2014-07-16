@@ -52,6 +52,7 @@ as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
 
 #' @export
 #' @method as.neuronlist default
+#' @rdname as.neuronlist
 as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
   if(is.neuron(l)) {
     n<-l
