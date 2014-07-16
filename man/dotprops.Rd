@@ -67,9 +67,9 @@ of \code{k} and copy over all attributes that are not set
 by \code{dotprops.default}.
 
 \code{dotprops.neuronlist} will run for every object in the
-neuronlist using \code{nlapply}. \code{...} arguments will
-be passed to \code{nlapply} in addition to the named
-argument \code{OmitFailures}.
+neuronlist using \code{\link{nlapply}}. \code{...}
+arguments will be passed to \code{nlapply} in addition to
+the named argument \code{OmitFailures}.
 }
 \details{
 \code{k} will default to 20 nearest neighbours when unset
