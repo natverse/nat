@@ -126,6 +126,10 @@ test_that("dim, voxdims and boundingbox work",{
     "testdata/amira/VerySmallLabelField.am", SimplifyAttributes=TRUE)))
   # ... and again
   expect_equal(nrrdraw, amraw)
+  
+  kcs20bb=structure(c(284.594, 404.6951, 24.1869, 122.9557, 21.4379, 102.8015
+  ), .Dim = 2:3, .Dimnames = list(NULL, c("X", "Y", "Z")), class = "boundingbox")
+  expect_equal(boundingbox(kcs20), kcs20bb, tol=1e-4)
 })
 
 context("im3d flip, slice and projection")
