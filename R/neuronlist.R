@@ -19,6 +19,8 @@
 #' nl=neuronlist()
 #' # slice an existing neuronlist with regular indexing
 #' kcs5=kcs20[1:5]
+#' # list all methods for neuronlist objects
+#' methods(class='neuronlist')
 neuronlist <- function(..., DATAFRAME=NULL) as.neuronlist(list(...), df=DATAFRAME)
 
 #' Test objects of neuronlist class to store multiple neurons

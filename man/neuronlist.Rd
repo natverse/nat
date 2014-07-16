@@ -32,6 +32,8 @@ generating an empty neuronlist
 nl=neuronlist()
 # slice an existing neuronlist with regular indexing
 kcs5=kcs20[1:5]
+# list all methods for neuronlist objects
+methods(class='neuronlist')
 }
 \seealso{
 Other neuronlist: \code{\link{as.neuronlistfh}},
