@@ -310,9 +310,11 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   if(is.vector(x)) {
     if(length(x)!=6) stop("Must supply a vector of length 6")
     x=matrix(x,nrow=2)
-  } else if(is.matrix(x)){
+  } else if(is.matrix(x) || is.data.frame(x)){
     if(!isTRUE(all.equal(dim(x),c(2L,3L),check.attributes=FALSE)))
       stop("Must supply a 2 x 3 matrix of physical extents")
+    if(is.data.frame(x)) x=data.matrix(x)
+    dimnames(x)=NULL
   }
   if(input=='bounds'){
     if(missing(dims)) stop("must supply dimensions when input is of type bounds!")
