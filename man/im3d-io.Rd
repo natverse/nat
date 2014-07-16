@@ -58,8 +58,10 @@ read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 
 Other im3d: \code{\link{as.im3d}},
 \code{\link{as.im3d.im3d}}; \code{\link{boundingbox}},
+\code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
+\code{\link{boundingbox.list}},
 \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
 \code{\link{im3d-coords}}, \code{\link{xyzpos}};
 \code{\link{im3d}}; \code{\link{imexpand.grid}};

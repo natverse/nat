@@ -40,8 +40,10 @@ stopifnot(all.equal(ijkpos(d,xyzpos(d,c(1,1,1))), c(1,1,1)))
 \seealso{
 Other im3d: \code{\link{as.im3d}},
 \code{\link{as.im3d.im3d}}; \code{\link{boundingbox}},
+\code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
+\code{\link{boundingbox.list}},
 \code{\link{boundingbox<-}}; \code{\link{im3d-io}},
 \code{\link{read.im3d}}, \code{\link{write.im3d}};
 \code{\link{im3d}}; \code{\link{imexpand.grid}};

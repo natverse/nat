@@ -22,8 +22,10 @@ suitable methods.
 im3d
 
 Other im3d: \code{\link{boundingbox}},
+\code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
+\code{\link{boundingbox.list}},
 \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
 \code{\link{im3d-coords}}, \code{\link{xyzpos}};
 \code{\link{im3d-io}}, \code{\link{read.im3d}},
