@@ -256,8 +256,10 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 #' @param subset For \code{mirror.neuronlist} indices
 #'   (character/logical/integer) that specify a subset of the members of
 #'   \code{x} to be transformed.
+#' @inheritParams nlapply
 #' @export
 #' @rdname mirror
-mirror.neuronlist<-function(x, subset=NULL, ...){
-  nlapply(x, FUN=mirror, ..., subset=subset)
+#' @seealso \code{\link{nlapply}}
+mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
+  nlapply(x, FUN=mirror, ..., subset=subset, OmitFailures=OmitFailures)
 }
