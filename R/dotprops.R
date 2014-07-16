@@ -138,11 +138,16 @@ dotprops.list<-function(x, ...) {
   dotprops(xyzmatrix(x), ...)
 }
 
+#' @description \code{dotprops.neuronlist} will run for every object in the 
+#'   neuronlist using \code{\link{nlapply}}. \code{...} arguments will be passed to 
+#'   \code{nlapply} in addition to the named argument \code{OmitFailures}.
 #' @export
 #' @method dotprops neuronlist
 #' @rdname dotprops
-dotprops.neuronlist<-function(x, ...) {
-  nlapply(x, dotprops, ...)
+#' @inheritParams nlapply
+#' @seealso \code{\link{nlapply}}
+dotprops.neuronlist<-function(x, ..., OmitFailures=NA) {
+  nlapply(x, dotprops, ..., OmitFailures=OmitFailures)
 }
 
 #' @export
