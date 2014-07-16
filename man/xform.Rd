@@ -17,7 +17,7 @@ xform(x, reg, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-\method{xform}{neuronlist}(x, reg, subset = NULL, ...)
+\method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA)
 }
 \arguments{
   \item{x}{an object to transform}
@@ -38,6 +38,11 @@ xform(x, reg, ...)
   \item{subset}{For \code{xform.neuronlist} indices
   (character/logical/integer) that specify a subset of the
   members of \code{x} to be transformed.}
+
+  \item{OmitFailures}{Whether to omit neurons for which
+  \code{FUN} gives an error. The default value (\code{NA})
+  will result in nlapply stopping with an error message the
+  moment there is an eror. For other values, see details.}
 }
 \description{
 \code{xform} is designed to operate on a variety of data

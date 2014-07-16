@@ -20,8 +20,10 @@ A new neuronlist object.
 objects along with an optional attached dataframe
 containing information about the neurons. \code{neuronlist}
 objects can be indexed using their name or the number of
-the neuron like a regular list. If the \code{[} operator is
-used to index the list, the attached dataframe will also be
+the neuron like a regular list. Both the \code{list} itself
+and the attached \code{data.frame} must have the same
+unique (row)names. If the \code{[} operator is used to
+index the list, the attached dataframe will also be
 subsetted.
 
 It is perfectly acceptable not to pass any parameters,
@@ -32,6 +34,8 @@ generating an empty neuronlist
 nl=neuronlist()
 # slice an existing neuronlist with regular indexing
 kcs5=kcs20[1:5]
+# list all methods for neuronlist objects
+methods(class='neuronlist')
 }
 \seealso{
 Other neuronlist: \code{\link{as.neuronlistfh}},

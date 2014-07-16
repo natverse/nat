@@ -82,24 +82,16 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #' @method xform neuronlist
 #' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
 #'   that specify a subset of the members of \code{x} to be transformed.
+#' @inheritParams nlapply
 #' @export
 #' @rdname xform
-xform.neuronlist<-function(x, reg, subset=NULL, ...){
+xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA){
   if(length(reg)>1) stop("xform.neuronlist is currently only able to apply",
                          " a single registration to multiple neurons")
   # TODO if x is long there would be some performance benefits in chunking
   # all points from multiple neurons together. I strongly suspect that doing 10
   # at once would approach a 10x speedup.
-  if(is.null(subset))
-    nlapply(x, xform, reg, ...)
-  else {
-    # this ensures that we convert e.g. logical indices into NL to names
-    nn=if(is.character(subset)) subset else subset(x, subset, rval='names')
-    for(n in nn){
-      x[[n]]=xform(x[[n]], reg, ...)
-    }
-    x
-  }
+  nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
 }
 
 #' Get and assign coordinates for classes containing 3d vertex data
@@ -199,14 +191,18 @@ xyzmatrix.igraph<-function(x, ...){
 
 #' Mirror 3d object about a given axis, optionally using a warping registration
 #' 
-#' @details The warping registration can be used to account e.g. for the 
-#'   asymmetry. between brain hemispheres
+#' @description mirroring with a warping registration can be used to account 
+#'   e.g. for the asymmetry between brain hemispheres.
 #'   
-#' @details This function is agnostic re node vs cell data, but for node data 
+#'   This function is agnostic re node vs cell data, but for node data 
 #'   BoundingBox should be supplied while for cell, it should be bounds. See 
 #'   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
+#'   
+#'   See \code{\link{nlapply}} for details of the \code{subset} and 
+#'   \code{OmitFailures} arguments.
+#'   
 #' @param x Object with 3d points (with named cols X,Y,Z)
-#' @param ... additional arguments passed to methods or eventually to
+#' @param ... additional arguments passed to methods or eventually to 
 #'   \code{xform}
 #' @return Object with transformed points
 #' @export
@@ -260,17 +256,10 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 #' @param subset For \code{mirror.neuronlist} indices
 #'   (character/logical/integer) that specify a subset of the members of
 #'   \code{x} to be transformed.
+#' @inheritParams nlapply
 #' @export
 #' @rdname mirror
-mirror.neuronlist<-function(x, subset=NULL, ...){
-  if(is.null(subset))
-    nlapply(x, mirror, ...)
-  else {
-    # this ensures that we convert e.g. logical indices into NL to names
-    nn=if(is.character(subset)) subset else subset(x, subset, rval='names')
-    for(n in nn){
-      x[[n]]=mirror(x[[n]], ...)
-    }
-    x
-  }
+#' @seealso \code{\link{nlapply}}
+mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
+  nlapply(x, FUN=mirror, ..., subset=subset, OmitFailures=OmitFailures)
 }

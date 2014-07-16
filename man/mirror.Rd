@@ -10,7 +10,7 @@ mirror(x, ...)
 \method{mirror}{default}(x, mirrorAxisSize, mirrorAxis = c("X", "Y", "Z"),
   warpfile = NULL, transform = c("warp", "affine", "flip"), ...)
 
-\method{mirror}{neuronlist}(x, subset = NULL, ...)
+\method{mirror}{neuronlist}(x, subset = NULL, OmitFailures = NA, ...)
 }
 \arguments{
   \item{x}{Object with 3d points (with named cols X,Y,Z)}
@@ -35,17 +35,26 @@ mirror(x, ...)
   \item{subset}{For \code{mirror.neuronlist} indices
   (character/logical/integer) that specify a subset of the
   members of \code{x} to be transformed.}
+
+  \item{OmitFailures}{Whether to omit neurons for which
+  \code{FUN} gives an error. The default value (\code{NA})
+  will result in nlapply stopping with an error message the
+  moment there is an eror. For other values, see details.}
 }
 \value{
 Object with transformed points
 }
 \description{
-Mirror 3d object about a given axis, optionally using a
-warping registration
-}
-\details{
-The warping registration can be used to account e.g. for
-the asymmetry. between brain hemispheres
+mirroring with a warping registration can be used to
+account e.g. for the asymmetry between brain hemispheres.
+
+This function is agnostic re node vs cell data, but for
+node data BoundingBox should be supplied while for cell, it
+should be bounds. See \code{\link{boundingbox}} for details
+of BoundingBox vs bounds.
+
+See \code{\link{nlapply}} for details of the \code{subset}
+and \code{OmitFailures} arguments.
 }
 \examples{
 x=Cell07PNs[[1]]
@@ -58,5 +67,7 @@ plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'),col='blue')
 }
 \seealso{
 \code{\link{xform}, \link{boundingbox}}
+
+\code{\link{nlapply}}
 }
 
