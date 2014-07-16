@@ -99,9 +99,12 @@ test_that("dim, voxdims and boundingbox work",{
   
   expect_equal(voxdims(d), c(1.4, 1.4, 1.4))
   
-  bb_base=structure(c(0, 68.6, 0, 68.6, 0, 68.6), .Dim = 2:3)
+  bb_base=structure(c(0, 68.6, 0, 68.6, 0, 68.6), .Dim = 2:3, class='boundingbox')
   expect_equal(boundingbox(d), bb_base)
   expect_equal(boundingbox.character("testdata/nrrd/LHMask.nrrd"), bb_base)
+  
+  bbdf=as.data.frame(unclass(bb_base))
+  expect_equal(boundingbox(bbdf),bb_base)
   
   expect_is(am<-read.im3d("testdata/amira/VerySmallLabelField.am", 
                           SimplifyAttributes=TRUE), 'im3d')
@@ -109,7 +112,8 @@ test_that("dim, voxdims and boundingbox work",{
   expect_equal(voxdims(am),c(0.5,0.5,2))
   # somewhat oddly, Amira decides that if dim=1 for any axis, the bounding
   # box will not be 0 or infinite, but the size that would be expected for dim=2
-  expect_equal(boundingbox(am),structure(c(0, 0.5, 0, 0.5, 0, 2), .Dim = 2:3))
+  expect_equal(boundingbox(am),structure(c(0, 0.5, 0, 0.5, 0, 2), .Dim = 2:3,
+                                         class='boundingbox'))
   
   expect_is(nrrd<-read.im3d("testdata/amira/VerySmallLabelField.nrrd",
                             SimplifyAttributes=TRUE), 'im3d')
@@ -125,6 +129,10 @@ test_that("dim, voxdims and boundingbox work",{
     "testdata/amira/VerySmallLabelField.am", SimplifyAttributes=TRUE)))
   # ... and again
   expect_equal(nrrdraw, amraw)
+  
+  kcs20bb=structure(c(284.594, 404.6951, 24.1869, 122.9557, 21.4379, 102.8015
+  ), .Dim = 2:3, class = "boundingbox")
+  expect_equal(boundingbox(kcs20), kcs20bb, tol=1e-4)
 })
 
 context("im3d flip, slice and projection")

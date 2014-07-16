@@ -223,21 +223,23 @@ voxdims.default<-function(x, dims, ...){
 #'   image that are discussed e.g. 
 #'   \url{http://teem.sourceforge.net/nrrd/format.html}. The definition that 
 #'   makes most sense depends largely on whether you think of a pixel as a 
-#'   little cube with some defined area (and therefor a voxel as a cube with 
+#'   little square with some defined area (and therefore a voxel as a cube with 
 #'   some defined volume) \emph{or} you take the view that you can only define 
-#'   with the certainty the grid points at which image data was acquired. The 
-#'   first view implies a physical extent which we call the  \code{bounds=dim(x)
-#'   * c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 * 
+#'   with certainty the grid points at which image data was acquired. The first
+#'   view implies a physical extent which we call the  \code{bounds=dim(x) *
+#'   c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 * 
 #'   c(dx,dy,dz)} and assumes that the extent of the image is defined by a 
 #'   cuboid including the sample points at the extreme corner of the grid. Amira
-#'   takes this second view and this is the one we favour given our background
-#'   in microscopy. If you wish to convert a \code{bounds} type definition into
+#'   takes this second view and this is the one we favour given our background 
+#'   in microscopy. If you wish to convert a \code{bounds} type definition into 
 #'   an im3d BoundingBox, you should pass the argument \code{input='bounds'}.
 #' @param x A vector or matrix specifying a bounding box, an \code{im3d} object 
 #'   or, for \code{boundingbox.character}, a character vector specifying a file.
 #' @inheritParams voxdims
-#' @return a \code{matrix} with 2 rows and 3 columns \emph{NULL} when missing.
+#' @return a \code{matrix} with 2 rows and 3 columns with 
+#'   \code{class='boundingbox'} or \emph{NULL} when missing.
 #' @export
+#' @seealso \code{\link{plot3d.boundingbox}}
 #' @family im3d
 #' @examples
 #' boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
@@ -278,11 +280,24 @@ origin<-function(x, ...) {
 }
 
 #' @export
+#' @rdname boundingbox
 boundingbox.character<-function(x, ...) {
   if(!file.exists(x))
     stop("Unable to find a file at path: ",x)
   
   boundingbox(read.im3d(x, ReadData=FALSE))
+}
+
+#' @export
+#' @description \code{boundingbox.list} is designed to be used on objects that
+#'   contain 3d point information and for which \code{xyzmatrix} is defined.
+#' @rdname boundingbox
+boundingbox.list<-function(x, ...) {
+  # we don't want to do this for data.frame objects
+  if(is.data.frame(x)) NextMethod()
+  xyz=xyzmatrix(x)
+  bb=apply(xyz,2,range)
+  boundingbox(bb)
 }
 
 #' @method boundingbox default
@@ -296,9 +311,11 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
   if(is.vector(x)) {
     if(length(x)!=6) stop("Must supply a vector of length 6")
     x=matrix(x,nrow=2)
-  } else if(is.matrix(x)){
+  } else if(is.matrix(x) || is.data.frame(x)){
     if(!isTRUE(all.equal(dim(x),c(2L,3L),check.attributes=FALSE)))
       stop("Must supply a 2 x 3 matrix of physical extents")
+    if(is.data.frame(x)) x=data.matrix(x)
+    dimnames(x)=NULL
   }
   if(input=='bounds'){
     if(missing(dims)) stop("must supply dimensions when input is of type bounds!")
@@ -309,7 +326,7 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
     x[2,]=x[2,]-halfVoxelDims
   }
   # zap small gets rid of FP rounding errors
-  zapsmall(x)
+  structure(zapsmall(x), class = "boundingbox")
 }
 
 #' @description Set the bounding box of an im3d object
