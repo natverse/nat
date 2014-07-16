@@ -34,8 +34,8 @@ boundingbox(x) <- value
   is a BoundingBox matrix.}
 }
 \value{
-a \code{matrix} with 2 rows and 3 columns \emph{NULL} when
-missing.
+a \code{matrix} with 2 rows and 3 columns with
+\code{class='boundingbox'} or \emph{NULL} when missing.
 }
 \description{
 Get the bounding box of an im3d volume or other compatible

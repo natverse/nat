@@ -236,7 +236,8 @@ voxdims.default<-function(x, dims, ...){
 #' @param x A vector or matrix specifying a bounding box, an \code{im3d} object 
 #'   or, for \code{boundingbox.character}, a character vector specifying a file.
 #' @inheritParams voxdims
-#' @return a \code{matrix} with 2 rows and 3 columns \emph{NULL} when missing.
+#' @return a \code{matrix} with 2 rows and 3 columns with
+#'   \code{class='boundingbox'} or \emph{NULL} when missing.
 #' @export
 #' @family im3d
 #' @examples
@@ -309,7 +310,7 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
     x[2,]=x[2,]-halfVoxelDims
   }
   # zap small gets rid of FP rounding errors
-  zapsmall(x)
+  structure(zapsmall(x), class = "boundingbox")
 }
 
 #' @description Set the bounding box of an im3d object
