@@ -279,6 +279,7 @@ origin<-function(x, ...) {
 }
 
 #' @export
+#' @rdname boundingbox
 boundingbox.character<-function(x, ...) {
   if(!file.exists(x))
     stop("Unable to find a file at path: ",x)
