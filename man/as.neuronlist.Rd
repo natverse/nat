@@ -13,14 +13,27 @@ as.neuronlist(l, ...)
   list}
 
   \item{...}{Additional arguments passed to methods}
+
+  \item{df}{the data.frame to attach with additional
+  metadata.}
+
+  \item{AddClassToNeurons}{Whether to ensure neurons have
+  class \code{neuron} (see details).}
 }
 \value{
 neuronlist with attr('df')
 }
 \description{
-Note that it can cope with both neurons and dotprops but
-AddClassToNeurons parameter will only apply to things that
-look like neurons but don't have a class of neuron.
+Make a list of neurons that can be used for coordinate
+plotting/analysis
+}
+\details{
+Note that \code{as.neuronlist} can cope with both
+\code{neurons} and \code{dotprops} objects but
+\code{AddClassToNeurons} will only apply to things that
+look like neurons but don't have a class of \code{neuron}.
+
+See \code{\link{neuronlist}} details for more information.
 }
 \seealso{
 \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}

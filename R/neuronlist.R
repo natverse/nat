@@ -3,13 +3,15 @@
 #' @description \code{neuronlist} objects consist of a list of neuron objects 
 #'   along with an optional attached dataframe containing information about the 
 #'   neurons. \code{neuronlist} objects can be indexed using their name or the 
-#'   number of the neuron like a regular list. If the \code{[} operator is used
-#'   to index the list, the attached dataframe will also be subsetted.
-#' 
-#' It is perfectly acceptable not to pass any parameters, generating an empty 
-#' neuronlist
+#'   number of the neuron like a regular list. Both the \code{list} itself and
+#'   the attached \code{data.frame} must have the same unique (row)names. If the
+#'   \code{[} operator is used to index the list, the attached dataframe will
+#'   also be subsetted.
+#'   
+#'   It is perfectly acceptable not to pass any parameters, generating an empty 
+#'   neuronlist
 #' @param ... objects to be turned into a list
-#' @param DATAFRAME an optional \code{data.frame} to attach to the neuronlist
+#' @param DATAFRAME an optional \code{data.frame} to attach to the neuronlist 
 #'   containing information about each neuron.
 #' @return A new neuronlist object.
 #' @family neuronlist
@@ -39,18 +41,24 @@ is.neuronlist<-function(x) {
 }
 
 #' Make a list of neurons that can be used for coordinate plotting/analysis
-#'
-#' Note that it can cope with both neurons and dotprops but AddClassToNeurons
-#' parameter will only apply to things that look like neurons but don't have
-#' a class of neuron.
+#' 
+#' @details Note that \code{as.neuronlist} can cope with both \code{neurons} and
+#'   \code{dotprops} objects but \code{AddClassToNeurons} will only apply to 
+#'   things that look like neurons but don't have a class of \code{neuron}.
+#'   
+#'   See \code{\link{neuronlist}} details for more information.
 #' @param l An existing list or a single neuron to start a list
 #' @param ... Additional arguments passed to methods
 #' @return neuronlist with attr('df')
 #' @export
-#' @seealso \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
+#' @seealso 
+#' \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
 as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
 
 #' @export
+#' @param df the data.frame to attach with additional metadata.
+#' @param AddClassToNeurons Whether to ensure neurons have class \code{neuron}
+#'   (see details).
 #' @method as.neuronlist default
 #' @rdname as.neuronlist
 as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
