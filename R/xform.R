@@ -191,14 +191,18 @@ xyzmatrix.igraph<-function(x, ...){
 
 #' Mirror 3d object about a given axis, optionally using a warping registration
 #' 
-#' @details The warping registration can be used to account e.g. for the 
-#'   asymmetry. between brain hemispheres
+#' @description mirroring with a warping registration can be used to account 
+#'   e.g. for the asymmetry between brain hemispheres.
 #'   
-#' @details This function is agnostic re node vs cell data, but for node data 
+#'   This function is agnostic re node vs cell data, but for node data 
 #'   BoundingBox should be supplied while for cell, it should be bounds. See 
 #'   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
+#'   
+#'   See \code{\link{nlapply}} for details of the \code{subset} and 
+#'   \code{OmitFailures} arguments.
+#'   
 #' @param x Object with 3d points (with named cols X,Y,Z)
-#' @param ... additional arguments passed to methods or eventually to
+#' @param ... additional arguments passed to methods or eventually to 
 #'   \code{xform}
 #' @return Object with transformed points
 #' @export

@@ -40,12 +40,16 @@ mirror(x, ...)
 Object with transformed points
 }
 \description{
-Mirror 3d object about a given axis, optionally using a
-warping registration
-}
-\details{
-The warping registration can be used to account e.g. for
-the asymmetry. between brain hemispheres
+mirroring with a warping registration can be used to
+account e.g. for the asymmetry between brain hemispheres.
+
+This function is agnostic re node vs cell data, but for
+node data BoundingBox should be supplied while for cell, it
+should be bounds. See \code{\link{boundingbox}} for details
+of BoundingBox vs bounds.
+
+See \code{\link{nlapply}} for details of the \code{subset}
+and \code{OmitFailures} arguments.
 }
 \examples{
 x=Cell07PNs[[1]]
