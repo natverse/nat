@@ -1,3 +1,13 @@
+nat 1.5.8
+=========
+* Add boundingbox.list method to find boundingbox for neurons, surfaces etc
+* nmapply and nlapply get OmitFailures arguments
+* nlapply also gets a subset argument
+* both arguments are also added to xform/mirror.neuronlist
+* dotprops.neuronlist also gets the OmitFailures argument.
+* fix subset.neuronlist handling of numeric indices
+* minor bug/doc fixes
+
 nat 1.5.7
 =========
 * teach plot3d.neuronlist and friends to plot soma locations.
