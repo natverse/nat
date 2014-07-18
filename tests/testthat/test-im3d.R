@@ -18,7 +18,7 @@ test_that("we can read im3d files",{
   expect_equivalent(dim(d0), c(154L, 154L, 87L))
   
   amfilenoam=tempfile()
-  file.symlink(normalizePath(amfile),amfilenoam)
+  file.copy(normalizePath(amfile),amfilenoam)
   on.exit(unlink(amfilenoam))
   expect_equal(d,read.im3d(amfilenoam))
   
