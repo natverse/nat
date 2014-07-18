@@ -225,16 +225,18 @@ voxdims.default<-function(x, dims, ...){
 #'   makes most sense depends largely on whether you think of a pixel as a 
 #'   little square with some defined area (and therefore a voxel as a cube with 
 #'   some defined volume) \emph{or} you take the view that you can only define 
-#'   with certainty the grid points at which image data was acquired. The first
-#'   view implies a physical extent which we call the  \code{bounds=dim(x) *
+#'   with certainty the grid points at which image data was acquired. The first 
+#'   view implies a physical extent which we call the  \code{bounds=dim(x) * 
 #'   c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 * 
 #'   c(dx,dy,dz)} and assumes that the extent of the image is defined by a 
 #'   cuboid including the sample points at the extreme corner of the grid. Amira
 #'   takes this second view and this is the one we favour given our background 
 #'   in microscopy. If you wish to convert a \code{bounds} type definition into 
 #'   an im3d BoundingBox, you should pass the argument \code{input='bounds'}.
-#' @param x A vector or matrix specifying a bounding box, an \code{im3d} object 
-#'   or, for \code{boundingbox.character}, a character vector specifying a file.
+#' @param x A vector or matrix specifying a bounding box, an \code{im3d} object,
+#'   any object with base class list for which \code{\link{xyzmatrix}} can 
+#'   extract 3d points (e.g. neurons, surfaces etc), or, for 
+#'   \code{boundingbox.character}, a character vector specifying a file.
 #' @inheritParams voxdims
 #' @return a \code{matrix} with 2 rows and 3 columns with 
 #'   \code{class='boundingbox'} or \emph{NULL} when missing.
@@ -243,6 +245,8 @@ voxdims.default<-function(x, dims, ...){
 #' @family im3d
 #' @examples
 #' boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
+#' # bounding box for a neuron
+#' boundingbox(Cell07PNs[[1]])
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 
 #' @method boundingbox im3d

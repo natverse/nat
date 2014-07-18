@@ -23,8 +23,11 @@ boundingbox(x) <- value
 }
 \arguments{
   \item{x}{A vector or matrix specifying a bounding box, an
-  \code{im3d} object or, for \code{boundingbox.character},
-  a character vector specifying a file.}
+  \code{im3d} object, any object with base class list for
+  which \code{\link{xyzmatrix}} can extract 3d points (e.g.
+  neurons, surfaces etc), or, for
+  \code{boundingbox.character}, a character vector
+  specifying a file.}
 
   \item{input}{Whether \code{x} defines the boundingbox or
   bounds of the image (see details).}
@@ -85,6 +88,8 @@ argument \code{input='bounds'}.
 }
 \examples{
 boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
+# bounding box for a neuron
+boundingbox(Cell07PNs[[1]])
 }
 \seealso{
 \code{\link{plot3d.boundingbox}}
