@@ -56,6 +56,12 @@ necessary if the \code{xyzmatrix} and \code{`xyzmatrix<-`}
 generics are suitably overloaded \emph{and} the S3 object
 inherits from \code{list}.
 
+Where reg is a function, it should have a signature like
+\code{myfun(x, ...)} where the ... \strong{must} be
+provided in order to swallow any arguments passed from
+higher level functions that are not relevant to this
+particular transformation function.
+
 TODO get this to work for matrices with more than 3 columns
 by working on xyzmatrix definition.
 

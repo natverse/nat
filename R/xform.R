@@ -8,14 +8,16 @@
 #'   this will probalbly not be necessary if the \code{xyzmatrix} and 
 #'   \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3 
 #'   object inherits from \code{list}.
-#' @details Where reg is a function, it should have a signature like
-#'   \code{myfun(x, ...)} where the ... \strong{must} be provided in order to
-#'   swallow any arguments passed from higher level functions that are not
-#'   relevant to this particular transformation function.
+#'   
+#'   Where reg is a function, it should have a signature like \code{myfun(x,
+#'   ...)} where the ... \strong{must} be provided in order to swallow any
+#'   arguments passed from higher level functions that are not relevant to this
+#'   particular transformation function.
 #' @param x an object to transform
 #' @param reg an object describing a transformation in any of the forms 
 #'   understood by \code{\link{xformpoints}} (see details).
-#' @param ... additional arguments passed to methods and eventually to \code{\link{xformpoints}}
+#' @param ... additional arguments passed to methods and eventually to
+#'   \code{\link{xformpoints}}
 #' @export
 #' @rdname xform
 #' @seealso \code{\link{xformpoints}}
