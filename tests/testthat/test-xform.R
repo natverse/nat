@@ -82,6 +82,15 @@ test_that("can extract xyz coords from a matrix",{
   expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
 })
 
+test_that("can replace xyz coords of a matrix",{
+  mx=matrix(1:24,ncol=3)
+  colnames(mx)=c("X","Y","Z")
+  mx2=mx
+  colnames(mx2)=c("x","y","z")
+  
+  expect_equivalent(xyzmatrix(mx)<-xyzmatrix(mx2), mx)
+})
+
 test_that("can extract xyz coords from a neuronlist",{
   xyz12=rbind(xyzmatrix(kcs20[[1]]),xyzmatrix(kcs20[[2]]))
   expect_is(xyzmatrix(kcs20[1:2]),'matrix')

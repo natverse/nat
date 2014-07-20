@@ -120,9 +120,9 @@ xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
-#' @details Note that \code{xyzmatrix.default} can extract 3d coordinates from a
-#'   a \code{matrix} or \code{data.frame} that \bold{either} has exactly 3
-#'   columns \bold{or} has 3 columns named X,Y,Z or x,y,z.
+#' @details Note that \code{xyzmatrix} can extract or set 3d coordinates in a a
+#'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
+#'   \bold{or} has 3 columns named X,Y,Z or x,y,z.
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
@@ -159,8 +159,9 @@ xyzmatrix.igraph<-function(x, ...){
   igraph::get.graph.attribute(x, 'xyz')
 }
 
-#' @description Assign xyz elements of neuron or dotprops object. Can also
-#'   handle matrix like objects with columns named X,Y,Z
+#' @description \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
+#'   object and can also handle matrix like objects with columns named X, Y, Z
+#'   or x, y, z.
 #' @usage xyzmatrix(x) <- value
 #' @param value Nx3 matrix specifying new xyz coords
 #' @return Original object with modified coords
@@ -177,10 +178,13 @@ xyzmatrix.igraph<-function(x, ...){
 
 #' @export
 `xyzmatrix<-.default`<-function(x, value){
-  if(is.neuron(x)) x$d[,c("X","Y","Z")]=value
-  else if(is.dotprops(x)) x$points[,c("X","Y","Z")]=value
-  else if(all(c("X","Y","Z") %in% colnames(x))) x[,c("X","Y","Z")]=value
-  else stop("Not a neuron or dotprops object or a matrix-like object with XYZ volnames")
+  xyzn=c("X","Y","Z")
+  if(is.neuron(x)) x$d[,xyzn]=value
+  else if(is.dotprops(x)) x$points[,xyzn]=value
+  else if(!any(is.na(matched_cols<-match(xyzn, toupper(colnames(x)))))) {
+    x[,matched_cols]=value
+  }
+  else stop("Not a neuron or dotprops object or a matrix-like object with XYZ colnames")
   x
 }
 

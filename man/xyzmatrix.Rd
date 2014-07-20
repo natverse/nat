@@ -32,8 +32,9 @@ Original object with modified coords
 Get and assign coordinates for classes containing 3d vertex
 data
 
-Assign xyz elements of neuron or dotprops object. Can also
-handle matrix like objects with columns named X,Y,Z
+\code{xyzmatrix<-} assigns xyz elements of neuron or
+dotprops object and can also handle matrix like objects
+with columns named X, Y, Z or x, y, z.
 }
 \details{
 Note that \code{xyzmatrix.default} can extract 3d
