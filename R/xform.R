@@ -120,6 +120,9 @@ xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
+#' @details Note that \code{xyzmatrix.default} can extract 3d coordinates from a
+#'   a \code{matrix} or \code{data.frame} that \bold{either} has exactly 3
+#'   columns \bold{or} has 3 columns named X,Y,Z or x,y,z.
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
@@ -130,7 +133,8 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
     x=cbind(x,y,z)
   } else if(is.data.frame(x) || is.matrix(x)){
     if(ncol(x)>3){
-      if(all(xyzn%in%colnames(x))) x=x[,xyzn]
+      matched_cols=match(xyzn, toupper(colnames(x)))
+      if(!any(is.na(matched_cols))) x=x[,matched_cols]
       else stop("Ambiguous column names. Unable to retrieve XYZ data")
     } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
   }

@@ -74,6 +74,9 @@ test_that("can extract xyz coords from a matrix",{
   expect_equivalent(xyzmatrix(mx),mx)
   colnames(mx)=c("X","Y","Z")
   expect_equal(xyzmatrix(mx),mx)
+  mx2=mx
+  colnames(mx2)=c("x","y","z")
+  expect_equal(xyzmatrix(mx2),mx)
   
   df=data.frame(X=1:4,Y=2:5,Z=3:6,W=1)
   expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
