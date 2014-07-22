@@ -120,7 +120,7 @@ xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
-#' @details Note that \code{xyzmatrix} can extract or set 3d coordinates in a a
+#' @details Note that \code{xyzmatrix} can extract or set 3d coordinates in a 
 #'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
 #'   \bold{or} has 3 columns named X,Y,Z or x,y,z.
 #' @rdname xyzmatrix

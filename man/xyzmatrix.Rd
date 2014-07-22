@@ -37,10 +37,10 @@ dotprops object and can also handle matrix like objects
 with columns named X, Y, Z or x, y, z.
 }
 \details{
-Note that \code{xyzmatrix.default} can extract 3d
-coordinates from a a \code{matrix} or \code{data.frame}
-that \bold{either} has exactly 3 columns \bold{or} has 3
-columns named X,Y,Z or x,y,z.
+Note that \code{xyzmatrix} can extract or set 3d
+coordinates in a \code{matrix} or \code{data.frame} that
+\bold{either} has exactly 3 columns \bold{or} has 3 columns
+named X,Y,Z or x,y,z.
 }
 \examples{
 n=Cell07PNs[[1]]
