@@ -21,7 +21,7 @@
 #'   can be used to colour or subset the neurons during plotting (see 
 #'   \code{\link{plot3d.neuronlist}} and \code{\link{subset.neuronlist}}). 
 #'   Interactive 3D selection of neurons in a neuronlist is also possible using 
-#'   \code{\link{find.neuron}} (which makes use of rgl's \code{\link{select3d}}
+#'   \code{\link{find.neuron}} (which makes use of rgl's \code{\link{select3d}} 
 #'   function.
 #'   
 #' @section Transformations: \code{neuron} or \code{dotprops} objects can be 
@@ -50,6 +50,13 @@
 #'   
 #'   \item{\code{nat.default.neuronlist}}{ A neuronlist to use with the 
 #'   \code{\link{plot3d.character}} method}
+#'   
+#'   }
+#'   
+#'   In addition there is one read-only option: \itemize{
+#'   
+#'   \item \code{nat.cmtk.version} which is used to store the current cmtk
+#'   version when there are repeated calls to \code{\link{cmtk.version}}.
 #'   
 #'   }
 #' @name nat-package
