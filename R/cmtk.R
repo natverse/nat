@@ -153,6 +153,17 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
   bindir
 }
 
+# return cmtk version or test for >= specific version
+cmtk.version<-function(minimum=NULL){
+  if(is.null(cmtk_version<-getOption('nat.cmtk.version'))){
+    cmtk_version=cmtk.dof2mat(version=TRUE)
+    options(nat.cmtk.version=cmtk_version)
+  }
+  cmtk_numeric_version=numeric_version(sub("([0-9.]+).*",'\\1',cmtk_version))
+  if(!is.null(minimum)) cmtk_numeric_version>=numeric_version(minimum)
+  else cmtk_numeric_version
+}
+
 #' Utility function to create a call to a cmtk commandline tool
 #' 
 #' @details arguments in ... will be processed as follows:
