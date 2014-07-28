@@ -74,6 +74,14 @@ neurons.
   with the \code{\link{plot3d.character}} method}
 
   }
+
+  In addition there is one read-only option: \itemize{
+
+  \item \code{nat.cmtk.version} which is used to store the
+  current cmtk version when there are repeated calls to
+  \code{\link{cmtk.version}}.
+
+  }
 }
 \seealso{
 \code{\link{dotprops},\link{neuron},\link{plot3d.neuronlist},\link{xform}},

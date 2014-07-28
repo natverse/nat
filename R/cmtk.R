@@ -153,10 +153,25 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
   bindir
 }
 
-# return cmtk version or test for >= specific version
+#' Return cmtk version or test for presence of at least a specific version
+#' 
+#' @param minimum If specified checks that the cmtk version
+#' @details NB this function has the side effect of setting an option 
+#'   nat.cmtk.version the first time that it is run in the current R session.
+#' @return returns \code{numeric_version} representation of CMTK version or if 
+#'   minimum is not NULL, returns a logical indicating whether the installed 
+#'   version exceeds the current version. If CMTK is not installed returns NA.
+#' @seealso \code{\link{cmtk.bindir}, \link{cmtk.dof2mat}}
+#' @examples
+#' \dontrun{
+#' cmtk.version()
+#' cmtk.version('3.2.2')
+#' }
+#' @export
 cmtk.version<-function(minimum=NULL){
   if(is.null(cmtk_version<-getOption('nat.cmtk.version'))){
-    cmtk_version=cmtk.dof2mat(version=TRUE)
+    cmtk_version=try(cmtk.dof2mat(version=TRUE), silent = TRUE)
+    if(inherits(cmtk_version,'try-error')) return(NA)
     options(nat.cmtk.version=cmtk_version)
   }
   cmtk_numeric_version=numeric_version(sub("([0-9.]+).*",'\\1',cmtk_version))
