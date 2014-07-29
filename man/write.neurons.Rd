@@ -28,11 +28,11 @@ write.neurons(Cell07PNs,dir="testwn",
   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
 # only write a subset
 write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn2",
-  subdir=file.path(Glomerulus),format='hxlineset')
+  subdir=Glomerulus,format='hxlineset')
 # The same, but likely faster for big neuronlists
 write.neurons(Cell07PNs, dir="testwn3",
   INDICES=subset(Cell07PNs,Scored.By="ACH",rval='names'),
-  subdir=file.path(Glomerulus),format='hxlineset')
+  subdir=Glomerulus,format='hxlineset')
 }
 }
 \author{
