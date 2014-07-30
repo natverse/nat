@@ -1,18 +1,33 @@
 #' Defines a target volume for a CMTK reformatx operation
 #' 
-#' @details if the character vector specifies an amiramesh file, it will be
-#'   converted to a bare \code{im3d} object and then to an appropriate
+#' @details if the character vector specifies an amiramesh file, it will be 
+#'   converted to a bare \code{im3d} object and then to an appropriate 
 #'   '--target-grid' specification.
-#' @param target A character vector specifying a file, an \code{im3d} object or a
-#'   6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
+#' @param target A character vector specifying a file, an \code{im3d} object or
+#'   a 6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
+#' @param ... additional arguments passed to methods
 #' @return a character vector specifying the full cmtk reformatx '--target' or 
 #'   '--target-grid' argument
 #' @export
-#' @rdname cmtk.reformatx
-cmtk.targetvolume<-function(target){
+cmtk.targetvolume<-function(target, ...) UseMethod("cmtk.targetvolume")
+
+#' @export
+#' @rdname cmtk.targetvolume
+cmtk.targetvolume.im3d<-function(target, ...) {
+  cmtk.targetvolume(c(dim(target), voxdims(target), origin(target)))
+}
+
+#' @export
+#' @rdname cmtk.targetvolume
+cmtk.targetvolume.default<-function(target, ...) {
+  if(is.list(target)) {
+    target=tryCatch(as.im3d(target), error=function(e) e)
+    cmtk.targetvolume(target, ...)
+  }
+  
   if(is.character(target) && !is.nrrd(target,TrustSuffix=TRUE) &&
        isTRUE(try(is.amiramesh(target), silent=TRUE))){
-    target=read.im3d(target,ReadData=FALSE)
+    return(cmtk.targetvolume(read.im3d(target,ReadData=FALSE)))
   }
   if(is.character(target)){
     target=shQuote(target)
@@ -26,24 +41,13 @@ cmtk.targetvolume<-function(target){
       target=paste("--target-grid",
                    paste(paste(target[1:3],collapse=","),paste(target[4:6],collapse=","),sep=":"))
     } else stop("Incorrect target specification: ",target)
-  } else if(inherits(target,'im3d')){
-    # can also give a density object
-    # --target-grid
-    #           Define target grid for reformating as Nx,Ny,Nz:dX,dY,dZ[:Ox,Oy,Oz]
-    #           (dims:pixel:origin)
-    # TODO: Double check definition of origin
-    target=paste("--target-grid",paste(
-      paste(dim(target),collapse=","),
-      paste(voxdims(target),collapse=","),
-      paste(origin(target),collapse=","),sep=":")
-    )
   } else {
     stop("Unrecognised target specification")
   }
   target
 }
 
-#' Refomat an image with a CMTK registration using the reformatx tool
+#' Reformat an image with a CMTK registration using the reformatx tool
 #' 
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
@@ -61,10 +65,16 @@ cmtk.targetvolume<-function(target){
 #'   be checked when determining if new output is required.
 #' @param ... additional arguments passed to CMTK \code{reformatx} after 
 #'   processing by \code{\link{cmtk.call}}.
+#' @inheritParams cmtk.targetvolume
 #' @importFrom nat.utils makelock removelock RunCmdForNewerInput
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
 #' @export
+#' @examples
+#' \dontrun{
+#' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
+#'   registrations='template_myimage.list')
+#' }
 cmtk.reformatx<-function(floating, target, registrations, output, 
                          dryrun=FALSE,
                          Verbose=TRUE, MakeLock=TRUE,
