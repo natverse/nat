@@ -1,15 +1,19 @@
 #' Defines a target volume for a CMTK reformatx operation
 #' 
-#' @details if the character vector specifies an amiramesh file, it will be
-#'   converted to a bare \code{im3d} object and then to an appropriate
+#' @details if the character vector specifies an amiramesh file, it will be 
+#'   converted to a bare \code{im3d} object and then to an appropriate 
 #'   '--target-grid' specification.
-#' @param target A character vector specifying a file, an \code{im3d} object or a
-#'   6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
+#' @param target A character vector specifying a file, an \code{im3d} object or
+#'   a 6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
+#' @param ... additional arguments passed to methods
 #' @return a character vector specifying the full cmtk reformatx '--target' or 
 #'   '--target-grid' argument
 #' @export
-#' @rdname cmtk.reformatx
-cmtk.targetvolume<-function(target){
+cmtk.targetvolume<-function(target, ...) UseMethod("cmtk.targetvolume")
+
+#' @export
+#' @rdname cmtk.targetvolume
+cmtk.targetvolume.default<-function(target, ...) {
   if(is.character(target) && !is.nrrd(target,TrustSuffix=TRUE) &&
        isTRUE(try(is.amiramesh(target), silent=TRUE))){
     target=read.im3d(target,ReadData=FALSE)
@@ -61,6 +65,7 @@ cmtk.targetvolume<-function(target){
 #'   be checked when determining if new output is required.
 #' @param ... additional arguments passed to CMTK \code{reformatx} after 
 #'   processing by \code{\link{cmtk.call}}.
+#' @inheritParams cmtk.targetvolume
 #' @importFrom nat.utils makelock removelock RunCmdForNewerInput
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
