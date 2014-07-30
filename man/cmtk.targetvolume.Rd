@@ -2,9 +2,12 @@
 \name{cmtk.targetvolume}
 \alias{cmtk.targetvolume}
 \alias{cmtk.targetvolume.default}
+\alias{cmtk.targetvolume.im3d}
 \title{Defines a target volume for a CMTK reformatx operation}
 \usage{
 cmtk.targetvolume(target, ...)
+
+\method{cmtk.targetvolume}{im3d}(target, ...)
 
 \method{cmtk.targetvolume}{default}(target, ...)
 }
