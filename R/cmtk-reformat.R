@@ -47,7 +47,7 @@ cmtk.targetvolume.default<-function(target, ...) {
   target
 }
 
-#' Refomat an image with a CMTK registration using the reformatx tool
+#' Reformat an image with a CMTK registration using the reformatx tool
 #' 
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
@@ -70,6 +70,11 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
 #' @export
+#' @examples
+#' \dontrun{
+#' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
+#'   registrations='template_myimage.list')
+#' }
 cmtk.reformatx<-function(floating, target, registrations, output, 
                          dryrun=FALSE,
                          Verbose=TRUE, MakeLock=TRUE,
