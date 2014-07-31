@@ -325,13 +325,14 @@ getformatreader<-function(file, class=NULL){
 #' @description \code{getformatwriter} gets the function to write a file
 #' @details If \code{ext=NA} then extension will not be used to query file 
 #'   formats and it will be overwritten by the default extensions returned by 
-#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will
-#'   use the specified extension to overwrite the value returned by
-#'   \code{fileformats}. If \code{ext=NULL} and
-#'   \code{file='somefilename.someext'} then \code{ext} will be set to
-#'   \code{'someext'} and that will override the value returned by
-#'   \code{fileformats}. See \code{\link{write.neuron}} for code to make this
-#'   discussion more concrete.
+#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will 
+#'   use the specified extension to overwrite the value returned by 
+#'   \code{fileformats}. If \code{ext=NULL} and 
+#'   \code{file='somefilename.someext'} then \code{ext} will be set to 
+#'   \code{'someext'} and that will override the value returned by 
+#'   \code{fileformats}. If \code{file='somefile_without_extension'} then the
+#'   suppplied or calculated extension will be appended to \code{file}. See
+#'   \code{\link{write.neuron}} for code to make this discussion more concrete.
 #' @rdname fileformats
 #' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
@@ -345,7 +346,15 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   r=nfs[[1]]
   
   if(ext_was_set) r$ext=ext
-  if(!is.null(file)) r$file=sub("\\.[^.]+$",r$ext,file)
+  if(!is.null(file)) {
+    r$file=if(nzchar(tools::file_ext(file))){
+      # the file we were given has an extension
+      sub("\\.[^.]+$", r$ext, file)
+    } else {
+      # the input file did not have an extension so just append
+      paste0(file, r$ext)
+    }
+  }
   r
 }
 
