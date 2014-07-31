@@ -337,9 +337,12 @@ getformatreader<-function(file, class=NULL){
 #' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   
-  if(!is.null(file) && is.null(ext))
-    ext=sub(".*(\\.[^.]+$)","\\1",basename(file))
+  if(!is.null(file) && is.null(ext)){
+    incomingext=tools::file_ext(file)
+    if(nzchar(incomingext)) ext=paste0(".", incomingext)
+  }
   ext_was_set=!is.null(ext) && !is.na(ext)
+  
   nfs=fileformats(format=format, ext=ext, class=class, rval='all', write=TRUE)
   if(length(nfs)>1) stop("Ambiguous file format specification!")
   if(length(nfs)==0) stop("No matching writer for this file format!")
