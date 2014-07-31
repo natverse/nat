@@ -1,3 +1,14 @@
+nat 1.5.10
+==========
+* fix: write.neurons subdir argument can accept a column of the attached
+  data.frame (unquoted)
+* fix: write.neuron(s) can add an extension to an output filename that does not
+  have one
+* write.neurons now has an explicit files argument
+* cmtk.targetvolume (and therefore cmtk.reformatx) can accept e.g. 
+  templatebrains (as contained in nat.flybrains package) to specify target 
+  image for registration.
+
 nat 1.5.9
 =========
 * fix transformation of points using compound CMTK registrations
