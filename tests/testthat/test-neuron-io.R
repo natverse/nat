@@ -781,6 +781,8 @@ test_that("we can write neuron to swc file",{
   
   expect_equal(write.neuron(y, dir=td, ext='.swc'),
                file.path(td,'EBH11R.swc'))
+  expect_equal(write.neuron(y, dir=td, ext='.swc', file='rhubarb'),
+               file.path(td,'rhubarb.swc'))
   expect_equal(f<-write.neuron(y, dir=td, format='swc', ext='_skel.swc'),
                file.path(td,'EBH11R_skel.swc'))
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
