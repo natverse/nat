@@ -405,6 +405,14 @@ read.neuron.swc<-function(f, ...){
 #' @examples
 #' # show the currently registered file formats that we can write
 #' fileformats(class='neuron', write=TRUE)
+#' \dontrun{
+#' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
+#' # writes out "myneuron.swc" in SWC format
+#' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
+#' # writes out "myneuron.amiramesh" in Amira hxlineset format
+#' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
+#' # writes out "myneuron.am" in Amira hxlineset format
+#' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
