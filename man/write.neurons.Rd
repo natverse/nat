@@ -3,7 +3,8 @@
 \alias{write.neurons}
 \title{Write neurons from a neuronlist object to individual files}
 \usage{
-write.neurons(nl, dir, subdir = NULL, INDICES = names(nl), ...)
+write.neurons(nl, dir, subdir = NULL, INDICES = names(nl), files = NULL,
+  ...)
 }
 \arguments{
   \item{nl}{neuronlist object}
@@ -17,6 +18,10 @@ write.neurons(nl, dir, subdir = NULL, INDICES = names(nl), ...)
   \item{INDICES}{Character vector of the names of a subset
   of neurons in neuronlist to write.}
 
+  \item{files}{Character vector or expression specifying
+  output filenames. See examples and
+  \code{\link{write.neuron}} for details.}
+
   \item{...}{Additional arguments passed to write.neuron}
 }
 \description{
@@ -26,6 +31,9 @@ Write neurons from a neuronlist object to individual files
 \dontrun{
 write.neurons(Cell07PNs,dir="testwn",
   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
+# ensure that the neurons are named according to neuronlist names
+write.neurons(Cell07PNs, dir="testwn", files=names(Cell07PNs),
+  subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
 # only write a subset
 write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn2",
   subdir=Glomerulus,format='hxlineset')
@@ -33,6 +41,9 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn2",
 write.neurons(Cell07PNs, dir="testwn3",
   INDICES=subset(Cell07PNs,Scored.By="ACH",rval='names'),
   subdir=Glomerulus,format='hxlineset')
+# set file name explicitly using a field in data.frame
+write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
+  subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 }
 }
 \author{
