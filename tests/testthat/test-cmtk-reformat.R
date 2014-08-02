@@ -36,4 +36,6 @@ test_that("cmtk.targetvolume works",{
   
   expect_equal(cmtk.targetvolume(im3d(dims = c(50,50,50), voxdims = c(1.4,1.4,1.4))),
                cmtk.targetvolume(c(50,50,50,1.4,1.4, 1.4, 0, 0, 0)))
+  
+  expect_error(cmtk.targetvolume(list(), 'Incorrect target'))
 })

@@ -20,10 +20,8 @@ cmtk.targetvolume.im3d<-function(target, ...) {
 #' @export
 #' @rdname cmtk.targetvolume
 cmtk.targetvolume.default<-function(target, ...) {
-  if(is.list(target)) {
-    target=tryCatch(as.im3d(target), error=function(e) e)
-    cmtk.targetvolume(target, ...)
-  }
+  if(is.list(target))
+    target=cmtk.targetvolume(as.im3d(target))
   
   if(is.character(target) && !is.nrrd(target,TrustSuffix=TRUE) &&
        isTRUE(try(is.amiramesh(target), silent=TRUE))){
