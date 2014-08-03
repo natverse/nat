@@ -79,6 +79,40 @@ test_that("cmtk.call",{
   
 })
 
+test_that("cmtk.statistics",{
+  lhmaskfile="testdata/nrrd/LHMask.nrrd"
+  statsnrrd="testdata/nrrd/dataforstats.nrrd"
+  a=suppressMessages(CMTKStatistics(lhmaskfile))
+  baseline_a=structure(list(min = 0, max = 1, mean = 0.22935, sdev = 0.42042, 
+                            n = 125000L, Entropy = 0.53849, sum = 28669), 
+                       .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"),
+                       class = "data.frame", row.names = c(NA, -1L))
+  b=CMTKStatistics(statsnrrd)
+  baseline_b=structure(list(min = 0, max = 100, mean = 8e-04, sdev = 0.28284, 
+                            n = 125000L, Entropy = 1e-04, sum = 100), 
+                       .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
+                       class = "data.frame", row.names = c(NA, -1L))
+  expect_equal(a,baseline_a)
+  expect_equal(b,baseline_b)
+  c=CMTKStatistics(statsnrrd,mask=lhmaskfile)
+  # my hacked version of statistics provides nnz
+  if('nnz'%in%names(c)){
+    baseline_c=structure(list(X.M = 0:1, min = c(0, 0), max = c(0, 100), 
+                              mean = c(0, 0.00349), sdev = c(0, 0.5906), 
+                              n = c(96331L, 28669L), nnz = 0:1, 
+                              Entropy = c(0, 0.00039), sum = c(0, 100)), 
+                         .Names = c("X.M", "min", "max", "mean", "sdev", "n", "nnz", "Entropy", "sum"), 
+                         class = "data.frame", row.names = c(NA, -2L))
+  } else {
+    baseline_c = structure(list(MaskLevel = 0:1, min = c(0, 0), max = c(0, 100), 
+                                mean = c(0, 0.00349), sdev = c(0, 0.5906), 
+                                n = c(96331L, 28669L), Entropy = c(0, 0.00039), 
+                                sum = c(0, 100)), 
+                           .Names = c("MaskLevel", "min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
+                           class = "data.frame", row.names = c(NA, -2L))
+  }
+  expect_equal(c,baseline_c)
+})
 
 }
 

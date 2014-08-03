@@ -128,3 +128,38 @@ cmtk.reformatx<-function(floating, target, registrations, output,
   if(Verbose||dryrun && PrintCommand) cat("cmd:\n",cmd,"\n") 
   return(TRUE)
 }
+
+#' Calculate image statistics for a nrrd or other CMTK compatible file
+#' 
+#' @details When given a label mask returns a dataframe with a row for each
+#'   level of the label field. If GJ's modified version of CMTK statistics is
+#'   available this will include an extra column with the number of non-zero
+#'   voxels in the main image for each level of the mask.
+#' @details Note that the Entropy column (sometimes H, sometimes Entropy) will 
+#'   always be named Entropy in the returned dataframe.
+#' @param f Path to image file (any CMTK compatible format)
+#' @param mask Optional path to a mask file
+#' @param masktype Whether mask should be treated as label field or binary mask 
+#'   (default label)
+#' @return return dataframe describing results
+#' @export
+#' @examples
+#' #CMTKStatistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
+CMTKStatistics<-function(f,mask,masktype=c("label","binary"),
+                         exe=file.path(cmtk.bindir(check=TRUE),"statistics")){
+  masktype=match.arg(masktype)
+  if(length(f)>1) return(sapply(f,CMTKStatistics,mask=mask,masktype=masktype,exe=exe))
+  args=f
+  if(!missing(mask)){
+    args=c(ifelse(masktype=='label','--Mask','--mask'),mask,args)
+  }
+  rval=system2(exe,args,stdout=TRUE)
+  # there is a bug in versions of CMTK statistics <2.3.1 when used with a mask 
+  # the header says that there are two entropy columns (H1,H2)
+  # but in fact there is only 1. 
+  rval[2]=sub('H1\tH2','Entropy',rval[2])
+  # use Entropy as standard columen method name
+  rval[2]=sub('\tH\t','\tEntropy\t',rval[2])
+  rval[2]=sub('#M','MaskLevel',rval[2])
+  read.table(text=rval,header=TRUE,skip=1,comment.char="")
+}
