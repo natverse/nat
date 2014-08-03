@@ -147,14 +147,14 @@ cmtk.reformatx<-function(floating, target, registrations, output,
 #' \dontrun{
 #' cmtk.statistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
 #' }
-cmtk.statistics<-function(f,mask,masktype=c("label","binary"),
-                         exe=file.path(cmtk.bindir(check=TRUE),"statistics")){
+cmtk.statistics<-function(f, mask, masktype=c("label","binary")){
   masktype=match.arg(masktype)
-  if(length(f)>1) return(sapply(f,CMTKStatistics,mask=mask,masktype=masktype,exe=exe))
+  if(length(f)>1) return(sapply(f,cmtk.statistics,mask=mask,masktype=masktype))
   args=f
   if(!missing(mask)){
     args=c(ifelse(masktype=='label','--Mask','--mask'),mask,args)
   }
+  exe=file.path(cmtk.bindir(check=TRUE),"statistics")
   rval=system2(exe,args,stdout=TRUE)
   # there is a bug in versions of CMTK statistics <2.3.1 when used with a mask 
   # the header says that there are two entropy columns (H1,H2)
