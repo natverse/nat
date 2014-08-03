@@ -144,8 +144,10 @@ cmtk.reformatx<-function(floating, target, registrations, output,
 #' @return return dataframe describing results
 #' @export
 #' @examples
-#' #CMTKStatistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
-CMTKStatistics<-function(f,mask,masktype=c("label","binary"),
+#' \dontrun{
+#' cmtk.statistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
+#' }
+cmtk.statistics<-function(f,mask,masktype=c("label","binary"),
                          exe=file.path(cmtk.bindir(check=TRUE),"statistics")){
   masktype=match.arg(masktype)
   if(length(f)>1) return(sapply(f,CMTKStatistics,mask=mask,masktype=masktype,exe=exe))
