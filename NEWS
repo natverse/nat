@@ -1,3 +1,8 @@
+nat 1.5.11
+==========
+* add cmtk.statistics function
+* fix infinite recursion in cmtk.targetvolume
+
 nat 1.5.10
 ==========
 * fix: write.neurons subdir argument can accept a column of the attached
