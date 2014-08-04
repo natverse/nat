@@ -3,7 +3,7 @@
 \alias{cmtk.statistics}
 \title{Calculate image statistics for a nrrd or other CMTK compatible file}
 \usage{
-cmtk.statistics(f, mask, masktype = c("label", "binary"))
+cmtk.statistics(f, mask, masktype = c("label", "binary"), ...)
 }
 \arguments{
   \item{f}{Path to image file (any CMTK compatible format)}
@@ -12,6 +12,9 @@ cmtk.statistics(f, mask, masktype = c("label", "binary"))
 
   \item{masktype}{Whether mask should be treated as label
   field or binary mask (default label)}
+
+  \item{...}{Additional arguments for ctmk's statistics
+  tool processed by \code{\link{cmtk.call}}.}
 }
 \value{
 return dataframe describing results

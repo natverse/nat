@@ -131,9 +131,9 @@ cmtk.reformatx<-function(floating, target, registrations, output,
 
 #' Calculate image statistics for a nrrd or other CMTK compatible file
 #' 
-#' @details When given a label mask returns a dataframe with a row for each
-#'   level of the label field. If GJ's modified version of CMTK statistics is
-#'   available this will include an extra column with the number of non-zero
+#' @details When given a label mask returns a dataframe with a row for each 
+#'   level of the label field. If GJ's modified version of CMTK statistics is 
+#'   available this will include an extra column with the number of non-zero 
 #'   voxels in the main image for each level of the mask.
 #' @details Note that the Entropy column (sometimes H, sometimes Entropy) will 
 #'   always be named Entropy in the returned dataframe.
@@ -141,21 +141,23 @@ cmtk.reformatx<-function(floating, target, registrations, output,
 #' @param mask Optional path to a mask file
 #' @param masktype Whether mask should be treated as label field or binary mask 
 #'   (default label)
+#' @param ... Additional arguments for ctmk's statistics tool processed by
+#'   \code{\link{cmtk.call}}.
 #' @return return dataframe describing results
 #' @export
 #' @examples
 #' \dontrun{
 #' cmtk.statistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
 #' }
-cmtk.statistics<-function(f, mask, masktype=c("label","binary")){
+cmtk.statistics<-function(f, mask, masktype=c("label", "binary"), ...){
   masktype=match.arg(masktype)
-  if(length(f)>1) return(sapply(f,cmtk.statistics,mask=mask,masktype=masktype))
+  if(length(f)>1) return(sapply(f,cmtk.statistics,mask=mask,masktype=masktype, ...))
   args=f
   if(!missing(mask)){
-    args=c(ifelse(masktype=='label','--Mask','--mask'),mask,args)
+    args=c(ifelse(masktype=='label','--Mask','--mask'), mask, args)
   }
-  exe=file.path(cmtk.bindir(check=TRUE),"statistics")
-  rval=system2(exe,args,stdout=TRUE)
+  cmd=cmtk.call("statistics", FINAL.ARGS = args, ... = ...)
+  rval=system(cmd, intern = TRUE)
   # there is a bug in versions of CMTK statistics <2.3.1 when used with a mask 
   # the header says that there are two entropy columns (H1,H2)
   # but in fact there is only 1. 
