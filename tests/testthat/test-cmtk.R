@@ -87,3 +87,16 @@ test_that("cmtk.arg.names works",{
   expect_equal(cmtk.arg.name('target.grid'),'--target-grid')
   expect_equal(cmtk.arg.name('target.offset.pixels'),'--target-offset-pixels')
 })
+
+test_that("cmtk.version works",{
+  op=options(nat.cmtk.bindir="",nat.cmtk.version=NULL)
+  on.exit(options(op))
+  expect_true(is.na(cmtk.version()))
+  expect_true(is.na(cmtk.version('1.1')))
+  
+  # now let's set a meaningful version and test
+  options(nat.cmtk.version='3.2.1')
+  expect_equal(cmtk.version(), numeric_version('3.2.1'))
+  expect_true(cmtk.version('3.2.1'))
+  expect_false(cmtk.version('3.2.2'))
+})

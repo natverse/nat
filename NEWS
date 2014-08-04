@@ -1,3 +1,24 @@
+nat 1.5.10
+==========
+* fix: write.neurons subdir argument can accept a column of the attached
+  data.frame (unquoted)
+* fix: write.neuron(s) can add an extension to an output filename that does not
+  have one
+* write.neurons now has an explicit files argument
+* cmtk.targetvolume (and therefore cmtk.reformatx) can accept e.g. 
+  templatebrains (as contained in nat.flybrains package) to specify target 
+  image for registration.
+
+nat 1.5.9
+=========
+* fix transformation of points using compound CMTK registrations
+  (this was broken for CMTK<3.2.2, so a workaround is required).
+* Add cmtk.version function.
+* xyzmatrix can cope with lower case x,y,z for column names
+* doc: fixes in xform
+
+* dev: fix test for winbuilder
+
 nat 1.5.8
 =========
 * Add boundingbox.list method to find boundingbox for neurons, surfaces etc

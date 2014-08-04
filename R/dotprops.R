@@ -337,6 +337,8 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' dp1=subset(dp,s3d(points))
 #' # special case of previous version
 #' dp2=subset(dp,s3d)
+#' # keep the points that were removed from dp2
+#' dp2.not=subset(dp,Negate(s3d))
 #' stopifnot(all.equal(dp1,dp2))
 #' dp2=subset(dp,alpha>0.5 & s3d(pointd))
 #' dp3=subset(dp,1:10)

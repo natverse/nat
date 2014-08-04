@@ -325,27 +325,39 @@ getformatreader<-function(file, class=NULL){
 #' @description \code{getformatwriter} gets the function to write a file
 #' @details If \code{ext=NA} then extension will not be used to query file 
 #'   formats and it will be overwritten by the default extensions returned by 
-#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will
-#'   use the specified extension to overwrite the value returned by
-#'   \code{fileformats}. If \code{ext=NULL} and
-#'   \code{file='somefilename.someext'} then \code{ext} will be set to
-#'   \code{'someext'} and that will override the value returned by
-#'   \code{fileformats}. See \code{\link{write.neuron}} for code to make this
-#'   discussion more concrete.
+#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will 
+#'   use the specified extension to overwrite the value returned by 
+#'   \code{fileformats}. If \code{ext=NULL} and 
+#'   \code{file='somefilename.someext'} then \code{ext} will be set to 
+#'   \code{'someext'} and that will override the value returned by 
+#'   \code{fileformats}. If \code{file='somefile_without_extension'} then the
+#'   suppplied or calculated extension will be appended to \code{file}. See
+#'   \code{\link{write.neuron}} for code to make this discussion more concrete.
 #' @rdname fileformats
 #' @export
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   
-  if(!is.null(file) && is.null(ext))
-    ext=sub(".*(\\.[^.]+$)","\\1",basename(file))
+  if(!is.null(file) && is.null(ext)){
+    incomingext=tools::file_ext(file)
+    if(nzchar(incomingext)) ext=paste0(".", incomingext)
+  }
   ext_was_set=!is.null(ext) && !is.na(ext)
+  
   nfs=fileformats(format=format, ext=ext, class=class, rval='all', write=TRUE)
   if(length(nfs)>1) stop("Ambiguous file format specification!")
   if(length(nfs)==0) stop("No matching writer for this file format!")
   r=nfs[[1]]
   
   if(ext_was_set) r$ext=ext
-  if(!is.null(file)) r$file=sub("\\.[^.]+$",r$ext,file)
+  if(!is.null(file)) {
+    r$file=if(nzchar(tools::file_ext(file))){
+      # the file we were given has an extension
+      sub("\\.[^.]+$", r$ext, file)
+    } else {
+      # the input file did not have an extension so just append
+      paste0(file, r$ext)
+    }
+  }
   r
 }
 
@@ -393,6 +405,14 @@ read.neuron.swc<-function(f, ...){
 #' @examples
 #' # show the currently registered file formats that we can write
 #' fileformats(class='neuron', write=TRUE)
+#' \dontrun{
+#' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
+#' # writes out "myneuron.swc" in SWC format
+#' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
+#' # writes out "myneuron.amiramesh" in Amira hxlineset format
+#' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
+#' # writes out "myneuron.am" in Amira hxlineset format
+#' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
@@ -463,8 +483,10 @@ write.neuron.swc<-function(x, file, ...){
 #' @param dir directory to write neurons
 #' @param subdir String naming field in neuron that specifies a subdirectory OR 
 #'   expression to evaluate in the context of neuronlist's df attribute
-#' @param INDICES Character vector of the names of a subset of neurons in
+#' @param INDICES Character vector of the names of a subset of neurons in 
 #'   neuronlist to write.
+#' @param files Character vector or expression specifying output filenames. See
+#'   examples and \code{\link{write.neuron}} for details.
 #' @param ... Additional arguments passed to write.neuron
 #' @author jefferis
 #' @export
@@ -474,24 +496,36 @@ write.neuron.swc<-function(x, file, ...){
 #' \dontrun{
 #' write.neurons(Cell07PNs,dir="testwn",
 #'   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
+#' # ensure that the neurons are named according to neuronlist names
+#' write.neurons(Cell07PNs, dir="testwn", files=names(Cell07PNs),
+#'   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
 #' # only write a subset
 #' write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn2",
-#'   subdir=file.path(Glomerulus),format='hxlineset')
+#'   subdir=Glomerulus,format='hxlineset')
 #' # The same, but likely faster for big neuronlists
 #' write.neurons(Cell07PNs, dir="testwn3",
 #'   INDICES=subset(Cell07PNs,Scored.By="ACH",rval='names'),
-#'   subdir=file.path(Glomerulus),format='hxlineset')
+#'   subdir=Glomerulus,format='hxlineset')
+#' # set file name explicitly using a field in data.frame
+#' write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
+#'   subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 #' }
-write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), ...){
+write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), files=NULL, ...){
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
   # Construct subdirectory structure based on 
   ee=substitute(subdir)
   subdirs=NULL
-  if(is.call(ee)){
+  if(!is.null(ee) && !is.character(ee)){
     if(!is.null(df)) df=df[INDICES,]
     subdirs=file.path(dir, eval(ee, df, parent.frame()))
     names(subdirs)=INDICES
+  }
+  ff=substitute(files)
+  if(!is.null(ff)){
+    if(!is.character(ff))
+      files=eval(ff, df, parent.frame())
+    if(is.null(names(files))) names(files)=INDICES
   }
   written=structure(rep("",length(INDICES)), .Names = INDICES)
   for(nn in INDICES){
@@ -506,7 +540,7 @@ write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), ...){
       thisdir=subdirs[nn]
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
-    written[nn]=write.neuron(n, dir=thisdir, ...)
+    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], ...)
   }
   invisible(written)
 }
