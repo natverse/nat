@@ -191,12 +191,12 @@ cmtk.version<-function(minimum=NULL){
 #'   \item{logical vectors}{ (which must be of length 1) will be passed on as 
 #'   \code{--arg-name}}
 #'   
-#'   \item{character vectors}{ (which must be of length 1) will be passed on as
+#'   \item{character vectors}{ (which must be of length 1) will be passed on as 
 #'   \code{--arg-name arg} i.e. quoting is left up to callee.}
 #'   
-#'   \item{numeric vectors}{ will be collapsed with commas if of length 1 and 
-#'   then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will result in 
-#'   \code{--target-offset 1,2,3}}
+#'   \item{numeric vectors}{ will be collapsed with commas if of length greater
+#'   than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will
+#'   result in \code{--target-offset 1,2,3}}
 #'   
 #'   }
 #' @param tool Name of the CMTK tool

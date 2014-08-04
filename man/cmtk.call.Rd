@@ -43,7 +43,7 @@ be passed on as \code{--arg-name arg} i.e. quoting is left
 up to callee.}
 
 \item{numeric vectors}{ will be collapsed with commas if of
-length 1 and then passed on unquoted e.g.
+length greater than 1 and then passed on unquoted e.g.
 \code{target.offset=c(1,2,3)} will result in
 \code{--target-offset 1,2,3}}
 
