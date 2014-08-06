@@ -4,11 +4,20 @@ test_that("we can download a neuronlistfh object with MD5'd objects", {
   localdir <- tempfile()
   dir.create(localdir)
   on.exit(unlink(localdir, recursive=TRUE))
-  kcs20md5 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir, quiet=TRUE)
+  kcs20.url="http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds"
+  kcs20md5 <- read.neuronlistfh(kcs20.url, localdir=localdir, quiet=TRUE)
   # test trying to read in neuronlistfh object which is now available locally
   # before we have downloaded any data objects
-  kcs20md5.2 <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds", localdir=localdir, quiet=TRUE)
+  kcs20md5.2 <- read.neuronlistfh(kcs20.url, localdir=localdir, quiet=TRUE)
   expect_equal(dim(kcs20md5[[1]]$points), c(284, 3))
+  
+  # test updating the neuronlistfh object after messing up the current version
+  writeLines('Rhubarb crumble!', attr(kcs20md5.2, 'file'))
+  expect_error(read.neuronlistfh(kcs20.url, localdir=localdir))
+  expect_message(kcs20md5.3<-read.neuronlistfh(kcs20.url, localdir=localdir, 
+                                               quiet=TRUE, update=TRUE),
+                 "Updating cached")
+  expect_equal(kcs20md5.3, kcs20md5.2)
 })
 
 test_that("we can synchronise a neuronlistfh object with its remote", {
