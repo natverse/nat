@@ -148,7 +148,7 @@ c.neuronlist<-function(..., recursive = FALSE){
 #'   error. The default value (\code{NA}) will result in nlapply stopping with 
 #'   an error message the moment there is an eror. For other values, see 
 #'   details.
-#' @param UsePlyr whether to use \code{\link{plyr::llply}} in place of lapply,
+#' @param UsePlyr whether to use \code{\link[plyr]{llply}} in place of lapply,
 #'   enabling parallelisation and progress bars.
 #' @return A neuronlist
 #' @export

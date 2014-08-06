@@ -26,7 +26,7 @@ nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   will result in nlapply stopping with an error message the
   moment there is an eror. For other values, see details.}
 
-  \item{UsePlyr}{whether to use \code{\link{plyr::llply}}
+  \item{UsePlyr}{whether to use \code{\link[plyr]{llply}}
   in place of lapply, enabling parallelisation and progress
   bars.}
 
