@@ -4,7 +4,7 @@
 \alias{nmapply}
 \title{lapply and mapply for neuronlists}
 \usage{
-nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA)
+nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA, UsePlyr = TRUE)
 
 nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   OmitFailures = NA)
@@ -25,6 +25,10 @@ nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   \code{FUN} gives an error. The default value (\code{NA})
   will result in nlapply stopping with an error message the
   moment there is an eror. For other values, see details.}
+
+  \item{UsePlyr}{whether to use \code{\link{plyr::llply}}
+  in place of lapply, enabling parallelisation and progress
+  bars.}
 
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 
