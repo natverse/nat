@@ -148,4 +148,9 @@ test_that("we can resample neurons", {
 
   expect_is(resampled1<-resample(testn, 1), 'neuron')
   expect_equal(seglengths(resampled1), seglengths(testn))
+  
+  set.seed(42)
+  g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
+  n=as.neuron(g,origin=3, vertexData = matrix(rnorm(12*4),ncol=4, dimnames = list(NULL, c("X","Y","Z","W"))))
+  expect_warning(resample(n,1), "resample will drop")
 })

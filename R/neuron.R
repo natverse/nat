@@ -443,6 +443,9 @@ resample<-function(x, ...) UseMethod("resample")
 #' @rdname resample
 #' @seealso \code{\link{seglengths}}
 resample.neuron<-function(x, stepsize, ...) {
+  if(!is.null(x$SubTrees) && length(x$SubTrees)>1)
+    warning("resample will drop all but the main segment of this neuron")
+  
   d=matrix(unlist(x$d[,c("X","Y","Z")]),ncol=3)
   
   # Always calculate seglengths 
