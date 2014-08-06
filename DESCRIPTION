@@ -31,7 +31,8 @@ Imports:
     methods,
     filehash,
     digest,
-    nat.utils (>= 0.4.2)
+    nat.utils (>= 0.4.2),
+    plyr
 Suggests:
     Rvcg,
     testthat,

@@ -179,7 +179,7 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, UsePlyr=TRUE){
     Y=X
     X=X[subset]
   }
-  APPLYFUN=ifelse(UsePlyr && require('plyr'), llply, lapply)
+  APPLYFUN=ifelse(UsePlyr, plyr::llply, lapply)
   TFUN = if(is.na(OmitFailures)) FUN 
   else function(...) try(FUN(...), silent=TRUE)
   rval=structure(APPLYFUN(X, TFUN, ...), class=cl, df=attr(X, 'df'))
