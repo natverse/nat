@@ -76,14 +76,15 @@ package (if you have not already done so) and then use that to install nat.
 
 ```r
 # install devtools if required
-install.packages("devtools")
+if (!require("devtools")) install.packages("devtools")
 # then install nat
 devtools::install_github("jefferis/nat")
 ```
 
-**nat** deveolpemnt includes continuous integration using [travis](http://travis-ci.org/jefferis/nat)
-so the master branch is considered very stable. However, you can install
-the latest point release version as follows:
+The **nat** package includes extensive unit tests which are run along with R's
+(extremely fastidious) package check routines by the [travis](http://travis-ci.org/jefferis/nat)
+continuous integration server. The master branch is therefore consideredvery stable.
+However, you can install the latest point release version as follows:
 
 ```r
 devtools::install_github("jefferis/nat",ref="release")
