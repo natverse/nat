@@ -16,36 +16,40 @@ Quick Start
 
 For the impatient ...
 
-    # install
-    install.packages("nat")
-    # use
-    library(nat)
-    
-    # plot some test data (?kcs20 for details)
-    # Drosophila Kenyon cells processed from raw data at http://flycircuit.tw
-    head(kcs20)
-    open3d()
-    plot3d(kcs20, col=type)
-    # get help
-    ?nat
+```r
+# install
+install.packages("nat")
+# use
+library(nat)
+
+# plot some test data (?kcs20 for details)
+# Drosophila Kenyon cells processed from raw data at http://flycircuit.tw
+head(kcs20)
+open3d()
+plot3d(kcs20, col=type)
+# get help
+?nat
+```
 
 A larger data set, 300 olfactory projection neurons from [Grosjean et al 2011](http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=si:grosjean_and_silbering_2011)
 
-    load(url("http://flybrain.mrc-lmb.cam.ac.uk/si/grosjean11/MyNeuronsFCIR.rda"))
-    plot3d(MyNeurons[[1]])
-    clear3d()
-    head(MyNeurons)
-    
-    # 3d plot of neurons from olfactory glomeruli beginning DM
-    # coloured by glomerulus
-    rval=plot3d(MyNeurons, subset=grepl("^DM",Glomerulus), col=factor(Glomerulus),
-      lwd=2, WithNodes=FALSE)
-    # make a legend so that you know which colours match which glomerulus
-    with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(col)))
-    
-    # more help
-    ?plot3d.neuronlist
-    ?subset.neuronlist
+```r
+load(url("http://flybrain.mrc-lmb.cam.ac.uk/si/grosjean11/MyNeuronsFCIR.rda"))
+plot3d(MyNeurons[[1]])
+clear3d()
+head(MyNeurons)
+
+# 3d plot of neurons from olfactory glomeruli beginning DM
+# coloured by glomerulus
+rval=plot3d(MyNeurons, subset=grepl("^DM",Glomerulus), col=factor(Glomerulus),
+  lwd=2, WithNodes=FALSE)
+# make a legend so that you know which colours match which glomerulus
+with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(col)))
+
+# more help
+?plot3d.neuronlist
+?subset.neuronlist
+```
 
 # Details
 ## Prerequisites
@@ -65,8 +69,11 @@ every few months.
 install.packages("nat")
 ```
 
-It you wish to run the package tests, it is necessary to install with 
-`dependencies=TRUE`.
+It you wish to run the package tests, it is necessary to install with all dependencies:
+
+```r
+install.packages("nat", dependencies=TRUE)
+```
 
 ### Development version
 **nat** remains under quite active development, so you may wish to install the
