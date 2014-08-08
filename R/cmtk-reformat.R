@@ -52,7 +52,7 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' @param output The output image (defaults to target-floating.nrrd)
 #' @param dryrun Just print command
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
-#'   update checks. Sets \code{reformatx} \code{--verbose} option.
+#'   update checks. Sets command line \code{--verbose} option.
 #' @param MakeLock Whether to use a lock file to allow simple parallelisation 
 #'   (see \code{makelock})
 #' @param OverWrite Whether to OverWrite an existing output file. One of 
@@ -73,9 +73,8 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
 #'   registrations='template_myimage.list')
 #' }
-cmtk.reformatx<-function(floating, target, registrations, output, 
-                         dryrun=FALSE,
-                         Verbose=TRUE, MakeLock=TRUE,
+cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
+                         Verbose=TRUE, MakeLock=TRUE, 
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
@@ -141,23 +140,25 @@ cmtk.reformatx<-function(floating, target, registrations, output,
 #' @param mask Optional path to a mask file
 #' @param masktype Whether mask should be treated as label field or binary mask 
 #'   (default label)
-#' @param ... Additional arguments for ctmk's statistics tool processed by
+#' @param ... Additional arguments for ctmk's statistics tool processed by 
 #'   \code{\link{cmtk.call}}.
+#' @inheritParams cmtk.reformatx
 #' @return return dataframe describing results
 #' @export
 #' @examples
 #' \dontrun{
 #' cmtk.statistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
 #' }
-cmtk.statistics<-function(f, mask, masktype=c("label", "binary"), ...){
+cmtk.statistics<-function(f, mask, masktype=c("label", "binary"), ..., Verbose=FALSE){
   masktype=match.arg(masktype)
   if(length(f)>1) return(sapply(f,cmtk.statistics,mask=mask,masktype=masktype, ...))
   args=f
   if(!missing(mask)){
     args=c(ifelse(masktype=='label','--Mask','--mask'), mask, args)
   }
-  cmd=cmtk.call("statistics", FINAL.ARGS = args, ... = ...)
-  rval=system(cmd, intern = TRUE)
+  cmd=cmtk.call("statistics", PROCESSED.ARGS = if(Verbose) "--verbose" else NULL, 
+                FINAL.ARGS = args, ... = ...)
+  rval=system(cmd, intern = TRUE, ignore.stderr=!Verbose)
   # there is a bug in versions of CMTK statistics <2.3.1 when used with a mask 
   # the header says that there are two entropy columns (H1,H2)
   # but in fact there is only 1. 

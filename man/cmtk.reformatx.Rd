@@ -19,8 +19,8 @@ cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
   \item{dryrun}{Just print command}
 
   \item{Verbose}{Whether to show cmtk status messages and
-  be verbose about file update checks. Sets
-  \code{reformatx} \code{--verbose} option.}
+  be verbose about file update checks. Sets command line
+  \code{--verbose} option.}
 
   \item{MakeLock}{Whether to use a lock file to allow
   simple parallelisation (see \code{makelock})}

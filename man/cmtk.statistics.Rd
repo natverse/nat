@@ -3,7 +3,8 @@
 \alias{cmtk.statistics}
 \title{Calculate image statistics for a nrrd or other CMTK compatible file}
 \usage{
-cmtk.statistics(f, mask, masktype = c("label", "binary"), ...)
+cmtk.statistics(f, mask, masktype = c("label", "binary"), ...,
+  Verbose = FALSE)
 }
 \arguments{
   \item{f}{Path to image file (any CMTK compatible format)}
@@ -15,6 +16,10 @@ cmtk.statistics(f, mask, masktype = c("label", "binary"), ...)
 
   \item{...}{Additional arguments for ctmk's statistics
   tool processed by \code{\link{cmtk.call}}.}
+
+  \item{Verbose}{Whether to show cmtk status messages and
+  be verbose about file update checks. Sets command line
+  \code{--verbose} option.}
 }
 \value{
 return dataframe describing results
