@@ -37,8 +37,8 @@ read.neuron<-function(f, format=NULL, ...){
     n=match.fun(ffs$read)(f, ...)
   }
   # make sure that neuron actually inherits from neuron
-  # we can normally rely on dotprops objects to have the correct class
-  if(is.dotprops(n)) n else as.neuron(n)
+  # we can rely on dotprops/neuronlist objects to have the correct class
+  if(is.dotprops(n) || is.neuronlist(n)) n else as.neuron(n)
 }
 
 #' Read one or more neurons from file to a neuronlist in memory
@@ -161,6 +161,14 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
     if(inherits(x,'try-error')){
       if(OmitFailures) x=NULL
       else x=NA
+    }
+    if(is.neuronlist(x)) {
+      if(length(paths)>1)
+        stop("It is not possible to load multiple neuronlists or a mix of",
+             " neurons and neuronlists!\nPlease specfiy a single file or",
+             " use a pattern to exclude files you did not mean to read.")
+      nl=x
+      break
     }
     nl[[n]]=x
   }
