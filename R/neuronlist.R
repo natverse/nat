@@ -98,30 +98,44 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
 
 #' Combine multiple neuronlists into a single list
 #' 
-#' Uses rbind.dataframe to merge any dataframes. This means that all attached
-#' data.frames must have compatible columns with the same names (though not
-#' necessarily in the same order).
+#' @details Uses \code{\link[plyr]{rbind.fill}} to join any attached dataframes.
+#'   When \code{columns='all'}, the default, missing values are replaced with
+#'   NAs. When \code{columns='matching'}, only columns present in all attached
+#'   data.frames are kept.
 #' @param ... neuronlists to combine
+#' @param columns Either \code{'all'}, the default, or \code{'matching'}. See 
+#'   details.
 #' @param recursive Presently ignored
 #' @export
 #' @seealso \code{\link[base]{c}}
 #' @examples
 #' stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))
-c.neuronlist<-function(..., recursive = FALSE){
+c.neuronlist<-function(..., columns=c('all','matching'), recursive = FALSE){
   args=list(...)
   if(!all(sapply(args, inherits, "neuronlist")))
     stop("method only applicable to multiple neuronlist objects")
   
-  old.dfs=lapply(args, attr, 'df')
-  null_dfs=sapply(old.dfs, is.null)
-  if(any(null_dfs)){
-    if(all(null_dfs)){
-      new.df=NULL
-    } else {
-      stop("Cannot join neuronlists with attached data.frames to neuronlists without")
-    }
-  } else new.df=do.call(rbind, old.dfs)
+  neuron_names=unlist(lapply(args, names))
+  if(any(duplicated(neuron_names))) 
+    stop("Cannot join neuronlists containing neurons with the same name!")
   
+  old.dfs=lapply(args, attr, 'df')
+  new.df=plyr::rbind.fill(old.dfs)
+  if(!is.null(new.df))
+    rownames(new.df)=neuron_names
+
+  columns=match.arg(columns)
+  if(columns=='matching'){
+    # find the columns present in all data.frames
+    selected_cols = Reduce(function(x, y) intersect(colnames(x), colnames(y)),
+                           oldf.dfs[-1], init=old.dfs[[1]])
+    if(length(selected_cols)){
+      new.df=new.df[, selected_cols]
+    } else {
+      warning("No columns common to all attached data.frames!")
+      new.df=NULL
+    }
+  }
   as.neuronlist(NextMethod(...), df = new.df)
 }
 
