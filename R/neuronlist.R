@@ -128,7 +128,7 @@ c.neuronlist<-function(..., columns=c('all','matching'), recursive = FALSE){
   if(columns=='matching'){
     # find the columns present in all data.frames
     selected_cols = Reduce(function(x, y) intersect(colnames(x), colnames(y)),
-                           oldf.dfs[-1], init=old.dfs[[1]])
+                           old.dfs[-1], init=old.dfs[[1]])
     if(length(selected_cols)){
       new.df=new.df[, selected_cols]
     } else {
