@@ -4,8 +4,6 @@ test_that("c.neuronlist behaves", {
   expect_equal(c(Cell07PNs), Cell07PNs)
   
   expect_equivalent(c(Cell07PNs[1:5], Cell07PNs[6:10]), Cell07PNs[1:10])
-  expect_equivalent(c(Cell07PNs[1:5], Cell07PNs[6:10], columns='matching'),
-                    Cell07PNs[1:10])
   expect_error(c(Cell07PNs[1:5], NULL))
   expect_error(c(Cell07PNs[1:5], Cell07PNs[1:5]), "neurons with the same name")
 })

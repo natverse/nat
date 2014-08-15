@@ -3,14 +3,10 @@
 \alias{c.neuronlist}
 \title{Combine multiple neuronlists into a single list}
 \usage{
-\method{c}{neuronlist}(..., columns = c("all", "matching"),
-  recursive = FALSE)
+\method{c}{neuronlist}(..., recursive = FALSE)
 }
 \arguments{
   \item{...}{neuronlists to combine}
-
-  \item{columns}{Either \code{'all'}, the default, or
-  \code{'matching'}. See details.}
 
   \item{recursive}{Presently ignored}
 }
@@ -19,10 +15,7 @@ Combine multiple neuronlists into a single list
 }
 \details{
 Uses \code{\link[plyr]{rbind.fill}} to join any attached
-dataframes.  When \code{columns='all'}, the default,
-missing values are replaced with NAs. When
-\code{columns='matching'}, only columns present in all
-attached data.frames are kept.
+dataframes, so missing values are replaced with NAs.
 }
 \examples{
 stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))

@@ -98,19 +98,15 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
 
 #' Combine multiple neuronlists into a single list
 #' 
-#' @details Uses \code{\link[plyr]{rbind.fill}} to join any attached dataframes.
-#'   When \code{columns='all'}, the default, missing values are replaced with
-#'   NAs. When \code{columns='matching'}, only columns present in all attached
-#'   data.frames are kept.
+#' @details Uses \code{\link[plyr]{rbind.fill}} to join any attached dataframes,
+#'   so missing values are replaced with NAs.
 #' @param ... neuronlists to combine
-#' @param columns Either \code{'all'}, the default, or \code{'matching'}. See 
-#'   details.
 #' @param recursive Presently ignored
 #' @export
 #' @seealso \code{\link[base]{c}}
 #' @examples
 #' stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))
-c.neuronlist<-function(..., columns=c('all','matching'), recursive = FALSE){
+c.neuronlist<-function(..., recursive = FALSE){
   args=list(...)
   if(!all(sapply(args, inherits, "neuronlist")))
     stop("method only applicable to multiple neuronlist objects")
@@ -124,18 +120,6 @@ c.neuronlist<-function(..., columns=c('all','matching'), recursive = FALSE){
   if(!is.null(new.df))
     rownames(new.df)=neuron_names
 
-  columns=match.arg(columns)
-  if(columns=='matching'){
-    # find the columns present in all data.frames
-    selected_cols = Reduce(function(x, y) intersect(colnames(x), colnames(y)),
-                           old.dfs[-1], init=old.dfs[[1]])
-    if(length(selected_cols)){
-      new.df=new.df[, selected_cols]
-    } else {
-      warning("No columns common to all attached data.frames!")
-      new.df=NULL
-    }
-  }
   as.neuronlist(NextMethod(...), df = new.df)
 }
 
