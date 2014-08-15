@@ -148,6 +148,8 @@ c.neuronlist<-function(..., recursive = FALSE){
 #'   error. The default value (\code{NA}) will result in nlapply stopping with 
 #'   an error message the moment there is an eror. For other values, see 
 #'   details.
+#' @param UsePlyr whether to use \code{\link[plyr]{llply}} in place of lapply,
+#'   enabling parallelisation and progress bars.
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -160,6 +162,19 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' plot3d(kcs20,col='grey')
 #' rgl.close()
 #' 
+#' \dontrun{
+#' ## nlapply example with plyr
+#' ## dotprops.neuronlist uses nlapply under the hood
+#' ## the .progress and .parallel arguments are passed straight to 
+#' system.time(d1<-dotprops(kcs20,resample=1,k=5,.progress='text'))
+#' ## plyr+parallel
+#' library(doMC)
+#' # can also specify cores e.g. registerDoMC(cores=4)
+#' registerDoMC()
+#' system.time(d2<-dotprops(kcs20,resample=1,k=5,.parallel=TRUE))
+#' stopifnot(all.equal(d1,d2))
+#' }
+#' 
 #' ## nmapply example
 #' # flip first neuron in X, second in Y and 3rd in Z
 #' xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
@@ -168,7 +183,7 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' plot3d(kcs20[1:3])
 #' plot3d(xyzflip)
 #' rgl.close()
-nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
+nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, UsePlyr=TRUE){
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) 
   else c("neuronlist", 'list')
   
@@ -177,10 +192,10 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
     Y=X
     X=X[subset]
   }
-
+  APPLYFUN=ifelse(UsePlyr, plyr::llply, lapply)
   TFUN = if(is.na(OmitFailures)) FUN 
   else function(...) try(FUN(...), silent=TRUE)
-  rval=structure(lapply(X, TFUN, ...), class=cl, df=attr(X, 'df'))
+  rval=structure(APPLYFUN(X, TFUN, ...), class=cl, df=attr(X, 'df'))
   
   if(isTRUE(OmitFailures))
     failures=sapply(rval, inherits, 'try-error')
