@@ -116,7 +116,15 @@ c.neuronlist<-function(..., recursive = FALSE){
     stop("Cannot join neuronlists containing neurons with the same name!")
   
   old.dfs=lapply(args, attr, 'df')
+  null_dfs=sapply(old.dfs, is.null)
+  if(any(null_dfs) && !all(null_dfs)){
+    # we need to ensure that the eventual data.frame has suitable rownames
+    # so add dummy empty data.frame with appropriate rownames
+    old.dfs[null_dfs]=lapply(args[null_dfs],
+                             function(x) data.frame(row.names = names(x)))
+  }
   new.df=plyr::rbind.fill(old.dfs)
+  # rbind.fill doesn't seem to look after rownames
   if(!is.null(new.df))
     rownames(new.df)=neuron_names
 
