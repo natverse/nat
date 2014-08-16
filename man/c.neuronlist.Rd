@@ -11,10 +11,11 @@
   \item{recursive}{Presently ignored}
 }
 \description{
-Uses rbind.dataframe to merge any dataframes. This means
-that all attached data.frames must have compatible columns
-with the same names (though not necessarily in the same
-order).
+Combine multiple neuronlists into a single list
+}
+\details{
+Uses \code{\link[plyr]{rbind.fill}} to join any attached
+dataframes, so missing values are replaced with NAs.
 }
 \examples{
 stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))

@@ -98,9 +98,8 @@ as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
 
 #' Combine multiple neuronlists into a single list
 #' 
-#' Uses rbind.dataframe to merge any dataframes. This means that all attached
-#' data.frames must have compatible columns with the same names (though not
-#' necessarily in the same order).
+#' @details Uses \code{\link[plyr]{rbind.fill}} to join any attached dataframes,
+#'   so missing values are replaced with NAs.
 #' @param ... neuronlists to combine
 #' @param recursive Presently ignored
 #' @export
@@ -112,16 +111,23 @@ c.neuronlist<-function(..., recursive = FALSE){
   if(!all(sapply(args, inherits, "neuronlist")))
     stop("method only applicable to multiple neuronlist objects")
   
+  neuron_names=unlist(lapply(args, names))
+  if(any(duplicated(neuron_names))) 
+    stop("Cannot join neuronlists containing neurons with the same name!")
+  
   old.dfs=lapply(args, attr, 'df')
   null_dfs=sapply(old.dfs, is.null)
-  if(any(null_dfs)){
-    if(all(null_dfs)){
-      new.df=NULL
-    } else {
-      stop("Cannot join neuronlists with attached data.frames to neuronlists without")
-    }
-  } else new.df=do.call(rbind, old.dfs)
-  
+  if(any(null_dfs) && !all(null_dfs)){
+    # we need to ensure that the eventual data.frame has suitable rownames
+    # so add dummy empty data.frame with appropriate rownames
+    old.dfs[null_dfs]=lapply(args[null_dfs],
+                             function(x) data.frame(row.names = names(x)))
+  }
+  new.df=plyr::rbind.fill(old.dfs)
+  # rbind.fill doesn't seem to look after rownames
+  if(!is.null(new.df))
+    rownames(new.df)=neuron_names
+
   as.neuronlist(NextMethod(...), df = new.df)
 }
 
