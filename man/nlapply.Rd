@@ -2,9 +2,9 @@
 \name{nlapply}
 \alias{nlapply}
 \alias{nmapply}
-\title{lapply and mapply for neuronlists}
+\title{lapply and mapply for neuronlists (with optional parallelisation)}
 \usage{
-nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA, UsePlyr = TRUE)
+nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA)
 
 nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   OmitFailures = NA)
@@ -26,10 +26,6 @@ nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   will result in nlapply stopping with an error message the
   moment there is an eror. For other values, see details.}
 
-  \item{UsePlyr}{whether to use \code{\link[plyr]{llply}}
-  in place of lapply, enabling parallelisation and progress
-  bars.}
-
   \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 
   \item{SIMPLIFY}{logical or character string; attempt to
@@ -45,11 +41,14 @@ nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
 A neuronlist
 }
 \description{
-lapply and mapply for neuronlists
+versions of lapply and mapply that look after the class and
+attached dataframe of neuronlist objects. \code{nlapply}
+can apply a function to only a \code{subset} of elements in
+the input neuronlist.  Internally \code{nlapply} uses
+\code{plyr::llply} thereby enabling progress bars and
+simple parallelisation (see plyr section and examples).
 }
 \details{
-Looks after class and any attached dataframe.
-
 When \code{OmitFailures} is not \code{NA}, \code{FUN} will
 be wrapped in a call to \code{try} to ensure that failure
 for any single neuron does not abort the nlapply/nmapply
@@ -63,6 +62,35 @@ not be printed because the call is wrapped as
 
 Note that for \code{nmapply} the first argument in \dots
 must be a \code{neuronlist}
+}
+\section{plyr}{
+  The arguments of most interest from plyr are:
+
+  \itemize{
+
+  \item .progress set to \code{"text"} for a basic progress
+  bar
+
+  \item .parallel set to \code{TRUE} for parallelisation
+  after registering a parallel backend (see below).
+
+  \item .paropts Additional arguments for parallel
+  computation. See \code{\link[plyr]{llply}} for details.
+
+  }
+
+  Before using parallel code within an R session you must
+  register a suitable parallel backend. The simplest
+  example is the multicore option provided by the
+  \code{doMC} package that is suitable for a spreading
+  computational load across multiple cores on a single
+  machine. An example is provided below.
+
+  Note that the progess bar and parallel options cannot be
+  used at the same time. You may want to start a
+  potentially long-running job with the progress bar option
+  and then abort and re-run with \code{.parallel=TRUE} if
+  it looks likely to take a very long time.
 }
 \examples{
 ## nlapply example
