@@ -1,3 +1,16 @@
+nat 1.5.12
+==========
+* fix bug in updating neuronlistfh objects from remote url
+* nlapply now has options for progress bars and parallelisation by using the 
+  plyr package under the hood.
+* c.neuronlist can now join lists with attached data.frames with different 
+  columns (missing values are filled with NAs). This also applies when some
+  neuronlists have no attached data.frame at all.
+* read.neurons can read neuronlist files from disk
+* cmtk.statistics now has a Verbose argument
+* warn if resmapling a neuron with multiple subtrees that only the main subtree
+  will be kept.
+
 nat 1.5.11
 ==========
 * add cmtk.statistics function
