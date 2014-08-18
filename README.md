@@ -31,7 +31,7 @@ plot3d(kcs20, col=type)
 ?nat
 ```
 
-A larger data set, 300 olfactory projection neurons from [Grosjean et al 2011](http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=si:grosjean_and_silbering_2011)
+A larger data set, 300 olfactory projection neurons from [Grosjean et al 2011](http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=si:grosjean_and_silbering_2011):
 
 ```r
 load(url("http://flybrain.mrc-lmb.cam.ac.uk/si/grosjean11/MyNeuronsFCIR.rda"))
@@ -57,7 +57,7 @@ with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(
 
 * http://www.r-project.org
 
-3D visualisation is provided by the rgl package based on OpenGL. On MacOSX you must have a copy of Xquartz, the X11 window manager installed. This is no longer a default install since MacOSX 10.8, but the OS should offer to it install it for you if something tries to use it. Altervatively you can get it directly from https://xquartz.macosforge.org/landing/
+3D visualisation is provided by the rgl package based on OpenGL. On Mac OS X you must have a copy of XQuartz, the X11 window manager, installed. This is no longer a default install since Mac OS X 10.8, but the OS should offer to it install it for you if something tries to use it. Alternatively you can get it directly from https://xquartz.macosforge.org/landing/
 
 If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately – see section *External Dependencies* below. 
 
@@ -89,8 +89,8 @@ devtools::install_github("jefferis/nat")
 ```
 
 The **nat** package includes extensive unit tests which are run along with R's
-(extremely fastidious) package check routines by the [travis](http://travis-ci.org/jefferis/nat)
-continuous integration server. The master branch is therefore consideredvery stable.
+(extremely fastidious) package check routines by the [Travis](http://travis-ci.org/jefferis/nat)
+continuous integration server. The master branch is therefore considered very stable.
 However, you can install the latest point release version as follows:
 
 ```r
@@ -105,13 +105,13 @@ install in this way, but devtools should offer to install this for you if you
 do not already have it.
 
 ## External Dependencies
-**nat** is self sufficient for core functionality, but the transformation of 3d
+**nat** is self sufficient for core functionality, but the transformation of 3D
 data using Computational Morphometry Toolkit (CMTK) registrations depends on an
 external installation of that toolkit. CMTK binaries can be downloaded for
 Windows, Linux and Mac at <http://www.nitrc.org/projects/cmtk/>. Source code is 
 available from the same site or an unofficial mirror repository at 
 <https://github.com/jefferis/cmtk>. We have extensive experience of using CMTK
-under linux (where we compile from source) and mac (where we compile or use the
+under Linux (where we compile from source) and Mac (where we compile or use the
 MacOSX-10.6-x86_64.dmg binary installers). We have also used 
 [neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
-travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
+Travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
