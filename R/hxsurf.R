@@ -194,7 +194,6 @@ write.hxsurf <- function(surf, filename) {
 #' @param ... Additional arguments passed to
 #' @export
 #' @method plot3d hxsurf
-#' @importFrom rgl plot3d par3d triangles3d
 #' @seealso \code{\link{read.hxsurf}}
 #' @family hxsurf
 plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
@@ -237,7 +236,6 @@ as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
 #' @export
 #' @rdname as.mesh3d
 #' @seealso \code{\link[rgl]{tmesh3d}}
-#' @importFrom rgl tmesh3d
 #' @family hxsurf
 as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   if(is.null(Regions)) {

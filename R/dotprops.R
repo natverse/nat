@@ -283,7 +283,6 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' @return invisible list of results of rgl plotting commands
 #' @method plot3d dotprops
 #' @export
-#' @importFrom rgl plot3d
 #' @seealso \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d}, 
 #'   \link[rgl]{segments3d}}
 #' @examples

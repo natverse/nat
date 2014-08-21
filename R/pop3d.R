@@ -7,7 +7,6 @@
 #' @param type Type of objects to remove see \code{pop3d}.
 #' @export
 #' @seealso \code{\link[rgl]{pop3d}}, \code{\link{plot3d.neuronlist}}
-#' @importFrom rgl pop3d
 npop3d <- function(x, slow=FALSE, type='shapes') {
   if(missing(x)){
     if(exists(".last.plot3d", envir=.plotted3d))
