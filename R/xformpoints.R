@@ -64,9 +64,11 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   if(length(reg)>1 && !cmtk.version(minimum = '3.2.2')){
     # there is a bug in applying compound registrations in CMTK<=3.2.1
     # see https://github.com/jefferis/cmtk/commit/209168d892d8980e47
-    return(mapply(xformpoints.cmtkreg, reg=reg, direction=direction, 
-           MoreArgs = list(points=points, transformtype=transformtype, 
-                           FallBackToAffine=FallBackToAffine, ...=...)))
+    if(length(direction)==1) direction=rep(direction, length(reg))
+    for(i in seq_along(reg)) {
+      points=xformpoints.cmtkreg(reg[[i]], direction=direction[[i]], points=points, transformtype=transformtype, FallBackToAffine=FallBackToAffine, ...)
+    }
+    return(points)
   }
   
   # check for NAs
