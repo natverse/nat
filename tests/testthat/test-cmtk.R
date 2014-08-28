@@ -38,6 +38,7 @@ test_that("test cmtk.mat2dof with shears", {
               .Dim = c(4L, 4L))
   params_base=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                      byrow=T)
+  rownames(params_base) <- c("xlate", "rotate", "scale", "shear", "center")
   expect_equal(cmtk.mat2dof(m),params_base,tolerance=1e-4)
   expect_equal(cmtk.mat2dof(t(m),Transpose=FALSE),params_base,tolerance=1e-4)
 })

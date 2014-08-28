@@ -65,7 +65,9 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
     cmd=paste(cmd,sep="<",shQuote(inf))
     params=read.table(text=system(cmd,intern=T),sep='\t',comment.char="")[,2]
     if(length(params)!=15) stop("Trouble reading mat2dof response")
-    return(matrix(params,ncol=3,byrow=TRUE))
+    numbers <- matrix(params, ncol=3, byrow=TRUE)
+    rownames(numbers) <- c("xlate", "rotate", "scale", "shear", "center")
+    return(numbers)
   } else {
     cmd=paste(cmd,'--list',shQuote(path.expand(f)),"<",shQuote(inf))
     return(system(cmd)==0)
