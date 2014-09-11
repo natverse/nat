@@ -15,17 +15,15 @@
 #' @seealso \code{\link{digest}}
 ndigest<-function(x, ...) UseMethod('ndigest')
 
-#' @details \code{ndigest.neuronlistfh} ignores all references to local and 
-#'   remote paths embedded in the \code{\link{neuronlistfh}} object, the 
-#'   filehash object and any hashmap.
+#' @details \code{ndigest.neuronlistfh} only considers the \code{keyfilemap} and
+#'   \code{df} (metadata data.frame) when computing the hash value. See
+#'   \code{\link{neuronlistfh}} for the significance of these two fields.
 #' @method ndigest neuronlistfh
 #' @export
 #' @rdname ndigest
 ndigest.neuronlistfh<-function(x, ...){
-  attr(x,'remote')=NULL
-  attr(x,'file')=NULL
-  attr(x,'db')=NULL
-  digest(x, ...)
+  # we
+  digest(attributes(x)[c("keyfilemap","df")], ...)
 }
 
 #' @details \code{ndigest.dotprops} ignores any \code{mtime} or \code{file}

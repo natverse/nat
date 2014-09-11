@@ -23,6 +23,7 @@ test_that("ndigest works for overloaded and regular classes",{
   expect_equal(ndigest(kcs20fh), ndigest(kcs20fh2))
   write.neuronlistfh(kcs20fh,file=file.path(tf,'kcs20fh.rds'))
   write.neuronlistfh(kcs20fh,file=file.path(tf2,'kcs20fh2.rds'))
+  expect_equal(ndigest(kcs20fh), "fb6338dfd6a5adea73bae4cf4efff1a8")
   
   kcs20fh3=read.neuronlistfh(file.path(tf,'kcs20fh.rds'))
   kcs20fh4=read.neuronlistfh(file.path(tf2,'kcs20fh2.rds'))

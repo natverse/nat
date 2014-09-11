@@ -42,9 +42,10 @@ for the same data regardless of the particular machine on
 which the digest is being computed.
 }
 \details{
-\code{ndigest.neuronlistfh} ignores all references to local
-and remote paths embedded in the \code{\link{neuronlistfh}}
-object, the filehash object and any hashmap.
+\code{ndigest.neuronlistfh} only considers the
+\code{keyfilemap} and \code{df} (metadata data.frame) when
+computing the hash value. See \code{\link{neuronlistfh}}
+for the significance of these two fields.
 
 \code{ndigest.dotprops} ignores any \code{mtime} or
 \code{file} attributes. It also converts tangent vectors to
