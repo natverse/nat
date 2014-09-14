@@ -1,3 +1,13 @@
+nat 1.5.13
+==========
+* mat2dof output gets descriptive rownames
+* ndigest.neuronlistfh only uses 2 key fields (keyfilemap and df)
+* fix bug in locating cmtk when only the cmtk wrapper script is in the path
+  (spotted on neurodebian with /usr/bin/cmtk)
+* fix bug in compound registrations when CMTK <3.2.2
+* fix rgl import errors on r-devel
+* dev: update help to roxygen2 4.0.2
+
 nat 1.5.12
 ==========
 * fix bug in updating neuronlistfh objects from remote url
