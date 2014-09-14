@@ -6,6 +6,7 @@ nat 1.5.13
   (spotted on neurodebian with /usr/bin/cmtk)
 * fix bug in compound registrations when CMTK <3.2.2
 * fix rgl import errors on r-devel
+* switch from RANN to nabor package for finding nearest neighbours
 * dev: update help to roxygen2 4.0.2
 
 nat 1.5.12
