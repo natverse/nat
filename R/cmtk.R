@@ -129,9 +129,12 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
   if(is.null(bindir)){
-    cmtktoolpath=Sys.which(cmtktool)
-    if(nchar(cmtktoolpath)>0){
+    if(nzchar(cmtktoolpath<-Sys.which(cmtktool))){
       bindir=dirname(cmtktoolpath)
+    } else if(nzchar(cmtkwrapperpath<-Sys.which("cmtk"))) {
+      # try looking for cmtk wrapper script
+      # e.g. /usr/bin/cmtk => /usr/lib/cmtk/bin
+      bindir=file.path(dirname(dirname(cmtkwrapperpath)), "lib", "cmtk","bin")
     } else {
       # check some plausible locations
       for(d in extradirs){
