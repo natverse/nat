@@ -172,7 +172,7 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #'   always to use labels when incoming object has them and \code{FALSE} never 
 #'   to use labels.
 #' @param na.rm Whether to remove \code{NA} points (default FALSE)
-#' @importFrom RANN nn2
+#' @importFrom nabor knn
 #' @references The dotprops format is essentially identical to that developed in:
 #' 
 #' Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). 
@@ -194,7 +194,7 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   alpha=rep(0,npoints)
   vect=matrix(0,ncol=3,nrow=npoints)
   
-  nns=nn2(x,x,k=k)
+  nns=knn(x, k=k)
   # transpose points to 3xN because 
   # R arithemtic of matric / vector operates column-wise
   pointst=t(x)
@@ -414,11 +414,12 @@ prune.neuronlist<-function(x, target, ...){
 #' @param keep Whether to keep points in x that are near or far from the target
 #' @param return.indices Whether to return the indices that pass the test rather
 #'   than the 3d object/points (default \code{FALSE})
+#' @importFrom nabor knn
 prune.default<-function(x, target, maxdist, keep=c("near","far"), 
                         return.indices=FALSE, ...){
   keep=match.arg(keep, c("near", "far"))
   xyzx=xyzmatrix(x)
-  nn_dists=drop(nn2(xyzmatrix(target), xyzx, k=1)$nn.dists)
+  nn_dists=drop(knn(xyzmatrix(target), xyzx, k=1)$nn.dists)
   inds=if(keep=="near") nn_dists<=maxdist else nn_dists>maxdist
   if(return.indices) inds else xyzx[inds, , drop=FALSE]
 }

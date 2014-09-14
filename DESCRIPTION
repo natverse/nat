@@ -27,7 +27,7 @@ Depends:
     R (>= 2.15.1),
     rgl
 Imports:
-    RANN,
+    nabor,
     igraph,
     methods,
     filehash,
