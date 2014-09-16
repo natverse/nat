@@ -69,7 +69,7 @@ every few months.
 install.packages("nat")
 ```
 
-It you wish to run the package tests, it is necessary to install with all dependencies:
+If you wish to run the package tests, it is necessary to install with all dependencies:
 
 ```r
 install.packages("nat", dependencies=TRUE)
