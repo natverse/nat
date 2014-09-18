@@ -18,9 +18,10 @@ neurons.
   \item{\code{\link{neuron}}}{ objects contain one or more
   connected trees that make up a neuron}
 
-  \item{\code{\link{dotprops}}}{ objects each contain a
-  single neuron represented as points and tangent vectors
-  in which the connectivity information has been discarded}
+  \item{\code{\link{dotprops}}}{ objects can contain one
+  (or more) neurons represented as points and tangent
+  vectors in which the connectivity information has been
+  discarded}
 
   }
 }

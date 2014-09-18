@@ -10,7 +10,7 @@
 #'   \item{\code{\link{neuron}}}{ objects contain one or more connected trees 
 #'   that make up a neuron}
 #'   
-#'   \item{\code{\link{dotprops}}}{ objects each contain a single neuron 
+#'   \item{\code{\link{dotprops}}}{ objects can contain one (or more) neurons 
 #'   represented as points and tangent vectors in which the connectivity 
 #'   information has been discarded}
 #'   
@@ -55,7 +55,7 @@
 #'   
 #'   In addition there is one read-only option: \itemize{
 #'   
-#'   \item \code{nat.cmtk.version} which is used to store the current cmtk
+#'   \item \code{nat.cmtk.version} which is used to store the current cmtk 
 #'   version when there are repeated calls to \code{\link{cmtk.version}}.
 #'   
 #'   }
