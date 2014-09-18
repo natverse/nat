@@ -200,15 +200,10 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   pointst=t(x)
   for(i in 1:npoints){
     indNN=nns$nn.idx[i,]
-    
     pt=pointst[,indNN]
     cpt=pt-rowMeans(pt)
     
-    inertia=matrix(0,ncol=3,nrow=3)
-    diag(inertia)=rowSums(cpt^2)
-    inertia[1,2]<-inertia[2,1]<-sum(cpt[1,]*cpt[2,])
-    inertia[1,3]<-inertia[3,1]<-sum(cpt[1,]*cpt[3,])
-    inertia[2,3]<-inertia[3,2]<-sum(cpt[2,]*cpt[3,])
+    inertia=cpt%*%t(cpt)
     v1d1<-eigen(inertia,symmetric=TRUE)
     
     alpha[i]=(v1d1$values[1]-v1d1$values[2])/sum(v1d1$values)
