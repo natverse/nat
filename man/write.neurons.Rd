@@ -22,13 +22,24 @@ write.neurons(nl, dir, subdir = NULL, INDICES = names(nl), files = NULL,
   output filenames. See examples and
   \code{\link{write.neuron}} for details.}
 
-  \item{...}{Additional arguments passed to write.neuron}
+  \item{...}{Additional arguments passed to
+  \code{\link{write.neuron}}}
 }
 \description{
 Write neurons from a neuronlist object to individual files
 }
+\details{
+See \code{\link{write.neuron}} for details of how to
+specify the file format/extension/name of the output files.
+}
 \examples{
 \dontrun{
+# write some neurons in swc format
+write.neurons(Cell07PNs, dir="testwn", format='swc')
+# write some neurons in Amira hxlineset format
+write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
+
+# organise new files in directory hierarchy by glomerulus and Scored.By field
 write.neurons(Cell07PNs,dir="testwn",
   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
 # ensure that the neurons are named according to neuronlist names

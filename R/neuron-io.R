@@ -487,21 +487,29 @@ write.neuron.swc<-function(x, file, ...){
 
 #' Write neurons from a neuronlist object to individual files
 #' 
+#' @details See \code{\link{write.neuron}} for details of how to specify the 
+#'   file format/extension/name of the output files.
 #' @param nl neuronlist object
 #' @param dir directory to write neurons
 #' @param subdir String naming field in neuron that specifies a subdirectory OR 
 #'   expression to evaluate in the context of neuronlist's df attribute
 #' @param INDICES Character vector of the names of a subset of neurons in 
 #'   neuronlist to write.
-#' @param files Character vector or expression specifying output filenames. See
+#' @param files Character vector or expression specifying output filenames. See 
 #'   examples and \code{\link{write.neuron}} for details.
-#' @param ... Additional arguments passed to write.neuron
+#' @param ... Additional arguments passed to \code{\link{write.neuron}}
 #' @author jefferis
 #' @export
 #' @seealso \code{\link{write.neuron}}
 #' @family neuronlist
 #' @examples
 #' \dontrun{
+#' # write some neurons in swc format
+#' write.neurons(Cell07PNs, dir="testwn", format='swc')
+#' # write some neurons in Amira hxlineset format
+#' write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
+#' 
+#' # organise new files in directory hierarchy by glomerulus and Scored.By field
 #' write.neurons(Cell07PNs,dir="testwn",
 #'   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
 #' # ensure that the neurons are named according to neuronlist names
