@@ -488,9 +488,11 @@ write.neuron.swc<-function(x, file, ...){
 #' Write neurons from a neuronlist object to individual files
 #' 
 #' @details See \code{\link{write.neuron}} for details of how to specify the 
-#'   file format/extension/name of the output files.
+#'   file format/extension/name of the output files and how to establish what 
+#'   output file formats are available.
 #' @param nl neuronlist object
 #' @param dir directory to write neurons
+#' @inheritParams write.neuron
 #' @param subdir String naming field in neuron that specifies a subdirectory OR 
 #'   expression to evaluate in the context of neuronlist's df attribute
 #' @param INDICES Character vector of the names of a subset of neurons in 
@@ -526,7 +528,8 @@ write.neuron.swc<-function(x, file, ...){
 #' write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 #'   subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 #' }
-write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), files=NULL, ...){
+write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl), 
+                        files=NULL, ...){
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
   # Construct subdirectory structure based on 
@@ -556,7 +559,7 @@ write.neurons<-function(nl, dir, subdir=NULL, INDICES=names(nl), files=NULL, ...
       thisdir=subdirs[nn]
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
-    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], ...)
+    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, ...)
   }
   invisible(written)
 }

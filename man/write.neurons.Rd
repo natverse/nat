@@ -3,13 +3,17 @@
 \alias{write.neurons}
 \title{Write neurons from a neuronlist object to individual files}
 \usage{
-write.neurons(nl, dir, subdir = NULL, INDICES = names(nl), files = NULL,
-  ...)
+write.neurons(nl, dir, format = NULL, subdir = NULL, INDICES = names(nl),
+  files = NULL, ...)
 }
 \arguments{
   \item{nl}{neuronlist object}
 
   \item{dir}{directory to write neurons}
+
+  \item{format}{Unique abbreviation of one of the
+  registered file formats for neurons including 'swc',
+  'hxlineset', 'hxskel'}
 
   \item{subdir}{String naming field in neuron that
   specifies a subdirectory OR expression to evaluate in the
@@ -30,7 +34,9 @@ Write neurons from a neuronlist object to individual files
 }
 \details{
 See \code{\link{write.neuron}} for details of how to
-specify the file format/extension/name of the output files.
+specify the file format/extension/name of the output files
+and how to establish what output file formats are
+available.
 }
 \examples{
 \dontrun{
