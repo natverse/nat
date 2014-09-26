@@ -9,7 +9,7 @@ union(x, y, ...)
 
 \method{union}{default}(x, y, ...)
 
-\method{union}{neuronlist}(x, y)
+\method{union}{neuronlist}(x, y, ...)
 }
 \arguments{
   \item{x}{the first collection to consider.}

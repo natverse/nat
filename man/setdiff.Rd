@@ -9,7 +9,7 @@ setdiff(x, y, ...)
 
 \method{setdiff}{default}(x, y, ...)
 
-\method{setdiff}{neuronlist}(x, y)
+\method{setdiff}{neuronlist}(x, y, ...)
 }
 \arguments{
   \item{x}{the first collection to consider.}

@@ -9,7 +9,7 @@ intersect(x, y, ...)
 
 \method{intersect}{default}(x, y, ...)
 
-\method{intersect}{neuronlist}(x, y)
+\method{intersect}{neuronlist}(x, y, ...)
 }
 \arguments{
   \item{x}{the first collection to consider.}

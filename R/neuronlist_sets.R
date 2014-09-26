@@ -17,7 +17,7 @@ setdiff.default <-   function(x, y, ...) base::setdiff(x, y, ...)
 
 #' @rdname setdiff
 #' @export
-setdiff.neuronlist <- function(x, y) {
+setdiff.neuronlist <- function(x, y, ...) {
   x[!names(x) %in% names(y)]
 }
 
@@ -42,7 +42,7 @@ union.default <-     function(x, y, ...) base::union(x, y, ...)
 
 #' @rdname union
 #' @export
-union.neuronlist <- function(x, y) {
+union.neuronlist <- function(x, y, ...) {
   c(x, y[!names(y) %in% names(x)])
 }
 
@@ -67,6 +67,6 @@ intersect.default <- function(x, y, ...) base::intersect(x, y, ...)
 
 #' @rdname intersect
 #' @export
-intersect.neuronlist <- function(x, y) {
+intersect.neuronlist <- function(x, y, ...) {
   x[names(x) %in% names(y)]
 }
