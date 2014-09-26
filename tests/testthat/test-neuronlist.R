@@ -129,3 +129,19 @@ test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
   expect_error(f())
   expect_is(f(SUBSTITUTE = FALSE), 'list')
 })
+
+
+context("neuronlist: set operations")
+
+test_that("set operations on neuronlists behave as expected", {
+  kcs_setdiff <- kcs20[1:3]
+  kcs_union <- kcs20[1:7]
+  kcs_intersect <- kcs20[4:5]
+  
+  x <- kcs20[1:5]
+  y <- kcs20[4:7]
+  
+  expect_equal(setdiff(x, y), kcs_setdiff)
+  expect_equal(union(x, y), kcs_union)
+  expect_equal(intersect(x, y), kcs_intersect)
+})
