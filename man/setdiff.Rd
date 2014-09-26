@@ -5,9 +5,9 @@
 \alias{setdiff.neuronlist}
 \title{Find the (asymmetric) difference between two collections of objects}
 \usage{
-setdiff(x, y)
+setdiff(x, y, ...)
 
-\method{setdiff}{default}(x, y)
+\method{setdiff}{default}(x, y, ...)
 
 \method{setdiff}{neuronlist}(x, y)
 }
@@ -15,6 +15,8 @@ setdiff(x, y)
   \item{x}{the first collection to consider.}
 
   \item{y}{the second collection to consider.}
+
+  \item{...}{additional arguments passed to methods}
 }
 \value{
 A collection of the same mode as \code{x} that contains all

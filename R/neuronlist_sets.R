@@ -2,13 +2,14 @@
 #' 
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
+#' @param ... additional arguments passed to methods
 #'   
 #' @return A collection of the same mode as \code{x} that contains all elements
 #'   of \code{x} that are not present in \code{y}.
 #'   
 #' @export
 #' @seealso sets
-setdiff <- function(x, y) UseMethod("setdiff")
+setdiff <- function(x, y, ...) UseMethod("setdiff")
 
 #' @method setdiff default
 #' @rdname setdiff
@@ -34,13 +35,14 @@ setdiff.neuronlist <- function(x, y) {
 #' 
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
+#' @param ... additional arguments passed to methods
 #'   
 #' @return A collection of the same mode as \code{x} that contains all unique elements
 #'   of \code{x} and \code{y}.
 #'   
 #' @export
 #' @seealso sets
-union <- function(x, y) UseMethod("union")
+union <- function(x, y, ...) UseMethod("union")
 
 #' @method union default
 #' @rdname union
@@ -62,13 +64,14 @@ union.neuronlist <- function(x, y) {
 #' 
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
+#' @param ... additional arguments passed to methods
 #'   
 #' @return A collection of the same mode as \code{x} that contains all elements
 #'   of \code{x} that are also present in \code{y}.
 #'   
 #' @export
 #' @seealso sets
-intersect <- function(x, y) UseMethod("intersect")
+intersect <- function(x, y, ...) UseMethod("intersect")
 
 #' @method intersect default
 #' @rdname intersect

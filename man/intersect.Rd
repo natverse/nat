@@ -5,9 +5,9 @@
 \alias{intersect.neuronlist}
 \title{Find the intersection of two collections of objects}
 \usage{
-intersect(x, y)
+intersect(x, y, ...)
 
-\method{intersect}{default}(x, y)
+\method{intersect}{default}(x, y, ...)
 
 \method{intersect}{neuronlist}(x, y)
 }
@@ -15,6 +15,8 @@ intersect(x, y)
   \item{x}{the first collection to consider.}
 
   \item{y}{the second collection to consider.}
+
+  \item{...}{additional arguments passed to methods}
 }
 \value{
 A collection of the same mode as \code{x} that contains all

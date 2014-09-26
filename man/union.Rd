@@ -5,9 +5,9 @@
 \alias{union.neuronlist}
 \title{Find the union of two collections of objects}
 \usage{
-union(x, y)
+union(x, y, ...)
 
-\method{union}{default}(x, y)
+\method{union}{default}(x, y, ...)
 
 \method{union}{neuronlist}(x, y)
 }
@@ -15,6 +15,8 @@ union(x, y)
   \item{x}{the first collection to consider.}
 
   \item{y}{the second collection to consider.}
+
+  \item{...}{additional arguments passed to methods}
 }
 \value{
 A collection of the same mode as \code{x} that contains all
