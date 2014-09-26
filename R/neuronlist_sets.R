@@ -11,12 +11,10 @@
 #' @seealso sets
 setdiff <- function(x, y, ...) UseMethod("setdiff")
 
-#' @method setdiff default
 #' @rdname setdiff
 #' @export
 setdiff.default <-   function(x, y, ...) base::setdiff(x, y, ...)
 
-#' @method setdiff neuronlist
 #' @rdname setdiff
 #' @export
 setdiff.neuronlist <- function(x, y) {
@@ -38,12 +36,10 @@ setdiff.neuronlist <- function(x, y) {
 #' @seealso sets
 union <- function(x, y, ...) UseMethod("union")
 
-#' @method union default
 #' @rdname union
 #' @export
 union.default <-     function(x, y, ...) base::union(x, y, ...)
 
-#' @method union neuronlist
 #' @rdname union
 #' @export
 union.neuronlist <- function(x, y) {
@@ -69,7 +65,6 @@ intersect <- function(x, y, ...) UseMethod("intersect")
 #' @export
 intersect.default <- function(x, y, ...) base::intersect(x, y, ...)
 
-#' @method intersect neuronlist
 #' @rdname intersect
 #' @export
 intersect.neuronlist <- function(x, y) {
