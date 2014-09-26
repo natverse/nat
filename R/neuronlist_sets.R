@@ -14,13 +14,7 @@ setdiff <- function(x, y, ...) UseMethod("setdiff")
 #' @method setdiff default
 #' @rdname setdiff
 #' @export
-setdiff.default <- function(x, y) {
-  x <- as.vector(x)
-  y <- as.vector(y)
-  unique(if(length(x) || length(y))
-    x[match(x, y, 0) == 0]
-    else x)
-}
+setdiff.default <-   function(x, y, ...) base::setdiff(x, y, ...)
 
 #' @method setdiff neuronlist
 #' @rdname setdiff
@@ -47,9 +41,7 @@ union <- function(x, y, ...) UseMethod("union")
 #' @method union default
 #' @rdname union
 #' @export
-union.default <- function(x, y) {
-  unique(c(as.vector(x), as.vector(y)))
-}
+union.default <-     function(x, y, ...) base::union(x, y, ...)
 
 #' @method union neuronlist
 #' @rdname union
@@ -73,13 +65,9 @@ union.neuronlist <- function(x, y) {
 #' @seealso sets
 intersect <- function(x, y, ...) UseMethod("intersect")
 
-#' @method intersect default
 #' @rdname intersect
 #' @export
-intersect.default <- function(x, y) {
-  y <- as.vector(y)
-  unique(y[match(as.vector(x), y, 0)])
-}
+intersect.default <- function(x, y, ...) base::intersect(x, y, ...)
 
 #' @method intersect neuronlist
 #' @rdname intersect
