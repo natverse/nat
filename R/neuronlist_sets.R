@@ -8,7 +8,7 @@
 #'   of \code{x} that are not present in \code{y}.
 #'   
 #' @export
-#' @seealso sets
+#' @seealso \code{\link[base]{setdiff}}
 setdiff <- function(x, y, ...) UseMethod("setdiff")
 
 #' @rdname setdiff
@@ -33,7 +33,7 @@ setdiff.neuronlist <- function(x, y, ...) {
 #'   of \code{x} and \code{y}.
 #'   
 #' @export
-#' @seealso sets
+#' @seealso \code{\link[base]{union}}
 union <- function(x, y, ...) UseMethod("union")
 
 #' @rdname union
@@ -58,7 +58,7 @@ union.neuronlist <- function(x, y, ...) {
 #'   of \code{x} that are also present in \code{y}.
 #'   
 #' @export
-#' @seealso sets
+#' @seealso \code{\link[base]{intersect}}
 intersect <- function(x, y, ...) UseMethod("intersect")
 
 #' @rdname intersect

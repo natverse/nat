@@ -27,6 +27,6 @@ Find the (asymmetric) difference between two collections of
 objects
 }
 \seealso{
-sets
+\code{\link[base]{setdiff}}
 }
 

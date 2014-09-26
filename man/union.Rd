@@ -26,6 +26,6 @@ unique elements of \code{x} and \code{y}.
 Find the union of two collections of objects
 }
 \seealso{
-sets
+\code{\link[base]{union}}
 }
 

@@ -26,6 +26,6 @@ elements of \code{x} that are also present in \code{y}.
 Find the intersection of two collections of objects
 }
 \seealso{
-sets
+\code{\link[base]{intersect}}
 }
 
