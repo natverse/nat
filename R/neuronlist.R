@@ -706,3 +706,31 @@ find.neuron<-function(sel3dfun=select3d(), indices=names(db),
   }
   subset(db, subset=indices, filterfun=selfun, rval='names')
 }
+
+#' Find names of neurons with soma within a 3d selection box (usually drawn in rgl window)
+#' 
+#' @details Uses \code{\link{subset.neuronlist}}, so can work on neurons or 
+#'   neuron lists.
+#' @param sel3dfun A \code{\link{select3d}} style function to indicate if points
+#'   are within region
+#' @param indices Names of neurons to search (defaults to all neurons in list)
+#' @param db \code{neuronlist} to search. Can also be a character vector naming
+#'   the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.
+#' @param threshold More than this many points must be present in region
+#' @return Character vector of names of selected neurons
+#' @export
+#' @seealso \code{\link{select3d}, \link{subset.neuronlist}, \link{find.neuron}}
+find.soma <- function (sel3dfun = select3d(), indices = names(db), db = getOption("nat.default.neuronlist"), threshold = 0) 
+{
+  if (is.null(db)) 
+    stop("Please pass a neuronlist in argument db or set options", 
+         "(nat.default.neuronlist='myfavneuronlist'). See ?nat for details.")
+  if (is.character(db)) 
+    db = get(db)
+  selfun = function(x) {
+    pointsinside = sel3dfun((x$d[x$d$PointNo[x$StartPoint], c("X","Y","Z")]))
+    sum(pointsinside, na.rm = T) > threshold
+  }
+  subset(db, subset = indices, filterfun = selfun, rval = "names")
+}
+
