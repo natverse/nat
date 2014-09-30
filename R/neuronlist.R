@@ -706,3 +706,39 @@ find.neuron<-function(sel3dfun=select3d(), indices=names(db),
   }
   subset(db, subset=indices, filterfun=selfun, rval='names')
 }
+
+#' Find neurons with soma inside 3d selection box (usually drawn in rgl window)
+#' 
+#' @details Can work on \code{neuronlist}s containing \code{neuron} objects
+#'   \emph{or} \code{neuronlist}s whose attached data.frame contains soma 
+#'   positions specified in columns called X,Y,Z  .
+#' @param sel3dfun A \code{\link{select3d}} style function to indicate if points
+#'   are within region
+#' @param indices Names of neurons to search (defaults to all neurons in list)
+#' @param db \code{neuronlist} to search. Can also be a character vector naming 
+#'   the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.
+#' @return Character vector of names of selected neurons
+#' @export
+#' @seealso \code{\link{select3d}, \link{subset.neuronlist}, \link{find.neuron}}
+find.soma <- function (sel3dfun = select3d(), indices = names(db), 
+                       db = getOption("nat.default.neuronlist")) 
+{
+  if (is.null(db)) 
+    stop("Please pass a neuronlist in argument db or set options", 
+         "(nat.default.neuronlist='myfavneuronlist'). See ?nat for details.")
+  if (is.character(db)) 
+    db = get(db)
+  df=attr(db, 'df')
+  if(all(c("X","Y","Z") %in% colnames(df))){
+    # assume these represent soma position
+    somapos=df[indices,c("X","Y","Z")]
+    indices[sel3dfun(somapos)]
+  } else {
+    selfun = function(x) {
+      somapos=x$d[x$d$PointNo[x$StartPoint], c("X","Y","Z")]
+      isTRUE(sel3dfun(somapos))
+    }
+    subset(db, subset = indices, filterfun = selfun, rval = "names")
+  }
+}
+
