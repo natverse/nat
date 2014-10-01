@@ -539,3 +539,57 @@ resample.neuron<-function(x, stepsize, ...) {
   
   return(x)
 }
+
+
+#' Glue two SWC neurons together
+#' 
+#' @details Some tracing software / users save each branch of a neuron as a separate SWC file, which is incorrect and severely limits the functionality of nat when used with these files. This function provides a way to 'glue' these neuron branches back together into one SWC file, via a user-selection of a point from each neuron that should be joined together. This function assumes that the SWC files are completely unbranched, and will give erroneous results if used on SWC files that contain branches (unless the branch points are all lower down the tree than the selected glue point).
+#' 
+#' @param file1 path to first SWC file.
+#' @param file2 path to second SWC file.
+#' @param col1 colour to plot first neuron in.
+#' @param col2 colour to plot second neuron in.
+#' @param filepath if not \code{NULL}, the glued-together neuron will be saved in SWC format to this file path.
+#' 
+#' @return A \code{\link{neuron}} object representing the glued-together SWC files.
+#' @export
+glue_swc <- function(file1, file2, col1="red", col2="blue", filepath=NULL) {
+  n1 <- read.neuron(file1)
+  n2 <- read.neuron(file2)
+  swc1 <- read.csv(file1, sep=" ", skip=1, header=FALSE)
+  swc2 <- read.csv(file2, sep=" ", skip=1, header=FALSE)
+  colnames(swc1) <- c("PointNo", "Type", "X", "Y", "Z", "Width", "Parent")
+  colnames(swc2) <- c("PointNo", "Type", "X", "Y", "Z", "Width", "Parent")
+  
+  plot3d(n1, WithAllPoints=TRUE, WithNodes=TRUE, col=col1)
+  plot3d(n2, WithAllPoints=TRUE, WithNodes=TRUE, col=col2)
+  
+  readline(paste0("Position first neuron (", col1, ") and hit enter to select point."))
+  s1 <- select3d()
+  n1_pt <- which(s1(n1$d[, c('X', 'Y', 'Z')]))
+  if(length(n1_pt) != 1) stop("One and only one point must be selected!")
+  
+  readline(paste0("Position second neuron (", col2, ") and hit enter to select point."))
+  s2 <- select3d()
+  n2_pt <- which(s2(n2$d[, c('X', 'Y', 'Z')]))
+  if(length(n2_pt) != 1) stop("One and only one point must be selected!")
+  
+  if(!(n1_pt == 1)) {
+    swc1[swc1$PointNo < n1_pt, 'Parent'] <- swc1[swc1$PointNo < n1_pt, 'PointNo'] + 1
+    swc1[swc1$PointNo == n1_pt, 'Parent'] <- -1
+  }
+  if(!(n2_pt == 1)) {
+    swc2[swc2$PointNo < n2_pt, 'Parent'] <- swc2[swc2$PointNo < n2_pt, 'PointNo'] + 1
+    swc2[swc2$PointNo == n2_pt, 'Parent'] <- -1
+  }
+  
+  swc2$Parent <- swc2$Parent + nrow(swc1)
+  swc2$Parent[n2_pt] <- n1_pt
+  swc2$PointNo <- swc2$PointNo + nrow(swc1)
+  
+  swc <- rbind(swc1, swc2)
+  if(!is.null(filepath)) swc_file <- filepath
+  else swc_file <- tempfile()
+  write.table(swc, swc_file, sep=" ", row.names=FALSE, col.names=FALSE)
+  neuron <- read.neuron.swc(swc_file)    
+}
