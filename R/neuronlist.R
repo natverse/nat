@@ -61,17 +61,18 @@ as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
 #'   (see details).
 #' @method as.neuronlist default
 #' @rdname as.neuronlist
-as.neuronlist.default<-function(l, df, AddClassToNeurons=TRUE, ...){
+as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   if(is.neuron(l)) {
     n<-l
     l<-list(n)
     names(l)<-n$NeuronName
   }
-  if(!missing(df) &&!is.null(df)) {
+  if(!is.null(df)) {
     if(nrow(df)!=length(l)) 
       stop("data frame must have same number of rows as there are neurons")
     attr(l,"df")=df
-    if(is.null(names(l)))
+    # null or empty string names
+    if(is.null(names(l)) || all(!nzchar(names(l))))
       names(l)=rownames(df)
     else if(any(names(l)!=rownames(df)))
       stop("mismatch between neuronlist names and dataframe rownames")
