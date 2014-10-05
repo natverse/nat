@@ -1,5 +1,11 @@
 context("neuronlist")
 
+test_that("as.neuronlist behaves", {
+  n14=Cell07PNs[1:4]
+  df=attr(n14,'df')
+  expect_equal(as.neuronlist(n14, df = df), n14)
+})
+
 test_that("c.neuronlist behaves", {
   expect_equal(c(Cell07PNs), Cell07PNs)
   
