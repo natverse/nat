@@ -4,6 +4,12 @@ test_that("as.neuronlist behaves", {
   n14=Cell07PNs[1:4]
   df=attr(n14,'df')
   expect_equal(as.neuronlist(n14, df = df), n14)
+  # check that we can make names null or empty and all OK
+  n14.nonames=n14
+  names(n14.nonames)=NULL
+  expect_equal(as.neuronlist(n14.nonames, df=df), n14)
+  names(n14.nonames)=rep("", length(n14))
+  expect_equal(as.neuronlist(n14.nonames, df=df), n14)
 })
 
 test_that("c.neuronlist behaves", {
