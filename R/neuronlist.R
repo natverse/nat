@@ -744,7 +744,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 }
 
 
-#' Scan through a set of neurons, plotting each in 3D
+#' Scan through a set of neurons, individually plotting each one in 3D
 #' 
 #' Can also choose to select specific neurons along the way and navigate 
 #' forwards and backwards.
@@ -774,7 +774,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' @importFrom yaml yaml.load_file
 #' @importFrom yaml as.yaml
 #' @export
-screen_neurons <- function(neurons, flip=F, col='red', Verbose=T, Wait=T, sleep=0.1,
+nlscan <- function(neurons, flip=F, col='red', Verbose=T, Wait=T, sleep=0.1,
                            extrafun=NULL, selected_file=NULL, selected_col='green', yaml=TRUE, ...) {
   frames <- length(neurons)
   if(length(flip)==1) flip <- rep(flip,frames)
