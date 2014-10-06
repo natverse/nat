@@ -3,16 +3,13 @@
 \alias{nlscan}
 \title{Scan through a set of neurons, individually plotting each one in 3D}
 \usage{
-nlscan(neurons, flip = F, col = "red", Verbose = T, Wait = T,
-  sleep = 0.1, extrafun = NULL, selected_file = NULL,
-  selected_col = "green", yaml = TRUE, ...)
+nlscan(neurons, col = "red", Verbose = T, Wait = T, sleep = 0.1,
+  extrafun = NULL, selected_file = NULL, selected_col = "green",
+  yaml = TRUE, ...)
 }
 \arguments{
   \item{neurons}{character vector of names of neuron to
   plot.}
-
-  \item{flip}{logical vector indicating whether to use list
-  containing flipped neurons. Recycled if length 1.}
 
   \item{col}{the color with which to plot the neurons
   (default \code{'red'}).}
