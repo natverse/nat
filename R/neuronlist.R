@@ -801,7 +801,7 @@ nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
     cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- do.call(plot3d, args=list(x=n, col=ifelse(n %in% selected, selected_col, col[i]), ...))
+    pl <- plot3d(n, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
     # call user supplied function
     more_rgl_ids <- list()
     if(!is.null(extrafun))
