@@ -804,7 +804,7 @@ screen_neurons <- function(neurons, flip=F, col='red', Verbose=T, Wait=T, sleep=
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
     cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- do.call(plot3d, args=list(x=n, col=ifelse(n %in% selected, selected_col, col[i]), flip=flip[i], ...))
+    pl <- plot3d(n, col=substitute(ifelse(n %in% selected, selected_col, col[i])), flip=flip[i], ..., SUBSTITUTE=FALSE)
     # call user supplied function
     more_rgl_ids <- list()
     if(!is.null(extrafun))
