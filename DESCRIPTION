@@ -33,7 +33,8 @@ Imports:
     filehash,
     digest,
     nat.utils (>= 0.4.2),
-    plyr
+    plyr,
+    yaml
 Suggests:
     Rvcg,
     testthat,
