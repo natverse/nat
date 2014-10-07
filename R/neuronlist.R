@@ -751,6 +751,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' forwards and backwards.
 #' 
 #' @param neurons character vector of names of neuron to plot.
+#' @inheritParams plot3d.character
 #' @param col the color with which to plot the neurons (default \code{'red'}).
 #' @param Verbose logical indicating that info about each selected neuron should
 #'   be printed (default \code{TRUE}).
@@ -798,7 +799,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' clear3d()
 #' plot3d(kcs20[gammas])
 #' }
-nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
+nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
                    extrafun=NULL, selected_file=NULL, selected_col='green',
                    yaml=TRUE, ...) {
   frames <- length(neurons)
@@ -828,7 +829,7 @@ nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
     cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- plot3d(n, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
+    pl <- plot3d(n, db=db, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
     # call user supplied function
     more_rgl_ids <- list()
     if(!is.null(extrafun))

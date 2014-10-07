@@ -3,13 +3,18 @@
 \alias{nlscan}
 \title{Scan through a set of neurons, individually plotting each one in 3D}
 \usage{
-nlscan(neurons, col = "red", Verbose = T, Wait = T, sleep = 0.1,
-  extrafun = NULL, selected_file = NULL, selected_col = "green",
-  yaml = TRUE, ...)
+nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
+  sleep = 0.1, extrafun = NULL, selected_file = NULL,
+  selected_col = "green", yaml = TRUE, ...)
 }
 \arguments{
   \item{neurons}{character vector of names of neuron to
   plot.}
+
+  \item{db}{A neuronlist to use as the source of objects to
+  plot. If \code{NULL}, the default, will use the
+  neuronlist specified by
+  options('nat.default.neuronlist')}
 
   \item{col}{the color with which to plot the neurons
   (default \code{'red'}).}
