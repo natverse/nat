@@ -769,8 +769,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #'   
 #' @return A character vector of names of any selected neurons, \code{NULL} if 
 #'   none selected.
-#' @importFrom yaml yaml.load_file
-#' @importFrom yaml as.yaml
+#' @importFrom yaml yaml.load_file as.yaml
 #' @export
 nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
                            extrafun=NULL, selected_file=NULL, selected_col='green', yaml=TRUE, ...) {
