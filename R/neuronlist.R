@@ -760,13 +760,14 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' @param sleep time to pause between each displayed neuron when 
 #'   \code{Wait=TRUE}.
 #' @param extrafun an optional function called when each neuron is plotted, with
-#'   args \code{gene_name} and \code{selected}.
+#'   two arguments: the current neuron name and the current \code{selected}
+#'   neurons.
 #' @param selected_file an optional path to a \code{yaml} file that already 
 #'   contains a selection.
 #' @param selected_col the color in which selected neurons (such as those 
 #'   specified in \code{selected_file}) should be plotted.
 #' @param yaml a logical indicating that selections should be saved to disk in 
-#'   (human-readable) \code{yaml} rather than (machine-readable) \code{rda}
+#'   (human-readable) \code{yaml} rather than (machine-readable) \code{rda} 
 #'   format.
 #' @param ... extra arguments to pass to \code{\link{plot3d}}.
 #'   

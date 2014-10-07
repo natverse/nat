@@ -29,8 +29,8 @@ nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
   when \code{Wait=TRUE}.}
 
   \item{extrafun}{an optional function called when each
-  neuron is plotted, with args \code{gene_name} and
-  \code{selected}.}
+  neuron is plotted, with two arguments: the current neuron
+  name and the current \code{selected} neurons.}
 
   \item{selected_file}{an optional path to a \code{yaml}
   file that already contains a selection.}
