@@ -383,15 +383,16 @@ plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
 #' @rdname plot3d.neuronlist
 #' @method plot3d character
 #' @export
-#' @param db A neuronlist to use as the source of objects to plot. If missing,
-#'   defaults to neuronlist specified by options('nat.default.neuronlist')
+#' @param db A neuronlist to use as the source of objects to plot. If
+#'   \code{NULL}, the default, will use the neuronlist specified by
+#'   options('nat.default.neuronlist')
 #' @description \code{plot3d.character} is a convenience method intended for 
 #'   exploratory work on the command line.
 #' @details plot3d.character will check if options('nat.default.neuronlist') has
 #'   been set and then use x as an identifier to find a neuron in that 
 #'   neuronlist.
-plot3d.character<-function(x, db, ...) {
-  if(missing(db))
+plot3d.character<-function(x, db=NULL, ...) {
+  if(is.null(db))
     db=get(getOption('nat.default.neuronlist',
                      default=stop('Option "nat.default.neuronlist" is not set.",
                                   " See ?nat for details.')))
