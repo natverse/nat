@@ -35,8 +35,8 @@ nlscan(neurons, col = "red", Verbose = T, Wait = T, sleep = 0.1,
   be plotted.}
 
   \item{yaml}{a logical indicating that selections should
-  be saved to disk in \code{yaml} rather than \code{rda}
-  format.}
+  be saved to disk in (human-readable) \code{yaml} rather
+  than (machine-readable) \code{rda} format.}
 
   \item{...}{extra arguments to pass to
   \code{\link{plot3d}}.}
@@ -48,5 +48,34 @@ A character vector of names of any selected neurons,
 \description{
 Can also choose to select specific neurons along the way
 and navigate forwards and backwards.
+}
+\examples{
+\dontrun{
+# using neuron names
+options(nat.default.neuronlist='kcs20')
+nlscan(names(kcs20)[1:4])
+
+# equivalently
+nlscan(names(kcs20)[1:4], db=kcs20)
+
+# could select e.g. the gamma neurons with unbranched axons
+gammas=nlscan(kcs20)
+clear3d()
+plot3d(kcs20[gammas])
+
+# plot surface model of brain first
+# nb depends on package only available on github
+devtools::install_github(username = "jefferislab/nat.flybrains")
+library(nat.flybrains)
+plot3d(FCWB)
+# could select e.g. the gamma neurons with unbranched axons
+gammas=nlscan(kcs20)
+clear3d()
+plot3d(kcs20[gammas])
+}
+}
+\seealso{
+\code{\link{plot3d.character}},
+\code{\link{plot3d.neuronlist}}
 }
 
