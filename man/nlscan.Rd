@@ -8,8 +8,9 @@ nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
   selected_col = "green", yaml = TRUE, ...)
 }
 \arguments{
-  \item{neurons}{character vector of names of neuron to
-  plot.}
+  \item{neurons}{a \code{neuronlist} object or a character
+  vector of names of neurons to plot from the neuronlist
+  specified by \code{db}.}
 
   \item{db}{A neuronlist to use as the source of objects to
   plot. If \code{NULL}, the default, will use the
@@ -56,12 +57,14 @@ and navigate forwards and backwards.
 }
 \examples{
 \dontrun{
-# using neuron names
-options(nat.default.neuronlist='kcs20')
-nlscan(names(kcs20)[1:4])
+# scan a neuronlist
+nlscan(kcs20)
 
-# equivalently
-nlscan(names(kcs20)[1:4], db=kcs20)
+# using neuron names
+nlscan(names(kcs20), db=kcs20)
+# equivalently using a default neuron list
+options(nat.default.neuronlist='kcs20')
+nlscan(names(kcs20))
 
 # could select e.g. the gamma neurons with unbranched axons
 gammas=nlscan(kcs20)

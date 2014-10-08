@@ -750,7 +750,8 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' Can also choose to select specific neurons along the way and navigate 
 #' forwards and backwards.
 #' 
-#' @param neurons character vector of names of neuron to plot.
+#' @param neurons a \code{neuronlist} object or a character vector of names of 
+#'   neurons to plot from the neuronlist specified by \code{db}.
 #' @inheritParams plot3d.character
 #' @param col the color with which to plot the neurons (default \code{'red'}).
 #' @param Verbose logical indicating that info about each selected neuron should
@@ -760,7 +761,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' @param sleep time to pause between each displayed neuron when 
 #'   \code{Wait=TRUE}.
 #' @param extrafun an optional function called when each neuron is plotted, with
-#'   two arguments: the current neuron name and the current \code{selected}
+#'   two arguments: the current neuron name and the current \code{selected} 
 #'   neurons.
 #' @param selected_file an optional path to a \code{yaml} file that already 
 #'   contains a selection.
@@ -778,12 +779,14 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' @export
 #' @examples
 #' \dontrun{
-#' # using neuron names
-#' options(nat.default.neuronlist='kcs20')
-#' nlscan(names(kcs20)[1:4])
+#' # scan a neuronlist
+#' nlscan(kcs20)
 #' 
-#' # equivalently 
-#' nlscan(names(kcs20)[1:4], db=kcs20)
+#' # using neuron names
+#' nlscan(names(kcs20), db=kcs20)
+#' # equivalently using a default neuron list
+#' options(nat.default.neuronlist='kcs20')
+#' nlscan(names(kcs20))
 #' 
 #' # could select e.g. the gamma neurons with unbranched axons
 #' gammas=nlscan(kcs20)
@@ -803,6 +806,10 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
                    extrafun=NULL, selected_file=NULL, selected_col='green',
                    yaml=TRUE, ...) {
+  if(is.neuronlist(neurons)) {
+    db=neurons
+    neurons=names(db)
+  }
   frames <- length(neurons)
   if(length(col)==1) col <- rep(col,frames)
   selected <- character()
