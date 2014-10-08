@@ -9,7 +9,7 @@ expression}
   skipRedraw = 200, WithNodes = FALSE, soma = FALSE, ...,
   SUBSTITUTE = TRUE)
 
-\method{plot3d}{character}(x, db, ...)
+\method{plot3d}{character}(x, db = NULL, ...)
 }
 \arguments{
   \item{x}{a neuron list or, for \code{plot3d.character}, a
@@ -52,7 +52,8 @@ expression}
   when calling from another function.}
 
   \item{db}{A neuronlist to use as the source of objects to
-  plot. If missing, defaults to neuronlist specified by
+  plot. If \code{NULL}, the default, will use the
+  neuronlist specified by
   options('nat.default.neuronlist')}
 }
 \value{

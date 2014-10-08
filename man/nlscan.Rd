@@ -3,13 +3,19 @@
 \alias{nlscan}
 \title{Scan through a set of neurons, individually plotting each one in 3D}
 \usage{
-nlscan(neurons, col = "red", Verbose = T, Wait = T, sleep = 0.1,
-  extrafun = NULL, selected_file = NULL, selected_col = "green",
-  yaml = TRUE, ...)
+nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
+  sleep = 0.1, extrafun = NULL, selected_file = NULL,
+  selected_col = "green", yaml = TRUE, ...)
 }
 \arguments{
-  \item{neurons}{character vector of names of neuron to
-  plot.}
+  \item{neurons}{a \code{neuronlist} object or a character
+  vector of names of neurons to plot from the neuronlist
+  specified by \code{db}.}
+
+  \item{db}{A neuronlist to use as the source of objects to
+  plot. If \code{NULL}, the default, will use the
+  neuronlist specified by
+  options('nat.default.neuronlist')}
 
   \item{col}{the color with which to plot the neurons
   (default \code{'red'}).}
@@ -24,8 +30,8 @@ nlscan(neurons, col = "red", Verbose = T, Wait = T, sleep = 0.1,
   when \code{Wait=TRUE}.}
 
   \item{extrafun}{an optional function called when each
-  neuron is plotted, with args \code{gene_name} and
-  \code{selected}.}
+  neuron is plotted, with two arguments: the current neuron
+  name and the current \code{selected} neurons.}
 
   \item{selected_file}{an optional path to a \code{yaml}
   file that already contains a selection.}
@@ -35,8 +41,8 @@ nlscan(neurons, col = "red", Verbose = T, Wait = T, sleep = 0.1,
   be plotted.}
 
   \item{yaml}{a logical indicating that selections should
-  be saved to disk in \code{yaml} rather than \code{rda}
-  format.}
+  be saved to disk in (human-readable) \code{yaml} rather
+  than (machine-readable) \code{rda} format.}
 
   \item{...}{extra arguments to pass to
   \code{\link{plot3d}}.}
@@ -48,5 +54,39 @@ A character vector of names of any selected neurons,
 \description{
 Can also choose to select specific neurons along the way
 and navigate forwards and backwards.
+}
+\examples{
+\dontrun{
+# scan a neuronlist
+nlscan(kcs20)
+
+# using neuron names
+nlscan(names(kcs20), db=kcs20)
+# equivalently using a default neuron list
+options(nat.default.neuronlist='kcs20')
+nlscan(names(kcs20))
+}
+# scan without waiting
+nlscan(kcs20[1:4], Wait=FALSE, sleep=0)
+\dontrun{
+# could select e.g. the gamma neurons with unbranched axons
+gammas=nlscan(kcs20)
+clear3d()
+plot3d(kcs20[gammas])
+
+# plot surface model of brain first
+# nb depends on package only available on github
+devtools::install_github(username = "jefferislab/nat.flybrains")
+library(nat.flybrains)
+plot3d(FCWB)
+# could select e.g. the gamma neurons with unbranched axons
+gammas=nlscan(kcs20)
+clear3d()
+plot3d(kcs20[gammas])
+}
+}
+\seealso{
+\code{\link{plot3d.character}},
+\code{\link{plot3d.neuronlist}}
 }
 

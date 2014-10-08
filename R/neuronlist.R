@@ -383,15 +383,16 @@ plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
 #' @rdname plot3d.neuronlist
 #' @method plot3d character
 #' @export
-#' @param db A neuronlist to use as the source of objects to plot. If missing,
-#'   defaults to neuronlist specified by options('nat.default.neuronlist')
+#' @param db A neuronlist to use as the source of objects to plot. If
+#'   \code{NULL}, the default, will use the neuronlist specified by
+#'   options('nat.default.neuronlist')
 #' @description \code{plot3d.character} is a convenience method intended for 
 #'   exploratory work on the command line.
 #' @details plot3d.character will check if options('nat.default.neuronlist') has
 #'   been set and then use x as an identifier to find a neuron in that 
 #'   neuronlist.
-plot3d.character<-function(x, db, ...) {
-  if(missing(db))
+plot3d.character<-function(x, db=NULL, ...) {
+  if(is.null(db))
     db=get(getOption('nat.default.neuronlist',
                      default=stop('Option "nat.default.neuronlist" is not set.",
                                   " See ?nat for details.')))
@@ -749,7 +750,9 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' Can also choose to select specific neurons along the way and navigate 
 #' forwards and backwards.
 #' 
-#' @param neurons character vector of names of neuron to plot.
+#' @param neurons a \code{neuronlist} object or a character vector of names of 
+#'   neurons to plot from the neuronlist specified by \code{db}.
+#' @inheritParams plot3d.character
 #' @param col the color with which to plot the neurons (default \code{'red'}).
 #' @param Verbose logical indicating that info about each selected neuron should
 #'   be printed (default \code{TRUE}).
@@ -758,22 +761,58 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' @param sleep time to pause between each displayed neuron when 
 #'   \code{Wait=TRUE}.
 #' @param extrafun an optional function called when each neuron is plotted, with
-#'   args \code{gene_name} and \code{selected}.
+#'   two arguments: the current neuron name and the current \code{selected} 
+#'   neurons.
 #' @param selected_file an optional path to a \code{yaml} file that already 
 #'   contains a selection.
 #' @param selected_col the color in which selected neurons (such as those 
 #'   specified in \code{selected_file}) should be plotted.
 #' @param yaml a logical indicating that selections should be saved to disk in 
-#'   \code{yaml} rather than \code{rda} format.
+#'   (human-readable) \code{yaml} rather than (machine-readable) \code{rda} 
+#'   format.
 #' @param ... extra arguments to pass to \code{\link{plot3d}}.
 #'   
 #' @return A character vector of names of any selected neurons, \code{NULL} if 
 #'   none selected.
-#' @importFrom yaml yaml.load_file
-#' @importFrom yaml as.yaml
+#' @importFrom yaml yaml.load_file as.yaml
+#' @seealso \code{\link{plot3d.character}}, \code{\link{plot3d.neuronlist}}
 #' @export
-nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
-                           extrafun=NULL, selected_file=NULL, selected_col='green', yaml=TRUE, ...) {
+#' @examples
+#' \dontrun{
+#' # scan a neuronlist
+#' nlscan(kcs20)
+#' 
+#' # using neuron names
+#' nlscan(names(kcs20), db=kcs20)
+#' # equivalently using a default neuron list
+#' options(nat.default.neuronlist='kcs20')
+#' nlscan(names(kcs20))
+#' }
+#' # scan without waiting
+#' nlscan(kcs20[1:4], Wait=FALSE, sleep=0)
+#' \dontrun{
+#' # could select e.g. the gamma neurons with unbranched axons
+#' gammas=nlscan(kcs20)
+#' clear3d()
+#' plot3d(kcs20[gammas])
+#' 
+#' # plot surface model of brain first
+#' # nb depends on package only available on github
+#' devtools::install_github(username = "jefferislab/nat.flybrains")
+#' library(nat.flybrains)
+#' plot3d(FCWB)
+#' # could select e.g. the gamma neurons with unbranched axons
+#' gammas=nlscan(kcs20)
+#' clear3d()
+#' plot3d(kcs20[gammas])
+#' }
+nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
+                   extrafun=NULL, selected_file=NULL, selected_col='green',
+                   yaml=TRUE, ...) {
+  if(is.neuronlist(neurons)) {
+    db=neurons
+    neurons=names(db)
+  }
   frames <- length(neurons)
   if(length(col)==1) col <- rep(col,frames)
   selected <- character()
@@ -796,12 +835,12 @@ nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
     }
     selected_file
   }
-  
+  chc <- NULL
   while(TRUE){
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
     cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- plot3d(n, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
+    pl <- plot3d(n, db=db, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
     # call user supplied function
     more_rgl_ids <- list()
     if(!is.null(extrafun))
@@ -829,7 +868,7 @@ nlscan <- function(neurons, col='red', Verbose=T, Wait=T, sleep=0.1,
     sapply(pl, rgl.pop, type='shape')
     sapply(more_rgl_ids, rgl.pop, type='shape')
   }
-  if(chc=='c') return(NULL)
+  if(is.null(chc) || chc=='c') return(NULL)
   if(!is.null(selected_file)) savetodisk(selected, selected_file)
   selected
 }
