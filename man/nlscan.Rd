@@ -65,7 +65,10 @@ nlscan(names(kcs20), db=kcs20)
 # equivalently using a default neuron list
 options(nat.default.neuronlist='kcs20')
 nlscan(names(kcs20))
-
+}
+# scan without waiting
+nlscan(kcs20[1:4], Wait=FALSE, sleep=0)
+\dontrun{
 # could select e.g. the gamma neurons with unbranched axons
 gammas=nlscan(kcs20)
 clear3d()
