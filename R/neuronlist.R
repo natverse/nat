@@ -835,7 +835,7 @@ nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
     }
     selected_file
   }
-  
+  chc <- NULL
   while(TRUE){
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
@@ -868,7 +868,7 @@ nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
     sapply(pl, rgl.pop, type='shape')
     sapply(more_rgl_ids, rgl.pop, type='shape')
   }
-  if(chc=='c') return(NULL)
+  if(is.null(chc) || chc=='c') return(NULL)
   if(!is.null(selected_file)) savetodisk(selected, selected_file)
   selected
 }
