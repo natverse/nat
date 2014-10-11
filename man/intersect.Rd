@@ -25,6 +25,10 @@ elements of \code{x} that are also present in \code{y}.
 \description{
 Find the intersection of two collections of objects
 }
+\details{
+Note that intersect.default calls base::intersect to ensure
+consistent behaviour for regular vectors.
+}
 \seealso{
 \code{\link[base]{intersect}}
 }

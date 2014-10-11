@@ -25,6 +25,10 @@ unique elements of \code{x} and \code{y}.
 \description{
 Find the union of two collections of objects
 }
+\details{
+Note that union.default calls base::union to ensure
+consistent behaviour for regular vectors.
+}
 \seealso{
 \code{\link[base]{union}}
 }

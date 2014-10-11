@@ -26,6 +26,10 @@ elements of \code{x} that are not present in \code{y}.
 Find the (asymmetric) difference between two collections of
 objects
 }
+\details{
+Note that setdiff.default calls base::setdiff to ensure
+consistent behaviour for regular vectors.
+}
 \seealso{
 \code{\link[base]{setdiff}}
 }

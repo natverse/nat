@@ -1,10 +1,13 @@
 #' Find the (asymmetric) difference between two collections of objects
 #' 
+#' @details Note that setdiff.default calls base::setdiff to ensure consistent
+#'   behaviour for regular vectors.
+#'   
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
 #' @param ... additional arguments passed to methods
 #'   
-#' @return A collection of the same mode as \code{x} that contains all elements
+#' @return A collection of the same mode as \code{x} that contains all elements 
 #'   of \code{x} that are not present in \code{y}.
 #'   
 #' @export
@@ -25,12 +28,15 @@ setdiff.neuronlist <- function(x, y, ...) {
 
 #' Find the union of two collections of objects
 #' 
+#' @details Note that union.default calls base::union to ensure consistent 
+#'   behaviour for regular vectors.
+#'   
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
 #' @param ... additional arguments passed to methods
 #'   
-#' @return A collection of the same mode as \code{x} that contains all unique elements
-#'   of \code{x} and \code{y}.
+#' @return A collection of the same mode as \code{x} that contains all unique
+#'   elements of \code{x} and \code{y}.
 #'   
 #' @export
 #' @seealso \code{\link[base]{union}}
@@ -50,11 +56,14 @@ union.neuronlist <- function(x, y, ...) {
 
 #' Find the intersection of two collections of objects
 #' 
+#' @details Note that intersect.default calls base::intersect to ensure
+#'   consistent behaviour for regular vectors.
+#'   
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
 #' @param ... additional arguments passed to methods
 #'   
-#' @return A collection of the same mode as \code{x} that contains all elements
+#' @return A collection of the same mode as \code{x} that contains all elements 
 #'   of \code{x} that are also present in \code{y}.
 #'   
 #' @export
