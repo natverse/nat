@@ -772,7 +772,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #'   format.
 #' @param ... extra arguments to pass to \code{\link{plot3d}}.
 #'   
-#' @return A character vector of names of any selected neurons, \code{NULL} if 
+#' @return A character vector of names of any selected neurons, of length 0 if 
 #'   none selected.
 #' @importFrom yaml yaml.load_file as.yaml
 #' @seealso \code{\link{plot3d.character}}, \code{\link{plot3d.neuronlist}}

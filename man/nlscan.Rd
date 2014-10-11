@@ -48,8 +48,8 @@ nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
   \code{\link{plot3d}}.}
 }
 \value{
-A character vector of names of any selected neurons,
-\code{NULL} if none selected.
+A character vector of names of any selected neurons, of
+length 0 if none selected.
 }
 \description{
 Can also choose to select specific neurons along the way
