@@ -1,3 +1,18 @@
+nat 1.5.14
+==========
+* add nlscan function to review a set of neurons, optionally selecting a subset
+* add find.soma function to select neurons whose cell bodies fall within an rgl
+  seelection box (thanks to Ben Sutcliffe).
+* add setdiff, intersect and union generics with implementations for neuronlist
+  objects (note this is done in more or less identical fashion to generics
+  defined in the dplyr package).
+* give write.neurons a format argument to make it more obvious that this is an 
+  option rather than pointing people to the write.neuron docs (suggestion from 
+  Ben Sutcliffe)
+* teach as.neuronlist to handle inputs with empty (rather than NULL names)
+* simplify calculation of inertia in dotprops
+* minor doc fixes and clarifications
+
 nat 1.5.13
 ==========
 * mat2dof output gets descriptive rownames
