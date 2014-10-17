@@ -273,3 +273,21 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
   nlapply(x, FUN=mirror, ..., subset=subset, OmitFailures=OmitFailures)
 }
+
+
+#' Construct an affine transformation matrix from user input
+#' 
+#' Prompts the user for translation, rotation, scaling, shearing and centre 
+#' details of transformation and converts these into an affine transformation 
+#' matrix, compatible with CMTK. Parameters should be seperated by single
+#' spaces.
+#' 
+#' @return A 4x4 numeric matrix, produced by \code{\link{cmtk.dof2mat}}.
+#' @export
+affine_matrix <- function() {
+  prompts <- c("xlate: ", "rotate: ", "scale: ", "shear: ", "centre: ")
+  dof_strings <- lapply(prompts, function(x) readline(x))
+  dofs <- sapply(dof_strings, strsplit, " ")
+  dof_mat <- matrix(as.numeric(unlist(dofs)), ncol=3, byrow=TRUE)
+  cmtk.dof2mat(dof_mat)
+}
