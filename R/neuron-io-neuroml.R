@@ -84,3 +84,25 @@ process_neuroml_cell<-function(cell, ...) {
   # return a list of class nml_cell with segment/cable information
   structure(list(segments=segdf, cables=cabledf), class='nml_cell')
 }
+
+as.data.frame.nml_cell<-function(x, ...){
+  in_names=c("id",'x.d','y.d','z.d','diameter.d','parent')
+  out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
+  structure(x[['segments']][in_names], .Names=out_names)
+}
+
+as.neuron.nml_cell<-function(x, ...) as.neuron(as.data.frame(x, ...))
+
+as.ngraph.nml_cell<-function(x, ...) {
+  as.ngraph(as.data.frame(x), ...)
+}
+
+read.neuron.neuroml<-function(f, ...) {
+  cells=read.neuroml(f)
+  celli=lapply(cells, neuroml_process_cell)
+  if(length(celli)>1) {
+    nlapply(celli, as.neuron)
+  } else {
+    as.neuron(celli[[1]])
+  }
+}
