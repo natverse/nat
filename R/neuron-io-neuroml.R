@@ -10,5 +10,6 @@ read.neuron.neuroml<-function(f, ...){
   # fetch cells 
   cells=getNodeSet(doc,'//*/nml:cell', c(nml=defaultns)
   cell_names=XML::xmlSApply(cells, function(x) XML::xmlAttrs(x)['name'])
-  as.vector(cell_names)
+  names(cells)<-cell_names
+  invisible(cells)
 }
