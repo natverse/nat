@@ -1,4 +1,4 @@
-read.neuroml<-function(f, ...){
+read.morphml<-function(f, ...){
   # basic parsing of xml doc (using libxml)
   doc=try(XML::xmlParse(f))
   if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
@@ -14,8 +14,8 @@ read.neuroml<-function(f, ...){
   invisible(cells)
 }
 
-# process the xml tree for a (morphml) format cell
-process_neuroml_cell<-function(cell, ...) {
+# process the xml tree for a single (morphml) format cell
+process_morphml_cell<-function(cell, ...) {
   if(!all(c("segments",'cables') %in% names(cell))){
     stop("Each cell must contain segments and cables elements")
   }
@@ -81,19 +81,19 @@ process_neuroml_cell<-function(cell, ...) {
   cabledf$type=sapply(cables, function(x) XML::xmlValue(x)[1])
   cabledf
   
-  # return a list of class nml_cell with segment/cable information
-  structure(list(segments=segdf, cables=cabledf), class='nml_cell')
+  # return a list of class morphml_cell with segment/cable information
+  structure(list(segments=segdf, cables=cabledf), class='morphml_cell')
 }
 
-as.data.frame.nml_cell<-function(x, ...){
+as.data.frame.morphml_cell<-function(x, ...){
   in_names=c("id",'x.d','y.d','z.d','diameter.d','parent')
   out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
   structure(x[['segments']][in_names], .Names=out_names)
 }
 
-as.neuron.nml_cell<-function(x, ...) as.neuron(as.data.frame(x, ...))
+as.neuron.morphml_cell<-function(x, ...) as.neuron(as.data.frame(x, ...))
 
-as.ngraph.nml_cell<-function(x, ...) {
+as.ngraph.morphml_cell<-function(x, ...) {
   as.ngraph(as.data.frame(x), ...)
 }
 
