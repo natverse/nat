@@ -16,9 +16,8 @@ read.morphml<-function(f, ...){
 
 # process the xml tree for a single (morphml) format cell
 process_morphml_cell<-function(cell, ...) {
-  if(!all(c("segments",'cables') %in% names(cell))){
-    stop("Each cell must contain segments and cables elements")
-  }
+  if(!"segments" %in% names(cell))
+    stop("Cells must contain segment information")
   
   ## process morphml segments
   # first segment attributes
@@ -55,31 +54,35 @@ process_morphml_cell<-function(cell, ...) {
   
   segdf[,colnames(proxinfo)]=proxinfo
   segdf[,colnames(distinfo)]=distinfo
-
-  ## extract cable info
-  cables=XML::xmlChildren(cell[['cables']])
-  # only keep children called "cable"
-  cables=cables[names(cables)=='cable']
   
-  cableinfo=t(sapply(cables, function(x) {
-    atts=XML::xmlAttrs(x)
-    rval=c(id=NA_integer_, name=NA_character_, fract_along_parent=NA_real_)
-    rval['id']=atts['id']
-    rval['name']=atts['name']
-    if('fract_along_parent'%in%atts['fract_along_parent']){
-      rval['fract_along_parent']=as.numeric(atts['fract_along_parent'])
-    }
-    rval
-  }))
-  rownames(cableinfo)=as.vector(cableinfo[,'id'])
-  special_cols=c("id","fract_along_parent")
-  
-  cabledf=data.frame(id=as.integer(cableinfo[,'id']), 
-                     fract_along_parent=as.numeric(cableinfo[,'fract_along_parent']))
-  cabledf=cbind(cabledf,cableinfo[,!colnames(cableinfo)%in%special_cols])
-  # cable type
-  cabledf$type=sapply(cables, function(x) XML::xmlValue(x)[1])
-  cabledf
+  if("cables" %in% names(cell)) {
+    
+    ## extract cable info
+    cables=XML::xmlChildren(cell[['cables']])
+    # only keep children called "cable"
+    cables=cables[names(cables)=='cable']
+    
+    cableinfo=t(sapply(cables, function(x) {
+      atts=XML::xmlAttrs(x)
+      rval=c(id=NA_integer_, name=NA_character_, fract_along_parent=NA_real_)
+      rval['id']=atts['id']
+      rval['name']=atts['name']
+      if('fract_along_parent'%in%atts['fract_along_parent']){
+        rval['fract_along_parent']=as.numeric(atts['fract_along_parent'])
+      }
+      rval
+    }))
+    rownames(cableinfo)=as.vector(cableinfo[,'id'])
+    special_cols=c("id","fract_along_parent")
+    
+    cabledf=data.frame(id=as.integer(cableinfo[,'id']), 
+                       fract_along_parent=as.numeric(cableinfo[,'fract_along_parent']))
+    cabledf=cbind(cabledf,cableinfo[,!colnames(cableinfo)%in%special_cols])
+    # cable type
+    cabledf$type=sapply(cables, function(x) XML::xmlValue(x)[1])
+  } else {
+    cabledf=NULL
+  }
   
   # return a list of class morphml_cell with segment/cable information
   structure(list(segments=segdf, cables=cabledf), class='morphml_cell')
