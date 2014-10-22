@@ -1,0 +1,218 @@
+<neuroml xmlns="http://www.neuroml.org/schema/neuroml2" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema" id="NeuroMLDocument">
+    <cell id="15053048" name="Cell">
+        <morphology id="Skeleton_15053048">
+            <segment id="0" name="15053050-15053054">
+                <proximal y="0" x="0" z="0" diameter="10"/>
+                <distal y="3.539084e+02" x="4.652594e+02" z="4.500000e-01" diameter="1"/>
+            </segment>
+            <segment id="3" name="15053054-15053056">
+                <parent fractionAlong="1" segment="0"/>
+                <proximal y="3.539084e+02" x="4.652594e+02" z="4.500000e-01" diameter="1"/>
+                <distal y="3.538513e+02" x="4.647819e+02" z="9.000000e-01" diameter="1"/>
+            </segment>
+            <segment id="4" name="15053056-15053058">
+                <parent fractionAlong="1" segment="3"/>
+                <proximal y="3.538513e+02" x="4.647819e+02" z="9.000000e-01" diameter="1"/>
+                <distal y="3.538375e+02" x="4.642127e+02" z="1.350000e+00" diameter="1"/>
+            </segment>
+            <segment id="5" name="15053058-15053060">
+                <parent fractionAlong="1" segment="4"/>
+                <proximal y="3.538375e+02" x="4.642127e+02" z="1.350000e+00" diameter="1"/>
+                <distal y="3.541264e+02" x="4.643758e+02" z="1.800000e+00" diameter="1"/>
+            </segment>
+            <segment id="6" name="15053060-15053062">
+                <parent fractionAlong="1" segment="5"/>
+                <proximal y="3.541264e+02" x="4.643758e+02" z="1.800000e+00" diameter="1"/>
+                <distal y="3.543171e+02" x="4.634770e+02" z="2.250000e+00" diameter="1"/>
+            </segment>
+            <segment id="7" name="15053062-15053064">
+                <parent fractionAlong="1" segment="6"/>
+                <proximal y="3.543171e+02" x="4.634770e+02" z="2.250000e+00" diameter="1"/>
+                <distal y="3.542071e+02" x="4.635280e+02" z="2.700000e+00" diameter="1"/>
+            </segment>
+            <segment id="8" name="15053064-15053066">
+                <parent fractionAlong="1" segment="7"/>
+                <proximal y="3.542071e+02" x="4.635280e+02" z="2.700000e+00" diameter="1"/>
+                <distal y="3.544321e+02" x="4.629472e+02" z="3.150000e+00" diameter="1"/>
+            </segment>
+            <segment id="9" name="15053066-15053068">
+                <parent fractionAlong="1" segment="8"/>
+                <proximal y="3.544321e+02" x="4.629472e+02" z="3.150000e+00" diameter="1"/>
+                <distal y="3.542412e+02" x="4.626103e+02" z="3.600000e+00" diameter="1"/>
+            </segment>
+            <segment id="10" name="15053068-15053070">
+                <parent fractionAlong="1" segment="9"/>
+                <proximal y="3.542412e+02" x="4.626103e+02" z="3.600000e+00" diameter="1"/>
+                <distal y="3.544208e+02" x="4.623746e+02" z="4.050000e+00" diameter="1"/>
+            </segment>
+            <segment id="11" name="15053070-15053072">
+                <parent fractionAlong="1" segment="10"/>
+                <proximal y="3.544208e+02" x="4.623746e+02" z="4.050000e+00" diameter="1"/>
+                <distal y="3.541716e+02" x="4.621689e+02" z="4.500000e+00" diameter="1"/>
+            </segment>
+            <segment id="12" name="15053072-15053074">
+                <parent fractionAlong="1" segment="11"/>
+                <proximal y="3.541716e+02" x="4.621689e+02" z="4.500000e+00" diameter="1"/>
+                <distal y="3.543903e+02" x="4.617375e+02" z="4.950000e+00" diameter="1"/>
+            </segment>
+            <segment id="13" name="15053074-15053076">
+                <parent fractionAlong="1" segment="12"/>
+                <proximal y="3.543903e+02" x="4.617375e+02" z="4.950000e+00" diameter="1"/>
+                <distal y="3.545779e+02" x="4.617462e+02" z="5.400000e+00" diameter="1"/>
+            </segment>
+            <segment id="14" name="15053076-15053078">
+                <parent fractionAlong="1" segment="13"/>
+                <proximal y="3.545779e+02" x="4.617462e+02" z="5.400000e+00" diameter="1"/>
+                <distal y="3.544956e+02" x="4.616101e+02" z="5.850000e+00" diameter="1"/>
+            </segment>
+            <segment id="15" name="15053078-15053080">
+                <parent fractionAlong="1" segment="14"/>
+                <proximal y="3.544956e+02" x="4.616101e+02" z="5.850000e+00" diameter="1"/>
+                <distal y="3.546897e+02" x="4.614116e+02" z="6.300000e+00" diameter="1"/>
+            </segment>
+            <segment id="16" name="15053080-15053082">
+                <parent fractionAlong="1" segment="15"/>
+                <proximal y="3.546897e+02" x="4.614116e+02" z="6.300000e+00" diameter="1"/>
+                <distal y="3.547087e+02" x="4.610362e+02" z="6.750000e+00" diameter="1"/>
+            </segment>
+            <segment id="17" name="15053082-15053084">
+                <parent fractionAlong="1" segment="16"/>
+                <proximal y="3.547087e+02" x="4.610362e+02" z="6.750000e+00" diameter="1"/>
+                <distal y="3.547764e+02" x="4.605121e+02" z="7.200000e+00" diameter="1"/>
+            </segment>
+            <segment id="18" name="15053084-15053086">
+                <parent fractionAlong="1" segment="17"/>
+                <proximal y="3.547764e+02" x="4.605121e+02" z="7.200000e+00" diameter="1"/>
+                <distal y="3.550063e+02" x="4.608129e+02" z="7.650000e+00" diameter="1"/>
+            </segment>
+            <segment id="19" name="15053086-15053088">
+                <parent fractionAlong="1" segment="18"/>
+                <proximal y="3.550063e+02" x="4.608129e+02" z="7.650000e+00" diameter="1"/>
+                <distal y="3.553706e+02" x="4.608684e+02" z="8.100000e+00" diameter="1"/>
+            </segment>
+            <segment id="20" name="15053088-15053090">
+                <parent fractionAlong="1" segment="19"/>
+                <proximal y="3.553706e+02" x="4.608684e+02" z="8.100000e+00" diameter="1"/>
+                <distal y="3.553655e+02" x="4.607762e+02" z="8.550000e+00" diameter="1"/>
+            </segment>
+            <segment id="21" name="15053090-15053092">
+                <parent fractionAlong="1" segment="20"/>
+                <proximal y="3.553655e+02" x="4.607762e+02" z="8.550000e+00" diameter="1"/>
+                <distal y="3.555250e+02" x="4.605805e+02" z="9.000000e+00" diameter="1"/>
+            </segment>
+            <segment id="22" name="15053092-15053094">
+                <parent fractionAlong="1" segment="21"/>
+                <proximal y="3.555250e+02" x="4.605805e+02" z="9.000000e+00" diameter="1"/>
+                <distal y="3.556909e+02" x="4.603144e+02" z="9.450000e+00" diameter="1"/>
+            </segment>
+            <segment id="23" name="15053094-15053096">
+                <parent fractionAlong="1" segment="22"/>
+                <proximal y="3.556909e+02" x="4.603144e+02" z="9.450000e+00" diameter="1"/>
+                <distal y="3.558602e+02" x="4.601569e+02" z="9.900000e+00" diameter="1"/>
+            </segment>
+            <segment id="24" name="15053096-15053098">
+                <parent fractionAlong="1" segment="23"/>
+                <proximal y="3.558602e+02" x="4.601569e+02" z="9.900000e+00" diameter="1"/>
+                <distal y="3.564342e+02" x="4.596013e+02" z="1.035000e+01" diameter="1"/>
+            </segment>
+            <segment id="25" name="15053098-15053100">
+                <parent fractionAlong="1" segment="24"/>
+                <proximal y="3.564342e+02" x="4.596013e+02" z="1.035000e+01" diameter="1"/>
+                <distal y="3.563123e+02" x="4.588115e+02" z="1.080000e+01" diameter="1"/>
+            </segment>
+            <segment id="26" name="15053100-15053102">
+                <parent fractionAlong="1" segment="25"/>
+                <proximal y="3.563123e+02" x="4.588115e+02" z="1.080000e+01" diameter="1"/>
+                <distal y="3.564032e+02" x="4.589291e+02" z="1.125000e+01" diameter="1"/>
+            </segment>
+            <segment id="27" name="15053102-15053104">
+                <parent fractionAlong="1" segment="26"/>
+                <proximal y="3.564032e+02" x="4.589291e+02" z="1.125000e+01" diameter="1"/>
+                <distal y="3.565457e+02" x="4.586007e+02" z="1.170000e+01" diameter="1"/>
+            </segment>
+            <segment id="28" name="15053104-15053106">
+                <parent fractionAlong="1" segment="27"/>
+                <proximal y="3.565457e+02" x="4.586007e+02" z="1.170000e+01" diameter="1"/>
+                <distal y="3.568305e+02" x="4.583032e+02" z="1.215000e+01" diameter="1"/>
+            </segment>
+            <segment id="29" name="15053106-15053108">
+                <parent fractionAlong="1" segment="28"/>
+                <proximal y="3.568305e+02" x="4.583032e+02" z="1.215000e+01" diameter="1"/>
+                <distal y="3.572678e+02" x="4.579007e+02" z="1.260000e+01" diameter="1"/>
+            </segment>
+            <segment id="30" name="15053108-15053110">
+                <parent fractionAlong="1" segment="29"/>
+                <proximal y="3.572678e+02" x="4.579007e+02" z="1.260000e+01" diameter="1"/>
+                <distal y="3.576262e+02" x="4.573420e+02" z="1.305000e+01" diameter="1"/>
+            </segment>
+            <segment id="31" name="15053110-15053112">
+                <parent fractionAlong="1" segment="30"/>
+                <proximal y="3.576262e+02" x="4.573420e+02" z="1.305000e+01" diameter="1"/>
+                <distal y="3.573735e+02" x="4.564896e+02" z="1.350000e+01" diameter="1"/>
+            </segment>
+            <segment id="32" name="15053112-15053114">
+                <parent fractionAlong="1" segment="31"/>
+                <proximal y="3.573735e+02" x="4.564896e+02" z="1.350000e+01" diameter="1"/>
+                <distal y="3.574819e+02" x="4.561992e+02" z="1.395000e+01" diameter="1"/>
+            </segment>
+            <segment id="33" name="15053114-15053116">
+                <parent fractionAlong="1" segment="32"/>
+                <proximal y="3.574819e+02" x="4.561992e+02" z="1.395000e+01" diameter="1"/>
+                <distal y="3.574629e+02" x="4.553457e+02" z="1.440000e+01" diameter="1"/>
+            </segment>
+            <segment id="34" name="15053116-15053118">
+                <parent fractionAlong="1" segment="33"/>
+                <proximal y="3.574629e+02" x="4.553457e+02" z="1.440000e+01" diameter="1"/>
+                <distal y="3.573345e+02" x="4.551596e+02" z="1.485000e+01" diameter="1"/>
+            </segment>
+            <segment id="35" name="15053118-15053120">
+                <parent fractionAlong="1" segment="34"/>
+                <proximal y="3.573345e+02" x="4.551596e+02" z="1.485000e+01" diameter="1"/>
+                <distal y="3.579427e+02" x="4.544852e+02" z="1.530000e+01" diameter="1"/>
+            </segment>
+            <segment id="36" name="15053120-15053122">
+                <parent fractionAlong="1" segment="35"/>
+                <proximal y="3.579427e+02" x="4.544852e+02" z="1.530000e+01" diameter="1"/>
+                <distal y="3.579230e+02" x="4.538372e+02" z="1.575000e+01" diameter="1"/>
+            </segment>
+            <segment id="37" name="15053122-15053124">
+                <parent fractionAlong="1" segment="36"/>
+                <proximal y="3.579230e+02" x="4.538372e+02" z="1.575000e+01" diameter="1"/>
+                <distal y="3.580167e+02" x="4.535029e+02" z="1.620000e+01" diameter="1"/>
+            </segment>
+            <segment id="38" name="15053124-15053126">
+                <parent fractionAlong="1" segment="37"/>
+                <proximal y="3.580167e+02" x="4.535029e+02" z="1.620000e+01" diameter="1"/>
+                <distal y="3.581173e+02" x="4.523506e+02" z="1.665000e+01" diameter="1"/>
+            </segment>
+            <segment id="39" name="15053126-15053128">
+                <parent fractionAlong="1" segment="38"/>
+                <proximal y="3.581173e+02" x="4.523506e+02" z="1.665000e+01" diameter="1"/>
+                <distal y="3.585470e+02" x="4.518703e+02" z="1.710000e+01" diameter="1"/>
+            </segment>
+            <segment id="40" name="15053128-15053130">
+                <parent fractionAlong="1" segment="39"/>
+                <proximal y="3.585470e+02" x="4.518703e+02" z="1.710000e+01" diameter="1"/>
+                <distal y="3.585636e+02" x="4.508420e+02" z="1.755000e+01" diameter="1"/>
+            </segment>
+            <segment id="41" name="15053130-15053132">
+                <parent fractionAlong="1" segment="40"/>
+                <proximal y="3.585636e+02" x="4.508420e+02" z="1.755000e+01" diameter="1"/>
+                <distal y="3.584242e+02" x="4.504011e+02" z="1.800000e+01" diameter="1"/>
+            </segment>
+            <segment id="42" name="15053132-15053134">
+                <parent fractionAlong="1" segment="41"/>
+                <proximal y="3.584242e+02" x="4.504011e+02" z="1.800000e+01" diameter="1"/>
+                <distal y="3.583845e+02" x="4.498263e+02" z="1.845000e+01" diameter="1"/>
+            </segment>
+            <segment id="43" name="15053134-15053136">
+                <parent fractionAlong="1" segment="42"/>
+                <proximal y="3.583845e+02" x="4.498263e+02" z="1.845000e+01" diameter="1"/>
+                <distal y="3.587118e+02" x="4.486769e+02" z="1.890000e+01" diameter="1"/>
+            </segment>
+            
+        
+
+        </morphology>
+    </cell>
+</neuroml>

@@ -6,3 +6,10 @@ test_that("read neuroml files", {
     expect_is(read.neuron.neuroml(f), 'neuron', info = paste("file:",basename(f)))
   }
 })
+
+test_that("error on neuroml2 files", {
+  nml2_files=dir("testdata/neuroml2", pattern = '[xn]ml$', full.names = T)
+  for (f in nml2_files) {
+    expect_error(read.neuron.neuroml(f))
+  }
+})
