@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<neuroml xmlns="http://morphml.org/neuroml/schema" 
+    xmlns:meta="http://morphml.org/metadata/schema"
+    xmlns:mml="http://morphml.org/morphml/schema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://morphml.org/neuroml/schema http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level1/NeuroML_Level1_v1.8.1.xsd"
+    length_units="micrometer">
+    
+    <meta:notes>
+        A single simple cell, using the NeuroML namespace for validation.
+    </meta:notes>
+                        
+    <cells>
+        <cell name = "SimpleCell">
+
+            <segments xmlns="http://morphml.org/morphml/schema">
+                <segment id ="0" name="Soma"  cable="0">
+                            <proximal x="0" y="0" z="0" diameter="10"/>
+                            <distal x="10" y="0" z="0" diameter="10"/>
+                </segment>
+                <segment id ="1" name="Dendrite" parent="0" cable="1">
+                            <proximal x="10" y="0" z="0" diameter="3"/> <!-- Note 3D point same as parent, diam different-->
+                            <distal x="20" y="0" z="0" diameter="3"/>
+                </segment>
+            </segments>
+
+            <cables xmlns="http://morphml.org/morphml/schema">
+                <cable id="0" name="SomaCable" />
+                <cable id="1" name="DendriteCable" />
+            </cables>
+
+        </cell>
+    </cells>
+
+
+</neuroml>
