@@ -104,8 +104,8 @@ as.ngraph.morphml_cell<-function(x, ...) {
 }
 
 read.neuron.neuroml<-function(f, ...) {
-  cells=read.neuroml(f)
-  celli=lapply(cells, neuroml_process_cell)
+  cells=read.morphml(f)
+  celli=lapply(cells, process_morphml_cell)
   if(length(celli)>1) {
     nlapply(celli, as.neuron)
   } else {
