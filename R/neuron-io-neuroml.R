@@ -16,6 +16,9 @@ read.morphml<-function(f, ...){
 
 # process the xml tree for a single (morphml) format cell
 process_morphml_cell<-function(cell, ...) {
+  if("morphology" %in% names(cell)) {
+    stop("NeuroML2 is not yet supported!")
+  }
   if(!"segments" %in% names(cell))
     stop("Cells must contain segment information")
   
