@@ -97,14 +97,23 @@ as.neuron.data.frame<-function(x, ...) {
   as.neuron(as.ngraph(x), vertexData=x, ...)
 }
 
-normalise_swc<-function(x, requiredColumns=
-                          c('PointNo','Label','X','Y','Z','W','Parent'),
-                        actionOnError=c('warning','stop')){
+normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','Parent'),
+                        defaultValue=list(PointNo=NA_integer_,Label=0L,
+                                          X=NA_real_,Y=NA_real_,Z=NA_real_,
+                                          W=NA_real_,Parent=NA_integer_),
+                        actionOnError=c('warning','stop','default')){
   cnx=colnames(x)
-  actionOnError=match.fun(match.arg(actionOnError))
+  actionOnError=match.arg(actionOnError)
+  if(actionOnError!='default') actionOnError=match.fun(actionOnError)
   missingColumns=setdiff(requiredColumns, cnx)
-  if(length(missingColumns))
-    actionOnError("Columns ", paste(missingColumns, collapse=","), " are missing from x")
+  if(length(missingColumns)){
+    if(is.character(actionOnError)){
+      x[,missingColumns]=defaultValue[missingColumns]
+    } else {
+      actionOnError("Columns ", paste(missingColumns, collapse=","), " are missing from x")
+    }
+  }
+  
   # if we are only warning on error we may not all have desired columns
   requiredColumnsWeHave=intersect(requiredColumns,cnx)
   x[,c(requiredColumnsWeHave,setdiff(cnx,requiredColumns))]
