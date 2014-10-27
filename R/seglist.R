@@ -160,6 +160,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
 #' @param DefaultLabel Integer label to use for SWC data chunk
 #' @param ReplaceLabel Whether to replace Label column if it already exists
 #' @return A neuron if x was a neuron otherwise dataframe of swc data
+#' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{normalise_swc}}
 #' @export
 seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
                       ReplaceLabel=FALSE){

@@ -33,4 +33,8 @@ ReplaceLabel=TRUE) then it is set to the value of
 DefaultLabel (2=Axon by default). Note that the order of
 point indices in SegList must match those in SWC.
 }
+\seealso{
+\code{\link{as.neuron.data.frame}},
+\code{\link{normalise_swc}}
+}
 
