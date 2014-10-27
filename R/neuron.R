@@ -101,7 +101,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
                         defaultValue=list(PointNo=NA_integer_,Label=0L,
                                           X=NA_real_,Y=NA_real_,Z=NA_real_,
                                           W=NA_real_,Parent=NA_integer_),
-                        actionOnError=c('warning','stop','default')){
+                        actionOnError=c('default','warning','stop')){
   cnx=colnames(x)
   actionOnError=match.arg(actionOnError)
   if(actionOnError!='default') actionOnError=match.fun(actionOnError)
