@@ -3,8 +3,7 @@
 \alias{seglist2swc}
 \title{Recalculate Neurons's SWCData using SegList and point information}
 \usage{
-seglist2swc(x, d, RecalculateParents = TRUE, DefaultLabel = 2L,
-  ReplaceLabel = FALSE)
+seglist2swc(x, d, RecalculateParents = TRUE, DefaultLabel = 2L)
 }
 \arguments{
   \item{x}{Neuron containing both the SegList and d fields
@@ -18,9 +17,6 @@ seglist2swc(x, d, RecalculateParents = TRUE, DefaultLabel = 2L,
 
   \item{DefaultLabel}{Integer label to use for SWC data
   chunk}
-
-  \item{ReplaceLabel}{Whether to replace Label column if it
-  already exists}
 }
 \value{
 A neuron if x was a neuron otherwise dataframe of swc data

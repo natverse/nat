@@ -158,12 +158,10 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
 #' @param d SWC data block (only expected if x is a SegList)
 #' @param RecalculateParents Whether to recalculate parent points (default T)
 #' @param DefaultLabel Integer label to use for SWC data chunk
-#' @param ReplaceLabel Whether to replace Label column if it already exists
 #' @return A neuron if x was a neuron otherwise dataframe of swc data
 #' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{normalise_swc}}
 #' @export
-seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
-                      ReplaceLabel=FALSE){
+seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L){
   if(missing(d)){
     if(!is.neuron(x)) stop("Must supply x=neuron or x=SegList and d=SWC data")
     d=x$d
@@ -191,7 +189,7 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
       }
     }
   }
-  if(is.null(d$Label) || ReplaceLabel)
+  if(is.null(d$Label))
     d$Label=DefaultLabel
   if(is.neuron(x)){
     x$d=d
