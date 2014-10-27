@@ -129,7 +129,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
   }
   
   # if only giving a warning for missing columns we may may be missing some
-  selectedCols=intersect(requiredColumns, cnx)
+  selectedCols=intersect(requiredColumns, colnames(x))
   if(includeExtraCols)
     selectedCols=c(selectedCols, setdiff(cnx, requiredColumns))
   x[,selectedCols]
