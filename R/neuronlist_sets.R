@@ -1,7 +1,10 @@
 #' Find the (asymmetric) difference between two collections of objects
 #' 
-#' @details Note that setdiff.default calls base::setdiff to ensure consistent
+#' @details Note that setdiff.default calls base::setdiff to ensure consistent 
 #'   behaviour for regular vectors.
+#'   
+#'   As a convenience \code{setdiff.neuronlist} allows \code{y}, the second
+#'   collection, to be a character vector of names.
 #'   
 #' @param x the first collection to consider.
 #' @param y the second collection to consider.
@@ -21,7 +24,12 @@ setdiff.default <-   function(x, y, ...) base::setdiff(x, y, ...)
 #' @rdname setdiff
 #' @export
 setdiff.neuronlist <- function(x, y, ...) {
-  x[!names(x) %in% names(y)]
+  if (is.neuronlist(y)) {
+    y<-names(y)
+  }
+  if(!is.character(y))
+    stop("y must be a neuronlist or a character vector of names!")
+  x[!names(x) %in% y]
 }
 
 

@@ -29,6 +29,9 @@ objects
 \details{
 Note that setdiff.default calls base::setdiff to ensure
 consistent behaviour for regular vectors.
+
+As a convenience \code{setdiff.neuronlist} allows \code{y},
+the second collection, to be a character vector of names.
 }
 \seealso{
 \code{\link[base]{setdiff}}
