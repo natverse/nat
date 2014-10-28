@@ -4,7 +4,7 @@
 \title{Find neurons with soma inside 3d selection box (usually drawn in rgl window)}
 \usage{
 find.soma(sel3dfun = select3d(), indices = names(db),
-  db = getOption("nat.default.neuronlist"))
+  db = getOption("nat.default.neuronlist"), invert = FALSE)
 }
 \arguments{
   \item{sel3dfun}{A \code{\link{select3d}} style function
@@ -16,6 +16,9 @@ find.soma(sel3dfun = select3d(), indices = names(db),
   \item{db}{\code{neuronlist} to search. Can also be a
   character vector naming the neuronlist. Defaults to
   \code{options('nat.default.neuronlist')}.}
+
+  \item{invert}{Whether to return neurons outside the
+  selection box (default \code{FALSE})}
 }
 \value{
 Character vector of names of selected neurons
