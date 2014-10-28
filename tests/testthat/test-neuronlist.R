@@ -154,6 +154,9 @@ test_that("set operations on neuronlists behave as expected", {
   y <- kcs20[4:7]
   
   expect_equal(setdiff(x, y), kcs_setdiff)
+  expect_equal(setdiff(x, names(y)), kcs_setdiff)
+  expect_error(setdiff(x, 4:7))
+  
   expect_equal(union(x, y), kcs_union)
   expect_equal(intersect(x, y), kcs_intersect)
 })
