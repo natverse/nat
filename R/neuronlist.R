@@ -676,9 +676,11 @@ subset.neuronlist<-function(x, subset, filterfun,
 #' @param sel3dfun A \code{\link{select3d}} style function to indicate if points
 #'   are within region
 #' @param indices Names of neurons to search (defaults to all neurons in list)
-#' @param db \code{neuronlist} to search. Can also be a character vector naming
+#' @param db \code{neuronlist} to search. Can also be a character vector naming 
 #'   the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.
 #' @param threshold More than this many points must be present in region
+#' @param invert Whether to return neurons outside the selection box (default
+#'   \code{FALSE})
 #' @return Character vector of names of selected neurons
 #' @export
 #' @seealso \code{\link{select3d}, \link{subset.neuronlist}}
@@ -696,7 +698,8 @@ subset.neuronlist<-function(x, subset, filterfun,
 #' find.neuron(Negate(vertical_lobe), db=kcs20)
 #' }
 find.neuron<-function(sel3dfun=select3d(), indices=names(db), 
-                      db=getOption("nat.default.neuronlist"), threshold=0){
+                      db=getOption("nat.default.neuronlist"), threshold=0,
+                      invert=FALSE){
   
   if(is.null(db))
     stop("Please pass a neuronlist in argument db or set options",
@@ -706,7 +709,8 @@ find.neuron<-function(sel3dfun=select3d(), indices=names(db),
     pointsinside=sel3dfun(xyzmatrix(x))
     sum(pointsinside, na.rm=T)>threshold
   }
-  subset(db, subset=indices, filterfun=selfun, rval='names')
+  sel_neurons=subset(db, subset=indices, filterfun=selfun, rval='names')
+  if(invert) setdiff(indices, sel_neurons) else sel_neurons
 }
 
 #' Find neurons with soma inside 3d selection box (usually drawn in rgl window)

@@ -4,7 +4,7 @@
 \title{Find names of neurons within a 3d selection box (usually drawn in rgl window)}
 \usage{
 find.neuron(sel3dfun = select3d(), indices = names(db),
-  db = getOption("nat.default.neuronlist"), threshold = 0)
+  db = getOption("nat.default.neuronlist"), threshold = 0, invert = FALSE)
 }
 \arguments{
   \item{sel3dfun}{A \code{\link{select3d}} style function
@@ -19,6 +19,9 @@ find.neuron(sel3dfun = select3d(), indices = names(db),
 
   \item{threshold}{More than this many points must be
   present in region}
+
+  \item{invert}{Whether to return neurons outside the
+  selection box (default \code{FALSE})}
 }
 \value{
 Character vector of names of selected neurons
