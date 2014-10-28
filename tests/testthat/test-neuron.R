@@ -158,3 +158,8 @@ test_that("we can resample neurons", {
   n=as.neuron(g,origin=3, vertexData = matrix(rnorm(12*4),ncol=4, dimnames = list(NULL, c("X","Y","Z","W"))))
   expect_warning(resample(n,1), "resample will drop")
 })
+
+test_that("we can normalise an SWC data block", {
+  expect_equal(normalise_swc(Cell07PNs[[1]]$d[-2], defaultValue=list(Label=2L)),
+               Cell07PNs[[1]]$d)
+})

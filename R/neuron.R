@@ -97,17 +97,42 @@ as.neuron.data.frame<-function(x, ...) {
   as.neuron(as.ngraph(x), vertexData=x, ...)
 }
 
-normalise_swc<-function(x, requiredColumns=
-                          c('PointNo','Label','X','Y','Z','W','Parent'),
-                        actionOnError=c('warning','stop')){
+#' Normalise an SWC format block of neuron morphology data
+#' @param x A data.frame containing neuron morphology data
+#' @param requiredColumns Character vector naming columns we should have
+#' @param ifMissing What to do if \code{x} is missing a required column
+#' @param includeExtraCols Whether to include any extra columns include in 
+#'   code{x}
+#' @param defaultValue A list containing default values to use for any missing 
+#'   columns
+#' @return A data.frame containing the normalised block of SWC data with 
+#'   stadanrd columns in standard order.
+#' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{seglist2swc}}
+#' @export
+normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','Parent'),
+                        ifMissing=c('usedefaults','warning','stop'),
+                        includeExtraCols=TRUE,
+                        defaultValue=list(PointNo=seq.int(nrow(x)),Label=2L,
+                                          X=NA_real_,Y=NA_real_,Z=NA_real_,
+                                          W=NA_real_,Parent=NA_integer_)
+                        ){
   cnx=colnames(x)
-  actionOnError=match.fun(match.arg(actionOnError))
+  ifMissing=match.arg(ifMissing)
+  if(ifMissing!='usedefaults') ifMissing=match.fun(ifMissing)
   missingColumns=setdiff(requiredColumns, cnx)
-  if(length(missingColumns))
-    actionOnError("Columns ", paste(missingColumns, collapse=","), " are missing from x")
-  # if we are only warning on error we may not all have desired columns
-  requiredColumnsWeHave=intersect(requiredColumns,cnx)
-  x[,c(requiredColumnsWeHave,setdiff(cnx,requiredColumns))]
+  if(length(missingColumns)){
+    if(is.character(ifMissing)){
+      x[,missingColumns]=defaultValue[missingColumns]
+    } else {
+      ifMissing("Columns ", paste(missingColumns, collapse=","), " are missing from x")
+    }
+  }
+  
+  # if only giving a warning for missing columns we may may be missing some
+  selectedCols=intersect(requiredColumns, colnames(x))
+  if(includeExtraCols)
+    selectedCols=c(selectedCols, setdiff(cnx, requiredColumns))
+  x[,selectedCols]
 }
 
 #' Make SegList (and other core fields) from full graph of all nodes and origin

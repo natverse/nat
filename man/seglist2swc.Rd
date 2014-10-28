@@ -3,8 +3,7 @@
 \alias{seglist2swc}
 \title{Recalculate Neurons's SWCData using SegList and point information}
 \usage{
-seglist2swc(x, d, RecalculateParents = TRUE, DefaultLabel = 2L,
-  ReplaceLabel = FALSE)
+seglist2swc(x, d, RecalculateParents = TRUE, ...)
 }
 \arguments{
   \item{x}{Neuron containing both the SegList and d fields
@@ -16,11 +15,8 @@ seglist2swc(x, d, RecalculateParents = TRUE, DefaultLabel = 2L,
   \item{RecalculateParents}{Whether to recalculate parent
   points (default T)}
 
-  \item{DefaultLabel}{Integer label to use for SWC data
-  chunk}
-
-  \item{ReplaceLabel}{Whether to replace Label column if it
-  already exists}
+  \item{...}{Additional arguments passed to
+  \code{\link{normalise_swc}}}
 }
 \value{
 A neuron if x was a neuron otherwise dataframe of swc data
@@ -28,9 +24,27 @@ A neuron if x was a neuron otherwise dataframe of swc data
 \description{
 Uses the SegList field (indices into point array) to
 recalculate point numbers and parent points for SWC data
-field (d). If Label column is missing (or
-ReplaceLabel=TRUE) then it is set to the value of
-DefaultLabel (2=Axon by default). Note that the order of
-point indices in SegList must match those in SWC.
+field (d).
+}
+\details{
+If any columns are missing then they are set to default
+values by \code{\link{normalise_swc}}. In particular
+\itemize{
+
+\item PointNo integer 1:npoints
+
+\item Label = 0 (unknown)
+
+\item W NA_real
+
+}
+
+Note that each numeric entry in the incoming SegList is a
+raw index into the block of vertex data defined by
+\code{d}.
+}
+\seealso{
+\code{\link{as.neuron.data.frame}},
+\code{\link{normalise_swc}}, \code{\link{neuron}}
 }
 

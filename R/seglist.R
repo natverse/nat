@@ -148,21 +148,31 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
 }
 
 #' Recalculate Neurons's SWCData using SegList and point information
-#'
-#' Uses the SegList field (indices into point array) to recalculate 
-#' point numbers and parent points for SWC data field (d).
-#' If Label column is missing (or ReplaceLabel=TRUE) then it is set to the
-#' value of DefaultLabel (2=Axon by default).
-#' Note that the order of point indices in SegList must match those in SWC.
+#' 
+#' Uses the SegList field (indices into point array) to recalculate point 
+#' numbers and parent points for SWC data field (d).
+#' 
+#' @details If any columns are missing then they are set to default values by 
+#'   \code{\link{normalise_swc}}. In particular \itemize{
+#'   
+#'   \item PointNo integer 1:npoints
+#'   
+#'   \item Label = 0 (unknown)
+#'   
+#'   \item W NA_real
+#'   
+#'   }
+#'   
+#'   Note that each numeric entry in the incoming SegList is a raw index into
+#'   the block of vertex data defined by \code{d}.
 #' @param x Neuron containing both the SegList and d fields or a plain seglist
 #' @param d SWC data block (only expected if x is a SegList)
 #' @param RecalculateParents Whether to recalculate parent points (default T)
-#' @param DefaultLabel Integer label to use for SWC data chunk
-#' @param ReplaceLabel Whether to replace Label column if it already exists
+#' @param ... Additional arguments passed to \code{\link{normalise_swc}}
 #' @return A neuron if x was a neuron otherwise dataframe of swc data
+#' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{normalise_swc}}, \code{\link{neuron}}
 #' @export
-seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
-                      ReplaceLabel=FALSE){
+seglist2swc<-function(x, d, RecalculateParents=TRUE, ...){
   if(missing(d)){
     if(!is.neuron(x)) stop("Must supply x=neuron or x=SegList and d=SWC data")
     d=x$d
@@ -173,11 +183,12 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
     if(!is.null(sl[[1]][[1]]))
       sl=unlist(sl, recursive=FALSE)
   }
-  if(is.null(d$PointNo)){
-    if(nrow(d)==0) stop("Must supply either supply some coords or PointNos")
-    d$PointNo=seq(nrow(d))
-  }
-  if(is.null(d$Parent) || RecalculateParents){
+  
+  if(is.null(d$PointNo) && nrow(d)==0)
+    stop("Must supply either supply some coords or PointNos")
+  d=normalise_swc(d, ...)
+
+  if(any(is.na(d$Parent)) || RecalculateParents){
     d$Parent=-1L
     for(s in sl){
       # first handle length 1 segments i.e. floating points
@@ -190,8 +201,7 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, DefaultLabel=2L,
       }
     }
   }
-  if(is.null(d$Label) || ReplaceLabel)
-    d$Label=DefaultLabel
+
   if(is.neuron(x)){
     x$d=d
     x
