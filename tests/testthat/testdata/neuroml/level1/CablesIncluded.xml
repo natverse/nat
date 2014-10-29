@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<morphml xmlns="http://morphml.org/morphml/schema"     
+    xmlns:meta="http://morphml.org/metadata/schema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://morphml.org/morphml/schema http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level1/MorphML_v1.8.1.xsd"
+    length_units="micrometer">
+                        
+     
+<cells>
+    <cell name="CellWithCables">
+        
+        <meta:notes>Test cell for showing mapping to NEURON/GENESIS when cables/sections are specified 
+                 (e.g. as in a MorphML file where the segments have been grouped into cables 
+                 in preparation for mapping to a neuronal simulator)</meta:notes>
+        
+        <meta:properties>
+            <meta:property tag="Neuron type" value="Abstract"/> <!-- Preferred form for property element since v1.7.1 -->
+        </meta:properties>
+    
+        <segments>
+                <!-- Soma segment-->
+            
+            <segment id= "0" name = "SomaSeg" cable = "0">
+                    <proximal x="0" y="0" z="0" diameter="10"/>
+                    <distal x="10" y="0" z="0" diameter="10"/>
+            </segment>
+            
+                <!-- Segments in cable 1-->
+        
+            <segment id= "1" name = "DendSeg1" parent = "0" cable = "1">
+                    <proximal x="5" y="0" z="0" diameter="5"/>
+                    <distal x="5" y="10" z="0" diameter="5"/>
+            </segment>     
+            
+            <segment id= "2" name = "DendSeg2" parent = "1" cable = "1">
+                    <!-- No need for proximal point: taken from distal of parent-->
+                    <distal x="5" y="20" z="0" diameter="5"/>             
+            </segment>  
+            
+            <segment id= "3" name = "DendSeg3" parent = "2" cable = "1">
+                    <distal x="5" y="30" z="0" diameter="5"/>
+            </segment> 
+            
+                <!-- Segments in cable 2-->   
+            
+            <segment id= "4" name = "DendSeg4" parent = "0" cable = "2">
+                    <proximal x="10" y="0" z="0" diameter="3"/> <!-- Note 3D point same as parent, diam different-->
+                    <distal x="10" y="0" z="10" diameter="3"/>
+            </segment>                
+                        
+            <segment id= "5" name = "DendSeg5" parent = "4" cable = "2">
+                    <distal x="10" y="0" z="20" diameter="3"/>
+            </segment>                
+  
+        </segments>
+        
+        
+        <cables>
+            <cable id= "0" name = "SomaSec">
+                <meta:group>soma_group</meta:group>
+            </cable>
+            
+                <!-- The two dendritic cables are in group dendrite_group -->
+
+            <cable id= "1" name = "DendSec1" fract_along_parent="0.5">
+                <meta:group>dendrite_group</meta:group>
+            </cable>
+
+            <cable id= "2" name = "DendSec2">
+                <meta:group>dendrite_group</meta:group>
+            </cable>
+        
+        </cables>
+
+    </cell>
+</cells>
+
+
+</morphml>

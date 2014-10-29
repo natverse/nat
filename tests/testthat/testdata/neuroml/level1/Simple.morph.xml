@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<morphml xmlns="http://morphml.org/morphml/schema" 
+    xmlns:meta="http://morphml.org/metadata/schema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://morphml.org/morphml/schema   http://www.neuroml.org/NeuroMLValidator/NeuroMLFiles/Schemata/v1.8.1/Level1/MorphML_v1.8.1.xsd"
+    length_units="micrometer">
+        
+    <meta:notes>
+        A single simple cell, using the MorphML namespace for validation.
+    </meta:notes>
+    
+    <meta:properties>
+        <meta:property tag="Neuron type" value="Abstract"/> <!-- Preferred form for property element since v1.7.1 -->
+    </meta:properties>
+    
+                        
+    <cells>
+        <cell name = "SimpleCell">
+
+            <segments>
+                <segment id ="0" name="Soma"  cable="0">
+                    <proximal x="0" y="0" z="0" diameter="10"/>
+                    <distal x="10" y="0" z="0" diameter="10"/>
+                </segment>
+                <segment id ="1" name="Dendrite" parent="0" cable="1">
+                    <proximal x="10" y="0" z="0" diameter="3"/> <!-- Note 3D point same as parent, diam different-->
+                    <distal x="20" y="0" z="0" diameter="3"/>
+                </segment>
+            </segments>
+
+            <cables>
+                <cable id="0" name="SomaCable">
+                    <meta:group>soma_group</meta:group>
+                </cable>
+                <cable id="1" name="DendriteCable" >
+                    <meta:group>dendrite_group</meta:group>
+                </cable>
+            </cables>
+
+        </cell>
+    </cells>
+
+
+</morphml>
