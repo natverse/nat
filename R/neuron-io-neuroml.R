@@ -133,7 +133,11 @@ as.data.frame.morphml_cell<-function(x, ...){
   # ... and drop (proximal) NA points that did not actually exist in input
   r=r[!is.na(r$PointNo),]
   
-  in_names=c("PointNo",'x','y','z','diameter','parent')
+  # renumber PointNo so they are sequential
+  r$NewPointNo=seq.int(length.out = nrow(r))
+  r$NewParent=match(r$parent, r$PointNo, nomatch = -1L)
+  
+  in_names=c("NewPointNo",'x','y','z','diameter','NewParent')
   out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
   structure(r[in_names], .Names=out_names)
 }
