@@ -80,7 +80,7 @@ process_morphml_cell<-function(cell, ...) {
     
     cabledf=data.frame(id=as.integer(cableinfo[,'id']), 
                        fract_along_parent=as.numeric(cableinfo[,'fract_along_parent']))
-    cabledf=cbind(cabledf,cableinfo[,!colnames(cableinfo)%in%special_cols])
+    cabledf=cbind(cabledf,cableinfo[,!colnames(cableinfo)%in%special_cols, drop=FALSE])
     # cable type
     cabledf$type=sapply(cables, function(x) XML::xmlValue(x)[1])
   } else {
