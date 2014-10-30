@@ -68,10 +68,14 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
   
   if(WithNodes){
     if(WithAllPoints){
-      if(!WithLine) NodeCols=col
-      rglreturnlist[["points"]]=points3d(x$d[,c("X","Y","Z")],color=NodeCols,size=3)
+      SimplePoints=setdiff(seq.int(length.out = nrow(x$d)), NodesOnly)
+      AllPoints=c(NodesOnly, SimplePoints)
+      NodeCols=c(NodeCols, rep(col, length(SimplePoints)))
+      rglreturnlist[["points"]]=points3d(x$d[AllPoints, 
+                                             c("X","Y","Z")], color=NodeCols, size=3)
       if(WithText) # text labels for nodes
-        rglreturnlist[["texts"]]=texts3d(x$d[,c("X","Y","Z")],texts=seq(nrow(x$d)),color=NodeCols,adj=c(0,0.5))
+        rglreturnlist[["texts"]]=texts3d(x$d[AllPoints, c("X","Y","Z")],
+                                         texts=AllPoints, color=NodeCols, adj=c(0,0.5))
     } else {
       if(!WithLine) NodeCols=col
       rglreturnlist[["points"]]=points3d(x$d[NodesOnly,c("X","Y","Z")],color=NodeCols,size=3)
