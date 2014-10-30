@@ -64,7 +64,7 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
                x$EndPoints[-which(x$EndPoints==x$StartPoint)],
                x$StartPoint)
   NodeCols<-c(rep("red",length(x$BranchPoints)),
-              rep("green",length(x$EndPoints)-1),"purple" )
+              rep("blue",length(x$EndPoints)-1),"purple" )
   
   if(WithNodes){
     if(WithAllPoints){
