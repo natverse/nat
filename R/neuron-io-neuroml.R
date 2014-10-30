@@ -103,10 +103,23 @@ as.data.frame.morphml_cell<-function(x, ...){
   # now interleave all points 
   # 
   # yes:
-  #   2. is fract_along_parent ever anything other than NA 0 1?
+  #   2. is fract_along_parent ever anything other than NA or 1?
   #   no: as above
   #   yes: we may need to insert segments to model the connection part way along
-  # parent segment. For the time being just use distal point of parent segment
+  # parent segment or connect to the proximal rather than the distal segment. 
+  # For the time being just use distal point of parent segment
+  
+  if(!is.null(x$cables) && !is.null(x$cables$fract_along_parent)){
+    # fract_along_parent exists, let's check for bad values
+    fap=x$cables$fract_along_parent
+    if(any(fap!=1, na.rm = TRUE)) {
+      ndodgy=sum(fap!=0 | fap!=1, na.rm = TRUE)
+      warning(ndodgy," cable(s) connect at somewhere other than the end of their parent segment!\n",
+              "Presently these will be connected to the distal point of the parent segment.\n",
+              "In future it might make sense to introduce an appropriately located 3d point.")
+    }
+  }
+  
   s=x$segments
   
   if(any(s$parent==-1 & is.na(s$x.p))) stop("Invalid morphml: root segments must have proximal and distal points")
