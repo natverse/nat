@@ -738,7 +738,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
     indices[sel3dfun(somapos)]
   } else {
     selfun = function(x) {
-      somapos=x$d[x$d$PointNo[x$StartPoint], c("X","Y","Z")]
+      somapos=x$d[x$StartPoint, c("X","Y","Z")]
       isTRUE(sel3dfun(somapos))
     }
     subset(db, subset = indices, filterfun = selfun, rval = "names")
