@@ -92,9 +92,50 @@ process_morphml_cell<-function(cell, ...) {
 }
 
 as.data.frame.morphml_cell<-function(x, ...){
-  in_names=c("id",'x.d','y.d','z.d','diameter.d','parent')
+
+  # convert neuroml to swc
+  # 1. do we have cable info?
+  # no: 
+  # set PointNo to 2x (segment id + 1)
+  # if proximal -1
+  # if distal +0
+  # 
+  # now interleave all points 
+  # 
+  # yes:
+  #   2. is fract_along_parent ever anything other than NA 0 1?
+  #   no: as above
+  #   yes: we may need to insert segments to model the connection part way along
+  # parent segment. For the time being just use distal point of parent segment
+  s=x$segments
+  
+  if(any(s$parent==-1 & is.na(s$x.p))) stop("Invalid morphml: root segments must have proximal and distal points")
+  # note that we set proximal pointno to NA if missing
+  prox_nas=ifelse(is.na(s$x.p), NA_integer_, 1L)
+  s$PointNo.p=(2 * s$id + 1) * prox_nas
+  s$PointNo.d= 2 * s$id + 2
+  # parent point of proximal point is distal point of parent seg 
+  s$parent.p=(2 * s$parent + 2) * prox_nas
+  # parent point of distal point is either
+  # a) distal point of parent seg when no proximal point
+  # OR proximal point of this segment
+  distal_points_parent_seg=2 * s$parent + 2
+  
+  s$parent.d=ifelse(is.na(s$PointNo.p), distal_points_parent_seg, s$PointNo.p)
+  
+  # Now fix any root nodes, which will have parent.p=0
+  s$parent.p[s$parent.p==0]=-1
+  
+  # now reshape from wide to long
+  r=reshape(s,direction='long', varying=names(s)[-(1:4)])
+  # ... interleave proximal, distal points for each seg
+  r=r[order(r$id),]
+  # ... and drop (proximal) NA points that did not actually exist in input
+  r=r[!is.na(r$PointNo),]
+  
+  in_names=c("PointNo",'x','y','z','diameter','parent')
   out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
-  structure(x[['segments']][in_names], .Names=out_names)
+  structure(r[in_names], .Names=out_names)
 }
 
 as.neuron.morphml_cell<-function(x, ...) as.neuron(as.data.frame(x, ...))
