@@ -13,3 +13,13 @@ test_that("error on neuroml2 files", {
     expect_error(read.neuron.neuroml(f))
   }
 })
+
+test_that("parse neuroml files", {
+  swcs=dir("testdata/neuroml/level1", pattern = 'swc$', full.names = T)
+  
+  for (swc in swcs) {
+    nml=paste0(tools::file_path_sans_ext(swc),".xml")
+    expect_equal(read.neuron.neuroml(nml), read.neuron(swc), info = basename(nml))
+  }
+})
+
