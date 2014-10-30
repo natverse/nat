@@ -70,7 +70,7 @@ process_morphml_cell<-function(cell, ...) {
       rval=c(id=NA_integer_, name=NA_character_, fract_along_parent=NA_real_)
       rval['id']=atts['id']
       rval['name']=atts['name']
-      if('fract_along_parent'%in%atts['fract_along_parent']){
+      if('fract_along_parent'%in%names(atts)){
         rval['fract_along_parent']=as.numeric(atts['fract_along_parent'])
       }
       rval
