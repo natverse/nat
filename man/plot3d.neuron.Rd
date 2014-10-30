@@ -24,7 +24,7 @@
   in the neuron}
 
   \item{WithText}{Whether to label plotted points with
-  their id}
+  their numeric id (see details)}
 
   \item{PlotSubTrees}{Whether to plot all sub trees when
   the neuron is not fully connected.}
@@ -48,6 +48,11 @@ list of rgl plotting ids (invisibly) separated into
 }
 \description{
 Plot neurons in 3d using rgl library
+}
+\details{
+Note that when WithText=TRUE, the numeric identifiers
+plotted are \emph{raw indices} into the \code{x$d} array,
+\emph{not} the values of the \code{PointNo} column.
 }
 \examples{
 # A new plot would have been opened if required

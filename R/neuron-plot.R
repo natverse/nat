@@ -8,7 +8,8 @@
 #'   using the NeuronName field \strong{or} a character vector of names.
 #' @param WithNodes Whether to plot dots for branch and end points
 #' @param WithAllPoints Whether to plot dots for all points in the neuron
-#' @param WithText Whether to label plotted points with their id
+#' @param WithText Whether to label plotted points with their numeric id (see 
+#'   details)
 #' @param PlotSubTrees Whether to plot all sub trees when the neuron is not 
 #'   fully connected.
 #' @param add Whether to add the neuron to existing rgl plot rather than 
@@ -23,6 +24,9 @@
 #'   \code{\link[rgl]{plot3d}} for details.
 #' @seealso \code{\link{plot3d.neuronlist}, \link{plot3d.dotprops}, 
 #'   \link[rgl]{plot3d}}
+#' @details Note that when WithText=TRUE, the numeric identifiers plotted are
+#'   \emph{raw indices} into the \code{x$d} array, \emph{not} the values of the
+#'   \code{PointNo} column.
 #' @examples
 #' # A new plot would have been opened if required
 #' open3d()
