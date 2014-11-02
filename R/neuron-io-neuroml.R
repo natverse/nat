@@ -161,6 +161,14 @@ as.ngraph.morphml_cell<-function(x, ...) {
   as.ngraph(as.data.frame(x), ...)
 }
 
+#' Read one or more neurons from a NeuroML v1 file
+#' 
+#' @param f Path to a NeuroML format XML file
+#' @param ... Additional arguments (presently ignored)
+#' @return When the XML file contains only 1 cell, a \code{neuron} object,
+#'   otherwise a \code{neuronlist} containing multiple neurons.
+#' @references \url{http://www.neuroml.org/specifications}
+#' @export
 read.neuron.neuroml<-function(f, ...) {
   cells=read.morphml(f)
   celli=lapply(cells, process_morphml_cell)
