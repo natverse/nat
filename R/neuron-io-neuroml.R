@@ -113,10 +113,11 @@ as.data.frame.morphml_cell<-function(x, ...){
     # fract_along_parent exists, let's check for bad values
     fap=x$cables$fract_along_parent
     if(any(fap!=1, na.rm = TRUE)) {
-      ndodgy=sum(fap!=0 | fap!=1, na.rm = TRUE)
+      ndodgy=sum(fap!=1, na.rm = TRUE)
       warning(ndodgy," cable(s) connect at somewhere other than the end of their parent segment!\n",
               "Presently these will be connected to the distal point of the parent segment.\n",
-              "In future it might make sense to introduce an appropriately located 3d point.")
+              "In future it might make sense to introduce an appropriately located 3d point, ",
+              "splitting the parent segment in two.")
     }
   }
   
