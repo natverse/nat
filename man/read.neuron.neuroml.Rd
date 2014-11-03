@@ -3,22 +3,29 @@
 \alias{read.neuron.neuroml}
 \title{Read one or more neurons from a NeuroML v1 file}
 \usage{
-read.neuron.neuroml(f, ...)
+read.neuron.neuroml(f, ..., AlwaysReturnNeuronList = FALSE)
 }
 \arguments{
   \item{f}{Path to a NeuroML format XML file}
 
-  \item{...}{Additional arguments (presently ignored)}
+  \item{...}{Additional arguments passed to read.morphml
+  (and on to \code{XML::xmlParse})}
+
+  \item{AlwaysReturnNeuronList}{}
 }
 \value{
-When the XML file contains only 1 cell, a \code{neuron}
-object, otherwise a \code{neuronlist} containing multiple
-neurons.
+When the XML file contains only 1 cell \emph{and}
+\code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}}
+object, otherwise a \code{\link{neuronlist}} containing one
+or more neurons.
 }
 \description{
 Read one or more neurons from a NeuroML v1 file
 }
 \references{
 \url{http://www.neuroml.org/specifications}
+}
+\seealso{
+\code{\link{read.morphml}}
 }
 

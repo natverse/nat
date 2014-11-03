@@ -28,6 +28,7 @@
 #'   \code{XMLDocument} when \code{ReturnXML=TRUE}.
 #' @export
 #' @seealso \code{xmlParse}, \code{\link{read.neuron.neuroml}}
+#' @references \url{http://www.neuroml.org/specifications}
 read.morphml<-function(f, ..., ReturnXML=FALSE){
   # basic parsing of xml doc (using libxml)
   doc=try(XML::xmlParse(f, ...))
@@ -215,17 +216,20 @@ as.ngraph.morphml_cell<-function(x, ...) {
 #' Read one or more neurons from a NeuroML v1 file
 #' 
 #' @param f Path to a NeuroML format XML file
-#' @param ... Additional arguments (presently ignored)
-#' @return When the XML file contains only 1 cell, a \code{neuron} object,
-#'   otherwise a \code{neuronlist} containing multiple neurons.
+#' @param ... Additional arguments passed to read.morphml (and on to 
+#'   \code{XML::xmlParse})
+#' @param AlwaysReturnNeuronList
+#' @return When the XML file contains only 1 cell \emph{and} 
+#'   \code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}} object, 
+#'   otherwise a \code{\link{neuronlist}} containing one or more neurons.
 #' @references \url{http://www.neuroml.org/specifications}
 #' @export
-read.neuron.neuroml<-function(f, ...) {
-  cells=read.morphml(f)
-  celli=lapply(cells, process_morphml_cell)
-  if(length(celli)>1) {
-    nlapply(celli, as.neuron)
+#' @seealso \code{\link{read.morphml}}
+read.neuron.neuroml<-function(f, ..., AlwaysReturnNeuronList=FALSE) {
+  cells=read.morphml(f, ...)
+  if(AlwaysReturnNeuronList || length(cells)>1) {
+    nlapply(cells, as.neuron)
   } else {
-    as.neuron(celli[[1]])
+    as.neuron(cells[[1]])
   }
 }

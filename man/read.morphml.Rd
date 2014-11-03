@@ -47,6 +47,9 @@ in two R data.frames. The latter option will inevitably
 drop some information, but will probably be more convenient
 for most purposes.
 }
+\references{
+\url{http://www.neuroml.org/specifications}
+}
 \seealso{
 \code{xmlParse}, \code{\link{read.neuron.neuroml}}
 }
