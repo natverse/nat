@@ -1,6 +1,36 @@
-read.morphml<-function(f, ...){
+#' Return parsed XML or R list versions of a NeuroML file
+#' 
+#' @description \code{read.morphml} is designed to expose the full details of 
+#'   the morphology information in a NeuroML file either as a parsed XML 
+#'   structure processed by the \code{XML} package \emph{or} as an extensively 
+#'   processed R list object. To obtain a \code{\link{neuron}} object use 
+#'   \code{read.neuron.neuroml}.
+#'   
+#' @details NeuroML files consist of an XML tree containing one more or more 
+#'   \bold{cells}. Each \bold{cell} contains a tree of \bold{segments} defining 
+#'   the basic connectivity/position and an optional tree \bold{cables} defining
+#'   attributes on groups of \bold{segments} (e.g. a name, whether they are 
+#'   axon/dendrite/soma etc).
+#'   
+#'   \code{read.morphml} will either provide the parsed XML tree which you can 
+#'   query using XPath statements or a more heavily processed version which 
+#'   provides as much information as possible from the segments and cables trees
+#'   in two R data.frames. The latter option will inevitably drop some 
+#'   information, but will probably be more convenient for most purposes.
+#' @param f Path to a file on disk or a remote URL (see \code{XML::xmlParse} for
+#'   details).
+#' @param ... Additional arguments passed to \code{XML::xmlParse}
+#' @param ReturnXML Whether to return a parsed XML tree (when 
+#'   \code{ReturnXML=TRUE}) or a more extensively processed R list object when 
+#'   \code{ReturnXML=FALSE}, the default.
+#' @return Either an R list of S3 class containing one \code{morphml_cell} 
+#'   object for every cell in the NeuroML document or an object of class 
+#'   \code{XMLDocument} when \code{ReturnXML=TRUE}.
+#' @export
+#' @seealso \code{xmlParse}, \code{\link{read.neuron.neuroml}}
+read.morphml<-function(f, ..., ReturnXML=FALSE){
   # basic parsing of xml doc (using libxml)
-  doc=try(XML::xmlParse(f))
+  doc=try(XML::xmlParse(f, ...))
   if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
   ns=XML::xmlNamespaceDefinitions(doc)
   defaultns=try(ns[[1]]$uri)
@@ -11,7 +41,11 @@ read.morphml<-function(f, ...){
   cells=XML::getNodeSet(doc,'//*/nml:cell', c(nml=defaultns))
   cell_names=XML::xmlSApply(cells, function(x) XML::xmlAttrs(x)['name'])
   names(cells)<-cell_names
-  invisible(cells)
+  if(ReturnXML)
+    cells
+  else {
+    lapply(cells, process_morphml_cell)
+  }
 }
 
 # process the xml tree for a single (morphml) format cell
