@@ -207,7 +207,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
 #'   according to the value of rval.
 #'   
 #'   \item \code{getformatreader} returns a list. The reader can be accessed 
-#'   with \code{$read}
+#'   with \code{$read} and the format can be acessed by \code{$format}.
 #'   
 #'   \item \code{getformatwriter} returns a list. The writer can be accessed 
 #'   with \code{$write}.}
@@ -295,6 +295,11 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
 #'   magic functions to see if it can identify the file. Presently formats are 
 #'   in a queue in alphabetical order, dispatching on the first match.
 #' @export
+#' @examples
+#' swc=tempfile(fileext = '.swc')
+#' write.neuron(Cell07PNs[[1]], swc)
+#' stopifnot(isTRUE(getformatreader(swc)$format=='swc'))
+#' unlink(swc)
 getformatreader<-function(file, class=NULL){
   formatsforclass<-fileformats(class=class)
   if(!length(formatsforclass)) return(NULL)
@@ -315,6 +320,7 @@ getformatreader<-function(file, class=NULL){
   ext=tolower(sub(".*(\\.[^.]+$)","\\1",basename(file)))
   for(format in formatsforclass){
     ffs=get(format,envir=.fileformats)
+    ffs$format=format
     
     # check that we have a read function for this format
     if (!"read"%in%names(ffs)) next

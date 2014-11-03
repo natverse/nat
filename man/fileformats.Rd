@@ -47,7 +47,8 @@ getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 or list according to the value of rval.
 
 \item \code{getformatreader} returns a list. The reader can
-be accessed with \code{$read}
+be accessed with \code{$read} and the format can be acessed
+by \code{$format}.
 
 \item \code{getformatwriter} returns a list. The writer can
 be accessed with \code{$write}.}
@@ -95,5 +96,9 @@ fileformats(rval='info')
 registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,
   class='neuron')
 }
+swc=tempfile(fileext = '.swc')
+write.neuron(Cell07PNs[[1]], swc)
+stopifnot(isTRUE(getformatreader(swc)$format=='swc'))
+unlink(swc)
 }
 
