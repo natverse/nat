@@ -151,8 +151,24 @@ as.data.frame.morphml_cell<-function(x, ...){
   r$NewPointNo=seq.int(length.out = nrow(r))
   r$NewParent=match(r$parent, r$PointNo, nomatch = -1L)
   
-  in_names=c("NewPointNo",'x','y','z','diameter','NewParent')
-  out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
+  
+  if(!is.null(x$cables$type)) {
+    # see if we can extract information for the SWC Label column
+    # We use the following (according to neuromorpho.org)
+    # 0 - undefined
+    # 1 - soma
+    # 2 - axon
+    # 3 - (basal) dendrite
+    cable_swc_labels=match(x$cables$type,
+                           c("soma_group","axon_group","dendrite_group"),
+                           nomatch = 0L)
+    r$Label=cable_swc_labels[match(r$cable, x$cables$id)]
+    in_names=c("NewPointNo", "Label", 'x','y','z','diameter','NewParent')
+    out_names=c("PointNo", "Label", "X", "Y", "Z", "W", "Parent")
+  } else {
+    in_names=c("NewPointNo",'x','y','z','diameter','NewParent')
+    out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
+  }
   structure(r[in_names], .Names=out_names)
 }
 
