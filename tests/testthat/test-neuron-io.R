@@ -697,6 +697,14 @@ test_that("we can read multiple neurons from a zip archive", {
   expect_equal(neurons, zip_neurons)
 })
 
+test_that("we can write multiple neurons to a zip archive", {
+  zip_file <- paste0(tempfile(), ".zip")
+  on.exit(unlink(zip_file))
+  write.neuron(Cell07PNs[1:5], zip_file, format="swc", Force=T)
+  zip_neurons <- read.neurons(zip_file, format="zip")
+  expect_equivalent(Cell07PNs[1:5], zip_neurons)
+})
+
 test_that("we can identify amira hxskel neurons",{
   # hxlineset neuron
   expect_false(is.hxskel('testdata/neuron/EBT7R.am'))

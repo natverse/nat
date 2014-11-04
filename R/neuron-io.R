@@ -435,6 +435,13 @@ read.neuron.swc<-function(f, ...){
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
+  if(!is.null(file) && grepl("\\.zip", file)) {
+    neurons_dir <- file.path(tempdir(), "user_neurons")
+    on.exit(unlink(neurons_dir, recursive=TRUE))
+    write.neurons(n, neurons_dir, format=format, ...)
+    zip(file, files=dir(neurons_dir, full=TRUE), flags="-r9Xj")
+    invisible(return(file))
+  }
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
     format='rds'
