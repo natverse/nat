@@ -90,7 +90,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
     neurons_dir <- file.path(tempdir(), "user_neurons")
     on.exit(unlink(neurons_dir, recursive=TRUE))
     unzip(paths, exdir=neurons_dir)
-    n <- read.neurons(dir(neurons_dir, full=TRUE, recursive=TRUE))
+    n <- read.neurons(dir(neurons_dir, full.names = TRUE, recursive=TRUE))
     return(n)
   }
   else 
@@ -551,7 +551,7 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     neurons_dir <- file.path(tempdir(), "user_neurons")
     on.exit(unlink(neurons_dir, recursive=TRUE))
     write.neurons(nl, neurons_dir, format=format, ...)
-    zip(dir, files=dir(neurons_dir, full=TRUE), flags="-r9Xj")
+    zip(dir, files=dir(neurons_dir, full.names = TRUE), flags="-r9Xj")
     invisible(return(dir))
   }
   if(!file.exists(dir)) dir.create(dir)
