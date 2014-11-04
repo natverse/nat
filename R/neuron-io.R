@@ -86,7 +86,7 @@ read.neuron<-function(f, format=NULL, ...){
 read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
-  if(length(paths) == 1 && grepl("\\.zip", paths)) {
+  if(length(paths) == 1 && grepl("\\.zip$", paths)) {
     neurons_dir <- file.path(tempdir(), "user_neurons")
     on.exit(unlink(neurons_dir, recursive=TRUE))
     unzip(paths, exdir=neurons_dir)
