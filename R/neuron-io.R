@@ -25,7 +25,13 @@ read.neuron<-function(f, format=NULL, ...){
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   if(is.null(format))
     format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
-  if(format=="rds")
+  if(format=="zip") {
+    neurons_dir <- file.path(tempdir(), "user_neurons")
+    on.exit(unlink(neurons_dir, recursive=TRUE))
+    unzip(f, exdir=neurons_dir)
+    n <- read.neurons(dir(neurons_dir, full=TRUE, recursive=TRUE))
+  }
+  else if(format=="rds")
     n=readRDS(f)
   else if(format=="rda"){
     objname=load(f,envir=environment())
