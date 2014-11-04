@@ -25,13 +25,7 @@ read.neuron<-function(f, format=NULL, ...){
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   if(is.null(format))
     format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
-  if(format=="zip") {
-    neurons_dir <- file.path(tempdir(), "user_neurons")
-    on.exit(unlink(neurons_dir, recursive=TRUE))
-    unzip(f, exdir=neurons_dir)
-    n <- read.neurons(dir(neurons_dir, full=TRUE, recursive=TRUE))
-  }
-  else if(format=="rds")
+  if(format=="rds")
     n=readRDS(f)
   else if(format=="rda"){
     objname=load(f,envir=environment())
@@ -52,26 +46,28 @@ read.neuron<-function(f, format=NULL, ...){
 #' @details This function will cope with the same set of file formats offered by
 #'   \code{read.neuron}.
 #'   
-#'   If the \code{paths} argument specifies a (single) directory then all files
-#'   in that directory will be read unless an optional regex pattern is also
-#'   specified.
+#'   If the \code{paths} argument specifies a (single) directory then all files 
+#'   in that directory will be read unless an optional regex pattern is also 
+#'   specified. Similarly, if \code{paths} specifies a zip archive, all neurons
+#'   within the archive will be loaded.
 #'   
-#'   \code{neuronnames} must specify a unique set of names that will be used as
+#'   \code{neuronnames} must specify a unique set of names that will be used as 
 #'   the names of the neurons in the resultant neuronlist. If \code{neuronnames}
-#'   is a a function then this will be applied to the path to each neuron. The
-#'   default value is the function \code{basename} which results in each neuron
+#'   is a a function then this will be applied to the path to each neuron. The 
+#'   default value is the function \code{basename} which results in each neuron 
 #'   being named for the input file from which it was read.
 #'   
-#'   The optional dataframe (\code{df}) detailing each neuron should have
-#'   \code{rownames} that match the names of each neuron. It would also make
-#'   sense if the same key was present in a column of the data frame. If the
+#'   The optional dataframe (\code{df}) detailing each neuron should have 
+#'   \code{rownames} that match the names of each neuron. It would also make 
+#'   sense if the same key was present in a column of the data frame. If the 
 #'   dataframe contains more rows than neurons, the superfluous rows are dropped
-#'   with a warning. If the dataframe is missing rows for some neurons an error
-#'   is generated. If SortOnUpdate is TRUE then updating an existing neuronlist
-#'   should result in a new neuronlist with ordering identical to reading all
+#'   with a warning. If the dataframe is missing rows for some neurons an error 
+#'   is generated. If SortOnUpdate is TRUE then updating an existing neuronlist 
+#'   should result in a new neuronlist with ordering identical to reading all 
 #'   neurons from scratch.
 #' @param paths Paths to neuron input files \emph{or} a directory containing 
-#'   neurons \emph{or} a \code{\link{neuronlistfh}} object.
+#'   neurons \emph{or} a \code{\link{neuronlistfh}} object, \emph{or} a zip 
+#'   archive containing multiple neurons.
 #' @param pattern If paths is a directory, \link{regex} that file names must 
 #'   match.
 #' @param neuronnames Character vector or function that specifies neuron names. 
@@ -90,6 +86,14 @@ read.neuron<-function(f, format=NULL, ...){
 read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
+  if(length(paths) == 1 && grepl("\\.zip", paths)) {
+    neurons_dir <- file.path(tempdir(), "user_neurons")
+    on.exit(unlink(neurons_dir, recursive=TRUE))
+    unzip(paths, exdir=neurons_dir)
+    n <- read.neurons(dir(neurons_dir, full=TRUE, recursive=TRUE))
+    return(n)
+  }
+  else 
   if(inherits(paths,'neuronlistfh')){
     if(!inherits(attr(paths,'db'),'filehashRDS'))
       stop("read.neurons only supports reading neuronlistfh with an RDS format filehash")
