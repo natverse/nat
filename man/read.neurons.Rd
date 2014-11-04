@@ -9,7 +9,8 @@ read.neurons(paths, pattern = NULL, neuronnames = basename, format = NULL,
 \arguments{
   \item{paths}{Paths to neuron input files \emph{or} a
   directory containing neurons \emph{or} a
-  \code{\link{neuronlistfh}} object.}
+  \code{\link{neuronlistfh}} object, \emph{or} a zip
+  archive containing multiple neurons.}
 
   \item{pattern}{If paths is a directory, \link{regex} that
   file names must match.}
@@ -48,7 +49,9 @@ offered by \code{read.neuron}.
 
 If the \code{paths} argument specifies a (single) directory
 then all files in that directory will be read unless an
-optional regex pattern is also specified.
+optional regex pattern is also specified. Similarly, if
+\code{paths} specifies a zip archive, all neurons within
+the archive will be loaded.
 
 \code{neuronnames} must specify a unique set of names that
 will be used as the names of the neurons in the resultant
