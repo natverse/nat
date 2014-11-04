@@ -439,13 +439,6 @@ read.neuron.swc<-function(f, ...){
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
-  if(!is.null(file) && grepl("\\.zip", file)) {
-    neurons_dir <- file.path(tempdir(), "user_neurons")
-    on.exit(unlink(neurons_dir, recursive=TRUE))
-    write.neurons(n, neurons_dir, format=format, ...)
-    zip(file, files=dir(neurons_dir, full=TRUE), flags="-r9Xj")
-    invisible(return(file))
-  }
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
     format='rds'
@@ -508,13 +501,14 @@ write.neuron.swc<-function(x, file, ...){
   write.table(df, file, col.names=F, row.names=F, append=TRUE, ...)
 }
 
-#' Write neurons from a neuronlist object to individual files
+#' Write neurons from a neuronlist object to individual files, or a zip archive
 #' 
 #' @details See \code{\link{write.neuron}} for details of how to specify the 
 #'   file format/extension/name of the output files and how to establish what 
-#'   output file formats are available.
+#'   output file formats are available. A zip archive of files can be written by
+#'   specifying a value of \code{dir} that ends in \code{.zip}.
 #' @param nl neuronlist object
-#' @param dir directory to write neurons
+#' @param dir directory to write neurons, or path to zip archive (see Details).
 #' @inheritParams write.neuron
 #' @param subdir String naming field in neuron that specifies a subdirectory OR 
 #'   expression to evaluate in the context of neuronlist's df attribute
@@ -553,6 +547,13 @@ write.neuron.swc<-function(x, file, ...){
 #' }
 write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl), 
                         files=NULL, ...){
+  if(grepl("\\.zip", dir)) {
+    neurons_dir <- file.path(tempdir(), "user_neurons")
+    on.exit(unlink(neurons_dir, recursive=TRUE))
+    write.neurons(nl, neurons_dir, format=format, ...)
+    zip(dir, files=dir(neurons_dir, full=TRUE), flags="-r9Xj")
+    invisible(return(dir))
+  }
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
   # Construct subdirectory structure based on 
