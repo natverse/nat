@@ -17,9 +17,9 @@
 #'   provides as much information as possible from the segments and cables trees
 #'   in two R data.frames. The latter option will inevitably drop some 
 #'   information, but will probably be more convenient for most purposes.
-#' @param f Path to a file on disk or a remote URL (see \code{XML::xmlParse} for
-#'   details).
-#' @param ... Additional arguments passed to \code{XML::xmlParse}
+#' @param f Path to a file on disk or a remote URL (see 
+#'   \code{\link[XML]{xmlParse}} for details).
+#' @param ... Additional arguments passed to \code{\link[XML]{xmlParse}}
 #' @param ReturnXML Whether to return a parsed XML tree (when 
 #'   \code{ReturnXML=TRUE}) or a more extensively processed R list object when 
 #'   \code{ReturnXML=FALSE}, the default.
@@ -27,7 +27,7 @@
 #'   object for every cell in the NeuroML document or an object of class 
 #'   \code{XMLDocument} when \code{ReturnXML=TRUE}.
 #' @export
-#' @seealso \code{xmlParse}, \code{\link{read.neuron.neuroml}}
+#' @seealso \code{link[XML]{xmlParse}}, \code{\link{read.neuron.neuroml}}
 #' @references \url{http://www.neuroml.org/specifications}
 read.morphml<-function(f, ..., ReturnXML=FALSE){
   # basic parsing of xml doc (using libxml)
@@ -217,7 +217,7 @@ as.ngraph.morphml_cell<-function(x, ...) {
 #' 
 #' @param f Path to a NeuroML format XML file
 #' @param ... Additional arguments passed to read.morphml (and on to 
-#'   \code{XML::xmlParse})
+#'   \code{\link[XML]{xmlParse}})
 #' @param AlwaysReturnNeuronList See \bold{Value} section (default \code{FALSE})
 #' @return When the XML file contains only 1 cell \emph{and} 
 #'   \code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}} object, 

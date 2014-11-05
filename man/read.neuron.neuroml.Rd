@@ -9,9 +9,9 @@ read.neuron.neuroml(f, ..., AlwaysReturnNeuronList = FALSE)
   \item{f}{Path to a NeuroML format XML file}
 
   \item{...}{Additional arguments passed to read.morphml
-  (and on to \code{XML::xmlParse})}
+  (and on to \code{\link[XML]{xmlParse}})}
 
-  \item{AlwaysReturnNeuronList}{See \bold{Value} section,
+  \item{AlwaysReturnNeuronList}{See \bold{Value} section
   (default \code{FALSE})}
 }
 \value{

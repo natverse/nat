@@ -7,10 +7,10 @@ read.morphml(f, ..., ReturnXML = FALSE)
 }
 \arguments{
   \item{f}{Path to a file on disk or a remote URL (see
-  \code{XML::xmlParse} for details).}
+  \code{\link[XML]{xmlParse}} for details).}
 
   \item{...}{Additional arguments passed to
-  \code{XML::xmlParse}}
+  \code{\link[XML]{xmlParse}}}
 
   \item{ReturnXML}{Whether to return a parsed XML tree
   (when \code{ReturnXML=TRUE}) or a more extensively
@@ -51,6 +51,7 @@ for most purposes.
 \url{http://www.neuroml.org/specifications}
 }
 \seealso{
-\code{xmlParse}, \code{\link{read.neuron.neuroml}}
+\code{link[XML]{xmlParse}},
+\code{\link{read.neuron.neuroml}}
 }
 
