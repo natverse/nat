@@ -218,7 +218,7 @@ as.ngraph.morphml_cell<-function(x, ...) {
 #' @param f Path to a NeuroML format XML file
 #' @param ... Additional arguments passed to read.morphml (and on to 
 #'   \code{XML::xmlParse})
-#' @param AlwaysReturnNeuronList
+#' @param AlwaysReturnNeuronList See \bold{Value} section (default \code{FALSE})
 #' @return When the XML file contains only 1 cell \emph{and} 
 #'   \code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}} object, 
 #'   otherwise a \code{\link{neuronlist}} containing one or more neurons.

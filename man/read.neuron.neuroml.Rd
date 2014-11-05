@@ -11,7 +11,8 @@ read.neuron.neuroml(f, ..., AlwaysReturnNeuronList = FALSE)
   \item{...}{Additional arguments passed to read.morphml
   (and on to \code{XML::xmlParse})}
 
-  \item{AlwaysReturnNeuronList}{}
+  \item{AlwaysReturnNeuronList}{See \bold{Value} section,
+  (default \code{FALSE})}
 }
 \value{
 When the XML file contains only 1 cell \emph{and}
