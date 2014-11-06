@@ -479,19 +479,7 @@ write.zlib<-function(uncompressed, con=raw()){
 #' @return logical
 #' @export
 #' @family amira
-is.amiramesh<-function(f) {
-  if(is.character(f) && length(f)>1) return(sapply(f,is.amiramesh))
-  # AmiraMesh
-  magic=as.raw(c(0x23, 0x20, 0x41, 0x6d, 0x69, 0x72, 0x61, 0x4d, 0x65, 
-                 0x73, 0x68))
-  if(is.character(f)) {
-    f=gzfile(f, open='rb')
-    on.exit(close(f))
-  }
-  first11bytes=try(readBin(f,what=raw(),n=11),silent=TRUE)
-  !inherits(first11bytes,'try-error') && length(first11bytes)==11 && 
-    all(first11bytes==magic)
-}
+is.amiramesh<-function(f) generic_magic_check(f, "# AmiraMesh")
 
 #' Return the type of an amiramesh file on disk or a parsed header
 #' 
