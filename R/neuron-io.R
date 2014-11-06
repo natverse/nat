@@ -289,7 +289,7 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
   if(is.null(read) && is.null(write)) 
     stop("Must provide at least one read or write function")
   
-  if(substr(ext,1,1)!=".") ext=paste(".",sep='',ext)
+  ext=sub("^([^.])",".\\1",ext)
   
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
                      class=class),

@@ -1,6 +1,37 @@
-read.morphml<-function(f, ...){
+#' Return parsed XML or R list versions of a NeuroML file
+#' 
+#' @description \code{read.morphml} is designed to expose the full details of 
+#'   the morphology information in a NeuroML file either as a parsed XML 
+#'   structure processed by the \code{XML} package \emph{or} as an extensively 
+#'   processed R list object. To obtain a \code{\link{neuron}} object use 
+#'   \code{read.neuron.neuroml}.
+#'   
+#' @details NeuroML files consist of an XML tree containing one more or more 
+#'   \bold{cells}. Each \bold{cell} contains a tree of \bold{segments} defining 
+#'   the basic connectivity/position and an optional tree \bold{cables} defining
+#'   attributes on groups of \bold{segments} (e.g. a name, whether they are 
+#'   axon/dendrite/soma etc).
+#'   
+#'   \code{read.morphml} will either provide the parsed XML tree which you can 
+#'   query using XPath statements or a more heavily processed version which 
+#'   provides as much information as possible from the segments and cables trees
+#'   in two R data.frames. The latter option will inevitably drop some 
+#'   information, but will probably be more convenient for most purposes.
+#' @param f Path to a file on disk or a remote URL (see 
+#'   \code{\link[XML]{xmlParse}} for details).
+#' @param ... Additional arguments passed to \code{\link[XML]{xmlParse}}
+#' @param ReturnXML Whether to return a parsed XML tree (when 
+#'   \code{ReturnXML=TRUE}) or a more extensively processed R list object when 
+#'   \code{ReturnXML=FALSE}, the default.
+#' @return Either an R list of S3 class containing one \code{morphml_cell} 
+#'   object for every cell in the NeuroML document or an object of class 
+#'   \code{XMLDocument} when \code{ReturnXML=TRUE}.
+#' @export
+#' @seealso \code{link[XML]{xmlParse}}, \code{\link{read.neuron.neuroml}}
+#' @references \url{http://www.neuroml.org/specifications}
+read.morphml<-function(f, ..., ReturnXML=FALSE){
   # basic parsing of xml doc (using libxml)
-  doc=try(XML::xmlParse(f))
+  doc=try(XML::xmlParse(f, ...))
   if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
   ns=XML::xmlNamespaceDefinitions(doc)
   defaultns=try(ns[[1]]$uri)
@@ -11,7 +42,11 @@ read.morphml<-function(f, ...){
   cells=XML::getNodeSet(doc,'//*/nml:cell', c(nml=defaultns))
   cell_names=XML::xmlSApply(cells, function(x) XML::xmlAttrs(x)['name'])
   names(cells)<-cell_names
-  invisible(cells)
+  if(ReturnXML)
+    cells
+  else {
+    lapply(cells, process_morphml_cell)
+  }
 }
 
 # process the xml tree for a single (morphml) format cell
@@ -70,7 +105,7 @@ process_morphml_cell<-function(cell, ...) {
       rval=c(id=NA_integer_, name=NA_character_, fract_along_parent=NA_real_)
       rval['id']=atts['id']
       rval['name']=atts['name']
-      if('fract_along_parent'%in%atts['fract_along_parent']){
+      if('fract_along_parent'%in%names(atts)){
         rval['fract_along_parent']=as.numeric(atts['fract_along_parent'])
       }
       rval
@@ -80,7 +115,7 @@ process_morphml_cell<-function(cell, ...) {
     
     cabledf=data.frame(id=as.integer(cableinfo[,'id']), 
                        fract_along_parent=as.numeric(cableinfo[,'fract_along_parent']))
-    cabledf=cbind(cabledf,cableinfo[,!colnames(cableinfo)%in%special_cols])
+    cabledf=cbind(cabledf,cableinfo[,!colnames(cableinfo)%in%special_cols, drop=FALSE])
     # cable type
     cabledf$type=sapply(cables, function(x) XML::xmlValue(x)[1])
   } else {
@@ -92,9 +127,84 @@ process_morphml_cell<-function(cell, ...) {
 }
 
 as.data.frame.morphml_cell<-function(x, ...){
-  in_names=c("id",'x.d','y.d','z.d','diameter.d','parent')
-  out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
-  structure(x[['segments']][in_names], .Names=out_names)
+
+  # convert neuroml to swc
+  # 1. do we have cable info?
+  # no: 
+  # set PointNo to 2x (segment id + 1)
+  # if proximal -1
+  # if distal +0
+  # 
+  # now interleave all points 
+  # 
+  # yes:
+  #   2. is fract_along_parent ever anything other than NA or 1?
+  #   no: as above
+  #   yes: we may need to insert segments to model the connection part way along
+  # parent segment or connect to the proximal rather than the distal segment. 
+  # For the time being just use distal point of parent segment
+  
+  if(!is.null(x$cables) && !is.null(x$cables$fract_along_parent)){
+    # fract_along_parent exists, let's check for bad values
+    fap=x$cables$fract_along_parent
+    if(any(fap!=1, na.rm = TRUE)) {
+      ndodgy=sum(fap!=1, na.rm = TRUE)
+      warning(ndodgy," cable(s) connect at somewhere other than the end of their parent segment!\n",
+              "Presently these will be connected to the distal point of the parent segment.\n",
+              "In future it might make sense to introduce an appropriately located 3d point, ",
+              "splitting the parent segment in two.")
+    }
+  }
+  
+  s=x$segments
+  
+  if(any(s$parent==-1 & is.na(s$x.p))) stop("Invalid morphml: root segments must have proximal and distal points")
+  # note that we set proximal pointno to NA if missing
+  prox_nas=ifelse(is.na(s$x.p), NA_integer_, 1L)
+  s$PointNo.p=(2 * s$id + 1) * prox_nas
+  s$PointNo.d= 2 * s$id + 2
+  # parent point of proximal point is distal point of parent seg 
+  s$parent.p=(2 * s$parent + 2) * prox_nas
+  # parent point of distal point is either
+  # a) distal point of parent seg when no proximal point
+  # OR proximal point of this segment
+  distal_points_parent_seg=2 * s$parent + 2
+  
+  s$parent.d=ifelse(is.na(s$PointNo.p), distal_points_parent_seg, s$PointNo.p)
+  
+  # Now fix any root nodes, which will have parent.p=0
+  s$parent.p[s$parent.p==0]=-1
+  
+  # now reshape from wide to long
+  r=reshape(s,direction='long', varying=names(s)[-(1:4)])
+  # ... interleave proximal, distal points for each seg
+  r=r[order(r$id),]
+  # ... and drop (proximal) NA points that did not actually exist in input
+  r=r[!is.na(r$PointNo),]
+  
+  # renumber PointNo so they are sequential
+  r$NewPointNo=seq.int(length.out = nrow(r))
+  r$NewParent=match(r$parent, r$PointNo, nomatch = -1L)
+  
+  
+  if(!is.null(x$cables$type)) {
+    # see if we can extract information for the SWC Label column
+    # We use the following (according to neuromorpho.org)
+    # 0 - undefined
+    # 1 - soma
+    # 2 - axon
+    # 3 - (basal) dendrite
+    cable_swc_labels=match(x$cables$type,
+                           c("soma_group","axon_group","dendrite_group"),
+                           nomatch = 0L)
+    r$Label=cable_swc_labels[match(r$cable, x$cables$id)]
+    in_names=c("NewPointNo", "Label", 'x','y','z','diameter','NewParent')
+    out_names=c("PointNo", "Label", "X", "Y", "Z", "W", "Parent")
+  } else {
+    in_names=c("NewPointNo",'x','y','z','diameter','NewParent')
+    out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
+  }
+  structure(r[in_names], .Names=out_names)
 }
 
 as.neuron.morphml_cell<-function(x, ...) as.neuron(as.data.frame(x, ...))
@@ -103,12 +213,23 @@ as.ngraph.morphml_cell<-function(x, ...) {
   as.ngraph(as.data.frame(x), ...)
 }
 
-read.neuron.neuroml<-function(f, ...) {
-  cells=read.morphml(f)
-  celli=lapply(cells, process_morphml_cell)
-  if(length(celli)>1) {
-    nlapply(celli, as.neuron)
+#' Read one or more neurons from a NeuroML v1 file
+#' 
+#' @param f Path to a NeuroML format XML file
+#' @param ... Additional arguments passed to read.morphml (and on to 
+#'   \code{\link[XML]{xmlParse}})
+#' @param AlwaysReturnNeuronList See \bold{Value} section (default \code{FALSE})
+#' @return When the XML file contains only 1 cell \emph{and} 
+#'   \code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}} object, 
+#'   otherwise a \code{\link{neuronlist}} containing one or more neurons.
+#' @references \url{http://www.neuroml.org/specifications}
+#' @export
+#' @seealso \code{\link{read.morphml}}
+read.neuron.neuroml<-function(f, ..., AlwaysReturnNeuronList=FALSE) {
+  cells=read.morphml(f, ...)
+  if(AlwaysReturnNeuronList || length(cells)>1) {
+    nlapply(cells, as.neuron)
   } else {
-    as.neuron(celli[[1]])
+    as.neuron(cells[[1]])
   }
 }
