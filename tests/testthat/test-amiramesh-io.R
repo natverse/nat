@@ -60,15 +60,15 @@ test_that("read.amiramesh can read an 8 bit amira file",{
 })
 
 test_that("is.amiramesh and amiratype",{
-  amfile="testdata/amira/AL-a_M.am"
-  expect_true(is.amiramesh(amfile))
+  amfiles=dir("testdata/amira", pattern = '\\.am$', full.names = T)
+  expect_true(all(is.amiramesh(amfiles)))
   # not enough to have a file ending
   tf=tempfile(fileext='.am')
   writeLines("#somethingelse",tf)
   on.exit(unlink(tf))
   expect_true(!is.amiramesh(tf))
 
-  expect_equal(amiratype(amfile),'uniform.field')
+  expect_equal(amiratype("testdata/amira/AL-a_M.am"), 'uniform.field')
   
   expect_equal(amiratype("testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
 })

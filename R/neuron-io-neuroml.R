@@ -233,3 +233,17 @@ read.neuron.neuroml<-function(f, ..., AlwaysReturnNeuronList=FALSE) {
     as.neuron(cells[[1]])
   }
 }
+
+# Function to check if a file (or raw bytes) starts with a magic value
+generic_magic_check<-function(f, magic) {
+  if(is.character(magic)) magic=charToRaw(magic)
+  if(is.character(f) && length(f)>1) return(sapply(f,generic_magic_check, magic))
+  nbytes=length(magic)
+  if(is.character(f)) {
+    f=gzfile(f, open='rb')
+    on.exit(close(f))
+  }
+  firstnbytes=try(readBin(f,what=raw(),n=nbytes),silent=TRUE)
+  !inherits(firstnbytes,'try-error') && length(firstnbytes)==nbytes && 
+    all(firstnbytes==magic)
+}
