@@ -247,3 +247,28 @@ generic_magic_check<-function(f, magic) {
   !inherits(firstnbytes,'try-error') && length(firstnbytes)==nbytes && 
     all(firstnbytes==magic)
 }
+
+#' Check whether a file is in NeuroML format
+#' 
+#' This will check a file on disk to see if it is in NeuroML format. Some 
+#' prechecks (optionally taking place on a supplied raw vector of bytes) should 
+#' weed out nearly all true negatives and identify many true positives without
+#' having to read/parse the file header.
+#' 
+#' @param f path to a file on disk
+#' @param bytes optional raw vector of bytes used for prechecks
+is.neuroml<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f,is.neuroml))
+  
+  bytes=if(is.null(bytes)) readBin(f, what=raw(), n=8L) else bytes
+  if(!generic_magic_check(bytes, "<")) return(FALSE)
+  if(generic_magic_check(bytes, "<neuroml")) return(TRUE)
+  if(generic_magic_check(bytes, "<morphml")) return(TRUE)
+  # if we got this far, then we can check if this has an XML header
+  if(!generic_magic_check(f, "<?xml")) return(FALSE)
+  # still not sure? Now we need to start reading in some lines
+  h=readLines(f, n = 4)
+  isTRUE(any(grepl("<neuroml",h,useBytes=T)) || any(grepl("<morphml",h,useBytes=T)))
+}

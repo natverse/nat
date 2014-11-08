@@ -8,6 +8,11 @@ test_that("read neuroml files", {
       expect_is(read.neuron.neuroml(f), 'neuron', info = paste("file:",basename(f)))
     )
   }
+  # suppress warnings re cable segments
+  suppressWarnings(
+    expect_equal(read.neuron(nml_level1_files[1]), 
+               read.neuron.neuroml(nml_level1_files[1]))
+  )
 })
 
 test_that("error on neuroml2 files", {
@@ -29,3 +34,8 @@ test_that("parse neuroml files", {
   }
 })
 
+test_that("is.neuroml", {
+  ff=dir(c("testdata/neuroml","testdata/neuroml2"), full.names = T, recursive = T)
+  notswc=tools::file_ext(ff)!="swc"
+  expect_equivalent(is.neuroml(ff), notswc)
+})
