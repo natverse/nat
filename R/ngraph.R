@@ -103,7 +103,7 @@ as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
   if('swc'%in%method && !is.null(x$d$Parent) && !is.null(x$d$PointNo)){
     as.ngraph(x$d, directed=directed, ...)
   } else {
-    as.ngraph(seglist2swc(x)$d, directed=directed)
+    as.ngraph(seglist2swc(x)$d, directed=directed, ...)
   }
 }
 
