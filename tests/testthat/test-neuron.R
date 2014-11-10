@@ -160,6 +160,10 @@ test_that("we can resample neurons", {
 })
 
 test_that("we can normalise an SWC data block", {
+  # nb need to remove rownames for this old neuron
+  d=Cell07PNs[[1]]$d
+  row.names(d)=NULL
+
   expect_equal(normalise_swc(Cell07PNs[[1]]$d[-2], defaultValue=list(Label=2L)),
-               Cell07PNs[[1]]$d)
+               d)
 })

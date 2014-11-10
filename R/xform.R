@@ -156,7 +156,7 @@ xyzmatrix.hxsurf<-function(x, ...) {
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.igraph<-function(x, ...){
-  igraph::get.graph.attribute(x, 'xyz')
+  sapply(c("X","Y","Z"), function(c) igraph::get.vertex.attribute(x, c))
 }
 
 #' @description \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
@@ -196,7 +196,11 @@ xyzmatrix.igraph<-function(x, ...){
 
 #' @export
 `xyzmatrix<-.igraph`<-function(x, value){
-  igraph::set.graph.attribute(x, 'xyz', value)
+  colnames(value)=c("X","Y","Z")
+  for(col in colnames(value)){
+    x=igraph::set.vertex.attribute(x, col, value=value[,col])
+  }
+  x
 }
 
 #' Mirror 3d object about a given axis, optionally using a warping registration

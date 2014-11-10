@@ -5,7 +5,8 @@
 #'   may additionally contain vertex label or position data. See details.
 #'   
 #'   \code{ngraph()} creates an ngraph from edge and vertex information.
-#' @details We make the following assumptions about neurons coming in
+#' @section Connectivity: We make the following assumptions about neurons coming
+#'   in
 #'   
 #'   \itemize{
 #'   
@@ -25,23 +26,38 @@
 #'   
 #'   When the graph is directed (default) the edges will be from the root to the
 #'   other tips of the neuron.
-#' @param el A two columm matrix (start, end) defining edges
+#' @section Morphology: The morphology of the neuron is encoded by the 
+#'   combination of connectivity information (i.e. the graph) and spatial data 
+#'   encoded as the 3D position and diameter of each vertex. Position 
+#'   information is stored as vertex attributes X, Y, and Z.
+#' @param el A two columm matrix (start, end) defining edges. \code{start} means
+#'   closer to the root (soma) of the neuron.
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
-#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix)
-#' @param weights Logical value indicating whether edge weights defined by the
-#'   3D distance between points should be added to graph (default \code{FALSE})
+#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
+#'   when 4th column is assumed to be diameter)
+#' @param diam Diameter of neuron at each vertex (optional)
+#' @param weights Logical value indicating whether edge weights defined by the 
+#'   3D distance between points should be added to graph (default \code{FALSE}) 
 #'   \emph{or} a numeric vector of weights.
 #' @param directed Whether the resultant graph should be directed (default TRUE)
-#' @param graph.attributes List of named attributes to be added to the graph
+#' @param vertex.attributes,graph.attributes List of named attributes to be 
+#'   added to the graph. The elements of \code{vertex.attributes} must be 
+#'   vectors whose length is compatible with the number of elements in the 
+#'   graph. See \code{\link[igraph]{attributes}} for details.
 #' @return an \code{igraph} object with additional class \code{ngraph}, having a
 #'   vertex for each entry in vertexlabels, each vertex having a \code{label} 
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
-#' @seealso \code{\link{igraph}}
+#' @seealso \code{\link{igraph}}, \code{\link[igraph]{attributes}}
 #' @export
-ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
-                 graph.attributes=NULL){
+#' @examples
+#' g=as.ngraph(Cell07PNs[[1]])
+#' library(igraph)
+#' # check that vertex attributes of graph match X position
+#' all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
+ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
+                 weights=FALSE, vertex.attributes=NULL, graph.attributes=NULL){
   if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")
   # now translate edges into raw vertex_ids
   rawel=match(t(el), vertexlabels)
@@ -58,7 +74,17 @@ ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
   igraph::V(g)$label=vertexlabels
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
-  if(!is.null(xyz)) xyzmatrix(g)<-xyz
+  if(!is.null(xyz)) {
+    if(ncol(xyz)==4 && is.null(diam)){
+      diam=xyz[,4]
+      xyz=xyz[,1:3]
+    }
+    xyzmatrix(g)<-xyz
+  }
+  if(!is.null(diam)) V(g)$diam=diam
+  for(n in names(vertex.attributes)){
+    g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
+  }
   for(n in names(graph.attributes)){
     g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[n]])
   }
@@ -81,7 +107,7 @@ as.ngraph<-function(x, ...) UseMethod('as.ngraph')
 #' @rdname ngraph
 as.ngraph.data.frame<-function(x, directed=TRUE, ...){
   el=x[x$Parent!=-1,c("Parent","PointNo")]
-  ngraph(data.matrix(el), x$PointNo, directed=directed, xyz=xyzmatrix(x), ...)
+  ngraph(data.matrix(el), x$PointNo, directed=directed, xyz=xyzmatrix(x), diam=x$W, ...)
 }
 
 #' @description \code{as.ngraph.neuron} construct ngraph from a neuron
@@ -90,14 +116,14 @@ as.ngraph.data.frame<-function(x, directed=TRUE, ...){
 #' @method as.ngraph neuron
 #' @param method Whether to use the swc data (x$d) or the seglist to define 
 #'   neuronal connectivity to generate graph.
-#' @details Note that this method \emph{always} keeps the original vertex labels
-#'   (a.k.a. PointNo) as read in from the original file.
+#' @details Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
+#'   original vertex labels (a.k.a. PointNo) as read in from the original file.
 as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
   method=match.arg(method, several.ok=TRUE)
   if('swc'%in%method && !is.null(x$d$Parent) && !is.null(x$d$PointNo)){
     as.ngraph(x$d, directed=directed, ...)
   } else {
-    as.ngraph(seglist2swc(x)$d, directed=directed)
+    as.ngraph(seglist2swc(x)$d, directed=directed, ...)
   }
 }
 

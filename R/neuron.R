@@ -106,8 +106,10 @@ as.neuron.data.frame<-function(x, ...) {
 #' @param defaultValue A list containing default values to use for any missing 
 #'   columns
 #' @return A data.frame containing the normalised block of SWC data with 
-#'   stadanrd columns in standard order.
+#'   standard columns in standard order.
 #' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{seglist2swc}}
+#' @details Note that row.names of the resultant data.frame will be set to NULL
+#'   so that they have completely standard values.
 #' @export
 normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','Parent'),
                         ifMissing=c('usedefaults','warning','stop'),
@@ -132,6 +134,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
   selectedCols=intersect(requiredColumns, colnames(x))
   if(includeExtraCols)
     selectedCols=c(selectedCols, setdiff(cnx, requiredColumns))
+  row.names(x)=NULL
   x[,selectedCols]
 }
 
@@ -218,6 +221,8 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
     # get vertex information from graph object
     xyz=xyzmatrix(x)
     if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(x),]
+    diam=V(x)$diam
+    if(!is.null(diam)) d[, "W"]=diam[igraph::V(x)]
   } else {
     # we were given a block of vertexData
     if("PointNo"%in%colnames(vertexData)){

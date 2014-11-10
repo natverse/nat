@@ -26,10 +26,14 @@ normalise_swc(x, requiredColumns = c("PointNo", "Label", "X", "Y", "Z", "W",
 }
 \value{
 A data.frame containing the normalised block of SWC data
-with stadanrd columns in standard order.
+with standard columns in standard order.
 }
 \description{
 Normalise an SWC format block of neuron morphology data
+}
+\details{
+Note that row.names of the resultant data.frame will be set
+to NULL so that they have completely standard values.
 }
 \seealso{
 \code{\link{as.neuron.data.frame}},

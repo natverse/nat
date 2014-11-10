@@ -91,8 +91,8 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
   # construct edge list
   el=cbind(start=lpts[-length(lpts)], end=lpts[-1])
   el=el[!is.na(rowSums(el)),]
-  ng=ngraph(el, vertexlabels=coords$PointNo)
-  as.neuron(ng, vertexData=coords, InputFileName=file, ...)
+  ng=ngraph(el, vertexlabels=coords$PointNo, xyz = coords[,c("X","Y","Z"), drop=FALSE], diam=coords[,"W"])
+  as.neuron(ng, InputFileName=file, ...)
 }
 
 is.hxlineset<-function(f, bytes=NULL){

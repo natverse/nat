@@ -10,7 +10,7 @@ test_that("ndigest works for overloaded and regular classes",{
   
   
   expect_equal(ndigest(read.neuron('testdata/neuron/EBT7R.am')),
-               "b5545be724737c229867a20e7b2c7364")
+               "f24c1252d17b6bd9898c7842f1ad9f5d")
   
   # three neuronlists with different names but same contents
   tf=tempfile('kcs20fh')
