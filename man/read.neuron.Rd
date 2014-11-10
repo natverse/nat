@@ -24,6 +24,25 @@ This function will handle \code{neuron} and \code{dotprops}
 objects saved in R .rds or .rda format by default.
 Additional file formats can be registered using
 \code{fileformats}.
+
+At the moment the following formats are supported natively
+by nat: \itemize{
+
+\item \bold{swc} See \code{\link{read.neuron.swc}}
+
+\item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
+
+\item \bold{hxlineset,hxskel} Two distinct fileformats used
+by Amira.  \code{hxlineset} is the generic one,
+\code{hxskel} is used by the hxskeletonize extension of
+Schmitt and Evers (see refs).
+
+\item \bold{rda,rds} Native R cross-platform binary formats
+(see \code{\link{load}, \link{readRDS}}). Note that RDS
+only contains a single unnamed neuron, whereas rda contains
+one or more named neurons.
+
+}
 }
 \examples{
 \dontrun{
@@ -36,6 +55,13 @@ n3=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",pa
 # show the currently registered file formats that we can read
 fileformats(class='neuron', read=TRUE)
 }
+}
+\references{
+Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M.
+and Obermayer, K. (2004). New methods for the
+computer-assisted 3-D reconstruction of neurons from
+confocal image stacks. Neuroimage 4, 1283--98.
+\href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
 }
 \seealso{
 \code{\link{read.neurons}, \link{fileformats}}
