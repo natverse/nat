@@ -106,8 +106,10 @@ as.neuron.data.frame<-function(x, ...) {
 #' @param defaultValue A list containing default values to use for any missing 
 #'   columns
 #' @return A data.frame containing the normalised block of SWC data with 
-#'   stadanrd columns in standard order.
+#'   standard columns in standard order.
 #' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{seglist2swc}}
+#' @details Note that row.names of the resultant data.frame will be set to NULL
+#'   so that they have completely standard values.
 #' @export
 normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','Parent'),
                         ifMissing=c('usedefaults','warning','stop'),
@@ -132,6 +134,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
   selectedCols=intersect(requiredColumns, colnames(x))
   if(includeExtraCols)
     selectedCols=c(selectedCols, setdiff(cnx, requiredColumns))
+  row.names(x)=NULL
   x[,selectedCols]
 }
 
