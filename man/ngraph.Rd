@@ -27,6 +27,8 @@ as.ngraph(x, ...)
   \item{xyz}{3D coordinates of vertices (optional, Nx3
   matrix)}
 
+  \item{diam}{Diameter of neuron at each vertex (optional)}
+
   \item{directed}{Whether the resultant graph should be
   directed (default TRUE)}
 

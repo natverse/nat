@@ -35,6 +35,7 @@
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
 #' @param xyz 3D coordinates of vertices (optional, Nx3 matrix)
+#' @param diam Diameter of neuron at each vertex (optional)
 #' @param weights Logical value indicating whether edge weights defined by the 
 #'   3D distance between points should be added to graph (default \code{FALSE}) 
 #'   \emph{or} a numeric vector of weights.
