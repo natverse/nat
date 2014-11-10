@@ -7,7 +7,7 @@
 \title{ngraph: a graph to encode a neuron's connectivity}
 \usage{
 ngraph(el, vertexlabels, xyz = NULL, directed = TRUE, weights = FALSE,
-  graph.attributes = NULL)
+  vertex.attributes = NULL, graph.attributes = NULL)
 
 as.ngraph(x, ...)
 
@@ -34,8 +34,11 @@ as.ngraph(x, ...)
   be added to graph (default \code{FALSE}) \emph{or} a
   numeric vector of weights.}
 
-  \item{graph.attributes}{List of named attributes to be
-  added to the graph}
+  \item{vertex.attributes,graph.attributes}{List of named
+  attributes to be added to the graph. The elements of
+  \code{vertex.attributes} must be vectors whose length is
+  compatible with the number of elements in the graph. See
+  \code{\link[igraph]{attributes}} for details.}
 
   \item{x}{Object to convert (see method descriptions)}
 
@@ -96,7 +99,7 @@ vertex labels (a.k.a. PointNo) as read in from the original
 file.
 }
 \seealso{
-\code{\link{igraph}}
+\code{\link{igraph}}, \code{\link[igraph]{attributes}}
 
 Other neuron: \code{\link{as.neuron}},
 \code{\link{as.neuron.data.frame}},

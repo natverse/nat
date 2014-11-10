@@ -81,11 +81,17 @@ test_that("we can find the path of the spine of a neuron", {
 
 test_that("setting of graph attributes",{
   gatts=list(name='testneuron',nclass="PN")
-  expect_is(testg <- as.ngraph(testd, graph.attributes = gatts), 'ngraph')
+  expect_is(testg <- as.ngraph(testd, graph.attributes = gatts, 
+                               vertex.attributes=list(X=testd$X)), 'ngraph')
   expect_equal(get.graph.attribute(testg, name = 'nclass'), gatts$nclass)
   expect_equal(get.graph.attribute(testg, name = 'name'), gatts$name)
   # null attributes
   expect_equal(get.graph.attribute(testg, name = 'rhubarb'), gatts$rhubarb)
+  
+  # vertex attributes
+  expect_equal(get.vertex.attribute(testg, name = 'X'), testd$X)
+  expect_warning(testg <- as.ngraph(testd, graph.attributes = gatts, 
+                               vertex.attributes=list(X=testd$X[-1])))
 })
 
 test_that("graph weights can be calculated and set",{

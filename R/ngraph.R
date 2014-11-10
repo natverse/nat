@@ -29,19 +29,22 @@
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
 #' @param xyz 3D coordinates of vertices (optional, Nx3 matrix)
-#' @param weights Logical value indicating whether edge weights defined by the
-#'   3D distance between points should be added to graph (default \code{FALSE})
+#' @param weights Logical value indicating whether edge weights defined by the 
+#'   3D distance between points should be added to graph (default \code{FALSE}) 
 #'   \emph{or} a numeric vector of weights.
 #' @param directed Whether the resultant graph should be directed (default TRUE)
-#' @param graph.attributes List of named attributes to be added to the graph
+#' @param vertex.attributes,graph.attributes List of named attributes to be 
+#'   added to the graph. The elements of \code{vertex.attributes} must be 
+#'   vectors whose length is compatible with the number of elements in the 
+#'   graph. See \code{\link[igraph]{attributes}} for details.
 #' @return an \code{igraph} object with additional class \code{ngraph}, having a
 #'   vertex for each entry in vertexlabels, each vertex having a \code{label} 
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
-#' @seealso \code{\link{igraph}}
+#' @seealso \code{\link{igraph}}, \code{\link[igraph]{attributes}}
 #' @export
 ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
-                 graph.attributes=NULL){
+                 vertex.attributes=NULL, graph.attributes=NULL){
   if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")
   # now translate edges into raw vertex_ids
   rawel=match(t(el), vertexlabels)
@@ -59,6 +62,9 @@ ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
   if(!is.null(xyz)) xyzmatrix(g)<-xyz
+  for(n in names(vertex.attributes)){
+    g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
+  }
   for(n in names(graph.attributes)){
     g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[n]])
   }
