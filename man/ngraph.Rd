@@ -25,7 +25,8 @@ as.ngraph(x, ...)
   list is specified using these labels.}
 
   \item{xyz}{3D coordinates of vertices (optional, Nx3
-  matrix)}
+  matrix, or Nx4 matrix when 4th column is assumed to be
+  diameter)}
 
   \item{diam}{Diameter of neuron at each vertex (optional)}
 

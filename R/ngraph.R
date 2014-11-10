@@ -34,7 +34,8 @@
 #'   closer to the root (soma) of the neuron.
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
-#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix)
+#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
+#'   when 4th column is assumed to be diameter)
 #' @param diam Diameter of neuron at each vertex (optional)
 #' @param weights Logical value indicating whether edge weights defined by the 
 #'   3D distance between points should be added to graph (default \code{FALSE}) 
@@ -73,7 +74,13 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
   igraph::V(g)$label=vertexlabels
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
-  if(!is.null(xyz)) xyzmatrix(g)<-xyz
+  if(!is.null(xyz)) {
+    if(ncol(xyz)==4 && is.null(diam)){
+      diam=xyz[,4]
+      xyz=xyz[,1:3]
+    }
+    xyzmatrix(g)<-xyz
+  }
   if(!is.null(diam)) V(g)$diam=diam
   for(n in names(vertex.attributes)){
     g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
