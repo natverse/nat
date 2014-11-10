@@ -18,7 +18,8 @@ as.ngraph(x, ...)
 }
 \arguments{
   \item{el}{A two columm matrix (start, end) defining
-  edges}
+  edges. \code{start} means closer to the root (soma) of
+  the neuron.}
 
   \item{vertexlabels}{Integer labels for graph - the edge
   list is specified using these labels.}

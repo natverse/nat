@@ -28,9 +28,10 @@
 #'   other tips of the neuron.
 #' @section Morphology: The morphology of the neuron is encoded by the 
 #'   combination of connectivity information (i.e. the graph) and spatial data 
-#'   encoded as the 3D position and diameter of each vertex. Position
+#'   encoded as the 3D position and diameter of each vertex. Position 
 #'   information is stored as vertex attributes X, Y, and Z.
-#' @param el A two columm matrix (start, end) defining edges
+#' @param el A two columm matrix (start, end) defining edges. \code{start} means
+#'   closer to the root (soma) of the neuron.
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
 #' @param xyz 3D coordinates of vertices (optional, Nx3 matrix)
