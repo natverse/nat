@@ -5,7 +5,8 @@
 #'   may additionally contain vertex label or position data. See details.
 #'   
 #'   \code{ngraph()} creates an ngraph from edge and vertex information.
-#' @details We make the following assumptions about neurons coming in
+#' @section Connectivity: We make the following assumptions about neurons coming
+#'   in
 #'   
 #'   \itemize{
 #'   
@@ -25,6 +26,10 @@
 #'   
 #'   When the graph is directed (default) the edges will be from the root to the
 #'   other tips of the neuron.
+#' @section Morphology: The morphology of the neuron is encoded by the 
+#'   combination of connectivity information (i.e. the graph) and spatial data 
+#'   encoded as the 3D position and diameter of each vertex. Position
+#'   information is stored as vertex attributes X, Y, and Z.
 #' @param el A two columm matrix (start, end) defining edges
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
@@ -43,6 +48,11 @@
 #' @family neuron
 #' @seealso \code{\link{igraph}}, \code{\link[igraph]{attributes}}
 #' @export
+#' @examples
+#' g=as.ngraph(Cell07PNs[[1]])
+#' library(igraph)
+#' # check that vertex attributes of graph match X position
+#' all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
 ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
                  vertex.attributes=NULL, graph.attributes=NULL){
   if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")
@@ -96,8 +106,8 @@ as.ngraph.data.frame<-function(x, directed=TRUE, ...){
 #' @method as.ngraph neuron
 #' @param method Whether to use the swc data (x$d) or the seglist to define 
 #'   neuronal connectivity to generate graph.
-#' @details Note that this method \emph{always} keeps the original vertex labels
-#'   (a.k.a. PointNo) as read in from the original file.
+#' @details Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
+#'   original vertex labels (a.k.a. PointNo) as read in from the original file.
 as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
   method=match.arg(method, several.ok=TRUE)
   if('swc'%in%method && !is.null(x$d$Parent) && !is.null(x$d$PointNo)){

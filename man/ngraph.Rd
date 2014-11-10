@@ -71,32 +71,47 @@ data.frame containing SWC format data
 \code{as.ngraph.neuron} construct ngraph from a neuron
 }
 \details{
-We make the following assumptions about neurons coming in
+Note that the \code{as.ngraph.neuron} method \emph{always}
+keeps the original vertex labels (a.k.a. PointNo) as read
+in from the original file.
+}
+\section{Connectivity}{
+  We make the following assumptions about neurons coming in
 
-\itemize{
+  \itemize{
 
-\item They have an integer vertex label that need not start
-from 1 and that may have gaps
+  \item They have an integer vertex label that need not
+  start from 1 and that may have gaps
 
-\item The edge list which defines connectivity specifies
-edges using pairs of vertex labels, _not_ raw vertex ids.
+  \item The edge list which defines connectivity specifies
+  edges using pairs of vertex labels, _not_ raw vertex ids.
 
+  }
+
+  We make no attempt to determine the root points at this
+  stage.
+
+  The raw vertex ids in the graph will be in the order of
+  vertexlabels and can therefore be used to index a block
+  of vertex coordinates. The vertexlabels will be stored
+  using the vertex attribute \code{label}
+
+  When the graph is directed (default) the edges will be
+  from the root to the other tips of the neuron.
 }
 
-We make no attempt to determine the root points at this
-stage.
-
-The raw vertex ids in the graph will be in the order of
-vertexlabels and can therefore be used to index a block of
-vertex coordinates. The vertexlabels will be stored using
-the vertex attribute \code{label}
-
-When the graph is directed (default) the edges will be from
-the root to the other tips of the neuron.
-
-Note that this method \emph{always} keeps the original
-vertex labels (a.k.a. PointNo) as read in from the original
-file.
+\section{Morphology}{
+  The morphology of the neuron is encoded by the
+  combination of connectivity information (i.e. the graph)
+  and spatial data encoded as the 3D position and diameter
+  of each vertex. Position information is stored as vertex
+  attributes X, Y, and Z.
+}
+\examples{
+g=as.ngraph(Cell07PNs[[1]])
+library(igraph)
+# check that vertex attributes of graph match X position
+all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
 }
 \seealso{
 \code{\link{igraph}}, \code{\link[igraph]{attributes}}
