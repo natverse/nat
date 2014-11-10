@@ -218,6 +218,8 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
     # get vertex information from graph object
     xyz=xyzmatrix(x)
     if(!is.null(xyz)) d[,c("X","Y","Z")]=xyz[igraph::V(x),]
+    diam=V(x)$diam
+    if(!is.null(diam)) d[, "W"]=diam[igraph::V(x)]
   } else {
     # we were given a block of vertexData
     if("PointNo"%in%colnames(vertexData)){

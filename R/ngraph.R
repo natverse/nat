@@ -54,8 +54,8 @@
 #' library(igraph)
 #' # check that vertex attributes of graph match X position
 #' all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
-ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
-                 vertex.attributes=NULL, graph.attributes=NULL){
+ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
+                 weights=FALSE, vertex.attributes=NULL, graph.attributes=NULL){
   if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")
   # now translate edges into raw vertex_ids
   rawel=match(t(el), vertexlabels)
@@ -73,6 +73,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, directed=TRUE, weights=FALSE,
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
   if(!is.null(xyz)) xyzmatrix(g)<-xyz
+  if(!is.null(diam)) V(g)$diam=diam
   for(n in names(vertex.attributes)){
     g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
   }
@@ -98,7 +99,7 @@ as.ngraph<-function(x, ...) UseMethod('as.ngraph')
 #' @rdname ngraph
 as.ngraph.data.frame<-function(x, directed=TRUE, ...){
   el=x[x$Parent!=-1,c("Parent","PointNo")]
-  ngraph(data.matrix(el), x$PointNo, directed=directed, xyz=xyzmatrix(x), ...)
+  ngraph(data.matrix(el), x$PointNo, directed=directed, xyz=xyzmatrix(x), diam=x$W, ...)
 }
 
 #' @description \code{as.ngraph.neuron} construct ngraph from a neuron

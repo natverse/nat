@@ -6,8 +6,8 @@
 \alias{ngraph}
 \title{ngraph: a graph to encode a neuron's connectivity}
 \usage{
-ngraph(el, vertexlabels, xyz = NULL, directed = TRUE, weights = FALSE,
-  vertex.attributes = NULL, graph.attributes = NULL)
+ngraph(el, vertexlabels, xyz = NULL, diam = NULL, directed = TRUE,
+  weights = FALSE, vertex.attributes = NULL, graph.attributes = NULL)
 
 as.ngraph(x, ...)
 
