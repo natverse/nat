@@ -180,10 +180,10 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, ...){
   } else {
     sl=x
     # is this a plain SegList or a list of seglists
-    if(!is.null(sl[[1]][[1]]))
+    if(is.list(sl[[1]]))
       sl=unlist(sl, recursive=FALSE)
   }
-  
+  if(!is.data.frame(d)) d=as.data.frame(d)
   if(is.null(d$PointNo) && nrow(d)==0)
     stop("Must supply either supply some coords or PointNos")
   d=normalise_swc(d, ...)

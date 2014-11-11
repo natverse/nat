@@ -81,3 +81,10 @@ test_that("convert graph to seglist",{
   sl2=seglist(c(3,1),c(3,2,4),c(4,5),c(4,6))
   expect_equal(as.seglist(g,origin=3),sl2)
 })
+
+test_that("seglist2swc",{
+  n=Cell07PNs[[1]]
+  expect_equivalent(seglist2swc(n)$d, n$d)
+  expect_equivalent(seglist2swc(as.seglist(n, all=F), n$d), n$d)
+  expect_equivalent(seglist2swc(as.seglist(n, all=T), n$d), n$d)
+})
