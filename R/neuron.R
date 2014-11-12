@@ -602,8 +602,12 @@ resample_segment<-function(d, stepsize, ...) {
   # make an emty list for results
   dnew=list()
   for(n in names(d)) {
-    dnew[[n]]=approx(cumlength, d[[n]], internalPoints, 
-                     method = ifelse(is.double(d[[n]]), "linear", "constant"))$y
+    dnew[[n]] <- if(!all(is.finite(d[[n]]))) {
+      rep(NA, nInternalPoints)
+    } else {
+      approx(cumlength, d[[n]], internalPoints, 
+             method = ifelse(is.double(d[[n]]), "linear", "constant"))$y
+    }
   }
   as.data.frame(dnew)
 }
