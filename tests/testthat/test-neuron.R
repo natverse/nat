@@ -6,7 +6,7 @@ test_that("we can make a neuron",{
   expect_equal(x,x2)
 })
 
-testd=data.frame(PointNo=1:6,Label=2,
+testd=data.frame(PointNo=1:6,Label=2L,
                  X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
                  Parent=c(-1,1:4,3))
 
@@ -136,7 +136,7 @@ test_that("we can calculate seglengths of neuron", {
                list(list(c(1, 1), c(1, 1), 1)))  
   
   # single segment neuron
-  n=as.neuron(data.frame(PointNo=1:5,Label=2,
+  n=as.neuron(data.frame(PointNo=1:5,Label=2L,
                    X=c(1:5),Y=c(rep(1,5)),Z=0,W=NA,
                    Parent=c(-1,1:4)))
   expect_equal(seglengths(n), 4)
