@@ -577,7 +577,7 @@ resample_segment<-function(d, stepsize, ...) {
   # we must have at least 3 points to resample  
   if(nrow(d) < 3) return(NULL)
   
-  dxyz=data.matrix(d)
+  dxyz=xyzmatrix(d)
   if(!is.data.frame(d)) d=as.data.frame(d)
   # we should only resample if the segment is longer than the new stepsize
   l=seglength(dxyz)
