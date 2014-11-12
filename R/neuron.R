@@ -578,6 +578,7 @@ resample_segment<-function(d, stepsize, ...) {
   if(nrow(d) < 3) return(NULL)
   
   dxyz=data.matrix(d)
+  if(!is.data.frame(d)) d=as.data.frame(d)
   # we should only resample if the segment is longer than the new stepsize
   l=seglength(dxyz)
   if(l<=stepsize) return(NULL)
@@ -598,9 +599,11 @@ resample_segment<-function(d, stepsize, ...) {
   
   # find 3d position of new internal points
   # using linear approximation on existing segments
-  # apply 2 works columnwise
-  dnew=apply(d, 2, function(v) approx(cumlength, v, internalPoints, ...)$y)
-  # add unchanged head and tail points
-  #dnew=rbind(d[1, ], dnew, d[nrow(d), ])
-  #dnew
+  # make an emty list for results
+  dnew=list()
+  for(n in names(d)) {
+    dnew[[n]]=approx(cumlength, d[[n]], internalPoints, 
+                     method = ifelse(is.double(d[[n]]), "linear", "constant"))$y
+  }
+  as.data.frame(dnew)
 }
