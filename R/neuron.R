@@ -569,3 +569,37 @@ resample.neuron<-function(x, stepsize, ...) {
   
   return(x)
 }
+
+# Interpolate ordered 3D points (optionally w diameter)
+# NB returns NULL if unchanged (when too short or <=2 points) 
+# and only returns _internal_ points, omitting the head and tail of a segment
+resample_segment<-function(d, stepsize, ...) {
+  # we must have at least 3 points to resample  
+  if(nrow(d) < 3) return(NULL)
+  
+  # we should only resample if the segment is longer than the new stepsize
+  l=seglength(d[,1:3])
+  if(l<=stepsize) return(NULL)
+  
+  # figure out linear position of new internal points
+  internalPoints=seq(stepsize, l, by=stepsize)
+  nInternalPoints=length(internalPoints)
+  # if the last internal point is actually in exactly the same place 
+  # as the endpoint then discard it
+  if(internalPoints[nInternalPoints]==l) {
+    internalPoints=internalPoints[-length(internalPoints)]
+    nInternalPoints=length(internalPoints)
+  }
+  
+  # find cumulative length stopping at each original point on the segment
+  diffs=diff(d)
+  cumlength=c(0,cumsum(sqrt(rowSums(diffs*diffs))))
+  
+  # find 3d position of new internal points
+  # using linear approximation on existing segments
+  # apply 2 works columnwise
+  dnew=apply(d, 2, function(v) approx(cumlength, v, internalPoints, ...)$y)
+  # add unchanged head and tail points
+  #dnew=rbind(d[1, ], dnew, d[nrow(d), ])
+  #dnew
+}
