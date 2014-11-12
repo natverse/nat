@@ -506,8 +506,8 @@ resample.neuron<-function(x, stepsize, ...) {
 # NB returns NULL if unchanged (when too short or <=2 points) 
 # and only returns _internal_ points, omitting the head and tail of a segment
 resample_segment<-function(d, stepsize, ...) {
-  # we must have at least 3 points to resample  
-  if(nrow(d) < 3) return(NULL)
+  # we must have at least 2 points to resample
+  if(nrow(d) < 2) return(NULL)
   
   dxyz=xyzmatrix(d)
   if(!is.data.frame(d)) d=as.data.frame(d)
