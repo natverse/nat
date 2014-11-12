@@ -145,7 +145,6 @@ test_that("we can calculate seglengths of neuron", {
 
 test_that("we can resample neurons", {
   s=testn$SegList[[1]]
-  
   expect_equivalent(resample_segment(testn$d[s, c("X", "Y", "Z", "W", "Label")], 1),
                     testn$d[2, c("X", "Y", "Z", "W", "Label"), drop=FALSE])
   
