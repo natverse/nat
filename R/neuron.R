@@ -577,8 +577,9 @@ resample_segment<-function(d, stepsize, ...) {
   # we must have at least 3 points to resample  
   if(nrow(d) < 3) return(NULL)
   
+  dxyz=data.matrix(d)
   # we should only resample if the segment is longer than the new stepsize
-  l=seglength(d[,1:3])
+  l=seglength(dxyz)
   if(l<=stepsize) return(NULL)
   
   # figure out linear position of new internal points
@@ -592,7 +593,7 @@ resample_segment<-function(d, stepsize, ...) {
   }
   
   # find cumulative length stopping at each original point on the segment
-  diffs=diff(d)
+  diffs=diff(dxyz)
   cumlength=c(0,cumsum(sqrt(rowSums(diffs*diffs))))
   
   # find 3d position of new internal points
