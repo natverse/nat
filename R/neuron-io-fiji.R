@@ -97,3 +97,25 @@ read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
   if(simplify && length(neuronList)==1) return(neuronList[[1]])
   else neuronList
 }
+
+#' Check whether a file is in Fiji's simple neurite tracer format
+#' 
+#' This will check a file on disk to see if it is in Fiji's simple neurite
+#' tracer XML format.
+#' 
+#' Some prechecks (optionally taking place on a supplied raw vector of bytes)
+#' should weed out nearly all true negatives and identify many true positives
+#' without having to read/parse the file header.
+#' 
+#' @param f path to a file on disk
+#' @param bytes optional raw vector of bytes used for prechecks
+is.fijixml<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f,is.fijixml))
+  
+  if(!generic_magic_check(f, "<?xml")) return(FALSE)
+  # still not sure? Now we need to start reading in some lines
+  h=readLines(f, n = 3)
+  isTRUE(any(grepl("<!DOCTYPE tracings",h, useBytes=T, fixed = T)))
+}

@@ -70,3 +70,8 @@ test_that("Cross check Simple Neurite Tracer SWC export", {
   n$d$W=NA_real_
   expect_equal(nl[[1]], n, fieldsToExclude="NeuronName")
 })
+
+test_that("Recognise Simple Neurite Tracer files",{
+  ff=dir(c("testdata/neuroml", "testdata/neuron"), full.names = T, recursive = T)
+  expect_equivalent(is.fijixml(ff), grepl(".traces$",ff))
+})
