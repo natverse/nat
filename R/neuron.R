@@ -501,7 +501,7 @@ resample.neuron<-function(x, stepsize, ...) {
   # reorder vertex information to match this
   d=d[old_ids,]
   swc=seglist2swc(sl, d)
-  as.neuron(swc)
+  as.neuron(swc, origin=match(x$StartPoint, old_ids))
 }
 
 # Interpolate ordered 3D points (optionally w diameter)
