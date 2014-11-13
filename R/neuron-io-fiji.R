@@ -51,7 +51,9 @@ read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
     d=l[[id]]
     df=seglist2swc(list(1:nrow(d)), d=xyzmatrix(d))
     pathAttributes=attr(l[[id]],"pathAttributes")
-    
+    if('swctype'%in%names(pathAttributes)) {
+      df$Label=as.integer(pathAttributes['swctype'])
+    }
     if('startson'%in%names(pathAttributes)){
       # this path is joined to another, so find out which
       parentPathId=pathAttributes['startson']

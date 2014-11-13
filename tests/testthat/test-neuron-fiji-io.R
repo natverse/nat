@@ -62,3 +62,11 @@ test_that("read Simple Neurite Tracer files", {
     ))
   expect_equal(as.seglist(sbt), sbt.seg)
 })
+
+test_that("Cross check Simple Neurite Tracer SWC export", {
+  expect_is(nl<-read.neuron.fiji("testdata/neuron/fitted.traces"), 'neuronlist')
+  n=read.neuron("testdata/neuron/unfitted.swc")
+  # Fiji writes width as 0 when undefined
+  n$d$W=NA_real_
+  expect_equal(nl[[1]], n, fieldsToExclude="NeuronName")
+})
