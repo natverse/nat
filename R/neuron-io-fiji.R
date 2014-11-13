@@ -28,8 +28,20 @@ ReadLongairTraceData<-function(f, ..., Verbose=FALSE){
   l
 }
 
-read.neuron.fiji<-function(f, ..., simplify=TRUE){
-  l=ReadLongairTraceData(f,...)
+#' Read a neuron saved by Fiji's Simple Neurite Tracer Plugin
+#' 
+#' @param f Path to a file
+#' @param ... Additional arguments passed to \code{\link[XML]{xmlParse}}.
+#' @param simplify Whether to return a single neuron as a \code{neuron} object 
+#'   rather than a \code{neuronlist} of length 1.
+#' @param Verbose Whether to print status messages during parsing.
+#' @details This is an XML based format so parsing it depends on installation of
+#'   the suggeted XML package.
+#' @references \url{http://fiji.sc/Simple_Neurite_Tracer} 
+#'   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
+#' @export
+read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
+  l=ReadLongairTraceData(f, ..., Verbose=Verbose)
   dflist=as.list(rep(NA,length(l)))
   MasterPath=seq(l)
   pointOffsets=rep(0,length(l))
