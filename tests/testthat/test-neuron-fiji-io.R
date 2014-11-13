@@ -1,7 +1,7 @@
 context("Fiji Simple Neurite Tracer input")
 
 test_that("read Simple Neurite Tracer files", {
-  expect_is(st<-read.neuron.fiji("testdata/neuron/SinglePath.traces"), 'neuron')
+  expect_is(st<-read.neuron("testdata/neuron/SinglePath.traces"), 'neuron')
   
   stbase=structure(list(NeuronName = "SinglePath", 
     NumPoints = 11L, StartPoint = 1L, BranchPoints = integer(0), 
@@ -26,7 +26,7 @@ test_that("read Simple Neurite Tracer files", {
 
   expect_equal(st, stbase)
 
-  expect_is(mpt<-read.neuron.fiji("testdata/neuron/MultiplePathsJoinedToMainPath.traces"), 'neuron')
+  expect_is(mpt<-read.neuron("testdata/neuron/MultiplePathsJoinedToMainPath.traces"), 'neuron')
   mpt.seg=structure(list(1:149, 149:150, 150:568, c(150L, 644L, 645L, 646L, 
     647L, 648L, 649L, 650L, 651L, 652L, 653L, 654L, 655L, 656L, 657L, 
     658L, 659L, 660L, 661L, 662L, 663L, 664L, 665L, 666L, 667L, 668L, 
@@ -43,7 +43,7 @@ test_that("read Simple Neurite Tracer files", {
     )), class = c("seglist", "list"))
   expect_equal(as.seglist(mpt), mpt.seg)
   
-  expect_is(sbt<-read.neuron.fiji("testdata/neuron/SequentiallyBranchingTrace.traces"), 'neuron')
+  expect_is(sbt<-read.neuron("testdata/neuron/SequentiallyBranchingTrace.traces"), 'neuron')
   sbt.seg=structure(list(1:78, 78:262, c(78L, 263L, 264L, 265L, 266L, 267L, 
     268L, 269L, 270L, 271L, 272L, 273L, 274L, 275L), 275:388, c(275L, 
     389L, 390L, 391L, 392L, 393L, 394L, 395L, 396L, 397L, 398L, 399L, 
@@ -64,7 +64,7 @@ test_that("read Simple Neurite Tracer files", {
 })
 
 test_that("Cross check Simple Neurite Tracer SWC export", {
-  expect_is(nl<-read.neuron.fiji("testdata/neuron/fitted.traces"), 'neuronlist')
+  expect_is(nl<-read.neuron("testdata/neuron/fitted.traces"), 'neuronlist')
   n=read.neuron("testdata/neuron/unfitted.swc")
   # Fiji writes width as 0 when undefined
   n$d$W=NA_real_
