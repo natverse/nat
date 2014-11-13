@@ -6,7 +6,7 @@ test_that("we can make a neuron",{
   expect_equal(x,x2)
 })
 
-testd=data.frame(PointNo=1:6,Label=2,
+testd=data.frame(PointNo=1:6,Label=2L,
                  X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
                  Parent=c(-1,1:4,3))
 
@@ -136,7 +136,7 @@ test_that("we can calculate seglengths of neuron", {
                list(list(c(1, 1), c(1, 1), 1)))  
   
   # single segment neuron
-  n=as.neuron(data.frame(PointNo=1:5,Label=2,
+  n=as.neuron(data.frame(PointNo=1:5,Label=2L,
                    X=c(1:5),Y=c(rep(1,5)),Z=0,W=NA,
                    Parent=c(-1,1:4)))
   expect_equal(seglengths(n), 4)
@@ -144,6 +144,13 @@ test_that("we can calculate seglengths of neuron", {
 })
 
 test_that("we can resample neurons", {
+  s=testn$SegList[[1]]
+  expect_equivalent(resample_segment(testn$d[s, c("X", "Y", "Z", "W", "Label")], 1),
+                    testn$d[2, c("X", "Y", "Z", "W", "Label"), drop=FALSE])
+  s3=testn$SegList[[3]]
+  expect_equivalent(resample_segment(testn$d[s3, c("X", "Y", "Z")], 0.5),
+               testn$d[s3[1], c("X", "Y", "Z"), drop=F]+c(0,0.5,0))
+  
   expect_is(resampled<-resample(testn, 1.2), 'neuron')
   expect_equal(seglengths(resampled), seglengths(testn))
 
@@ -156,7 +163,16 @@ test_that("we can resample neurons", {
   set.seed(42)
   g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
   n=as.neuron(g,origin=3, vertexData = matrix(rnorm(12*4),ncol=4, dimnames = list(NULL, c("X","Y","Z","W"))))
-  expect_warning(resample(n,1), "resample will drop")
+  expect_is(n1<-resample(n,1), "neuron")
+  expect_equivalent(xyzmatrix(n1)[n1$StartPoint,], xyzmatrix(n)[n$StartPoint,], )
+  expect_true(all(seglengths(n1, all = T) < seglengths(n, all = T)))
+  
+  n=Cell07PNs[[1]]
+  expect_is(n1<-resample(n, 1), 'neuron')
+  expect_true(igraph::graph.isomorphic(segmentgraph(n1), segmentgraph(n)))
+  nodes.n=c(n$BranchPoints, n$EndPoints)
+  nodes.n1=c(n1$BranchPoints, n1$EndPoints)
+  expect_equivalent(xyzmatrix(n1)[nodes.n1,], xyzmatrix(n)[nodes.n,])
 })
 
 test_that("we can normalise an SWC data block", {

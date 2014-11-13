@@ -21,18 +21,13 @@ Resample an object with a new spacing
 resample a neuron with a new spacing
 }
 \details{
-\code{resample.neuron} calls seglengths to calculate the
-length of each segment of the neuron before resampling.
-FIXME It presently has two deficiencies. \itemize{
-
-\item It does not interpolate neuron width
-
-\item It only handles the main subtree of a neuron, even if
-it has more than one.
-
-}
+\code{resample.neuron} Floating point columns including
+X,Y,Z,W will be interpolated using linear interpolation,
+while integer or factor columns will be interpolated using
+constant interpolation. See \code{\link{approx}} for
+details.
 }
 \seealso{
-\code{\link{seglengths}}
+\code{\link{approx}}, \code{\link{seglengths}}
 }
 

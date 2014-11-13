@@ -459,113 +459,89 @@ resample<-function(x, ...) UseMethod("resample")
 #' resample a neuron with a new spacing
 #' 
 #' @param stepsize The new spacing along the tracing
-#' @details \code{resample.neuron} calls seglengths to calculate the length of 
-#'   each segment of the neuron before resampling. FIXME It presently has two 
-#'   deficiencies. \itemize{
-#'   
-#'   \item It does not interpolate neuron width
-#'   
-#'   \item It only handles the main subtree of a neuron, even if it has more 
-#'   than one.
-#'   
-#'   }
+#' @details \code{resample.neuron} Floating point columns including X,Y,Z,W will
+#'   be interpolated using linear interpolation, while integer or factor columns
+#'   will be interpolated using constant interpolation. See \code{\link{approx}}
+#'   for details.
 #' @export
 #' @rdname resample
-#' @seealso \code{\link{seglengths}}
+#' @seealso \code{\link{approx}}, \code{\link{seglengths}}
 resample.neuron<-function(x, stepsize, ...) {
-  if(!is.null(x$SubTrees) && length(x$SubTrees)>1)
-    warning("resample will drop all but the main segment of this neuron")
-  
-  d=matrix(unlist(x$d[,c("X","Y","Z")]),ncol=3)
-  
-  # Always calculate seglengths 
-  # otherwise this would lead to strange failures when they are not correct
-  x$SegLengths=seglengths(x)
-  
-  oldID=NULL; newID=NULL
-  newseglist=x$SegList
-  
-  totalPoints=sum(sapply(x$SegLengths,function(x) 2+floor((x-1e-9)/stepsize)))
-  pointsSoFar=0
-  pointArray=matrix(0,ncol=3,nrow=totalPoints)
-  for(i in seq(len=length(x$SegList))){
-    
-    # length in microns of this segment
-    l=x$SegLengths[i]
-    
-    if(l>stepsize){
-      # new internal points, measured in length along segment
-      internalPoints=seq(stepsize,l,by=stepsize)
-      nInternalPoints=length(internalPoints)
-      # if the last generated one is actually in exactly the same place 
-      # as the endpoint then discard it
-      if(internalPoints[nInternalPoints]==l) {
-        internalPoints=internalPoints[-length(internalPoints)]
-        nInternalPoints=length(internalPoints)
-      }
-      
-      # find lengths between each original point on the segment
-      diffs=diff(d[x$SegList[[i]],])
-      indSegLens=sqrt(rowSums(diffs*diffs))
-      cs=c(0,cumsum(indSegLens))
-      
-      idxs=rep(0,length(internalPoints))
-      for(j in seq(len=length(cs))){
-        idxs[idxs==0 & internalPoints<cs[j]]=j-1
-      }
-      
-      newPoints=matrix(0,ncol=3,nrow=nInternalPoints+2)
-      newPoints[1,]= d[x$SegList[[i]][1],]
-      
-      froms=d[x$SegList[[i]][idxs],]
-      deltas=diffs[idxs,]
-      fracs=(internalPoints-cs[idxs])/indSegLens[idxs]
-      newPoints[-c(1,nrow(newPoints)),]=froms+(deltas*fracs)
-      nNewPoints=nrow(newPoints)
-      newPoints[nNewPoints,]=d[x$SegList[[i]][length(x$SegList[[i]])],]
-    } else {
-      nNewPoints=2
-      newPoints=d[x$SegList[[i]][c(1,length(x$SegList[[i]]))],]
-    }
-    
-    newseg=NULL
-    # have we seen the headpoint of this seg before?
-    if(any(x$SegList[[i]][1]==oldID)){
-      # yes 
-      nNewPoints=nNewPoints-1
-      newPoints=newPoints[-1,] # prevent this head from being readded to point array
-      newseg=c(newID[x$SegList[[i]][1]==oldID],
-               seq(from=pointsSoFar+1,by=1,len=nNewPoints))
-    } else {
-      # no, make a note of it and add it to the array
-      oldID=c(oldID,x$SegList[[i]][1])
-      newID[length(oldID)]=pointsSoFar+1
-      newseg=seq(from=pointsSoFar+1,by=1,len=nNewPoints)
-    }
-    
-    # add the tail to the table we are keeping track of
-    oldID=c(oldID,x$SegList[[i]][length(x$SegList[[i]])])
-    newID=c(newID,pointsSoFar+nNewPoints)
-    
-    newseglist[[i]]=newseg
-    pointArray[(pointsSoFar+1):(pointsSoFar+nNewPoints),]=newPoints
-    pointsSoFar=pointsSoFar+nNewPoints
+  # extract original vertex array before resampling
+  cols=c("X","Y","Z")
+  if(!is.null(x$d$W)) cols=c(cols, 'W')
+  if(!is.null(x$d$Label)) cols=c(cols, 'Label')
+  d=x$d[, cols, drop=FALSE]
+  if(any(is.na(d[,1:3])))
+    stop("Unable to resample neurons with NA points")
+
+  # fetch all segments and process each segment in turn
+  sl=as.seglist(x, all = T, flatten = T)
+  for (i in seq_along(sl)){
+    s=sl[[i]]
+    # interpolate this segment
+    dold=d[s, , drop=FALSE]
+    dnew=resample_segment(dold, stepsize=stepsize, ...)
+    if(is.null(dnew)) next
+    # if we've got here, we need to do something
+    # add new points to the end of the swc block
+    # and give them sequential point numbers
+    newids=seq.int(from = nrow(d)+1, length.out = nrow(dnew))
+    d=rbind(d, dnew)
+    # replace internal ids in segment so that proximal point is connected to head
+    # and distal point is connected to tail
+    sl[[i]]=c(s[1], newids, s[length(s)])
   }
-  pointArray=pointArray[1:pointsSoFar,]
-  colnames(pointArray)=c("X","Y","Z")
+  rownames(d)=NULL
+  # in order to avoid re-ordering the segments when as.neuron.ngraph is called
+  # we can renumber the raw indices in the seglist (and therefore the vertices)
+  # in a strictly ascending sequence based on the seglist
+  old_ids=unique(unlist(sl))
+  sl=lapply(sl, function(x) match(x, old_ids))
+  # reorder vertex information to match this
+  d=d[old_ids,]
+  swc=seglist2swc(sl, d)
+  as.neuron(swc, origin=match(x$StartPoint, old_ids))
+}
+
+# Interpolate ordered 3D points (optionally w diameter)
+# NB returns NULL if unchanged (when too short or <=2 points) 
+# and only returns _internal_ points, omitting the head and tail of a segment
+resample_segment<-function(d, stepsize, ...) {
+  # we must have at least 2 points to resample
+  if(nrow(d) < 2) return(NULL)
   
-  #return(oldID,newID,pointArray,newseglist)
-  # OK now return a new neuron
-  x$NumPoints=pointsSoFar
-  x$StartPoint=newID[oldID==x$StartPoint]
-  x$BranchPoints=newID[match(x$BranchPoints,oldID)]
-  x$EndPoints=newID[match(x$EndPoints,oldID)]
-  if(any(is.na(c(x$EndPoints,x$BranchPoints)))){
-    stop("Problem matching up old & new end/branchpoints")
+  dxyz=xyzmatrix(d)
+  if(!is.data.frame(d)) d=as.data.frame(d)
+  # we should only resample if the segment is longer than the new stepsize
+  l=seglength(dxyz)
+  if(l<=stepsize) return(NULL)
+  
+  # figure out linear position of new internal points
+  internalPoints=seq(stepsize, l, by=stepsize)
+  nInternalPoints=length(internalPoints)
+  # if the last internal point is actually in exactly the same place 
+  # as the endpoint then discard it
+  if(internalPoints[nInternalPoints]==l) {
+    internalPoints=internalPoints[-length(internalPoints)]
+    nInternalPoints=length(internalPoints)
   }
   
-  x$SegList=newseglist
-  x$d=data.frame(PointNo=1:pointsSoFar,X=pointArray[,1],Y=pointArray[,2],Z=pointArray[,3])
+  # find cumulative length stopping at each original point on the segment
+  diffs=diff(dxyz)
+  cumlength=c(0,cumsum(sqrt(rowSums(diffs*diffs))))
   
-  return(x)
+  # find 3d position of new internal points
+  # using linear approximation on existing segments
+  # make an emty list for results
+  dnew=list()
+  for(n in names(d)) {
+    dnew[[n]] <- if(!all(is.finite(d[[n]]))) {
+      rep(NA, nInternalPoints)
+    } else {
+      approx(cumlength, d[[n]], internalPoints, 
+             method = ifelse(is.double(d[[n]]), "linear", "constant"))$y
+    }
+  }
+  as.data.frame(dnew)
 }
