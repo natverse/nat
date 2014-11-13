@@ -73,5 +73,5 @@ test_that("Cross check Simple Neurite Tracer SWC export", {
 
 test_that("Recognise Simple Neurite Tracer files",{
   ff=dir(c("testdata/neuroml", "testdata/neuron"), full.names = T, recursive = T)
-  expect_equivalent(is.fijixml(ff), grepl(".traces$",ff))
+  expect_equivalent(is.fijitraces(ff), grepl(".traces$",ff))
 })
