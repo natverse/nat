@@ -488,17 +488,19 @@ resample.neuron<-function(x, stepsize, ...) {
     # and give them sequential point numbers
     newids=seq.int(from = nrow(d)+1, length.out = nrow(dnew))
     d=rbind(d, dnew)
-    # mark ids to remove by setting X to NA
-    ids_to_remove=s[-c(1L, length(s))]
-    d[ids_to_remove,1]=NA_real_
-    # replace internal ids in segment 
-    # so that first point is connected to head and distal point to the last
+    # replace internal ids in segment so that proximal point is connected to head
+    # and distal point is connected to tail
     sl[[i]]=c(s[1], newids, s[length(s)])
   }
   rownames(d)=NULL
+  # in order to avoid re-ordering the segments when as.neuron.ngraph is called
+  # we can renumber the raw indices in the seglist (and therefore the vertices)
+  # in a strictly ascending sequence based on the seglist
+  old_ids=unique(unlist(sl))
+  sl=lapply(sl, function(x) match(x, old_ids))
+  # reorder vertex information to match this
+  d=d[old_ids,]
   swc=seglist2swc(sl, d)
-  swc=swc[!is.na(swc$X), ]
-  # check
   as.neuron(swc)
 }
 
