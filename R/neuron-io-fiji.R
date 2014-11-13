@@ -1,4 +1,4 @@
-ReadLongairTraceData<-function(f, ..., Verbose=FALSE){
+read.fijixml<-function(f, ..., Verbose=FALSE){
   doc=try(XML::xmlParse(f, ...))
   if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
 
@@ -41,7 +41,7 @@ ReadLongairTraceData<-function(f, ..., Verbose=FALSE){
 #'   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 #' @export
 read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
-  l=ReadLongairTraceData(f, ..., Verbose=Verbose)
+  l=read.fijixml(f, ..., Verbose=Verbose)
   dflist=as.list(rep(NA,length(l)))
   MasterPath=seq(l)
   pointOffsets=rep(0,length(l))
