@@ -37,10 +37,7 @@ read.neuron.fiji<-function(f, ..., simplify=TRUE){
   
   for(id in names(l)){
     d=l[[id]]
-    df=data.frame(PointNo=1:nrow(d),Label=2)
-    df=cbind(df,d)
-    df$W=2 # diameter of neuron
-    df$Parent=df[,1]-1
+    df=seglist2swc(list(1:nrow(d)), d=xyzmatrix(d))
     pathAttributes=attr(l[[id]],"pathAttributes")
     
     if('startson'%in%names(pathAttributes)){
