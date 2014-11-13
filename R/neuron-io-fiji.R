@@ -83,7 +83,7 @@ read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
   }
   
   # Actually make neurons from the dataframes of points
-  neuronList=list()
+  neuronList=neuronlist()
   for(df in dflist){
     if(!is.data.frame(df)) next
     neuronList[[length(neuronList)+1]]=as.neuron(df, InputFileName=f)
