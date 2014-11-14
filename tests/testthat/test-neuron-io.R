@@ -21,6 +21,15 @@ test_that("we can query fileformats",{
                'hxlineset')
 })
 
+test_that("is.swc works", {
+  expect_false(is.swc("testdata/neuron/EBT7R.am"))
+  expect_false(is.swc("testdata/neuron/SequentiallyBranchingTrace.traces"))
+  expect_true(is.swc("testdata/neuron/XT6L2.CNG.swc"))
+  file.copy("testdata/neuron/XT6L2.CNG.swc", tf<-tempfile())
+  on.exit(unlink(tf))
+  expect_true(is.swc(tf))
+})
+
 context("neurons reading")
 
 test_that("we can read single neurons in rda or rds format", {

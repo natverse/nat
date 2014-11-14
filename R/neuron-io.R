@@ -433,6 +433,42 @@ read.neuron.swc<-function(f, ...){
   as.neuron(d, InputFileName=f, ...)
 }
 
+#' Test if a file is an SWC format neuron
+#' 
+#' @details Note that this test is somewhat expensive compared with the other 
+#'   file tests since SWC files do not have a consistent magic value. It
+#'   therefore often has to read and parse the first few lines of the file in 
+#'   order to determine whether they are consistent with the SWC format.
+#' @param f Path to one or more files
+#' @inheritParams is.nrrd
+#' @return logical value
+#' @seealso \code{\link{read.neuron}}
+#' @export
+is.swc<-function(f, TrustSuffix=TRUE) {
+  if(length(f)>1) return(sapply(f, is.swc, TrustSuffix))
+  if(TrustSuffix && tools::file_ext(f)=='.swc') return(TRUE)
+  
+  first_char=readChar(f, nchars = 1, useBytes = TRUE)
+  
+  # must start with a number or a comment character
+  if(!grepl(first_char, "#0123456789", fixed = TRUE, useBytes = T))
+    return(FALSE)
+  
+  # try reading a line, treating any warnings as errors
+  first_line=try(withCallingHandlers(
+    read.table(f, nrows = 1, col.names = 
+                 c("PointNo","Label","X","Y","Z","W","Parent")),
+    warning=function(w) stop(w) ),
+    silent = TRUE)
+  if(inherits(first_line, 'try-error')) return(FALSE)
+  
+  # these columns must be integer
+  if(!all(sapply(first_line[c("PointNo", "Label", "Parent")], is.integer)))
+    return(FALSE)
+  # final check these columns must be numeric (double or integer)
+  all(sapply(first_line[c("X", "Y", "Z", "W")], is.numeric))
+}
+
 #' Write out a neuron in any of the file formats we know about
 #' 
 #' If file is not specified the neuron's InputFileName field will be checked
