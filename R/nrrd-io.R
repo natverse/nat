@@ -179,11 +179,11 @@ is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
     return(grepl("\\.n(hdr|rrd)$", f, ignore.case=TRUE))
   }
   
-  if(length(f)>1)
-    return(sapply(f, is.nrrd, ReturnVersion=ReturnVersion))
-  
-  if(!file.exists(f)){
-    stop("file does not exist")
+  if(is.character(f)){
+    if(length(f)>1)
+      return(sapply(f, is.nrrd, ReturnVersion=ReturnVersion))
+    if(!file.exists(f))
+      stop("file does not exist")
   }
   
   nrrd=as.raw(c(0x4e,0x52,0x52,0x44, 0x30, 0x30, 0x30))

@@ -18,6 +18,9 @@ test_that("is.nrrd works",{
   
   expect_true(is.nrrd(lhmaskfile))
   expect_false(is.nrrd(lhmaskfile, TrustSuffix=TRUE))
+  
+  expect_false(is.nrrd(charToRaw("NRRD00")))
+  expect_true(is.nrrd(charToRaw("NRRD0007")))
 })
 
 test_that("read.nrrd.header works",{
