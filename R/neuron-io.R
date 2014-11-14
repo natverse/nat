@@ -11,9 +11,13 @@
 #'   
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
 #'   
+#'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file 
+#'   format used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple
+#'   Neurite Tracer} plugin of Fiji/ImageJ.
+#'   
 #'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira. 
-#'   \code{hxlineset} is the generic one, \code{hxskel} is used by the hxskeletonize 
-#'   extension of Schmitt and Evers (see refs).
+#'   \code{hxlineset} is the generic one, \code{hxskel} is used by the 
+#'   hxskeletonize extension of Schmitt and Evers (see refs).
 #'   
 #'   \item \bold{rda,rds} Native R cross-platform binary formats (see 
 #'   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single 
@@ -27,11 +31,12 @@
 #'   or file header (aka magic) using the \code{fileformats} registry.
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{read.neurons}, \link{fileformats}}
-#' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
-#' Obermayer, K. (2004). New methods for the computer-assisted 3-D
-#' reconstruction of neurons from confocal image stacks. Neuroimage 4, 1283--98.
-#' \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
-#' 
+#' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and 
+#'   Obermayer, K. (2004). New methods for the computer-assisted 3-D 
+#'   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
+#'   1283--98. 
+#'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
+#'   
 #' @examples
 #' \dontrun{
 #' # note that we override the default NeuronName field

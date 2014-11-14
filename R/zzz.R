@@ -6,6 +6,8 @@
                  class='neuron')
   registerformat('neuroml', ext=c('.xml','.nml'), read=read.neuron.neuroml, 
     class='neuron', magic=is.neuroml, magiclen=8L)
+  registerformat('fijitraces', ext=c('.traces','.xml'), read=read.neuron.fiji, 
+    class='neuron', magic=is.fijitraces, magiclen=5L)
   registerformat('rds', read=readRDS, write=saveRDS, class='neuron')
   registerformat('hxskel', ext='.am', read=read.neuron.hxskel, 
                  write=write.neuron.hxskel, magic=is.hxskel,
