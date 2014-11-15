@@ -156,7 +156,10 @@ xyzmatrix.hxsurf<-function(x, ...) {
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.igraph<-function(x, ...){
-  sapply(c("X","Y","Z"), function(c) igraph::get.vertex.attribute(x, c))
+  xyz=sapply(c("X","Y","Z"), function(c) igraph::get.vertex.attribute(x, c))
+  if(is.list(xyz) && all(sapply(xyz, is.null)))
+    xyz = NULL
+  xyz
 }
 
 #' @description \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
