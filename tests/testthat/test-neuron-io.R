@@ -87,7 +87,7 @@ test_that("we can read neurons in swc format", {
 
 test_that("we get an error when trying to read a non-neuron file", {
   nrrd="testdata/nrrd/LHMask.nrrd"
-  expect_error(read.neuron(nrrd)
+  expect_error(read.neuron(nrrd))
 })
 
 test_that("we can set the NeuronName field when reading a file", {
