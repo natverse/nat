@@ -28,6 +28,7 @@ test_that("is.swc works", {
   file.copy("testdata/neuron/XT6L2.CNG.swc", tf<-tempfile())
   on.exit(unlink(tf))
   expect_true(is.swc(tf))
+  expect_is(read.neuron(tf), 'neuron')
 })
 
 context("neurons reading")
@@ -82,6 +83,11 @@ test_that("we can read neurons in swc format", {
   swc='testdata/neuron/EBT7R.CNG.swc'
   expect_is(n<-read.neuron(swc),'neuron')
   expect_equal(n$NeuronName,'EBT7R.CNG')
+})
+
+test_that("we get an error when trying to read a non-neuron file", {
+  nrrd="testdata/nrrd/LHMask.nrrd"
+  expect_error(read.neuron(nrrd)
 })
 
 test_that("we can set the NeuronName field when reading a file", {

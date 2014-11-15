@@ -60,8 +60,14 @@ read.neuron<-function(f, format=NULL, ...){
     n=get(objname,envir=environment())
   } else {
     ffs=getformatreader(f)
-    if(is.null(ffs)) stop("Unable to identify file type of:", f)
-    n=match.fun(ffs$read)(f, ...)
+    if(is.null(ffs)) {
+      # as a special test, check to see if this looks like an swc file
+      # we don't do this by default since is.swc is a little slow
+      if(is.swc(f)) n=read.neuron.swc(f, ...)
+      else stop("Unable to identify file type of:", f)
+    } else {
+      n=match.fun(ffs$read)(f, ...)
+    }
   }
   # make sure that neuron actually inherits from neuron
   # we can rely on dotprops/neuronlist objects to have the correct class
