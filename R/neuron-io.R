@@ -4,16 +4,16 @@
 #'   saved in R .rds or .rda format by default. Additional file formats can be 
 #'   registered using \code{fileformats}.
 #'   
-#'   At the moment the following formats are supported natively by nat: 
-#'   \itemize{
+#'   At the moment the following formats are supported using file readers 
+#'   already included with the nat package: \itemize{
 #'   
 #'   \item \bold{swc} See \code{\link{read.neuron.swc}}
 #'   
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
 #'   
-#'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file 
-#'   format used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple
-#'   Neurite Tracer} plugin of Fiji/ImageJ.
+#'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
+#'   used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple Neurite 
+#'   Tracer} plugin of Fiji/ImageJ.
 #'   
 #'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira. 
 #'   \code{hxlineset} is the generic one, \code{hxskel} is used by the 
@@ -36,7 +36,7 @@
 #'   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
 #'   1283--98. 
 #'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
-#'   
+#'     
 #' @examples
 #' \dontrun{
 #' # note that we override the default NeuronName field
@@ -420,7 +420,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 
 #' Read a neuron in swc file format
 #' 
-#' This function should normally only be called from read.neuron and is not
+#' This function should normally only be called from read.neuron and is not 
 #' designed for use by end users.
 #' @section SWC Format: According to 
 #'   \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC file format has a
@@ -428,6 +428,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #' @param f path to file
 #' @param ... Additional arguments passed to \code{as.neuron()} and then on to 
 #'   \code{neuron()}
+#' @seealso \code{\link{is.swc}}
 read.neuron.swc<-function(f, ...){
   ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
   d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",

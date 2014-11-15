@@ -20,4 +20,7 @@ read.neuron and is not designed for use by end users.
   \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC
   file format has a radius not a diameter specification
 }
+\seealso{
+\code{\link{is.swc}}
+}
 

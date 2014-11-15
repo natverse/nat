@@ -25,8 +25,9 @@ objects saved in R .rds or .rda format by default.
 Additional file formats can be registered using
 \code{fileformats}.
 
-At the moment the following formats are supported natively
-by nat: \itemize{
+At the moment the following formats are supported using
+file readers already included with the nat package:
+\itemize{
 
 \item \bold{swc} See \code{\link{read.neuron.swc}}
 
