@@ -1,3 +1,18 @@
+nat 1.6.0
+=========
+* Add support for reading NeuroML and Fiji Simple Neurite Tracer neurons
+* recognise SWC neurons by content (rather than just file extension)
+* can write a set of neurons to a zip archive (?write.neurons)
+* getformatreader returns name of identified format
+* Give find.soma and find.neuron invert arguments
+* internal funciton normalise_swc sets sensible defaults for column values (and 
+  these can be overridden from some user functions).
+* fix resample.neuron so that it keeps all subtrees and handles width and labels
+* fix seglist2swc when receiving flat seglist
+* ngraph attaches vertex data to each point and now includes diameter
+* fix is.nrrd for raw input
+* fix node colourse in plot3d.neuron when WithAllPoints=TRUE
+
 nat 1.5.14
 ==========
 * add nlscan function to review a set of neurons, optionally selecting a subset
