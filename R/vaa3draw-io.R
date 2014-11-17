@@ -22,9 +22,9 @@ is.vaa3draw<-function(f, bytes=NULL){
 # Read vaa3d raw images into im3d objects, optionally subsetting input array
 # @examples
 # \dontrun{
-# read.vaa3draw.im3d("L1DS1_crop_straight.raw",ReadData = F,chan=2)
+# read.im3d.vaa3draw("L1DS1_crop_straight.raw",ReadData = F,chan=2)
 # }
-read.vaa3draw.im3d<-function(f, ReadData=TRUE, ..., chan=NA){
+read.im3d.vaa3draw<-function(f, ReadData=TRUE, ..., chan=NA){
   x=read.vaa3draw(f=f, ReadData = ReadData, ...)
   dims=attr(x,'header')$sizes
   dims=dims[dims>1]
