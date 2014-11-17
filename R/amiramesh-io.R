@@ -476,6 +476,8 @@ write.zlib<-function(uncompressed, con=raw()){
 #'   checking if they equal "# AmiraMesh"
 #' @param f Path to one or more files to be tested \strong{or} an array of raw
 #'   bytes, for one file only.
+#' @param bytes optional raw vector of at least 11 bytes from the start of a
+#'   single file (used in preference to reading file \code{f}).
 #' @return logical
 #' @export
 #' @family amira

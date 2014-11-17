@@ -165,6 +165,8 @@ read.nrrd.header<-function(file, Verbose=FALSE){
 #'   array is provided.
 #' @param f A character vector specifying the path or a raw vector with at least
 #'   8 bytes.
+#' @param bytes optional raw vector of at least 8 bytes from the start of a
+#'   single file (used in preference to reading file \code{f}).
 #' @param ReturnVersion Whether to return the version of the nrrd format in 
 #'   which the file is encoded (1-5).
 #' @param TrustSuffix Whether to trust that a file ending in .nrrd or .nhdr is a
