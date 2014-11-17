@@ -282,7 +282,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
     if(!is.null(ext) && !is.na(ext)){
       if(substr(ext,1,1)!=".") ext=paste(".",sep="",ext)
       currentformats<-Filter(function(x) isTRUE(
-        get(x,envir=.fileformats)$ext%in%ext), currentformats)
+        ext%in%get(x,envir=.fileformats)$ext), currentformats)
     }
   }
   rval=match.arg(rval)
