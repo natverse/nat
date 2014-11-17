@@ -10,7 +10,11 @@
 #' @param f A character vector specifying the path or a raw vector with at least
 #'   24 bytes.
 #' @export
-is.vaa3draw<-function(f) generic_magic_check(f, "raw_image_stack_by_hpeng")
+is.vaa3draw<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  generic_magic_check(if(is.null(bytes)) f else bytes, "raw_image_stack_by_hpeng")
+} 
 
 # Read vaa3d raw images into im3d objects, optionally subsetting input array
 # @examples

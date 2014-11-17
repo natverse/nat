@@ -479,7 +479,12 @@ write.zlib<-function(uncompressed, con=raw()){
 #' @return logical
 #' @export
 #' @family amira
-is.amiramesh<-function(f) generic_magic_check(f, "# AmiraMesh")
+is.amiramesh<-function(f=NULL, bytes=NULL) {
+  if(!is.null(bytes) && is.character(f) && length(f)>1)
+    stop("Can only check bytes for a single file")
+  tocheck=if(is.null(bytes)) f else bytes
+  generic_magic_check(tocheck, "# AmiraMesh")
+}
 
 #' Return the type of an amiramesh file on disk or a parsed header
 #' 
