@@ -122,17 +122,11 @@ as.im3d.im3d <- function(x, ...) x
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
                     ReadByteAsRaw=FALSE, ...){
   if(!file.exists(file)) stop("file: ", file, " doesn't exist!")
-  ext=sub(".*(\\.[^.])","\\1",file)
-  x=if(ext%in%c('.nrrd','.nhdr')){
-    read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else if(ext%in%c(".am",'.amiramesh') || is.amiramesh(file)){
-    if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
-    else read.im3d.amiramesh(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else if(is.vaa3draw(file)){
-    read.vaa3draw.im3d(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else {
-    stop("Unable to read data saved in format: ",ext)
-  }
+  ffs=getformatreader(file, class = 'im3d')
+  if(is.null(ffs))
+    stop("Unable to read data saved in format: ",tools::file_ext(file))
+  
+  x=match.fun(ffs$read)(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   attr(x,'file')=file
   if(SimplifyAttributes){
     coreattrs=c("BoundingBox",'origin','x','y','z')

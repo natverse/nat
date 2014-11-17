@@ -17,13 +17,13 @@
                  class='neuron', magiclen=11)
   
   # image formats
-  registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d, 
+  registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.nrrd, 
                  write=write.nrrd, magic=is.nrrd,
                  class='im3d', magiclen=8L)
-  registerformat('amiramesh', ext=c('.am','.amiramesh'), read=read.im3d, 
+  registerformat('amiramesh', ext=c('.am','.amiramesh'), read=read.im3d.amiramesh, 
                  write=write.amiramesh, magic=is.amiramesh,
                  class='im3d', magiclen=11L)
-  registerformat('vaa3draw', ext=c('.v3d','.v3draw'), read=read.im3d, 
+  registerformat('vaa3draw', ext=c('.v3d','.v3draw'), read=read.im3d.vaa3draw, 
                magic=is.vaa3draw, class='im3d', magiclen=24L)
 
   invisible()
