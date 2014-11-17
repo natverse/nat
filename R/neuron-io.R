@@ -59,7 +59,7 @@ read.neuron<-function(f, format=NULL, ...){
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
   } else {
-    ffs=getformatreader(f)
+    ffs=getformatreader(f, class = 'neuron')
     if(is.null(ffs)) {
       # as a special test, check to see if this looks like an swc file
       # we don't do this by default since is.swc is a little slow

@@ -6,16 +6,16 @@ test_that("we can query fileformats",{
                c('hxlineset','hxskel'))
   expect_is(fileformats(class='neuron',rval='info'),'matrix')
   
-  expect_is(fw<-getformatwriter(file='test.rds'),'list')
+  expect_is(fw<-getformatwriter(file='test.rds', class='neuron'),'list')
   expect_equal(fw$ext,'.rds')
   expect_equal(fw$read,readRDS)
   expect_equal(fw$write,saveRDS)
   
-  expect_equal(getformatwriter(file='test.am', format='rds')$file,'test.am')
-  expect_equal(getformatwriter(file='test.am', format='rds', ext=NA)$file,'test.rds')
-  expect_equal(getformatwriter(file='test.am', ext='.rds')$ext,'.rds')
+  expect_equal(getformatwriter(file='test.am', format='rds', class='neuron')$file,'test.am')
+  expect_equal(getformatwriter(file='test.am', format='rds', ext=NA, class='neuron')$file,'test.rds')
+  expect_equal(getformatwriter(file='test.am', ext='.rds', class='neuron')$ext,'.rds')
   
-  expect_error(getformatwriter(file='test.rds', ext='.rhubarb'))
+  expect_error(getformatwriter(file='test.rds', ext='.rhubarb', class='neuron'))
   
   expect_equal(fileformats(format='hxl', ext='_skel.am', class='neuron'),
                'hxlineset')
