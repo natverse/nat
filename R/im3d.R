@@ -127,7 +127,7 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
     read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else if(ext%in%c(".am",'.amiramesh') || is.amiramesh(file)){
     if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
-    else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
+    else read.im3d.amiramesh(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else if(is.vaa3draw(file)){
     read.vaa3draw.im3d(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   } else {
@@ -159,8 +159,9 @@ write.im3d<-function(x, file, ...){
   }
 }
 
-read.im3d.amiramesh<-function(file, ...){
-  d<-read.amiramesh(file, ...)
+read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
+  sections = if(ReadData) NULL else NA
+  d<-read.amiramesh(file, sections=sections, ...)
   
   # Amira does not store the "space origin" separately as is the case for nrrds
   # Have decided that we should always store the origin inferred from the
