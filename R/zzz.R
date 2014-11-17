@@ -1,7 +1,7 @@
 .onLoad <- function(libname, pkgname) {
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
   
-  # Register file formats
+  # Register file formats: neuron tracings
   registerformat('swc', read=read.neuron.swc, write=write.neuron.swc, 
                  class='neuron')
   registerformat('neuroml', ext=c('.xml','.nml'), read=read.neuron.neuroml, 
@@ -15,6 +15,17 @@
   registerformat('hxlineset', ext='.am', read=read.neuron.hxlineset, 
                  write=write.neuron.hxlineset, magic=is.hxlineset,
                  class='neuron', magiclen=11)
+  
+  # image formats
+  registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d, 
+                 write=write.nrrd, magic=is.nrrd,
+                 class='im3d', magiclen=8L)
+  registerformat('amiramesh', ext=c('.am','.amiramesh'), read=read.im3d, 
+                 write=write.amiramesh, magic=is.amiramesh,
+                 class='im3d', magiclen=11L)
+  registerformat('vaa3draw', ext=c('.v3d','.v3draw'), read=read.im3d, 
+               magic=is.vaa3draw, class='im3d', magiclen=24L)
+
   invisible()
 }
 
