@@ -142,15 +142,13 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
 #' @rdname im3d-io
 #' @seealso \code{\link{write.nrrd}}
 #' @export
-write.im3d<-function(x, file, ...){
-  ext=sub(".*(\\.[^.])","\\1",file)
-  if(ext%in%c('.nrrd','.nhdr')){
-    write.nrrd(x, file, ...)
-  } else if(ext%in%c(".am",'.amiramesh')){
-    write.amiramesh(x, file, ...)
-  } else {
-    stop("Unable to write data in format: ",ext)
-  }
+write.im3d<-function(x, file, format=NULL, ...){
+  fw=getformatwriter(file=file, format = format, class='im3d')
+  if(is.null(fw))
+    stop("Unable to write data in format: ",tools::file_ext(file))
+  file=fw$file
+  match.fun(fw$write)(x, file=file, ...)
+  invisible(file)
 }
 
 read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
