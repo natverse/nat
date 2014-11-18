@@ -72,6 +72,16 @@ TRUE then updating an existing neuronlist should result in
 a new neuronlist with ordering identical to reading all
 neurons from scratch.
 }
+\examples{
+\dontrun{
+## Read C. elegans neurons from OpenWorm github repository
+vds=paste0("https://raw.githubusercontent.com/openworm/CElegansNeuroML/",
+  "103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/VD",
+  1:13,".morph.xml")
+vdnl=read.neurons(vds)
+plot3d(vdnl)
+}
+}
 \seealso{
 \code{\link{read.neuron}}
 

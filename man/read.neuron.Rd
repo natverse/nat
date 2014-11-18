@@ -6,7 +6,9 @@
 read.neuron(f, format = NULL, ...)
 }
 \arguments{
-  \item{f}{Path to file}
+  \item{f}{Path to file. This can be a URL, in which case
+  the file is downloaded to a temporary location before
+  reading.}
 
   \item{format}{The file format of the neuron. When
   \code{format=NULL}, the default, \code{read.neuron} will

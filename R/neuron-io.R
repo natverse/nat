@@ -25,7 +25,8 @@
 #'   
 #'   }
 #' @export
-#' @param f Path to file
+#' @param f Path to file. This can be a URL, in which case the file is
+#'   downloaded to a temporary location before reading.
 #' @param format The file format of the neuron. When \code{format=NULL}, the 
 #'   default, \code{read.neuron} will infer the file format from the extension 
 #'   or file header (aka magic) using the \code{fileformats} registry.
@@ -49,6 +50,14 @@
 #' fileformats(class='neuron', read=TRUE)
 #' }
 read.neuron<-function(f, format=NULL, ...){
+  if(grepl("^http[s]{0,1}://", f)) {
+    url=f
+    # download remote url to local file in tempdir
+    f=file.path(tempdir(), basename(f))
+    on.exit(unlink(f))
+    filecontents=httr::GET(url)
+    writeBin(httr::content(filecontents,type = 'raw'), con = f)
+  } else url=NULL
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   if(is.null(format))
     format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
@@ -68,6 +77,9 @@ read.neuron<-function(f, format=NULL, ...){
     } else {
       n=match.fun(ffs$read)(f, ...)
     }
+  }
+  if(!is.null(url)){
+    attr(n, 'url')=url
   }
   # make sure that neuron actually inherits from neuron
   # we can rely on dotprops/neuronlist objects to have the correct class
@@ -116,6 +128,15 @@ read.neuron<-function(f, format=NULL, ...){
 #' @export
 #' @seealso \code{\link{read.neuron}}
 #' @family neuronlist
+#' @examples
+#' \dontrun{
+#' ## Read C. elegans neurons from OpenWorm github repository
+#' vds=paste0("https://raw.githubusercontent.com/openworm/CElegansNeuroML/",
+#'   "103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/VD",
+#'   1:13,".morph.xml")
+#' vdnl=read.neurons(vds)
+#' plot3d(vdnl)
+#' }
 read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
