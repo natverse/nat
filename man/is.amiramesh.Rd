@@ -3,11 +3,15 @@
 \alias{is.amiramesh}
 \title{Check if file is amiramesh format}
 \usage{
-is.amiramesh(f)
+is.amiramesh(f = NULL, bytes = NULL)
 }
 \arguments{
   \item{f}{Path to one or more files to be tested
   \strong{or} an array of raw bytes, for one file only.}
+
+  \item{bytes}{optional raw vector of at least 11 bytes
+  from the start of a single file (used in preference to
+  reading file \code{f}).}
 }
 \value{
 logical

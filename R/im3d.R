@@ -122,17 +122,11 @@ as.im3d.im3d <- function(x, ...) x
 read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
                     ReadByteAsRaw=FALSE, ...){
   if(!file.exists(file)) stop("file: ", file, " doesn't exist!")
-  ext=sub(".*(\\.[^.])","\\1",file)
-  x=if(ext%in%c('.nrrd','.nhdr')){
-    read.nrrd(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else if(ext%in%c(".am",'.amiramesh') || is.amiramesh(file)){
-    if(ReadData) read.im3d.amiramesh(file, ReadByteAsRaw=ReadByteAsRaw, ...)
-    else read.im3d.amiramesh(file, sections=NA, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else if(is.vaa3draw(file)){
-    read.vaa3draw.im3d(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
-  } else {
-    stop("Unable to read data saved in format: ",ext)
-  }
+  ffs=getformatreader(file, class = 'im3d')
+  if(is.null(ffs))
+    stop("Unable to read data saved in format: ",tools::file_ext(file))
+  
+  x=match.fun(ffs$read)(file, ReadData=ReadData, ReadByteAsRaw=ReadByteAsRaw, ...)
   attr(x,'file')=file
   if(SimplifyAttributes){
     coreattrs=c("BoundingBox",'origin','x','y','z')
@@ -145,22 +139,24 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
 
 #' @param x The image data to write (an im3d, or capable of being interpreted as
 #'   such)
+#' @param format Character vector specifying an image format (e.g. "nrrd", 
+#'   "amiramesh"). Optional, since the format will normally be inferred from the
+#'   file extension. See \code{\link{getformatwriter}} for details.
 #' @rdname im3d-io
-#' @seealso \code{\link{write.nrrd}}
+#' @seealso \code{\link{write.nrrd}}, \code{\link{getformatwriter}}
 #' @export
-write.im3d<-function(x, file, ...){
-  ext=sub(".*(\\.[^.])","\\1",file)
-  if(ext%in%c('.nrrd','.nhdr')){
-    write.nrrd(x, file, ...)
-  } else if(ext%in%c(".am",'.amiramesh')){
-    write.amiramesh(x, file, ...)
-  } else {
-    stop("Unable to write data in format: ",ext)
-  }
+write.im3d<-function(x, file, format=NULL, ...){
+  fw=getformatwriter(file=file, format = format, class='im3d')
+  if(is.null(fw))
+    stop("Unable to write data in format: ",tools::file_ext(file))
+  file=fw$file
+  match.fun(fw$write)(x, file=file, ...)
+  invisible(file)
 }
 
-read.im3d.amiramesh<-function(file, ...){
-  d<-read.amiramesh(file, ...)
+read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
+  sections = if(ReadData) NULL else NA
+  d<-read.amiramesh(file, sections=sections, ...)
   
   # Amira does not store the "space origin" separately as is the case for nrrds
   # Have decided that we should always store the origin inferred from the

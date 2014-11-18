@@ -3,11 +3,16 @@
 \alias{is.nrrd}
 \title{Check if a file is a NRRD file}
 \usage{
-is.nrrd(f, ReturnVersion = FALSE, TrustSuffix = FALSE)
+is.nrrd(f = NULL, bytes = NULL, ReturnVersion = FALSE,
+  TrustSuffix = FALSE)
 }
 \arguments{
   \item{f}{A character vector specifying the path or a raw
   vector with at least 8 bytes.}
+
+  \item{bytes}{optional raw vector of at least 8 bytes from
+  the start of a single file (used in preference to reading
+  file \code{f}).}
 
   \item{ReturnVersion}{Whether to return the version of the
   nrrd format in which the file is encoded (1-5).}

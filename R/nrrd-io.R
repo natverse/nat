@@ -165,12 +165,18 @@ read.nrrd.header<-function(file, Verbose=FALSE){
 #'   array is provided.
 #' @param f A character vector specifying the path or a raw vector with at least
 #'   8 bytes.
+#' @param bytes optional raw vector of at least 8 bytes from the start of a
+#'   single file (used in preference to reading file \code{f}).
 #' @param ReturnVersion Whether to return the version of the nrrd format in 
 #'   which the file is encoded (1-5).
 #' @param TrustSuffix Whether to trust that a file ending in .nrrd or .nhdr is a
 #'   NRRD
 #' @export
-is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
+is.nrrd<-function(f=NULL, bytes=NULL, ReturnVersion=FALSE, TrustSuffix=FALSE){
+  if(is.raw(f)) {
+    bytes=f
+    f=NULL
+  }
   # TrustSuffix => expect files to end in nrrd or nhdr
   if(TrustSuffix){
     if(ReturnVersion)
@@ -179,7 +185,7 @@ is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
     return(grepl("\\.n(hdr|rrd)$", f, ignore.case=TRUE))
   }
   
-  if(is.character(f)){
+  if(!is.null(f)){
     if(length(f)>1)
       return(sapply(f, is.nrrd, ReturnVersion=ReturnVersion))
     if(!file.exists(f))
@@ -187,7 +193,7 @@ is.nrrd<-function(f, ReturnVersion=FALSE, TrustSuffix=FALSE){
   }
   
   nrrd=as.raw(c(0x4e,0x52,0x52,0x44, 0x30, 0x30, 0x30))
-  magic=readBin(f, what=nrrd, n=8)
+  magic=if(!is.null(bytes)) bytes else readBin(f, what=nrrd, n=8)
   if(any(magic[1:7]!=nrrd))
     return (FALSE)
   

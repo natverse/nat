@@ -3,11 +3,15 @@
 \alias{is.vaa3draw}
 \title{Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D}
 \usage{
-is.vaa3draw(f)
+is.vaa3draw(f, bytes = NULL)
 }
 \arguments{
   \item{f}{A character vector specifying the path or a raw
-  vector with at least 24 bytes.}
+  vector (see \code{bytes}).}
+
+  \item{bytes}{optional raw vector of at least 24 bytes
+  from the start of a single file (used in preference to
+  reading file \code{f}).}
 }
 \description{
 See http://www.vaa3d.org/

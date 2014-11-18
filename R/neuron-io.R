@@ -59,7 +59,7 @@ read.neuron<-function(f, format=NULL, ...){
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
   } else {
-    ffs=getformatreader(f)
+    ffs=getformatreader(f, class = 'neuron')
     if(is.null(ffs)) {
       # as a special test, check to see if this looks like an swc file
       # we don't do this by default since is.swc is a little slow
@@ -282,7 +282,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
     if(!is.null(ext) && !is.na(ext)){
       if(substr(ext,1,1)!=".") ext=paste(".",sep="",ext)
       currentformats<-Filter(function(x) isTRUE(
-        get(x,envir=.fileformats)$ext%in%ext), currentformats)
+        ext%in%get(x,envir=.fileformats)$ext), currentformats)
     }
   }
   rval=match.arg(rval)
