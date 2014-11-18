@@ -54,9 +54,9 @@ read.neuron<-function(f, format=NULL, ...){
     # download remote url to local file in tempdir
     f=file.path(tempdir(), basename(f))
     on.exit(unlink(f))
-  }
     filecontents=httr::GET(url)
     writeBin(httr::content(filecontents,type = 'raw'), con = f)
+  } else url=NULL
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   if(is.null(format))
     format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
@@ -76,6 +76,9 @@ read.neuron<-function(f, format=NULL, ...){
     } else {
       n=match.fun(ffs$read)(f, ...)
     }
+  }
+  if(!is.null(url)){
+    attr(n, 'url')=url
   }
   # make sure that neuron actually inherits from neuron
   # we can rely on dotprops/neuronlist objects to have the correct class
