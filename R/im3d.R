@@ -139,8 +139,11 @@ read.im3d<-function(file, ReadData=TRUE, SimplifyAttributes=FALSE,
 
 #' @param x The image data to write (an im3d, or capable of being interpreted as
 #'   such)
+#' @param format Character vector specifying an image format (e.g. "nrrd", 
+#'   "amiramesh"). Optional, since the format will normally be inferred from the
+#'   file extension. See \code{\link{getformatwriter}} for details.
 #' @rdname im3d-io
-#' @seealso \code{\link{write.nrrd}}
+#' @seealso \code{\link{write.nrrd}}, \code{\link{getformatwriter}}
 #' @export
 write.im3d<-function(x, file, format=NULL, ...){
   fw=getformatwriter(file=file, format = format, class='im3d')

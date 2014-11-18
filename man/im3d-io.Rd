@@ -8,7 +8,7 @@
 read.im3d(file, ReadData = TRUE, SimplifyAttributes = FALSE,
   ReadByteAsRaw = FALSE, ...)
 
-write.im3d(x, file, ...)
+write.im3d(x, file, format = NULL, ...)
 }
 \arguments{
   \item{file}{Character vector describing a single file}
@@ -27,6 +27,11 @@ write.im3d(x, file, ...)
 
   \item{x}{The image data to write (an im3d, or capable of
   being interpreted as such)}
+
+  \item{format}{Character vector specifying an image format
+  (e.g. "nrrd", "amiramesh"). Optional, since the format
+  will normally be inferred from the file extension. See
+  \code{\link{getformatwriter}} for details.}
 }
 \value{
 For \code{read.im3d} an objecting inheriting from base
@@ -54,7 +59,7 @@ read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 \seealso{
 \code{\link{read.nrrd}, \link{read.amiramesh}}
 
-\code{\link{write.nrrd}}
+\code{\link{write.nrrd}}, \code{\link{getformatwriter}}
 
 Other im3d: \code{\link{as.im3d}},
 \code{\link{as.im3d.im3d}}; \code{\link{boundingbox}},
