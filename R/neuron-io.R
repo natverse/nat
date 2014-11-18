@@ -49,6 +49,13 @@
 #' fileformats(class='neuron', read=TRUE)
 #' }
 read.neuron<-function(f, format=NULL, ...){
+  if(grepl("^http[s]{0,1}://", f)) {
+    url=f
+    # download remote url to local file in tempdir
+    f=tempfile(fileext = basename(f))
+    filecontents=GET(url)
+    writeBin(content(filecontents,type = 'raw'), con = f)
+  }
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   if(is.null(format))
     format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
