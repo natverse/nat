@@ -25,7 +25,8 @@
 #'   
 #'   }
 #' @export
-#' @param f Path to file
+#' @param f Path to file. This can be a URL, in which case the file is
+#'   downloaded to a temporary location before reading.
 #' @param format The file format of the neuron. When \code{format=NULL}, the 
 #'   default, \code{read.neuron} will infer the file format from the extension 
 #'   or file header (aka magic) using the \code{fileformats} registry.
