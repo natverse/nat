@@ -128,6 +128,15 @@ read.neuron<-function(f, format=NULL, ...){
 #' @export
 #' @seealso \code{\link{read.neuron}}
 #' @family neuronlist
+#' @examples
+#' \dontrun{
+#' ## Read C. elegans neurons from OpenWorm github repository
+#' vds=paste0("https://raw.githubusercontent.com/openworm/CElegansNeuroML/",
+#'   "103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/VD",
+#'   1:13,".morph.xml")
+#' vdnl=read.neurons(vds)
+#' plot3d(vdnl)
+#' }
 read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
