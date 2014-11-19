@@ -73,4 +73,8 @@ test_that("is.amiramesh and amiratype",{
   expect_equal(amiratype("testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
   
   expect_equal(amiratype("testdata/amira/tetrahedron.surf"), 'HxSurface')
+  
+  expect_equal(amiratype("testdata/neuron/Neurites.am"), 'SkeletonGraph')
+  
+  expect_equal(amiratype("testdata/neuron/EBT7R.CNG.swc"), NA_character_)
 })
