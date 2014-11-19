@@ -512,11 +512,9 @@ amiratype<-function(x, bytes=NULL){
       on.exit(close(f))
       bytes=readBin(f, what=raw(), n=14L)
     }
+    
     if(!isTRUE(is.amiramesh(bytes))) {
-      # check if this is one of the other types
-      if(generic_magic_check(bytes, "# HyperMesh")) {
-        # old fashioned name for # AmiraMesh
-      } else if(generic_magic_check(bytes, "# HyperSurface")) {
+      if(generic_magic_check(bytes, "# HyperSurface")) {
         return("HxSurface")
       } else return(NA_character_)
     }
