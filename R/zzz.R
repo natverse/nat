@@ -11,10 +11,10 @@
   registerformat('rds', read=readRDS, write=saveRDS, class='neuron')
   registerformat('hxskel', ext='.am', read=read.neuron.hxskel, 
                  write=write.neuron.hxskel, magic=is.hxskel,
-                 class='neuron', magiclen=11)
+                 class='neuron', magiclen=14L)
   registerformat('hxlineset', ext='.am', read=read.neuron.hxlineset, 
                  write=write.neuron.hxlineset, magic=is.hxlineset,
-                 class='neuron', magiclen=11)
+                 class='neuron', magiclen=14L)
     
   # image formats
   registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.nrrd, 
@@ -22,7 +22,7 @@
                  class='im3d', magiclen=8L)
   registerformat('amiramesh', ext=c('.am','.amiramesh'), read=read.im3d.amiramesh, 
                  write=write.amiramesh, magic=is.amiramesh.im3d,
-                 class='im3d', magiclen=11L)
+                 class='im3d', magiclen=14L)
   registerformat('vaa3draw', ext=c('.v3d','.v3draw'), read=read.im3d.vaa3draw, 
                magic=is.vaa3draw, class='im3d', magiclen=24L)
 
