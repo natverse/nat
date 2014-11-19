@@ -66,7 +66,7 @@ test_that("is.amiramesh and amiratype",{
   tf=tempfile(fileext='.am')
   writeLines("#somethingelse",tf)
   on.exit(unlink(tf))
-  expect_true(!is.amiramesh(tf))
+  expect_false(is.amiramesh(tf))
 
   expect_equal(amiratype("testdata/amira/AL-a_M.am"), 'uniform.field')
   
@@ -77,4 +77,7 @@ test_that("is.amiramesh and amiratype",{
   expect_equal(amiratype("testdata/neuron/Neurites.am"), 'SkeletonGraph')
   
   expect_equal(amiratype("testdata/neuron/EBT7R.CNG.swc"), NA_character_)
+  
+  expect_true(all(is.amiramesh.im3d(amfiles)))
+  expect_false(is.amiramesh.im3d(tf))
 })
