@@ -473,10 +473,10 @@ write.zlib<-function(uncompressed, con=raw()){
 #' Check if file is amiramesh format
 #' 
 #' @details Tries to be as fast as possible by reading only first 11 bytes and 
-#'   checking if they equal "# AmiraMesh"
-#' @param f Path to one or more files to be tested \strong{or} an array of raw
+#'   checking if they equal to "# AmiraMesh" or (deprecated) "# HyperMesh".
+#' @param f Path to one or more files to be tested \strong{or} an array of raw 
 #'   bytes, for one file only.
-#' @param bytes optional raw vector of at least 11 bytes from the start of a
+#' @param bytes optional raw vector of at least 11 bytes from the start of a 
 #'   single file (used in preference to reading file \code{f}).
 #' @return logical
 #' @export
@@ -485,7 +485,7 @@ is.amiramesh<-function(f=NULL, bytes=NULL) {
   if(!is.null(bytes) && is.character(f) && length(f)>1)
     stop("Can only check bytes for a single file")
   tocheck=if(is.null(bytes)) f else bytes
-  generic_magic_check(tocheck, "# AmiraMesh")
+  generic_magic_check(tocheck, c("# HyperMesh", "# AmiraMesh"))
 }
 
 #' Return the type of an amiramesh file on disk or a parsed header
