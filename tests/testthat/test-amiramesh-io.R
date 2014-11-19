@@ -81,3 +81,8 @@ test_that("is.amiramesh and amiratype",{
   expect_true(all(is.amiramesh.im3d(amfiles)))
   expect_false(is.amiramesh.im3d(tf))
 })
+
+test_that("getformatreader chooses appropriate class", {
+  expect_equal(getformatreader("testdata/neuron/EBT7R.am")$class, "neuron")
+  expect_equal(getformatreader("testdata/amira/AL-a_M.am")$class, "im3d")
+})
