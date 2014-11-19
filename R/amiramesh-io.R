@@ -520,16 +520,27 @@ amiratype<-function(x, bytes=NULL){
         return("HxSurface")
       } else return(NA_character_)
     }
-    h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
+    h=try(read.amiramesh.header(x, Verbose=FALSE, Parse = F), silent=TRUE)
     if(inherits(h,'try-error')) return(NA_character_)
   }
-  if(!is.null(ct<-h$Parameters$ContentType)){
-    as.vector(ct)
-  } else if(!is.null(ct<-h$Parameters$CoordType)){
-    # since e.g. uniform is not very descriptive
-    # append field to make uniform.field
-    paste(as.vector(ct),'field',sep='.')
-  } else NA_character_
+
+  ct=grep("ContentType", h, value = T, fixed=T)
+  if(length(ct)){
+    ct=sub(".*ContentType","",ct[1])
+    ct=gsub("[^A-z ]+"," ",ct)
+    ct=scan(text=ct, what = "", quiet = T)
+    if(length(ct)==0) stop('unable to parse ContentType')
+    return(ct[1])
+  }
+  ct=grep("CoordType", h, value = T, fixed=T)
+  if(length(ct)){
+    ct=sub(".*CoordType","",ct[1])
+    ct=gsub("[^A-z ]+"," ",ct)
+    ct=scan(text=ct, what = "", quiet = T)
+    if(length(ct)==0) stop('unable to parse CoordType')
+    return(paste0(ct[1], ".field"))
+  }
+  NA_character_
 }
 
 #' Write a 3d data object to an amiramesh format file
