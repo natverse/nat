@@ -46,15 +46,8 @@ read.neuron.hxskel<-function(file, ...){
 }
 
 is.hxskel<-function(f, bytes=NULL){
-  if(!is.null(bytes) && length(f)>1)
-    stop("can only supply raw bytes to check for single file")
-  if(length(f)>1) return(sapply(f,is.hxskel))
-  
-  tocheck=if(is.null(bytes)) f else bytes
-  if(!is.amiramesh(tocheck)) return(FALSE)
-  
-  h=read.amiramesh.header(f, Parse=FALSE)
-  isTRUE(any(grepl("ContentType.*SkeletonGraph",h,useBytes=T)))
+  rval=amiratype(f, bytes=bytes)
+  sapply(rval, function(x) isTRUE(x=='SkeletonGraph'))
 }
 
 # Read neuron in Amira's native lineset format
@@ -96,15 +89,8 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
 }
 
 is.hxlineset<-function(f, bytes=NULL){
-  if(!is.null(bytes) && length(f)>1)
-    stop("can only supply raw bytes to check for single file")
-  if(length(f)>1) return(sapply(f,is.hxlineset))
-  
-  tocheck=if(is.null(bytes)) f else bytes
-  if(!is.amiramesh(tocheck)) return(FALSE)
-  
-  h=read.amiramesh.header(f, Parse=FALSE)
-  isTRUE(any(grepl("ContentType.*HxLineSet",h,useBytes=T)))
+  rval=amiratype(f, bytes=bytes)
+  sapply(rval, function(x) isTRUE(x=='HxLineSet'))
 }
 
 # write out a neuron in the specialised skeletonize AM3D format 
