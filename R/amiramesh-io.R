@@ -506,8 +506,20 @@ amiratype<-function(x, bytes=NULL){
     if(!is.null(bytes) && length(x)>1) 
       stop("Can only accept bytes argument for single file")
     if(length(x)>1) return(sapply(x,amiratype))
-    tocheck=if(is.null(bytes)) x else bytes
-    if(!isTRUE(is.amiramesh(tocheck))) return(NA_character_)
+    
+    if(is.null(bytes) || length(bytes)<14) {
+      f=gzfile(x, open='rb')
+      on.exit(close(f))
+      bytes=readBin(f, what=raw(), n=14L)
+    }
+    if(!isTRUE(is.amiramesh(bytes))) {
+      # check if this is one of the other types
+      if(generic_magic_check(bytes, "# HyperMesh")) {
+        # old fashioned name for # AmiraMesh
+      } else if(generic_magic_check(bytes, "# HyperSurface")) {
+        return("HxSurface")
+      } else return(NA_character_)
+    }
     h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
     if(inherits(h,'try-error')) return(NA_character_)
   }

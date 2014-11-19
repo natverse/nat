@@ -71,4 +71,6 @@ test_that("is.amiramesh and amiratype",{
   expect_equal(amiratype("testdata/amira/AL-a_M.am"), 'uniform.field')
   
   expect_equal(amiratype("testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
+  
+  expect_equal(amiratype("testdata/amira/tetrahedron.surf"), 'HxSurface')
 })
