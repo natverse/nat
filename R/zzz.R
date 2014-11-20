@@ -31,6 +31,11 @@
                  write=write.amiralandmarks, magic=is.amiratype("LandmarkSet"),
                  class='landmarks', magiclen=14L)
 
+  # surfaces
+  registerformat('hxsurf', ext=c('.surf', '.am','.amiramesh'), read=read.hxsurf,
+                 magic=is.amiratype("HxSurface"),
+                 class='hxsurf', magiclen=14L)
+  
   invisible()
 }
 
