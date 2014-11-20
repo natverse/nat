@@ -541,6 +541,14 @@ amiratype<-function(x, bytes=NULL){
   NA_character_
 }
 
+# generic function to return a function tha identifies an amira type
+is.amiratype<-function(type) {
+  function(f, bytes=NULL){
+    rval=amiratype(f, bytes=bytes)
+    sapply(rval, function(x) isTRUE(x==type))
+  }
+}
+
 #' Write a 3d data object to an amiramesh format file
 #' @inheritParams write.im3d
 #' @param enc Encoding of the data. NB "raw" and "binary" are synonyms.
