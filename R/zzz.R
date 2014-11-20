@@ -25,6 +25,11 @@
                  class='im3d', magiclen=14L)
   registerformat('vaa3draw', ext=c('.v3d','.v3draw'), read=read.im3d.vaa3draw, 
                magic=is.vaa3draw, class='im3d', magiclen=24L)
+  
+  # landmarks
+  registerformat('amiralandmarks', ext=c('.am','.amiramesh'), read=read.amiralandmarks, 
+                 write=write.amiralandmarks, magic=is.amiratype("LandmarkSet"),
+                 class='landmarks', magiclen=14L)
 
   invisible()
 }
