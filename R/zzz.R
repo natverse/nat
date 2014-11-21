@@ -33,7 +33,7 @@
 
   # surfaces
   registerformat('hxsurf', ext=c('.surf', '.am','.amiramesh'), read=read.hxsurf,
-                 magic=is.amiratype("HxSurface"),
+                 write=write.hxsurf, magic=is.amiratype("HxSurface"),
                  class='hxsurf', magiclen=14L)
   
   invisible()
