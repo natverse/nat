@@ -473,10 +473,10 @@ write.zlib<-function(uncompressed, con=raw()){
 #' Check if file is amiramesh format
 #' 
 #' @details Tries to be as fast as possible by reading only first 11 bytes and 
-#'   checking if they equal "# AmiraMesh"
-#' @param f Path to one or more files to be tested \strong{or} an array of raw
+#'   checking if they equal to "# AmiraMesh" or (deprecated) "# HyperMesh".
+#' @param f Path to one or more files to be tested \strong{or} an array of raw 
 #'   bytes, for one file only.
-#' @param bytes optional raw vector of at least 11 bytes from the start of a
+#' @param bytes optional raw vector of at least 11 bytes from the start of a 
 #'   single file (used in preference to reading file \code{f}).
 #' @return logical
 #' @export
@@ -485,7 +485,7 @@ is.amiramesh<-function(f=NULL, bytes=NULL) {
   if(!is.null(bytes) && is.character(f) && length(f)>1)
     stop("Can only check bytes for a single file")
   tocheck=if(is.null(bytes)) f else bytes
-  generic_magic_check(tocheck, "# AmiraMesh")
+  generic_magic_check(tocheck, c("# HyperMesh", "# AmiraMesh"))
 }
 
 #' Return the type of an amiramesh file on disk or a parsed header
@@ -506,18 +506,47 @@ amiratype<-function(x, bytes=NULL){
     if(!is.null(bytes) && length(x)>1) 
       stop("Can only accept bytes argument for single file")
     if(length(x)>1) return(sapply(x,amiratype))
-    tocheck=if(is.null(bytes)) x else bytes
-    if(!isTRUE(is.amiramesh(tocheck))) return(NA_character_)
-    h=try(read.amiramesh.header(x, Verbose=FALSE), silent=TRUE)
+    
+    if(is.null(bytes) || length(bytes)<14) {
+      f=gzfile(x, open='rb')
+      on.exit(close(f))
+      bytes=readBin(f, what=raw(), n=14L)
+    }
+    
+    if(!isTRUE(is.amiramesh(bytes))) {
+      if(generic_magic_check(bytes, "# HyperSurface")) {
+        return("HxSurface")
+      } else return(NA_character_)
+    }
+    h=try(read.amiramesh.header(x, Verbose=FALSE, Parse = F), silent=TRUE)
     if(inherits(h,'try-error')) return(NA_character_)
   }
-  if(!is.null(ct<-h$Parameters$ContentType)){
-    as.vector(ct)
-  } else if(!is.null(ct<-h$Parameters$CoordType)){
-    # since e.g. uniform is not very descriptive
-    # append field to make uniform.field
-    paste(as.vector(ct),'field',sep='.')
-  } else NA_character_
+
+  ct=grep("ContentType", h, value = T, fixed=T)
+  if(length(ct)){
+    ct=sub(".*ContentType","",ct[1])
+    ct=gsub("[^A-z ]+"," ",ct)
+    ct=scan(text=ct, what = "", quiet = T)
+    if(length(ct)==0) stop('unable to parse ContentType')
+    return(ct[1])
+  }
+  ct=grep("CoordType", h, value = T, fixed=T)
+  if(length(ct)){
+    ct=sub(".*CoordType","",ct[1])
+    ct=gsub("[^A-z ]+"," ",ct)
+    ct=scan(text=ct, what = "", quiet = T)
+    if(length(ct)==0) stop('unable to parse CoordType')
+    return(paste0(ct[1], ".field"))
+  }
+  NA_character_
+}
+
+# generic function to return a function tha identifies an amira type
+is.amiratype<-function(type) {
+  function(f, bytes=NULL){
+    rval=amiratype(f, bytes=bytes)
+    sapply(rval, function(x) isTRUE(x==type))
+  }
 }
 
 #' Write a 3d data object to an amiramesh format file

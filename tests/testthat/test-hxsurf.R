@@ -27,6 +27,11 @@ test_that("we can read hxsurf object", {
   rgl.close()
 })
 
+test_that("we can identify reader/writer for hxsurf", {
+  expect_equal(getformatreader(surf_file)$class, 'hxsurf')
+  expect_equal(getformatwriter(class=class(surf))$class, 'hxsurf')
+})
+
 test_that("we can subset hxsurf object",{
   expect_is(lhr<-subset(surf,"LH_R"),'hxsurf')
   expect_equal(subset(surf, surf$RegionList), surf)
@@ -86,7 +91,7 @@ test_that("we can xform hxsurf object", {
 if(!is.null(cmtk.bindir())){
 test_that("we can xform hxsurf object using registration", {
   reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
-  xform(surf, reg)
+  expect_is(xform(surf, reg), 'hxsurf')
 })
 }
 

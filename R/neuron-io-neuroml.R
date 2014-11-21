@@ -235,10 +235,18 @@ read.neuron.neuroml<-function(f, ..., AlwaysReturnNeuronList=FALSE) {
 }
 
 # Function to check if a file (or raw bytes) starts with a magic value
+# if magic is a character vector of length >1 or a list of raw values
+# it will return true if any magic value matches the file header
 generic_magic_check<-function(f, magic) {
-  if(is.character(magic)) magic=charToRaw(magic)
-  if(is.character(f) && length(f)>1) return(sapply(f,generic_magic_check, magic))
-  nbytes=length(magic)
+  if(is.character(magic)) {
+    magic=lapply(magic, charToRaw)
+  } else if(is.raw(magic)){
+    magic=list(magic)
+  }
+  if(is.character(f) && length(f)>1)
+    return(sapply(f,generic_magic_check, magic))
+  
+  nbytes=max(sapply(magic, length))
   
   firstnbytes=try({
     if(is.character(f)) {
@@ -249,8 +257,14 @@ generic_magic_check<-function(f, magic) {
       f[seq.int(length.out = nbytes)]
     }
   },silent=TRUE)
-  !inherits(firstnbytes,'try-error') && length(firstnbytes)==nbytes && 
-    all(firstnbytes==magic)
+  
+  if(inherits(firstnbytes,'try-error') || length(firstnbytes)<nbytes)
+    return(FALSE)
+  
+  for(m in magic) {
+    if(all(firstnbytes[1:length(m)]==m)) return(TRUE)
+  }
+  FALSE
 }
 
 #' Check whether a file is in NeuroML format

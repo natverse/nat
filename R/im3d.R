@@ -154,6 +154,11 @@ write.im3d<-function(x, file, format=NULL, ...){
   invisible(file)
 }
 
+is.amiramesh.im3d<-function(f, bytes=NULL){
+  rval=amiratype(f, bytes=bytes)
+  sapply(rval, function(x) isTRUE(x=='uniform.field'))
+}
+
 read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
   sections = if(ReadData) NULL else NA
   d<-read.amiramesh(file, sections=sections, ...)

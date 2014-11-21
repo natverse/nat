@@ -11,21 +11,31 @@
   registerformat('rds', read=readRDS, write=saveRDS, class='neuron')
   registerformat('hxskel', ext='.am', read=read.neuron.hxskel, 
                  write=write.neuron.hxskel, magic=is.hxskel,
-                 class='neuron', magiclen=11)
+                 class='neuron', magiclen=14L)
   registerformat('hxlineset', ext='.am', read=read.neuron.hxlineset, 
                  write=write.neuron.hxlineset, magic=is.hxlineset,
-                 class='neuron', magiclen=11)
-  
+                 class='neuron', magiclen=14L)
+    
   # image formats
   registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.nrrd, 
                  write=write.nrrd, magic=is.nrrd,
                  class='im3d', magiclen=8L)
   registerformat('amiramesh', ext=c('.am','.amiramesh'), read=read.im3d.amiramesh, 
-                 write=write.amiramesh, magic=is.amiramesh,
-                 class='im3d', magiclen=11L)
+                 write=write.amiramesh, magic=is.amiramesh.im3d,
+                 class='im3d', magiclen=14L)
   registerformat('vaa3draw', ext=c('.v3d','.v3draw'), read=read.im3d.vaa3draw, 
                magic=is.vaa3draw, class='im3d', magiclen=24L)
+  
+  # landmarks
+  registerformat('amiralandmarks', ext=c('.am','.amiramesh'), read=read.amiralandmarks, 
+                 write=write.amiralandmarks, magic=is.amiratype("LandmarkSet"),
+                 class='landmarks', magiclen=14L)
 
+  # surfaces
+  registerformat('hxsurf', ext=c('.surf', '.am','.amiramesh'), read=read.hxsurf,
+                 write=write.hxsurf, magic=is.amiratype("HxSurface"),
+                 class='hxsurf', magiclen=14L)
+  
   invisible()
 }
 

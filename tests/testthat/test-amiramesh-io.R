@@ -66,9 +66,22 @@ test_that("is.amiramesh and amiratype",{
   tf=tempfile(fileext='.am')
   writeLines("#somethingelse",tf)
   on.exit(unlink(tf))
-  expect_true(!is.amiramesh(tf))
+  expect_false(is.amiramesh(tf))
 
   expect_equal(amiratype("testdata/amira/AL-a_M.am"), 'uniform.field')
-  
   expect_equal(amiratype("testdata/neuron/testneuron_fclineset.am.gz"),'HxLineSet')
+  expect_equal(amiratype("testdata/amira/tetrahedron.surf"), 'HxSurface')
+  expect_equal(amiratype("testdata/neuron/Neurites.am"), 'SkeletonGraph')
+  expect_equal(amiratype("testdata/amira/landmarks.am"), 'LandmarkSet')
+  expect_equal(amiratype("testdata/neuron/EBT7R.CNG.swc"), NA_character_)
+  
+  expect_true(all(is.amiramesh.im3d("testdata/amira/AL-a_M.am")))
+  expect_false(is.amiramesh.im3d("testdata/amira/landmarks.am"))
+  expect_false(is.amiramesh.im3d(tf))
+})
+
+test_that("getformatreader chooses appropriate class", {
+  expect_equal(getformatreader("testdata/neuron/EBT7R.am")$class, "neuron")
+  expect_equal(getformatreader("testdata/amira/AL-a_M.am")$class, "im3d")
+  expect_equal(getformatreader("testdata/amira/landmarks.am")$class, "landmarks")
 })
