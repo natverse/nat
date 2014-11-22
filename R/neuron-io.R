@@ -499,18 +499,25 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 
 #' Write out a neuron in any of the file formats we know about
 #' 
-#' If file is not specified the neuron's InputFileName field will be checked
-#' (for a dotprops object it will be the \code{'file'} attribute). If this is
-#' missing there will be an error. If dir is specified it will be combined with
-#' basename(file). If file is specified but format is not, it will be inferred
+#' If file is not specified the neuron's InputFileName field will be checked 
+#' (for a dotprops object it will be the \code{'file'} attribute). If this is 
+#' missing there will be an error. If dir is specified it will be combined with 
+#' basename(file). If file is specified but format is not, it will be inferred 
 #' from file's extension.
+#' 
+#' @details Note that if \code{file} does not have an extension then the default
+#'   extension for the specified \code{format} will be appended. This behaviour
+#'   can be suppressed by setting \code{ext=NA}.
+#'   
 #' @param n A neuron
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
 #' @param format Unique abbreviation of one of the registered file formats for 
 #'   neurons including 'swc', 'hxlineset', 'hxskel'
 #' @param ext Will replace the default extension for the filetype and should 
-#'   include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}
+#'   include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}. The
+#'   special value of ext=NA will prevent the extension from being changed or 
+#'   added e.g. if the desired file name does not have an extension.
 #' @param Force Whether to overwrite an existing file
 #' @param MakeDir Whether to create directory implied by \code{file} argument.
 #' @param ... Additional arguments passed to selected writer function

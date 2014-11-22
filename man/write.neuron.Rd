@@ -20,7 +20,10 @@ write.neuron(n, file = NULL, dir = NULL, format = NULL, ext = NULL,
 
   \item{ext}{Will replace the default extension for the
   filetype and should include the period eg
-  \code{ext='.amiramesh'} or \code{ext='_reg.swc'}}
+  \code{ext='.amiramesh'} or \code{ext='_reg.swc'}. The
+  special value of ext=NA will prevent the extension from
+  being changed or added e.g. if the desired file name does
+  not have an extension.}
 
   \item{Force}{Whether to overwrite an existing file}
 
@@ -40,6 +43,12 @@ will be checked (for a dotprops object it will be the
 an error. If dir is specified it will be combined with
 basename(file). If file is specified but format is not, it
 will be inferred from file's extension.
+}
+\details{
+Note that if \code{file} does not have an extension then
+the default extension for the specified \code{format} will
+be appended. This behaviour can be suppressed by setting
+\code{ext=NA}.
 }
 \examples{
 # show the currently registered file formats that we can write
