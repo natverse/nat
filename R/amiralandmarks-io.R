@@ -53,3 +53,32 @@ write.landmarks.amira<-function(x, file){
     cat("\n",file=file,append=T)
   }
 }
+
+#' Generic function to read landmarks in any supported format
+#' 
+#' @details Presently the supported formats are \itemize{
+#' 
+#' \item Amira
+#' 
+#' \item CMTK
+#' 
+#' \item Fiji (see \url{http://fiji.sc/Name_Landmarks_and_Register})
+#' }
+#' @param f Path to a file (can also be a URL)
+#' @param ... Additional arguments passed on to format specific functions
+read.landmarks<-function(f, ...) {
+  if(grepl("^http[s]{0,1}://", f)) {
+    url=f
+    # download remote url to local file in tempdir
+    f=file.path(tempdir(), basename(f))
+    on.exit(unlink(f))
+    filecontents=httr::GET(url)
+    writeBin(httr::content(filecontents,type = 'raw'), con = f)
+  }
+  ffs=getformatreader(f, class = 'landmarks')
+  if(is.null(ffs))
+    stop("Unable to identify file type of:", f)
+  l=match.fun(ffs$read)(f, ...)
+  class(l)=c('landmarks', class(l))
+  l
+}
