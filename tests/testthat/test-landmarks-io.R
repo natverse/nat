@@ -43,3 +43,11 @@ test_that("we can identify Fiji landmarks", {
   expect_true(all(basename(fjl) %in% c("JFRC2.points", "JFRC2_single.points")))
   expect_equal(getformatreader(fjl[1])$format, "fijilandmarks")
 })
+
+test_that("generic landmarks I/O", {
+  expect_is(read.landmarks("testdata/amira/landmarks.am"), "landmarks")
+  expect_is(l<-read.landmarks("testdata/landmarks//JFRC2.points"), "landmarks")
+  write.cmtklandmarks(l, tf<-tempfile(fileext = "test.landmarks"))
+  expect_equivalent(read.landmarks(tf), l)
+  unlink(tf)
+})
