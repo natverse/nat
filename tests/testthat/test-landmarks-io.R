@@ -30,5 +30,6 @@ test_that("we can read Fiji landmarks", {
                            "left_vlpr_tract_crossing"),
                          c("X", "Y", "Z")))
   
-  expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2.points"), baseline)
+  expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2.points"), baseline,
+               tolerance=1e-6)
 })
