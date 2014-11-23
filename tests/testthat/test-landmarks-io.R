@@ -32,4 +32,7 @@ test_that("we can read Fiji landmarks", {
   
   expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2.points"), baseline,
                tolerance=1e-6)
+  
+  expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2_single.points"),
+               baseline[1, , drop=FALSE], tolerance=1e-6)
 })
