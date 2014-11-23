@@ -120,3 +120,17 @@ is.fijitraces<-function(f, bytes=NULL){
   h=readLines(f, n = 3)
   isTRUE(any(grepl("<!DOCTYPE tracings",h, useBytes=T, fixed = T)))
 }
+
+read.landmarks.fiji<-function(f, ..., Verbose=FALSE){
+  doc=try(XML::xmlParse(f, ...))
+  if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
+
+  r<-XML::xmlRoot(doc)
+  if(XML::xmlName(r)!="namedpointset")
+    stop("This is not a Fiji (Longair) format landmark file")
+  
+  points=XML::xmlSApply(r,function(x) as.numeric(XML::xmlAttrs(x)[c("x","y","z")]))
+  pointnames=XML::xmlSApply(r,function(x) XML::xmlAttrs(x)[c("name")])
+  matrix(points, ncol=3, byrow = T, dimnames = list(pointnames, c("X", "Y", "Z")))
+}
+
