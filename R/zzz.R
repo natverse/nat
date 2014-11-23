@@ -35,6 +35,10 @@
   registerformat('fijilandmarks', ext=c('.points'), read=read.landmarks.fiji,
                  magic=is.fijilandmarks, class='landmarks', magiclen=5L)
 
+  registerformat('cmtklandmarks', ext=c('.landmarks'), read=read.cmtklandmarks,
+                 write=write.cmtklandmarks, magic=is.cmtklandmarks,
+                 class='landmarks', magiclen=13L)
+
   # surfaces
   registerformat('hxsurf', ext=c('.surf', '.am','.amiramesh'), read=read.hxsurf,
                  write=write.hxsurf, magic=is.amiratype("HxSurface"),
