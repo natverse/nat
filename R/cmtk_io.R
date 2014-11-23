@@ -314,6 +314,18 @@ read.cmtklandmarks<-function(con){
   x
 }
 
+is.cmtklandmarks<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f, is.cmtklandmarks))
+  
+  tocheck=if(is.null(bytes)) f else bytes
+  if(!generic_magic_check(tocheck, "! TYPEDSTREAM")) return(FALSE)
+  # still not sure? Now we need to start reading in some lines
+  h=readLines(f, n = 3)
+  isTRUE(any(grepl("landmark",h, useBytes=T, fixed = T)))
+}
+
 #' @description \code{cmtklandmarks} generates in memory list representation of
 #'   cmtk landmarks
 #' @param xyzs Nx3 matrix of landmarks
