@@ -27,8 +27,9 @@
                magic=is.vaa3draw, class='im3d', magiclen=24L)
   
   # landmarks
-  registerformat('amiralandmarks', ext=c('.am','.amiramesh'), read=read.amiralandmarks, 
-                 write=write.amiralandmarks, magic=is.amiratype("LandmarkSet"),
+  registerformat('amiralandmarks', ext=c('.landmarkAscii','.landmarkBin','.am','.amiramesh'),
+                 read=read.amiralandmarks, write=write.amiralandmarks,
+                 magic=is.amiratype("LandmarkSet"),
                  class='landmarks', magiclen=14L)
 
   # surfaces
