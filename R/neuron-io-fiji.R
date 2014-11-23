@@ -136,3 +136,14 @@ read.landmarks.fiji<-function(f, ...){
   matrix(points, ncol=3, byrow = T, dimnames = list(pointnames, c("X", "Y", "Z")))
 }
 
+# Test if a file is in the Fiji landmarks format
+is.fijilandmarks<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f, is.fijilandmarks))
+  
+  if(!generic_magic_check(f, "<?xml")) return(FALSE)
+  # still not sure? Now we need to start reading in some lines
+  h=readLines(f, n = 3)
+  isTRUE(any(grepl("<!DOCTYPE namedpointset",h, useBytes=T, fixed = T)))
+}
