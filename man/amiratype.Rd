@@ -28,10 +28,10 @@ before reading the header and determining content type
 \seealso{
 Other amira: \code{\link{hxsurf}},
 \code{\link{read.hxsurf}}; \code{\link{is.amiramesh}};
-\code{\link{read.amiralandmarks}},
-\code{\link{write.amiralandmarks}};
 \code{\link{read.amiramesh}},
 \code{\link{read.amiramesh.header}};
+\code{\link{read.landmarks.amira}},
+\code{\link{write.landmarks.amira}};
 \code{\link{write.hxsurf}}
 }
 

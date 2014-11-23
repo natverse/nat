@@ -7,7 +7,7 @@
 #' @return for read.amiralandmarks a matrix for an unpaired landmark set or a
 #'   list of length 2 for a paired landmark set.
 #' @export
-read.amiralandmarks<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
+read.landmarks.amira<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
   r=read.amiramesh(file, header=TRUE, simplify=FALSE, Verbose=Verbose)
   headerLines=attr(r,"header")
   dataDef=attr(r,"dataDef")
@@ -35,7 +35,7 @@ read.amiralandmarks<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
 #' @rdname amiralandmark-io 
 #' @family amira
 #' @export
-write.amiralandmarks<-function(x, file){
+write.landmarks.amira<-function(x, file){
   if(is.list(x) && !is.data.frame(x)) l=x
   else l=list(x)
   nSets=length(l)

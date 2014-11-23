@@ -23,10 +23,10 @@ Write Amira surface (aka HxSurface or HyperSurface) into
 
 Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
 \code{\link{read.hxsurf}}; \code{\link{is.amiramesh}};
-\code{\link{read.amiralandmarks}},
-\code{\link{write.amiralandmarks}};
 \code{\link{read.amiramesh}},
-\code{\link{read.amiramesh.header}}
+\code{\link{read.amiramesh.header}};
+\code{\link{read.landmarks.amira}},
+\code{\link{write.landmarks.amira}}
 
 Other hxsurf: \code{\link{as.mesh3d}},
 \code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},

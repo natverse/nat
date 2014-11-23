@@ -28,7 +28,7 @@
   
   # landmarks
   registerformat('amiralandmarks', ext=c('.landmarkAscii','.landmarkBin','.am','.amiramesh'),
-                 read=read.amiralandmarks, write=write.amiralandmarks,
+                 read=read.landmarks.amira, write=write.landmarks.amira,
                  magic=is.amiratype("LandmarkSet"),
                  class='landmarks', magiclen=14L)
 
