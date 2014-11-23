@@ -1,4 +1,4 @@
-context("amira landmarks io")
+context("landmarks io")
 
 test_that("we can read unpaired Amira landmarks",{
   testData=matrix(rnorm(15),ncol=3)
