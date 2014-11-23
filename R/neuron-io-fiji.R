@@ -130,7 +130,7 @@ read.landmarks.fiji<-function(f, ..., Verbose=FALSE){
     stop("This is not a Fiji (Longair) format landmark file")
   
   points=XML::xmlSApply(r,function(x) as.numeric(XML::xmlAttrs(x)[c("x","y","z")]))
-  pointnames=XML::xmlSApply(r,function(x) XML::xmlAttrs(x)[c("name")])
+  pointnames=unname(XML::xmlSApply(r,function(x) XML::xmlAttrs(x)[c("name")]))
   matrix(points, ncol=3, byrow = T, dimnames = list(pointnames, c("X", "Y", "Z")))
 }
 
