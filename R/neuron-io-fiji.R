@@ -121,7 +121,9 @@ is.fijitraces<-function(f, bytes=NULL){
   isTRUE(any(grepl("<!DOCTYPE tracings",h, useBytes=T, fixed = T)))
 }
 
-read.landmarks.fiji<-function(f, ..., Verbose=FALSE){
+# Read a file is in the Fiji landmarks format (XML)
+# See http://fiji.sc/Name_Landmarks_and_Register
+read.landmarks.fiji<-function(f, ...){
   doc=try(XML::xmlParse(f, ...))
   if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
 
