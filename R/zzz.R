@@ -32,6 +32,9 @@
                  magic=is.amiratype("LandmarkSet"),
                  class='landmarks', magiclen=14L)
 
+  registerformat('fijilandmarks', ext=c('.points'), read=read.landmarks.fiji,
+                 magic=is.fijilandmarks, class='landmarks', magiclen=5L)
+
   # surfaces
   registerformat('hxsurf', ext=c('.surf', '.am','.amiramesh'), read=read.hxsurf,
                  write=write.hxsurf, magic=is.amiratype("HxSurface"),

@@ -36,3 +36,10 @@ test_that("we can read Fiji landmarks", {
   expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2_single.points"),
                baseline[1, , drop=FALSE], tolerance=1e-6)
 })
+
+test_that("we can identify Fiji landmarks", {
+  ff=dir(file.path("testdata", c("amira", "landmarks")), full.names = T)
+  expect_equal(length(fjl<-Filter(is.fijilandmarks, ff)), 2L)
+  expect_true(all(basename(fjl) %in% c("JFRC2.points", "JFRC2_single.points")))
+  expect_equal(getformatreader(fjl[1])$format, "fijilandmarks")
+})
