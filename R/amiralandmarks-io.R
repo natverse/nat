@@ -1,12 +1,12 @@
-#' Read and Write Amira Landmarks files
-#' 
-#' @param file The file to read or write
-#' @param CoordinatesOnly Only return Coordinates of points
-#' @param Verbose Whether to write status messages
-#' @rdname amiralandmark-io
-#' @return for read.amiralandmarks a matrix for an unpaired landmark set or a
-#'   list of length 2 for a paired landmark set.
-#' @export
+# Read and Write Amira Landmarks files
+# 
+# @param file The file to read or write
+# @param CoordinatesOnly Only return Coordinates of points
+# @param Verbose Whether to write status messages
+# @rdname amiralandmark-io
+# @return for read.amiralandmarks a matrix for an unpaired landmark set or a
+#   list of length 2 for a paired landmark set.
+# @export
 read.landmarks.amira<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
   r=read.amiramesh(file, header=TRUE, simplify=FALSE, Verbose=Verbose)
   headerLines=attr(r,"header")
@@ -30,11 +30,11 @@ read.landmarks.amira<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
   else r
 }
 
-#' @param x Nx3 matrix or dataframe of landmark coordinates or a list with two
-#'   matrices, one for landmarks in each space.
-#' @rdname amiralandmark-io 
-#' @family amira
-#' @export
+# @param x Nx3 matrix or dataframe of landmark coordinates or a list with two
+#   matrices, one for landmarks in each space.
+# @rdname amiralandmark-io 
+# @family amira
+# @export
 write.landmarks.amira<-function(x, file){
   if(is.list(x) && !is.data.frame(x)) l=x
   else l=list(x)

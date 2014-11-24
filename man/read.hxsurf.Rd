@@ -53,8 +53,6 @@ into hxsurf object
 Other amira: \code{\link{amiratype}};
 \code{\link{is.amiramesh}}; \code{\link{read.amiramesh}},
 \code{\link{read.amiramesh.header}};
-\code{\link{read.landmarks.amira}},
-\code{\link{write.landmarks.amira}};
 \code{\link{write.hxsurf}}
 
 Other hxsurf: \code{\link{as.mesh3d}},

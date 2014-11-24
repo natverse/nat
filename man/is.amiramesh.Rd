@@ -28,8 +28,6 @@ bytes and checking if they equal to "# AmiraMesh" or
 Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
 \code{\link{read.hxsurf}}; \code{\link{read.amiramesh}},
 \code{\link{read.amiramesh.header}};
-\code{\link{read.landmarks.amira}},
-\code{\link{write.landmarks.amira}};
 \code{\link{write.hxsurf}}
 }
 
