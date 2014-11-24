@@ -99,7 +99,8 @@ read.landmarks<-function(f, ...) {
 #'   like \code{.landmarksAscii}, then one will be added based on the value of 
 #'   the \code{ext} argument.
 #' @param format Character vector specifying output format. Defaults to 
-#'   \code{"amiralandmarks"}.
+#'   \code{"amiralandmarks"}. Partial matching is used (e.g. amira is
+#'   sufficient).
 #' @param ext Optional character vector specifying a new or non-standard 
 #'   extension to use for output file, including the period (e.g. 
 #'   \code{ext='.am'}). When \code{ext=NULL}, the default, the default extension
@@ -108,7 +109,15 @@ read.landmarks<-function(f, ...) {
 #'   extension will be appended if \code{f} does not have one.
 #' @return For \code{write.landmarks} the path to the written file, invisibly.
 #' @examples
+#' ## Listing of supported fileformats for landmarks
 #' fileformats(class = 'landmarks', rval = "info")
+#' \dontrun{
+#' ## Write landmarks in specified format
+#' write.landmarks(x, f, format='amira')
+#' write.landmarks(x, f, format='cmtk')
+#' ## Read landmarks in any format
+#' x2=read.landmarks(f)
+#' }
 write.landmarks<-function(x, file, format='amiralandmarks', ext=NULL, Force=FALSE,
                           MakeDir=TRUE, ...) {
  fw=getformatwriter(format=format, file=file, ext=ext, class='landmarks')

@@ -24,7 +24,8 @@ write.landmarks(x, file, format = "amiralandmarks", ext = NULL,
   argument.}
 
   \item{format}{Character vector specifying output format.
-  Defaults to \code{"amiralandmarks"}.}
+  Defaults to \code{"amiralandmarks"}. Partial matching is
+  used (e.g. amira is sufficient).}
 
   \item{ext}{Optional character vector specifying a new or
   non-standard extension to use for output file, including
@@ -70,7 +71,15 @@ currently available formats with \code{fileformats}.
   landmarks
 }
 \examples{
+## Listing of supported fileformats for landmarks
 fileformats(class = 'landmarks', rval = "info")
+\dontrun{
+## Write landmarks in specified format
+write.landmarks(x, f, format='amira')
+write.landmarks(x, f, format='cmtk')
+## Read landmarks in any format
+x2=read.landmarks(f)
+}
 }
 \seealso{
 \code{\link{fileformats}}
