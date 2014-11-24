@@ -12,7 +12,16 @@ test_that("we can query fileformats",{
   expect_equal(fw$write,saveRDS)
   
   expect_equal(getformatwriter(file='test.am', format='rds', class='neuron')$file,'test.am')
-  expect_equal(getformatwriter(file='test.am', format='rds', ext=NA, class='neuron')$file,'test.rds')
+  
+  expect_equal(getformatwriter(file='test.am', format='rds', ext='.rds', class='neuron')$file,'test.rds')
+  expect_equal(getformatwriter(file='test', format='rds', ext='.rds', class='neuron')$file,'test.rds')
+  
+  expect_equal(getformatwriter(file='test.am', format='rds', ext=NA, class='neuron')$file,'test.am')
+  expect_equal(getformatwriter(file='test.am', format='rds', ext=NULL, class='neuron')$file,'test.am')
+  
+  expect_equal(getformatwriter(file='test', format='rds', ext=NULL, class='neuron')$file,'test.rds')
+  expect_equal(getformatwriter(file='test', format='rds', ext=NA, class='neuron')$file,'test')
+  
   expect_equal(getformatwriter(file='test.am', ext='.rds', class='neuron')$ext,'.rds')
   
   expect_error(getformatwriter(file='test.rds', ext='.rhubarb', class='neuron'))
