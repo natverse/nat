@@ -141,14 +141,12 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
   if(length(paths) == 1 && grepl("\\.zip$", paths)) {
-    neurons_dir <- file.path(tempdir(), "user_neurons")
+    neurons_dir <- file.path(tempfile(pattern = "user_neurons"))
     on.exit(unlink(neurons_dir, recursive=TRUE))
     unzip(paths, exdir=neurons_dir)
-    n <- read.neurons(dir(neurons_dir, full.names = TRUE, recursive=TRUE))
-    return(n)
+    paths=dir(neurons_dir, full.names = TRUE, recursive=TRUE)
   }
-  else 
-  if(inherits(paths,'neuronlistfh')){
+  else if(inherits(paths,'neuronlistfh')){
     if(!inherits(attr(paths,'db'),'filehashRDS'))
       stop("read.neurons only supports reading neuronlistfh with an RDS format filehash")
     nlfh=paths
