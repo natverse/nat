@@ -345,15 +345,11 @@ cmtklandmarks<-function(xyzs){
 }
 
 #' @param filename Path to write out cmtklandmarks
-#' @param Force Whether to overwrite an existing landmarks file (default FALSE)
 #' @rdname cmtklandmarks
 #' @export
-write.landmarks.cmtk<-function(xyzs,filename,Force=FALSE){
+write.landmarks.cmtk<-function(xyzs,filename){
   ll=cmtklandmarks(xyzs)
   if(file.exists(filename) && file.info(filename)$isdir) filename=file.path(filename,"landmarks")
-  if(file.exists(filename) && !Force) {
-    stop(paste(filename,"already exists, use Force=TRUE to replace"))
-  }
   write.cmtk(ll,filename)
 }
 

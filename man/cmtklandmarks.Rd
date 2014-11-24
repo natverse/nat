@@ -9,7 +9,7 @@ read.landmarks.cmtk(con)
 
 cmtklandmarks(xyzs)
 
-write.landmarks.cmtk(xyzs, filename, Force = FALSE)
+write.landmarks.cmtk(xyzs, filename)
 }
 \arguments{
   \item{con}{Character vector specifying path or a
@@ -18,9 +18,6 @@ write.landmarks.cmtk(xyzs, filename, Force = FALSE)
   \item{xyzs}{Nx3 matrix of landmarks}
 
   \item{filename}{Path to write out cmtklandmarks}
-
-  \item{Force}{Whether to overwrite an existing landmarks
-  file (default FALSE)}
 }
 \description{
 Read and Write CMTK landmarks
