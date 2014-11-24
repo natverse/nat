@@ -25,10 +25,7 @@ the coefficients and active members of the spline warp
 component of a CMTK nonrigid registrartion.
 }
 \seealso{
-Other cmtk-io: \code{\link{cmtklandmarks}},
-\code{\link{read.cmtklandmarks}},
-\code{\link{write.cmtklandmarks}};
-\code{\link{read.cmtkreg}}; \code{\link{write.cmtkreg}};
-\code{\link{write.cmtk}}
+Other cmtk-io: \code{\link{read.cmtkreg}};
+\code{\link{write.cmtkreg}}; \code{\link{write.cmtk}}
 }
 

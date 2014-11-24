@@ -27,9 +27,17 @@
                magic=is.vaa3draw, class='im3d', magiclen=24L)
   
   # landmarks
-  registerformat('amiralandmarks', ext=c('.am','.amiramesh'), read=read.amiralandmarks, 
-                 write=write.amiralandmarks, magic=is.amiratype("LandmarkSet"),
+  registerformat('amiralandmarks', ext=c('.landmarkAscii','.landmarkBin','.am','.amiramesh'),
+                 read=read.landmarks.amira, write=write.landmarks.amira,
+                 magic=is.amiratype("LandmarkSet"),
                  class='landmarks', magiclen=14L)
+
+  registerformat('fijilandmarks', ext=c('.points'), read=read.landmarks.fiji,
+                 magic=is.fijilandmarks, class='landmarks', magiclen=5L)
+
+  registerformat('cmtklandmarks', ext=c('.landmarks'), read=read.landmarks.cmtk,
+                 write=write.landmarks.cmtk, magic=is.cmtklandmarks,
+                 class='landmarks', magiclen=13L)
 
   # surfaces
   registerformat('hxsurf', ext=c('.surf', '.am','.amiramesh'), read=read.hxsurf,

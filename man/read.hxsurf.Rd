@@ -51,10 +51,7 @@ into hxsurf object
 \code{\link{plot3d.hxsurf}, \link{rgb}}
 
 Other amira: \code{\link{amiratype}};
-\code{\link{is.amiramesh}};
-\code{\link{read.amiralandmarks}},
-\code{\link{write.amiralandmarks}};
-\code{\link{read.amiramesh}},
+\code{\link{is.amiramesh}}; \code{\link{read.amiramesh}},
 \code{\link{read.amiramesh.header}};
 \code{\link{write.hxsurf}}
 

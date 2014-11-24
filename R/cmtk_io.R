@@ -295,15 +295,14 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   l
 }
 
-#' Read and Write CMTK landmarks
-#' 
-#' @details CMTK landmarks are always unpaired i.e. only contain information for
-#'   one brain.
-#' @param con Character vector specifying path or a connection (passed straight
-#'   to \code{read.cmtk})
-#' @export
-#' @rdname cmtklandmarks
-read.cmtklandmarks<-function(con){
+# Read and Write CMTK landmarks
+# 
+# @details CMTK landmarks are always unpaired i.e. only contain information for
+#   one brain.
+# @param con Character vector specifying path or a connection (passed straight
+#   to \code{read.cmtk})
+# @rdname cmtklandmarks
+read.landmarks.cmtk<-function(con){
   l=read.cmtk(con,CheckLabel=FALSE)
   x=t(sapply(l,function(x) x[["location"]]))
   rn=sapply(l,function(x) x[["name"]])
@@ -314,12 +313,23 @@ read.cmtklandmarks<-function(con){
   x
 }
 
-#' @description \code{cmtklandmarks} generates in memory list representation of
-#'   cmtk landmarks
-#' @param xyzs Nx3 matrix of landmarks
-#' @rdname cmtklandmarks
-#' @export
-#' @family cmtk-io
+is.cmtklandmarks<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f, is.cmtklandmarks))
+  
+  tocheck=if(is.null(bytes)) f else bytes
+  if(!generic_magic_check(tocheck, "! TYPEDSTREAM")) return(FALSE)
+  # still not sure? Now we need to start reading in some lines
+  h=readLines(f, n = 3)
+  isTRUE(any(grepl("landmark",h, useBytes=T, fixed = T)))
+}
+
+# @description \code{cmtklandmarks} generates in memory list representation of
+#   cmtk landmarks
+# @param xyzs Nx3 matrix of landmarks
+# @rdname cmtklandmarks
+# @family cmtk-io
 cmtklandmarks<-function(xyzs){
   # IGS Landmark lists are unpaired ie contain information for only 1 brain
   xyzs=data.matrix(xyzs)
@@ -332,16 +342,10 @@ cmtklandmarks<-function(xyzs){
   ll
 }
 
-#' @param filename Path to write out cmtklandmarks
-#' @param Force Whether to overwrite an existing landmarks file (default FALSE)
-#' @rdname cmtklandmarks
-#' @export
-write.cmtklandmarks<-function(xyzs,filename,Force=FALSE){
+# @param filename Path to write out cmtklandmarks
+# @rdname cmtklandmarks
+write.landmarks.cmtk<-function(xyzs,filename){
   ll=cmtklandmarks(xyzs)
   if(file.exists(filename) && file.info(filename)$isdir) filename=file.path(filename,"landmarks")
-  if(file.exists(filename) && !Force) {
-    stop(paste(filename,"already exists, use Force=TRUE to replace"))
-  }
   write.cmtk(ll,filename)
 }
-

@@ -54,8 +54,6 @@ is a character vector and close it when finished reading.
 
 Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
 \code{\link{read.hxsurf}}; \code{\link{is.amiramesh}};
-\code{\link{read.amiralandmarks}},
-\code{\link{write.amiralandmarks}};
 \code{\link{write.hxsurf}}
 }
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE namedpointset [
+  <!ELEMENT namedpointset (pointworld*)>
+  <!ELEMENT pointworld EMPTY>
+  <!ATTLIST namedpointset version CDATA #REQUIRED>
+  <!ATTLIST pointworld set (true|false) #REQUIRED>
+  <!ATTLIST pointworld name CDATA #REQUIRED>
+  <!ATTLIST pointworld x CDATA #IMPLIED>
+  <!ATTLIST pointworld y CDATA #IMPLIED>
+  <!ATTLIST pointworld z CDATA #IMPLIED>
+]>
+
+<namedpointset version="1.0">
+  <pointworld set="true" name="right_alpha_tip" x="256.922344" y="11.819671999999999" z="66.563416"/>
+</namedpointset>

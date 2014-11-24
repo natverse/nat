@@ -27,10 +27,7 @@ NB a version specified on the command line overrides one
 encoded as an attribute in the input list.
 }
 \seealso{
-Other cmtk-io: \code{\link{cmtklandmarks}},
-\code{\link{read.cmtklandmarks}},
-\code{\link{write.cmtklandmarks}};
-\code{\link{read.cmtkreg}}; \code{\link{read.cmtk}};
-\code{\link{write.cmtkreg}}
+Other cmtk-io: \code{\link{read.cmtkreg}};
+\code{\link{read.cmtk}}; \code{\link{write.cmtkreg}}
 }
 

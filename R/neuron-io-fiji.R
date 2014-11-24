@@ -120,3 +120,30 @@ is.fijitraces<-function(f, bytes=NULL){
   h=readLines(f, n = 3)
   isTRUE(any(grepl("<!DOCTYPE tracings",h, useBytes=T, fixed = T)))
 }
+
+# Read a file is in the Fiji landmarks format (XML)
+# See http://fiji.sc/Name_Landmarks_and_Register
+read.landmarks.fiji<-function(f, ...){
+  doc=try(XML::xmlParse(f, ...))
+  if(inherits(doc, 'try-error')) stop("Unable to parse file as neuroml")
+
+  r<-XML::xmlRoot(doc)
+  if(XML::xmlName(r)!="namedpointset")
+    stop("This is not a Fiji (Longair) format landmark file")
+  
+  points=XML::xmlSApply(r,function(x) as.numeric(XML::xmlAttrs(x)[c("x","y","z")]))
+  pointnames=unname(XML::xmlSApply(r,function(x) XML::xmlAttrs(x)[c("name")]))
+  matrix(points, ncol=3, byrow = T, dimnames = list(pointnames, c("X", "Y", "Z")))
+}
+
+# Test if a file is in the Fiji landmarks format
+is.fijilandmarks<-function(f, bytes=NULL){
+  if(!is.null(bytes) && length(f)>1)
+    stop("can only supply raw bytes to check for single file")
+  if(length(f)>1) return(sapply(f, is.fijilandmarks))
+  
+  if(!generic_magic_check(f, "<?xml")) return(FALSE)
+  # still not sure? Now we need to start reading in some lines
+  h=readLines(f, n = 3)
+  isTRUE(any(grepl("<!DOCTYPE namedpointset",h, useBytes=T, fixed = T)))
+}
