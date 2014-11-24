@@ -60,7 +60,7 @@ that match the given filter conditions.
 
 \code{registerformat} registers a format in the io registry
 
-\code{getformatwriter} gets the function to read a file
+\code{getformatreader} gets the function to read a file
 
 \code{getformatwriter} gets the function to write a file
 }

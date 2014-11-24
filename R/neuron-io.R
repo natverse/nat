@@ -349,7 +349,7 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
   invisible()
 }
 
-#' @description \code{getformatwriter} gets the function to read a file
+#' @description \code{getformatreader} gets the function to read a file
 #' @rdname fileformats
 #' @param file Path to a file
 #' @details \code{getformatreader} starts by reading a set number of bytes from 
