@@ -19,8 +19,9 @@ Read a CMTK format registration
 }
 \seealso{
 Other cmtk-io: \code{\link{cmtklandmarks}},
-\code{\link{read.cmtklandmarks}},
-\code{\link{write.cmtklandmarks}}; \code{\link{read.cmtk}};
-\code{\link{write.cmtkreg}}; \code{\link{write.cmtk}}
+\code{\link{read.landmarks.cmtk}},
+\code{\link{write.landmarks.cmtk}};
+\code{\link{read.cmtk}}; \code{\link{write.cmtkreg}};
+\code{\link{write.cmtk}}
 }
 

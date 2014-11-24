@@ -26,8 +26,8 @@ component of a CMTK nonrigid registrartion.
 }
 \seealso{
 Other cmtk-io: \code{\link{cmtklandmarks}},
-\code{\link{read.cmtklandmarks}},
-\code{\link{write.cmtklandmarks}};
+\code{\link{read.landmarks.cmtk}},
+\code{\link{write.landmarks.cmtk}};
 \code{\link{read.cmtkreg}}; \code{\link{write.cmtkreg}};
 \code{\link{write.cmtk}}
 }

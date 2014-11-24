@@ -303,7 +303,7 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
 #'   to \code{read.cmtk})
 #' @export
 #' @rdname cmtklandmarks
-read.cmtklandmarks<-function(con){
+read.landmarks.cmtk<-function(con){
   l=read.cmtk(con,CheckLabel=FALSE)
   x=t(sapply(l,function(x) x[["location"]]))
   rn=sapply(l,function(x) x[["name"]])
@@ -348,7 +348,7 @@ cmtklandmarks<-function(xyzs){
 #' @param Force Whether to overwrite an existing landmarks file (default FALSE)
 #' @rdname cmtklandmarks
 #' @export
-write.cmtklandmarks<-function(xyzs,filename,Force=FALSE){
+write.landmarks.cmtk<-function(xyzs,filename,Force=FALSE){
   ll=cmtklandmarks(xyzs)
   if(file.exists(filename) && file.info(filename)$isdir) filename=file.path(filename,"landmarks")
   if(file.exists(filename) && !Force) {
