@@ -613,6 +613,7 @@ write.neuron.swc<-function(x, file, ...){
 #' @param files Character vector or expression specifying output filenames. See 
 #'   examples and \code{\link{write.neuron}} for details.
 #' @param ... Additional arguments passed to \code{\link{write.neuron}}
+#' @inheritParams write.neuron
 #' @return the path to the output file(s), absolute when this is a zip file.
 #' @author jefferis
 #' @export
@@ -643,20 +644,26 @@ write.neuron.swc<-function(x, file, ...){
 #'   subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 #' }
 write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl), 
-                        files=NULL, ...){
+                        files=NULL, Force=FALSE, ...){
   if(grepl("\\.zip", dir)) {
     zip_file=dir
-    dir <- file.path(tempdir(), "user_neurons")
+    # check if file exists (and we want to overwrite)
+    if(file.exists(zip_file)){
+      if(!Force)
+        stop("Zip file: ", zip_file, "already exists")
+      unlink(zip_file)
+    }
     # Get absolute path of parent dir
     zip_dir=tools::file_path_as_absolute(dirname(zip_file))
     # ... and use that to construct absolute path to output zip
     zip_file=file.path(zip_dir, basename(zip_file))
+    dir <- file.path(tempfile("user_neurons"))
   } else {
     zip_file=NULL
   }
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
-  # Construct subdirectory structure based on 
+  # Construct subdirectory structure based on variables in attached data.frame
   ee=substitute(subdir)
   subdirs=NULL
   if(!is.null(ee) && !is.character(ee)){
@@ -683,7 +690,7 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
       thisdir=subdirs[nn]
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
-    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, ...)
+    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, Force=Force, ...)
   }
   if(!is.null(zip_file)) {
     owd=setwd(dir)

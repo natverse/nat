@@ -4,7 +4,7 @@
 \title{Write neurons from a neuronlist object to individual files, or a zip archive}
 \usage{
 write.neurons(nl, dir, format = NULL, subdir = NULL, INDICES = names(nl),
-  files = NULL, ...)
+  files = NULL, Force = FALSE, ...)
 }
 \arguments{
   \item{nl}{neuronlist object}
@@ -26,6 +26,8 @@ write.neurons(nl, dir, format = NULL, subdir = NULL, INDICES = names(nl),
   \item{files}{Character vector or expression specifying
   output filenames. See examples and
   \code{\link{write.neuron}} for details.}
+
+  \item{Force}{Whether to overwrite an existing file}
 
   \item{...}{Additional arguments passed to
   \code{\link{write.neuron}}}
