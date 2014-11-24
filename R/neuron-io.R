@@ -425,13 +425,17 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   r=nfs[[1]]
   
   if(ext_was_set) r$ext=ext
-  else if(length(r$ext)>1) r$ext=r$ext[1]
+  # Process file name if one was supplied
   if(!is.null(file)) {
-    r$file=if(nzchar(tools::file_ext(file))){
-      # the file we were given has an extension
+    r$file=if(length(ext) && is.na(ext)) {
+      # ext=NA, don't touch file name!
+      file
+    } else if(nzchar(tools::file_ext(file))){
+      # the file we were given has an extension, replace it
       sub("\\.[^.]+$", r$ext, file)
     } else {
-      # the input file did not have an extension so just append
+      # the input file did not have an extension
+      # append if ext was anything other than NA
       paste0(file, r$ext)
     }
   }
