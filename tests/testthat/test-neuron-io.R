@@ -704,11 +704,15 @@ test_that("we can read hxskel format neurons",{
 test_that("we can read multiple neurons from a zip archive", {
   files_to_zip <- c("testdata/neuron/testneuron_am3d.am", "testdata/neuron/testneuron_lineset.am")
   # swallow extraneous warning
-  expect_warning(neurons <- read.neurons(files_to_zip), regexp = "specifies radius")
+  expect_warning(neurons <- read.neurons(files_to_zip,
+                                         neuronnames = function(f) tools::file_path_sans_ext(basename(f))),
+                 regexp = "specifies radius")
   zip_file <- paste0(tempfile(), ".zip")
   on.exit(unlink(zip_file, recursive=TRUE))
   zip(zip_file, files_to_zip)
-  expect_warning(zip_neurons <- read.neurons(zip_file, format="zip"), regexp = "specifies radius")
+  expect_warning(zip_neurons <- read.neurons(zip_file, format="zip",
+                                             neuronnames = function(f) tools::file_path_sans_ext(basename(f))),
+                 regexp = "specifies radius")
   expect_equal(neurons, zip_neurons)
 })
 
