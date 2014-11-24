@@ -399,18 +399,33 @@ getformatreader<-function(file, class=NULL){
 }
 
 #' @description \code{getformatwriter} gets the function to write a file
-#' @details If \code{ext=NA} then extension will not be used to query file 
-#'   formats and it will be overwritten by the default extensions returned by 
-#'   \code{fileformats}. If \code{ext='.someext'} \code{getformatwriter} will 
-#'   use the specified extension to overwrite the value returned by 
-#'   \code{fileformats}. If \code{ext=NULL} and 
-#'   \code{file='somefilename.someext'} then \code{ext} will be set to 
-#'   \code{'someext'} and that will override the value returned by 
-#'   \code{fileformats}. If \code{file='somefile_without_extension'} then the
-#'   suppplied or calculated extension will be appended to \code{file}. See
-#'   \code{\link{write.neuron}} for code to make this discussion more concrete.
+#' @section getformatwriter output file: If \code{getformatwriter} is passed a 
+#'   \code{file} argument, it will be processed based on the registered 
+#'   fileformats information and the \code{ext} argument to give a final output 
+#'   path in the \code{$file} element of the returned \code{list}.
+#'   
+#'   If \code{ext='.someext'} \code{getformatwriter} will use the specified 
+#'   extension to overwrite the default value returned by \code{fileformats}.
+#'   
+#'   If \code{ext=NULL}, the default, and \code{file='somefilename.someext'}
+#'   then \code{file} will be untouched and \code{ext} will be set to
+#'   \code{'someext'} (overriding the value returned by \code{fileformats}).
+#'   
+#'   If \code{file='somefile_without_extension'} then the suppplied or 
+#'   calculated extension will be appended to \code{file}.
+#'   
+#'   If \code{ext=NA} then the input \code{file} name will not be touched (even 
+#'   if it has no extension at all).
+#'   
+#'   Note that if \code{ext=NULL} or \code{ext=NA}, then only the specified 
+#'   format or, failing that, the \code{file} extension will be used to query 
+#'   the fileformats database for a match.
+#'   
+#'   See \code{\link{write.neuron}} for code to make this discussion more 
+#'   concrete.
 #' @rdname fileformats
 #' @export
+#' @seealso \code{\link{write.neuron}}
 getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   
   if(!is.null(file) && is.null(ext)){
