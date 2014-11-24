@@ -425,6 +425,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
   r=nfs[[1]]
   
   if(ext_was_set) r$ext=ext
+  else if(length(r$ext)>1) r$ext=r$ext[1]
   if(!is.null(file)) {
     r$file=if(nzchar(tools::file_ext(file))){
       # the file we were given has an extension
