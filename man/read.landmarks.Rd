@@ -73,12 +73,17 @@ currently available formats with \code{fileformats}.
 \examples{
 ## Listing of supported fileformats for landmarks
 fileformats(class = 'landmarks', rval = "info")
+
+## round trip test
+m=matrix(rnorm(6), ncol=3)
+rownames(m)=c("nose", "ear")
+f=write.landmarks(m, file='knee')
+m2=read.landmarks(f)
+stopifnot(all.equal(m, m2))
 \dontrun{
 ## Write landmarks in specified format
 write.landmarks(x, f, format='amira')
 write.landmarks(x, f, format='cmtk')
-## Read landmarks in any format
-x2=read.landmarks(f)
 }
 }
 \seealso{

@@ -75,6 +75,7 @@ write.landmarks.amira<-function(x, file){
 #'   available.
 #' @inheritParams write.neuron
 #' @seealso \code{\link{fileformats}}
+#' @export
 read.landmarks<-function(f, ...) {
   if(grepl("^http[s]{0,1}://", f)) {
     url=f
@@ -108,15 +109,21 @@ read.landmarks<-function(f, ...) {
 #'   extension. When \code{ext=NA}, the extension will not be modified and no 
 #'   extension will be appended if \code{f} does not have one.
 #' @return For \code{write.landmarks} the path to the written file, invisibly.
+#' @export
 #' @examples
 #' ## Listing of supported fileformats for landmarks
 #' fileformats(class = 'landmarks', rval = "info")
+#' 
+#' ## round trip test
+#' m=matrix(rnorm(6), ncol=3)
+#' rownames(m)=c("nose", "ear")
+#' f=write.landmarks(m, file='knee')
+#' m2=read.landmarks(f)
+#' stopifnot(all.equal(m, m2))
 #' \dontrun{
 #' ## Write landmarks in specified format
 #' write.landmarks(x, f, format='amira')
 #' write.landmarks(x, f, format='cmtk')
-#' ## Read landmarks in any format
-#' x2=read.landmarks(f)
 #' }
 write.landmarks<-function(x, file, format='amiralandmarks', ext=NULL, Force=FALSE,
                           MakeDir=TRUE, ...) {
