@@ -50,4 +50,7 @@ test_that("generic landmarks I/O", {
   write.landmarks(l, tf<-tempfile(fileext = "test.landmarks"), format='cmtk')
   expect_equivalent(read.landmarks(tf), l)
   unlink(tf)
+  
+  expect_equal(getformatwriter(format='amira', file='test', class='landmarks')$file,
+               "test.landmarkAscii")
 })
