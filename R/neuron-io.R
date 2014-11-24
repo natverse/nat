@@ -644,11 +644,10 @@ write.neuron.swc<-function(x, file, ...){
 write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl), 
                         files=NULL, ...){
   if(grepl("\\.zip", dir)) {
-    neurons_dir <- file.path(tempdir(), "user_neurons")
-    on.exit(unlink(neurons_dir, recursive=TRUE))
-    write.neurons(nl, neurons_dir, format=format, ...)
-    zip(dir, files=dir(neurons_dir, full.names = TRUE), flags="-r9Xj")
-    invisible(return(dir))
+    zip_file=dir
+    dir <- file.path(tempdir(), "user_neurons")
+  } else {
+    zip_file=NULL
   }
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
@@ -680,6 +679,13 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
     written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, ...)
+  }
+  if(!is.null(zip_file)) {
+    owd=setwd(dir)
+    on.exit(setwd(owd))
+    zip(zip_file, files=dir(dir, recursive = TRUE))
+    unlink(dir, recursive=TRUE)
+    written<-zip_file
   }
   invisible(written)
 }
