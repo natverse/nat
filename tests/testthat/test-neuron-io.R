@@ -717,7 +717,9 @@ test_that("we can read multiple neurons from a zip archive", {
 })
 
 test_that("we can write multiple neurons to a zip archive", {
-  zip_file <- paste0(tempfile(), ".zip")
+  dir.create(td<-tempfile())
+  owd=setwd(td)
+  zip_file <- "test.zip"
   on.exit(unlink(zip_file))
   write.neurons(Cell07PNs[1:5], zip_file, format="swc", Force=T, subdir=Glomerulus)
   nat.utils::zipinfo(zip_file)
@@ -725,6 +727,7 @@ test_that("we can write multiple neurons to a zip archive", {
   # fix names and compare
   names(zip_neurons)=sub("\\.swc","",names(zip_neurons))
   expect_equivalent(Cell07PNs[1:5], zip_neurons[names(Cell07PNs)[1:5]])
+  setwd(owd)
 })
 
 test_that("we can identify amira hxskel neurons",{

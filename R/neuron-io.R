@@ -613,6 +613,7 @@ write.neuron.swc<-function(x, file, ...){
 #' @param files Character vector or expression specifying output filenames. See 
 #'   examples and \code{\link{write.neuron}} for details.
 #' @param ... Additional arguments passed to \code{\link{write.neuron}}
+#' @return the path to the output file(s), absolute when this is a zip file.
 #' @author jefferis
 #' @export
 #' @seealso \code{\link{write.neuron}}
@@ -646,6 +647,10 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
   if(grepl("\\.zip", dir)) {
     zip_file=dir
     dir <- file.path(tempdir(), "user_neurons")
+    # Get absolute path of parent dir
+    zip_dir=tools::file_path_as_absolute(dirname(zip_file))
+    # ... and use that to construct absolute path to output zip
+    zip_file=file.path(zip_dir, basename(zip_file))
   } else {
     zip_file=NULL
   }
