@@ -295,14 +295,13 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   l
 }
 
-#' Read and Write CMTK landmarks
-#' 
-#' @details CMTK landmarks are always unpaired i.e. only contain information for
-#'   one brain.
-#' @param con Character vector specifying path or a connection (passed straight
-#'   to \code{read.cmtk})
-#' @export
-#' @rdname cmtklandmarks
+# Read and Write CMTK landmarks
+# 
+# @details CMTK landmarks are always unpaired i.e. only contain information for
+#   one brain.
+# @param con Character vector specifying path or a connection (passed straight
+#   to \code{read.cmtk})
+# @rdname cmtklandmarks
 read.landmarks.cmtk<-function(con){
   l=read.cmtk(con,CheckLabel=FALSE)
   x=t(sapply(l,function(x) x[["location"]]))
@@ -326,12 +325,11 @@ is.cmtklandmarks<-function(f, bytes=NULL){
   isTRUE(any(grepl("landmark",h, useBytes=T, fixed = T)))
 }
 
-#' @description \code{cmtklandmarks} generates in memory list representation of
-#'   cmtk landmarks
-#' @param xyzs Nx3 matrix of landmarks
-#' @rdname cmtklandmarks
-#' @export
-#' @family cmtk-io
+# @description \code{cmtklandmarks} generates in memory list representation of
+#   cmtk landmarks
+# @param xyzs Nx3 matrix of landmarks
+# @rdname cmtklandmarks
+# @family cmtk-io
 cmtklandmarks<-function(xyzs){
   # IGS Landmark lists are unpaired ie contain information for only 1 brain
   xyzs=data.matrix(xyzs)
@@ -344,12 +342,10 @@ cmtklandmarks<-function(xyzs){
   ll
 }
 
-#' @param filename Path to write out cmtklandmarks
-#' @rdname cmtklandmarks
-#' @export
+# @param filename Path to write out cmtklandmarks
+# @rdname cmtklandmarks
 write.landmarks.cmtk<-function(xyzs,filename){
   ll=cmtklandmarks(xyzs)
   if(file.exists(filename) && file.info(filename)$isdir) filename=file.path(filename,"landmarks")
   write.cmtk(ll,filename)
 }
-

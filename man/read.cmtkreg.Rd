@@ -18,10 +18,7 @@ read.cmtkreg(filename, ReturnRegistrationOnly = FALSE, ...)
 Read a CMTK format registration
 }
 \seealso{
-Other cmtk-io: \code{\link{cmtklandmarks}},
-\code{\link{read.landmarks.cmtk}},
-\code{\link{write.landmarks.cmtk}};
-\code{\link{read.cmtk}}; \code{\link{write.cmtkreg}};
-\code{\link{write.cmtk}}
+Other cmtk-io: \code{\link{read.cmtk}};
+\code{\link{write.cmtkreg}}; \code{\link{write.cmtk}}
 }
 

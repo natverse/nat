@@ -28,10 +28,7 @@ command the switch --initial-inverse must be used
 specifying the folder name created by this function.
 }
 \seealso{
-Other cmtk-io: \code{\link{cmtklandmarks}},
-\code{\link{read.landmarks.cmtk}},
-\code{\link{write.landmarks.cmtk}};
-\code{\link{read.cmtkreg}}; \code{\link{read.cmtk}};
-\code{\link{write.cmtk}}
+Other cmtk-io: \code{\link{read.cmtkreg}};
+\code{\link{read.cmtk}}; \code{\link{write.cmtk}}
 }
 
