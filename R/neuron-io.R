@@ -545,9 +545,10 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     format='rds'
     if(is.null(file)) {
       file=basename(attr(n,"file"))
-      # don't use the extension of file attribute to override default extension 
-      # returned by query fileformats registry
-      if(is.null(ext)) ext=NA
+      if(is.null(file))
+        stop("No file specified and dotprops obj does not have a file attribute")
+      # trim off the suffix unless we have specified ext=NA 
+      if(!(length(ext) && is.na(ext))) file=tools::file_path_sans_ext(file)
     }
   }
   if(is.null(file)){
@@ -555,9 +556,9 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     file=basename(n$InputFileName)
     if(is.null(file))
       stop("No file specified and neuron does not have an InputFileName")
-    # don't use the extension of InputFileName to override default extension 
-    # returned by query fileformats registry
-    if(is.null(ext)) ext=NA
+    # trim off the suffix if ext!=NA
+    if(!(length(ext) && is.na(ext)))
+      file=tools::file_path_sans_ext(file)
   }
   fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
   file=fw$file
