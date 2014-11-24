@@ -81,7 +81,7 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   An external CMTK installation is required in order to apply CMTK
 #'   registrations. This function attempts to locate the full path to the CMTK
 #'   executable files and can query and set an option.
-#' @details Queries options('nat.cmtk.bindir') if \code{firtsdir} is not 
+#' @details Queries options('nat.cmtk.bindir') if \code{firstdir} is not 
 #'   specified. If that does not contain the appropriate binaries, it will look 
 #'   in the system PATH and then a succession of plausible places until it finds
 #'   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing 

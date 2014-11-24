@@ -43,7 +43,7 @@ path to the CMTK executable files and can query and set an
 option.
 }
 \details{
-Queries options('nat.cmtk.bindir') if \code{firtsdir} is
+Queries options('nat.cmtk.bindir') if \code{firstdir} is
 not specified. If that does not contain the appropriate
 binaries, it will look in the system PATH and then a
 succession of plausible places until it finds something.
