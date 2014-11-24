@@ -47,7 +47,7 @@ test_that("we can identify Fiji landmarks", {
 test_that("generic landmarks I/O", {
   expect_is(read.landmarks("testdata/amira/landmarks.am"), "landmarks")
   expect_is(l<-read.landmarks("testdata/landmarks//JFRC2.points"), "landmarks")
-  write.landmarks.cmtk(l, tf<-tempfile(fileext = "test.landmarks"))
+  write.landmarks(l, tf<-tempfile(fileext = "test.landmarks"), format='cmtk')
   expect_equivalent(read.landmarks(tf), l)
   unlink(tf)
 })

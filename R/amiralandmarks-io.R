@@ -125,11 +125,11 @@ write.landmarks<-function(x, file, format='amiralandmarks', ext=NULL, Force=FALS
       stop(dirname(file)," does not exist; use MakeDir=T to overwrite")
     }
   }
-  if(!file.create(file)){
+  if(!file.access(file, mode=2)){
     stop("Unable to write to file ",file)
   }
   
   # OK all fine, so let's write
-  match.fun(fw$write)(n, file=file, ...)
+  match.fun(fw$write)(x, file=file, ...)
   invisible(file)
 }
