@@ -114,17 +114,18 @@ read.landmarks<-function(f, ...) {
 #' ## Listing of supported fileformats for landmarks
 #' fileformats(class = 'landmarks', rval = "info")
 #' 
-#' ## round trip test
+#' ## round trip tests
 #' m=matrix(rnorm(6), ncol=3)
 #' rownames(m)=c("nose", "ear")
-#' f=write.landmarks(m, file='knee')
-#' m2=read.landmarks(f)
-#' stopifnot(all.equal(m, m2))
-#' \dontrun{
-#' ## Write landmarks in specified format
-#' write.landmarks(x, f, format='amira')
-#' write.landmarks(x, f, format='cmtk')
-#' }
+#' f=write.landmarks(m, file='knee', format='cmtk')
+#' read.landmarks(f)
+#' 
+#' # write in amira format which does not support named landmarks
+#' f2=write.landmarks(m, file='knee', format='amira')
+#' read.landmarks(f2)
+#' 
+#' # clean up
+#' unlink(c(f,f2))
 write.landmarks<-function(x, file, format='amiralandmarks', ext=NULL, Force=FALSE,
                           MakeDir=TRUE, ...) {
  fw=getformatwriter(format=format, file=file, ext=ext, class='landmarks')
