@@ -17,7 +17,8 @@ xform(x, reg, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-\method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA)
+\method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA,
+  VectoriseRegistrations = FALSE)
 }
 \arguments{
   \item{x}{an object to transform}
@@ -43,6 +44,12 @@ xform(x, reg, ...)
   \code{FUN} gives an error. The default value (\code{NA})
   will result in nlapply stopping with an error message the
   moment there is an eror. For other values, see details.}
+
+  \item{VectoriseRegistrations}{When \code{FALSE}, the
+  default, each element of \code{reg} will be applied
+  sequentially to each element of \code{x}. When
+  \code{TRUE}, it is assumed that there is one element of
+  \code{reg} for each element of \code{x}.}
 }
 \description{
 \code{xform} is designed to operate on a variety of data

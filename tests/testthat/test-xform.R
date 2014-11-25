@@ -38,6 +38,10 @@ test_that("we can xform a neuronlist with multiple registrations", {
   
   expect_equal(xform(Cell07PNs[1:3], c(f1, f2)), Cell07PNs[1:3])
   expect_equal(xform(Cell07PNs[1:3], c(f2, f1)), Cell07PNs[1:3])
+  
+  expect_equal(xform(Cell07PNs[1:2], c(f1, f1), VectoriseRegistrations = T),
+               xform(Cell07PNs[1:2], f1))
+  
   unlink(c(f1,f2))
 })
 

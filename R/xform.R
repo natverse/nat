@@ -84,11 +84,19 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #' @method xform neuronlist
 #' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
 #'   that specify a subset of the members of \code{x} to be transformed.
+#' @param VectoriseRegistrations When \code{FALSE}, the default, each element of
+#'   \code{reg} will be applied sequentially to each element of \code{x}. When 
+#'   \code{TRUE}, it is assumed that there is one element of \code{reg} for each
+#'   element of \code{x}.
 #' @inheritParams nlapply
 #' @export
 #' @rdname xform
-xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA){
-  nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
+xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA, VectoriseRegistrations=FALSE){
+  if(VectoriseRegistrations) {
+    nmapply(xform, x, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
+  } else {
+    nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
+  }
 }
 
 #' Get and assign coordinates for classes containing 3d vertex data
