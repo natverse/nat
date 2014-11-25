@@ -82,18 +82,31 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 }
 
 #' @method xform neuronlist
+#' @details With \code{xform.neuronlist}, if you want to apply a different 
+#'   registration to each object in the neuronlist \code{x}, then you should use
+#'   \code{VectoriseRegistrations=TRUE}.
 #' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
 #'   that specify a subset of the members of \code{x} to be transformed.
+#' @param VectoriseRegistrations When \code{FALSE}, the default, each element of
+#'   \code{reg} will be applied sequentially to each element of \code{x}. When 
+#'   \code{TRUE}, it is assumed that there is one element of \code{reg} for each
+#'   element of \code{x}.
 #' @inheritParams nlapply
 #' @export
 #' @rdname xform
-xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA){
-  if(length(reg)>1) stop("xform.neuronlist is currently only able to apply",
-                         " a single registration to multiple neurons")
-  # TODO if x is long there would be some performance benefits in chunking
-  # all points from multiple neurons together. I strongly suspect that doing 10
-  # at once would approach a 10x speedup.
-  nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
+#' @examples
+#' \dontrun{
+#' # apply reg1 to Cell07PNs[[1]], reg2 to Cell07PNs[[2]] etc
+#' regs=c(reg1, reg2, reg3)
+#' nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
+#' }
+xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
+                           VectoriseRegistrations=FALSE) {
+  if(VectoriseRegistrations) {
+    nmapply(xform, x, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
+  } else {
+    nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
+  }
 }
 
 #' Get and assign coordinates for classes containing 3d vertex data

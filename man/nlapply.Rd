@@ -6,8 +6,8 @@
 \usage{
 nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA)
 
-nmapply(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
-  OmitFailures = NA)
+nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
+  subset = NULL, OmitFailures = NA)
 }
 \arguments{
   \item{X}{A neuronlist}
@@ -59,9 +59,6 @@ which \code{FUN} evaluated successfully. When
 in place. In either of the last 2 cases error messages will
 not be printed because the call is wrapped as
 \code{try(expr, silent=TRUE)}.
-
-Note that for \code{nmapply} the first argument in \dots
-must be a \code{neuronlist}
 }
 \section{plyr}{
   The arguments of most interest from plyr are:

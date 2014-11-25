@@ -17,7 +17,8 @@ xform(x, reg, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-\method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA)
+\method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA,
+  VectoriseRegistrations = FALSE)
 }
 \arguments{
   \item{x}{an object to transform}
@@ -43,6 +44,12 @@ xform(x, reg, ...)
   \code{FUN} gives an error. The default value (\code{NA})
   will result in nlapply stopping with an error message the
   moment there is an eror. For other values, see details.}
+
+  \item{VectoriseRegistrations}{When \code{FALSE}, the
+  default, each element of \code{reg} will be applied
+  sequentially to each element of \code{x}. When
+  \code{TRUE}, it is assumed that there is one element of
+  \code{reg} for each element of \code{x}.}
 }
 \description{
 \code{xform} is designed to operate on a variety of data
@@ -68,6 +75,11 @@ by working on xyzmatrix definition.
 the dotprops tangent vectors will be recalculated after the
 points have been transformed (even though they could in
 theory be transformed more or less correctly).
+
+With \code{xform.neuronlist}, if you want to apply a
+different registration to each object in the neuronlist
+\code{x}, then you should use
+\code{VectoriseRegistrations=TRUE}.
 }
 \examples{
 \dontrun{
@@ -78,6 +90,11 @@ kc1.5=xform(kc1,function(x,...) x, k=5)
 stopifnot(isTRUE(all.equal(kc1.5,kc1.default)))
 kc1.20=xform(kc1,function(x,...) x, k=20)
 stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
+}
+\dontrun{
+# apply reg1 to Cell07PNs[[1]], reg2 to Cell07PNs[[2]] etc
+regs=c(reg1, reg2, reg3)
+nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
 }
 }
 \seealso{
