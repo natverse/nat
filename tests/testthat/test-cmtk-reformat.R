@@ -10,11 +10,11 @@ context("cmtk reformatx")
 test_that("reformatx can reformat a volume", {
   tf=tempfile(fileext='.nrrd')
   on.exit(unlink(tf))
-  expect_true(cmtk.reformatx(floating="testdata/nrrd/LHMask.nrrd",
+  expect_is(cmtk.reformatx(floating="testdata/nrrd/LHMask.nrrd",
                              target=c(10,10,10,5,5,5),
                              output=tf,
                              registrations="testdata/cmtk/dofv1.1wshears.list",
-                             Verbose=FALSE))
+                             Verbose=FALSE), "character")
   expect_is(d<-read.im3d(tf, ReadData=FALSE), 'im3d')
   expect_equal(voxdims(d), c(5,5,5))
   expect_equal(dim(d), c(10,10,10))
