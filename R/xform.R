@@ -82,6 +82,9 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 }
 
 #' @method xform neuronlist
+#' @details With \code{xform.neuronlist}, if you want to apply a different 
+#'   registration to each object in the neuronlist \code{x}, then you should use
+#'   \code{VectoriseRegistrations=TRUE}.
 #' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
 #'   that specify a subset of the members of \code{x} to be transformed.
 #' @param VectoriseRegistrations When \code{FALSE}, the default, each element of
@@ -91,7 +94,14 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #' @inheritParams nlapply
 #' @export
 #' @rdname xform
-xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA, VectoriseRegistrations=FALSE){
+#' @examples
+#' \dontrun{
+#' # apply reg1 to Cell07PNs[[1]], reg2 to Cell07PNs[[2]] etc
+#' regs=c(reg1, reg2, reg3)
+#' nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
+#' }
+xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
+                           VectoriseRegistrations=FALSE) {
   if(VectoriseRegistrations) {
     nmapply(xform, x, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
   } else {

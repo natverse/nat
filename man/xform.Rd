@@ -75,6 +75,11 @@ by working on xyzmatrix definition.
 the dotprops tangent vectors will be recalculated after the
 points have been transformed (even though they could in
 theory be transformed more or less correctly).
+
+With \code{xform.neuronlist}, if you want to apply a
+different registration to each object in the neuronlist
+\code{x}, then you should use
+\code{VectoriseRegistrations=TRUE}.
 }
 \examples{
 \dontrun{
@@ -85,6 +90,11 @@ kc1.5=xform(kc1,function(x,...) x, k=5)
 stopifnot(isTRUE(all.equal(kc1.5,kc1.default)))
 kc1.20=xform(kc1,function(x,...) x, k=20)
 stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
+}
+\dontrun{
+# apply reg1 to Cell07PNs[[1]], reg2 to Cell07PNs[[2]] etc
+regs=c(reg1, reg2, reg3)
+nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
 }
 }
 \seealso{
