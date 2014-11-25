@@ -252,9 +252,6 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
 #' @export
 nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
                   USE.NAMES = TRUE, subset=NULL, OmitFailures=NA){
-  if(missing(...))
-    warning("It is recommended to use nlapply when !")
-  
   if(!is.neuronlist(X))
     stop("X must be a neuronlist!")
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X)
