@@ -18,7 +18,7 @@ cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
   registrations on disk}
 
   \item{output}{The output image (defaults to
-  target-floating.nrrd)}
+  targetstem-floatingstem.nrrd)}
 
   \item{dryrun}{Just print command}
 

@@ -62,7 +62,7 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' 
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
-#' @param output The output image (defaults to target-floating.nrrd)
+#' @param output The output image (defaults to targetstem-floatingstem.nrrd)
 #' @param dryrun Just print command
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
 #'   update checks. Sets command line \code{--verbose} option.
@@ -91,10 +91,11 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
+  basestem<-function(f) tools::file_path_sans_ext(basename(f))
   if(missing(output)){
-    output=file.path(dirname(floating),paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
+    output=file.path(dirname(floating),paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
   } else if(isTRUE(file.info(output)$isdir)){
-    output=file.path(output,paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
+    output=file.path(output,paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
   }
   if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
   else OverWrite=match.arg(OverWrite)
