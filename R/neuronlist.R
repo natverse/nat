@@ -247,30 +247,42 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
 }
 
 #' @inheritParams base::mapply
-#' @details Note that for \code{nmapply} the first argument in \dots must be a
-#'   \code{neuronlist}
 #' @rdname nlapply
 #' @seealso \code{\link{mapply}}
 #' @export
-nmapply<-function(FUN, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
-                  USE.NAMES = TRUE, OmitFailures=NA){
+nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
+                  USE.NAMES = TRUE, subset=NULL, OmitFailures=NA){
   if(missing(...))
-    stop("First argument in ... must be a neuronlist!")
+    warning("It is recommended to use nlapply when !")
   
-  X<-pairlist(...)[[1]]
   if(!is.neuronlist(X))
-    stop("First argument in ... must be a neuronlist!")
+    stop("X must be a neuronlist!")
   cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X)
   else c("neuronlist",'list')
+  if(!is.null(subset)){
+    if(!is.character(subset)) subset=names(X)[subset]
+    Y=X
+    X=X[subset]
+  }
   
   TFUN = if(is.na(OmitFailures)) FUN else function(...) try(FUN(...), silent=TRUE)
-  rval=structure(mapply(TFUN, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
+  rval=structure(mapply(TFUN, X, ..., MoreArgs = MoreArgs, SIMPLIFY = SIMPLIFY,
                         USE.NAMES = USE.NAMES), class=cl, df=attr(X, 'df'))
-  if(isTRUE(OmitFailures)){
+  if(isTRUE(OmitFailures))
     failures=sapply(rval, inherits, 'try-error')
-    if(any(failures)) rval=rval[!failures]
+
+  if(is.null(subset)){
+    if(isTRUE(OmitFailures) && any(failures)) rval[!failures]
+    else rval
+  } else {
+    if(isTRUE(OmitFailures) && any(failures)){
+      Y[subset[!failures]]=rval[!failures]
+      Y=Y[setdiff(names(Y),subset[failures])]
+    } else {
+      Y[subset]=rval
+    }
+    Y
   }
-  rval
 }
 
 #' 3D plots of the elements in a neuronlist, optionally using a subset 

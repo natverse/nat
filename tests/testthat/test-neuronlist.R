@@ -122,6 +122,9 @@ test_that("nmapply can omit failures",{
                   mirrorAxisSize=c(400,20,Inf)))
   expect_equal(length(nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
                        mirrorAxisSize=c(400,20,Inf), OmitFailures=TRUE)), 2)
+  
+  expect_equal(length(nmapply(mirror, kcs20[1:5], mirrorAxis = c("X","Y","Z"),
+                       mirrorAxisSize=c(400,20,Inf), subset=1:3, OmitFailures=TRUE)), 4)
 })
 
 context("neuronlist: plot3d")
