@@ -3,11 +3,14 @@
 \alias{cmtk.targetvolume}
 \alias{cmtk.targetvolume.default}
 \alias{cmtk.targetvolume.im3d}
+\alias{cmtk.targetvolume.list}
 \title{Defines a target volume for a CMTK reformatx operation}
 \usage{
 cmtk.targetvolume(target, ...)
 
 \method{cmtk.targetvolume}{im3d}(target, ...)
+
+\method{cmtk.targetvolume}{list}(target, ...)
 
 \method{cmtk.targetvolume}{default}(target, ...)
 }
@@ -24,10 +27,22 @@ a character vector specifying the full cmtk reformatx
 }
 \description{
 Defines a target volume for a CMTK reformatx operation
+
+\code{cmtk.targetvolume.list} is designed to cope with any
+user-defined class for which an as.im3d method exists.
+Presently the only example in the nat.* ecosystem is
+\code{nat.templatebrains::as.im3d.templatebrain}.
 }
 \details{
 if the character vector specifies an amiramesh file, it
 will be converted to a bare \code{im3d} object and then to
 an appropriate '--target-grid' specification.
+}
+\examples{
+\dontrun{
+# see https://github.com/jefferislab/nat.flybrains
+library(nat.flybrains)
+cmtk.targetvolume(FCWB)
+}
 }
 

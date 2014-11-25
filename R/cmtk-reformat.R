@@ -17,12 +17,25 @@ cmtk.targetvolume.im3d<-function(target, ...) {
   cmtk.targetvolume(c(dim(target), voxdims(target), origin(target)))
 }
 
+#' @description \code{cmtk.targetvolume.list} is designed to cope with any 
+#'   user-defined class for which an as.im3d method exists. Presently the only
+#'   example in the nat.* ecosystem is
+#'   \code{nat.templatebrains::as.im3d.templatebrain}.
 #' @export
 #' @rdname cmtk.targetvolume
-cmtk.targetvolume.default<-function(target, ...) {
-  if(is.list(target))
-    target=cmtk.targetvolume(as.im3d(target))
-  
+#' @examples
+#' \dontrun{
+#' # see https://github.com/jefferislab/nat.flybrains
+#' library(nat.flybrains)
+#' cmtk.targetvolume(FCWB)
+#' }
+cmtk.targetvolume.list<-function(target, ...) {
+  cmtk.targetvolume(as.im3d(target))
+}
+
+#' @export
+#' @rdname cmtk.targetvolume
+cmtk.targetvolume.default<-function(target, ...) {  
   if(is.character(target) && !is.nrrd(target,TrustSuffix=TRUE) &&
        isTRUE(try(is.amiramesh(target), silent=TRUE))){
     return(cmtk.targetvolume(read.im3d(target,ReadData=FALSE)))
