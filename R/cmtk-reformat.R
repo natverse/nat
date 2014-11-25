@@ -81,6 +81,8 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
 #' @export
+#' @return the path to the ouput image (whether or not it was re-created afresh)
+#'   or \code{NA_character_} if no output was possible.
 #' @examples
 #' \dontrun{
 #' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
@@ -108,13 +110,13 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
   inputsExist=file.exists(allinputs)
   if(!all(inputsExist)){
     cat("Missing input files",basename(allinputs)[!inputsExist],"\n")
-    return(FALSE)
+    return(NA_character_)
   }
   if( file.exists(output) ){
     # output exists
     if(OverWrite=="no"){
       if(Verbose) cat("Output",output,"already exists; use OverWrite=\"yes\"\n")
-      return(FALSE)
+      return(output)
     } else if(OverWrite=="update"){
       # check modification times
       filesToCheck=setdiff(allinputs,filesToIgnoreModTimes)
@@ -139,7 +141,7 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
     } else if(Verbose) cat("Unable to make lockfile:",lockfile,"\n")
   }
   if(Verbose||dryrun && PrintCommand) cat("cmd:\n",cmd,"\n") 
-  return(TRUE)
+  return(output)
 }
 
 #' Calculate image statistics for a nrrd or other CMTK compatible file

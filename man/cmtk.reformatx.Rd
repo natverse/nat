@@ -43,6 +43,11 @@ cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
   \code{reformatx} after processing by
   \code{\link{cmtk.call}}.}
 }
+\value{
+the path to the ouput image (whether or not it was
+re-created afresh) or \code{NA_character_} if no output was
+possible.
+}
 \description{
 Reformat an image with a CMTK registration using the
 reformatx tool
