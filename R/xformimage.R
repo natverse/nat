@@ -1,10 +1,11 @@
-#' Transform image files using a registration, affine matrix or function
+#' Transform image files using a registration or affine matrix
 #' 
-#' @param reg A registration defined by a matrix, a function, a \code{cmtkreg}
-#'   object, or a character vector specifying a path to a CMTK registration on
-#'   disk (see details).
+#' @param reg A registration defined by a matrix or a \code{cmtkreg} object, or
+#'   a character vector specifying a path to a CMTK registration on disk (see
+#'   details).
 #' @param image Nx3 matrix of image
 #' @param ... Additional arguments passed to methods
+#' @return Character vector with path to xformed image.
 #' @export
 xformimage<-function(reg, image, ...) {
   UseMethod('xformimage')
@@ -16,9 +17,18 @@ xformimage<-function(reg, image, ...) {
 #'   will hand off to xformimage.cmtkreg. A future TODO would be to provide a
 #'   mechanism for extending this behaviour for other registration formats.
 #
-#'   If a list of transformations is passed in, these transformations are
-#'   performed in sequence order, such that
-#'   \code{xformimage(c(a,b,c), x) == xformimage(c, (xformimage(b, xformimage(a, x))))}
+#'   If a list of transformations is passed in, these transformations are passed
+#'   to the cmtk reformatx tool in the order received. Note that there is
+#'   presently no support for \itemize{
+#'   
+#'   \item using the inverse of a registration
+#'   
+#'   \item specifying a mask
+#'   
+#'   \item passing additional arguments to reformatx
+#'   
+#'   }
+#'   
 #' @export
 #' @rdname xformimage
 xformimage.character<-function(reg, image, ...){
@@ -37,12 +47,13 @@ xformimage.character<-function(reg, image, ...){
 #'   like to transform into template space. Here one needs the \emph{inverse} 
 #'   transformation.
 #' @param transformtype Which transformation to use when the CMTK file contains 
-#'   both warp (default) and affine
+#'   both warp (default) and affine (TODO)
 #' @param direction Whether to transform image from sample space to reference 
 #'   space (called \strong{inverse} by CMTK) or from reference to sample space 
 #'   (called \strong{forward} by CMTK)
 #' @export
 #' @rdname xformimage
+#' @seealso \code{\link{cmtk.reformatx}}
 xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'), 
                               direction=NULL, ...){
   if(is.list(reg)){
