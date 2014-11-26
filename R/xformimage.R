@@ -70,6 +70,7 @@ xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'),
     stop("cmtk.reformatx does not handle application of inverse registrations")
   if(transformtype=='affine') {
     # extract affine registrations from warp
+    stop("Not yet implemented")
   }
   cmtk.reformatx(floating = image, registrations = reg, ...)
 }
