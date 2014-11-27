@@ -124,7 +124,7 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
   } else OverWrite="yes" # just for the purpose of the runtime checks below 
   
   cmd=cmtk.call('reformatx',if(Verbose) "--verbose" else NULL,
-                outfile=shQuote(output),floating=shQuote(floating),
+                outfile=shQuote(output),floating=shQuote(floating), ...,
                 FINAL.ARGS=c(targetspec,paste(shQuote(registrations),collapse=" ")))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
@@ -133,7 +133,7 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
     if(!MakeLock) system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
     else if(makelock(lockfile)){
       if(OverWrite=="update")
-        PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose,...)
+        PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose)
       else {
         PrintCommand<-TRUE;system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
       }
