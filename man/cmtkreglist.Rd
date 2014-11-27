@@ -32,6 +32,7 @@ IGSParamsToIGSRegistration (which results in an implicit
 inversion by CMTK tools).
 }
 \seealso{
-\code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
+\code{\link{write.cmtkreg}, \link{affmat2cmtkparams},
+\link{cmtkreg}}
 }
 

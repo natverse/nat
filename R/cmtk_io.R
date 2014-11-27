@@ -269,7 +269,7 @@ write.cmtk.list<-function(x,con,tablevel=0){
 #' @return \code{list} of class \code{cmtkreg} containing registration
 #'   parameters suitable for \code{\link{write.cmtkreg}}
 #' @export
-#' @seealso \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
+#' @seealso \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}, \link{cmtkreg}}
 cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   
   mat.ok=FALSE
