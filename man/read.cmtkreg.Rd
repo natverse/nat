@@ -18,7 +18,8 @@ read.cmtkreg(filename, ReturnRegistrationOnly = FALSE, ...)
 Read a CMTK format registration
 }
 \seealso{
-Other cmtk-io: \code{\link{read.cmtk}};
-\code{\link{write.cmtkreg}}; \code{\link{write.cmtk}}
+Other cmtk-io: \code{\link{cmtk.extract_affine}};
+\code{\link{read.cmtk}}; \code{\link{write.cmtkreg}};
+\code{\link{write.cmtk}}
 }
 
