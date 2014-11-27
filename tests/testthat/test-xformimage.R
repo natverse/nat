@@ -8,11 +8,16 @@ if(!is.null(cmtk.bindir())){
     xformt=expression(xform("testdata/nrrd/JFRC2-444_mask.nrrd", 
                             reg = 'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/', 
                             target='testdata/nrrd/FCWB_2um_mask.nrrd',
-                            out=td, Verbose=FALSE))
+                            interpolation="nn",
+                            out=td, Verbose=F))
     expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask-JFRC2-444_mask.nrrd")
-    
+    # check that we reformatted as expected
+    imout=read.im3d(out)
+    baseline=structure(c(1904662L, 592730L), .Dim = 2L, .Dimnames = structure(list(
+    imout = c("0", "255")), .Names = "imout"), class = "table")
+    expect_equal(table(imout), baseline)
     # verify bounding box of output
     bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
-    expect_equal(boundingbox(read.im3d(out, ReadData = F)), bb_out)
+    expect_equal(boundingbox(imout), bb_out)
   })
 }
