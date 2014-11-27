@@ -18,8 +18,8 @@ cmtkreglist(x, centre = c(0, 0, 0), reference = "dummy",
   floating images.}
 }
 \value{
-list of registration parameters suitable for
-\code{\link{write.cmtkreg}}
+\code{list} of class \code{cmtkreg} containing registration
+parameters suitable for \code{\link{write.cmtkreg}}
 }
 \description{
 Make in-memory CMTK registration list from affine matrix or

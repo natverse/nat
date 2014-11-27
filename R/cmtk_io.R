@@ -263,11 +263,11 @@ write.cmtk.list<-function(x,con,tablevel=0){
 #'   on the command line of CMTK tools.
 #' @param x 5x3 matrix of CMTK registration parameters OR 4x4 homogeneous affine
 #'   matrix
-#' @param centre Optional centre of rotation passed to \code{affmat2cmtkparams}
+#' @param centre Optional centre of rotation passed to \code{affmat2cmtkparams} 
 #'   when decomposing 4x4 affine matrix
 #' @param reference,floating Path to refererence and floating images.
-#' @return list of registration parameters suitable for 
-#'   \code{\link{write.cmtkreg}}
+#' @return \code{list} of class \code{cmtkreg} containing registration
+#'   parameters suitable for \code{\link{write.cmtkreg}}
 #' @export
 #' @seealso \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
 cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
@@ -292,7 +292,7 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   version=attr(x,'version')
   if(is.null(version)) version=numeric_version('2.4')
   attr(l,'version')=version
-  l
+  as.cmtkreg(l)
 }
 
 #' Extract affine registration from CMTK registration file or in-memory list
