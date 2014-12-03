@@ -68,6 +68,9 @@ whether an image should be treated as a mask, so the
 \dontrun{
 cmtk.reformatx('myimage.nrrd', target='template.nrrd',
   registrations='template_myimage.list')
+
+# get full listing of command line options
+system(cmtk.call('reformatx', help=TRUE))
 }
 }
 \seealso{

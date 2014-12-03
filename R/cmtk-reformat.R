@@ -94,6 +94,9 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' \dontrun{
 #' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
 #'   registrations='template_myimage.list')
+#' 
+#' # get full listing of command line options  
+#' system(cmtk.call('reformatx', help=TRUE))
 #' }
 cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
                          interpolation=c("linear", "nn", "cubic", "pv", "sinc-cosine", "sinc-hamming"),

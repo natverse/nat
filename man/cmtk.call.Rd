@@ -53,6 +53,8 @@ length greater than 1 and then passed on unquoted e.g.
 \dontrun{
 cmtk.call("reformatx",'--outfile=out.nrrd', floating='floating.nrrd',
   mask=TRUE, target.offset=c(1,2,3), FINAL.ARGS=c('target.nrrd','reg.list'))
+# get help for a cmtk tool
+system(cmtk.call('reformatx', help=TRUE))
 }
 }
 \seealso{
