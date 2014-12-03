@@ -60,10 +60,17 @@ cmtk.targetvolume.default<-function(target, ...) {
 
 #' Reformat an image with a CMTK registration using the reformatx tool
 #' 
+#' @details Note that if you are reformatting a mask then you will need to 
+#'   change the interpolation to "nn", since interpolating between e.g. mask 
+#'   levels 72 and 74 with 73 may have unintened consequences. Presently we have
+#'   no way of knowing whether an image should be treated as a mask, so the
+#'   \code{interpolation} must be handled manually.
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
 #' @param output The output image (defaults to targetstem-floatingstem.nrrd)
 #' @param dryrun Just print command
+#' @param interpolation What interpolation scheme to use for output image 
+#'   (defaults to linear - see details)
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
 #'   update checks. Sets command line \code{--verbose} option.
 #' @param MakeLock Whether to use a lock file to allow simple parallelisation 
@@ -89,6 +96,7 @@ cmtk.targetvolume.default<-function(target, ...) {
 #'   registrations='template_myimage.list')
 #' }
 cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
+                         interpolation=c("linear", "nn", "cubic", "pv", "sinc-cosine", "sinc-hamming"),
                          Verbose=TRUE, MakeLock=TRUE, 
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
@@ -101,6 +109,8 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
   }
   if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
   else OverWrite=match.arg(OverWrite)
+  
+  interpolation=match.arg(interpolation)
   
   targetspec=cmtk.targetvolume(target)
   allinputs=c(floating,registrations)
@@ -124,7 +134,8 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
   } else OverWrite="yes" # just for the purpose of the runtime checks below 
   
   cmd=cmtk.call('reformatx',if(Verbose) "--verbose" else NULL,
-                outfile=shQuote(output),floating=shQuote(floating), ...,
+                outfile=shQuote(output),floating=shQuote(floating),
+                interpolation=interpolation, ...,
                 FINAL.ARGS=c(targetspec,paste(shQuote(registrations),collapse=" ")))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
