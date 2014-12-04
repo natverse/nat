@@ -4,9 +4,9 @@
 \title{Reformat an image with a CMTK registration using the reformatx tool}
 \usage{
 cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
-  interpolation = c("linear", "nn", "cubic", "pv", "sinc-cosine",
-  "sinc-hamming"), Verbose = TRUE, MakeLock = TRUE, OverWrite = c("no",
-  "update", "yes"), filesToIgnoreModTimes = NULL, ...)
+  mask = FALSE, interpolation = c("linear", "nn", "cubic", "pv",
+  "sinc-cosine", "sinc-hamming"), Verbose = TRUE, MakeLock = TRUE,
+  OverWrite = c("no", "update", "yes"), filesToIgnoreModTimes = NULL, ...)
 }
 \arguments{
   \item{floating}{The floating image to be reformatted}
@@ -22,6 +22,9 @@ cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
   targetstem-floatingstem.nrrd)}
 
   \item{dryrun}{Just print command}
+
+  \item{mask}{Whether to treat target as a binary mask
+  (only reformatting positve voxels)}
 
   \item{interpolation}{What interpolation scheme to use for
   output image (defaults to linear - see details)}
