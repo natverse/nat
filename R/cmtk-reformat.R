@@ -68,11 +68,11 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
 #' @param output The output image (defaults to targetstem-floatingstem.nrrd)
-#' @param dryrun Just print command
 #' @param mask Whether to treat target as a binary mask (only reformatting
 #'   positve voxels)
 #' @param interpolation What interpolation scheme to use for output image 
 #'   (defaults to linear - see details)
+#' @param dryrun Just print command
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
 #'   update checks. Sets command line \code{--verbose} option.
 #' @param MakeLock Whether to use a lock file to allow simple parallelisation 
@@ -100,10 +100,9 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' # get full listing of command line options  
 #' system(cmtk.call('reformatx', help=TRUE))
 #' }
-cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
-                         mask=FALSE,
+cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
                          interpolation=c("linear", "nn", "cubic", "pv", "sinc-cosine", "sinc-hamming"),
-                         Verbose=TRUE, MakeLock=TRUE, 
+                         dryrun=FALSE, Verbose=TRUE, MakeLock=TRUE, 
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
