@@ -1,3 +1,12 @@
+nat 1.6.1
+=========
+* add ability to transform images (specified as path to a file)
+* register image file formats to use with read/write.im3d
+* register amira types including linesets, surfaces and landmarks
+* add ability to read neurons from remote url
+* add support for applying multiple registrations in xform.neuronlist, as well
+  as vectorisation (where each registration is applied to a different object)
+
 nat 1.6.0
 =========
 * Add support for reading NeuroML and Fiji Simple Neurite Tracer neurons
