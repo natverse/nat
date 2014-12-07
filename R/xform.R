@@ -45,6 +45,21 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
   pointst
 }
 
+#' @description \code{xform.character} is designed to work with files on disk.
+#'   Presently it is restricted to images, although other datatypes may be
+#'   supported in future.
+#' @export
+#' @rdname xform
+xform.character<-function(x, reg, ...) {
+  if(!file.exists(x)) stop("file does not exist:", x)
+  fr=getformatreader(x, class = 'im3d')
+  if(is.null(fr))
+    stop("xform currently only operates on image files. ",
+         "See ?xform and ?fileformats for details of acceptable formats.")
+  
+  xformimage(reg, x, ...)
+}
+
 #' @method xform list
 #' @export
 #' @rdname xform

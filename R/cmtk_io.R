@@ -263,13 +263,13 @@ write.cmtk.list<-function(x,con,tablevel=0){
 #'   on the command line of CMTK tools.
 #' @param x 5x3 matrix of CMTK registration parameters OR 4x4 homogeneous affine
 #'   matrix
-#' @param centre Optional centre of rotation passed to \code{affmat2cmtkparams}
+#' @param centre Optional centre of rotation passed to \code{affmat2cmtkparams} 
 #'   when decomposing 4x4 affine matrix
 #' @param reference,floating Path to refererence and floating images.
-#' @return list of registration parameters suitable for 
-#'   \code{\link{write.cmtkreg}}
+#' @return \code{list} of class \code{cmtkreg} containing registration
+#'   parameters suitable for \code{\link{write.cmtkreg}}
 #' @export
-#' @seealso \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}}
+#' @seealso \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}, \link{cmtkreg}}
 cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   
   mat.ok=FALSE
@@ -292,7 +292,40 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
   version=attr(x,'version')
   if(is.null(version)) version=numeric_version('2.4')
   attr(l,'version')=version
-  l
+  as.cmtkreg(l)
+}
+
+#' Extract affine registration from CMTK registration file or in-memory list
+#' 
+#' @param r A registration list or path to file on disk
+#' @param outdir Optional path to output file
+#' @return When \code{outdir} is missing a list containing the registration
+#'   paramers. Otherwise \code{NULL} invisibly.
+#' @family cmtk-io
+#' @seealso \code{\link{cmtkreglist}}
+#' @export
+cmtk.extract_affine<-function(r, outdir) {
+  f=NULL
+  if(is.character(r)) {
+    if(!file.exists(r)) stop("Can't find registration:", r)
+    f=r
+    r=read.cmtkreg(r)
+  }
+  
+  required_fields=c("reference_study", "floating_study", "affine_xform")
+  missing_fields=setdiff(required_fields, names(r$registration))
+  if(length(missing_fields))
+    stop("The registration is missing fields: ", cat(missing_fields, collapse=", "))
+  
+  r2=r
+  # set other fields to NULL
+  r2$registration[setdiff(names(r$registration), required_fields)]=NULL
+
+  version=as.character(attr(r,'version'))
+  if(!length(version)) version='2.4'
+  if(!missing(outdir))
+    write.cmtkreg(r2, foldername = outdir, version = version)
+  else r2
 }
 
 # Read and Write CMTK landmarks

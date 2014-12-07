@@ -3,23 +3,24 @@
 if(is.null(cmtk.bindir())){
   message("skipping cmtk command line tool tests since CMTK is not installed")
 } else {
-
-context("cmtk reformatx")
-
-#' round trip test of mat2dof/dof2mat
-test_that("reformatx can reformat a volume", {
-  tf=tempfile(fileext='.nrrd')
-  on.exit(unlink(tf))
-  expect_true(cmtk.reformatx(floating="testdata/nrrd/LHMask.nrrd",
+  
+  context("cmtk reformatx")
+  
+  #' round trip test of mat2dof/dof2mat
+  test_that("reformatx can reformat a volume", {
+    tf=tempfile(fileext='.nrrd')
+    on.exit(unlink(tf))
+    expect_is(cmtk.reformatx(floating="testdata/nrrd/LHMask.nrrd",
                              target=c(10,10,10,5,5,5),
                              output=tf,
                              registrations="testdata/cmtk/dofv1.1wshears.list",
-                             Verbose=FALSE))
-  expect_is(d<-read.im3d(tf, ReadData=FALSE), 'im3d')
-  expect_equal(voxdims(d), c(5,5,5))
-  expect_equal(dim(d), c(10,10,10))
-})
-
+                             interpolation="nn",
+                             Verbose=FALSE), "character")
+    expect_is(d<-read.im3d(tf, ReadData=FALSE), 'im3d')
+    expect_equal(voxdims(d), c(5,5,5))
+    expect_equal(dim(d), c(10,10,10))
+  })
+  
 }
 
 test_that("cmtk.targetvolume works",{

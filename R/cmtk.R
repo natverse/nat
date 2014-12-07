@@ -219,6 +219,8 @@ cmtk.version<-function(minimum=NULL){
 #' \dontrun{
 #' cmtk.call("reformatx",'--outfile=out.nrrd', floating='floating.nrrd',
 #'   mask=TRUE, target.offset=c(1,2,3), FINAL.ARGS=c('target.nrrd','reg.list'))
+#' # get help for a cmtk tool
+#' system(cmtk.call('reformatx', help=TRUE))
 #' }
 cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
   cmd=shQuote(file.path(cmtk.bindir(check=TRUE),tool))
@@ -235,7 +237,7 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
         if(length(arg)!=1) stop("character arguments must have length 1")
         cmd=paste(cmd,cmtkarg,arg)
       } else if(is.logical(arg)){
-        cmd=paste(cmd,cmtkarg)
+        if(isTRUE(arg)) cmd=paste(cmd,cmtkarg)
       } else if(is.numeric(arg)){
         arg=paste(1:3,collapse=',')
         cmd=paste(cmd,cmtkarg,arg)

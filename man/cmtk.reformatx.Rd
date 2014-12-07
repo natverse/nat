@@ -3,22 +3,29 @@
 \alias{cmtk.reformatx}
 \title{Reformat an image with a CMTK registration using the reformatx tool}
 \usage{
-cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
-  Verbose = TRUE, MakeLock = TRUE, OverWrite = c("no", "update", "yes"),
-  filesToIgnoreModTimes = NULL, ...)
+cmtk.reformatx(floating, registrations, output, target, mask = FALSE,
+  interpolation = c("linear", "nn", "cubic", "pv", "sinc-cosine",
+  "sinc-hamming"), dryrun = FALSE, Verbose = TRUE, MakeLock = TRUE,
+  OverWrite = c("no", "update", "yes"), filesToIgnoreModTimes = NULL, ...)
 }
 \arguments{
   \item{floating}{The floating image to be reformatted}
-
-  \item{target}{A character vector specifying a file, an
-  \code{im3d} object or a 6-or 9-vector defining a grid in
-  the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
 
   \item{registrations}{One or more CMTK format
   registrations on disk}
 
   \item{output}{The output image (defaults to
-  target-floating.nrrd)}
+  targetstem-floatingstem.nrrd)}
+
+  \item{target}{A character vector specifying a file, an
+  \code{im3d} object or a 6-or 9-vector defining a grid in
+  the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
+
+  \item{mask}{Whether to treat target as a binary mask
+  (only reformatting positve voxels)}
+
+  \item{interpolation}{What interpolation scheme to use for
+  output image (defaults to linear - see details)}
 
   \item{dryrun}{Just print command}
 
@@ -43,14 +50,30 @@ cmtk.reformatx(floating, target, registrations, output, dryrun = FALSE,
   \code{reformatx} after processing by
   \code{\link{cmtk.call}}.}
 }
+\value{
+the path to the ouput image (whether or not it was
+re-created afresh) or \code{NA_character_} if no output was
+possible.
+}
 \description{
 Reformat an image with a CMTK registration using the
 reformatx tool
+}
+\details{
+Note that if you are reformatting a mask then you will need
+to change the interpolation to "nn", since interpolating
+between e.g. mask levels 72 and 74 with 73 may have
+unintened consequences. Presently we have no way of knowing
+whether an image should be treated as a mask, so the
+\code{interpolation} must be handled manually.
 }
 \examples{
 \dontrun{
 cmtk.reformatx('myimage.nrrd', target='template.nrrd',
   registrations='template_myimage.list')
+
+# get full listing of command line options
+system(cmtk.call('reformatx', help=TRUE))
 }
 }
 \seealso{

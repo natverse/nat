@@ -60,9 +60,18 @@ cmtk.targetvolume.default<-function(target, ...) {
 
 #' Reformat an image with a CMTK registration using the reformatx tool
 #' 
+#' @details Note that if you are reformatting a mask then you will need to 
+#'   change the interpolation to "nn", since interpolating between e.g. mask 
+#'   levels 72 and 74 with 73 may have unintened consequences. Presently we have
+#'   no way of knowing whether an image should be treated as a mask, so the 
+#'   \code{interpolation} must be handled manually.
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
-#' @param output The output image (defaults to target-floating.nrrd)
+#' @param output The output image (defaults to targetstem-floatingstem.nrrd)
+#' @param mask Whether to treat target as a binary mask (only reformatting
+#'   positve voxels)
+#' @param interpolation What interpolation scheme to use for output image 
+#'   (defaults to linear - see details)
 #' @param dryrun Just print command
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
 #'   update checks. Sets command line \code{--verbose} option.
@@ -81,23 +90,32 @@ cmtk.targetvolume.default<-function(target, ...) {
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
 #' @export
+#' @return the path to the ouput image (whether or not it was re-created afresh)
+#'   or \code{NA_character_} if no output was possible.
 #' @examples
 #' \dontrun{
 #' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
 #'   registrations='template_myimage.list')
+#' 
+#' # get full listing of command line options  
+#' system(cmtk.call('reformatx', help=TRUE))
 #' }
-cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
-                         Verbose=TRUE, MakeLock=TRUE, 
+cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
+                         interpolation=c("linear", "nn", "cubic", "pv", "sinc-cosine", "sinc-hamming"),
+                         dryrun=FALSE, Verbose=TRUE, MakeLock=TRUE, 
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
+  basestem<-function(f) tools::file_path_sans_ext(basename(f))
   if(missing(output)){
-    output=file.path(dirname(floating),paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
+    output=file.path(dirname(floating),paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
   } else if(isTRUE(file.info(output)$isdir)){
-    output=file.path(output,paste(basename(target),"-",basename(floating),'.nrrd',sep=""))
+    output=file.path(output,paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
   }
   if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
   else OverWrite=match.arg(OverWrite)
+  
+  interpolation=match.arg(interpolation)
   
   targetspec=cmtk.targetvolume(target)
   allinputs=c(floating,registrations)
@@ -107,13 +125,13 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
   inputsExist=file.exists(allinputs)
   if(!all(inputsExist)){
     cat("Missing input files",basename(allinputs)[!inputsExist],"\n")
-    return(FALSE)
+    return(NA_character_)
   }
   if( file.exists(output) ){
     # output exists
     if(OverWrite=="no"){
       if(Verbose) cat("Output",output,"already exists; use OverWrite=\"yes\"\n")
-      return(FALSE)
+      return(output)
     } else if(OverWrite=="update"){
       # check modification times
       filesToCheck=setdiff(allinputs,filesToIgnoreModTimes)
@@ -122,6 +140,7 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
   
   cmd=cmtk.call('reformatx',if(Verbose) "--verbose" else NULL,
                 outfile=shQuote(output),floating=shQuote(floating),
+                mask=mask, interpolation=interpolation, ...,
                 FINAL.ARGS=c(targetspec,paste(shQuote(registrations),collapse=" ")))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
@@ -130,7 +149,7 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
     if(!MakeLock) system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
     else if(makelock(lockfile)){
       if(OverWrite=="update")
-        PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose,...)
+        PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose)
       else {
         PrintCommand<-TRUE;system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
       }
@@ -138,7 +157,7 @@ cmtk.reformatx<-function(floating, target, registrations, output, dryrun=FALSE,
     } else if(Verbose) cat("Unable to make lockfile:",lockfile,"\n")
   }
   if(Verbose||dryrun && PrintCommand) cat("cmd:\n",cmd,"\n") 
-  return(TRUE)
+  return(output)
 }
 
 #' Calculate image statistics for a nrrd or other CMTK compatible file
