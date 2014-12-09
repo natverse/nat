@@ -198,7 +198,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE)
                        mode = 'all')
     if(LengthOnly) return(max(lps))
     to=n$EndPoints[which.max(lps)]
-    longestpath=get.shortest.paths(ng, from = n$StartPoint, to = to, mode = 'all')
+    longestpath=get.shortest.paths(ng, from = n$StartPoint, to = to, mode = 'all')$vpath[[1]]
   } else {
     if(LengthOnly) {
       return(diameter(ng, directed=FALSE))
