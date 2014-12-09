@@ -35,9 +35,9 @@ neuron
 plot3d(Cell07PNs[[1]])
 plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
 # just extract length
-spine(Cell07PNs[[1]], LengthOnly=T)
+spine(Cell07PNs[[1]], LengthOnly=TRUE)
 # same result since StartPoint is included in longest path
-spine(Cell07PNs[[1]], LengthOnly=T, UseStartPoint=T)
+spine(Cell07PNs[[1]], LengthOnly=TRUE, UseStartPoint=TRUE)
 }
 \seealso{
 \code{\link[igraph]{diameter}},
