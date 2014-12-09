@@ -171,28 +171,39 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' Compute the longest path (aka spine or backbone) of a neuron
 #' 
 #' @param n the neuron to consider.
+#' @param UseStartPoint Whether to use the StartPoint of the neuron (often the
+#'   soma) as the starting point of the returned spine.
 #' @param SpatialWeights logical indicating whether spatial distances (default) 
 #'   should be used to weight segments instead of weighting each edge equally.
 #' @param LengthOnly logical indicating whether only the length of the longest 
 #'   path should be returned (when \code{TRUE}) or whether a neuron pruned down 
 #'   to the the sequence of vertices along the path should be returned 
 #'   (\code{FALSE}, the default).
-#' @return Either a neuron object corresponding to the longest path \emph{or}
+#' @return Either a neuron object corresponding to the longest path \emph{or} 
 #'   the length of the longest path when \code{LengthOnly=TRUE}).
 #' @seealso \code{\link[igraph]{diameter}}
 #' @export
 #' @examples
 #' plot3d(Cell07PNs[[1]])
 #' plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
-spine <- function(n, SpatialWeights=TRUE, LengthOnly=FALSE) {
+spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE) {
   ng <- as.ngraph(n, weights=SpatialWeights)
-  if(LengthOnly) {
-    diameter(ng, directed=FALSE)
+  if(UseStartPoint) {
+    # Find longest shortest path from given start point to all end points
+    lps=shortest.paths(graph = ng, n$StartPoint, to = n$EndPoints, 
+                       mode = 'all')
+    if(LengthOnly) return(max(lps))
+    to=n$EndPoints[which.max(lps)]
+    longestpath=get.shortest.paths(ng, from = n$StartPoint, to = to, mode = 'all')
   } else {
-    longestpath=get.diameter(ng, directed=FALSE)
-    spineGraph <- delete.vertices(ng, setdiff(V(ng), longestpath))
-    as.neuron(as.ngraph(spineGraph), vertexData=n$d[match(V(spineGraph)$label,n$d$PointNo), ])
+    if(LengthOnly) {
+      return(diameter(ng, directed=FALSE))
+    } else {
+      longestpath=get.diameter(ng, directed=FALSE)
+    }
   }
+  spineGraph <- delete.vertices(ng, setdiff(V(ng), longestpath))
+  as.neuron(as.ngraph(spineGraph), vertexData=n$d[match(V(spineGraph)$label,n$d$PointNo), ])
 }
 
 #' Return a simplified segment graph for a neuron

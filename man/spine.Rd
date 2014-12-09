@@ -3,10 +3,14 @@
 \alias{spine}
 \title{Compute the longest path (aka spine or backbone) of a neuron}
 \usage{
-spine(n, SpatialWeights = TRUE, LengthOnly = FALSE)
+spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, LengthOnly = FALSE)
 }
 \arguments{
   \item{n}{the neuron to consider.}
+
+  \item{UseStartPoint}{Whether to use the StartPoint of the
+  neuron (often the soma) as the starting point of the
+  returned spine.}
 
   \item{SpatialWeights}{logical indicating whether spatial
   distances (default) should be used to weight segments
