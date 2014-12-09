@@ -191,7 +191,7 @@ spine <- function(n, SpatialWeights=TRUE, LengthOnly=FALSE) {
   } else {
     longestpath=get.diameter(ng, directed=FALSE)
     spineGraph <- delete.vertices(ng, setdiff(V(ng), longestpath))
-    as.neuron(as.ngraph(spineGraph), vertexData=n$d[V(spineGraph)$label, ])
+    as.neuron(as.ngraph(spineGraph), vertexData=n$d[match(V(spineGraph)$label,n$d$PointNo), ])
   }
 }
 

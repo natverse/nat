@@ -77,6 +77,11 @@ test_that("we can find the path of the spine of a neuron", {
   expect_is(spine <- spine(n), 'neuron')
   spine.expected <- readRDS('testdata/neuron/testCell07PNs1_spine.rds')
   expect_equal(spine, spine.expected)
+  
+  # check that can cope with point labels other than 1:n
+  n$d$PointNo=n$d$PointNo+1
+  spine.expected$PointNo=spine.expected$PointNo+1
+  expect_equal(spine, spine.expected)
 })
 
 test_that("setting of graph attributes",{
