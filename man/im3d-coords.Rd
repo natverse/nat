@@ -39,7 +39,8 @@ stopifnot(all.equal(ijkpos(d,xyzpos(d,c(1,1,1))), c(1,1,1)))
 }
 \seealso{
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}; \code{\link{boundingbox}},
+\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
+\code{\link{boundingbox}},
 \code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},

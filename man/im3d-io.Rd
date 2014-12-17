@@ -62,7 +62,8 @@ read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 \code{\link{write.nrrd}}, \code{\link{getformatwriter}}
 
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}; \code{\link{boundingbox}},
+\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
+\code{\link{boundingbox}},
 \code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},

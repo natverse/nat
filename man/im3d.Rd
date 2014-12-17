@@ -50,7 +50,8 @@ with only 1 voxel.
 }
 \seealso{
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}; \code{\link{boundingbox}},
+\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
+\code{\link{boundingbox}},
 \code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},

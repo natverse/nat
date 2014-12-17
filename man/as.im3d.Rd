@@ -2,21 +2,43 @@
 \name{as.im3d}
 \alias{as.im3d}
 \alias{as.im3d.im3d}
+\alias{as.im3d.matrix}
 \title{Convert a suitable object to an im3d object.}
 \usage{
 as.im3d(x, ...)
 
 \method{as.im3d}{im3d}(x, ...)
+
+\method{as.im3d}{matrix}(x, voxdims, origin = NULL, ...)
 }
 \arguments{
   \item{x}{Object to turn into an im3d}
 
   \item{...}{Additional arguments to pass to methods.}
+
+  \item{voxdims}{The voxel dimensions}
+
+  \item{origin}{the location (or centre) of the first
+  voxel}
 }
 \description{
-This is a largely a placeholder function with the
-expectation that other packages may wish to provide
-suitable methods.
+Convert a suitable object to an im3d object.
+}
+\details{
+At present the only interesting method in \code{nat} is
+\code{as.im3d.matrix} which can be used to convert a matrix
+of 3D points into a 3D volume representation.
+
+Other than that, this is a largely a placeholder function
+with the expectation that other packages may wish to
+provide suitable methods.
+}
+\examples{
+# convert a list of neurons into an image volume
+im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1))
+\dontrun{
+write.im3d(im, 'kc20volume.nrrd')
+}
 }
 \seealso{
 im3d
