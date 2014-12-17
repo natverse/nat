@@ -99,6 +99,9 @@ test_that("we can construct an im3d from a set of points",{
   expect_equal(boundingbox(im), structure(matrix(c(orig, orig+dims-1), ncol=3, byrow = T),
                                           class='boundingbox'), tol=1e-6)
   
+  expect_is(im<-as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
+                        BoundingBox=c(250, 410, 0, 130, 0, 120)), "im3d")
+  expect_equal(dim(im), c(161, 131, 121))
 })
 
 context("im3d boundingbox and friends")
