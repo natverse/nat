@@ -9,7 +9,7 @@ as.im3d(x, ...)
 
 \method{as.im3d}{im3d}(x, ...)
 
-\method{as.im3d}{matrix}(x, voxdims, origin = NULL, ...)
+\method{as.im3d}{matrix}(x, voxdims, origin = NULL, BoundingBox = NULL, ...)
 }
 \arguments{
   \item{x}{Object to turn into an im3d}
@@ -20,6 +20,10 @@ as.im3d(x, ...)
 
   \item{origin}{the location (or centre) of the first
   voxel}
+
+  \item{BoundingBox}{Physical extent of image. See the
+  details section of \code{\link{boundingbox}}'s help for
+  the distinction.}
 }
 \description{
 Convert a suitable object to an im3d object.
@@ -35,7 +39,8 @@ provide suitable methods.
 }
 \examples{
 # convert a list of neurons into an image volume
-im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1))
+im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1),
+  BoundingBox=c(250, 410, 0, 130, 0, 120))
 \dontrun{
 write.im3d(im, 'kc20volume.nrrd')
 }

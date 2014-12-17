@@ -99,7 +99,8 @@ as.im3d.im3d <- function(x, ...) x
 #' @rdname as.im3d
 #' @examples
 #' # convert a list of neurons into an image volume
-#' im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1))
+#' im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
+#'   BoundingBox=c(250, 410, 0, 130, 0, 120))
 #' \dontrun{
 #' write.im3d(im, 'kc20volume.nrrd')
 #' }
@@ -109,7 +110,7 @@ as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
   
   if(is.null(BoundingBox))
     r=apply(x, 2, range)
-  else r=BoundingBox
+  else r=boundingbox(BoundingBox)
   
   if(is.null(origin)) origin=r[1,]
   else r[1, ]=origin
