@@ -120,9 +120,10 @@ as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
   
   breaks=mapply(function(ps, delta) c(ps[1]-delta/2, ps+delta/2), 
                 attributes(emptyim)[c("x","y","z")], voxdims)
-  t3d=table(cut(x[,1], breaks = breaks[[1]], labels = F),
-            cut(x[,2], breaks = breaks[[2]], labels = F),
-            cut(x[,3], breaks = breaks[[3]], labels = F))
+  i=cut(x[,1], breaks = breaks[[1]], labels = F)
+  j=cut(x[,2], breaks = breaks[[2]], labels = F)
+  k=cut(x[,3], breaks = breaks[[3]], labels = F)
+  t3d=fast3dintegertable(i, j, k, dims[1], dims[2], dims[3])
   im3d(t3d, voxdims = voxdims, origin=origin, ...)
 }
 
