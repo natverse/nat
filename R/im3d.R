@@ -126,6 +126,17 @@ as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
   im3d(t3d, voxdims = voxdims, origin=origin, ...)
 }
 
+fast3dintegertable<-function (a, b, c, nlevelsa = max(a), nlevelsb = max(b), 
+                              nlevelsc = max(c)) {
+    nlevelsabc <- nlevelsa * nlevelsb * nlevelsc
+    if (nlevelsabc > .Machine$integer.max) 
+        stop("Number of levels exceeds integer type.")
+    inrow=nlevelsa
+    inslice=nlevelsa*nlevelsb
+    abc <- a + inrow * (b-1) + inslice * (c-1)
+    array(tabulate(abc, nlevelsabc), dim=c(nlevelsa, nlevelsb, nlevelsc))
+}
+
 #' Read/Write calibrated 3D blocks of image data
 #' 
 #' @details Currently only nrrd and amira formats are implemented. Furthermore 
