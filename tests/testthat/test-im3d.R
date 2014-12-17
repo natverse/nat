@@ -88,6 +88,17 @@ test_that("we can construct an im3d with additional attributes",{
   expect_equal(attr(x, 'units'), 'microns')
 })
 
+context("converting points to volumes")
+
+test_that("we can construct an im3d from a set of points",{
+  expect_is(im<-as.im3d(xyzmatrix(kcs20), voxdims=c(1,1,1)), "im3d")
+  expect_equal(dim(im), dim(im))
+  expect_equal(voxdims(im), c(1, 1, 1))
+  expect_equal(boundingbox(im), structure(c(284.594, 404.594, 24.1869, 122.1869, 
+                                            21.4379, 102.4379), .Dim = 2:3,
+                                          class = "boundingbox"))
+})
+
 context("im3d boundingbox and friends")
 
 test_that("dim, voxdims and boundingbox work",{
