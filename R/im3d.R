@@ -115,7 +115,7 @@ as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
   if(is.null(origin)) origin=r[1,]
   else r[1, ]=origin
   extents=apply(r, 2, diff)
-  dims=ceiling(abs(extents/voxdims))
+  dims=ceiling(abs(extents/voxdims))+1
   emptyim=im3d(dims = dims, voxdims = voxdims, origin=origin)
   
   breaks=mapply(function(ps, delta) c(ps[1]-delta/2, ps+delta/2), 
