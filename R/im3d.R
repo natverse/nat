@@ -77,8 +77,12 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
 
 #' Convert a suitable object to an im3d object.
 #' 
-#' This is a largely a placeholder function with the expectation that other 
-#' packages may wish to provide suitable methods.
+#' @details At present the only interesting method in \code{nat} is
+#'   \code{as.im3d.matrix} which can be used to convert a matrix of 3D points
+#'   into a 3D volume representation.
+#'   
+#'   Other than that, this is a largely a placeholder function with the
+#'   expectation that other packages may wish to provide suitable methods.
 #' @param x Object to turn into an im3d
 #' @param ... Additional arguments to pass to methods.
 #' @export
@@ -89,6 +93,50 @@ as.im3d <- function(x, ...) UseMethod("as.im3d")
 #' @export
 #' @rdname as.im3d
 as.im3d.im3d <- function(x, ...) x
+
+#' @export
+#' @inheritParams im3d
+#' @rdname as.im3d
+#' @examples
+#' # convert a list of neurons into an image volume
+#' im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
+#'   BoundingBox=c(250, 410, 0, 130, 0, 120))
+#' \dontrun{
+#' write.im3d(im, 'kc20volume.nrrd')
+#' }
+as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
+  if(ncol(x)!=3 || nrow(x)<2) stop("Expects an Nx3 matrix of 3D points!")
+  if(length(voxdims)!=3) stop("voxdims must have length 3")
+  
+  if(is.null(BoundingBox))
+    r=apply(x, 2, range)
+  else r=boundingbox(BoundingBox)
+  
+  if(is.null(origin)) origin=r[1,]
+  else r[1, ]=origin
+  extents=apply(r, 2, diff)
+  dims=ceiling(abs(extents/voxdims))+1
+  emptyim=im3d(dims = dims, voxdims = voxdims, origin=origin)
+  
+  breaks=mapply(function(ps, delta) c(ps[1]-delta/2, ps+delta/2), 
+                attributes(emptyim)[c("x","y","z")], voxdims)
+  i=cut(x[,1], breaks = breaks[[1]], labels = F)
+  j=cut(x[,2], breaks = breaks[[2]], labels = F)
+  k=cut(x[,3], breaks = breaks[[3]], labels = F)
+  t3d=fast3dintegertable(i, j, k, dims[1], dims[2], dims[3])
+  im3d(t3d, voxdims = voxdims, origin=origin, ...)
+}
+
+fast3dintegertable<-function (a, b, c, nlevelsa = max(a), nlevelsb = max(b), 
+                              nlevelsc = max(c)) {
+    nlevelsabc <- nlevelsa * nlevelsb * nlevelsc
+    if (nlevelsabc > .Machine$integer.max) 
+        stop("Number of levels exceeds integer type.")
+    inrow=nlevelsa
+    inslice=nlevelsa*nlevelsb
+    abc <- a + inrow * (b-1) + inslice * (c-1)
+    array(tabulate(abc, nlevelsabc), dim=c(nlevelsa, nlevelsb, nlevelsc))
+}
 
 #' Read/Write calibrated 3D blocks of image data
 #' 

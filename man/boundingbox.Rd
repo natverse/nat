@@ -95,14 +95,14 @@ boundingbox(Cell07PNs[[1]])
 \code{\link{plot3d.boundingbox}}
 
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}; \code{\link{ijkpos}},
-\code{\link{im3d-coords}}, \code{\link{xyzpos}};
-\code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imexpand.grid}}; \code{\link{imslice}};
-\code{\link{origin}}; \code{\link{projection}};
-\code{\link{threshold}}, \code{\link{threshold.im3d}};
-\code{\link{unmask}}; \code{\link{voxdims}},
-\code{\link{voxdims.default}}
+\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
+\code{\link{ijkpos}}, \code{\link{im3d-coords}},
+\code{\link{xyzpos}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{im3d}}; \code{\link{imexpand.grid}};
+\code{\link{imslice}}; \code{\link{origin}};
+\code{\link{projection}}; \code{\link{threshold}},
+\code{\link{threshold.im3d}}; \code{\link{unmask}};
+\code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 
