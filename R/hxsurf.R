@@ -16,7 +16,7 @@
 #'   \code{Vertices} element)}
 #'   
 #'   \item{RegionList}{ Character vector of region names (should match names of
-#'   \code{RegionList} element)}
+#'   \code{Regions} element)}
 #'   
 #'   \item{RegionColourList}{ Character vector specifying default colour to plot
 #'   each region in R's \code{\link{rgb}} format}

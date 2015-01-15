@@ -35,7 +35,7 @@ triplets of vertices for each region (with reference to
 \code{PointNo} column in \code{Vertices} element)}
 
 \item{RegionList}{ Character vector of region names (should
-match names of \code{RegionList} element)}
+match names of \code{Regions} element)}
 
 \item{RegionColourList}{ Character vector specifying
 default colour to plot each region in R's \code{\link{rgb}}
