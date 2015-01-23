@@ -23,7 +23,7 @@ Read a neuron saved by Fiji's Simple Neurite Tracer Plugin
 }
 \details{
 This is an XML based format so parsing it depends on
-installation of the suggeted XML package.
+installation of the suggested XML package.
 }
 \references{
 \url{http://fiji.sc/Simple_Neurite_Tracer}

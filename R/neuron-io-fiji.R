@@ -36,7 +36,7 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
 #'   rather than a \code{neuronlist} of length 1.
 #' @param Verbose Whether to print status messages during parsing.
 #' @details This is an XML based format so parsing it depends on installation of
-#'   the suggeted XML package.
+#'   the suggested XML package.
 #' @references \url{http://fiji.sc/Simple_Neurite_Tracer} 
 #'   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 #' @export
