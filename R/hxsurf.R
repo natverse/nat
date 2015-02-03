@@ -320,7 +320,8 @@ pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 #'   in x or the \code{mesh3d} object returned by \code{Rvcg::vcgClost}.
 #' @rdname pointsinside
 pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3d')) {
-  if(!require('Rvcg')) stop("Please install suggested library Rvcg to use pointsinside")
+  if(!requireNamespace('Rvcg', quietly = TRUE))
+    stop("Please install suggested library Rvcg to use pointsinside")
   rval=match.arg(rval)
   pts=xyzmatrix(x)
   if(inherits(surf,'hxsurf')) {
