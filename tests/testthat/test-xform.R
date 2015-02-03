@@ -25,6 +25,7 @@ test_that("xform with affine matrix gives same result as neuron arithmetic", {
   expect_equal(xform(n,reg=affmat),scale(n,scale=1/scalefacs,center=FALSE))
 })
 
+if(!is.null(cmtk.bindir())){
 test_that("we can xform a neuronlist with multiple registrations", {
   # construct a pair of CMTK affine registrations where f2 is the
   # inverse of f1
@@ -44,6 +45,7 @@ test_that("we can xform a neuronlist with multiple registrations", {
   
   unlink(c(f1,f2))
 })
+}
 
 test_that("mirror with flip only gives same result as neuron arithmetic", {
   n=Cell07PNs[[1]]
