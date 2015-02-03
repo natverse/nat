@@ -1,3 +1,15 @@
+nat 1.6.2
+=========
+* add as.im3d.matrix which allows conversion of a Nx3 matrix of coordinates into
+  a volume representation
+* add ability to use a neuron's StartPoint in the spine function that finds the 
+  longest path (aka backbone or spine) of a neuron
+* fix xformimage's handling of in-memory registrations
+* fix bug in read.hxsurf docs
+* dev: add coveralls code coverage support
+* dev: fix use of require in package code (a new note from r-devel)
+* dev: fix a cmtk-dependent test that was not guarded against cmtk's absence
+
 nat 1.6.1
 =========
 * add ability to transform images (specified as path to a file)
