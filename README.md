@@ -5,7 +5,7 @@
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
 single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
 
-**nat** is a cleaned up version of [code](https://github.com/AnalysisSuite) that has been used in a number of papers from our group including:
+**nat** is a cleaned up version of [code](https://github.com/jefferis/AnalysisSuite) that has been used in a number of papers from our group including:
 
 [![Cell 2007 Cover](http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif "Olfactory Projection Neuron Mapping")](http://dx.doi.org/10.1016/j.cell.2007.01.040)
 [![CB 2010 Cover](http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif "fruitless Circuit Mapping")](http://dx.doi.org/10.1016/j.cub.2010.07.045)
