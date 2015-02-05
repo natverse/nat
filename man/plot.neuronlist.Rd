@@ -13,8 +13,7 @@ expression}
   character vector of neuron names. The default neuronlist
   used by plot3d.character can be set by using
   \code{options(nat.default.neuronlist='mylist')}. See
-  ?\code{\link{nat}} for details.
-  \code{\link{nat-package}}.}
+  ?\code{\link{nat}} for details.}
 
   \item{subset}{Expression evaluating to logical mask for
   neurons. See details.}

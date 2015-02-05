@@ -423,7 +423,7 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See 
-#'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
+#'   ?\code{\link{nat}} for details.
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param add Logical specifying whether to add data to an existing plot or make
