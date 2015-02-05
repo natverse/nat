@@ -1,3 +1,7 @@
+nat 1.6.3
+=========
+* fix invalid url in README.md noticed by r-devel/BDR
+
 nat 1.6.2
 =========
 * add as.im3d.matrix which allows conversion of a Nx3 matrix of coordinates into
