@@ -7,11 +7,11 @@ Author: Greg Jefferis and James Manton
 Maintainer: Greg Jefferis <jefferis@gmail.com>
 URL: https://github.com/jefferis/nat http://jefferislab.org
 BugReports: https://github.com/jefferis/nat/issues
-Description: This package is a reboot of the AnalysisSuite
-    (https://github.com/jefferis/AnalysisSuite) bundle of R code that I have
+Description: A reboot of the AnalysisSuite
+    (https://github.com/jefferis/AnalysisSuite) bundle of R code that we have
     been using for a number of years to analyse and visualise 3D biological
     image data, especially traced neurons. AnalysisSuite is most easily
-    installed using the nat.as package presently available at
+    installed using the nat.as package presently available at 
     https://github.com/jefferis/nat.as. The nat package is considerably cleaner
     and provides the core functionality of nat.as / AnalysisSuite.
     nat can read and write 3D images in NRRD and Amira formats
