@@ -1,3 +1,7 @@
+nat 1.6.4
+=========
+* Edits to package description for CRAN
+
 nat 1.6.3
 =========
 * fix invalid url in README.md noticed by r-devel/BDR
