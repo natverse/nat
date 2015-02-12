@@ -26,7 +26,8 @@
   compared.}
 
   \item{fieldsToCheck}{Which fields in the neuron are
-  always check}
+  always checked. The special value of \code{NA} indicates
+  that \bold{all} fields in the neurons will be compared.}
 
   \item{fieldsToCheckIfPresent}{These fields are only
   checked if they are present}
