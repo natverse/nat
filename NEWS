@@ -1,3 +1,8 @@
+nat 1.6.5
+=========
+* add as.data.frame.neuronlist for convenient generation of a data.frame from a
+  neuronlist
+
 nat 1.6.4
 =========
 * Edits to package description for CRAN
