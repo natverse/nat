@@ -101,6 +101,15 @@ test_that("we can set NeuronName when there is no input file",{
   expect_equal(n$NeuronName, "MySpecialNeuron")
 })
 
+context("neuron arithmetic")
+
+test_that("operator equivalence for neuron arithmetic", {
+  nn=Cell07PNs[1:2]
+  expect_equal(nn*0.5, nn/2)
+  expect_equal(nn+(-2), nn-2)
+  expect_equal(-nn, nn*-1)
+})
+
 context("neuron plotting")
 
 test_that("we can plot neurons in 2D", {
