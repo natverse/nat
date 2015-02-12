@@ -378,7 +378,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
                            fieldsToExclude=character(),
                            CheckSharedFieldsOnly=FALSE, ...){
   if(length(fieldsToCheck)==1 && is.na(fieldsToCheck))
-    fieldsToCheck=names(current)
+    fieldsToCheck=union(names(current), names(target))
   
   if(!is.neuron(target) || !is.neuron(current))
     return ("target and current must both be neurons")

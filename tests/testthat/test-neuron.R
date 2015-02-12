@@ -107,7 +107,7 @@ test_that("all.equal.neuron behaves", {
   expect_equal(n, Cell07PNs[[1]])
   n2=n
   n2$NeuronName=NULL
-  expect_false(all.equal(n, n2, fieldsToCheck=NA))
+  expect_match(all.equal(n, n2, fieldsToCheck = NA), "missing")
   expect_equal(n, n2, CheckSharedFieldsOnly=TRUE)
 })
 
