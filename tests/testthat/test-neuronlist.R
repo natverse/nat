@@ -163,3 +163,15 @@ test_that("set operations on neuronlists behave as expected", {
   expect_equal(union(x, y), kcs_union)
   expect_equal(intersect(x, y), kcs_intersect)
 })
+
+context("as.data.frame.neuronlist")
+
+test_that("as.data.frame.neuronlist behaves", {
+  df=attr(kcs20, 'df')
+  expect_equal(as.data.frame(kcs20), df)
+  expect_equal(as.data.frame(kcs20, i=seq(kcs20)), cbind(df, i=seq(kcs20)))
+  
+  kcs20nodf=kcs20
+  attr(kcs20nodf, 'df')=NULL
+  expect_equal(as.data.frame(kcs20nodf), data.frame(row.names=names(kcs20)))
+})
