@@ -1,10 +1,22 @@
 #' Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object
 #' 
+#' Note that when \code{RegionChoice="both"} or \code{RegionChoice=c("Inner", 
+#' "Outer")} both polygons in inner and outer regions will be added to named 
+#' regions. To understand the significance of this, consider two adjacent 
+#' regions, A and B, with a shared surface. For the polygons in both A and B, 
+#' Amira will have a patch with (say) InnerRegion A and OuterRegion B. This 
+#' avoids duplication in the file. However, it might be convenient to add these 
+#' polygons to both regions when we read them into R, so that regions A and B in
+#' our R object are both closed surfaces. To achieve this when 
+#' \code{RegionChoice="both"}, \code{read.hxsurf} adds these polygons to region
+#' B (as well as region A) but swaps the order of the vertices defining the
+#' polygon to ensure that the surface directionality is correct.
+#' 
 #' @param filename Character vector defining path to file
 #' @param RegionNames Character vector specifying which regions should be read 
 #'   from file. Default value of \code{NULL} => all regions.
-#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material should 
-#'   define the material of the patch.
+#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or 
+#'   \emph{both}, should define the material of the patch. See details.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
 #' @return A list with S3 class hxsurf with elements \itemize{
@@ -12,10 +24,10 @@
 #'   \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
 #'   
 #'   \item{Regions}{ A list with 3 column data.frames specifying triplets of 
-#'   vertices for each region (with reference to \code{PointNo} column in
+#'   vertices for each region (with reference to \code{PointNo} column in 
 #'   \code{Vertices} element)}
 #'   
-#'   \item{RegionList}{ Character vector of region names (should match names of
+#'   \item{RegionList}{ Character vector of region names (should match names of 
 #'   \code{Regions} element)}
 #'   
 #'   \item{RegionColourList}{ Character vector specifying default colour to plot
@@ -27,6 +39,10 @@
 #' @aliases hxsurf
 #' @family amira
 #' @family hxsurf
+#' @examples 
+#' \dontrun{
+#' read.hxsurf("my.surf", RegionChoice="both")
+#' }
 read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
                       FallbackRegionCol="grey",Verbose=FALSE){
   # Check for header confirming file type
@@ -35,7 +51,8 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
     warning(paste(filename,"does not appear to be an Amira HyperSurface ASCII file"))
     return(NULL)
   }
-  
+  RegionChoice=match.arg(RegionChoice, c("Inner", "Outer", "both"), several.ok = TRUE)
+  if(RegionChoice[1]=="both") RegionChoice=c("Inner", "Outer")
   t=readLines(filename)
   nLines=length(t)
   if(Verbose) cat(nLines,"lines of text to parse\n")
