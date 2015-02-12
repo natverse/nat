@@ -353,7 +353,9 @@ scale.neuron<-function(x,center=FALSE,scale=FALSE){
 #' Check equality on key fields of neuron object
 #' 
 #' @inheritParams base::all.equal.default
-#' @param fieldsToCheck Which fields in the neuron are always check
+#' @param fieldsToCheck Which fields in the neuron are always checked. The
+#'   special value of \code{NA} indicates that \bold{all} fields in the neurons
+#'   will be compared.
 #' @param fieldsToCheckIfPresent These fields are only checked if they are 
 #'   present
 #' @param fieldsToExclude Character vector of fields to exclude from check
@@ -378,7 +380,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
                            fieldsToExclude=character(),
                            CheckSharedFieldsOnly=FALSE, ...){
   if(length(fieldsToCheck)==1 && is.na(fieldsToCheck))
-    fieldsToCheck=names(current)
+    fieldsToCheck=union(names(current), names(target))
   
   if(!is.neuron(target) || !is.neuron(current))
     return ("target and current must both be neurons")

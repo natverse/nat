@@ -27,6 +27,22 @@ test_that("we can read hxsurf object", {
   rgl.close()
 })
 
+test_that("we fail for bad surface files", {
+  expect_error(read.hxsurf("testdata/amira/tetrahedron_notriangles.surf"), 
+               "Incorrect number of Triangle")
+  expect_error(read.hxsurf("testdata/amira/tetrahedron_badtrianglenum.surf"), 
+               "Bad triangle")
+  expect_error(read.hxsurf("testdata/amira/VerySmallLabelField.am"), 
+               "does not appear to be an Amira HyperSurface")
+})
+
+test_that("we can use fallback colour for surfaces", {
+  tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
+  tet.hxsurf2=read.hxsurf("testdata/amira/tetrahedron_nocol.surf",
+                          FallbackRegionCol = '#FF0000')
+  expect_equal(tet.hxsurf2, tet.hxsurf)
+})
+
 test_that("we can identify reader/writer for hxsurf", {
   expect_equal(getformatreader(surf_file)$class, 'hxsurf')
   expect_equal(getformatwriter(class=class(surf))$class, 'hxsurf')
@@ -101,6 +117,9 @@ if(require('Rvcg')){
     # so cheat by using an approximate offset
     n=kcs20[[1]]+c(40,-30,20)
     MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
+    expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
+    surf2=read.hxsurf(surf_file, RegionChoice="both")
+    MB_CA_L=subset(surf2, "MB_CA_L")
     expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
   })
 }
