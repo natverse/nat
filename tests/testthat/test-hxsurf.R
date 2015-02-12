@@ -27,6 +27,15 @@ test_that("we can read hxsurf object", {
   rgl.close()
 })
 
+test_that("we fail for bad surface files", {
+  expect_error(read.hxsurf("testdata/amira/tetrahedron_notriangles.surf"), 
+               "Unable to find Triangle number")
+  expect_error(read.hxsurf("testdata/amira/tetrahedron_zerotriangles.surf"), 
+               "Bad triangle")
+  expect_error(read.hxsurf("testdata/amira/VerySmallLabelField.am"), 
+               "does not appear to be an Amira HyperSurface")
+})
+
 test_that("we can use fallback colour for surfaces", {
   tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
   tet.hxsurf2=read.hxsurf("testdata/amira/tetrahedron_nocol.surf",
