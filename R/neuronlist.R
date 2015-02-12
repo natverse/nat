@@ -567,7 +567,10 @@ makecols<-function(cols, colpal, nitems) {
 #' @export
 #' @rdname neuronlist-arithmetic
 #' @method - neuronlist
-`-.neuronlist` <- function(x,y) x+(-y)
+`-.neuronlist` <- function(x,y) {
+  if(missing(y)) x*-1
+  else x+(-y)
+}
 
 #' @export
 #' @rdname neuronlist-arithmetic
