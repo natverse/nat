@@ -109,7 +109,7 @@ if(require('Rvcg')){
     n=kcs20[[1]]+c(40,-30,20)
     MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
     expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
-    surf2=read.hxsurf(surf_file, RegionChoice=c("both"))
+    surf2=read.hxsurf(surf_file, RegionChoice="both")
     MB_CA_L=subset(surf2, "MB_CA_L")
     expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
   })
