@@ -48,8 +48,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   # Check for header confirming file type
   firstLine=readLines(filename,n=1)
   if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+ascii",firstLine,ignore.case=T,perl=T))){
-    warning(paste(filename,"does not appear to be an Amira HyperSurface ASCII file"))
-    return(NULL)
+    stop(filename," does not appear to be an Amira HyperSurface ASCII file!")
   }
   RegionChoice=match.arg(RegionChoice, c("Inner", "Outer", "both"), several.ok = TRUE)
   if(RegionChoice[1]=="both") RegionChoice=c("Inner", "Outer")
@@ -88,8 +87,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   
   for(i in 1:nPatches){
     if(!any(TriangleDeflines[i])){
-      warning(paste("Unable to find Triangle number in patch",i,"in",filename,"\n"))
-      return (NULL)
+      stop("Unable to find Triangle number in patch ",i," in ",filename,"\n")
     }
     if(Verbose) cat("TriangleDefline =",TriangleDeflines[i],"\n")
     PatchHeader<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
@@ -98,7 +96,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
     for(RegChoice in RegionChoice) {
       RegionName=getfield(paste(RegChoice,"Region",sep=""),PatchHeader,2)
       nTriangles=as.numeric(getfield("Triangles",PatchHeader,2))
-      if(nTriangles<0 || nTriangles>100000){return(-1)}
+      if(nTriangles<0 || nTriangles>100000) stop("Bad triangle number: ", nTriangles)
       if(Verbose) cat("nTriangles =",nTriangles,"for patch =",i,"\n")
       # Check if we want to load in this region
       if( is.null(RegionNames) || RegionName%in%RegionNames ){
