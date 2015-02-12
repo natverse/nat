@@ -30,7 +30,7 @@ test_that("we can read hxsurf object", {
 test_that("we fail for bad surface files", {
   expect_error(read.hxsurf("testdata/amira/tetrahedron_notriangles.surf"), 
                "Incorrect number of Triangle")
-  expect_error(read.hxsurf("testdata/amira/tetrahedron_zerotriangles.surf"), 
+  expect_error(read.hxsurf("testdata/amira/tetrahedron_badtrianglenum.surf"), 
                "Bad triangle")
   expect_error(read.hxsurf("testdata/amira/VerySmallLabelField.am"), 
                "does not appear to be an Amira HyperSurface")

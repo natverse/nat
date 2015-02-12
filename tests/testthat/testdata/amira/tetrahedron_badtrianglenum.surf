@@ -1,0 +1,35 @@
+# HyperSurface 0.1 ASCII
+
+Parameters {
+    Materials {
+        Inside {
+            id 0,
+            Color 1 0 0
+        }
+        Exterior {
+            id 1
+        }
+    }
+    BoundaryIds {
+        name "BoundaryConditions"
+    }
+    Filename "/GD/dev/R/nat/tetrahedron.ply"
+}
+
+Vertices 4
+	-1.000000 -1.000000 -1.000000
+	1.000000 1.000000 -1.000000
+	1.000000 -1.000000 1.000000
+	-1.000000 1.000000 1.000000
+NBranchingPoints 0
+NVerticesOnCurves 0
+BoundaryCurves 0
+Patches 1
+{
+InnerRegion Inside
+OuterRegion Exterior
+BoundaryID 0
+BranchingPoints 0
+    
+Triangles 1000000
+}
