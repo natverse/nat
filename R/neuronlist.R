@@ -132,6 +132,39 @@ c.neuronlist<-function(..., recursive = FALSE){
   as.neuronlist(NextMethod(...), df = new.df)
 }
 
+#' Extract the attached data.frame from a neuronlist
+#' 
+#' When there is no attached data.frame the result will be data.frame with 0 
+#' columns but an appropriate number of rows, named by the objects in the 
+#' neuronlist.
+#' 
+#' @param x neuronlist to convert
+#' @param row.names row names (defaults to names of objects in neuronlist, which
+#'   is nearly always what you want.)
+#' @param optional ignored in this method
+#' @param ... additional arguments passed to \code{\link{data.frame}} (see
+#'   examples)
+#' @export
+#' @return a \code{data.frame} with length(x) rows, named according to names(x) 
+#'   and containing the columns from the attached data.frame, when present.
+#' @seealso \code{\link{data.frame}}, \code{\link{neuronlist}}
+#' @examples 
+#' head(as.data.frame(kcs20))
+#' 
+#' # add additional variables
+#' str(as.data.frame(kcs20, i=seq(kcs20), abc=LETTERS[seq(kcs20)]))
+#' # stop character columns being turned into factors
+#' str(as.data.frame(kcs20, i=seq(kcs20), abc=LETTERS[seq(kcs20)], 
+#'   stringsAsFactors=FALSE))
+as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ...) {
+  df=attr(x, 'df')
+  if(is.null(df)) {
+    data.frame(row.names = row.names, ...)
+  } else {
+    data.frame(df, row.names = row.names, ...)
+  }
+}
+
 #' lapply and mapply for neuronlists (with optional parallelisation)
 #' 
 #' @description versions of lapply and mapply that look after the class and 
