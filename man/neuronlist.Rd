@@ -39,6 +39,8 @@ kcs5=kcs20[1:5]
 methods(class='neuronlist')
 }
 \seealso{
+\code{\link{as.data.frame.neuronlist}}
+
 Other neuronlist: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},

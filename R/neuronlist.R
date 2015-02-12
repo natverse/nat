@@ -15,6 +15,7 @@
 #'   containing information about each neuron.
 #' @return A new neuronlist object.
 #' @family neuronlist
+#' @seealso \code{\link{as.data.frame.neuronlist}}
 #' @export
 #' @examples
 #' # generate an empty neuronlist
