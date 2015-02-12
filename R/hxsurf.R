@@ -84,11 +84,10 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
   PatchEnds=grep("^\\s*}",remainingLines[PatchDefLine:length(remainingLines)],perl=TRUE)+PatchDefLine-1
   if(length(PatchEnds)>nPatches) PatchEnds=PatchEnds[1:nPatches]
   TriangleDeflines<-grep("Triangles",remainingLines)
+  if(length(TriangleDeflines)!=nPatches)
+    stop("Incorrect number of Triangle definition lines in",filename,"\n")
   
   for(i in 1:nPatches){
-    if(!any(TriangleDeflines[i])){
-      stop("Unable to find Triangle number in patch ",i," in ",filename,"\n")
-    }
     if(Verbose) cat("TriangleDefline =",TriangleDeflines[i],"\n")
     PatchHeader<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
     if(Verbose) cat("PatchHeader is",length(PatchHeader),"lines long\n")
