@@ -14,11 +14,17 @@ test_that("is.cmtkreg works ok for objects", {
 })
 
 test_that("(is.)cmtkreg works ok for files", {
+  
+  expect_true(is.na(cmtkreg(tempfile())), 'non-existent file => NA')
+  
   reg2="testdata/cmtk/dofv1.1wshears.list"
   creg2=cmtkreg(reg2)
   expect_true(is.cmtkreg(creg2))
   expect_true(is.cmtkreg(creg2,filecheck='exists'))
   expect_true(is.cmtkreg(creg2,filecheck='magic'))
+  
+  # refer to file not directory
+  expect_equal(cmtkreg("testdata/cmtk/dofv1.1wshears.list/registration"), creg2)
   
   reg3=tempfile(fileext='.list')
   on.exit(unlink(reg3,recursive=TRUE),add=TRUE)
