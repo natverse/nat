@@ -81,7 +81,7 @@ xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'),
 xformimage.default<-function(reg, image, ...){
   if(is.matrix(reg)) {
     # convert to a CMTK registration params (in memory)
-    xformimage(cmtkreglist(reg))
+    xformimage(cmtkreglist(reg), image, ...)
   } else {
     stop("Unrecognised/implemented registration type")
   }
