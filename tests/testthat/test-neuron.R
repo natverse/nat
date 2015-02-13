@@ -118,6 +118,10 @@ test_that("operator equivalence for neuron arithmetic", {
   expect_equal(nn*0.5, nn/2)
   expect_equal(nn+(-2), nn-2)
   expect_equal(-nn, nn*-1)
+  n=Cell07PNs[[1]]
+  expect_equal(n*0.5, n/2)
+  expect_equal(n+(-2), n-2)
+  expect_equal(-n, n*-1)
 })
 
 context("neuron plotting")
