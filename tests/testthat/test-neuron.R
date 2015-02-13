@@ -201,5 +201,6 @@ test_that("we can normalise an SWC data block", {
 
   expect_equal(normalise_swc(Cell07PNs[[1]]$d[-2], defaultValue=list(Label=2L)),
                d)
-  expect_error(normalise_swc(Cell07PNs[[1]]$d[-2], ifMissing = 'error'))
+  expect_error(normalise_swc(Cell07PNs[[1]]$d[-2], ifMissing = 'stop'),
+               regexp = "Columns.*are missing")
 })
