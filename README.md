@@ -1,6 +1,6 @@
 # nat: NeuroAnatomy Toolbox
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) [![Build Status](https://travis-ci.org/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat) 
-[![Coverage Status](https://img.shields.io/coveralls/jefferis/nat.svg?style=flat)](https://coveralls.io/r/jefferis/nat?branch=master)
+[![Coverage Status](https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master)](https://coveralls.io/r/jefferis/nat?branch=master)
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
 single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
