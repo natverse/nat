@@ -248,24 +248,15 @@ cmtkparams2affmat<-function(params=NULL, tx=0, ty=0, tz=0,
     rval[1:3,2]=rval[1:3,2]*sy
     rval[1:3,3]=rval[1:3,3]*sz
     shears=c(shx,shy,shz)
-    if(TRUE){
-      # generate shears in broken CMTK <2.4.0 style
-      for (i in 3:1 ) {
-        shear=matrix(0,4,4)
-        diag(shear)<-1
-        # i/2 {0,0,1} for i={0,1,2}
-        # (i/2)+(i%2)+1 {1,2,2} for i={0,1,2}
-        # shear[i/2][(i/2)+(i%2)+1] = dofs[9+i];
-        shear[c(2,3,3)[i],c(1,1,2)[i]]=shears[i]
-        rval = shear%*%rval
-      }
-    } else {
-      # Generate shears in broken early IGS form
-      for (i in 3:1 ) {
-        for (j in 1:3) {
-          rval[j,i] =rval[j,i] +shears[i] * rval[j,i%%3+1]
-        }
-      }
+    # generate shears in broken CMTK <2.4.0 style
+    for (i in 3:1 ) {
+      shear=matrix(0,4,4)
+      diag(shear)<-1
+      # i/2 {0,0,1} for i={0,1,2}
+      # (i/2)+(i%2)+1 {1,2,2} for i={0,1,2}
+      # shear[i/2][(i/2)+(i%2)+1] = dofs[9+i];
+      shear[c(2,3,3)[i],c(1,1,2)[i]]=shears[i]
+      rval = shear%*%rval
     }
   } else {
     # generate scales and shears according to CMTK >=v.2.4.0 / svn r5050
