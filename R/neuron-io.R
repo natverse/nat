@@ -155,9 +155,8 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
     paths=structure(file.path(dbdir,kfm),.Names=names(kfm))
     if(OmitFailures) {
       fep=file.exists(paths)
-      missing_paths=paths[!fep]
-      if(length(missing_paths)) 
-        warning("There are ", length(missing_paths), " missing neurons!")
+      if(!all(fep)) 
+        warning("There are ", sum(fep), " missing neurons!")
       paths=paths[fep]
     }
     neuronnames=names(paths)
