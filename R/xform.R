@@ -126,25 +126,17 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
 
 #' Get and assign coordinates for classes containing 3d vertex data
 #' 
+#' \code{xyzmatrix} gets coordinates from objects containing 3d vertex data
 #' @param x object containing 3d coordinates
 #' @param ... additional arguments passed to methods
-#' @return Nx3 matrix containing 3d coordinates
+#' @return For \code{xyzmatrix}: Nx3 matrix containing 3d coordinates
 #' @export
+#' @examples 
+#' # see all available methods for different classes
+#' methods('xyzmatrix')
+#' # ... and for the assignment method
+#' methods('xyzmatrix<-')
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
-
-
-#' @method xyzmatrix neuronlist
-#' @export
-xyzmatrix.neuronlist<-function(x, ...) {
-  coords=lapply(x, xyzmatrix, ...)
-  do.call(rbind, coords)
-}
-
-#' @export
-xyzmatrix.neuron<-function(x, ...) x$d[,c("X","Y","Z")]
-
-#' @export
-xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
@@ -172,6 +164,22 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 }
 
 #' @export
+#' @rdname xyzmatrix
+xyzmatrix.neuron<-function(x, ...) x$d[,c("X","Y","Z")]
+
+#' @export
+#' @rdname xyzmatrix
+xyzmatrix.neuronlist<-function(x, ...) {
+  coords=lapply(x, xyzmatrix, ...)
+  do.call(rbind, coords)
+}
+
+#' @export
+#' @rdname xyzmatrix
+xyzmatrix.dotprops<-function(x, ...) x$points
+
+#' @export
+#' @rdname xyzmatrix
 xyzmatrix.hxsurf<-function(x, ...) {
   # quick function that gives a generic way to extract coords from 
   # classes that we care about and returns a matrix
@@ -195,7 +203,7 @@ xyzmatrix.igraph<-function(x, ...){
 #'   or x, y, z.
 #' @usage xyzmatrix(x) <- value
 #' @param value Nx3 matrix specifying new xyz coords
-#' @return Original object with modified coords
+#' @return For \code{xyzmatrix<-}: Original object with modified coords
 #' @export
 #' @seealso \code{\link{xyzmatrix}}
 #' @rdname xyzmatrix
@@ -220,12 +228,14 @@ xyzmatrix.igraph<-function(x, ...){
 }
 
 #' @export
+#' @rdname xyzmatrix
 `xyzmatrix<-.hxsurf`<-function(x, value){
   x$Vertices[,1:3]=value
   x
 }
 
 #' @export
+#' @rdname xyzmatrix
 `xyzmatrix<-.igraph`<-function(x, value){
   colnames(value)=c("X","Y","Z")
   for(col in colnames(value)){
