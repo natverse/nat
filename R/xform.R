@@ -263,11 +263,16 @@ xyzmatrix.igraph<-function(x, ...){
 #' @export
 #' @seealso \code{\link{xform}, \link{boundingbox}}
 #' @examples
+#' nopen3d()
 #' x=Cell07PNs[[1]]
 #' plot3d(x,col='red')
 #' plot3d(mirror(x,168),col='green')
+#' 
+#' # also works with dotprops objects
+#' clear3d()
 #' y=kcs20[[1]]
-#' plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'),col='red')
+#' plot3d(y, col='red')
+#' plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
 mirror<-function(x, ...) UseMethod('mirror')
 
 #' @param mirrorAxisSize The bounding box of the axis to mirror
