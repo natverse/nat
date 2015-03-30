@@ -307,6 +307,7 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
     xform(x, reg=warpfile, transformtype=transform, ...)
   }
 }
+
 #' @method mirror neuronlist
 #' @param subset For \code{mirror.neuronlist} indices
 #'   (character/logical/integer) that specify a subset of the members of
