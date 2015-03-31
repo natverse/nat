@@ -28,6 +28,16 @@ subsetted hxsurf object
 \description{
 Subset hxsurf object to specified regions
 }
+\examples{
+plot3d(kcs20)
+# plot only vertical lobe
+vertical_lobe=subset(MBL.surf, "VL")
+plot3d(vertical_lobe, alpha=0.3)
+
+# there is also a shortcut for this
+clear3d()
+plot3d(MBL.surf, "VL", alpha=0.3)
+}
 \seealso{
 Other hxsurf: \code{\link{as.mesh3d}},
 \code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
