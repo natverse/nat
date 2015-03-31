@@ -38,6 +38,14 @@ dp2.not=subset(dp,Negate(s3d))
 stopifnot(all.equal(dp1,dp2))
 dp2=subset(dp,alpha>0.5 & s3d(pointd))
 dp3=subset(dp,1:10)
+
+## subset each dotprops object in a whole neuronlist
+plot3d(kcs20)
+s3d=select3d()
+kcs20.partial = nlapply(kcs20, subset, s3d)
+clear3d()
+plot3d(kcs20.partial, col='red')
+plot3d(kcs20, col='grey')
 }
 }
 \seealso{

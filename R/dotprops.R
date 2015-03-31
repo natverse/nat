@@ -336,6 +336,14 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' stopifnot(all.equal(dp1,dp2))
 #' dp2=subset(dp,alpha>0.5 & s3d(pointd))
 #' dp3=subset(dp,1:10)
+#' 
+#' ## subset each dotprops object in a whole neuronlist
+#' plot3d(kcs20)
+#' s3d=select3d()
+#' kcs20.partial = nlapply(kcs20, subset, s3d)
+#' clear3d()
+#' plot3d(kcs20.partial, col='red')
+#' plot3d(kcs20, col='grey')
 #' }
 subset.dotprops<-function(x, subset, ...){
   e <- substitute(subset)
