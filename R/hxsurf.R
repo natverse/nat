@@ -270,7 +270,8 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' @param x A dotprops object
 #' @param subset Character vector specifying regions to keep. Interpreted as 
 #'   \code{\link{regex}} if of length 1 and no fixed match.
-#' @param drop Whether to drop unused vertices after subsetting
+#' @param drop Whether to drop unused vertices after subsetting (default:
+#'   \code{TRUE})
 #' @param rval Whether to return a new \code{hxsurf} object or just the names of
 #'   the matching regions
 #' @param ... Additional parameters (currently ignored)
@@ -278,7 +279,7 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' @method subset hxsurf
 #' @export
 #' @family hxsurf
-subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ...){
+subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...){
   rval=match.arg(rval)
   if(!is.null(subset)){
     tokeep=integer(0)

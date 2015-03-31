@@ -4,7 +4,7 @@
 \alias{subset.hxsurf}
 \title{Subset hxsurf object to specified regions}
 \usage{
-\method{subset}{hxsurf}(x, subset = NULL, drop = FALSE, rval = c("hxsurf",
+\method{subset}{hxsurf}(x, subset = NULL, drop = TRUE, rval = c("hxsurf",
   "names"), ...)
 }
 \arguments{
@@ -15,7 +15,7 @@
   and no fixed match.}
 
   \item{drop}{Whether to drop unused vertices after
-  subsetting}
+  subsetting (default: \code{TRUE})}
 
   \item{rval}{Whether to return a new \code{hxsurf} object
   or just the names of the matching regions}
