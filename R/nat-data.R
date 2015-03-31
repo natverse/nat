@@ -34,3 +34,20 @@ NULL
 #'   wiring networks in Drosophila at single-cell resolution. Curr Biol 21 (1),
 #'   1--11.
 NULL
+
+#' Surface object (hxsurf) for the left mushroom body in FCWB template space
+#' 
+#' This surface object is in the same space as the 20 Kenyon cells in
+#' \code{\link{kcs20}}.
+#' @name MBL.surf
+#' @docType data
+#' @seealso \code{\link{hxsurf}}
+#' @examples 
+#' plot3d(kcs20)
+#' plot3d(MBL.surf, alpha=0.3)
+#' \dontrun{
+#' ## originally generated as follows
+#' library(nat.flybrains)
+#' MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = T)
+#' }
+NULL
