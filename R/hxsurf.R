@@ -315,6 +315,17 @@ subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ..
   x
 }
 
+#' Subset methods for different nat objects
+#' 
+#' These methods enable subsets of some nat objects including neuronlists and 
+#' dotprops objects to be obtained. See the help for each individual method for
+#' details.
+#' 
+#' @name subset
+#' @seealso \code{\link{subset.dotprops}}, \code{\link{subset.hxsurf}}, 
+#'   \code{\link{subset.neuronlist}}
+NULL
+
 #' Find which points of an object are inside a surface
 #' 
 #' @details Note that \code{hxsurf} surface objects will be converted to 
