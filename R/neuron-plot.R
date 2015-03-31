@@ -135,10 +135,12 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
 NULL
 
 #' Open customised rgl window
-#'
-#' Pan with right button (Ctrl+click), zoom with middle
-#'   (Alt/Meta+click) button. Defaults to a white background and orthogonal
-#'   projection (FOV=0)
+#' 
+#' Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
+#' Defaults to a white background and orthogonal projection (FOV=0)
+#' 
+#' Note that sometimes (parts of) objects seem to disappear after panning and
+#' zooming. See help for \code{\link{pan3d}}.
 #' @param bgcol background colour
 #' @param FOV field of view
 #' @param ... additional options passed to open3d
@@ -153,11 +155,15 @@ nopen3d<- function(bgcol='white', FOV=0, ...){
 }
 
 #' Some useful extensions / changes to rgl defaults
-#'
+#' 
 #' Set up pan call back for current rgl device
-#'
-#' Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892
-#' Mouse button 2 is right and button 3 is middle (accessed by meta/alt key)
+#' 
+#' Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892 Mouse
+#' button 2 is right and button 3 is middle (accessed by meta/alt key)
+#' 
+#' Note that sometimes (parts of) objects seem to disappear after panning and 
+#' zooming. The example in \code{\link{rgl.setMouseCallbacks}} from which this
+#' is copied includes a note that "this doesn't play well with rescaling"
 #' @param button Integer from 1 to 3 indicating mouse button
 #' @seealso \code{\link{rgl.setMouseCallbacks}}
 #' @author Duncan Murdoch
