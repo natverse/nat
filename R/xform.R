@@ -73,6 +73,16 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
   x
 }
 
+#' @export
+#' @rdname xform
+xform.shape3d<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
+  points=xyzmatrix(x)
+  pointst=xformpoints(reg, points, FallBackToAffine=FallBackToAffine, 
+                      na.action=na.action, ...)
+  xyzmatrix(x)<-pointst
+  x
+}
+
 #' @method xform dotprops
 #' @export
 #' @rdname xform
