@@ -118,3 +118,15 @@ test_that("can extract xyz coords from a neuronlist",{
   expect_is(xyzmatrix(kcs20[1:2]),'matrix')
   expect_equal(xyzmatrix(kcs20[1:2]), xyz12)
 })
+
+test_that("we can extract/replace coords and xform shape3d objects",{
+  m=as.mesh3d(MBL.surf)
+  xyz=xyzmatrix(m)
+  expect_is(xyz,'matrix')
+  expect_equal(dim(xyz), c(1068L, 3L))
+  m2=m
+  xyzmatrix(m2)<-xyzmatrix(m)
+  expect_equal(m2, m)
+  # dummy transformation
+  expect_equal(xform(m, function(x,...) x), m)
+})
