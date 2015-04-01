@@ -124,9 +124,6 @@ test_that("we can extract/replace coords and xform shape3d objects",{
   xyz=xyzmatrix(m)
   expect_is(xyz,'matrix')
   expect_equal(dim(xyz), c(1068L, 3L))
-  m2=m
-  xyzmatrix(m2)<-xyzmatrix(m)
-  expect_equal(m2, m)
   # dummy transformation
   expect_equal(xform(m, function(x,...) x), m)
 })
