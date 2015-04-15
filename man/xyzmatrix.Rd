@@ -8,9 +8,11 @@
 \alias{xyzmatrix.igraph}
 \alias{xyzmatrix.neuron}
 \alias{xyzmatrix.neuronlist}
+\alias{xyzmatrix.shape3d}
 \alias{xyzmatrix<-}
 \alias{xyzmatrix<-.hxsurf}
 \alias{xyzmatrix<-.igraph}
+\alias{xyzmatrix<-.shape3d}
 \title{Get and assign coordinates for classes containing 3d vertex data}
 \usage{
 xyzmatrix(x, ...)
@@ -27,11 +29,15 @@ xyzmatrix(x, ...)
 
 \method{xyzmatrix}{igraph}(x, ...)
 
+\method{xyzmatrix}{shape3d}(x, ...)
+
 xyzmatrix(x) <- value
 
 \method{xyzmatrix}{hxsurf}(x) <- value
 
 \method{xyzmatrix}{igraph}(x) <- value
+
+\method{xyzmatrix}{shape3d}(x) <- value
 }
 \arguments{
   \item{x}{object containing 3d coordinates}

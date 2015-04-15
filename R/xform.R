@@ -73,6 +73,10 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
   x
 }
 
+#' @export
+#' @rdname xform
+xform.shape3d<-xform.list
+
 #' @method xform dotprops
 #' @export
 #' @rdname xform
@@ -198,6 +202,12 @@ xyzmatrix.igraph<-function(x, ...){
   xyz
 }
 
+#' @rdname xyzmatrix
+#' @export
+xyzmatrix.shape3d<-function(x, ...){
+  cbind(x$vb[1, ]/x$vb[4, ], x$vb[2, ]/x$vb[4, ], x$vb[3, ]/x$vb[4, ])
+}
+
 #' @description \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
 #'   object and can also handle matrix like objects with columns named X, Y, Z
 #'   or x, y, z.
@@ -241,6 +251,13 @@ xyzmatrix.igraph<-function(x, ...){
   for(col in colnames(value)){
     x=igraph::set.vertex.attribute(x, col, value=value[,col])
   }
+  x
+}
+
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.shape3d`<-function(x, value){
+  x$vb=t(cbind(value, 1))
   x
 }
 
