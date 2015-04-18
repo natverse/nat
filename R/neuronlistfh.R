@@ -416,8 +416,6 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
     dbdir2 <- file.path(dirname(file),'data')
     if(!isTRUE(file.info(dbdir2)$isdir))
       stop("Unable to locate data directory at: ", dbdir, ' or: ', dbdir2)
-    warning("setting new location of filehash database directory: ", dbdir2,
-            "\nConsider resaving neuronlistfh object with write.neuronlistfh!")
     attr(obj, 'db')@dir <- dbdir2
   }
   
