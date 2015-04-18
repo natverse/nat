@@ -615,7 +615,7 @@ with.neuronlist<-function(data, expr, ...) {
 #' @importFrom utils head
 #' @seealso head
 head.neuronlist<-function(x, ...) {
-  head(attr(x,'df'), ...)
+  head(as.data.frame(x), ...)
 }
 
 #' Subset neuronlist returning either new neuronlist or names of chosen neurons
