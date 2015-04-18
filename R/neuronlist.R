@@ -605,7 +605,7 @@ with.neuronlist<-function(data, expr, ...) {
   eval(substitute(expr), attr(data,'df'), enclos = parent.frame())
 }
 
-#' @description \code{head} Return the first part dataframe attached to
+#' @description \code{head} Return the first part of data.frame attached to
 #'   neuronlist
 #' 
 #' @param x A neuronlist object
@@ -616,6 +616,17 @@ with.neuronlist<-function(data, expr, ...) {
 #' @seealso head
 head.neuronlist<-function(x, ...) {
   head(as.data.frame(x), ...)
+}
+
+#' @description \code{head} Return the last part of data.frame attached to 
+#'   neuronlist
+#'   
+#' @rdname neuronlist-dataframe-methods
+#' @export
+#' @importFrom utils tail
+#' @seealso tail
+tail.neuronlist<-function(x, ...) {
+  tail(as.data.frame(x), ...)
 }
 
 #' Subset neuronlist returning either new neuronlist or names of chosen neurons

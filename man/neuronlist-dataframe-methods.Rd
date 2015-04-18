@@ -4,6 +4,7 @@
 \alias{droplevels.neuronlist}
 \alias{head.neuronlist}
 \alias{neuronlist-dataframe-methods}
+\alias{tail.neuronlist}
 \alias{with.neuronlist}
 \title{Methods for working with the dataframe attached to a neuronlist}
 \usage{
@@ -12,6 +13,8 @@
 \method{with}{neuronlist}(data, expr, ...)
 
 \method{head}{neuronlist}(x, ...)
+
+\method{tail}{neuronlist}(x, ...)
 }
 \arguments{
   \item{x}{A neuronlist object}
@@ -37,7 +40,10 @@ dataframe attached to neuronlist
 \code{with} Evaluate expression in the context of dataframe
 attached to a neuronlist
 
-\code{head} Return the first part dataframe attached to
+\code{head} Return the first part of data.frame attached to
+neuronlist
+
+\code{head} Return the last part of data.frame attached to
 neuronlist
 }
 \seealso{
@@ -46,5 +52,7 @@ droplevels
 with
 
 head
+
+tail
 }
 
