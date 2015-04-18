@@ -584,10 +584,10 @@ makecols<-function(cols, colpal, nitems) {
 #' @inheritParams base::droplevels.data.frame
 #' @export
 #' @name neuronlist-dataframe-methods
-#' @aliases droplevels.neuronlist
+#' @aliases droplevels.neuronlist droplevels
 #' @return the attached dataframe with levels dropped (NB \strong{not} the
 #'   neuronlist)
-#' @seealso droplevels
+#' @seealso \code{\link{droplevels}}
 droplevels.neuronlist<-function(x, except, ...){
   droplevels(attr(x,'df'))
 }
@@ -598,9 +598,10 @@ droplevels.neuronlist<-function(x, except, ...){
 #' @param data A neuronlist object
 #' @param expr The expression to evaluate
 #' @rdname neuronlist-dataframe-methods
+#' @aliases with.neuronlist with
 #' @export
 #' @method with neuronlist
-#' @seealso with
+#' @seealso \code{\link{with}}
 with.neuronlist<-function(data, expr, ...) {
   eval(substitute(expr), attr(data,'df'), enclos = parent.frame())
 }
@@ -611,20 +612,22 @@ with.neuronlist<-function(data, expr, ...) {
 #' @param x A neuronlist object
 #' @param ... Further arguments passed to default methods (and usually ignored)
 #' @rdname neuronlist-dataframe-methods
+#' @aliases head.neuronlist head
 #' @export
 #' @importFrom utils head
-#' @seealso head
+#' @seealso \code{\link{head}}
 head.neuronlist<-function(x, ...) {
   head(as.data.frame(x), ...)
 }
 
-#' @description \code{head} Return the last part of data.frame attached to 
+#' @description \code{tail} Return the last part of data.frame attached to 
 #'   neuronlist
 #'   
 #' @rdname neuronlist-dataframe-methods
+#' @aliases tail.neuronlist tail
 #' @export
 #' @importFrom utils tail
-#' @seealso tail
+#' @seealso \code{\link{tail}}
 tail.neuronlist<-function(x, ...) {
   tail(as.data.frame(x), ...)
 }
