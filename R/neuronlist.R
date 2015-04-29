@@ -247,8 +247,13 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' @rdname get-set-neuronlist-data.frame
 #' @export
 `data.frame<-.neuronlist`<-function(x, value) {
-  if(is.null(value))
+  if(is.null(value)){
+    # already null, so no change
+    if(is.null(attr(x, 'df'))) return(x)
+    # already exists but now want to set to NULL
+    attr(x,'df')=NULL
     return(x)
+  }
   nn=names(x)
   matching_rows=intersect(nn, rownames(value))
   if(length(matching_rows)){
