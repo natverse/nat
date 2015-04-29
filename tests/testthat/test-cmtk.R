@@ -83,18 +83,19 @@ test_that("cmtk.call",{
 test_that("cmtk.statistics",{
   lhmaskfile="testdata/nrrd/LHMask.nrrd"
   statsnrrd="testdata/nrrd/dataforstats.nrrd"
-  a=suppressMessages(cmtk.statistics(lhmaskfile))
   baseline_a=structure(list(min = 0, max = 1, mean = 0.22935, sdev = 0.42042, 
                             n = 125000L, Entropy = 0.53849, sum = 28669), 
                        .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"),
                        class = "data.frame", row.names = c(NA, -1L))
-  b=cmtk.statistics(statsnrrd)
   baseline_b=structure(list(min = 0, max = 100, mean = 8e-04, sdev = 0.28284, 
                             n = 125000L, Entropy = 1e-04, sum = 100), 
                        .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
                        class = "data.frame", row.names = c(NA, -1L))
-  expect_equal(a,baseline_a)
-  expect_equal(b,baseline_b)
+  
+  expect_equal(cmtk.statistics(lhmaskfile), baseline_a)
+  expect_equal(b<-cmtk.statistics(statsnrrd), baseline_b)
+  expect_equal(cmtk.statistics(statsnrrd, imagetype = 'grey'), b)
+  
   c=cmtk.statistics(statsnrrd,mask=lhmaskfile)
   # my hacked version of statistics provides nnz
   if('nnz'%in%names(c)){
