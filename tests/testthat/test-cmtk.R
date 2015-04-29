@@ -113,6 +113,8 @@ test_that("cmtk.statistics",{
                            class = "data.frame", row.names = c(NA, -2L))
   }
   expect_equal(c,baseline_c)
+  
+  cmtk.statistics(lhmaskfile, imagetype = 'label')
 })
 
 }
