@@ -170,6 +170,8 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
 #'   always be named Entropy in the returned dataframe.
 #' @param f Path to image file (any CMTK compatible format)
 #' @param mask Optional path to a mask file
+#' @param imagetype Whether image should be treated as greyscale (default) or
+#'   label field.
 #' @param masktype Whether mask should be treated as label field or binary mask 
 #'   (default label)
 #' @param ... Additional arguments for ctmk's statistics tool processed by 
@@ -179,24 +181,40 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
 #' @export
 #' @examples
 #' \dontrun{
-#' cmtk.statistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
+#' cmtk.statistics('someneuron.nrrd', mask='neuropilregionmask.nrrd')
+#' cmtk.statistics('somelabelfield.nrrd', imagetype='label')
 #' }
-cmtk.statistics<-function(f, mask, masktype=c("label", "binary"), ..., Verbose=FALSE){
+cmtk.statistics<-function(f, mask, imagetype=c("greyscale","label"),
+                          masktype=c("label", "binary"), ..., Verbose=FALSE){
   masktype=match.arg(masktype)
-  if(length(f)>1) return(sapply(f,cmtk.statistics,mask=mask,masktype=masktype, ...))
+  imagetype=match.arg(imagetype)
+  if(length(f)>1) return(sapply(f,cmtk.statistics,mask=mask,imagetype=imagetype,
+                                masktype=masktype, ..., Verbose=Verbose))
   args=f
   if(!missing(mask)){
     args=c(ifelse(masktype=='label','--Mask','--mask'), mask, args)
   }
+  if(imagetype=="label") {
+    args=c("--label", args)
+  }
   cmd=cmtk.call("statistics", PROCESSED.ARGS = if(Verbose) "--verbose" else NULL, 
                 FINAL.ARGS = args, ... = ...)
   rval=system(cmd, intern = TRUE, ignore.stderr=!Verbose)
-  # there is a bug in versions of CMTK statistics <2.3.1 when used with a mask 
-  # the header says that there are two entropy columns (H1,H2)
-  # but in fact there is only 1. 
-  rval[2]=sub('H1\tH2','Entropy',rval[2])
-  # use Entropy as standard columen method name
-  rval[2]=sub('\tH\t','\tEntropy\t',rval[2])
-  rval[2]=sub('#M','MaskLevel',rval[2])
-  read.table(text=rval,header=TRUE,skip=1,comment.char="")
+  if(imagetype=="label") {
+    stats=gsub("[\\(\\)]","",rval)
+    stats=gsub(",","\t",stats)
+    # there is a final line that needs to be omitted
+    stats=stats[!grepl("^Entropy:", stats)]
+    # the first line is also useless
+    read.table(text=stats, header=FALSE, skip=1, col.names = c("level","count","surface","volume","X","Y","Z"))
+  } else {
+    # there is a bug in versions of CMTK statistics <2.3.1 when used with a mask 
+    # the header says that there are two entropy columns (H1,H2)
+    # but in fact there is only 1. 
+    rval[2]=sub('H1\tH2','Entropy',rval[2])
+    # use Entropy as standard columen method name
+    rval[2]=sub('\tH\t','\tEntropy\t',rval[2])
+    rval[2]=sub('#M','MaskLevel',rval[2])
+    read.table(text=rval,header=TRUE,skip=1,comment.char="")
+  }
 }

@@ -4,13 +4,16 @@
 \alias{cmtk.statistics}
 \title{Calculate image statistics for a nrrd or other CMTK compatible file}
 \usage{
-cmtk.statistics(f, mask, masktype = c("label", "binary"), ...,
-  Verbose = FALSE)
+cmtk.statistics(f, mask, imagetype = c("greyscale", "label"),
+  masktype = c("label", "binary"), ..., Verbose = FALSE)
 }
 \arguments{
   \item{f}{Path to image file (any CMTK compatible format)}
 
   \item{mask}{Optional path to a mask file}
+
+  \item{imagetype}{Whether image should be treated as
+  greyscale (default) or label field.}
 
   \item{masktype}{Whether mask should be treated as label
   field or binary mask (default label)}
@@ -38,7 +41,8 @@ for each level of the mask.
 }
 \examples{
 \dontrun{
-cmtk.statistics('someneuron.nrrd',mask='neuropilregionmask.nrrd')
+cmtk.statistics('someneuron.nrrd', mask='neuropilregionmask.nrrd')
+cmtk.statistics('somelabelfield.nrrd', imagetype='label')
 }
 }
 
