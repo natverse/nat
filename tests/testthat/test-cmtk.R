@@ -114,7 +114,13 @@ test_that("cmtk.statistics",{
   }
   expect_equal(c,baseline_c)
   
-  cmtk.statistics(lhmaskfile, imagetype = 'label')
+  baseline_label=data.frame(level = 0:1, count = c(96331L, 28669L), 
+                            surface = c(9191L, 7852L), 
+                            volume = c(264332.2505, 78667.732), 
+                            X = c(33.571064, 36.749304), 
+                            Y = c(34.582751, 33.349924), 
+                            Z = c(35.102241, 31.604381))
+  expect_equal(cmtk.statistics(lhmaskfile, imagetype = 'label'), baseline_label)
 })
 
 }
