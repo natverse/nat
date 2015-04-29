@@ -247,6 +247,8 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' @rdname get-set-neuronlist-data.frame
 #' @export
 `data.frame<-.neuronlist`<-function(x, value) {
+  if(is.null(value))
+    return(x)
   nn=names(x)
   matching_rows=intersect(nn, rownames(value))
   if(length(matching_rows)){
