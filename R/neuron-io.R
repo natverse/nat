@@ -141,7 +141,8 @@ read.neuron<-function(f, format=NULL, ...){
 #' ## The same, but this time add some metadata to neuronlist
 #' # fetch table of worm neurons from wormbase
 #' library(rvest)
-#' wormneurons = html_table(html("http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"), fill=TRUE)[[4]]
+#' nlurl="http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"
+#' wormneurons = html_table(html(nlurl), fill=TRUE)[[4]]
 #' vddf=subset(wormneurons, Neuron%in%vds)
 #' rownames(vddf)=vddf$Neuron
 #' # attach metadata to neuronlist
