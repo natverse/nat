@@ -268,7 +268,13 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
   } else {
     stop("data.frame rownames do not match neuron names.")
   }
-  attr(x,'df')=value[names(x),]
+  if(!isTRUE(all.equal(rownames(value), matching_rows))) {
+    # we need to reorder the rows and/or subset the incoming data.frame
+    # we do it like this so that we don't touch the incoming data.frame
+    # unless strictly necessary
+    value=value[matching_rows,]
+  }
+  attr(x,'df')=value
   x
 }
 
