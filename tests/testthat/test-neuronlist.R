@@ -82,7 +82,7 @@ test_that("subset.neuronlist drops NA rows", {
   # make a copy of original
   x=Cell07PNs
   # set one entry to NA
-  attr(x,'df')$Glomerulus[1]=NA
+  data.frame(x)$Glomerulus[1]=NA
   
   expect_equal(subset(Cell07PNs, Glomerulus=='DL3'), 
                subset(x, Glomerulus=='DL3'))
@@ -236,6 +236,6 @@ test_that("as.data.frame.neuronlist behaves", {
   expect_equal(as.data.frame(kcs20, i=seq(kcs20)), cbind(df, i=seq(kcs20)))
   
   kcs20nodf=kcs20
-  attr(kcs20nodf, 'df')=NULL
+  data.frame(kcs20nodf)=NULL
   expect_equal(as.data.frame(kcs20nodf), data.frame(row.names=names(kcs20)))
 })
