@@ -282,7 +282,7 @@ is.neuroml<-function(f, bytes=NULL){
   if(length(f)>1) return(sapply(f,is.neuroml))
   
   bytes=if(is.null(bytes)) readBin(f, what=raw(), n=8L) else bytes
-  if(!generic_magic_check(bytes, "<")) return(FALSE)
+  if(!generic_magic_check(bytes, charToRaw("<"))) return(FALSE)
   if(generic_magic_check(bytes, "<neuroml")) return(TRUE)
   if(generic_magic_check(bytes, "<morphml")) return(TRUE)
   # if we got this far, then we can check if this has an XML header
