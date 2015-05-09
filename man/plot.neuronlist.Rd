@@ -6,7 +6,7 @@
 expression}
 \usage{
 \method{plot}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
-  add = NULL, ..., SUBSTITUTE = TRUE)
+  add = NULL, boundingbox = NULL, ..., SUBSTITUTE = TRUE)
 }
 \arguments{
   \item{x}{a neuron list or, for \code{plot3d.character}, a
@@ -29,6 +29,11 @@ expression}
   existing plot or make a new one. The default value of
   \code{NULL} creates a new plot with the first neuron in
   the neuronlist and then adds the remaining neurons.}
+
+  \item{boundingbox}{A 2 x 3 matrix (ideally of class
+  \code{\link{boundingbox}}) that enables the plot axis
+  limits to be set without worrying about axis selection or
+  reversal (see details)}
 
   \item{...}{options passed on to plot (such as colours,
   line width etc)}

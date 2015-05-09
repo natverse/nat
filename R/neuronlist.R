@@ -465,6 +465,7 @@ plot3d.character<-function(x, db=NULL, ...) {
 #'   first neuron in the neuronlist and then adds the remaining neurons.
 #' @param ... options passed on to plot (such as colours, line width etc)
 #' @inheritParams plot3d.neuronlist
+#' @inheritParams plot.neuron
 #' @return list of values of \code{plot} with subsetted dataframe as attribute 
 #'   \code{'df'}
 #' @export
@@ -474,7 +475,8 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' plot(Cell07PNs[1:4], ylim=c(140, 85))
 #' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
 #'   ylim=c(140,75), WithNodes=FALSE)
-plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ..., SUBSTITUTE=TRUE){
+plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, 
+                          boundingbox=NULL, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -493,7 +495,12 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, ..., SU
   if(is.null(add)){
     add=c(FALSE, rep(TRUE, length(x)-1))
   }
-  rval=mapply(plot, x, col=cols, add=add, MoreArgs = list(...))
+  
+  # check bounding box for data
+  if(is.null(boundingbox)) boundingbox=boundingbox(x)
+  rval=mapply(plot, x, col=cols, add=add, 
+              MoreArgs = list(boundingbox=boundingbox, ...))
+  
   df=attr(x,'df')
   if(is.null(df)) {
     keys=names(x)
