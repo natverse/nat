@@ -284,7 +284,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     }
     
     plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
-            main=main,asp=asp,axes=axes && all(AxisDirections==1),tck=tck,...)
+            main=main,asp=asp,axes=F,tck=tck,...)
     # Draw the axes and surrounding box
     if(axes) {
       box()
