@@ -210,6 +210,18 @@ write.hxsurf <- function(surf, filename) {
 #' @method plot3d hxsurf
 #' @seealso \code{\link{read.hxsurf}}
 #' @family hxsurf
+#' @examples 
+#' plot3d(kcs20)
+#' plot3d(MBL.surf, alpha=0.3)
+#' 
+#' # plot only vertical lobe
+#' clear3d()
+#' plot3d(MBL.surf, materials="VL", alpha=0.3)
+#' 
+#' # everything except vertical lobe
+#' clear3d()
+#' plot3d(MBL.surf, alpha=0.3, 
+#'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
   skip <- par3d(skipRedraw = TRUE)
@@ -270,7 +282,8 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' @param x A dotprops object
 #' @param subset Character vector specifying regions to keep. Interpreted as 
 #'   \code{\link{regex}} if of length 1 and no fixed match.
-#' @param drop Whether to drop unused vertices after subsetting
+#' @param drop Whether to drop unused vertices after subsetting (default:
+#'   \code{TRUE})
 #' @param rval Whether to return a new \code{hxsurf} object or just the names of
 #'   the matching regions
 #' @param ... Additional parameters (currently ignored)
@@ -278,7 +291,16 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' @method subset hxsurf
 #' @export
 #' @family hxsurf
-subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ...){
+#' @examples
+#' plot3d(kcs20)
+#' # plot only vertical lobe
+#' vertical_lobe=subset(MBL.surf, "VL")
+#' plot3d(vertical_lobe, alpha=0.3)
+#' 
+#' # there is also a shortcut for this
+#' clear3d()
+#' plot3d(MBL.surf, "VL", alpha=0.3)
+subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...){
   rval=match.arg(rval)
   if(!is.null(subset)){
     tokeep=integer(0)
@@ -314,6 +336,17 @@ subset.hxsurf<-function(x, subset=NULL, drop=FALSE, rval=c("hxsurf","names"), ..
   }
   x
 }
+
+#' Subset methods for different nat objects
+#' 
+#' These methods enable subsets of some nat objects including neuronlists and 
+#' dotprops objects to be obtained. See the help for each individual method for
+#' details.
+#' 
+#' @name subset
+#' @seealso \code{\link{subset.dotprops}}, \code{\link{subset.hxsurf}}, 
+#'   \code{\link{subset.neuronlist}}
+NULL
 
 #' Find which points of an object are inside a surface
 #' 

@@ -118,11 +118,29 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
   invisible(rglreturnlist)
 }
 
+#' plot3d methods for different nat objects
+#' 
+#' These methods enable nat objects including neuronlists and dotprops objects
+#' to be plotted in 3d. See the help for each individual method for details along
+#' with the help for the generic in the rgl package.
+#' 
+#' @name plot3d
+#' @examples 
+#' ## up to date list of all plot3d nethods in this package
+#' intersect(methods("plot3d"), ls(envir = as.environment('package:nat')))
+#' @seealso \code{\link[rgl]{plot3d}}, \code{\link{plot3d.boundingbox}},
+#'   \code{\link{plot3d.character}}, \code{\link{plot3d.dotprops}},
+#'   \code{\link{plot3d.hxsurf}}, \code{\link{plot3d.neuron}},
+#'   \code{\link{plot3d.neuronlist}}
+NULL
+
 #' Open customised rgl window
-#'
-#' Pan with right button (Ctrl+click), zoom with middle
-#'   (Alt/Meta+click) button. Defaults to a white background and orthogonal
-#'   projection (FOV=0)
+#' 
+#' Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
+#' Defaults to a white background and orthogonal projection (FOV=0)
+#' 
+#' Note that sometimes (parts of) objects seem to disappear after panning and
+#' zooming. See help for \code{\link{pan3d}}.
 #' @param bgcol background colour
 #' @param FOV field of view
 #' @param ... additional options passed to open3d
@@ -137,11 +155,15 @@ nopen3d<- function(bgcol='white', FOV=0, ...){
 }
 
 #' Some useful extensions / changes to rgl defaults
-#'
+#' 
 #' Set up pan call back for current rgl device
-#'
-#' Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892
-#' Mouse button 2 is right and button 3 is middle (accessed by meta/alt key)
+#' 
+#' Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892 Mouse
+#' button 2 is right and button 3 is middle (accessed by meta/alt key)
+#' 
+#' Note that sometimes (parts of) objects seem to disappear after panning and 
+#' zooming. The example in \code{\link{rgl.setMouseCallbacks}} from which this
+#' is copied includes a note that "this doesn't play well with rescaling"
 #' @param button Integer from 1 to 3 indicating mouse button
 #' @seealso \code{\link{rgl.setMouseCallbacks}}
 #' @author Duncan Murdoch
@@ -169,13 +191,23 @@ pan3d <- function(button) {
   rgl.setMouseCallbacks(button, begin, update)
 }
 
-#' Plot a 2D project of a neuron
+#' Plot a 2D projection of a neuron
 #' 
 #' @export
-#' @method plot neuron
+#' @details This functions sets the axis ranges based on the chosen
+#'   \code{PlotAxes} and the range of the data in \code{x}. It is still possible
+#'   to use \code{PlotAxes} in combination with a \code{boundingbox}, for
+#'   example to set the range of a plot of a number of objects.
+#'   
+#'   nat assumes the default axis convention used in biological imaging, where
+#'   the origin of the y axis is the top rather than the bottom of the plot.
+#'   This is achieved by reversing the y axis of the 2D plot when the second
+#'   data axis is the Y axis of the 3d data. Other settings can be achieved by
+#'   modfiying the AxisDirections argument.
+#'   
 #' @param x a neuron to plot.
 #' @param WithLine whether to plot lines for all segments in neuron.
-#' @param WithNodes whether points should only be drawn for nodes (branch/end
+#' @param WithNodes whether points should only be drawn for nodes (branch/end 
 #'   points)
 #' @param WithAllPoints whether points should be drawn for all points in neuron.
 #' @param WithText whether to label plotted points with their id.
@@ -183,20 +215,23 @@ pan3d <- function(button) {
 #' @param axes whether axes should be drawn.
 #' @param asp the \code{y/x} aspect ratio, see \code{\link{plot.window}}.
 #' @param main the title for the plot.
-#' @param xlim limits for the horizontal axis.
-#' @param ylim limits for the vertical axis.
+#' @param xlim limits for the horizontal axis (see also boundingbox)
+#' @param ylim limits for the vertical axis (see also boundingbox)
 #' @param AxisDirections the directions for the axes. By default, R uses the 
 #'   bottom-left for the origin, whilst most graphics software uses the 
 #'   top-left. The default value of \code{c(1, -1, 1)} makes the produced plot 
 #'   consistent with the latter.
-#' @param add Whether the plot should be superimposed on one already 
-#'   present (default: \code{FALSE}).
+#' @param add Whether the plot should be superimposed on one already present 
+#'   (default: \code{FALSE}).
 #' @param col the color in which to draw the lines between nodes.
 #' @param PointAlpha the value of alpha to use in plotting the nodes.
 #' @param tck length of tick mark as fraction of plotting region (negative 
 #'   number is outside graph, positive number is inside, 0 suppresses ticks, 1 
 #'   creates gridlines).
 #' @param lwd line width relative to the default (default=1).
+#' @param boundingbox A 2 x 3 matrix (ideally of class 
+#'   \code{\link{boundingbox}}) that enables the plot axis limits to be set 
+#'   without worrying about axis selection or reversal (see details)
 #' @param ... additional arguments passed to plot
 #' @return list of plotted points (invisibly)
 #' @seealso \code{\link{plot3d.neuron}}
@@ -214,7 +249,8 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,
                         main=x$NeuronName, xlim=NULL, ylim=NULL,
                         AxisDirections=c(1,-1,1), add=FALSE, col=NULL,
-                        PointAlpha=1, tck=NA, lwd=par("lwd"), ...) {
+                        PointAlpha=1, tck=NA, lwd=par("lwd"), 
+                        boundingbox=NULL, ...) {
   
   # R uses the bottom-left as the origin, while we want the top-left
   PlotAxes <- match.arg(PlotAxes)
@@ -222,17 +258,6 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     if(PlotAxes=="YZ") {PlotAxes<-c("Y","Z");NumPlotAxes<-c(2,3)} else
       if(PlotAxes=="XZ") {PlotAxes<-c("X","Z");NumPlotAxes<-c(1,3)} else 
         if(PlotAxes=="ZY") {PlotAxes<-c("Z","Y");NumPlotAxes<-c(3,2)}
-    
-  # Set limits for axes (inverting y axis if necessary due to differing handedness)
-  myxlims <- range(x$d[PlotAxes[1]],na.rm = TRUE)
-  myylims <- if(PlotAxes[2] == "Y") rev(range(x$d[PlotAxes[2]],na.rm = TRUE)) else range(x$d[PlotAxes[2]],na.rm = TRUE)
-    
-  if (!is.null(xlim)) {
-    myxlims=xlim
-  }
-  if (!is.null(ylim)) {
-    myylims=ylim
-  }    
   
   if(WithAllPoints){
     mycols<-rep("red",x$NumPoints)
@@ -254,8 +279,26 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
   # Draw the plot
   if(add) points(PlottedPoints[,PlotAxes],col=mycols,pch=20,asp=asp,...)
   else {
+    # We are setting up the plot, so we need to find limits for axes 
+    # (inverting y axis if necessary due to differing handedness)
+    if(is.null(boundingbox))
+      boundingbox=boundingbox(x)
+    colnames(boundingbox)=c("X","Y","Z")
+    myxlims <- boundingbox[,PlotAxes[1]]
+    myylims <- boundingbox[,PlotAxes[2]]
+    
+    AxesToReverse=c("X","Y","Z")[AxisDirections<0]
+    if(PlotAxes[2] %in% AxesToReverse) myylims <- rev(myylims)
+    
+    if (!is.null(xlim)) {
+      myxlims=xlim
+    }
+    if (!is.null(ylim)) {
+      myylims=ylim
+    }
+    
     plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
-            main=main,asp=asp,axes=axes && all(AxisDirections==1),tck=tck,...)
+            main=main,asp=asp,axes=F,tck=tck,...)
     # Draw the axes and surrounding box
     if(axes) {
       box()

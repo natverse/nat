@@ -1046,7 +1046,7 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
 #' Extract or set the materials for an object
 #' @details Note that the id column will be the 1-indexed order that the
 #'   material appears in the \code{surf$Region} list for \code{hxsurf} objects
-#'   and the 0-indexed mask values for a nrrd
+#'   and the 0-indexed mask values for an image.
 #' @param x An object in memory or, for \code{materials.character}, an image on 
 #'   disk.
 #' @param \dots additional parameters passed to methods (presently ignored)
@@ -1061,8 +1061,11 @@ materials.default<-function(x, ...) {
   attr(x,'materials')
 }
 
-#' @description \code{materials.character} will read the materials from an im3d
+#' @description \code{materials.character} will read the materials from an im3d 
 #'   compatible image file on disk.
+#' @details Presently only amiramesh images are supported since they have a
+#'   standardised way of encoding labels, whereas nrrds would have to use
+#'   key-value pairs according to some ad hoc convention.
 #' @export
 #' @rdname materials
 #' @method materials character

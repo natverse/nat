@@ -83,18 +83,19 @@ test_that("cmtk.call",{
 test_that("cmtk.statistics",{
   lhmaskfile="testdata/nrrd/LHMask.nrrd"
   statsnrrd="testdata/nrrd/dataforstats.nrrd"
-  a=suppressMessages(cmtk.statistics(lhmaskfile))
   baseline_a=structure(list(min = 0, max = 1, mean = 0.22935, sdev = 0.42042, 
                             n = 125000L, Entropy = 0.53849, sum = 28669), 
                        .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"),
                        class = "data.frame", row.names = c(NA, -1L))
-  b=cmtk.statistics(statsnrrd)
   baseline_b=structure(list(min = 0, max = 100, mean = 8e-04, sdev = 0.28284, 
                             n = 125000L, Entropy = 1e-04, sum = 100), 
                        .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
                        class = "data.frame", row.names = c(NA, -1L))
-  expect_equal(a,baseline_a)
-  expect_equal(b,baseline_b)
+  
+  expect_equal(cmtk.statistics(lhmaskfile), baseline_a)
+  expect_equal(b<-cmtk.statistics(statsnrrd), baseline_b)
+  expect_equal(cmtk.statistics(statsnrrd, imagetype = 'grey'), b)
+  
   c=cmtk.statistics(statsnrrd,mask=lhmaskfile)
   # my hacked version of statistics provides nnz
   if('nnz'%in%names(c)){
@@ -113,6 +114,14 @@ test_that("cmtk.statistics",{
                            class = "data.frame", row.names = c(NA, -2L))
   }
   expect_equal(c,baseline_c)
+  
+  baseline_label=data.frame(level = 0:1, count = c(96331L, 28669L), 
+                            surface = c(9191L, 7852L), 
+                            volume = c(264332.2505, 78667.732), 
+                            X = c(33.571064, 36.749304), 
+                            Y = c(34.582751, 33.349924), 
+                            Z = c(35.102241, 31.604381))
+  expect_equal(cmtk.statistics(lhmaskfile, imagetype = 'label'), baseline_label)
 })
 
 }
