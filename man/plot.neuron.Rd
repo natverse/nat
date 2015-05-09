@@ -2,13 +2,13 @@
 % Please edit documentation in R/neuron-plot.R
 \name{plot.neuron}
 \alias{plot.neuron}
-\title{Plot a 2D project of a neuron}
+\title{Plot a 2D projection of a neuron}
 \usage{
 \method{plot}{neuron}(x, WithLine = TRUE, WithNodes = TRUE,
   WithAllPoints = FALSE, WithText = FALSE, PlotAxes = c("XY", "YZ", "XZ",
   "ZY"), axes = TRUE, asp = 1, main = x$NeuronName, xlim = NULL,
   ylim = NULL, AxisDirections = c(1, -1, 1), add = FALSE, col = NULL,
-  PointAlpha = 1, tck = NA, lwd = par("lwd"), ...)
+  PointAlpha = 1, tck = NA, lwd = par("lwd"), boundingbox = NULL, ...)
 }
 \arguments{
   \item{x}{a neuron to plot.}
@@ -34,9 +34,11 @@
 
   \item{main}{the title for the plot.}
 
-  \item{xlim}{limits for the horizontal axis.}
+  \item{xlim}{limits for the horizontal axis (see also
+  boundingbox)}
 
-  \item{ylim}{limits for the vertical axis.}
+  \item{ylim}{limits for the vertical axis (see also
+  boundingbox)}
 
   \item{AxisDirections}{the directions for the axes. By
   default, R uses the bottom-left for the origin, whilst
@@ -60,13 +62,26 @@
   \item{lwd}{line width relative to the default
   (default=1).}
 
+  \item{boundingbox}{A 2 x 3 matrix (ideally of class
+  \code{\link{boundingbox}}) that enables the plot axis
+  limits to be set without worrying about axis selection or
+  reversal (see details)}
+
   \item{...}{additional arguments passed to plot}
 }
 \value{
 list of plotted points (invisibly)
 }
 \description{
-Plot a 2D project of a neuron
+Plot a 2D projection of a neuron
+}
+\details{
+This functions sets the axis ranges based on the chosen
+\code{PlotAxes} and the range of the data in \code{x}. It
+is still possible to use \code{PlotAxes} in combination
+with a \code{boundingbox}, for example to set the range of
+a plot of a number of objects.
+
 }
 \examples{
 # Draw first example neuron

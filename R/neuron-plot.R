@@ -194,7 +194,11 @@ pan3d <- function(button) {
 #' Plot a 2D project of a neuron
 #' 
 #' @export
-#' @method plot neuron
+#' @details This functions sets the axis ranges based on the chosen
+#'   \code{PlotAxes} and the range of the data in \code{x}. It is still possible
+#'   to use \code{PlotAxes} in combination with a \code{boundingbox}, for
+#'   example to set the range of a plot of a number of objects.
+#'   
 #' @param x a neuron to plot.
 #' @param WithLine whether to plot lines for all segments in neuron.
 #' @param WithNodes whether points should only be drawn for nodes (branch/end
@@ -205,8 +209,8 @@ pan3d <- function(button) {
 #' @param axes whether axes should be drawn.
 #' @param asp the \code{y/x} aspect ratio, see \code{\link{plot.window}}.
 #' @param main the title for the plot.
-#' @param xlim limits for the horizontal axis.
-#' @param ylim limits for the vertical axis.
+#' @param xlim limits for the horizontal axis (see also boundingbox)
+#' @param ylim limits for the vertical axis (see also boundingbox)
 #' @param AxisDirections the directions for the axes. By default, R uses the 
 #'   bottom-left for the origin, whilst most graphics software uses the 
 #'   top-left. The default value of \code{c(1, -1, 1)} makes the produced plot 
@@ -219,7 +223,9 @@ pan3d <- function(button) {
 #'   number is outside graph, positive number is inside, 0 suppresses ticks, 1 
 #'   creates gridlines).
 #' @param lwd line width relative to the default (default=1).
-#' @param boundingbox Used for computing axis limits without havin to 
+#' @param boundingbox A 2 x 3 matrix (ideally of class 
+#'   \code{\link{boundingbox}}) that enables the plot axis limits to be set 
+#'   without worrying about axis selection or reversal (see details)
 #' @param ... additional arguments passed to plot
 #' @return list of plotted points (invisibly)
 #' @seealso \code{\link{plot3d.neuron}}
