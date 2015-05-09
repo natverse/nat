@@ -219,6 +219,7 @@ pan3d <- function(button) {
 #'   number is outside graph, positive number is inside, 0 suppresses ticks, 1 
 #'   creates gridlines).
 #' @param lwd line width relative to the default (default=1).
+#' @param boundingbox Used for computing axis limits without havin to 
 #' @param ... additional arguments passed to plot
 #' @return list of plotted points (invisibly)
 #' @seealso \code{\link{plot3d.neuron}}
@@ -236,7 +237,8 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,
                         main=x$NeuronName, xlim=NULL, ylim=NULL,
                         AxisDirections=c(1,-1,1), add=FALSE, col=NULL,
-                        PointAlpha=1, tck=NA, lwd=par("lwd"), ...) {
+                        PointAlpha=1, tck=NA, lwd=par("lwd"), 
+                        boundingbox=NULL, ...) {
   
   # R uses the bottom-left as the origin, while we want the top-left
   PlotAxes <- match.arg(PlotAxes)
@@ -244,17 +246,6 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     if(PlotAxes=="YZ") {PlotAxes<-c("Y","Z");NumPlotAxes<-c(2,3)} else
       if(PlotAxes=="XZ") {PlotAxes<-c("X","Z");NumPlotAxes<-c(1,3)} else 
         if(PlotAxes=="ZY") {PlotAxes<-c("Z","Y");NumPlotAxes<-c(3,2)}
-    
-  # Set limits for axes (inverting y axis if necessary due to differing handedness)
-  myxlims <- range(x$d[PlotAxes[1]],na.rm = TRUE)
-  myylims <- if(PlotAxes[2] == "Y") rev(range(x$d[PlotAxes[2]],na.rm = TRUE)) else range(x$d[PlotAxes[2]],na.rm = TRUE)
-    
-  if (!is.null(xlim)) {
-    myxlims=xlim
-  }
-  if (!is.null(ylim)) {
-    myylims=ylim
-  }    
   
   if(WithAllPoints){
     mycols<-rep("red",x$NumPoints)
@@ -276,6 +267,22 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
   # Draw the plot
   if(add) points(PlottedPoints[,PlotAxes],col=mycols,pch=20,asp=asp,...)
   else {
+    # We are setting up the plot, so we need to find limits for axes 
+    # (inverting y axis if necessary due to differing handedness)
+    if(is.null(boundingbox))
+      boundingbox=boundingbox(x)
+    colnames(boundingbox)=c("X","Y","Z")
+    myxlims <- boundingbox[,PlotAxes[1]]
+    myylims <- boundingbox[,PlotAxes[2]]
+    if(PlotAxes[2] == "Y") myylims <- rev(myylims)
+    
+    if (!is.null(xlim)) {
+      myxlims=xlim
+    }
+    if (!is.null(ylim)) {
+      myylims=ylim
+    }
+    
     plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
             main=main,asp=asp,axes=axes && all(AxisDirections==1),tck=tck,...)
     # Draw the axes and surrounding box
