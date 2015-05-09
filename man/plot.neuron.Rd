@@ -82,6 +82,12 @@ is still possible to use \code{PlotAxes} in combination
 with a \code{boundingbox}, for example to set the range of
 a plot of a number of objects.
 
+nat assumes the default axis convention used in biological
+imaging, where the origin of the y axis is the top rather
+than the bottom of the plot.  This is achieved by reversing
+the y axis of the 2D plot when the second data axis is the
+Y axis of the 3d data. Other settings can be achieved by
+modfiying the AxisDirections argument.
 }
 \examples{
 # Draw first example neuron

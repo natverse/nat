@@ -191,7 +191,7 @@ pan3d <- function(button) {
   rgl.setMouseCallbacks(button, begin, update)
 }
 
-#' Plot a 2D project of a neuron
+#' Plot a 2D projection of a neuron
 #' 
 #' @export
 #' @details This functions sets the axis ranges based on the chosen
@@ -199,9 +199,15 @@ pan3d <- function(button) {
 #'   to use \code{PlotAxes} in combination with a \code{boundingbox}, for
 #'   example to set the range of a plot of a number of objects.
 #'   
+#'   nat assumes the default axis convention used in biological imaging, where
+#'   the origin of the y axis is the top rather than the bottom of the plot.
+#'   This is achieved by reversing the y axis of the 2D plot when the second
+#'   data axis is the Y axis of the 3d data. Other settings can be achieved by
+#'   modfiying the AxisDirections argument.
+#'   
 #' @param x a neuron to plot.
 #' @param WithLine whether to plot lines for all segments in neuron.
-#' @param WithNodes whether points should only be drawn for nodes (branch/end
+#' @param WithNodes whether points should only be drawn for nodes (branch/end 
 #'   points)
 #' @param WithAllPoints whether points should be drawn for all points in neuron.
 #' @param WithText whether to label plotted points with their id.
@@ -215,8 +221,8 @@ pan3d <- function(button) {
 #'   bottom-left for the origin, whilst most graphics software uses the 
 #'   top-left. The default value of \code{c(1, -1, 1)} makes the produced plot 
 #'   consistent with the latter.
-#' @param add Whether the plot should be superimposed on one already 
-#'   present (default: \code{FALSE}).
+#' @param add Whether the plot should be superimposed on one already present 
+#'   (default: \code{FALSE}).
 #' @param col the color in which to draw the lines between nodes.
 #' @param PointAlpha the value of alpha to use in plotting the nodes.
 #' @param tck length of tick mark as fraction of plotting region (negative 
@@ -280,7 +286,9 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     colnames(boundingbox)=c("X","Y","Z")
     myxlims <- boundingbox[,PlotAxes[1]]
     myylims <- boundingbox[,PlotAxes[2]]
-    if(PlotAxes[2] == "Y") myylims <- rev(myylims)
+    
+    AxesToReverse=c("X","Y","Z")[AxisDirections<0]
+    if(PlotAxes[2] %in% AxesToReverse) myylims <- rev(myylims)
     
     if (!is.null(xlim)) {
       myxlims=xlim
