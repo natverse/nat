@@ -95,11 +95,16 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
                         col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
                         colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
   pointst <- data.matrix(cmtkOut[,1:3])
-  if(FallBackToAffine && transformtype=='warp'){
+  
+  if(transformtype=='warp'){
     naPoints = cmtkOut$Failed =="FAILED"
-    if(any(naPoints)) {
-      affpoints = xformpoints(reg,points[naPoints,,drop=FALSE],transformtype='affine')
-      pointst[naPoints, ] = affpoints
+    if(any(naPoints)){
+      if(FallBackToAffine) {
+        affpoints = xformpoints(reg,points[naPoints,,drop=FALSE],transformtype='affine')
+        pointst[naPoints, ] = affpoints
+      } else {
+        pointst[naPoints, ] = NA_real_
+      }
     }
   }
   
