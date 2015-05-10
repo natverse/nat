@@ -19,6 +19,16 @@ if(!is.null(cmtk.bindir())){
     # verify bounding box of output
     bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
     expect_equal(boundingbox(imout), bb_out)
+    expect_output(xform("testdata/nrrd/JFRC2-444_mask.nrrd", 
+                       reg = 'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/',
+                       target='testdata/nrrd/FCWB_2um_mask.nrrd',
+                       out=td), "already exists.*use OverWrite")
+    
+    expect_output(xform("testdata/nrrd/JFRC2-444_mask.nrrd", 
+                        reg = 'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/',
+                        target='testdata/nrrd/FCWB_2um_mask.nrrd',
+                        out=td, OverWrite='update'),
+                  "Skipping.*because input files are older")
   })
   
   test_that("xform(image) can carry out a simple reformat operation with an in-memory registration", {

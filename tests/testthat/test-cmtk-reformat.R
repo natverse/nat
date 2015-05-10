@@ -6,6 +6,10 @@ if(is.null(cmtk.bindir())){
   
   context("cmtk reformatx")
   
+  #' test handling of missing inputs
+  expect_output(cmtk.reformatx('in.nrrd', reg='reg.list', output = 'out.nrrd', 
+                               target = 'target.nrrd'), "Missing input files.*")
+  
   #' round trip test of mat2dof/dof2mat
   test_that("reformatx can reformat a volume", {
     tf=tempfile(fileext='.nrrd')
