@@ -10,8 +10,10 @@
 \alias{xyzmatrix.neuronlist}
 \alias{xyzmatrix.shape3d}
 \alias{xyzmatrix<-}
+\alias{xyzmatrix<-.dotprops}
 \alias{xyzmatrix<-.hxsurf}
 \alias{xyzmatrix<-.igraph}
+\alias{xyzmatrix<-.neuron}
 \alias{xyzmatrix<-.shape3d}
 \title{Get and assign coordinates for classes containing 3d vertex data}
 \usage{
@@ -32,6 +34,10 @@ xyzmatrix(x, ...)
 \method{xyzmatrix}{shape3d}(x, ...)
 
 xyzmatrix(x) <- value
+
+\method{xyzmatrix}{neuron}(x) <- value
+
+\method{xyzmatrix}{dotprops}(x) <- value
 
 \method{xyzmatrix}{hxsurf}(x) <- value
 
