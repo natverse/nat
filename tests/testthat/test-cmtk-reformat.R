@@ -6,8 +6,8 @@ if(is.null(cmtk.bindir())){
   
   context("cmtk reformatx")
   
-  #' test handling of missing inputs
-  expect_output(cmtk.reformatx('in.nrrd', reg='reg.list', output = 'out.nrrd', 
+  #' test handling of missing inputs (and default output file)
+  expect_output(cmtk.reformatx('in.nrrd', reg='reg.list', 
                                target = 'target.nrrd'), "Missing input files.*")
   
   #' round trip test of mat2dof/dof2mat
