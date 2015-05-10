@@ -148,8 +148,10 @@ test_that("plot2d neuronlist contents",{
   # more tests for colour evaluation
   x<-plot(Cell07PNs, subset=names(Cell07PNs)[1:2], col=Glomerulus, colpal=heat.colors)
   expect_equal(attr(x,'df')$col, heat.colors(2))
-  x<-plot(Cell07PNs, subset=1:2, col=Glomerulus, colpal=c(DA1='red',DL3='green'))
-  expect_equal(attr(x,'df')$col, c("red","green"))
+  # note use of subset expression and use of default colour value
+  x<-plot(Cell07PNs, subset=!duplicated(Glomerulus), col=Glomerulus, 
+          colpal=c(DA1='red','grey'))
+  expect_equal(attr(x,'df')$col, c("red","grey","grey", "grey"))
 })
 
 context("neuronlist: plot3d")

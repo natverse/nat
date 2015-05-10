@@ -73,9 +73,13 @@ The col and subset parameters are evaluated in the context
 of the dataframe attribute of the neuronlist. If col
 evaluates to a factor and colpal is a named vector then
 colours will be assigned by matching factor levels against
-the named elements of colpal. If col evaluates to a factor
-and colpal is a function then it will be used to generate
-colours with the same number of levels as are used in col.
+the named elements of colpal. If there is one unnamed
+level, this will be used as catch-all default value (see
+examples).
+
+If col evaluates to a factor and colpal is a function then
+it will be used to generate colours with the same number of
+levels as are used in col.
 
 WithNodes is \code{FALSE} by default when using
 \code{plot3d.neuronlist} but remains \code{TRUE} by default
@@ -110,6 +114,9 @@ plot3d(kcs20,col=type)
 \dontrun{
 plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
+# Note use of default colour for non DA1 neurons
+plot3d(Cell07PNs,col=Glomerulus, colpal=c(DA1='red', 'grey'))
+# a subset expression
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),
   col=c("red","green")[factor(Glomerulus)])
 # the same but not specifying colours explicitly
