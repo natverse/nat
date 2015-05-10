@@ -105,7 +105,7 @@ test_that("we can mirror a neuron list", {
 
 context('xyzmatrix')
 
-test_that("can extract xyz coords from a matrix",{
+test_that("can extract xyz coords from a matrix and other objects",{
   mx=matrix(1:24,ncol=3)
   expect_equivalent(xyzmatrix(mx),mx)
   colnames(mx)=c("X","Y","Z")
@@ -116,6 +116,11 @@ test_that("can extract xyz coords from a matrix",{
   
   df=data.frame(X=1:4,Y=2:5,Z=3:6,W=1)
   expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
+  
+  fake_neuron=list(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
+  xyz1=matrix(1,ncol=3, dimnames = list(NULL, c("X","Y","Z")))
+  expect_equal(xyzmatrix(fake_neuron), xyz1)
+  expect_equal(xyzmatrix(1,1,1), xyz1)
 })
 
 test_that("can replace xyz coords of a matrix",{
