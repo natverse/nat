@@ -25,9 +25,11 @@ test_that("c.neuronlist behaves", {
   expect_error(c(Cell07PNs[1:5], Cell07PNs[1:5]), "neurons with the same name")
 })
 
-test_that("head.neuronlist behaves", {
+test_that("head.neuronlist and tail.neuronlist behave", {
   expect_is(h<-head(Cell07PNs),class='data.frame')
   expect_that(nrow(h),equals(6L))
+  nl3=Cell07PNs[1:3]
+  expect_equal(head(nl3), tail(nl3))
 })
 
 test_that("with.neuronlist / droplevels behave", {
