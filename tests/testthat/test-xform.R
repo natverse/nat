@@ -55,6 +55,9 @@ if(!is.null(cmtk.bindir())){
     baselinem[2,]=c(2.65463188, 13.857304, 14.7245891)
     expect_warning(tm<-xform(m, reg), "2 points .*not.*transformed")
     expect_equal(tm, baselinem)
+    expect_error(xform(m, reg, na.action='error'), "2 points")
+    # nb should not drop dimensions
+    expect_equal(xform(m, reg, na.action='drop'), baselinem[2, , drop=FALSE])
   })
 }
 
