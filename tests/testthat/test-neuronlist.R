@@ -131,6 +131,7 @@ context("neuronlist: plot2d")
 test_that("plot2d neuronlist contents",{
   # check that the cells are plotted in expected colours
   x <- plot(Cell07PNs[1:2], colpal=grey(c(0,0.5)))
+  expect_equal(length(x), 2)
   expect_equal(attr(x,'df')$col, c("#000000", "#808080"))
   x <- plot(Cell07PNs[1:4], col=4:1)
   expect_equal(attr(x,'df')$col, rev(rainbow(4)))
@@ -139,7 +140,7 @@ test_that("plot2d neuronlist contents",{
 context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
-  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs))
+  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
   op=options(nat.default.neuronlist="Cell07PNs")
   expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
   options(op)

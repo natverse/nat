@@ -406,7 +406,8 @@ plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
     on.exit(par3d(op))
   }
   
-  rval=mapply(plot3d,x,col=cols,soma=soma,...,MoreArgs = list(WithNodes=WithNodes))
+  rval=mapply(plot3d,x,col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
+              SIMPLIFY=FALSE)
   df=attr(x,'df')
   if(is.null(df)) {
     keys=names(x)
@@ -499,7 +500,7 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL,
   # check bounding box for data
   if(is.null(boundingbox)) boundingbox=boundingbox(x)
   rval=mapply(plot, x, col=cols, add=add, 
-              MoreArgs = list(boundingbox=boundingbox, ...))
+              MoreArgs = list(boundingbox=boundingbox, ...), SIMPLIFY = F)
   
   df=attr(x,'df')
   if(is.null(df)) {
