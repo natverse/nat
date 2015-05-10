@@ -53,7 +53,8 @@ if(!is.null(cmtk.bindir())){
     m=matrix(c(4:9, -200,-200,-200), ncol=3, byrow = T)
     baselinem=matrix(NA_real_, ncol=3, nrow=3)
     baselinem[2,]=c(2.65463188, 13.857304, 14.7245891)
-    expect_equal(xform(m, reg), baselinem)
+    expect_warning(tm<-xform(m, reg), "2 points .*not.*transformed")
+    expect_equal(tm, baselinem)
   })
 }
 

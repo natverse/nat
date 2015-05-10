@@ -38,9 +38,9 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
     if (na.action == "drop") 
       pointst = pointst[!naPoints, ]
     else if (na.action == "warn") 
-      warning("There were ", length(naPoints), " that could not be transformed")
+      warning("There were ", sum(naPoints), " points that could not be transformed")
     else if (na.action == "error") 
-      stop("There were ", length(naPoints), " that could not be transformed")
+      stop("There were ", sum(naPoints), " points that could not be transformed")
   }
   pointst
 }
