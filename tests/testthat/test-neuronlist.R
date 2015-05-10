@@ -10,6 +10,8 @@ test_that("as.neuronlist behaves", {
   expect_equal(as.neuronlist(n14.nonames, df=df), n14)
   names(n14.nonames)=rep("", length(n14))
   expect_equal(as.neuronlist(n14.nonames, df=df), n14)
+  
+  expect_equivalent(as.neuronlist(Cell07PNs[[1]]), Cell07PNs[1])
 })
 
 test_that("c.neuronlist behaves", {
