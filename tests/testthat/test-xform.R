@@ -47,6 +47,16 @@ test_that("we can xform a neuronlist with multiple registrations", {
 })
 }
 
+if(!is.null(cmtk.bindir())){
+  test_that("we can xform points with non-rigid reg and handle bad points", {
+    reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
+    m=matrix(c(4:9, -200,-200,-200), ncol=3, byrow = T)
+    baselinem=matrix(NA_real_, ncol=3, nrow=3)
+    baselinem[2,]=c(2.65463188, 13.857304, 14.7245891)
+    expect_equal(xform(m, reg), baselinem)
+  })
+}
+
 test_that("mirror with flip only gives same result as neuron arithmetic", {
   n=Cell07PNs[[1]]
   mn1=(n*c(-1,1,1))+c(168,0,0)
