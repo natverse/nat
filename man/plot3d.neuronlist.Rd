@@ -121,8 +121,21 @@ plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),
   col=c("red","green")[factor(Glomerulus)])
 # the same but not specifying colours explicitly
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),col=Glomerulus)
-plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
-plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
+
+## more complex colouring strategies for a larger neuron set
+# see https://github.com/jefferis/frulhns for details
+library(frulhns)
+# notice the sexually dimorphic projection patterns for these neurons
+plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029',
+  col=sex,colpal=c(male='green',female='magenta'))
+
+## colour neurons of a class by input resistance
+jkn.aspg=subset(jkn, cluster=='aSP-g')
+# NB this comes in as a factor
+Ri=with(jkn.aspg,as.numeric(as.character(Ri..GOhm.)))
+# the matlab jet palette
+jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
+plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 }
 }
 \seealso{
