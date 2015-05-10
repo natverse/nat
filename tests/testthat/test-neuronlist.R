@@ -160,6 +160,11 @@ test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
   expect_is(f(SUBSTITUTE = FALSE), 'list')
 })
 
+test_that("basic interactive 3d functionality",{
+  open3d()
+  expect_output(nlscan(names(Cell07PNs)[1:2], db=Cell07PNs, Wait=F), "2 / 2")
+  rgl.close()
+})
 
 context("neuronlist: set operations")
 
