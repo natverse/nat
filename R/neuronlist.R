@@ -408,12 +408,8 @@ plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
   
   rval=mapply(plot3d,x,col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
               SIMPLIFY=FALSE)
-  df=attr(x,'df')
-  if(is.null(df)) {
-    keys=names(x)
-    if(is.null(keys)) keys=seq_along(x)
-    df=data.frame(key=keys,stringsAsFactors=FALSE)
-  } else if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
+  df=as.data.frame(x)
+  if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
                all(c("X","Y","Z") %in% colnames(df))){
     if(is.logical(soma)) soma=2
     rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
@@ -502,12 +498,7 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL,
   rval=mapply(plot, x, col=cols, add=add, 
               MoreArgs = list(boundingbox=boundingbox, ...), SIMPLIFY = F)
   
-  df=attr(x,'df')
-  if(is.null(df)) {
-    keys=names(x)
-    if(is.null(keys)) keys=seq_along(x)
-    df=data.frame(key=keys,stringsAsFactors=FALSE)
-  }
+  df=as.data.frame(x)
   df$col=cols
   attr(rval,'df')=df
   invisible(rval)
