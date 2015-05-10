@@ -141,6 +141,10 @@ test_that("can replace xyz coords of a matrix",{
   colnames(mx2)=c("x","y","z")
   
   expect_equivalent(xyzmatrix(mx)<-xyzmatrix(mx2), mx)
+  mx3=cbind(mx, W=1)
+  mx3.saved=mx3
+  expect_is(xyzmatrix(mx3)<-xyzmatrix(mx2), 'matrix')
+  expect_equal(mx3, mx3.saved)
 })
 
 test_that("can extract xyz coords from a neuronlist",{
