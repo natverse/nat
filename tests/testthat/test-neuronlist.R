@@ -127,6 +127,15 @@ test_that("nmapply can omit failures",{
                        mirrorAxisSize=c(400,20,Inf), subset=1:3, OmitFailures=TRUE)), 4)
 })
 
+context("neuronlist: plot2d")
+test_that("plot2d neuronlist contents",{
+  # check that the cells are plotted in expected colours
+  x <- plot(Cell07PNs[1:2], colpal=grey(c(0,0.5)))
+  expect_equal(attr(x,'df')$col, c("#000000", "#808080"))
+  x <- plot(Cell07PNs[1:4], col=4:1)
+  expect_equal(attr(x,'df')$col, rev(rainbow(4)))
+})
+
 context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
