@@ -144,6 +144,12 @@ test_that("plot2d neuronlist contents",{
   expect_equal(attr(x,'df')$col, c("#000000", "#808080"))
   x <- plot(Cell07PNs[1:4], col=4:1)
   expect_equal(attr(x,'df')$col, rev(rainbow(4)))
+  
+  # more tests for colour evaluation
+  x<-plot(Cell07PNs, subset=names(Cell07PNs)[1:2], col=Glomerulus, colpal=heat.colors)
+  expect_equal(attr(x,'df')$col, heat.colors(2))
+  x<-plot(Cell07PNs, subset=1:2, col=Glomerulus, colpal=c(DA1='red',DL3='green'))
+  expect_equal(attr(x,'df')$col, c("red","green"))
 })
 
 context("neuronlist: plot3d")
