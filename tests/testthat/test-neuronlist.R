@@ -163,6 +163,17 @@ test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
 test_that("basic interactive 3d functionality",{
   open3d()
   expect_output(nlscan(names(Cell07PNs)[1:2], db=Cell07PNs, Wait=F), "2 / 2")
+  
+  selfun=readRDS('testdata/selfun_cell07.rds')
+  sel_neuron=c("EBH11R", "EBH20L", "EBH20R", "EBI12L", "EBI22R", "EBJ23L", 
+    "EBJ3R", "EBN19L", "EBO15L", "EBO53L", "ECA34L", "ECB3L", "LIC2R", 
+    "NIA8L", "NIA8R", "NNA9L", "NNC4R", "NNE1L", "OFD2L", "SDD8L", 
+    "TKC8R")
+  expect_equal(find.neuron(selfun, db=Cell07PNs), sel_neuron)
+  
+  sel_soma=c("EBH20L", "EBH20R", "EBJ3R", "EBO15L", "EBO53L")
+  expect_equal(find.soma(selfun, db=Cell07PNs), sel_soma)
+  
   rgl.close()
 })
 
