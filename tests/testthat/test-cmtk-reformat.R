@@ -6,6 +6,10 @@ if(is.null(cmtk.bindir())){
   
   context("cmtk reformatx")
   
+  #' test handling of missing inputs (and default output file)
+  expect_output(cmtk.reformatx('in.nrrd', reg='reg.list', 
+                               target = 'target.nrrd'), "Missing input files.*")
+  
   #' round trip test of mat2dof/dof2mat
   test_that("reformatx can reformat a volume", {
     tf=tempfile(fileext='.nrrd')
@@ -38,5 +42,10 @@ test_that("cmtk.targetvolume works",{
   expect_equal(cmtk.targetvolume(im3d(dims = c(50,50,50), voxdims = c(1.4,1.4,1.4))),
                cmtk.targetvolume(c(50,50,50,1.4,1.4, 1.4, 0, 0, 0)))
   
-  expect_error(cmtk.targetvolume(list(), 'Incorrect target'))
+  expect_error(cmtk.targetvolume(list()), 'no applicable method.*as.im3d')
+  expect_error(cmtk.targetvolume(FALSE), 'Incorrect target specification')
+  expect_error(cmtk.targetvolume(matrix(0,2,3)), 'Unrecognised target spec')
+  
+  expect_equal(cmtk.targetvolume('testdata/amira/LHMask.Labels.rle.am'),
+               "--target-grid 50,50,50:1.4,1.4,1.4:95.7,60.7,0.7")
 })

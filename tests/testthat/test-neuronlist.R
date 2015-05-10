@@ -10,6 +10,8 @@ test_that("as.neuronlist behaves", {
   expect_equal(as.neuronlist(n14.nonames, df=df), n14)
   names(n14.nonames)=rep("", length(n14))
   expect_equal(as.neuronlist(n14.nonames, df=df), n14)
+  
+  expect_equivalent(as.neuronlist(Cell07PNs[[1]]), Cell07PNs[1])
 })
 
 test_that("c.neuronlist behaves", {
@@ -23,9 +25,11 @@ test_that("c.neuronlist behaves", {
   expect_error(c(Cell07PNs[1:5], Cell07PNs[1:5]), "neurons with the same name")
 })
 
-test_that("head.neuronlist behaves", {
+test_that("head.neuronlist and tail.neuronlist behave", {
   expect_is(h<-head(Cell07PNs),class='data.frame')
   expect_that(nrow(h),equals(6L))
+  nl3=Cell07PNs[1:3]
+  expect_equal(head(nl3), tail(nl3))
 })
 
 test_that("with.neuronlist / droplevels behave", {
@@ -127,10 +131,33 @@ test_that("nmapply can omit failures",{
                        mirrorAxisSize=c(400,20,Inf), subset=1:3, OmitFailures=TRUE)), 4)
 })
 
+context("neuronlist: plot2d")
+
+test_that("plot2d neuronlist contents",{
+  # make tempdir for plots and be sure to clean up
+  td=tempfile(); dir.create(td); owd<-setwd(td)
+  on.exit({setwd(owd); unlink(td, recursive = T)})
+  
+  # check that the cells are plotted in expected colours
+  x <- plot(Cell07PNs[1:2], colpal=grey(c(0,0.5)))
+  expect_equal(length(x), 2)
+  expect_equal(attr(x,'df')$col, c("#000000", "#808080"))
+  x <- plot(Cell07PNs[1:4], col=4:1)
+  expect_equal(attr(x,'df')$col, rev(rainbow(4)))
+  
+  # more tests for colour evaluation
+  x<-plot(Cell07PNs, subset=names(Cell07PNs)[1:2], col=Glomerulus, colpal=heat.colors)
+  expect_equal(attr(x,'df')$col, heat.colors(2))
+  # note use of subset expression and use of default colour value
+  x<-plot(Cell07PNs, subset=!duplicated(Glomerulus), col=Glomerulus, 
+          colpal=c(DA1='red','grey'))
+  expect_equal(attr(x,'df')$col, c("red","grey","grey", "grey"))
+})
+
 context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
-  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs))
+  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
   op=options(nat.default.neuronlist="Cell07PNs")
   expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
   options(op)
@@ -145,6 +172,22 @@ test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
   expect_is(f(SUBSTITUTE = FALSE), 'list')
 })
 
+test_that("basic interactive 3d functionality",{
+  open3d()
+  expect_output(nlscan(names(Cell07PNs)[1:2], db=Cell07PNs, Wait=F), "2 / 2")
+  
+  selfun=readRDS('testdata/selfun_cell07.rds')
+  sel_neuron=c("EBH11R", "EBH20L", "EBH20R", "EBI12L", "EBI22R", "EBJ23L", 
+    "EBJ3R", "EBN19L", "EBO15L", "EBO53L", "ECA34L", "ECB3L", "LIC2R", 
+    "NIA8L", "NIA8R", "NNA9L", "NNC4R", "NNE1L", "OFD2L", "SDD8L", 
+    "TKC8R")
+  expect_equal(find.neuron(selfun, db=Cell07PNs), sel_neuron)
+  
+  sel_soma=c("EBH20L", "EBH20R", "EBJ3R", "EBO15L", "EBO53L")
+  expect_equal(find.soma(selfun, db=Cell07PNs), sel_soma)
+  
+  rgl.close()
+})
 
 context("neuronlist: set operations")
 

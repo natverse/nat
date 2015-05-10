@@ -73,9 +73,13 @@ The col and subset parameters are evaluated in the context
 of the dataframe attribute of the neuronlist. If col
 evaluates to a factor and colpal is a named vector then
 colours will be assigned by matching factor levels against
-the named elements of colpal. If col evaluates to a factor
-and colpal is a function then it will be used to generate
-colours with the same number of levels as are used in col.
+the named elements of colpal. If there is one unnamed
+level, this will be used as catch-all default value (see
+examples).
+
+If col evaluates to a factor and colpal is a function then
+it will be used to generate colours with the same number of
+levels as are used in col.
 
 WithNodes is \code{FALSE} by default when using
 \code{plot3d.neuronlist} but remains \code{TRUE} by default
@@ -110,12 +114,28 @@ plot3d(kcs20,col=type)
 \dontrun{
 plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
+# Note use of default colour for non DA1 neurons
+plot3d(Cell07PNs,col=Glomerulus, colpal=c(DA1='red', 'grey'))
+# a subset expression
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),
   col=c("red","green")[factor(Glomerulus)])
 # the same but not specifying colours explicitly
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),col=Glomerulus)
-plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
-plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
+
+## more complex colouring strategies for a larger neuron set
+# see https://github.com/jefferis/frulhns for details
+library(frulhns)
+# notice the sexually dimorphic projection patterns for these neurons
+plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029',
+  col=sex,colpal=c(male='green',female='magenta'))
+
+## colour neurons of a class by input resistance
+jkn.aspg=subset(jkn, cluster=='aSP-g')
+# NB this comes in as a factor
+Ri=with(jkn.aspg,as.numeric(as.character(Ri..GOhm.)))
+# the matlab jet palette
+jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
+plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 }
 }
 \seealso{

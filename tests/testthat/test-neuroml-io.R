@@ -9,11 +9,12 @@ test_that("read neuroml files", {
     )
   }
   # suppress warnings re cable segments
-  suppressWarnings(
-    expect_equal(read.neuron(nml_level1_files[1]), 
-               read.neuron.neuroml(nml_level1_files[1]))
+  suppressWarnings(expect_is(nl<-read.neuron.neuroml(nml_level1_files[1], 
+                                                     AlwaysReturnNeuronList = T),
+                             'neuronlist')
   )
 })
+
 
 test_that("error on neuroml2 files", {
   nml2_files=dir("testdata/neuroml2", pattern = '[xn]ml$', full.names = T)
@@ -32,6 +33,9 @@ test_that("parse neuroml files", {
       expect_equal(read.neuron.neuroml(nml), read.neuron(swc), info = basename(nml))
     )
   }
+  suppressWarnings(
+   expect_equal(as.ngraph(read.morphml(nml)[[1]]), as.ngraph(read.neuron(swc)))
+  )
 })
 
 test_that("is.neuroml", {

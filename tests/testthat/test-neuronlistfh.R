@@ -33,7 +33,7 @@ test_that("we can load a previously created on disk neuronlistfh representation"
   fhpath=tempfile(pattern='kcs20fh')
   dir.create(file.path(fhpath,'data'),recursive=T)
   kcs20fh=as.neuronlistfh(kcs20, dbdir=file.path(fhpath, 'data'), dbClass='RDS')
-  plot3d(subset(kcs20fh,type=='gamma'))
+  plot3d(subset(kcs20fh,type=='gamma'), soma=T)
   on.exit(unlink(fhpath,recursive=TRUE))
   
   # now save and reload 

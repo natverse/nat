@@ -28,9 +28,12 @@ test_that("we can read im3d files",{
   v3drawfile2ch='testdata/v3draw/L1DS1_crop_straight_crop.v3draw'
   v3drawfile2chslice='testdata/v3draw/L1DS1_crop_straight_crop_slice.v3draw'
   
-  expect_error(read.im3d(v3drawfile2ch))
+  expect_error(read.im3d(v3drawfile2ch), "im3d is restricted to 3D")
   expect_equal(x<-read.im3d(v3drawfile2ch, chan=1), y<-read.im3d(v3drawfile1ch))
   expect_equal(x[,,1], read.im3d(v3drawfile2chslice)[,,1])
+  # check that we can read metadata only
+  expect_equal(boundingbox(read.im3d(v3drawfile1ch, ReadData = F)), 
+               boundingbox(x))
 })
 
 test_that("round trip test for im3d is successful",{

@@ -56,12 +56,22 @@ The col and subset parameters are evaluated in the context
 of the dataframe attribute of the neuronlist. If col
 evaluates to a factor and colpal is a named vector then
 colours will be assigned by matching factor levels against
-the named elements of colpal. If col evaluates to a factor
-and colpal is a function then it will be used to generate
-colours with the same number of levels as are used in col.
+the named elements of colpal. If there is one unnamed
+level, this will be used as catch-all default value (see
+examples).
+
+If col evaluates to a factor and colpal is a function then
+it will be used to generate colours with the same number of
+levels as are used in col.
 }
 \examples{
-plot(Cell07PNs[1:4], ylim=c(140, 85))
+# plot 4 cells
+plot(Cell07PNs[1:4])
+# modify some default plot arguments
+plot(Cell07PNs[1:4], ylim=c(140,75), main='First 4 neurons')
+# plot one class of neurons in red and all the others in grey
+plot(Cell07PNs, col=Glomerulus, colpal=c(DA1='red', 'grey'), WithNodes=FALSE)
+# subset operation
 plot(Cell07PNs, subset=Glomerulus\%in\%c("DA1", "DP1m"), col=Glomerulus,
   ylim=c(140,75), WithNodes=FALSE)
 }

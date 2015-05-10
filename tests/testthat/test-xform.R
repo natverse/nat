@@ -47,6 +47,20 @@ test_that("we can xform a neuronlist with multiple registrations", {
 })
 }
 
+if(!is.null(cmtk.bindir())){
+  test_that("we can xform points with non-rigid reg and handle bad points", {
+    reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
+    m=matrix(c(4:9, -200,-200,-200), ncol=3, byrow = T)
+    baselinem=matrix(NA_real_, ncol=3, nrow=3)
+    baselinem[2,]=c(2.65463188, 13.857304, 14.7245891)
+    expect_warning(tm<-xform(m, reg), "2 points .*not.*transformed")
+    expect_equal(tm, baselinem)
+    expect_error(xform(m, reg, na.action='error'), "2 points")
+    # nb should not drop dimensions
+    expect_equal(xform(m, reg, na.action='drop'), baselinem[2, , drop=FALSE])
+  })
+}
+
 test_that("mirror with flip only gives same result as neuron arithmetic", {
   n=Cell07PNs[[1]]
   mn1=(n*c(-1,1,1))+c(168,0,0)
@@ -72,6 +86,17 @@ test_that("we can mirror raw points", {
   expect_equal(g(g(xyz)),xyz)
 })
 
+test_that("we can mirror with a non-rigid registration", {
+  reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
+  # nb this registration doesn't actually make any sense as mirroring
+  # registration but it does produce some valid data
+  m=matrix(c(0,0,0,300,200,50), ncol=3, byrow = T)
+  expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reg))
+  baseline=matrix(c(NA,NA,NA,300.953189,183.401797,40.7112503), 
+                  ncol=3, byrow = T)
+  expect_equal(tm, baseline)
+})
+
 test_that("we can mirror using different forms of axis specification", {
   n=Cell07PNs[[1]]
   expect_equal(mirror(n,mirrorAxisSize=0,mirrorAxis=1),mirror(n,mirrorAxisSize=0))
@@ -91,7 +116,7 @@ test_that("we can mirror a neuron list", {
 
 context('xyzmatrix')
 
-test_that("can extract xyz coords from a matrix",{
+test_that("can extract xyz coords from a matrix and other objects",{
   mx=matrix(1:24,ncol=3)
   expect_equivalent(xyzmatrix(mx),mx)
   colnames(mx)=c("X","Y","Z")
@@ -102,6 +127,11 @@ test_that("can extract xyz coords from a matrix",{
   
   df=data.frame(X=1:4,Y=2:5,Z=3:6,W=1)
   expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
+  
+  fake_neuron=list(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
+  xyz1=matrix(1,ncol=3, dimnames = list(NULL, c("X","Y","Z")))
+  expect_equal(xyzmatrix(fake_neuron), xyz1)
+  expect_equal(xyzmatrix(1,1,1), xyz1)
 })
 
 test_that("can replace xyz coords of a matrix",{
@@ -111,6 +141,10 @@ test_that("can replace xyz coords of a matrix",{
   colnames(mx2)=c("x","y","z")
   
   expect_equivalent(xyzmatrix(mx)<-xyzmatrix(mx2), mx)
+  mx3=cbind(mx, W=1)
+  mx3.saved=mx3
+  expect_is(xyzmatrix(mx3)<-xyzmatrix(mx2), 'matrix')
+  expect_equal(mx3, mx3.saved)
 })
 
 test_that("can extract xyz coords from a neuronlist",{

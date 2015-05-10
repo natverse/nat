@@ -36,11 +36,11 @@ xform.default<-function(x, reg, na.action=c('warn','none','drop','error'), ...){
   naPoints = is.na(pointst[, 1])
   if (any(naPoints)) {
     if (na.action == "drop") 
-      pointst = pointst[!naPoints, ]
+      pointst = pointst[!naPoints, , drop=FALSE]
     else if (na.action == "warn") 
-      warning("There were ", length(naPoints), " that could not be transformed")
+      warning("There were ", sum(naPoints), " points that could not be transformed")
     else if (na.action == "error") 
-      stop("There were ", length(naPoints), " that could not be transformed")
+      stop("There were ", sum(naPoints), " points that could not be transformed")
   }
   pointst
 }
@@ -228,12 +228,26 @@ xyzmatrix.shape3d<-function(x, ...){
 #' @export
 `xyzmatrix<-.default`<-function(x, value){
   xyzn=c("X","Y","Z")
-  if(is.neuron(x)) x$d[,xyzn]=value
-  else if(is.dotprops(x)) x$points[,xyzn]=value
-  else if(!any(is.na(matched_cols<-match(xyzn, toupper(colnames(x)))))) {
+  if(ncol(x)==3) {
+    x[,]=value
+  } else if(!any(is.na(matched_cols<-match(xyzn, toupper(colnames(x)))))) {
     x[,matched_cols]=value
   }
   else stop("Not a neuron or dotprops object or a matrix-like object with XYZ colnames")
+  x
+}
+
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.neuron`<-function(x, value){
+  x$d[,c("X","Y","Z")]=value
+  x
+}
+
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.dotprops`<-function(x, value){
+  x$points[,c("X","Y","Z")]=value
   x
 }
 

@@ -322,9 +322,11 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' @details The col and subset parameters are evaluated in the context of the 
 #'   dataframe attribute of the neuronlist. If col evaluates to a factor and 
 #'   colpal is a named vector then colours will be assigned by matching factor 
-#'   levels against the named elements of colpal. If col evaluates to a factor 
-#'   and colpal is a function then it will be used to generate colours with the 
-#'   same number of levels as are used in col.
+#'   levels against the named elements of colpal. If there is one unnamed level,
+#'   this will be used as catch-all default value (see examples).
+#'   
+#'   If col evaluates to a factor and colpal is a function then it will be used 
+#'   to generate colours with the same number of levels as are used in col.
 #'   
 #'   WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist} 
 #'   but remains \code{TRUE} by default when plotting single neurons with 
@@ -339,7 +341,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #'   used directly by code in \code{plot3d.neuronlist}.
 #'   
 #'   Whenever plot3d.neuronlist is called, it will add an entry to an 
-#'   environment \code{.plotted3d} in \code{nat} that stores the ids of all the
+#'   environment \code{.plotted3d} in \code{nat} that stores the ids of all the 
 #'   plotted shapes (neurons, cell bodies) so that they can then be removed by a
 #'   call to \code{npop3d}.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
@@ -374,12 +376,28 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' \dontrun{
 #' plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 #' plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
+#' # Note use of default colour for non DA1 neurons
+#' plot3d(Cell07PNs,col=Glomerulus, colpal=c(DA1='red', 'grey'))
+#' # a subset expression
 #' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),
 #'   col=c("red","green")[factor(Glomerulus)])
 #' # the same but not specifying colours explicitly
 #' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),col=Glomerulus)
-#' plot3d(jkn,col=sex,colpal=c(male='green',female='magenta'))
-#' plot3d(jkn,col=cut(cVA2,20),colpal=jet.colors)
+#' 
+#' ## more complex colouring strategies for a larger neuron set
+#' # see https://github.com/jefferis/frulhns for details
+#' library(frulhns)
+#' # notice the sexually dimorphic projection patterns for these neurons
+#' plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029', 
+#'   col=sex,colpal=c(male='green',female='magenta'))
+#'
+#' ## colour neurons of a class by input resistance
+#' jkn.aspg=subset(jkn, cluster=='aSP-g')
+#' # NB this comes in as a factor
+#' Ri=with(jkn.aspg,as.numeric(as.character(Ri..GOhm.)))
+#' # the matlab jet palette
+#' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
+#' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
 plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
                             WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
@@ -406,13 +424,10 @@ plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
     on.exit(par3d(op))
   }
   
-  rval=mapply(plot3d,x,col=cols,soma=soma,...,MoreArgs = list(WithNodes=WithNodes))
-  df=attr(x,'df')
-  if(is.null(df)) {
-    keys=names(x)
-    if(is.null(keys)) keys=seq_along(x)
-    df=data.frame(key=keys,stringsAsFactors=FALSE)
-  } else if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
+  rval=mapply(plot3d,x,col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
+              SIMPLIFY=FALSE)
+  df=as.data.frame(x)
+  if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
                all(c("X","Y","Z") %in% colnames(df))){
     if(is.logical(soma)) soma=2
     rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
@@ -451,9 +466,11 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' @details The col and subset parameters are evaluated in the context of the 
 #'   dataframe attribute of the neuronlist. If col evaluates to a factor and 
 #'   colpal is a named vector then colours will be assigned by matching factor 
-#'   levels against the named elements of colpal. If col evaluates to a factor 
-#'   and colpal is a function then it will be used to generate colours with the 
-#'   same number of levels as are used in col.
+#'   levels against the named elements of colpal. If there is one unnamed level,
+#'   this will be used as catch-all default value (see examples).
+#'   
+#'   If col evaluates to a factor and colpal is a function then it will be used
+#'   to generate colours with the same number of levels as are used in col.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See 
@@ -461,7 +478,7 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param add Logical specifying whether to add data to an existing plot or make
-#'   a new one. The default value of \code{NULL} creates a new plot with the
+#'   a new one. The default value of \code{NULL} creates a new plot with the 
 #'   first neuron in the neuronlist and then adds the remaining neurons.
 #' @param ... options passed on to plot (such as colours, line width etc)
 #' @inheritParams plot3d.neuronlist
@@ -472,7 +489,13 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' @method plot neuronlist
 #' @seealso \code{\link{nat-package}, \link{plot3d.neuronlist}}
 #' @examples
-#' plot(Cell07PNs[1:4], ylim=c(140, 85))
+#' # plot 4 cells
+#' plot(Cell07PNs[1:4])
+#' # modify some default plot arguments
+#' plot(Cell07PNs[1:4], ylim=c(140,75), main='First 4 neurons')
+#' # plot one class of neurons in red and all the others in grey
+#' plot(Cell07PNs, col=Glomerulus, colpal=c(DA1='red', 'grey'), WithNodes=FALSE)
+#' # subset operation
 #' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
 #'   ylim=c(140,75), WithNodes=FALSE)
 plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, 
@@ -499,14 +522,9 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL,
   # check bounding box for data
   if(is.null(boundingbox)) boundingbox=boundingbox(x)
   rval=mapply(plot, x, col=cols, add=add, 
-              MoreArgs = list(boundingbox=boundingbox, ...))
+              MoreArgs = list(boundingbox=boundingbox, ...), SIMPLIFY = F)
   
-  df=attr(x,'df')
-  if(is.null(df)) {
-    keys=names(x)
-    if(is.null(keys)) keys=seq_along(x)
-    df=data.frame(key=keys,stringsAsFactors=FALSE)
-  }
+  df=as.data.frame(x)
   df$col=cols
   attr(rval,'df')=df
   invisible(rval)
@@ -536,7 +554,7 @@ makecols<-function(cols, colpal, nitems) {
           # handle missing colours
           # first check if there is an unnamed entry in palette
           unnamed=which(names(colpal)=="")
-          cols[is.na(cols)] = if(length(unnamed)) unnamed[1] else 'black'
+          cols[is.na(cols)] = if(length(unnamed)) colpal[unnamed[1]] else 'black'
         }
       } else {
         if(is.function(colpal)) colpal=colpal(nlevels(cols))
@@ -734,210 +752,4 @@ subset.neuronlist<-function(x, subset, filterfun,
   }
   
   switch(rval, neuronlist=x[r], names=r, data.frame=df[r, ])
-}
-
-#' Find names of neurons within a 3d selection box (usually drawn in rgl window)
-#' 
-#' @details Uses \code{\link{subset.neuronlist}}, so can work on dotprops or 
-#'   neuron lists.
-#' @param sel3dfun A \code{\link{select3d}} style function to indicate if points
-#'   are within region
-#' @param indices Names of neurons to search (defaults to all neurons in list)
-#' @param db \code{neuronlist} to search. Can also be a character vector naming 
-#'   the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.
-#' @param threshold More than this many points must be present in region
-#' @param invert Whether to return neurons outside the selection box (default
-#'   \code{FALSE})
-#' @return Character vector of names of selected neurons
-#' @export
-#' @seealso \code{\link{select3d}, \link{subset.neuronlist}}
-#' @examples
-#' \dontrun{
-#' plot3d(kcs20)
-#' # draw a 3d selection e.g. around tip of vertical lobe when ready
-#' find.neuron(db=kcs20)
-#' # would return 9 neurons
-#' # make a standalone selection function
-#' vertical_lobe=select3d()
-#' find.neuron(vertical_lobe, db=kcs20)
-#' # use base::Negate function to invert the selection function 
-#' # i.e. choose neurons that do not overlap the selection region
-#' find.neuron(Negate(vertical_lobe), db=kcs20)
-#' }
-find.neuron<-function(sel3dfun=select3d(), indices=names(db), 
-                      db=getOption("nat.default.neuronlist"), threshold=0,
-                      invert=FALSE){
-  
-  if(is.null(db))
-    stop("Please pass a neuronlist in argument db or set options",
-         "(nat.default.neuronlist='myfavneuronlist'). See ?nat for details.")
-  if(is.character(db)) db=get(db)
-  selfun=function(x){
-    pointsinside=sel3dfun(xyzmatrix(x))
-    sum(pointsinside, na.rm=T)>threshold
-  }
-  sel_neurons=subset(db, subset=indices, filterfun=selfun, rval='names')
-  if(invert) setdiff(indices, sel_neurons) else sel_neurons
-}
-
-#' Find neurons with soma inside 3d selection box (usually drawn in rgl window)
-#' 
-#' @details Can work on \code{neuronlist}s containing \code{neuron} objects 
-#'   \emph{or} \code{neuronlist}s whose attached data.frame contains soma 
-#'   positions specified in columns called X,Y,Z  .
-#' @inheritParams find.neuron
-#' @return Character vector of names of selected neurons
-#' @export
-#' @seealso \code{\link{select3d}, \link{subset.neuronlist}, \link{find.neuron}}
-find.soma <- function (sel3dfun = select3d(), indices = names(db), 
-                       db = getOption("nat.default.neuronlist"),
-                       invert=FALSE) 
-{
-  if (is.null(db)) 
-    stop("Please pass a neuronlist in argument db or set options", 
-         "(nat.default.neuronlist='myfavneuronlist'). See ?nat for details.")
-  if (is.character(db)) 
-    db = get(db)
-  df=attr(db, 'df')
-  sel_neurons=if(all(c("X","Y","Z") %in% colnames(df))){
-    # assume these represent soma position
-    somapos=df[indices,c("X","Y","Z")]
-    indices[sel3dfun(somapos)]
-  } else {
-    selfun = function(x) {
-      somapos=x$d[x$StartPoint, c("X","Y","Z")]
-      isTRUE(sel3dfun(somapos))
-    }
-    subset(db, subset = indices, filterfun = selfun, rval = "names")
-  }
-  if(invert) setdiff(indices, sel_neurons) else sel_neurons
-}
-
-
-#' Scan through a set of neurons, individually plotting each one in 3D
-#' 
-#' Can also choose to select specific neurons along the way and navigate 
-#' forwards and backwards.
-#' 
-#' @param neurons a \code{neuronlist} object or a character vector of names of 
-#'   neurons to plot from the neuronlist specified by \code{db}.
-#' @inheritParams plot3d.character
-#' @param col the color with which to plot the neurons (default \code{'red'}).
-#' @param Verbose logical indicating that info about each selected neuron should
-#'   be printed (default \code{TRUE}).
-#' @param Wait logical indicating that there should be a pause between each 
-#'   displayed neuron.
-#' @param sleep time to pause between each displayed neuron when 
-#'   \code{Wait=TRUE}.
-#' @param extrafun an optional function called when each neuron is plotted, with
-#'   two arguments: the current neuron name and the current \code{selected} 
-#'   neurons.
-#' @param selected_file an optional path to a \code{yaml} file that already 
-#'   contains a selection.
-#' @param selected_col the color in which selected neurons (such as those 
-#'   specified in \code{selected_file}) should be plotted.
-#' @param yaml a logical indicating that selections should be saved to disk in 
-#'   (human-readable) \code{yaml} rather than (machine-readable) \code{rda} 
-#'   format.
-#' @param ... extra arguments to pass to \code{\link{plot3d}}.
-#'   
-#' @return A character vector of names of any selected neurons, of length 0 if 
-#'   none selected.
-#' @importFrom yaml yaml.load_file as.yaml
-#' @seealso \code{\link{plot3d.character}}, \code{\link{plot3d.neuronlist}}
-#' @export
-#' @examples
-#' \dontrun{
-#' # scan a neuronlist
-#' nlscan(kcs20)
-#' 
-#' # using neuron names
-#' nlscan(names(kcs20), db=kcs20)
-#' # equivalently using a default neuron list
-#' options(nat.default.neuronlist='kcs20')
-#' nlscan(names(kcs20))
-#' }
-#' # scan without waiting
-#' nlscan(kcs20[1:4], Wait=FALSE, sleep=0)
-#' \dontrun{
-#' # could select e.g. the gamma neurons with unbranched axons
-#' gammas=nlscan(kcs20)
-#' clear3d()
-#' plot3d(kcs20[gammas])
-#' 
-#' # plot surface model of brain first
-#' # nb depends on package only available on github
-#' devtools::install_github(username = "jefferislab/nat.flybrains")
-#' library(nat.flybrains)
-#' plot3d(FCWB)
-#' # could select e.g. the gamma neurons with unbranched axons
-#' gammas=nlscan(kcs20)
-#' clear3d()
-#' plot3d(kcs20[gammas])
-#' }
-nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
-                   extrafun=NULL, selected_file=NULL, selected_col='green',
-                   yaml=TRUE, ...) {
-  if(is.neuronlist(neurons)) {
-    db=neurons
-    neurons=names(db)
-  }
-  frames <- length(neurons)
-  if(length(col)==1) col <- rep(col,frames)
-  selected <- character()
-  i <- 1
-  if(!is.null(selected_file) && file.exists(selected_file)) {
-    selected <- yaml.load_file(selected_file)
-    if(!all(names(selected) %in% neurons)) stop("Mismatch between selection file and neurons.")
-  }
-  
-  savetodisk <- function(selected, selected_file) {
-    if(is.null(selected_file)) selected_file <- file.choose(new=TRUE)
-    if(yaml){
-      if(!grepl("\\.yaml$",selected_file)) selected_file <- paste(selected_file,sep="",".yaml")
-      message("Saving selection to disk as ", selected_file, ".")
-      writeLines(as.yaml(selected), con=selected_file)
-    } else {
-      if(!grepl("\\.rda$", selected_file)) selected_file <- paste(selected_file, sep="", ".rda")
-      save(selected, file=selected_file)
-      message("Saving selection to disk as ", selected_file)
-    }
-    selected_file
-  }
-  chc <- NULL
-  while(TRUE){
-    if(i > length(neurons) || i < 1) break
-    n <- neurons[i]
-    cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- plot3d(n, db=db, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
-    # call user supplied function
-    more_rgl_ids <- list()
-    if(!is.null(extrafun))
-      more_rgl_ids <- extrafun(n, selected=selected)
-    if(Wait){
-      chc <- readline("Return to continue, b to go back, s to select, d [save to disk], t to stop, c to cancel (without returning a selection): ")
-      if(chc=="c" || chc=='t'){
-        sapply(pl, rgl.pop, type='shape')
-        sapply(more_rgl_ids, rgl.pop, type='shape')
-        break
-      }
-      if(chc=="s") {
-        if(n %in% selected) {
-          message("Deselected: ", n)
-          selected <- setdiff(selected, n)
-        } else selected <- union(selected, n)
-      }
-      if(chc=="b") i <- i-1
-      else if (chc=='d') savetodisk(selected, selected_file)
-      else i <- i+1
-    } else {
-      Sys.sleep(sleep)
-      i <- i+1
-    }
-    sapply(pl, rgl.pop, type='shape')
-    sapply(more_rgl_ids, rgl.pop, type='shape')
-  }
-  if(is.null(chc) || chc=='c') return(NULL)
-  if(!is.null(selected_file)) savetodisk(selected, selected_file)
-  selected
 }
