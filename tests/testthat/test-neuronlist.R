@@ -128,7 +128,12 @@ test_that("nmapply can omit failures",{
 })
 
 context("neuronlist: plot2d")
+
 test_that("plot2d neuronlist contents",{
+  # make tempdir for plots and be sure to clean up
+  td=tempfile(); dir.create(td); owd<-setwd(td)
+  on.exit({setwd(owd); unlink(td, recursive = T)})
+  
   # check that the cells are plotted in expected colours
   x <- plot(Cell07PNs[1:2], colpal=grey(c(0,0.5)))
   expect_equal(length(x), 2)
