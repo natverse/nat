@@ -86,16 +86,18 @@ test_that("we can mirror raw points", {
   expect_equal(g(g(xyz)),xyz)
 })
 
-test_that("we can mirror with a non-rigid registration", {
-  reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
-  # nb this registration doesn't actually make any sense as mirroring
-  # registration but it does produce some valid data
-  m=matrix(c(0,0,0,300,200,50), ncol=3, byrow = T)
-  expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reg))
-  baseline=matrix(c(NA,NA,NA,300.953189,183.401797,40.7112503), 
-                  ncol=3, byrow = T)
-  expect_equal(tm, baseline)
-})
+if(!is.null(cmtk.bindir())){
+  test_that("we can mirror with a non-rigid registration", {
+    reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
+    # nb this registration doesn't actually make any sense as mirroring
+    # registration but it does produce some valid data
+    m=matrix(c(0,0,0,300,200,50), ncol=3, byrow = T)
+    expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reg))
+    baseline=matrix(c(NA,NA,NA,300.953189,183.401797,40.7112503), 
+                    ncol=3, byrow = T)
+    expect_equal(tm, baseline)
+  })
+}
 
 test_that("we can mirror using different forms of axis specification", {
   n=Cell07PNs[[1]]
