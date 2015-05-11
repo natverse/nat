@@ -343,7 +343,9 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' @seealso \code{\link{boundingbox}}
 #' @examples
 #' # plot some neurons
-#' plot3d(kcs20)
+#' clear3d()
+#' # NB skipRedraw draws all neurons in one go
+#' plot3d(kcs20, skipRedraw = T)
 #' # plot the bounding box of all the neurons
 #' plot3d(boundingbox(kcs20))
 #' 
