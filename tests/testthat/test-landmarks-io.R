@@ -50,9 +50,14 @@ test_that("generic landmarks I/O", {
   expect_is(l<-read.landmarks(f), "landmarks")
   u=paste0('https://raw.githubusercontent.com/jefferis/nat/master/tests/testthat/', f)
   expect_equal(read.landmarks(u), l)
-  write.landmarks(l, tf<-tempfile(fileext = "test.landmarks"), format='cmtk')
+  
+  td<-tempfile()
+  tf<-tempfile(tmpdir = td, fileext = "test.landmarks")
+  expect_error(write.landmarks(l, tf, format='cmtk', MakeDir = F), 'does not exist')
+  write.landmarks(l, tf, format='cmtk')
   expect_equivalent(read.landmarks(tf), l)
-  unlink(tf)
+  expect_warning(write.landmarks(l, tf, format='cmtk'), 'already exists')
+  unlink(td, recursive = T)
   
   expect_equal(getformatwriter(format='amira', file='test', class='landmarks')$file,
                "test.landmarkAscii")
