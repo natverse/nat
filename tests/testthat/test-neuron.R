@@ -137,7 +137,7 @@ test_that("we can plot neurons in 2D", {
 })
 
 test_that("we can plot neurons in 3D", {
-  plottedLines <- plot3d(Cell07PNs[[1]])$lines
+  plottedLines <- plot3d(Cell07PNs[[1]], soma=3, WithText=T, WithNodes = T, WithAllPoints=T)$lines
   expect_more_than(plottedLines, 0)
 })
 
