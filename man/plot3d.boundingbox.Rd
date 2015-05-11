@@ -22,7 +22,7 @@ Plot a bounding box in 3D
 # plot some neurons
 clear3d()
 # NB skipRedraw draws all neurons in one go
-plot3d(kcs20, skipRedraw = T)
+plot3d(kcs20, skipRedraw = TRUE)
 # plot the bounding box of all the neurons
 plot3d(boundingbox(kcs20))
 
