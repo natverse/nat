@@ -6,9 +6,9 @@
 \alias{xyzmatrix.dotprops}
 \alias{xyzmatrix.hxsurf}
 \alias{xyzmatrix.igraph}
+\alias{xyzmatrix.mesh3d}
 \alias{xyzmatrix.neuron}
 \alias{xyzmatrix.neuronlist}
-\alias{xyzmatrix.shape3d}
 \alias{xyzmatrix<-}
 \alias{xyzmatrix<-.dotprops}
 \alias{xyzmatrix<-.hxsurf}
@@ -31,7 +31,7 @@ xyzmatrix(x, ...)
 
 \method{xyzmatrix}{igraph}(x, ...)
 
-\method{xyzmatrix}{shape3d}(x, ...)
+\method{xyzmatrix}{mesh3d}(x, ...)
 
 xyzmatrix(x) <- value
 

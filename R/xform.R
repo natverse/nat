@@ -204,7 +204,7 @@ xyzmatrix.igraph<-function(x, ...){
 
 #' @rdname xyzmatrix
 #' @export
-xyzmatrix.shape3d<-function(x, ...){
+xyzmatrix.mesh3d<-function(x, ...){
   cbind(x$vb[1, ]/x$vb[4, ], x$vb[2, ]/x$vb[4, ], x$vb[3, ]/x$vb[4, ])
 }
 
