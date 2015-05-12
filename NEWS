@@ -1,7 +1,37 @@
 nat 1.6.5
 =========
+* add xyzmatrix get/set methods for class mesh3d along with xform.shape3d. This
+  should enable rgl::mesh3d objects (used in a number of other packages) to be
+  transformed using CMTK registrations.
+* add tail.neuronlist
 * add as.data.frame.neuronlist for convenient generation of a data.frame from a
   neuronlist
+* add help topics for generics subset and plot3d so that e.g. ?subset will give 
+  the option to see our documentation as well as base docs.
+* subset.hxsurf drops unused vertices by default
+* add sample surface object of mushroom body
+* teach cmtk.statistics to handle imagetype == 'label' (#221)
+* plot.neuronlist sets axes based on boundingbox of all plotted neurons, not just
+  the first neuron (#223)
+* plot.neuron(,AxisDirections) argument is re-implemented (#224)
+* don't warn when read.neuronlistfh changes the directory location on disk (#157)
+* remove superimposed plots in mirror example (hope this will fix build on 
+  macosx snowleopard)
+* teach read.neurons to OmitFailures when reading in a neuronlistfh object.
+* fix handling of default colours in plot.neuronlist and plot3d.neuronlist (#230)
+* fix plot3d.neuronlist returns one element per neuron
+* fix bug in xformpoints.cmtkreg when some points could not be transformed - 
+  now give NAs as expected (#227)
+* fix bug when xform(na.action='drop') dropped dimensions when only 1 valid 
+  point resulted (#228)
+* teach xyz.matrix<- to work for bare 3 column matrices (i.e. without colnames)
+* fix bug in xformimage where input image was not being passed on when 
+  transforming with a matrix.
+* read.hxsurf can accept RegionChoices='both' (see ?read.hxsurf)
+* fix: unary -.neuronlist behaves
+* docs: numerous minor doc/example improvements
+* dev: improvements in test coverage (up to 84%) catching numerous small bugs in
+  the process.
 
 nat 1.6.4
 =========
