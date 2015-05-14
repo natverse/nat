@@ -7,11 +7,9 @@
 \method{scale}{neuron}(x, center = FALSE, scale = FALSE)
 }
 \arguments{
-  \item{x}{A neuron}
-
-  \item{center}{3-vector to subtract from x,y,z coords}
-
-  \item{scale}{3-vector used to divide x,y,z coords}
+  \item{x}{A neuron} \item{center}{3-vector to subtract from
+  x,y,z coords} \item{scale}{3-vector used to divide x,y,z
+  coords}
 }
 \value{
 neuron with scaled coordinates
@@ -20,9 +18,9 @@ neuron with scaled coordinates
 Divide neuron coords by a factor (and optionally center)
 }
 \details{
-Note that if scale=TRUE, the neuron will be rescaled to
-unit sd in each axis likewise if center=TRUE, the neuron
-will be centred around the axis means
+Note that if scale=TRUE, the neuron will be rescaled to unit
+sd in each axis likewise if center=TRUE, the neuron will be
+centred around the axis means
 }
 \examples{
 n1.scaledown=scale(Cell07PNs[[1]],scale=c(2,2,3))

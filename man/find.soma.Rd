@@ -9,17 +9,13 @@ find.soma(sel3dfun = select3d(), indices = names(db),
 }
 \arguments{
   \item{sel3dfun}{A \code{\link{select3d}} style function
-  to indicate if points are within region}
-
-  \item{indices}{Names of neurons to search (defaults to
-  all neurons in list)}
-
-  \item{db}{\code{neuronlist} to search. Can also be a
-  character vector naming the neuronlist. Defaults to
-  \code{options('nat.default.neuronlist')}.}
-
-  \item{invert}{Whether to return neurons outside the
-  selection box (default \code{FALSE})}
+  to indicate if points are within region} \item{indices}
+  {Names of neurons to search (defaults to all neurons in
+  list)} \item{db}{\code{neuronlist} to search. Can also
+  be a character vector naming the neuronlist. Defaults to
+  \code{options('nat.default.neuronlist')}.} \item{invert}
+  {Whether to return neurons outside the selection box
+  (default \code{FALSE})}
 }
 \value{
 Character vector of names of selected neurons

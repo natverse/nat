@@ -16,10 +16,8 @@
 \method{/}{neuron}(n, x)
 }
 \arguments{
-  \item{n}{a neuron}
-
-  \item{x}{(a numeric vector to multiply neuron coords in
-  neuron)}
+  \item{n}{a neuron} \item{x}{(a numeric vector to multiply
+  neuron coords in neuron)}
 }
 \value{
 modified neuron

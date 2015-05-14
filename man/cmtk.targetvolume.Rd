@@ -17,27 +17,25 @@ cmtk.targetvolume(target, ...)
 }
 \arguments{
   \item{target}{A character vector specifying a file, an
-  \code{im3d} object or a 6-or 9-vector defining a grid in
-  the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
-
-  \item{...}{additional arguments passed to methods}
+  \code{im3d} object or a 6-or 9-vector defining a grid
+  in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].} \item{...}
+  {additional arguments passed to methods}
 }
 \value{
-a character vector specifying the full cmtk reformatx
-'--target' or '--target-grid' argument
+a character vector specifying the full cmtk reformatx '--
+target' or '--target-grid' argument
 }
 \description{
 Defines a target volume for a CMTK reformatx operation
-
-\code{cmtk.targetvolume.list} is designed to cope with any
-user-defined class for which an as.im3d method exists.
+\code{cmtk.targetvolume.list} is designed to cope with
+any user-defined class for which an as.im3d method exists.
 Presently the only example in the nat.* ecosystem is
 \code{nat.templatebrains::as.im3d.templatebrain}.
 }
 \details{
-if the character vector specifies an amiramesh file, it
-will be converted to a bare \code{im3d} object and then to
-an appropriate '--target-grid' specification.
+if the character vector specifies an amiramesh file, it will
+be converted to a bare \code{im3d} object and then to an
+appropriate '--target-grid' specification.
 }
 \examples{
 \dontrun{

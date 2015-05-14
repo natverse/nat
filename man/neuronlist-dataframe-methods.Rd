@@ -21,17 +21,11 @@
 \method{tail}{neuronlist}(x, ...)
 }
 \arguments{
-  \item{x}{A neuronlist object}
-
-  \item{except}{indices of columns from which \emph{not} to
-  drop levels}
-
-  \item{...}{Further arguments passed to default methods
-  (and usually ignored)}
-
-  \item{data}{A neuronlist object}
-
-  \item{expr}{The expression to evaluate}
+  \item{x}{A neuronlist object} \item{except}{indices of
+  columns from which \emph{not} to drop levels} \item{...}
+  {Further arguments passed to default methods (and usually
+  ignored)} \item{data}{A neuronlist object} \item{expr}{The
+  expression to evaluate}
 }
 \value{
 the attached dataframe with levels dropped (NB \strong{not}
@@ -39,24 +33,14 @@ the neuronlist)
 }
 \description{
 \code{droplevels} Remove redundant factor levels in
-dataframe attached to neuronlist
-
-\code{with} Evaluate expression in the context of dataframe
-attached to a neuronlist
-
-\code{head} Return the first part of data.frame attached to
-neuronlist
-
-\code{tail} Return the last part of data.frame attached to
-neuronlist
+dataframe attached to neuronlist \code{with} Evaluate
+expression in the context of dataframe attached to a
+neuronlist \code{head} Return the first part of data.frame
+attached to neuronlist \code{tail} Return the last part of
+data.frame attached to neuronlist
 }
 \seealso{
-\code{\link{droplevels}}
-
-\code{\link{with}}
-
-\code{\link{head}}
-
-\code{\link{tail}}
+\code{\link{droplevels}} \code{\link{with}}
+\code{\link{head}} \code{\link{tail}}
 }
 

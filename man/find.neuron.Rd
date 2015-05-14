@@ -9,20 +9,14 @@ find.neuron(sel3dfun = select3d(), indices = names(db),
 }
 \arguments{
   \item{sel3dfun}{A \code{\link{select3d}} style function
-  to indicate if points are within region}
-
-  \item{indices}{Names of neurons to search (defaults to
-  all neurons in list)}
-
-  \item{db}{\code{neuronlist} to search. Can also be a
-  character vector naming the neuronlist. Defaults to
-  \code{options('nat.default.neuronlist')}.}
-
+  to indicate if points are within region} \item{indices}
+  {Names of neurons to search (defaults to all neurons
+  in list)} \item{db}{\code{neuronlist} to search. Can
+  also be a character vector naming the neuronlist.
+  Defaults to \code{options('nat.default.neuronlist')}.}
   \item{threshold}{More than this many points must be
-  present in region}
-
-  \item{invert}{Whether to return neurons outside the
-  selection box (default \code{FALSE})}
+  present in region} \item{invert}{Whether to return neurons
+  outside the selection box (default \code{FALSE})}
 }
 \value{
 Character vector of names of selected neurons

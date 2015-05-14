@@ -10,21 +10,14 @@ write.amiramesh(x, file, enc = c("binary", "raw", "text", "hxzip"),
 }
 \arguments{
   \item{x}{The image data to write (an im3d, or capable of
-  being interpreted as such)}
-
-  \item{file}{Character vector describing a single file}
-
-  \item{enc}{Encoding of the data. NB "raw" and "binary"
-  are synonyms.}
-
-  \item{dtype}{Data type to write to disk}
-
-  \item{endian}{Endianness of data block. Defaults to
-  current value of \code{.Platform$endian}.}
-
-  \item{WriteNrrdHeader}{Whether to write a separate
-  detached nrrd header next to the amiramesh file allowing
-  it to be opened by a NRRD reader. See details.}
+  being interpreted as such)} \item{file}{Character vector
+  describing a single file} \item{enc}{Encoding of the
+  data. NB "raw" and "binary" are synonyms.} \item{dtype}
+  {Data type to write to disk} \item{endian}{Endianness of
+  data block. Defaults to current value of \code{.Platform
+  $endian}.} \item{WriteNrrdHeader}{Whether to write a
+  separate detached nrrd header next to the amiramesh file
+  allowing it to be opened by a NRRD reader. See details.}
 }
 \description{
 Write a 3d data object to an amiramesh format file

@@ -7,9 +7,8 @@
 \method{plot3d}{boundingbox}(x, ...)
 }
 \arguments{
-  \item{x}{the \code{\link{boundingbox}} object to plot.}
-
-  \item{...}{additional arguments to pass to
+  \item{x}{the \code{\link{boundingbox}} object to
+  plot.} \item{...}{additional arguments to pass to
   \code{\link[rgl]{segments3d}}.}
 }
 \value{

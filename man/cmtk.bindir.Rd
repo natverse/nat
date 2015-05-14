@@ -13,22 +13,16 @@ cmtk.bindir(firstdir = getOption("nat.cmtk.bindir"), extradirs = c("~/bin",
 \arguments{
   \item{firstdir}{Character vector specifying path
   containing CMTK binaries or NA (see details). This
-  defaults to options('nat.cmtk.bindir').}
-
-  \item{extradirs}{Where to look if CMTK is not in
-  \code{firstdir} or the PATH}
-
-  \item{set}{Whether to set options('nat.cmtk.bindir') with
-  the found directory}
-
-  \item{check}{Whether to (re)check that a path that has
-  been set appropriately in
+  defaults to options('nat.cmtk.bindir').} \item{extradirs}
+  {Where to look if CMTK is not in \code{firstdir} or the
+  PATH} \item{set}{Whether to set options('nat.cmtk.bindir')
+  with the found directory} \item{check}{Whether to
+  (re)check that a path that has been set appropriately in
   options(nat.cmtk.bindir='/some/path') or now found in the
   PATH or alternative directories. Will throw an error on
-  failure.}
-
-  \item{cmtktool}{Name of a specific cmtk tool which will
-  be used to identify the location of all cmtk binaries.}
+  failure.} \item{cmtktool}{Name of a specific cmtk tool
+  which will be used to identify the location of all cmtk
+  binaries.}
 }
 \value{
 Character vector giving path to CMTK binary directory or
@@ -37,8 +31,8 @@ NULL when this cannot be found.
 \description{
 The \href{www.nitrc.org/projects/cmtk}{Computational
 Morphometry Toolkit} (CMTK) is the default image
-registration toolkit supported by nat.  An external CMTK
-installation is required in order to apply CMTK
+registration toolkit supported by nat. An external
+CMTK installation is required in order to apply CMTK
 registrations. This function attempts to locate the full
 path to the CMTK executable files and can query and set an
 option.
@@ -55,14 +49,13 @@ when it will error out.
 }
 \section{Installation}{
   It is recommended to install released CMTK versions
-  available from the
-  \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A bug
-  in composition of affine transformations from CMTK
-  parameters in the CMTK versions <2.4 series means that
-  CMTK>=3.0 is strongly recommended.  CMTK v3 registrations
-  are not backwards compatible with CMTK v2, but CMTKv3 can
-  correctly interpret and convert registrations from
-  earlier versions.
+  available from the \href{www.nitrc.org/projects/
+  cmtk/}{NITRC website}. A bug in composition of affine
+  transformations from CMTK parameters in the CMTK versions
+  <2.4 series means that CMTK>=3.0 is strongly recommended.
+  CMTK v3 registrations are not backwards compatible with
+  CMTK v2, but CMTKv3 can correctly interpret and convert
+  registrations from earlier versions.
 }
 \examples{
 message(ifelse(is.null(d<-cmtk.bindir()), "CMTK not found!",

@@ -12,16 +12,10 @@ normalise_swc(x, requiredColumns = c("PointNo", "Label", "X", "Y", "Z", "W",
 }
 \arguments{
   \item{x}{A data.frame containing neuron morphology data}
-
-  \item{requiredColumns}{Character vector naming columns we
-  should have}
-
-  \item{ifMissing}{What to do if \code{x} is missing a
-  required column}
-
-  \item{includeExtraCols}{Whether to include any extra
-  columns include in code{x}}
-
+  \item{requiredColumns}{Character vector naming columns
+  we should have} \item{ifMissing}{What to do if \code{x}
+  is missing a required column} \item{includeExtraCols}
+  {Whether to include any extra columns include in code{x}}
   \item{defaultValue}{A list containing default values to
   use for any missing columns}
 }

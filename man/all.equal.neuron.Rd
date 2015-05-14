@@ -11,34 +11,22 @@
   fieldsToExclude = character(), CheckSharedFieldsOnly = FALSE, ...)
 }
 \arguments{
-  \item{target}{\R object.}
-
-  \item{current}{other \R object, to be compared with
-  \code{target}.}
-
-  \item{tolerance}{numeric \eqn{\ge} 0.  Differences
-  smaller than \code{tolerance} are not reported.  The
-  default value is close to \code{1.5e-8}.}
-
-  \item{check.attributes}{logical indicating if the
-  \code{\link{attributes}} of \code{target} and
-  \code{current} (other than the names) should be
-  compared.}
-
-  \item{fieldsToCheck}{Which fields in the neuron are
-  always checked. The special value of \code{NA} indicates
-  that \bold{all} fields in the neurons will be compared.}
-
-  \item{fieldsToCheckIfPresent}{These fields are only
-  checked if they are present}
-
-  \item{fieldsToExclude}{Character vector of fields to
-  exclude from check}
-
-  \item{CheckSharedFieldsOnly}{Logical whether to check
-  shared fields only (default: FALSE)}
-
-  \item{...}{additional arguments passed to
+  \item{target}{\R object.} \item{current}{other \R object,
+  to be compared with \code{target}.} \item{tolerance}
+  {numeric \eqn{\ge} 0. Differences smaller than
+  \code{tolerance} are not reported. The default value
+  is close to \code{1.5e-8}.} \item{check.attributes}
+  {logical indicating if the \code{\link{attributes}} of
+  \code{target} and \code{current} (other than the names)
+  should be compared.} \item{fieldsToCheck}{Which fields
+  in the neuron are always checked. The special value
+  of \code{NA} indicates that \bold{all} fields in the
+  neurons will be compared.} \item{fieldsToCheckIfPresent}
+  {These fields are only checked if they are present}
+  \item{fieldsToExclude}{Character vector of fields
+  to exclude from check} \item{CheckSharedFieldsOnly}
+  {Logical whether to check shared fields only (default:
+  FALSE)} \item{...}{additional arguments passed to
   \code{all.equal}}
 }
 \description{

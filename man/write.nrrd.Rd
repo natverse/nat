@@ -8,22 +8,16 @@ write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   "byte", "short", "ushort", "int", "double"), endian = .Platform$endian)
 }
 \arguments{
-  \item{x}{A 3d data array}
-
-  \item{file}{Character string naming a file}
-
-  \item{enc}{One of three supported nrrd encodings ("gzip",
-  "raw", "text")}
-
-  \item{dtype}{The data type to write. One of
-  "float","byte", "short", "ushort", "int", "double"}
-
-  \item{endian}{One of "big" or "little". Defaults to
-  \code{.Platform$endian}.}
+  \item{x}{A 3d data array} \item{file}{Character string
+  naming a file} \item{enc}{One of three supported nrrd
+  encodings ("gzip", "raw", "text")} \item{dtype}{The data
+  type to write. One of "float","byte", "short", "ushort",
+  "int", "double"} \item{endian}{One of "big" or "little".
+  Defaults to \code{.Platform$endian}.}
 }
 \description{
-Produces a lattice format file i.e. one with a regular
-x,y,z grid
+Produces a lattice format file i.e. one with a regular x,y,z
+grid
 }
 \seealso{
 \code{\link{read.nrrd}, \link{.Platform}}

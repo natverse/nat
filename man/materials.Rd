@@ -18,7 +18,6 @@ materials(x, ...)
 \arguments{
   \item{x}{An object in memory or, for
   \code{materials.character}, an image on disk.}
-
   \item{\dots}{additional parameters passed to methods
   (presently ignored)}
 }
@@ -27,23 +26,18 @@ A \code{data.frame} with columns \code{name, id, col}
 }
 \description{
 Extract or set the materials for an object
-
 \code{materials.character} will read the materials from an
-im3d compatible image file on disk.
-
-\code{materials.hxsurf} will extract the materials from an
-hxsurf object
+im3d compatible image file on disk. \code{materials.hxsurf}
+will extract the materials from an hxsurf object
 }
 \details{
 Note that the id column will be the 1-indexed order that
 the material appears in the \code{surf$Region} list for
 \code{hxsurf} objects and the 0-indexed mask values for an
-image.
-
-Presently only amiramesh images are supported since they
-have a standardised way of encoding labels, whereas nrrds
-would have to use key-value pairs according to some ad hoc
-convention.
+image. Presently only amiramesh images are supported since
+they have a standardised way of encoding labels, whereas
+nrrds would have to use key-value pairs according to some ad
+hoc convention.
 }
 \seealso{
 Other hxsurf: \code{\link{as.mesh3d}},

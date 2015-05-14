@@ -8,15 +8,12 @@ read.morphml(f, ..., ReturnXML = FALSE)
 }
 \arguments{
   \item{f}{Path to a file on disk or a remote URL (see
-  \code{\link[XML]{xmlParse}} for details).}
-
-  \item{...}{Additional arguments passed to
-  \code{\link[XML]{xmlParse}}}
-
-  \item{ReturnXML}{Whether to return a parsed XML tree
-  (when \code{ReturnXML=TRUE}) or a more extensively
-  processed R list object when \code{ReturnXML=FALSE}, the
-  default.}
+  \code{\link[XML]{xmlParse}} for details).} \item{...}
+  {Additional arguments passed to \code{\link[XML]
+  {xmlParse}}} \item{ReturnXML}{Whether to return
+  a parsed XML tree (when \code{ReturnXML=TRUE}) or
+  a more extensively processed R list object when
+  \code{ReturnXML=FALSE}, the default.}
 }
 \value{
 Either an R list of S3 class containing one
@@ -26,27 +23,25 @@ document or an object of class \code{XMLDocument} when
 }
 \description{
 \code{read.morphml} is designed to expose the full details
-of the morphology information in a NeuroML file either as a
-parsed XML structure processed by the \code{XML} package
-\emph{or} as an extensively processed R list object. To
-obtain a \code{\link{neuron}} object use
+of the morphology information in a NeuroML file either
+as a parsed XML structure processed by the \code{XML}
+package \emph{or} as an extensively processed R list
+object. To obtain a \code{\link{neuron}} object use
 \code{read.neuron.neuroml}.
 }
 \details{
-NeuroML files consist of an XML tree containing one more or
-more \bold{cells}. Each \bold{cell} contains a tree of
+NeuroML files consist of an XML tree containing one more
+or more \bold{cells}. Each \bold{cell} contains a tree of
 \bold{segments} defining the basic connectivity/position
 and an optional tree \bold{cables} defining attributes on
 groups of \bold{segments} (e.g. a name, whether they are
-axon/dendrite/soma etc).
-
-\code{read.morphml} will either provide the parsed XML tree
-which you can query using XPath statements or a more
-heavily processed version which provides as much
-information as possible from the segments and cables trees
-in two R data.frames. The latter option will inevitably
-drop some information, but will probably be more convenient
-for most purposes.
+axon/dendrite/soma etc). \code{read.morphml} will either
+provide the parsed XML tree which you can query using
+XPath statements or a more heavily processed version which
+provides as much information as possible from the segments
+and cables trees in two R data.frames. The latter option
+will inevitably drop some information, but will probably be
+more convenient for most purposes.
 }
 \references{
 \url{http://www.neuroml.org/specifications}

@@ -26,51 +26,32 @@ as.neuron(x, ...)
 }
 \arguments{
   \item{d}{matrix of vertices and associated data in SWC
-  format}
-
-  \item{NumPoints}{Number of points in master subtree}
-
-  \item{StartPoint,BranchPoints,EndPoints}{Nodes of the
-  neuron}
-
-  \item{SegList}{List where each element contains the
-  vertex indices for a single segments of the neuron,
-  starting at root.}
-
-  \item{SubTrees}{List of SegLists where a neuron has
-  multiple unconnected trees (e.g. because the soma is not
-  part of the graph, or because the neuronal arbour has
-  been cut.)}
-
+  format} \item{NumPoints}{Number of points in master
+  subtree} \item{StartPoint,BranchPoints,EndPoints}{Nodes
+  of the neuron} \item{SegList}{List where each element
+  contains the vertex indices for a single segments of
+  the neuron, starting at root.} \item{SubTrees}{List
+  of SegLists where a neuron has multiple unconnected
+  trees (e.g. because the soma is not part of the
+  graph, or because the neuronal arbour has been cut.)}
   \item{InputFileName}{Character vector with path to input
-  file}
-
-  \item{NeuronName}{Character vector containing name of
-  neuron or a function with one argument (the full path)
-  which returns the name. The default (\code{NULL}) sets
-  NeuronName to the file name without the file extension.}
-
-  \item{...}{Additional fields to be included in neuron.
-  Note that if these include CreatedAt, NodeName,
-  InputFileStat or InputFileMD5, they will override fields
-  of that name that are calculated automatically.}
-
+  file} \item{NeuronName}{Character vector containing
+  name of neuron or a function with one argument (the full
+  path) which returns the name. The default (\code{NULL})
+  sets NeuronName to the file name without the file
+  extension.} \item{...}{Additional fields to be included
+  in neuron. Note that if these include CreatedAt, NodeName,
+  InputFileStat or InputFileMD5, they will override
+  fields of that name that are calculated automatically.}
   \item{MD5}{Logical indicating whether to calculate MD5
-  hash of input}
-
-  \item{x}{A neuron or other object to test/convert}
-
-  \item{Strict}{Whether to check class of neuron or use a
-  more relaxed definition based on object being a list with
-  a SegList component.}
-
-  \item{vertexData}{A dataframe with SWC fields especially
-  X,Y,Z,W,PointNo, Parent.}
-
-  \item{origin}{Root vertex, matched against labels (aka
-  PointNo) when available (see details)}
-
-  \item{Verbose}{Whether to be verbose (default: FALSE)}
+  hash of input} \item{x}{A neuron or other object to test/
+  convert} \item{Strict}{Whether to check class of neuron
+  or use a more relaxed definition based on object being
+  a list with a SegList component.} \item{vertexData}{A
+  dataframe with SWC fields especially X,Y,Z,W,PointNo,
+  Parent.} \item{origin}{Root vertex, matched against labels
+  (aka PointNo) when available (see details)} \item{Verbose}
+  {Whether to be verbose (default: FALSE)}
 }
 \value{
 A list with elements:
@@ -79,53 +60,37 @@ A list with elements:
 }
 \description{
 \code{neuron} makes a neuron object from appropriate
-variables.
-
-\code{is.neuron} will check if an object looks like a
-neuron.
-
-\code{as.neuron} will convert a suitable object to a neuron
-
-\code{as.neuron.data.frame} expects a block of SWC format
-data
-
-\code{as.neuron.ngraph} converts a graph (typically an
-\code{ngraph} object) to a neuron
-
+variables. \code{is.neuron} will check if an object looks
+like a neuron. \code{as.neuron} will convert a suitable
+object to a neuron \code{as.neuron.data.frame} expects a
+block of SWC format data \code{as.neuron.ngraph} converts
+a graph (typically an \code{ngraph} object) to a neuron
 \code{as.neuron.default} will add class "neuron" to a
 neuron-like object.
 }
 \details{
 neuron objects consist of a list containing multiple fields
-describing the 3D location and connectivity of points in a
-traced neuron. The critical fields of a neuron, n, are n$d
-which contains a dataframe in SWC format and n$SegList
-which contains a representation of the neuron's topology
-used for most internal calculations. For historical
-reasons, n$SegList is limited to a \emph{single
-fully-connected} tree. If the tree contains multiple
-unconnected subtrees, then these are stored in n$SubTrees
-and nTrees will be >1; the "master" subtree (typically the
-one with the most points) will then be stored in n$SegList
-and n$NumPoints will refer to the number of points in that
-subtree, not the whole neuron.
-
-StartPoint, BranchPoints, EndPoints are indices matching
-the rows of the vertices in \code{d} \strong{not} arbitrary
-point numbers typically encoded in \code{d$PointNo}.
-
-Columns will be ordered
-c('PointNo','Label','X','Y','Z','W','Parent')
-
-Uses a depth first search on the tree to reorder using the
-given origin.
+describing the 3D location and connectivity of points
+in a traced neuron. The critical fields of a neuron, n,
+are n$d which contains a dataframe in SWC format and n
+$SegList which contains a representation of the neuron's
+topology used for most internal calculations. For historical
+reasons, n$SegList is limited to a \emph{single fully-
+connected} tree. If the tree contains multiple unconnected
+subtrees, then these are stored in n$SubTrees and nTrees
+will be >1; the "master" subtree (typically the one with
+the most points) will then be stored in n$SegList and n
+$NumPoints will refer to the number of points in that
+subtree, not the whole neuron. StartPoint, BranchPoints,
+EndPoints are indices matching the rows of the vertices
+in \code{d} \strong{not} arbitrary point numbers typically
+encoded in \code{d$PointNo}. Columns will be ordered
+c('PointNo','Label','X','Y','Z','W','Parent') Uses a depth
+first search on the tree to reorder using the given origin.
 }
 \seealso{
-\code{\link{neuronlist}}
-
-\code{\link{graph.dfs}, \link{as.seglist}}
-
-Other neuron: \code{\link{as.ngraph}},
+\code{\link{neuronlist}} \code{\link{graph.dfs},
+\link{as.seglist}} Other neuron: \code{\link{as.ngraph}},
 \code{\link{as.ngraph.data.frame}},
 \code{\link{as.ngraph.neuron}}, \code{\link{ngraph}}
 }

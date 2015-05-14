@@ -12,11 +12,9 @@ voxdims(x, ...)
 \arguments{
   \item{x}{An \code{im3d} object with associated voxel
   dimensions or a 2 x 3 BoundingBox \code{matrix}.}
-
-  \item{...}{Additional arguments for methods}
-
-  \item{dims}{The number of voxels in each dimension when x
-  is a BoundingBox matrix.}
+  \item{...}{Additional arguments for methods} \item{dims}
+  {The number of voxels in each dimension when x is a
+  BoundingBox matrix.}
 }
 \value{
 A numeric vector of length 3, NA when missing.
@@ -32,22 +30,19 @@ equal to the bounding box size (rather than 0) for any
 dimension with only 1 voxel.
 }
 \seealso{
-\code{\link{boundingbox}}
-
-Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
-\code{\link{boundingbox}},
+\code{\link{boundingbox}} Other im3d:
+\code{\link{as.im3d}}, \code{\link{as.im3d.im3d}},
+\code{\link{as.im3d.matrix}}; \code{\link{boundingbox}},
 \code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
-\code{\link{boundingbox.list}},
-\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
-\code{\link{im3d-coords}}, \code{\link{xyzpos}};
-\code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imexpand.grid}}; \code{\link{imslice}};
-\code{\link{origin}}; \code{\link{projection}};
-\code{\link{threshold}}, \code{\link{threshold.im3d}};
-\code{\link{unmask}}
+\code{\link{boundingbox.list}}, \code{\link{boundingbox<-}};
+\code{\link{ijkpos}}, \code{\link{im3d-coords}},
+\code{\link{xyzpos}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{im3d}}; \code{\link{imexpand.grid}};
+\code{\link{imslice}}; \code{\link{origin}};
+\code{\link{projection}}; \code{\link{threshold}},
+\code{\link{threshold.im3d}}; \code{\link{unmask}}
 }
 

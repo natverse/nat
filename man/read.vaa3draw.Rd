@@ -7,16 +7,11 @@
 read.vaa3draw(f, ReadData = TRUE, Verbose = FALSE, ReadByteAsRaw = FALSE)
 }
 \arguments{
-  \item{f}{Path to image to read}
-
-  \item{ReadData}{Whether to read in data or just parse
-  header}
-
-  \item{Verbose}{Whether to print status messages}
-
-  \item{ReadByteAsRaw}{Can reduce memory footprint by
-  reading 8 bit data as a raw rather than 4 byte
-  interegers.}
+  \item{f}{Path to image to read} \item{ReadData}{Whether to
+  read in data or just parse header} \item{Verbose}{Whether
+  to print status messages} \item{ReadByteAsRaw}{Can reduce
+  memory footprint by reading 8 bit data as a raw rather
+  than 4 byte interegers.}
 }
 \description{
 Read Vaa3d format image data

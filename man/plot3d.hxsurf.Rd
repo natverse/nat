@@ -7,18 +7,14 @@
 \method{plot3d}{hxsurf}(x, materials = NULL, col = NULL, ...)
 }
 \arguments{
-  \item{x}{An hxsurf surface object}
-
-  \item{materials}{Character vector or \code{\link{regex}}
-  naming materials to plot (defaults to all materials in
-  x). See \code{\link{subset.hxsurf}}.}
-
-  \item{col}{Character vector specifying colors for the
-  materials, or a function that will be called with the
-  number of materials to plot. When \code{NULL} (default)
-  will use meterial colours defined in Amira (if
-  available), or \code{rainbow} otherwise.}
-
+  \item{x}{An hxsurf surface object} \item{materials}
+  {Character vector or \code{\link{regex}} naming
+  materials to plot (defaults to all materials in x). See
+  \code{\link{subset.hxsurf}}.} \item{col}{Character vector
+  specifying colors for the materials, or a function that
+  will be called with the number of materials to plot. When
+  \code{NULL} (default) will use meterial colours defined
+  in Amira (if available), or \code{rainbow} otherwise.}
   \item{...}{Additional arguments passed to}
 }
 \description{
@@ -38,14 +34,12 @@ plot3d(MBL.surf, alpha=0.3,
   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 }
 \seealso{
-\code{\link{read.hxsurf}}
-
-Other hxsurf: \code{\link{as.mesh3d}},
-\code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{materials}},
-\code{\link{materials.character}},
+\code{\link{read.hxsurf}} Other hxsurf:
+\code{\link{as.mesh3d}}, \code{\link{as.mesh3d.hxsurf}};
+\code{\link{hxsurf}}, \code{\link{read.hxsurf}};
+\code{\link{materials}}, \code{\link{materials.character}},
 \code{\link{materials.default}},
-\code{\link{materials.hxsurf}};
-\code{\link{subset.hxsurf}}; \code{\link{write.hxsurf}}
+\code{\link{materials.hxsurf}}; \code{\link{subset.hxsurf}};
+\code{\link{write.hxsurf}}
 }
 

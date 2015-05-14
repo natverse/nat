@@ -17,61 +17,45 @@ as.seglist(x, ...)
 }
 \arguments{
   \item{...}{for \code{seglist} integer vectors to convert
-  to a seglist}
-
-  \item{x}{object passed to be converted to seglist}
-
-  \item{all}{Whether to include segments from all subtrees}
-
-  \item{flatten}{When \code{all=TRUE} flatten the lists of
-  lists into a one-level list.}
-
-  \item{origin}{The origin of the tree (see details)}
-
-  \item{Verbose}{Whether to print progress updates to
-  console (default FALSE)}
+  to a seglist} \item{x}{object passed to be converted to
+  seglist} \item{all}{Whether to include segments from all
+  subtrees} \item{flatten}{When \code{all=TRUE} flatten the
+  lists of lists into a one-level list.} \item{origin}{The
+  origin of the tree (see details)} \item{Verbose}{Whether
+  to print progress updates to console (default FALSE)}
 }
 \value{
-A \code{list} with additional class \code{seglist}.
-
-a \code{list} with one entry for each unbranched segment.
+A \code{list} with additional class \code{seglist}. a
+\code{list} with one entry for each unbranched segment.
 }
 \description{
-\code{seglist} makes a seglist object from a list of
-integer vectors of raw vertex ids. As a convenience if a
-vector of numeric ids are passed these are assumed to
-specify a neuron with 1 segment.
-
-\code{as.seglist.neuron} will extract the seglist from a
-neuron, optionally extracting all subtrees
+\code{seglist} makes a seglist object from a list of integer
+vectors of raw vertex ids. As a convenience if a vector of
+numeric ids are passed these are assumed to specify a neuron
+with 1 segment. \code{as.seglist.neuron} will extract the
+seglist from a neuron, optionally extracting all subtrees
 (\code{all=TRUE}) and (in this case) flattening the list
-into a single hierarchy when \code{flatten=TRUE}.  n.b.
-when \code{all=TRUE} but \code{flatten=FALSE} the result
-will \emph{always} be a list of \code{seglist} objects
-(even if the neuron has only one subtree i.e. is fully
-connected).
-
+into a single hierarchy when \code{flatten=TRUE}. n.b. when
+\code{all=TRUE} but \code{flatten=FALSE} the result will
+\emph{always} be a list of \code{seglist} objects (even if
+the neuron has only one subtree i.e. is fully connected).
 \code{as.seglist.igraph} will convert a fully connected
-acyclic ngraph or igraph object into a seglist consisting
-of exactly one subtree.
+acyclic ngraph or igraph object into a seglist consisting of
+exactly one subtree.
 }
 \details{
 see \code{\link{neuron}} for further information about
-seglists.
-
-If the graph vertices have \code{vid} attributes, typically
-defining the original vertex ids of a graph that was then
-decomposed into subgraphs, then the origin is assumed to
-refer to one of these vids not a raw vertex id of the
-current graph. The returned seglist will also contain these
-original vertex ids.
+seglists. If the graph vertices have \code{vid} attributes,
+typically defining the original vertex ids of a graph that
+was then decomposed into subgraphs, then the origin is
+assumed to refer to one of these vids not a raw vertex id
+of the current graph. The returned seglist will also contain
+these original vertex ids.
 }
 \examples{
 sl=seglist(c(1:2),c(2:6))
 }
 \seealso{
-\code{\link{neuron}}
-
-\code{\link{ngraph},\link{igraph}}
+\code{\link{neuron}} \code{\link{ngraph},\link{igraph}}
 }
 

@@ -13,11 +13,9 @@ intersect(x, y, ...)
 \method{intersect}{neuronlist}(x, y, ...)
 }
 \arguments{
-  \item{x}{the first collection to consider.}
-
-  \item{y}{the second collection to consider.}
-
-  \item{...}{additional arguments passed to methods}
+  \item{x}{the first collection to consider.} \item{y}{the
+  second collection to consider.} \item{...}{additional
+  arguments passed to methods}
 }
 \value{
 A collection of the same mode as \code{x} that contains all

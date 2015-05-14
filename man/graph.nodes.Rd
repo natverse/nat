@@ -8,15 +8,10 @@ graph.nodes(x, type = c("root", "end", "branch"), original.ids = "label",
   exclude.isolated = TRUE)
 }
 \arguments{
-  \item{x}{An igraph object}
-
-  \item{type}{one of root, end (which includes root) or
-  branch}
-
-  \item{original.ids}{Use named attribute to return
-  original vertex ids (when available). Set to FALSE when
-  this is not desired.}
-
+  \item{x}{An igraph object} \item{type}{one of root, end
+  (which includes root) or branch} \item{original.ids}
+  {Use named attribute to return original vertex ids (when
+  available). Set to FALSE when this is not desired.}
   \item{exclude.isolated}{Do not count isolated vertices as
   root points (default)}
 }

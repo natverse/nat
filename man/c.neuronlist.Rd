@@ -7,9 +7,8 @@
 \method{c}{neuronlist}(..., recursive = FALSE)
 }
 \arguments{
-  \item{...}{neuronlists to combine}
-
-  \item{recursive}{Presently ignored}
+  \item{...}{neuronlists to combine} \item{recursive}
+  {Presently ignored}
 }
 \description{
 Combine multiple neuronlists into a single list

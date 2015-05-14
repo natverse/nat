@@ -16,21 +16,18 @@ table(with(Cell07PNs,Glomerulus))
 }
 \references{
 Jefferis G.S.X.E., Potter C.J., Chan A.M., Marin E.C.,
-Rohlfing T., Maurer C.R.J., and Luo L. (2007).
-Comprehensive maps of Drosophila higher olfactory centers:
-spatially segregated fruit and pheromone representation.
-Cell 128 (6), 1187--1203.
-\href{http://dx.doi.org/10.1016/j.cell.2007.01.040}{doi:10.1016/j.cell.2007.01.040}
-
-Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and
-Jefferis G.S.X.E. (2010). Sexual dimorphism in the fly
-brain. Curr Biol 20 (18), 1589--601.
-\href{http://dx.doi.org/10.1016/j.cub.2010.07.045}{doi:10.1016/j.cub.2010.07.045}
+Rohlfing T., Maurer C.R.J., and Luo L. (2007). Comprehensive
+maps of Drosophila higher olfactory centers: spatially
+segregated fruit and pheromone representation. Cell 128
+(6), 1187--1203. \href{http://dx.doi.org/10.1016/j.cell.
+2007.01.040}{doi:10.1016/j.cell.2007.01.040} Cachero S.,
+Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E.
+(2010). Sexual dimorphism in the fly brain. Curr Biol 20
+(18), 1589--601. \href{http://dx.doi.org/10.1016/j.cub.
+2010.07.045}{doi:10.1016/j.cub.2010.07.045}
 }
 \seealso{
-\code{\link{head.neuronlist}},
-\code{\link{with.neuronlist}}
-
+\code{\link{head.neuronlist}}, \code{\link{with.neuronlist}}
 Other nat-data: \code{\link{MBL.surf}}; \code{\link{kcs20}}
 }
 

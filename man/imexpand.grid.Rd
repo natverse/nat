@@ -20,22 +20,20 @@ d=im3d(,dim=c(2,3,2),origin=c(10,20,30),voxdims=c(1,2,3))
 imexpand.grid(d)
 }
 \seealso{
-expand.grid
-
-Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
-\code{\link{boundingbox}},
+expand.grid Other im3d: \code{\link{as.im3d}},
+\code{\link{as.im3d.im3d}},
+\code{\link{as.im3d.matrix}}; \code{\link{boundingbox}},
 \code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
-\code{\link{boundingbox.list}},
-\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
-\code{\link{im3d-coords}}, \code{\link{xyzpos}};
-\code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{projection}}; \code{\link{threshold}},
-\code{\link{threshold.im3d}}; \code{\link{unmask}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+\code{\link{boundingbox.list}}, \code{\link{boundingbox<-}};
+\code{\link{ijkpos}}, \code{\link{im3d-coords}},
+\code{\link{xyzpos}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{im3d}}; \code{\link{imslice}};
+\code{\link{origin}}; \code{\link{projection}};
+\code{\link{threshold}}, \code{\link{threshold.im3d}};
+\code{\link{unmask}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
 }
 

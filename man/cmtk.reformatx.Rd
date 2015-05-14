@@ -11,49 +11,33 @@ cmtk.reformatx(floating, registrations, output, target, mask = FALSE,
 }
 \arguments{
   \item{floating}{The floating image to be reformatted}
-
-  \item{registrations}{One or more CMTK format
-  registrations on disk}
-
-  \item{output}{The output image (defaults to
-  targetstem-floatingstem.nrrd)}
-
-  \item{target}{A character vector specifying a file, an
-  \code{im3d} object or a 6-or 9-vector defining a grid in
-  the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
-
-  \item{mask}{Whether to treat target as a binary mask
-  (only reformatting positve voxels)}
-
-  \item{interpolation}{What interpolation scheme to use for
-  output image (defaults to linear - see details)}
-
-  \item{dryrun}{Just print command}
-
-  \item{Verbose}{Whether to show cmtk status messages and
-  be verbose about file update checks. Sets command line
-  \code{--verbose} option.}
-
-  \item{MakeLock}{Whether to use a lock file to allow
-  simple parallelisation (see \code{makelock})}
-
-  \item{OverWrite}{Whether to OverWrite an existing output
-  file. One of c("no","update","yes"). When
-  OverWrite='update' \code{\link{RunCmdForNewerInput}} is
-  used to determine if the output is older than any of the
-  input files.}
-
+  \item{registrations}{One or more CMTK format registrations
+  on disk} \item{output}{The output image (defaults to
+  targetstem-floatingstem.nrrd)} \item{target}{A character
+  vector specifying a file, an \code{im3d} object or a 6-
+  or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,
+  [Ox,Oy,Oz].} \item{mask}{Whether to treat target as
+  a binary mask (only reformatting positve voxels)}
+  \item{interpolation}{What interpolation scheme to use
+  for output image (defaults to linear - see details)}
+  \item{dryrun}{Just print command} \item{Verbose}{Whether
+  to show cmtk status messages and be verbose about file
+  update checks. Sets command line \code{--verbose} option.}
+  \item{MakeLock}{Whether to use a lock file to allow simple
+  parallelisation (see \code{makelock})} \item{OverWrite}
+  {Whether to OverWrite an existing output file. One
+  of c("no","update","yes"). When OverWrite='update'
+  \code{\link{RunCmdForNewerInput}} is used to determine
+  if the output is older than any of the input files.}
   \item{filesToIgnoreModTimes}{Input files whose
   modification time should not be checked when determining
-  if new output is required.}
-
-  \item{...}{additional arguments passed to CMTK
-  \code{reformatx} after processing by
-  \code{\link{cmtk.call}}.}
+  if new output is required.} \item{...}{additional
+  arguments passed to CMTK \code{reformatx} after processing
+  by \code{\link{cmtk.call}}.}
 }
 \value{
-the path to the ouput image (whether or not it was
-re-created afresh) or \code{NA_character_} if no output was
+the path to the ouput image (whether or not it was re-
+created afresh) or \code{NA_character_} if no output was
 possible.
 }
 \description{
@@ -78,7 +62,7 @@ system(cmtk.call('reformatx', help=TRUE))
 }
 }
 \seealso{
-\code{\link{cmtk.bindir}, \link{cmtk.call},
-\link{makelock}, \link{RunCmdForNewerInput}}
+\code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock},
+\link{RunCmdForNewerInput}}
 }
 

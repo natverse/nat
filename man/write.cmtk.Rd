@@ -7,13 +7,9 @@
 write.cmtk(l, con, gzip = FALSE, version = NA_character_)
 }
 \arguments{
-  \item{l}{Appropriately formatted list}
-
-  \item{con}{A character string specifying a path or a
-  connection}
-
+  \item{l}{Appropriately formatted list} \item{con}
+  {A character string specifying a path or a connection}
   \item{gzip}{Whether to gzip output file (default FALSE)}
-
   \item{version}{TYPEDSTREAM version number, defaults to
   \code{"1.1"} if not specified in the version attribute of
   \code{l}.}
