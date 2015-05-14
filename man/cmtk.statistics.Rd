@@ -9,21 +9,15 @@ cmtk.statistics(f, mask, imagetype = c("greyscale", "label"),
 }
 \arguments{
   \item{f}{Path to image file (any CMTK compatible format)}
-
-  \item{mask}{Optional path to a mask file}
-
-  \item{imagetype}{Whether image should be treated as
-  greyscale (default) or label field.}
-
-  \item{masktype}{Whether mask should be treated as label
-  field or binary mask (default label)}
-
+  \item{mask}{Optional path to a mask file} \item{imagetype}
+  {Whether image should be treated as greyscale (default)
+  or label field.} \item{masktype}{Whether mask should be
+  treated as label field or binary mask (default label)}
   \item{...}{Additional arguments for ctmk's statistics
-  tool processed by \code{\link{cmtk.call}}.}
-
-  \item{Verbose}{Whether to show cmtk status messages and
-  be verbose about file update checks. Sets command line
-  \code{--verbose} option.}
+  tool processed by \code{\link{cmtk.call}}.} \item{Verbose}
+  {Whether to show cmtk status messages and be verbose about
+  file update checks. Sets command line \code{--verbose}
+  option.}
 }
 \value{
 return dataframe describing results
@@ -34,8 +28,8 @@ compatible file
 }
 \details{
 When given a label mask returns a dataframe with a row for
-each level of the label field. If GJ's modified version of
-CMTK statistics is available this will include an extra
+each level of the label field. If GJ's modified version
+of CMTK statistics is available this will include an extra
 column with the number of non-zero voxels in the main image
 for each level of the mask.
 }

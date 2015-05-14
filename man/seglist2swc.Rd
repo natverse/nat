@@ -7,16 +7,11 @@
 seglist2swc(x, d, RecalculateParents = TRUE, ...)
 }
 \arguments{
-  \item{x}{Neuron containing both the SegList and d fields
-  or a plain seglist}
-
-  \item{d}{SWC data block (only expected if x is a
-  SegList)}
-
-  \item{RecalculateParents}{Whether to recalculate parent
-  points (default T)}
-
-  \item{...}{Additional arguments passed to
+  \item{x}{Neuron containing both the SegList and d
+  fields or a plain seglist} \item{d}{SWC data block (only
+  expected if x is a SegList)} \item{RecalculateParents}
+  {Whether to recalculate parent points (default
+  T)} \item{...}{Additional arguments passed to
   \code{\link{normalise_swc}}}
 }
 \value{
@@ -30,19 +25,10 @@ field (d).
 \details{
 If any columns are missing then they are set to default
 values by \code{\link{normalise_swc}}. In particular
-\itemize{
-
-\item PointNo integer 1:npoints
-
-\item Label = 0 (unknown)
-
-\item W NA_real
-
-}
-
-Note that each numeric entry in the incoming SegList is a
-raw index into the block of vertex data defined by
-\code{d}.
+\itemize{ \item PointNo integer 1:npoints \item Label = 0
+(unknown) \item W NA_real } Note that each numeric entry in
+the incoming SegList is a raw index into the block of vertex
+data defined by \code{d}.
 }
 \seealso{
 \code{\link{as.neuron.data.frame}},

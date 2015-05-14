@@ -8,10 +8,8 @@ amiratype(x, bytes = NULL)
 }
 \arguments{
   \item{x}{Path to files on disk or a single pre-parsed
-  parameter list}
-
-  \item{bytes}{A raw vector containing at least 11 bytes
-  from the start of the file.}
+  parameter list} \item{bytes}{A raw vector containing at
+  least 11 bytes from the start of the file.}
 }
 \value{
 character vector (NA_character_ when file invalid)

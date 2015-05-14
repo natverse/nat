@@ -11,30 +11,22 @@ as.mesh3d(x, ...)
   drop = TRUE, ...)
 }
 \arguments{
-  \item{x}{Object to convert to mesh3d}
-
-  \item{...}{Additional arguments for methods}
-
-  \item{Regions}{Character vector or regions to select from
-  \code{hxsurf} object}
-
-  \item{material}{rgl materials such as \code{color}}
-
-  \item{drop}{Whether to drop unused vertices (default
-  TRUE)}
+  \item{x}{Object to convert to mesh3d} \item{...}
+  {Additional arguments for methods} \item{Regions}
+  {Character vector or regions to select from \code{hxsurf}
+  object} \item{material}{rgl materials such as
+  \code{color}} \item{drop}{Whether to drop unused vertices
+  (default TRUE)}
 }
 \description{
 Note that this provides a link to the Rvcg package
 }
 \seealso{
-\code{\link[rgl]{tmesh3d}}
-
-Other hxsurf: \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{materials}},
-\code{\link{materials.character}},
+\code{\link[rgl]{tmesh3d}} Other hxsurf:
+\code{\link{hxsurf}}, \code{\link{read.hxsurf}};
+\code{\link{materials}}, \code{\link{materials.character}},
 \code{\link{materials.default}},
-\code{\link{materials.hxsurf}};
-\code{\link{plot3d.hxsurf}}; \code{\link{subset.hxsurf}};
-\code{\link{write.hxsurf}}
+\code{\link{materials.hxsurf}}; \code{\link{plot3d.hxsurf}};
+\code{\link{subset.hxsurf}}; \code{\link{write.hxsurf}}
 }
 

@@ -17,23 +17,16 @@ xformpoints(reg, points, ...)
 \method{xformpoints}{default}(reg, points, ...)
 }
 \arguments{
-  \item{reg}{A registration defined by a matrix, a
-  function, a \code{cmtkreg} object, or a character vector
-  specifying a path to a CMTK registration on disk (see
-  details).}
-
-  \item{points}{Nx3 matrix of points}
-
-  \item{...}{Additional arguments passed to methods}
-
-  \item{transformtype}{Which transformation to use when the
-  CMTK file contains both warp (default) and affine}
-
-  \item{direction}{Whether to transform points from sample
-  space to reference space (called \strong{inverse} by
-  CMTK) or from reference to sample space (called
-  \strong{forward} by CMTK)}
-
+  \item{reg}{A registration defined by a matrix, a function,
+  a \code{cmtkreg} object, or a character vector specifying
+  a path to a CMTK registration on disk (see details).}
+  \item{points}{Nx3 matrix of points} \item{...}{Additional
+  arguments passed to methods} \item{transformtype}{Which
+  transformation to use when the CMTK file contains both
+  warp (default) and affine} \item{direction}{Whether to
+  transform points from sample space to reference space
+  (called \strong{inverse} by CMTK) or from reference
+  to sample space (called \strong{forward} by CMTK)}
   \item{FallBackToAffine}{Whether to use the affine
   transformation for points that fail to transform under a
   warping transformation.}
@@ -43,28 +36,27 @@ Transform 3d points using a registration, affine matrix or
 function
 }
 \details{
-When passed a character vector, xformpoints will check to
-see if it defines a path containing CMTK registration
+When passed a character vector, xformpoints will check
+to see if it defines a path containing CMTK registration
 erroring out if this is not the case. If the path does
-indeed point to a CMTK registration, this method will hand
-off to xformpoints.cmtkreg. A future TODO would be to
+indeed point to a CMTK registration, this method will
+hand off to xformpoints.cmtkreg. A future TODO would be to
 provide a mechanism for extending this behaviour for other
-registration formats.  If a list of transformations is
-passed in, these transformations are performed in sequence
-order, such that \code{xformpoints(c(a,b,c), x) ==
-xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
-
-Note that the direction of CMTK registrations can be the
-source of much confusion. This is because CMTK defines the
-\emph{forward} direction as the transform required to
-reformat an image in \emph{sample} (floating) space to an
-image in \emph{template} space. Since this operation
-involves filling a regular grid in template space by
-looking up the corresponding positions in sample space, the
-transformation that is required is (somewhat
-counterintuitively) the one that maps template to sample.
-However in neuroanatomical work, one often has points in
-sample space that one would like to transform into template
-space. Here one needs the \emph{inverse} transformation.
+registration formats. If a list of transformations is passed
+in, these transformations are performed in sequence order,
+such that \code{xformpoints(c(a,b,c), x) == xformpoints(c,
+(xformpoints(b, xformpoints(a, x))))} Note that the
+direction of CMTK registrations can be the source of much
+confusion. This is because CMTK defines the \emph{forward}
+direction as the transform required to reformat an
+image in \emph{sample} (floating) space to an image in
+\emph{template} space. Since this operation involves
+filling a regular grid in template space by looking up the
+corresponding positions in sample space, the transformation
+that is required is (somewhat counterintuitively) the one
+that maps template to sample. However in neuroanatomical
+work, one often has points in sample space that one would
+like to transform into template space. Here one needs the
+\emph{inverse} transformation.
 }
 

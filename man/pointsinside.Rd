@@ -11,15 +11,11 @@ pointsinside(x, surf, ...)
   "mesh3d"))
 }
 \arguments{
-  \item{x}{an object with 3D points.}
-
-  \item{surf}{an \code{hxsurf} or \code{mesh3d} object
-  defining the reference surface.}
-
-  \item{...}{additional arguments for methods, eventually
-  passed to as.mesh3d.}
-
-  \item{rval}{what to return.}
+  \item{x}{an object with 3D points.} \item{surf}{an
+  \code{hxsurf} or \code{mesh3d} object defining the
+  reference surface.} \item{...}{additional arguments for
+  methods, eventually passed to as.mesh3d.} \item{rval}{what
+  to return.}
 }
 \value{
 A vector of logical values or distances equal to the number
@@ -30,9 +26,9 @@ of points in x or the \code{mesh3d} object returned by
 Find which points of an object are inside a surface
 }
 \details{
-Note that \code{hxsurf} surface objects will be converted
-to \code{mesh3d} before being passed to
-\code{Rvcg::vcgClost}, so if you are testing repeatedly
-against the same surface, it may make sense to pre-convert.
+Note that \code{hxsurf} surface objects will be converted to
+\code{mesh3d} before being passed to \code{Rvcg::vcgClost},
+so if you are testing repeatedly against the same surface,
+it may make sense to pre-convert.
 }
 

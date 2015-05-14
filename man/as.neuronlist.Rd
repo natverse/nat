@@ -11,15 +11,10 @@ as.neuronlist(l, ...)
 }
 \arguments{
   \item{l}{An existing list or a single neuron to start a
-  list}
-
-  \item{...}{Additional arguments passed to methods}
-
+  list} \item{...}{Additional arguments passed to methods}
   \item{df}{the data.frame to attach with additional
-  metadata.}
-
-  \item{AddClassToNeurons}{Whether to ensure neurons have
-  class \code{neuron} (see details).}
+  metadata.} \item{AddClassToNeurons}{Whether to ensure
+  neurons have class \code{neuron} (see details).}
 }
 \value{
 neuronlist with attr('df')
@@ -31,12 +26,12 @@ plotting/analysis
 \details{
 Note that \code{as.neuronlist} can cope with both
 \code{neurons} and \code{dotprops} objects but
-\code{AddClassToNeurons} will only apply to things that
-look like neurons but don't have a class of \code{neuron}.
-
-See \code{\link{neuronlist}} details for more information.
+\code{AddClassToNeurons} will only apply to things that look
+like neurons but don't have a class of \code{neuron}. See
+\code{\link{neuronlist}} details for more information.
 }
 \seealso{
-\code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
+\code{\link{is.neuronlist}},\code{\link{is.neuron}},
+\code{\link{is.dotprops}}
 }
 

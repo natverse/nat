@@ -14,11 +14,9 @@ generic in the rgl package.
 intersect(methods("plot3d"), ls(envir = as.environment('package:nat')))
 }
 \seealso{
-\code{\link[rgl]{plot3d}},
-\code{\link{plot3d.boundingbox}},
+\code{\link[rgl]{plot3d}}, \code{\link{plot3d.boundingbox}},
 \code{\link{plot3d.character}},
 \code{\link{plot3d.dotprops}}, \code{\link{plot3d.hxsurf}},
-\code{\link{plot3d.neuron}},
-\code{\link{plot3d.neuronlist}}
+\code{\link{plot3d.neuron}}, \code{\link{plot3d.neuronlist}}
 }
 

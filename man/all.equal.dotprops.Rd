@@ -9,16 +9,11 @@
 }
 \arguments{
   \item{target,current}{dotprops objects to compare}
-
-  \item{check.attributes}{Whether to check attributes
-  (false by default)}
-
-  \item{absoluteVectors}{Whether to check only the absolute
-  value of eigenvectors for equality (default TRUE, see
-  details)}
-
-  \item{...}{Additional arguments passed to base
-  \code{all.equal}.}
+  \item{check.attributes}{Whether to check attributes (false
+  by default)} \item{absoluteVectors}{Whether to check only
+  the absolute value of eigenvectors for equality (default
+  TRUE, see details)} \item{...}{Additional arguments passed
+  to base \code{all.equal}.}
 }
 \description{
 all.equal method tailored to dotprops objects
@@ -27,8 +22,8 @@ all.equal method tailored to dotprops objects
 This method is required because the direction vectors are
 computed using an eigenvector decomposition where the sign
 of the eigenvector is essentially random and subject to
-small numerical instabilities. Therefore it does not
-usually make sense to check the value of vect exactly.
+small numerical instabilities. Therefore it does not usually
+make sense to check the value of vect exactly.
 }
 \examples{
 # equal using default

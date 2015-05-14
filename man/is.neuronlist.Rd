@@ -17,8 +17,8 @@ Tests if object is a neuronlist.
 }
 \details{
 \code{is.neuronlist} uses a relaxed definition to cope with
-older lists of neurons that do not have a class attribute
-of neuronlist.
+older lists of neurons that do not have a class attribute of
+neuronlist.
 }
 \seealso{
 Other neuronlist: \code{\link{as.neuronlistfh}},

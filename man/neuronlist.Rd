@@ -8,7 +8,6 @@ neuronlist(..., DATAFRAME = NULL)
 }
 \arguments{
   \item{...}{objects to be turned into a list}
-
   \item{DATAFRAME}{an optional \code{data.frame} to attach
   to the neuronlist containing information about each
   neuron.}
@@ -18,17 +17,15 @@ A new neuronlist object.
 }
 \description{
 \code{neuronlist} objects consist of a list of neuron
-objects along with an optional attached dataframe
-containing information about the neurons. \code{neuronlist}
-objects can be indexed using their name or the number of
-the neuron like a regular list. Both the \code{list} itself
-and the attached \code{data.frame} must have the same
-unique (row)names. If the \code{[} operator is used to
-index the list, the attached dataframe will also be
-subsetted.
-
-It is perfectly acceptable not to pass any parameters,
-generating an empty neuronlist
+objects along with an optional attached dataframe containing
+information about the neurons. \code{neuronlist} objects can
+be indexed using their name or the number of the neuron like
+a regular list. Both the \code{list} itself and the attached
+\code{data.frame} must have the same unique (row)names.
+If the \code{[} operator is used to index the list, the
+attached dataframe will also be subsetted. It is perfectly
+acceptable not to pass any parameters, generating an empty
+neuronlist
 }
 \examples{
 # generate an empty neuronlist
@@ -39,9 +36,8 @@ kcs5=kcs20[1:5]
 methods(class='neuronlist')
 }
 \seealso{
-\code{\link{as.data.frame.neuronlist}}
-
-Other neuronlist: \code{\link{as.neuronlistfh}},
+\code{\link{as.data.frame.neuronlist}} Other
+neuronlist: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
 \code{\link{neuronlistfh}}; \code{\link{is.neuronlist}};

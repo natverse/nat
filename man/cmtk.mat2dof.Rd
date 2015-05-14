@@ -9,15 +9,9 @@ cmtk.mat2dof(m, f = NULL, centre = NULL, Transpose = TRUE,
 }
 \arguments{
   \item{m}{Homogenous affine matrix (4x4) last row 0 0 0 1
-  etc}
-
-  \item{f}{Output file (optional)}
-
-  \item{centre}{Centre for rotation (optional 3-vector)}
-
-  \item{Transpose}{the input matrix so that it is read in
-  as it appears on disk}
-
+  etc} \item{f}{Output file (optional)} \item{centre}{Centre
+  for rotation (optional 3-vector)} \item{Transpose}{the
+  input matrix so that it is read in as it appears on disk}
   \item{version}{When TRUE, function returns CMTK version
   number of mat2dof tool}
 }
@@ -35,7 +29,6 @@ indicating success or failure at writing to disk.
 }
 \seealso{
 Other cmtk-commandline: \code{\link{cmtk.dof2mat}}
-
 Other cmtk-geometry: \code{\link{affmat2cmtkparams}};
 \code{\link{cmtk.dof2mat}}; \code{\link{cmtkparams2affmat}}
 }

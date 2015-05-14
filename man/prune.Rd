@@ -21,19 +21,12 @@ prune(x, target, ...)
 }
 \arguments{
   \item{x}{The object to prune. (e.g. \code{dotprops}
-  object, see details)}
-
-  \item{target}{Another object with 3d points that will
-  determine which points in x are kept.}
-
+  object, see details)} \item{target}{Another object with
+  3d points that will determine which points in x are kept.}
   \item{...}{Additional arguments for methods (eventually
-  passed to \code{prune.default})}
-
-  \item{maxdist}{The threshold distance for keeping points}
-
-  \item{keep}{Whether to keep points in x that are near or
-  far from the target}
-
+  passed to \code{prune.default})} \item{maxdist}{The
+  threshold distance for keeping points} \item{keep}{Whether
+  to keep points in x that are near or far from the target}
   \item{return.indices}{Whether to return the indices that
   pass the test rather than the 3d object/points (default
   \code{FALSE})}

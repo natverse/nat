@@ -7,10 +7,8 @@
 is.neuroml(f, bytes = NULL)
 }
 \arguments{
-  \item{f}{path to a file on disk}
-
-  \item{bytes}{optional raw vector of bytes used for
-  prechecks}
+  \item{f}{path to a file on disk} \item{bytes}{optional raw
+  vector of bytes used for prechecks}
 }
 \description{
 This will check a file on disk to see if it is in NeuroML

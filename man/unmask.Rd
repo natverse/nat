@@ -8,36 +8,30 @@ unmask(x, mask, default = NA, attributes. = attributes(mask),
   copyAttributes = TRUE)
 }
 \arguments{
-  \item{x}{the data to place on a regular grid}
-
-  \item{mask}{An \code{im3d} regular image array where
-  non-zero voxels are the selected element.}
-
-  \item{default}{Value for regions outside the mask
-  (default: NA)}
-
-  \item{attributes.}{Attributes to set on new object.
-  Defaults to attributes of \code{mask}}
-
-  \item{copyAttributes}{Whether to copy over attributes
-  (including \code{dim}) from the mask to the returned
-  object. default: \code{TRUE}}
+  \item{x}{the data to place on a regular grid} \item{mask}
+  {An \code{im3d} regular image array where non-zero voxels
+  are the selected element.} \item{default}{Value for
+  regions outside the mask (default: NA)} \item{attributes.}
+  {Attributes to set on new object. Defaults to attributes
+  of \code{mask}} \item{copyAttributes}{Whether to copy over
+  attributes (including \code{dim}) from the mask to the
+  returned object. default: \code{TRUE}}
 }
 \value{
-A new \code{im3d} object with attributes/dimensions defined
-by \code{mask} and values from \code{x}. If
+A new \code{im3d} object with attributes/dimensions
+defined by \code{mask} and values from \code{x}. If
 \code{copyAttributes} is \code{FALSE}, then it will have
 mode of \code{x} and length of \code{mask} but no other
 attributes.
 }
 \description{
-Make im3d image array containing values at locations
-defined by a mask
+Make im3d image array containing values at locations defined
+by a mask
 }
 \details{
-The values in x will be placed into a grid defined by the
-dimensions of the \code{mask} in the order defined by the
-standard R linear subscripting of arrays (see e.g.
+The values in x will be placed into a grid defined by
+the dimensions of the \code{mask} in the order defined
+by the standard R linear subscripting of arrays (see e.g.
 \code{\link{arrayInd}}).
 }
 \examples{
@@ -55,19 +49,19 @@ image(imslice(stripes,11), asp=TRUE)
 }
 \seealso{
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
-\code{\link{boundingbox}},
+\code{\link{as.im3d.im3d}},
+\code{\link{as.im3d.matrix}}; \code{\link{boundingbox}},
 \code{\link{boundingbox.character}},
 \code{\link{boundingbox.default}},
 \code{\link{boundingbox.im3d}},
-\code{\link{boundingbox.list}},
-\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
-\code{\link{im3d-coords}}, \code{\link{xyzpos}};
-\code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imexpand.grid}}; \code{\link{imslice}};
-\code{\link{origin}}; \code{\link{projection}};
-\code{\link{threshold}}, \code{\link{threshold.im3d}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+\code{\link{boundingbox.list}}, \code{\link{boundingbox<-}};
+\code{\link{ijkpos}}, \code{\link{im3d-coords}},
+\code{\link{xyzpos}}; \code{\link{im3d-io}},
+\code{\link{read.im3d}}, \code{\link{write.im3d}};
+\code{\link{im3d}}; \code{\link{imexpand.grid}};
+\code{\link{imslice}}; \code{\link{origin}};
+\code{\link{projection}}; \code{\link{threshold}},
+\code{\link{threshold.im3d}}; \code{\link{voxdims}},
+\code{\link{voxdims.default}}
 }
 

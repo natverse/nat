@@ -12,8 +12,8 @@ cmtk.version(minimum = NULL)
 \value{
 returns \code{numeric_version} representation of CMTK
 version or if minimum is not NULL, returns a logical
-indicating whether the installed version exceeds the
-current version. If CMTK is not installed returns NA.
+indicating whether the installed version exceeds the current
+version. If CMTK is not installed returns NA.
 }
 \description{
 Return cmtk version or test for presence of at least a

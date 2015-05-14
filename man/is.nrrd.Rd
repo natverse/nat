@@ -9,17 +9,13 @@ is.nrrd(f = NULL, bytes = NULL, ReturnVersion = FALSE,
 }
 \arguments{
   \item{f}{A character vector specifying the path or a raw
-  vector with at least 8 bytes.}
-
-  \item{bytes}{optional raw vector of at least 8 bytes from
-  the start of a single file (used in preference to reading
-  file \code{f}).}
-
-  \item{ReturnVersion}{Whether to return the version of the
-  nrrd format in which the file is encoded (1-5).}
-
-  \item{TrustSuffix}{Whether to trust that a file ending in
-  .nrrd or .nhdr is a NRRD}
+  vector with at least 8 bytes.} \item{bytes}{optional raw
+  vector of at least 8 bytes from the start of a single
+  file (used in preference to reading file \code{f}).}
+  \item{ReturnVersion}{Whether to return the version of
+  the nrrd format in which the file is encoded (1-5).}
+  \item{TrustSuffix}{Whether to trust that a file ending
+  in .nrrd or .nhdr is a NRRD}
 }
 \description{
 Check if a file is a NRRD file

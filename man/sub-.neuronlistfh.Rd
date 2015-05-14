@@ -7,13 +7,9 @@
 \method{[}{neuronlistfh}(x, i, ...)
 }
 \arguments{
-  \item{x}{A neuronlistfh object}
-
-  \item{i}{Indices of items to extract from neuronlistfh
-  object}
-
-  \item{...}{Additional arguments passed to neuronlistfh []
-  function}
+  \item{x}{A neuronlistfh object} \item{i}{Indices of items
+  to extract from neuronlistfh object} \item{...}{Additional
+  arguments passed to neuronlistfh [] function}
 }
 \value{
 A new neuronlist object (i.e. in memory)

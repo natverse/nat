@@ -13,24 +13,17 @@ remotesync(x, remote = attr(x, "remote"), download.missing = TRUE,
   update.object = TRUE, ...)
 }
 \arguments{
-  \item{x}{Object to synchronise with a remote URL}
-
-  \item{remote}{The remote URL to update from}
-
-  \item{download.missing}{Whether to download missing
-  objects (default TRUE)}
-
-  \item{delete.extra}{Whether to delete objects (default
-  TRUE)}
-
-  \item{indices}{Character vector naming neurons to update
-  (default \code{indices=NULL} implies all neurons).}
-
-  \item{update.object}{Whether to update the
+  \item{x}{Object to synchronise with a remote
+  URL} \item{remote}{The remote URL to update
+  from} \item{download.missing}{Whether to download
+  missing objects (default TRUE)} \item{delete.extra}
+  {Whether to delete objects (default TRUE)}
+  \item{indices}{Character vector naming neurons to
+  update (default \code{indices=NULL} implies all
+  neurons).} \item{update.object}{Whether to update the
   \code{neuronlistfh} object itself on disk (default TRUE).
   Note that this assumes that the \code{neuronlistfh}
   object has not been renamed after it was downloaded.}
-
   \item{\dots}{Additional arguments passed to methods}
 }
 \value{
@@ -53,8 +46,7 @@ kcs20=remotesync(kcs20, indices=mbvl_neurons, download.missing=TRUE)
 Other neuronlistfh: \code{\link{as.neuronlistfh}},
 \code{\link{as.neuronlistfh.neuronlist}},
 \code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}};
-\code{\link{read.neuronlistfh}};
+\code{\link{neuronlistfh}}; \code{\link{read.neuronlistfh}};
 \code{\link{write.neuronlistfh}}
 }
 

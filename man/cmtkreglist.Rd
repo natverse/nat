@@ -9,14 +9,10 @@ cmtkreglist(x, centre = c(0, 0, 0), reference = "dummy",
 }
 \arguments{
   \item{x}{5x3 matrix of CMTK registration parameters OR
-  4x4 homogeneous affine matrix}
-
-  \item{centre}{Optional centre of rotation passed to
-  \code{affmat2cmtkparams} when decomposing 4x4 affine
-  matrix}
-
-  \item{reference,floating}{Path to refererence and
-  floating images.}
+  4x4 homogeneous affine matrix} \item{centre}{Optional
+  centre of rotation passed to \code{affmat2cmtkparams} when
+  decomposing 4x4 affine matrix} \item{reference,floating}
+  {Path to refererence and floating images.}
 }
 \value{
 \code{list} of class \code{cmtkreg} containing registration

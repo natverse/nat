@@ -7,15 +7,10 @@
 read.neuron.fiji(f, ..., simplify = TRUE, Verbose = FALSE)
 }
 \arguments{
-  \item{f}{Path to a file}
-
-  \item{...}{Additional arguments passed to
-  \code{\link[XML]{xmlParse}}.}
-
-  \item{simplify}{Whether to return a single neuron as a
-  \code{neuron} object rather than a \code{neuronlist} of
-  length 1.}
-
+  \item{f}{Path to a file} \item{...}{Additional arguments
+  passed to \code{\link[XML]{xmlParse}}.} \item{simplify}
+  {Whether to return a single neuron as a \code{neuron}
+  object rather than a \code{neuronlist} of length 1.}
   \item{Verbose}{Whether to print status messages during
   parsing.}
 }
@@ -27,7 +22,7 @@ This is an XML based format so parsing it depends on
 installation of the suggested XML package.
 }
 \references{
-\url{http://fiji.sc/Simple_Neurite_Tracer}
-\url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
+\url{http://fiji.sc/Simple_Neurite_Tracer} \url{http://
+fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 }
 

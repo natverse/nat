@@ -18,9 +18,7 @@ MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = T)
 }
 }
 \seealso{
-\code{\link{hxsurf}}
-
-Other nat-data: \code{\link{Cell07PNs}};
-\code{\link{kcs20}}
+\code{\link{hxsurf}} Other nat-data:
+\code{\link{Cell07PNs}}; \code{\link{kcs20}}
 }
 

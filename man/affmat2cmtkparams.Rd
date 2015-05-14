@@ -7,9 +7,8 @@
 affmat2cmtkparams(matrix, centre = c(0, 0, 0))
 }
 \arguments{
-  \item{matrix}{4x4 homogeneous affine matrix}
-
-  \item{centre}{Rotation centre}
+  \item{matrix}{4x4 homogeneous affine matrix} \item{centre}
+  {Rotation centre}
 }
 \value{
 5x3 matrix of CMTK registration parameters with a version

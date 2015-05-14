@@ -7,10 +7,9 @@
 is.swc(f, TrustSuffix = TRUE)
 }
 \arguments{
-  \item{f}{Path to one or more files}
-
-  \item{TrustSuffix}{Whether to trust that a file ending in
-  .nrrd or .nhdr is a NRRD}
+  \item{f}{Path to one or more files} \item{TrustSuffix}
+  {Whether to trust that a file ending in .nrrd or .nhdr is
+  a NRRD}
 }
 \value{
 logical value
