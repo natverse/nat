@@ -7,45 +7,37 @@
 seglist2swc(x, d, RecalculateParents = TRUE, ...)
 }
 \arguments{
-  \item{x}{Neuron containing both the SegList and d fields
-  or a plain seglist}
+\item{x}{Neuron containing both the SegList and d fields or a plain seglist}
 
-  \item{d}{SWC data block (only expected if x is a
-  SegList)}
+\item{d}{SWC data block (only expected if x is a SegList)}
 
-  \item{RecalculateParents}{Whether to recalculate parent
-  points (default T)}
+\item{RecalculateParents}{Whether to recalculate parent points (default T)}
 
-  \item{...}{Additional arguments passed to
-  \code{\link{normalise_swc}}}
+\item{...}{Additional arguments passed to \code{\link{normalise_swc}}}
 }
 \value{
 A neuron if x was a neuron otherwise dataframe of swc data
 }
 \description{
-Uses the SegList field (indices into point array) to
-recalculate point numbers and parent points for SWC data
-field (d).
+Uses the SegList field (indices into point array) to recalculate point
+numbers and parent points for SWC data field (d).
 }
 \details{
-If any columns are missing then they are set to default
-values by \code{\link{normalise_swc}}. In particular
-\itemize{
+If any columns are missing then they are set to default values by
+  \code{\link{normalise_swc}}. In particular \itemize{
 
-\item PointNo integer 1:npoints
+  \item PointNo integer 1:npoints
 
-\item Label = 0 (unknown)
+  \item Label = 0 (unknown)
 
-\item W NA_real
+  \item W NA_real
 
-}
+  }
 
-Note that each numeric entry in the incoming SegList is a
-raw index into the block of vertex data defined by
-\code{d}.
+  Note that each numeric entry in the incoming SegList is a raw index into
+  the block of vertex data defined by \code{d}.
 }
 \seealso{
-\code{\link{as.neuron.data.frame}},
-\code{\link{normalise_swc}}, \code{\link{neuron}}
+\code{\link{as.neuron.data.frame}}, \code{\link{normalise_swc}}, \code{\link{neuron}}
 }
 

@@ -7,32 +7,30 @@
 write.hxsurf(surf, filename)
 }
 \arguments{
-  \item{surf}{hxsurf object to write to file.}
+\item{surf}{hxsurf object to write to file.}
 
-  \item{filename}{character vector defining path to file.}
+\item{filename}{character vector defining path to file.}
 }
 \value{
 \code{NULL} or integer status from \code{\link{close}}.
 }
 \description{
-Write Amira surface (aka HxSurface or HyperSurface) into
-.surf file.
+Write Amira surface (aka HxSurface or HyperSurface) into .surf file.
 }
 \seealso{
-\code{\link{plot3d.hxsurf}},\code{\link{read.hxsurf}},
-\code{\link{rgb}}
+\code{\link{plot3d.hxsurf}},\code{\link{read.hxsurf}}, \code{\link{rgb}}
 
 Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{is.amiramesh}};
-\code{\link{read.amiramesh}},
-\code{\link{read.amiramesh.header}}
+  \code{\link{read.hxsurf}}; \code{\link{is.amiramesh}};
+  \code{\link{read.amiramesh}},
+  \code{\link{read.amiramesh.header}}
 
 Other hxsurf: \code{\link{as.mesh3d}},
-\code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{materials}},
-\code{\link{materials.character}},
-\code{\link{materials.default}},
-\code{\link{materials.hxsurf}};
-\code{\link{plot3d.hxsurf}}; \code{\link{subset.hxsurf}}
+  \code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
+  \code{\link{read.hxsurf}}; \code{\link{materials}},
+  \code{\link{materials.character}},
+  \code{\link{materials.default}},
+  \code{\link{materials.hxsurf}};
+  \code{\link{plot3d.hxsurf}}; \code{\link{subset.hxsurf}}
 }
 

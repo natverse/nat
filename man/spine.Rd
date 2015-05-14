@@ -7,30 +7,25 @@
 spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, LengthOnly = FALSE)
 }
 \arguments{
-  \item{n}{the neuron to consider.}
+\item{n}{the neuron to consider.}
 
-  \item{UseStartPoint}{Whether to use the StartPoint of the
-  neuron (often the soma) as the starting point of the
-  returned spine.}
+\item{UseStartPoint}{Whether to use the StartPoint of the neuron (often the
+soma) as the starting point of the returned spine.}
 
-  \item{SpatialWeights}{logical indicating whether spatial
-  distances (default) should be used to weight segments
-  instead of weighting each edge equally.}
+\item{SpatialWeights}{logical indicating whether spatial distances (default)
+should be used to weight segments instead of weighting each edge equally.}
 
-  \item{LengthOnly}{logical indicating whether only the
-  length of the longest path should be returned (when
-  \code{TRUE}) or whether a neuron pruned down to the the
-  sequence of vertices along the path should be returned
-  (\code{FALSE}, the default).}
+\item{LengthOnly}{logical indicating whether only the length of the longest
+path should be returned (when \code{TRUE}) or whether a neuron pruned down
+to the the sequence of vertices along the path should be returned
+(\code{FALSE}, the default).}
 }
 \value{
-Either a neuron object corresponding to the longest path
-\emph{or} the length of the longest path when
-\code{LengthOnly=TRUE}).
+Either a neuron object corresponding to the longest path \emph{or}
+  the length of the longest path when \code{LengthOnly=TRUE}).
 }
 \description{
-Compute the longest path (aka spine or backbone) of a
-neuron
+Compute the longest path (aka spine or backbone) of a neuron
 }
 \examples{
 plot3d(Cell07PNs[[1]])
@@ -41,7 +36,6 @@ spine(Cell07PNs[[1]], LengthOnly=TRUE)
 spine(Cell07PNs[[1]], LengthOnly=TRUE, UseStartPoint=TRUE)
 }
 \seealso{
-\code{\link[igraph]{diameter}},
-\code{\link[igraph]{shortest.paths}}
+\code{\link[igraph]{diameter}}, \code{\link[igraph]{shortest.paths}}
 }
 

@@ -7,23 +7,22 @@
 cmtk.extract_affine(r, outdir)
 }
 \arguments{
-  \item{r}{A registration list or path to file on disk}
+\item{r}{A registration list or path to file on disk}
 
-  \item{outdir}{Optional path to output file}
+\item{outdir}{Optional path to output file}
 }
 \value{
-When \code{outdir} is missing a list containing the
-registration paramers. Otherwise \code{NULL} invisibly.
+When \code{outdir} is missing a list containing the registration
+  paramers. Otherwise \code{NULL} invisibly.
 }
 \description{
-Extract affine registration from CMTK registration file or
-in-memory list
+Extract affine registration from CMTK registration file or in-memory list
 }
 \seealso{
 \code{\link{cmtkreglist}}
 
 Other cmtk-io: \code{\link{read.cmtkreg}};
-\code{\link{read.cmtk}}; \code{\link{write.cmtkreg}};
-\code{\link{write.cmtk}}
+  \code{\link{read.cmtk}}; \code{\link{write.cmtkreg}};
+  \code{\link{write.cmtk}}
 }
 

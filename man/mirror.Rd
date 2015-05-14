@@ -14,48 +14,45 @@ mirror(x, ...)
 \method{mirror}{neuronlist}(x, subset = NULL, OmitFailures = NA, ...)
 }
 \arguments{
-  \item{x}{Object with 3d points (with named cols X,Y,Z)}
+\item{x}{Object with 3d points (with named cols X,Y,Z)}
 
-  \item{...}{additional arguments passed to methods or
-  eventually to \code{xform}}
+\item{...}{additional arguments passed to methods or eventually to
+\code{xform}}
 
-  \item{mirrorAxisSize}{The bounding box of the axis to
-  mirror}
+\item{mirrorAxisSize}{The bounding box of the axis to mirror}
 
-  \item{mirrorAxis}{Axis to mirror (default \code{"X"}).
-  Can also be an integer in range \code{1:3}.}
+\item{mirrorAxis}{Axis to mirror (default \code{"X"}). Can also be an integer
+in range \code{1:3}.}
 
-  \item{warpfile}{Path to (optional) CMTK registration that
-  specifies a (usually non-rigid) transformation to be
-  applied \emph{after} the simple mirroring.}
+\item{warpfile}{Path to (optional) CMTK registration that specifies a
+(usually non-rigid) transformation to be applied \emph{after} the simple
+mirroring.}
 
-  \item{transform}{whether to use warp (default) or affine
-  component of registration, or simply flip about midplane
-  of axis.}
+\item{transform}{whether to use warp (default) or affine component of
+registration, or simply flip about midplane of axis.}
 
-  \item{subset}{For \code{mirror.neuronlist} indices
-  (character/logical/integer) that specify a subset of the
-  members of \code{x} to be transformed.}
+\item{subset}{For \code{mirror.neuronlist} indices
+(character/logical/integer) that specify a subset of the members of
+\code{x} to be transformed.}
 
-  \item{OmitFailures}{Whether to omit neurons for which
-  \code{FUN} gives an error. The default value (\code{NA})
-  will result in nlapply stopping with an error message the
-  moment there is an eror. For other values, see details.}
+\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
+error. The default value (\code{NA}) will result in nlapply stopping with
+an error message the moment there is an eror. For other values, see
+details.}
 }
 \value{
 Object with transformed points
 }
 \description{
-mirroring with a warping registration can be used to
-account e.g. for the asymmetry between brain hemispheres.
+mirroring with a warping registration can be used to account
+  e.g. for the asymmetry between brain hemispheres.
 
-This function is agnostic re node vs cell data, but for
-node data BoundingBox should be supplied while for cell, it
-should be bounds. See \code{\link{boundingbox}} for details
-of BoundingBox vs bounds.
+  This function is agnostic re node vs cell data, but for node data
+  BoundingBox should be supplied while for cell, it should be bounds. See
+  \code{\link{boundingbox}} for details of BoundingBox vs bounds.
 
-See \code{\link{nlapply}} for details of the \code{subset}
-and \code{OmitFailures} arguments.
+  See \code{\link{nlapply}} for details of the \code{subset} and
+  \code{OmitFailures} arguments.
 }
 \examples{
 nopen3d()

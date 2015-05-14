@@ -7,22 +7,19 @@
 cmtk.version(minimum = NULL)
 }
 \arguments{
-  \item{minimum}{If specified checks that the cmtk version}
+\item{minimum}{If specified checks that the cmtk version}
 }
 \value{
-returns \code{numeric_version} representation of CMTK
-version or if minimum is not NULL, returns a logical
-indicating whether the installed version exceeds the
-current version. If CMTK is not installed returns NA.
+returns \code{numeric_version} representation of CMTK version or if
+  minimum is not NULL, returns a logical indicating whether the installed
+  version exceeds the current version. If CMTK is not installed returns NA.
 }
 \description{
-Return cmtk version or test for presence of at least a
-specific version
+Return cmtk version or test for presence of at least a specific version
 }
 \details{
 NB this function has the side effect of setting an option
-nat.cmtk.version the first time that it is run in the
-current R session.
+  nat.cmtk.version the first time that it is run in the current R session.
 }
 \examples{
 \dontrun{

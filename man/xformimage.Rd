@@ -17,21 +17,20 @@ xformimage(reg, image, ...)
 \method{xformimage}{default}(reg, image, ...)
 }
 \arguments{
-  \item{reg}{A registration defined by a matrix or a
-  \code{cmtkreg} object, or a character vector specifying a
-  path to a CMTK registration on disk (see details).}
+\item{reg}{A registration defined by a matrix or a \code{cmtkreg} object, or
+a character vector specifying a path to a CMTK registration on disk (see
+details).}
 
-  \item{image}{Nx3 matrix of image}
+\item{image}{Nx3 matrix of image}
 
-  \item{...}{Additional arguments passed to methods}
+\item{...}{Additional arguments passed to methods}
 
-  \item{transformtype}{Which transformation to use when the
-  CMTK file contains both warp (default) and affine (TODO)}
+\item{transformtype}{Which transformation to use when the CMTK file contains
+both warp (default) and affine (TODO)}
 
-  \item{direction}{Whether to transform image from sample
-  space to reference space (called \strong{inverse} by
-  CMTK) or from reference to sample space (called
-  \strong{forward} by CMTK)}
+\item{direction}{Whether to transform image from sample space to reference
+space (called \strong{inverse} by CMTK) or from reference to sample space
+(called \strong{forward} by CMTK)}
 }
 \value{
 Character vector with path to xformed image.
@@ -40,37 +39,33 @@ Character vector with path to xformed image.
 Transform image files using a registration or affine matrix
 }
 \details{
-When passed a character vector, xformimage will check to
-see if it defines a path containing CMTK registration
-erroring out if this is not the case. If the path does
-indeed point to a CMTK registration, this method will hand
-off to xformimage.cmtkreg. A future TODO would be to
-provide a mechanism for extending this behaviour for other
-registration formats.  If a list of transformations is
-passed in, these transformations are passed to the cmtk
-reformatx tool in the order received. Note that there is
-presently no support for \itemize{
+When passed a character vector, xformimage will check to see if it
+  defines a path containing CMTK registration erroring out if this is not the
+  case. If the path does indeed point to a CMTK registration, this method
+  will hand off to xformimage.cmtkreg. A future TODO would be to provide a
+  mechanism for extending this behaviour for other registration formats.
+  If a list of transformations is passed in, these transformations are passed
+  to the cmtk reformatx tool in the order received. Note that there is
+  presently no support for \itemize{
 
-\item using the inverse of a registration
+  \item using the inverse of a registration
 
-\item specifying a mask
+  \item specifying a mask
 
-\item passing additional arguments to reformatx
+  \item passing additional arguments to reformatx
 
-}
+  }
 
-Note that the direction of CMTK registrations can be the
-source of much confusion. This is because CMTK defines the
-\emph{forward} direction as the transform required to
-reformat an image in \emph{sample} (floating) space to an
-image in \emph{template} space. Since this operation
-involves filling a regular grid in template space by
-looking up the corresponding positions in sample space, the
-transformation that is required is (somewhat
-counterintuitively) the one that maps template to sample.
-However in neuroanatomical work, one often has points in
-sample space that one would like to transform into template
-space. Here one needs the \emph{inverse} transformation.
+Note that the direction of CMTK registrations can be the source of
+  much confusion. This is because CMTK defines the \emph{forward} direction
+  as the transform required to reformat an image in \emph{sample} (floating)
+  space to an image in \emph{template} space. Since this operation involves
+  filling a regular grid in template space by looking up the corresponding
+  positions in sample space, the transformation that is required is (somewhat
+  counterintuitively) the one that maps template to sample. However in
+  neuroanatomical work, one often has points in sample space that one would
+  like to transform into template space. Here one needs the \emph{inverse}
+  transformation.
 }
 \seealso{
 \code{\link{cmtk.reformatx}}

@@ -7,17 +7,15 @@
 npop3d(x, slow = FALSE, type = "shapes")
 }
 \arguments{
-  \item{x}{rgl ids of objects to remove}
+\item{x}{rgl ids of objects to remove}
 
-  \item{slow}{Whether to remove neurons one by one (slowly)
-  default: FALSE}
+\item{slow}{Whether to remove neurons one by one (slowly) default: FALSE}
 
-  \item{type}{Type of objects to remove see \code{pop3d}.}
+\item{type}{Type of objects to remove see \code{pop3d}.}
 }
 \description{
-The normal usage will not specify \code{x} in which case
-the last neurons plotted by \code{plot3d.neuronlist} or any
-of its friends will be removed.
+The normal usage will not specify \code{x} in which case the last neurons
+plotted by \code{plot3d.neuronlist} or any of its friends will be removed.
 }
 \seealso{
 \code{\link[rgl]{pop3d}}, \code{\link{plot3d.neuronlist}}

@@ -7,7 +7,7 @@
 is.neuronlist(x)
 }
 \arguments{
-  \item{x}{the object to test}
+\item{x}{the object to test}
 }
 \value{
 A logical indicating whether the object is a neuronlist.
@@ -16,16 +16,16 @@ A logical indicating whether the object is a neuronlist.
 Tests if object is a neuronlist.
 }
 \details{
-\code{is.neuronlist} uses a relaxed definition to cope with
-older lists of neurons that do not have a class attribute
-of neuronlist.
+\code{is.neuronlist} uses a relaxed definition to cope with older
+  lists of neurons that do not have a class attribute of neuronlist.
 }
 \seealso{
 Other neuronlist: \code{\link{as.neuronlistfh}},
-\code{\link{as.neuronlistfh.neuronlist}},
-\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}; \code{\link{neuronlist}};
-\code{\link{nlapply}}, \code{\link{nmapply}};
-\code{\link{read.neurons}}; \code{\link{write.neurons}}
+  \code{\link{as.neuronlistfh.neuronlist}},
+  \code{\link{is.neuronlistfh}},
+  \code{\link{neuronlistfh}}, \code{\link{neuronlistfh}};
+  \code{\link{neuronlist}}; \code{\link{nlapply}},
+  \code{\link{nmapply}}; \code{\link{read.neurons}};
+  \code{\link{write.neurons}}
 }
 

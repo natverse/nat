@@ -7,7 +7,7 @@
 imexpand.grid(d)
 }
 \arguments{
-  \item{d}{An \code{im3d} object}
+\item{d}{An \code{im3d} object}
 }
 \value{
 Nx3 matrix of image coordindates
@@ -23,19 +23,19 @@ imexpand.grid(d)
 expand.grid
 
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
-\code{\link{boundingbox}},
-\code{\link{boundingbox.character}},
-\code{\link{boundingbox.default}},
-\code{\link{boundingbox.im3d}},
-\code{\link{boundingbox.list}},
-\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
-\code{\link{im3d-coords}}, \code{\link{xyzpos}};
-\code{\link{im3d-io}}, \code{\link{read.im3d}},
-\code{\link{write.im3d}}; \code{\link{im3d}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{projection}}; \code{\link{threshold}},
-\code{\link{threshold.im3d}}; \code{\link{unmask}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+  \code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
+  \code{\link{boundingbox}},
+  \code{\link{boundingbox.character}},
+  \code{\link{boundingbox.default}},
+  \code{\link{boundingbox.im3d}},
+  \code{\link{boundingbox.list}},
+  \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
+  \code{\link{im3d-coords}}, \code{\link{xyzpos}};
+  \code{\link{im3d-io}}, \code{\link{read.im3d}},
+  \code{\link{write.im3d}}; \code{\link{im3d}};
+  \code{\link{imslice}}; \code{\link{origin}};
+  \code{\link{projection}}; \code{\link{threshold}},
+  \code{\link{threshold.im3d}}; \code{\link{unmask}};
+  \code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 

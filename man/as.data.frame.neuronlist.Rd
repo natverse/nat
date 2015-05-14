@@ -8,25 +8,24 @@
   optional = FALSE, ...)
 }
 \arguments{
-  \item{x}{neuronlist to convert}
+\item{x}{neuronlist to convert}
 
-  \item{row.names}{row names (defaults to names of objects
-  in neuronlist, which is nearly always what you want.)}
+\item{row.names}{row names (defaults to names of objects in neuronlist, which
+is nearly always what you want.)}
 
-  \item{optional}{ignored in this method}
+\item{optional}{ignored in this method}
 
-  \item{...}{additional arguments passed to
-  \code{\link{data.frame}} (see examples)}
+\item{...}{additional arguments passed to \code{\link{data.frame}} (see
+examples)}
 }
 \value{
-a \code{data.frame} with length(x) rows, named according to
-names(x) and containing the columns from the attached
-data.frame, when present.
+a \code{data.frame} with length(x) rows, named according to names(x)
+  and containing the columns from the attached data.frame, when present.
 }
 \description{
-When there is no attached data.frame the result will be
-data.frame with 0 columns but an appropriate number of
-rows, named by the objects in the neuronlist.
+When there is no attached data.frame the result will be data.frame with 0
+columns but an appropriate number of rows, named by the objects in the
+neuronlist.
 }
 \examples{
 head(as.data.frame(kcs20))

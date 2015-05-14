@@ -11,33 +11,30 @@ normalise_swc(x, requiredColumns = c("PointNo", "Label", "X", "Y", "Z", "W",
   NA_integer_))
 }
 \arguments{
-  \item{x}{A data.frame containing neuron morphology data}
+\item{x}{A data.frame containing neuron morphology data}
 
-  \item{requiredColumns}{Character vector naming columns we
-  should have}
+\item{requiredColumns}{Character vector naming columns we should have}
 
-  \item{ifMissing}{What to do if \code{x} is missing a
-  required column}
+\item{ifMissing}{What to do if \code{x} is missing a required column}
 
-  \item{includeExtraCols}{Whether to include any extra
-  columns include in code{x}}
+\item{includeExtraCols}{Whether to include any extra columns include in
+code{x}}
 
-  \item{defaultValue}{A list containing default values to
-  use for any missing columns}
+\item{defaultValue}{A list containing default values to use for any missing
+columns}
 }
 \value{
-A data.frame containing the normalised block of SWC data
-with standard columns in standard order.
+A data.frame containing the normalised block of SWC data with
+  standard columns in standard order.
 }
 \description{
 Normalise an SWC format block of neuron morphology data
 }
 \details{
-Note that row.names of the resultant data.frame will be set
-to NULL so that they have completely standard values.
+Note that row.names of the resultant data.frame will be set to NULL
+  so that they have completely standard values.
 }
 \seealso{
-\code{\link{as.neuron.data.frame}},
-\code{\link{seglist2swc}}
+\code{\link{as.neuron.data.frame}}, \code{\link{seglist2swc}}
 }
 

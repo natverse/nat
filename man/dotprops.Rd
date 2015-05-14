@@ -31,62 +31,53 @@ dotprops(x, ...)
 \method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
 }
 \arguments{
-  \item{x}{Object to be tested/converted}
+\item{x}{Object to be tested/converted}
 
-  \item{...}{Additional arguments passed to methods}
+\item{...}{Additional arguments passed to methods}
 
-  \item{k}{Number of nearest neighbours to use for tangent
-  vector calculation (set to k=20 when passed NULL)}
+\item{k}{Number of nearest neighbours to use for tangent vector calculation
+(set to k=20 when passed NULL)}
 
-  \item{OmitFailures}{Whether to omit neurons for which
-  \code{FUN} gives an error. The default value (\code{NA})
-  will result in nlapply stopping with an error message the
-  moment there is an eror. For other values, see details.}
+\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
+error. The default value (\code{NA}) will result in nlapply stopping with
+an error message the moment there is an eror. For other values, see
+details.}
 
-  \item{Labels}{Vector of labels for each point or
-  \code{NULL} to accept class-specific default behaviour
-  for different S3 classes, \code{TRUE} always to use
-  labels when incoming object has them and \code{FALSE}
-  never to use labels.}
+\item{Labels}{Vector of labels for each point or \code{NULL} to accept
+class-specific default behaviour for different S3 classes, \code{TRUE}
+always to use labels when incoming object has them and \code{FALSE} never
+to use labels.}
 
-  \item{resample}{When finite, a new length to which all
-  segmented edges will be resampled. See
-  \code{\link{resample.neuron}}.}
+\item{resample}{When finite, a new length to which all segmented edges will
+be resampled. See \code{\link{resample.neuron}}.}
 
-  \item{na.rm}{Whether to remove \code{NA} points (default
-  FALSE)}
+\item{na.rm}{Whether to remove \code{NA} points (default FALSE)}
 }
 \description{
-dotprops: Neurons as point clouds with tangent vectors (but
-no connectivity)
+dotprops: Neurons as point clouds with tangent vectors (but no connectivity)
 
-\code{dotprops} makes dotprops representation from raw 3d
-points (extracting vertices from S3 objects that have them)
+\code{dotprops} makes dotprops representation from raw 3d points
+  (extracting vertices from S3 objects that have them)
 
-\code{dotprops.dotprops} will default to the original vale
-of \code{k} and copy over all attributes that are not set
-by \code{dotprops.default}.
+\code{dotprops.dotprops} will default to the original vale of
+  \code{k} and copy over all attributes that are not set by
+  \code{dotprops.default}.
 
 \code{dotprops.neuronlist} will run for every object in the
-neuronlist using \code{\link{nlapply}}. \code{...}
-arguments will be passed to \code{nlapply} in addition to
-the named argument \code{OmitFailures}.
+  neuronlist using \code{\link{nlapply}}. \code{...} arguments will be passed to
+  \code{nlapply} in addition to the named argument \code{OmitFailures}.
 }
 \details{
-\code{k} will default to 20 nearest neighbours when unset
-(i.e. when it has default value of NA) unless \code{x} is a
-dotprops object.
+\code{k} will default to 20 nearest neighbours when unset (i.e. when
+  it has default value of NA) unless \code{x} is a dotprops object.
 }
 \references{
-The dotprops format is essentially identical to that
-developed in:
+The dotprops format is essentially identical to that developed in:
 
-Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E.
-(2012). A mutual information approach to automate
-identification of neuronal clusters in \emph{Drosophila}
-brain images. Frontiers in Neuroinformatics 6 (00021).
-\href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi:
-10.3389/fninf.2012.00021}
+Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012).
+A mutual information approach to automate identification of neuronal clusters
+in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
+\href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
 }
 \seealso{
 \code{\link{nlapply}}

@@ -13,22 +13,22 @@ intersect(x, y, ...)
 \method{intersect}{neuronlist}(x, y, ...)
 }
 \arguments{
-  \item{x}{the first collection to consider.}
+\item{x}{the first collection to consider.}
 
-  \item{y}{the second collection to consider.}
+\item{y}{the second collection to consider.}
 
-  \item{...}{additional arguments passed to methods}
+\item{...}{additional arguments passed to methods}
 }
 \value{
-A collection of the same mode as \code{x} that contains all
-elements of \code{x} that are also present in \code{y}.
+A collection of the same mode as \code{x} that contains all elements
+  of \code{x} that are also present in \code{y}.
 }
 \description{
 Find the intersection of two collections of objects
 }
 \details{
 Note that intersect.default calls base::intersect to ensure
-consistent behaviour for regular vectors.
+  consistent behaviour for regular vectors.
 }
 \seealso{
 \code{\link[base]{intersect}}

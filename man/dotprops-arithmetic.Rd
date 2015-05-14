@@ -16,10 +16,9 @@
 \method{/}{dotprops}(x, y)
 }
 \arguments{
-  \item{x}{A dotprops object}
+\item{x}{A dotprops object}
 
-  \item{y}{A scalar or 3-vector that will be applied to the
-  dotprops object}
+\item{y}{A scalar or 3-vector that will be applied to the dotprops object}
 }
 \value{
 A new dotprops object

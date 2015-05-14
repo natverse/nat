@@ -5,8 +5,8 @@
 \alias{MBL.surf}
 \title{Surface object (hxsurf) for the left mushroom body in FCWB template space}
 \description{
-This surface object is in the same space as the 20 Kenyon
-cells in \code{\link{kcs20}}.
+This surface object is in the same space as the 20 Kenyon cells in
+\code{\link{kcs20}}.
 }
 \examples{
 plot3d(kcs20)
@@ -21,6 +21,6 @@ MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = T)
 \code{\link{hxsurf}}
 
 Other nat-data: \code{\link{Cell07PNs}};
-\code{\link{kcs20}}
+  \code{\link{kcs20}}
 }
 

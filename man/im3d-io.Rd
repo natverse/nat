@@ -12,44 +12,41 @@ read.im3d(file, ReadData = TRUE, SimplifyAttributes = FALSE,
 write.im3d(x, file, format = NULL, ...)
 }
 \arguments{
-  \item{file}{Character vector describing a single file}
+\item{file}{Character vector describing a single file}
 
-  \item{ReadData}{Whether to read the data itself or return
-  metadata only. Default: TRUE}
+\item{ReadData}{Whether to read the data itself or return metadata only.
+Default: TRUE}
 
-  \item{SimplifyAttributes}{When \code{TRUE} leave only
-  core im3d attributes.}
+\item{SimplifyAttributes}{When \code{TRUE} leave only core im3d attributes.}
 
-  \item{ReadByteAsRaw}{Whether to read byte values as R
-  \code{\link{raw}} arrays. These occupy 1/4 memory but
-  arithmetic is less convenient. (default: FALSE)}
+\item{ReadByteAsRaw}{Whether to read byte values as R \code{\link{raw}}
+arrays. These occupy 1/4 memory but arithmetic is less convenient.
+(default: FALSE)}
 
-  \item{...}{Arguments passed to methods}
+\item{...}{Arguments passed to methods}
 
-  \item{x}{The image data to write (an im3d, or capable of
-  being interpreted as such)}
+\item{x}{The image data to write (an im3d, or capable of being interpreted as
+such)}
 
-  \item{format}{Character vector specifying an image format
-  (e.g. "nrrd", "amiramesh"). Optional, since the format
-  will normally be inferred from the file extension. See
-  \code{\link{getformatwriter}} for details.}
+\item{format}{Character vector specifying an image format (e.g. "nrrd",
+"amiramesh"). Optional, since the format will normally be inferred from the
+file extension. See \code{\link{getformatwriter}} for details.}
 }
 \value{
-For \code{read.im3d} an objecting inheriting from base
-\code{array} and \code{im3d} classes.
+For \code{read.im3d} an objecting inheriting from base \code{array}
+  and \code{im3d} classes.
 }
 \description{
 Read/Write calibrated 3D blocks of image data
 }
 \details{
-Currently only nrrd and amira formats are implemented.
-Furthermore implementing a registry to allow extension to
-arbitrary formats remains a TODO item.
+Currently only nrrd and amira formats are implemented. Furthermore
+  implementing a registry to allow extension to arbitrary formats remains a
+  TODO item.
 
-The core attributes of an im3d object are
-\code{BoundingBox, origin, x, y , z} where \code{x, y, z}
-are the locations of samples in the x, y and z image axes
-(which are assumed to be orthogonsl).
+  The core attributes of an im3d object are \code{BoundingBox, origin, x, y ,
+  z} where \code{x, y, z} are the locations of samples in the x, y and z
+  image axes (which are assumed to be orthogonsl).
 }
 \examples{
 \dontrun{
@@ -63,18 +60,18 @@ read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 \code{\link{write.nrrd}}, \code{\link{getformatwriter}}
 
 Other im3d: \code{\link{as.im3d}},
-\code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
-\code{\link{boundingbox}},
-\code{\link{boundingbox.character}},
-\code{\link{boundingbox.default}},
-\code{\link{boundingbox.im3d}},
-\code{\link{boundingbox.list}},
-\code{\link{boundingbox<-}}; \code{\link{ijkpos}},
-\code{\link{im3d-coords}}, \code{\link{xyzpos}};
-\code{\link{im3d}}; \code{\link{imexpand.grid}};
-\code{\link{imslice}}; \code{\link{origin}};
-\code{\link{projection}}; \code{\link{threshold}},
-\code{\link{threshold.im3d}}; \code{\link{unmask}};
-\code{\link{voxdims}}, \code{\link{voxdims.default}}
+  \code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
+  \code{\link{boundingbox}},
+  \code{\link{boundingbox.character}},
+  \code{\link{boundingbox.default}},
+  \code{\link{boundingbox.im3d}},
+  \code{\link{boundingbox.list}},
+  \code{\link{boundingbox<-}}; \code{\link{ijkpos}},
+  \code{\link{im3d-coords}}, \code{\link{xyzpos}};
+  \code{\link{im3d}}; \code{\link{imexpand.grid}};
+  \code{\link{imslice}}; \code{\link{origin}};
+  \code{\link{projection}}; \code{\link{threshold}},
+  \code{\link{threshold.im3d}}; \code{\link{unmask}};
+  \code{\link{voxdims}}, \code{\link{voxdims.default}}
 }
 

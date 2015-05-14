@@ -7,16 +7,16 @@
 \method{c}{neuronlist}(..., recursive = FALSE)
 }
 \arguments{
-  \item{...}{neuronlists to combine}
+\item{...}{neuronlists to combine}
 
-  \item{recursive}{Presently ignored}
+\item{recursive}{Presently ignored}
 }
 \description{
 Combine multiple neuronlists into a single list
 }
 \details{
-Uses \code{\link[plyr]{rbind.fill}} to join any attached
-dataframes, so missing values are replaced with NAs.
+Uses \code{\link[plyr]{rbind.fill}} to join any attached dataframes,
+  so missing values are replaced with NAs.
 }
 \examples{
 stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))

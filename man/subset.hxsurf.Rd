@@ -8,19 +8,18 @@
   "names"), ...)
 }
 \arguments{
-  \item{x}{A dotprops object}
+\item{x}{A dotprops object}
 
-  \item{subset}{Character vector specifying regions to
-  keep. Interpreted as \code{\link{regex}} if of length 1
-  and no fixed match.}
+\item{subset}{Character vector specifying regions to keep. Interpreted as
+\code{\link{regex}} if of length 1 and no fixed match.}
 
-  \item{drop}{Whether to drop unused vertices after
-  subsetting (default: \code{TRUE})}
+\item{drop}{Whether to drop unused vertices after subsetting (default:
+\code{TRUE})}
 
-  \item{rval}{Whether to return a new \code{hxsurf} object
-  or just the names of the matching regions}
+\item{rval}{Whether to return a new \code{hxsurf} object or just the names of
+the matching regions}
 
-  \item{...}{Additional parameters (currently ignored)}
+\item{...}{Additional parameters (currently ignored)}
 }
 \value{
 subsetted hxsurf object
@@ -40,11 +39,11 @@ plot3d(MBL.surf, "VL", alpha=0.3)
 }
 \seealso{
 Other hxsurf: \code{\link{as.mesh3d}},
-\code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{materials}},
-\code{\link{materials.character}},
-\code{\link{materials.default}},
-\code{\link{materials.hxsurf}};
-\code{\link{plot3d.hxsurf}}; \code{\link{write.hxsurf}}
+  \code{\link{as.mesh3d.hxsurf}}; \code{\link{hxsurf}},
+  \code{\link{read.hxsurf}}; \code{\link{materials}},
+  \code{\link{materials.character}},
+  \code{\link{materials.default}},
+  \code{\link{materials.hxsurf}};
+  \code{\link{plot3d.hxsurf}}; \code{\link{write.hxsurf}}
 }
 

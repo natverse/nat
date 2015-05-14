@@ -16,17 +16,16 @@ ind2coord(inds, ...)
 \method{ind2coord}{im3d}(inds, voxdims = NULL, origin = NULL, ...)
 }
 \arguments{
-  \item{inds}{indices into an image array (either 1D, for
-  which \code{dims} must be present, or a logical array).}
+\item{inds}{indices into an image array (either 1D, for which \code{dims}
+must be present, or a logical array).}
 
-  \item{...}{extra arguments passed to methods.}
+\item{...}{extra arguments passed to methods.}
 
-  \item{dims}{dimensions of 3d image array.}
+\item{dims}{dimensions of 3d image array.}
 
-  \item{voxdims}{vector of 3 voxel dimensions (width,
-  height, depth).}
+\item{voxdims}{vector of 3 voxel dimensions (width, height, depth).}
 
-  \item{origin}{the origin.}
+\item{origin}{the origin.}
 }
 \description{
 Find XYZ coords corresponding to 1D indices into a 3D image

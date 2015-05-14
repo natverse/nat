@@ -12,28 +12,23 @@ read.nrrd(file, origin = NULL, ReadData = TRUE,
 read.nrrd.header(file, Verbose = FALSE)
 }
 \arguments{
-  \item{file}{Path to a nrrd (or a connection for
-  \code{read.nrrd.header})}
+\item{file}{Path to a nrrd (or a connection for \code{read.nrrd.header})}
 
-  \item{origin}{Add a user specified origin (x,y,z) to the
-  returned object}
+\item{origin}{Add a user specified origin (x,y,z) to the returned object}
 
-  \item{ReadData}{When FALSE just return attributes (e.g.
-  voxel size)}
+\item{ReadData}{When FALSE just return attributes (e.g. voxel size)}
 
-  \item{AttachFullHeader}{Include the full nrrd header as
-  an attribute of the returned object (default FALSE)}
+\item{AttachFullHeader}{Include the full nrrd header as an attribute of the
+returned object (default FALSE)}
 
-  \item{Verbose}{Status messages while reading}
+\item{Verbose}{Status messages while reading}
 
-  \item{ReadByteAsRaw}{Either a character vector or a
-  logical vector specifying when R should read 8 bit data
-  as an R \code{raw} vector rather than \code{integer}
-  vector.}
+\item{ReadByteAsRaw}{Either a character vector or a logical vector specifying
+when R should read 8 bit data as an R \code{raw} vector rather than
+\code{integer} vector.}
 }
 \value{
-a 3D data array with attributes compatible with gjdens
-objects
+a 3D data array with attributes compatible with gjdens objects
 
 A list with elements for the key nrrd header fields
 }
@@ -43,8 +38,8 @@ Read nrrd file into 3d array in memory
 Read the (text) header of a NRRD format file
 }
 \details{
-ReadByteAsRaw=unsigned (the default) only reads unsigned
-byte data as a raw array. This saves quite a bit of space
-and still allows data to be used for logical indexing.
+ReadByteAsRaw=unsigned (the default) only reads unsigned byte data
+  as a raw array. This saves quite a bit of space and still allows data to be
+  used for logical indexing.
 }
 

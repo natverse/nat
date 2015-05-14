@@ -20,27 +20,23 @@ prune(x, target, ...)
   return.indices = FALSE, ...)
 }
 \arguments{
-  \item{x}{The object to prune. (e.g. \code{dotprops}
-  object, see details)}
+\item{x}{The object to prune. (e.g. \code{dotprops} object, see details)}
 
-  \item{target}{Another object with 3d points that will
-  determine which points in x are kept.}
+\item{target}{Another object with 3d points that will determine which points
+in x are kept.}
 
-  \item{...}{Additional arguments for methods (eventually
-  passed to \code{prune.default})}
+\item{...}{Additional arguments for methods (eventually passed to
+\code{prune.default})}
 
-  \item{maxdist}{The threshold distance for keeping points}
+\item{maxdist}{The threshold distance for keeping points}
 
-  \item{keep}{Whether to keep points in x that are near or
-  far from the target}
+\item{keep}{Whether to keep points in x that are near or far from the target}
 
-  \item{return.indices}{Whether to return the indices that
-  pass the test rather than the 3d object/points (default
-  \code{FALSE})}
+\item{return.indices}{Whether to return the indices that pass the test rather
+than the 3d object/points (default \code{FALSE})}
 }
 \description{
-prune an object by removing points near (or far) from a
-target object
+prune an object by removing points near (or far) from a target object
 }
 \examples{
 ## prune single neurons

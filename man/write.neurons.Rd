@@ -8,45 +8,37 @@ write.neurons(nl, dir, format = NULL, subdir = NULL, INDICES = names(nl),
   files = NULL, Force = FALSE, ...)
 }
 \arguments{
-  \item{nl}{neuronlist object}
+\item{nl}{neuronlist object}
 
-  \item{dir}{directory to write neurons, or path to zip
-  archive (see Details).}
+\item{dir}{directory to write neurons, or path to zip archive (see Details).}
 
-  \item{format}{Unique abbreviation of one of the
-  registered file formats for neurons including 'swc',
-  'hxlineset', 'hxskel'}
+\item{format}{Unique abbreviation of one of the registered file formats for
+neurons including 'swc', 'hxlineset', 'hxskel'}
 
-  \item{subdir}{String naming field in neuron that
-  specifies a subdirectory OR expression to evaluate in the
-  context of neuronlist's df attribute}
+\item{subdir}{String naming field in neuron that specifies a subdirectory OR
+expression to evaluate in the context of neuronlist's df attribute}
 
-  \item{INDICES}{Character vector of the names of a subset
-  of neurons in neuronlist to write.}
+\item{INDICES}{Character vector of the names of a subset of neurons in
+neuronlist to write.}
 
-  \item{files}{Character vector or expression specifying
-  output filenames. See examples and
-  \code{\link{write.neuron}} for details.}
+\item{files}{Character vector or expression specifying output filenames. See
+examples and \code{\link{write.neuron}} for details.}
 
-  \item{Force}{Whether to overwrite an existing file}
+\item{Force}{Whether to overwrite an existing file}
 
-  \item{...}{Additional arguments passed to
-  \code{\link{write.neuron}}}
+\item{...}{Additional arguments passed to \code{\link{write.neuron}}}
 }
 \value{
-the path to the output file(s), absolute when this is a zip
-file.
+the path to the output file(s), absolute when this is a zip file.
 }
 \description{
-Write neurons from a neuronlist object to individual files,
-or a zip archive
+Write neurons from a neuronlist object to individual files, or a zip archive
 }
 \details{
-See \code{\link{write.neuron}} for details of how to
-specify the file format/extension/name of the output files
-and how to establish what output file formats are
-available. A zip archive of files can be written by
-specifying a value of \code{dir} that ends in \code{.zip}.
+See \code{\link{write.neuron}} for details of how to specify the
+  file format/extension/name of the output files and how to establish what
+  output file formats are available. A zip archive of files can be written by
+  specifying a value of \code{dir} that ends in \code{.zip}.
 }
 \examples{
 \dontrun{
@@ -80,10 +72,11 @@ jefferis
 \code{\link{write.neuron}}
 
 Other neuronlist: \code{\link{as.neuronlistfh}},
-\code{\link{as.neuronlistfh.neuronlist}},
-\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}};
-\code{\link{neuronlist}}; \code{\link{nlapply}},
-\code{\link{nmapply}}; \code{\link{read.neurons}}
+  \code{\link{as.neuronlistfh.neuronlist}},
+  \code{\link{is.neuronlistfh}},
+  \code{\link{neuronlistfh}}, \code{\link{neuronlistfh}};
+  \code{\link{is.neuronlist}}; \code{\link{neuronlist}};
+  \code{\link{nlapply}}, \code{\link{nmapply}};
+  \code{\link{read.neurons}}
 }
 

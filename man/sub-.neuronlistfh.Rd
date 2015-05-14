@@ -7,20 +7,18 @@
 \method{[}{neuronlistfh}(x, i, ...)
 }
 \arguments{
-  \item{x}{A neuronlistfh object}
+\item{x}{A neuronlistfh object}
 
-  \item{i}{Indices of items to extract from neuronlistfh
-  object}
+\item{i}{Indices of items to extract from neuronlistfh object}
 
-  \item{...}{Additional arguments passed to neuronlistfh []
-  function}
+\item{...}{Additional arguments passed to neuronlistfh [] function}
 }
 \value{
 A new neuronlist object (i.e. in memory)
 }
 \description{
-Note that if i is a numeric or logical indexing vector, it
-will be converted internally to a vector of names by using
-the (sorted) names of the objects in x (i.e. names(x)[i])
+Note that if i is a numeric or logical indexing vector, it will be converted
+internally to a vector of names by using the (sorted) names of the objects
+in x (i.e. names(x)[i])
 }
 

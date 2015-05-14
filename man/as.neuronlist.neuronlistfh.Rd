@@ -7,10 +7,9 @@
 \method{as.neuronlist}{neuronlistfh}(l, ...)
 }
 \arguments{
-  \item{l}{An existing list or a single neuron to start a
-  list}
+\item{l}{An existing list or a single neuron to start a list}
 
-  \item{...}{Additional arguments passed to methods}
+\item{...}{Additional arguments passed to methods}
 }
 \description{
 convert neuronlistfh to a regular (in memory) neuronlist

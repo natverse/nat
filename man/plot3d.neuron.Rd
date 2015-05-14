@@ -9,51 +9,46 @@
   PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...)
 }
 \arguments{
-  \item{x}{A neuron to plot}
+\item{x}{A neuron to plot}
 
-  \item{WithLine}{Whether to plot lines for all segments in
-  neuron}
+\item{WithLine}{Whether to plot lines for all segments in neuron}
 
-  \item{NeuronNames}{Logical indicating whether to label
-  the neuron in the plot using the NeuronName field
-  \strong{or} a character vector of names.}
+\item{NeuronNames}{Logical indicating whether to label the neuron in the plot
+using the NeuronName field \strong{or} a character vector of names.}
 
-  \item{WithNodes}{Whether to plot dots for branch and end
-  points}
+\item{WithNodes}{Whether to plot dots for branch and end points}
 
-  \item{WithAllPoints}{Whether to plot dots for all points
-  in the neuron}
+\item{WithAllPoints}{Whether to plot dots for all points in the neuron}
 
-  \item{WithText}{Whether to label plotted points with
-  their numeric id (see details)}
+\item{WithText}{Whether to label plotted points with their numeric id (see
+details)}
 
-  \item{PlotSubTrees}{Whether to plot all sub trees when
-  the neuron is not fully connected.}
+\item{PlotSubTrees}{Whether to plot all sub trees when the neuron is not
+fully connected.}
 
-  \item{add}{Whether to add the neuron to existing rgl plot
-  rather than clearing the scene (default TRUE)}
+\item{add}{Whether to add the neuron to existing rgl plot rather than
+clearing the scene (default TRUE)}
 
-  \item{col}{Colour specification (see rgl materials)}
+\item{col}{Colour specification (see rgl materials)}
 
-  \item{soma}{Whether to plot a sphere at neuron's origin
-  representing the soma. Either a logical value or a
-  numeric indicating the radius (default \code{FALSE}).
-  When \code{soma=TRUE} the radius is hard coded to 2.}
+\item{soma}{Whether to plot a sphere at neuron's origin representing the
+soma. Either a logical value or a numeric indicating the radius (default
+\code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
 
-  \item{...}{Additional arguments passed to rgl::lines3d}
+\item{...}{Additional arguments passed to rgl::lines3d}
 }
 \value{
 list of rgl plotting ids (invisibly) separated into
-\code{lines,points,texts} according to plot element. See
-\code{\link[rgl]{plot3d}} for details.
+  \code{lines,points,texts} according to plot element. See
+  \code{\link[rgl]{plot3d}} for details.
 }
 \description{
 Plot neurons in 3d using rgl library
 }
 \details{
-Note that when WithText=TRUE, the numeric identifiers
-plotted are \emph{raw indices} into the \code{x$d} array,
-\emph{not} the values of the \code{PointNo} column.
+Note that when WithText=TRUE, the numeric identifiers plotted are
+  \emph{raw indices} into the \code{x$d} array, \emph{not} the values of the
+  \code{PointNo} column.
 }
 \examples{
 # A new plot would have been opened if required
@@ -71,6 +66,6 @@ rgl.close()
 }
 \seealso{
 \code{\link{plot3d.neuronlist}, \link{plot3d.dotprops},
-\link[rgl]{plot3d}}
+  \link[rgl]{plot3d}}
 }
 

@@ -7,10 +7,9 @@
 \method{plot3d}{boundingbox}(x, ...)
 }
 \arguments{
-  \item{x}{the \code{\link{boundingbox}} object to plot.}
+\item{x}{the \code{\link{boundingbox}} object to plot.}
 
-  \item{...}{additional arguments to pass to
-  \code{\link[rgl]{segments3d}}.}
+\item{...}{additional arguments to pass to \code{\link[rgl]{segments3d}}.}
 }
 \value{
 A list of RGL object IDs.

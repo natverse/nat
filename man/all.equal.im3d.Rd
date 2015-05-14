@@ -9,26 +9,23 @@
   "dimnames", "x", "y", "z"), CheckSharedAttrsOnly = FALSE, ...)
 }
 \arguments{
-  \item{target}{\R object.}
+\item{target}{\R object.}
 
-  \item{current}{other \R object, to be compared with
-  \code{target}.}
+\item{current}{other \R object, to be compared with \code{target}.}
 
-  \item{tolerance}{numeric \eqn{\ge} 0.  Differences
-  smaller than \code{tolerance} are not reported.  The
-  default value is close to \code{1.5e-8}.}
+\item{tolerance}{numeric \eqn{\ge} 0.  Differences smaller than
+    \code{tolerance} are not reported.  The default value is close to
+    \code{1.5e-8}.}
 
-  \item{attrsToCheck}{Which attributes in im3d should
-  always be checked}
+\item{attrsToCheck}{Which attributes in im3d should always be checked}
 
-  \item{attrsToCheckIfPresent}{Which attributes in im3d
-  should be checked if present}
+\item{attrsToCheckIfPresent}{Which attributes in im3d should be checked if
+present}
 
-  \item{CheckSharedAttrsOnly}{Logical whether to check
-  shared attributes only (default: FALSE)}
+\item{CheckSharedAttrsOnly}{Logical whether to check shared attributes only
+(default: FALSE)}
 
-  \item{...}{additional arguments passed to
-  \code{all.equal}}
+\item{...}{additional arguments passed to \code{all.equal}}
 }
 \description{
 Check equality on data and key attributes of im3d objects

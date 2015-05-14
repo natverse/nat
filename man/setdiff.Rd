@@ -13,26 +13,25 @@ setdiff(x, y, ...)
 \method{setdiff}{neuronlist}(x, y, ...)
 }
 \arguments{
-  \item{x}{the first collection to consider.}
+\item{x}{the first collection to consider.}
 
-  \item{y}{the second collection to consider.}
+\item{y}{the second collection to consider.}
 
-  \item{...}{additional arguments passed to methods}
+\item{...}{additional arguments passed to methods}
 }
 \value{
-A collection of the same mode as \code{x} that contains all
-elements of \code{x} that are not present in \code{y}.
+A collection of the same mode as \code{x} that contains all elements
+  of \code{x} that are not present in \code{y}.
 }
 \description{
-Find the (asymmetric) difference between two collections of
-objects
+Find the (asymmetric) difference between two collections of objects
 }
 \details{
-Note that setdiff.default calls base::setdiff to ensure
-consistent behaviour for regular vectors.
+Note that setdiff.default calls base::setdiff to ensure consistent
+  behaviour for regular vectors.
 
-As a convenience \code{setdiff.neuronlist} allows \code{y},
-the second collection, to be a character vector of names.
+  As a convenience \code{setdiff.neuronlist} allows \code{y}, the second
+  collection, to be a character vector of names.
 }
 \seealso{
 \code{\link[base]{setdiff}}

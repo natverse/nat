@@ -11,23 +11,21 @@ coord2ind(coords, ...)
   aperm, Clamp = FALSE, CheckRanges = !Clamp, ...)
 }
 \arguments{
-  \item{coords}{spatial coordinates of image voxels.}
+\item{coords}{spatial coordinates of image voxels.}
 
-  \item{...}{extra arguments passed to methods.}
+\item{...}{extra arguments passed to methods.}
 
-  \item{imdims}{array dimensions of 3D image.}
+\item{imdims}{array dimensions of 3D image.}
 
-  \item{voxdims}{vector of 3 voxels dimensions (width,
-  height, depth).}
+\item{voxdims}{vector of 3 voxels dimensions (width, height, depth).}
 
-  \item{origin}{the origin of the 3D image.}
+\item{origin}{the origin of the 3D image.}
 
-  \item{aperm}{permutation order for axes.}
+\item{aperm}{permutation order for axes.}
 
-  \item{Clamp}{???}
+\item{Clamp}{???}
 
-  \item{CheckRanges}{whether to check if coordinates are
-  out of range.}
+\item{CheckRanges}{whether to check if coordinates are out of range.}
 }
 \description{
 Find 1D indices into a 3D image given spatial coordinates

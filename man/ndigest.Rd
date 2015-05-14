@@ -17,61 +17,54 @@ ndigest(x, ...)
   "NodeName", "InputFileStat", "InputFileMD5"), ...)
 }
 \arguments{
-  \item{x}{Object for which a normalised digest will be
-  computed.}
+\item{x}{Object for which a normalised digest will be computed.}
 
-  \item{...}{Additional arguments passed to methods and
-  then on to \code{\link{digest}}}
+\item{...}{Additional arguments passed to methods and then on to
+\code{\link{digest}}}
 
-  \item{absoluteVectors}{Whether to check only the absolute
-  value of eigenvectors for equality (default TRUE, see
-  details)}
+\item{absoluteVectors}{Whether to check only the absolute value of
+eigenvectors for equality (default TRUE, see details)}
 
-  \item{fieldsToExclude}{Character vector naming the neuron
-  fields to exclude}
+\item{fieldsToExclude}{Character vector naming the neuron fields to exclude}
 }
 \value{
-A character string containing the digest of the supplied
-object computed by \code{\link{digest}}.
+A character string containing the digest of the supplied object
+  computed by \code{\link{digest}}.
 }
 \description{
 The \emph{normalised} digest should exclude any fields or
-attributes irrelevant to the core contents of the object
-(e.g. timestamps, absolute location of the input files on
-disk etc). In theory then, this value should be constant
-for the same data regardless of the particular machine on
-which the digest is being computed.
+  attributes irrelevant to the core contents of the object (e.g. timestamps,
+  absolute location of the input files on disk etc). In theory then, this
+  value should be constant for the same data regardless of the particular
+  machine on which the digest is being computed.
 }
 \details{
-\code{ndigest.neuronlistfh} only considers the
-\code{keyfilemap} and \code{df} (metadata data.frame) when
-computing the hash value. See \code{\link{neuronlistfh}}
-for the significance of these two fields.
+\code{ndigest.neuronlistfh} only considers the \code{keyfilemap} and
+  \code{df} (metadata data.frame) when computing the hash value. See
+  \code{\link{neuronlistfh}} for the significance of these two fields.
 
-\code{ndigest.dotprops} ignores any \code{mtime} or
-\code{file} attributes. It also converts tangent vectors to
-absolute values (when \code{absoluteVectors=TRUE}) because
-the direction vectors are computed using an eigenvector
-decomposition where the sign of the eigenvector is
-essentially random and subject to small numerical
-instabilities. Therefore it does not usually make sense to
-rely on the value of vect exactly.
+\code{ndigest.dotprops} ignores any \code{mtime} or \code{file}
+  attributes. It also converts tangent vectors to absolute values (when
+  \code{absoluteVectors=TRUE}) because the direction vectors are computed
+  using an eigenvector decomposition where the sign of the eigenvector is
+  essentially random and subject to small numerical instabilities. Therefore
+  it does not usually make sense to rely on the value of vect exactly.
 
 \code{ndigest.neuron} ignores the following fields:
 
-\itemize{
+  \itemize{
 
-\item InputFileName
+  \item InputFileName
 
-\item CreatedAt
+  \item CreatedAt
 
-\item NodeName
+  \item NodeName
 
-\item InputFileStat
+  \item InputFileStat
 
-\item InputFileMD5
+  \item InputFileMD5
 
-}
+  }
 }
 \examples{
 stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))

@@ -7,24 +7,22 @@
 nopen3d(bgcol = "white", FOV = 0, ...)
 }
 \arguments{
-  \item{bgcol}{background colour}
+\item{bgcol}{background colour}
 
-  \item{FOV}{field of view}
+\item{FOV}{field of view}
 
-  \item{...}{additional options passed to open3d}
+\item{...}{additional options passed to open3d}
 }
 \value{
 current rgl device
 }
 \description{
-Pan with right button (Ctrl+click), zoom with middle
-(Alt/Meta+click) button. Defaults to a white background and
-orthogonal projection (FOV=0)
+Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
+Defaults to a white background and orthogonal projection (FOV=0)
 }
 \details{
-Note that sometimes (parts of) objects seem to disappear
-after panning and zooming. See help for
-\code{\link{pan3d}}.
+Note that sometimes (parts of) objects seem to disappear after panning and
+zooming. See help for \code{\link{pan3d}}.
 }
 \seealso{
 \code{\link{open3d},\link{pan3d}}

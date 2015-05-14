@@ -10,11 +10,11 @@ resample(x, ...)
 \method{resample}{neuron}(x, stepsize, ...)
 }
 \arguments{
-  \item{x}{An object to resample}
+\item{x}{An object to resample}
 
-  \item{...}{Additional arguments passed to methods}
+\item{...}{Additional arguments passed to methods}
 
-  \item{stepsize}{The new spacing along the tracing}
+\item{stepsize}{The new spacing along the tracing}
 }
 \description{
 Resample an object with a new spacing
@@ -22,11 +22,10 @@ Resample an object with a new spacing
 resample a neuron with a new spacing
 }
 \details{
-\code{resample.neuron} Floating point columns including
-X,Y,Z,W will be interpolated using linear interpolation,
-while integer or factor columns will be interpolated using
-constant interpolation. See \code{\link{approx}} for
-details.
+\code{resample.neuron} Floating point columns including X,Y,Z,W will
+  be interpolated using linear interpolation, while integer or factor columns
+  will be interpolated using constant interpolation. See \code{\link{approx}}
+  for details.
 }
 \seealso{
 \code{\link{approx}}, \code{\link{seglengths}}

@@ -7,19 +7,17 @@
 read.neuron.neuroml(f, ..., AlwaysReturnNeuronList = FALSE)
 }
 \arguments{
-  \item{f}{Path to a NeuroML format XML file}
+\item{f}{Path to a NeuroML format XML file}
 
-  \item{...}{Additional arguments passed to read.morphml
-  (and on to \code{\link[XML]{xmlParse}})}
+\item{...}{Additional arguments passed to read.morphml (and on to
+\code{\link[XML]{xmlParse}})}
 
-  \item{AlwaysReturnNeuronList}{See \bold{Value} section
-  (default \code{FALSE})}
+\item{AlwaysReturnNeuronList}{See \bold{Value} section (default \code{FALSE})}
 }
 \value{
 When the XML file contains only 1 cell \emph{and}
-\code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}}
-object, otherwise a \code{\link{neuronlist}} containing one
-or more neurons.
+  \code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}} object,
+  otherwise a \code{\link{neuronlist}} containing one or more neurons.
 }
 \description{
 Read one or more neurons from a NeuroML v1 file

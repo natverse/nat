@@ -39,4 +39,3 @@ Suggests:
     XML
 License: GPL-3
 LazyData: yes
-Roxygen: list(wrap = TRUE)

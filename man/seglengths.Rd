@@ -7,31 +7,30 @@
 seglengths(x, all = FALSE, flatten = TRUE, sumsegment = TRUE)
 }
 \arguments{
-  \item{x}{A neuron}
+\item{x}{A neuron}
 
-  \item{all}{Whether to calculate lengths for all segments
-  when there are multiple subtrees (default: \code{FALSE})}
+\item{all}{Whether to calculate lengths for all segments when there are
+multiple subtrees (default: \code{FALSE})}
 
-  \item{flatten}{Whether to flatten the lists of lists into
-  a single list when \code{all=TRUE}}
+\item{flatten}{Whether to flatten the lists of lists into a single list when
+\code{all=TRUE}}
 
-  \item{sumsegment}{Whether to return the length of each
-  segment (when {sumsegment=TRUE}, the default) or a list
-  of vectors of lengths of each individual edge in the
-  segment.}
+\item{sumsegment}{Whether to return the length of each segment (when
+{sumsegment=TRUE}, the default) or a list of vectors of lengths of each
+individual edge in the segment.}
 }
 \value{
 A \code{vector} of lengths for each segment or when
-\code{sumsegment=FALSE} a \code{list} of vectors
+  \code{sumsegment=FALSE} a \code{list} of vectors
 }
 \description{
 Calculate length of all segments in neuron
 }
 \details{
-A segment is an ubranched portion of neurite consisting of
-at least one vertex joined by edges.Only segments in
-x$SegList will be calculated unless \code{all=TRUE}.
-Segments containing only one point will have 0 length.
+A segment is an ubranched portion of neurite consisting of at least
+  one vertex joined by edges.Only segments in x$SegList will be calculated
+  unless \code{all=TRUE}. Segments containing only one point will have 0
+  length.
 }
 \examples{
 summary(seglengths(Cell07PNs[[1]]))

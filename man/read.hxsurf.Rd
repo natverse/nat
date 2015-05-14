@@ -9,57 +9,47 @@ read.hxsurf(filename, RegionNames = NULL, RegionChoice = "Inner",
   FallbackRegionCol = "grey", Verbose = FALSE)
 }
 \arguments{
-  \item{filename}{Character vector defining path to file}
+\item{filename}{Character vector defining path to file}
 
-  \item{RegionNames}{Character vector specifying which
-  regions should be read from file. Default value of
-  \code{NULL} => all regions.}
+\item{RegionNames}{Character vector specifying which regions should be read
+from file. Default value of \code{NULL} => all regions.}
 
-  \item{RegionChoice}{Whether the \emph{Inner} or
-  \emph{Outer} material, or \emph{both}, should define the
-  material of the patch. See details.}
+\item{RegionChoice}{Whether the \emph{Inner} or \emph{Outer} material, or
+\emph{both}, should define the material of the patch. See details.}
 
-  \item{FallbackRegionCol}{Colour to set regions when no
-  colour is defined}
+\item{FallbackRegionCol}{Colour to set regions when no colour is defined}
 
-  \item{Verbose}{Print status messages during parsing when
-  \code{TRUE}}
+\item{Verbose}{Print status messages during parsing when \code{TRUE}}
 }
 \value{
 A list with S3 class hxsurf with elements \itemize{
 
-\item{Vertices}{ A data.frame with columns \code{X, Y, Z,
-PointNo}}
+  \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
 
-\item{Regions}{ A list with 3 column data.frames specifying
-triplets of vertices for each region (with reference to
-\code{PointNo} column in \code{Vertices} element)}
+  \item{Regions}{ A list with 3 column data.frames specifying triplets of
+  vertices for each region (with reference to \code{PointNo} column in
+  \code{Vertices} element)}
 
-\item{RegionList}{ Character vector of region names (should
-match names of \code{Regions} element)}
+  \item{RegionList}{ Character vector of region names (should match names of
+  \code{Regions} element)}
 
-\item{RegionColourList}{ Character vector specifying
-default colour to plot each region in R's \code{\link{rgb}}
-format}
+  \item{RegionColourList}{ Character vector specifying default colour to plot
+  each region in R's \code{\link{rgb}} format}
 
-}
+  }
 }
 \description{
-Note that when \code{RegionChoice="both"} or
-\code{RegionChoice=c("Inner", "Outer")} both polygons in
-inner and outer regions will be added to named regions. To
-understand the significance of this, consider two adjacent
-regions, A and B, with a shared surface. For the polygons
-in both A and B, Amira will have a patch with (say)
-InnerRegion A and OuterRegion B. This avoids duplication in
-the file. However, it might be convenient to add these
-polygons to both regions when we read them into R, so that
-regions A and B in our R object are both closed surfaces.
-To achieve this when \code{RegionChoice="both"},
-\code{read.hxsurf} adds these polygons to region B (as well
-as region A) but swaps the order of the vertices defining
-the polygon to ensure that the surface directionality is
-correct.
+Note that when \code{RegionChoice="both"} or \code{RegionChoice=c("Inner",
+"Outer")} both polygons in inner and outer regions will be added to named
+regions. To understand the significance of this, consider two adjacent
+regions, A and B, with a shared surface. For the polygons in both A and B,
+Amira will have a patch with (say) InnerRegion A and OuterRegion B. This
+avoids duplication in the file. However, it might be convenient to add these
+polygons to both regions when we read them into R, so that regions A and B in
+our R object are both closed surfaces. To achieve this when
+\code{RegionChoice="both"}, \code{read.hxsurf} adds these polygons to region
+B (as well as region A) but swaps the order of the vertices defining the
+polygon to ensure that the surface directionality is correct.
 }
 \examples{
 \dontrun{
@@ -70,16 +60,16 @@ read.hxsurf("my.surf", RegionChoice="both")
 \code{\link{plot3d.hxsurf}, \link{rgb}}
 
 Other amira: \code{\link{amiratype}};
-\code{\link{is.amiramesh}}; \code{\link{read.amiramesh}},
-\code{\link{read.amiramesh.header}};
-\code{\link{write.hxsurf}}
+  \code{\link{is.amiramesh}}; \code{\link{read.amiramesh}},
+  \code{\link{read.amiramesh.header}};
+  \code{\link{write.hxsurf}}
 
 Other hxsurf: \code{\link{as.mesh3d}},
-\code{\link{as.mesh3d.hxsurf}}; \code{\link{materials}},
-\code{\link{materials.character}},
-\code{\link{materials.default}},
-\code{\link{materials.hxsurf}};
-\code{\link{plot3d.hxsurf}}; \code{\link{subset.hxsurf}};
-\code{\link{write.hxsurf}}
+  \code{\link{as.mesh3d.hxsurf}}; \code{\link{materials}},
+  \code{\link{materials.character}},
+  \code{\link{materials.default}},
+  \code{\link{materials.hxsurf}};
+  \code{\link{plot3d.hxsurf}}; \code{\link{subset.hxsurf}};
+  \code{\link{write.hxsurf}}
 }
 

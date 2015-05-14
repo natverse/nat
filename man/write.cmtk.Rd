@@ -7,29 +7,27 @@
 write.cmtk(l, con, gzip = FALSE, version = NA_character_)
 }
 \arguments{
-  \item{l}{Appropriately formatted list}
+\item{l}{Appropriately formatted list}
 
-  \item{con}{A character string specifying a path or a
-  connection}
+\item{con}{A character string specifying a path or a connection}
 
-  \item{gzip}{Whether to gzip output file (default FALSE)}
+\item{gzip}{Whether to gzip output file (default FALSE)}
 
-  \item{version}{TYPEDSTREAM version number, defaults to
-  \code{"1.1"} if not specified in the version attribute of
-  \code{l}.}
+\item{version}{TYPEDSTREAM version number, defaults to \code{"1.1"} if not
+specified in the version attribute of \code{l}.}
 }
 \description{
-This is probaly only of interest to developers. End users
-will probably wish to use more specific functions such as
-write.cmtkreg for writing out registrations.
+This is probaly only of interest to developers. End users will
+  probably wish to use more specific functions such as write.cmtkreg for
+  writing out registrations.
 }
 \details{
-NB a version specified on the command line overrides one
-encoded as an attribute in the input list.
+NB a version specified on the command line overrides one encoded as
+  an attribute in the input list.
 }
 \seealso{
 Other cmtk-io: \code{\link{cmtk.extract_affine}};
-\code{\link{read.cmtkreg}}; \code{\link{read.cmtk}};
-\code{\link{write.cmtkreg}}
+  \code{\link{read.cmtkreg}}; \code{\link{read.cmtk}};
+  \code{\link{write.cmtkreg}}
 }
 

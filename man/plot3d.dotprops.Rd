@@ -9,28 +9,26 @@
   UseAlpha = FALSE, ...)
 }
 \arguments{
-  \item{x}{A dotprops object}
+\item{x}{A dotprops object}
 
-  \item{scalevecs}{Factor by which to scale unit vectors
-  (numeric, default: 1.0)}
+\item{scalevecs}{Factor by which to scale unit vectors (numeric, default:
+1.0)}
 
-  \item{alpharange}{Restrict plotting to points with
-  \code{alpha} values in this range to plot (default: null
-  => all points). See \code{\link{dotprops}} for definition
-  of \code{alpha}.}
+\item{alpharange}{Restrict plotting to points with \code{alpha} values in
+this range to plot (default: null => all points). See
+\code{\link{dotprops}} for definition of \code{alpha}.}
 
-  \item{color}{Character or numeric vector specifying
-  colours for points/vectors. See details.}
+\item{color}{Character or numeric vector specifying colours for
+points/vectors. See details.}
 
-  \item{PlotPoints,PlotVectors}{Whether to plot points
-  and/or tangent vectors (logical, default: tangent vectors
-  only)}
+\item{PlotPoints,PlotVectors}{Whether to plot points and/or tangent vectors
+(logical, default: tangent vectors only)}
 
-  \item{UseAlpha}{Whether to scale tangent vector length by
-  the value of \code{alpha}}
+\item{UseAlpha}{Whether to scale tangent vector length by the value of
+\code{alpha}}
 
-  \item{...}{Additional arguments passed to \code{points3d}
-  and/or \code{segments3d}}
+\item{...}{Additional arguments passed to \code{points3d} and/or
+\code{segments3d}}
 }
 \value{
 invisible list of results of rgl plotting commands
@@ -39,18 +37,15 @@ invisible list of results of rgl plotting commands
 3D plots of dotprops objects using rgl package
 }
 \details{
-Tangent vectors are plotted by \code{segments3d} and
-centered on the relevant point. Points are plotted by
-\code{points3d}.
+Tangent vectors are plotted by \code{segments3d} and centered on the
+  relevant point. Points are plotted by \code{points3d}.
 
-\code{color} will be recycled by \code{points3d} and
-\code{segments3d}.  However in the special case that
-\code{color} has length equal to the number of points in
-\code{x}, then it will be duplicated before being passed to
-\code{segments3d} so that the result is that each vector is
-coloured uniformly according to \code{color} (since
-segments3d expects 2 colours for each line segment,
-blending them if they are different).
+  \code{color} will be recycled by \code{points3d} and \code{segments3d}.
+  However in the special case that \code{color} has length equal to the
+  number of points in \code{x}, then it will be duplicated before being
+  passed to \code{segments3d} so that the result is that each vector is
+  coloured uniformly according to \code{color} (since segments3d expects 2
+  colours for each line segment, blending them if they are different).
 }
 \examples{
 open3d()
@@ -62,7 +57,7 @@ plot3d(kcs20[[1]],col='red',lwd=2)
 plot3d(kcs20[[2]],col='green',lwd=2)
 }
 \seealso{
-\code{\link{dotprops}, \link[rgl]{plot3d},
-\link[rgl]{points3d}, \link[rgl]{segments3d}}
+\code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d},
+  \link[rgl]{segments3d}}
 }
 

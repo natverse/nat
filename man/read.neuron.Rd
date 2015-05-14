@@ -7,51 +7,43 @@
 read.neuron(f, format = NULL, ...)
 }
 \arguments{
-  \item{f}{Path to file. This can be a URL, in which case
-  the file is downloaded to a temporary location before
-  reading.}
+\item{f}{Path to file. This can be a URL, in which case the file is
+downloaded to a temporary location before reading.}
 
-  \item{format}{The file format of the neuron. When
-  \code{format=NULL}, the default, \code{read.neuron} will
-  infer the file format from the extension or file header
-  (aka magic) using the \code{fileformats} registry.}
+\item{format}{The file format of the neuron. When \code{format=NULL}, the
+default, \code{read.neuron} will infer the file format from the extension
+or file header (aka magic) using the \code{fileformats} registry.}
 
-  \item{...}{additional arguments passed to format-specific
-  readers}
+\item{...}{additional arguments passed to format-specific readers}
 }
 \description{
 Read a single neuron from a file
 }
 \details{
-This function will handle \code{neuron} and \code{dotprops}
-objects saved in R .rds or .rda format by default.
-Additional file formats can be registered using
-\code{fileformats}.
+This function will handle \code{neuron} and \code{dotprops} objects
+  saved in R .rds or .rda format by default. Additional file formats can be
+  registered using \code{fileformats}.
 
-At the moment the following formats are supported using
-file readers already included with the nat package:
-\itemize{
+  At the moment the following formats are supported using file readers
+  already included with the nat package: \itemize{
 
-\item \bold{swc} See \code{\link{read.neuron.swc}}
+  \item \bold{swc} See \code{\link{read.neuron.swc}}
 
-\item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
+  \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
 
-\item \bold{fijitraces} See \code{\link{read.neuron.fiji}}.
-The file format used by the
-\href{http://fiji.sc/Simple_Neurite_Tracer}{Simple Neurite
-Tracer} plugin of Fiji/ImageJ.
+  \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
+  used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple Neurite
+  Tracer} plugin of Fiji/ImageJ.
 
-\item \bold{hxlineset,hxskel} Two distinct fileformats used
-by Amira.  \code{hxlineset} is the generic one,
-\code{hxskel} is used by the hxskeletonize extension of
-Schmitt and Evers (see refs).
+  \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira.
+  \code{hxlineset} is the generic one, \code{hxskel} is used by the
+  hxskeletonize extension of Schmitt and Evers (see refs).
 
-\item \bold{rda,rds} Native R cross-platform binary formats
-(see \code{\link{load}, \link{readRDS}}). Note that RDS
-only contains a single unnamed neuron, whereas rda contains
-one or more named neurons.
+  \item \bold{rda,rds} Native R cross-platform binary formats (see
+  \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single
+  unnamed neuron, whereas rda contains one or more named neurons.
 
-}
+  }
 }
 \examples{
 \dontrun{
@@ -66,11 +58,11 @@ fileformats(class='neuron', read=TRUE)
 }
 }
 \references{
-Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M.
-and Obermayer, K. (2004). New methods for the
-computer-assisted 3-D reconstruction of neurons from
-confocal image stacks. Neuroimage 4, 1283--98.
-\href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
+Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
+  Obermayer, K. (2004). New methods for the computer-assisted 3-D
+  reconstruction of neurons from confocal image stacks. Neuroimage 4,
+  1283--98.
+  \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
 }
 \seealso{
 \code{\link{read.neurons}, \link{fileformats}}

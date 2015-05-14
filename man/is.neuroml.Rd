@@ -7,16 +7,14 @@
 is.neuroml(f, bytes = NULL)
 }
 \arguments{
-  \item{f}{path to a file on disk}
+\item{f}{path to a file on disk}
 
-  \item{bytes}{optional raw vector of bytes used for
-  prechecks}
+\item{bytes}{optional raw vector of bytes used for prechecks}
 }
 \description{
-This will check a file on disk to see if it is in NeuroML
-format. Some prechecks (optionally taking place on a
-supplied raw vector of bytes) should weed out nearly all
-true negatives and identify many true positives without
+This will check a file on disk to see if it is in NeuroML format. Some
+prechecks (optionally taking place on a supplied raw vector of bytes) should
+weed out nearly all true negatives and identify many true positives without
 having to read/parse the file header.
 }
 

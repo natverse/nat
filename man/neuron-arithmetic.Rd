@@ -16,18 +16,17 @@
 \method{/}{neuron}(n, x)
 }
 \arguments{
-  \item{n}{a neuron}
+\item{n}{a neuron}
 
-  \item{x}{(a numeric vector to multiply neuron coords in
-  neuron)}
+\item{x}{(a numeric vector to multiply neuron coords in neuron)}
 }
 \value{
 modified neuron
 }
 \description{
-If x is a 1-vector or a 3-vector, multiply xyz only If x is
-a 4-vector, multiply xyz and diameter by that TODO Figure
-out how to document arithemtic functions in one go
+If x is a 1-vector or a 3-vector, multiply xyz only
+If x is a 4-vector, multiply xyz and diameter by that
+TODO Figure out how to document arithemtic functions in one go
 }
 \examples{
 n1<-Cell07PNs[[1]]*2

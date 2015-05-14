@@ -11,83 +11,74 @@ nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   subset = NULL, OmitFailures = NA)
 }
 \arguments{
-  \item{X}{A neuronlist}
+\item{X}{A neuronlist}
 
-  \item{FUN}{Function to be applied to each element of X}
+\item{FUN}{Function to be applied to each element of X}
 
-  \item{...}{Additional arguments for FUN (see details)}
+\item{...}{Additional arguments for FUN (see details)}
 
-  \item{subset}{Character, numeric or logical vector
-  specifying on which subset of \code{X} the function
-  \code{FUN} should be applied. Elements outside the subset
-  are passed through unmodified.}
+\item{subset}{Character, numeric or logical vector specifying on which subset
+of \code{X} the function \code{FUN} should be applied. Elements outside the
+subset are passed through unmodified.}
 
-  \item{OmitFailures}{Whether to omit neurons for which
-  \code{FUN} gives an error. The default value (\code{NA})
-  will result in nlapply stopping with an error message the
-  moment there is an eror. For other values, see details.}
+\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
+error. The default value (\code{NA}) will result in nlapply stopping with
+an error message the moment there is an eror. For other values, see
+details.}
 
-  \item{MoreArgs}{a list of other arguments to \code{FUN}.}
+\item{MoreArgs}{a list of other arguments to \code{FUN}.}
 
-  \item{SIMPLIFY}{logical or character string; attempt to
-  reduce the result to a vector, matrix or higher
-  dimensional array; see the \code{simplify} argument of
-  \code{\link{sapply}}.}
+\item{SIMPLIFY}{logical or character string; attempt to reduce the
+    result to a vector, matrix or higher dimensional array; see
+    the \code{simplify} argument of \code{\link{sapply}}.}
 
-  \item{USE.NAMES}{logical; use names if the first \dots
-  argument has names, or if it is a character vector, use
-  that character vector as the names.}
+\item{USE.NAMES}{logical; use names if the first \dots argument has
+    names, or if it is a character vector, use that character vector as
+    the names.}
 }
 \value{
 A neuronlist
 }
 \description{
 versions of lapply and mapply that look after the class and
-attached dataframe of neuronlist objects. \code{nlapply}
-can apply a function to only a \code{subset} of elements in
-the input neuronlist.  Internally \code{nlapply} uses
-\code{plyr::llply} thereby enabling progress bars and
-simple parallelisation (see plyr section and examples).
+  attached dataframe of neuronlist objects. \code{nlapply} can apply a
+  function to only a \code{subset} of elements in the input neuronlist.
+  Internally \code{nlapply} uses \code{plyr::llply} thereby enabling progress
+  bars and simple parallelisation (see plyr section and examples).
 }
 \details{
-When \code{OmitFailures} is not \code{NA}, \code{FUN} will
-be wrapped in a call to \code{try} to ensure that failure
-for any single neuron does not abort the nlapply/nmapply
-call. When \code{OmitFailures=TRUE} the resultant
-neuronlist will be subsetted down to return values for
-which \code{FUN} evaluated successfully. When
-\code{OmitFailures=FALSE}, "try-error" objects will be left
-in place. In either of the last 2 cases error messages will
-not be printed because the call is wrapped as
-\code{try(expr, silent=TRUE)}.
+When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
+  wrapped in a call to \code{try} to ensure that failure for any single
+  neuron does not abort the nlapply/nmapply call. When
+  \code{OmitFailures=TRUE} the resultant neuronlist will be subsetted down to
+  return values for which \code{FUN} evaluated successfully. When
+  \code{OmitFailures=FALSE}, "try-error" objects will be left in place. In
+  either of the last 2 cases error messages will not be printed because the
+  call is wrapped as \code{try(expr, silent=TRUE)}.
 }
 \section{plyr}{
-  The arguments of most interest from plyr are:
+ The arguments of most interest from plyr are:
 
   \itemize{
 
-  \item .progress set to \code{"text"} for a basic progress
-  bar
+  \item .progress set to \code{"text"} for a basic progress bar
 
-  \item .parallel set to \code{TRUE} for parallelisation
-  after registering a parallel backend (see below).
+  \item .parallel set to \code{TRUE} for parallelisation after registering a
+  parallel backend (see below).
 
-  \item .paropts Additional arguments for parallel
-  computation. See \code{\link[plyr]{llply}} for details.
+  \item .paropts Additional arguments for parallel computation. See
+  \code{\link[plyr]{llply}} for details.
 
   }
 
-  Before using parallel code within an R session you must
-  register a suitable parallel backend. The simplest
-  example is the multicore option provided by the
-  \code{doMC} package that is suitable for a spreading
-  computational load across multiple cores on a single
-  machine. An example is provided below.
+  Before using parallel code within an R session you must register a suitable
+  parallel backend. The simplest example is the multicore option provided by
+  the \code{doMC} package that is suitable for a spreading computational load
+  across multiple cores on a single machine. An example is provided below.
 
-  Note that the progess bar and parallel options cannot be
-  used at the same time. You may want to start a
-  potentially long-running job with the progress bar option
-  and then abort and re-run with \code{.parallel=TRUE} if
+  Note that the progess bar and parallel options cannot be used at the same
+  time. You may want to start a potentially long-running job with the
+  progress bar option and then abort and re-run with \code{.parallel=TRUE} if
   it looks likely to take a very long time.
 }
 \examples{
@@ -126,10 +117,10 @@ rgl.close()
 \code{\link{mapply}}
 
 Other neuronlist: \code{\link{as.neuronlistfh}},
-\code{\link{as.neuronlistfh.neuronlist}},
-\code{\link{is.neuronlistfh}}, \code{\link{neuronlistfh}},
-\code{\link{neuronlistfh}}; \code{\link{is.neuronlist}};
-\code{\link{neuronlist}}; \code{\link{read.neurons}};
-\code{\link{write.neurons}}
+  \code{\link{as.neuronlistfh.neuronlist}},
+  \code{\link{is.neuronlistfh}},
+  \code{\link{neuronlistfh}}, \code{\link{neuronlistfh}};
+  \code{\link{is.neuronlist}}; \code{\link{neuronlist}};
+  \code{\link{read.neurons}}; \code{\link{write.neurons}}
 }
 

@@ -7,10 +7,10 @@
 is.swc(f, TrustSuffix = TRUE)
 }
 \arguments{
-  \item{f}{Path to one or more files}
+\item{f}{Path to one or more files}
 
-  \item{TrustSuffix}{Whether to trust that a file ending in
-  .nrrd or .nhdr is a NRRD}
+\item{TrustSuffix}{Whether to trust that a file ending in .nrrd or .nhdr is a
+NRRD}
 }
 \value{
 logical value
@@ -19,11 +19,10 @@ logical value
 Test if a file is an SWC format neuron
 }
 \details{
-Note that this test is somewhat expensive compared with the
-other file tests since SWC files do not have a consistent
-magic value. It therefore often has to read and parse the
-first few lines of the file in order to determine whether
-they are consistent with the SWC format.
+Note that this test is somewhat expensive compared with the other
+  file tests since SWC files do not have a consistent magic value. It
+  therefore often has to read and parse the first few lines of the file in
+  order to determine whether they are consistent with the SWC format.
 }
 \seealso{
 \code{\link{read.neuron}}

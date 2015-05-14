@@ -18,46 +18,40 @@ getformatreader(file, class = NULL)
 getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 }
 \arguments{
-  \item{format}{Character vector naming the format}
+\item{format}{Character vector naming the format}
 
-  \item{ext}{Character vector of file extensions (including
-  periods)}
+\item{ext}{Character vector of file extensions (including periods)}
 
-  \item{read,write}{Functions to read and write this
-  format}
+\item{read,write}{Functions to read and write this format}
 
-  \item{class}{The S3 class for the format (character
-  vector e.g. 'neuron')}
+\item{class}{The S3 class for the format (character vector e.g. 'neuron')}
 
-  \item{rval}{Character vector choosing what kind of return
-  value \code{fileformats} will give.}
+\item{rval}{Character vector choosing what kind of return value
+\code{fileformats} will give.}
 
-  \item{magic}{Function to test whether a file is of this
-  format}
+\item{magic}{Function to test whether a file is of this format}
 
-  \item{magiclen}{Optional integer specifying maximum
-  number of bytes required from file header to determine
-  file's type.}
+\item{magiclen}{Optional integer specifying maximum number of bytes required
+from file header to determine file's type.}
 
-  \item{file}{Path to a file}
+\item{file}{Path to a file}
 }
 \value{
 \itemize{
 
-\item \code{fileformats} returns a character vector, matrix
-or list according to the value of rval.
+  \item \code{fileformats} returns a character vector, matrix or list
+  according to the value of rval.
 
-\item \code{getformatreader} returns a list. The reader can
-be accessed with \code{$read} and the format can be acessed
-by \code{$format}.
+  \item \code{getformatreader} returns a list. The reader can be accessed
+  with \code{$read} and the format can be acessed by \code{$format}.
 
-\item \code{getformatwriter} returns a list. The writer can
-be accessed with \code{$write}.}
+  \item \code{getformatwriter} returns a list. The writer can be accessed
+  with \code{$write}.}
 }
 \description{
-\code{fileformats} returns format names, a format
-definition list or a table of information about the formats
-that match the given filter conditions.
+\code{fileformats} returns format names, a format definition
+  list or a table of information about the formats that match the given
+  filter conditions.
 
 \code{registerformat} registers a format in the io registry
 
@@ -66,47 +60,40 @@ that match the given filter conditions.
 \code{getformatwriter} gets the function to write a file
 }
 \details{
-if a \code{format} argument is passed to \code{fileformats}
-it will be matched wigth partial string matching and iif a
-unique match exists that will be returned.
+if a \code{format} argument is passed to \code{fileformats} it will
+  be matched wigth partial string matching and iif a unique match exists that
+  will be returned.
 
-\code{getformatreader} starts by reading a set number of
-bytes from the start off the current file and then checks
-using file extension and magic functions to see if it can
-identify the file. Presently formats are in a queue in
-alphabetical order, dispatching on the first match.
+\code{getformatreader} starts by reading a set number of bytes from
+  the start off the current file and then checks using file extension and
+  magic functions to see if it can identify the file. Presently formats are
+  in a queue in alphabetical order, dispatching on the first match.
 }
 \section{getformatwriter output file}{
-  If \code{getformatwriter} is passed a \code{file}
-  argument, it will be processed based on the registered
-  fileformats information and the \code{ext} argument to
-  give a final output path in the \code{$file} element of
-  the returned \code{list}.
+ If \code{getformatwriter} is passed a
+  \code{file} argument, it will be processed based on the registered
+  fileformats information and the \code{ext} argument to give a final output
+  path in the \code{$file} element of the returned \code{list}.
 
-  If \code{ext='.someext'} \code{getformatwriter} will use
-  the specified extension to overwrite the default value
-  returned by \code{fileformats}.
+  If \code{ext='.someext'} \code{getformatwriter} will use the specified
+  extension to overwrite the default value returned by \code{fileformats}.
 
-  If \code{ext=NULL}, the default, and
-  \code{file='somefilename.someext'} then \code{file} will
-  be untouched and \code{ext} will be set to
-  \code{'someext'} (overriding the value returned by
-  \code{fileformats}).
+  If \code{ext=NULL}, the default, and \code{file='somefilename.someext'}
+  then \code{file} will be untouched and \code{ext} will be set to
+  \code{'someext'} (overriding the value returned by \code{fileformats}).
 
-  If \code{file='somefile_without_extension'} then the
-  suppplied or calculated extension will be appended to
-  \code{file}.
+  If \code{file='somefile_without_extension'} then the suppplied or
+  calculated extension will be appended to \code{file}.
 
-  If \code{ext=NA} then the input \code{file} name will not
-  be touched (even if it has no extension at all).
+  If \code{ext=NA} then the input \code{file} name will not be touched (even
+  if it has no extension at all).
 
-  Note that if \code{ext=NULL} or \code{ext=NA}, then only
-  the specified format or, failing that, the \code{file}
-  extension will be used to query the fileformats database
-  for a match.
+  Note that if \code{ext=NULL} or \code{ext=NA}, then only the specified
+  format or, failing that, the \code{file} extension will be used to query
+  the fileformats database for a match.
 
-  See \code{\link{write.neuron}} for code to make this
-  discussion more concrete.
+  See \code{\link{write.neuron}} for code to make this discussion more
+  concrete.
 }
 \examples{
 # information about the currently registered file formats

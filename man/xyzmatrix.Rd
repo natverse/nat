@@ -46,33 +46,30 @@ xyzmatrix(x) <- value
 \method{xyzmatrix}{shape3d}(x) <- value
 }
 \arguments{
-  \item{x}{object containing 3d coordinates}
+\item{x}{object containing 3d coordinates}
 
-  \item{...}{additional arguments passed to methods}
+\item{...}{additional arguments passed to methods}
 
-  \item{y,z}{separate y and z coordinates}
+\item{y,z}{separate y and z coordinates}
 
-  \item{value}{Nx3 matrix specifying new xyz coords}
+\item{value}{Nx3 matrix specifying new xyz coords}
 }
 \value{
 For \code{xyzmatrix}: Nx3 matrix containing 3d coordinates
 
-For \code{xyzmatrix<-}: Original object with modified
-coords
+For \code{xyzmatrix<-}: Original object with modified coords
 }
 \description{
-\code{xyzmatrix} gets coordinates from objects containing
-3d vertex data
+\code{xyzmatrix} gets coordinates from objects containing 3d vertex data
 
-\code{xyzmatrix<-} assigns xyz elements of neuron or
-dotprops object and can also handle matrix like objects
-with columns named X, Y, Z or x, y, z.
+\code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
+  object and can also handle matrix like objects with columns named X, Y, Z
+  or x, y, z.
 }
 \details{
-Note that \code{xyzmatrix} can extract or set 3d
-coordinates in a \code{matrix} or \code{data.frame} that
-\bold{either} has exactly 3 columns \bold{or} has 3 columns
-named X,Y,Z or x,y,z.
+Note that \code{xyzmatrix} can extract or set 3d coordinates in a
+  \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
+  \bold{or} has 3 columns named X,Y,Z or x,y,z.
 }
 \examples{
 # see all available methods for different classes

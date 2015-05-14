@@ -7,12 +7,11 @@
 is.amiramesh(f = NULL, bytes = NULL)
 }
 \arguments{
-  \item{f}{Path to one or more files to be tested
-  \strong{or} an array of raw bytes, for one file only.}
+\item{f}{Path to one or more files to be tested \strong{or} an array of raw
+bytes, for one file only.}
 
-  \item{bytes}{optional raw vector of at least 11 bytes
-  from the start of a single file (used in preference to
-  reading file \code{f}).}
+\item{bytes}{optional raw vector of at least 11 bytes from the start of a
+single file (used in preference to reading file \code{f}).}
 }
 \value{
 logical
@@ -21,14 +20,13 @@ logical
 Check if file is amiramesh format
 }
 \details{
-Tries to be as fast as possible by reading only first 11
-bytes and checking if they equal to "# AmiraMesh" or
-(deprecated) "# HyperMesh".
+Tries to be as fast as possible by reading only first 11 bytes and
+  checking if they equal to "# AmiraMesh" or (deprecated) "# HyperMesh".
 }
 \seealso{
 Other amira: \code{\link{amiratype}}; \code{\link{hxsurf}},
-\code{\link{read.hxsurf}}; \code{\link{read.amiramesh}},
-\code{\link{read.amiramesh.header}};
-\code{\link{write.hxsurf}}
+  \code{\link{read.hxsurf}}; \code{\link{read.amiramesh}},
+  \code{\link{read.amiramesh.header}};
+  \code{\link{write.hxsurf}}
 }
 

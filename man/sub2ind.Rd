@@ -7,10 +7,9 @@
 sub2ind(dims, indices)
 }
 \arguments{
-  \item{dims}{vector of dimensions of object to index
-  into.}
+\item{dims}{vector of dimensions of object to index into.}
 
-  \item{indices}{vector of n-dimensional indices.}
+\item{indices}{vector of n-dimensional indices.}
 }
 \description{
 Emulates the MATLAB function \code{sub2ind}.
