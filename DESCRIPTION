@@ -8,7 +8,7 @@ URL: https://github.com/jefferis/nat http://jefferislab.org
 BugReports: https://github.com/jefferis/nat/issues
 Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     biological image data, especially traced neurons. Reads and writes 3D images
-    in NRRD and 'Amira' amiramesh formats and reads surfaces in 'Amira' hxsurf
+    in NRRD and 'Amira' AmiraMesh formats and reads surfaces in 'Amira' hxsurf
     format. Traced neurons can be imported from and written to SWC and 'Amira'
     LineSet and SkeletonGraph formats. These data can then be visualised in 3D
     via 'rgl', manipulated including applying calculated registrations, e.g. 
