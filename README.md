@@ -2,7 +2,7 @@
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
 [![Release Version](https://badge.fury.io/gh/jefferis%2Fnat.svg)](https://github.com/jefferis/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](http://cran.r-project.org/web/packages/nat) 
-[![Build Status](https://travis-ci.org/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat) 
+[![Build Status](https://travis-ci.org/jefferis/nat.svg?branch=master)](https://travis-ci.org/jefferis/nat) 
 [![Coverage Status](https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master)](https://coveralls.io/r/jefferis/nat?branch=master)
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
