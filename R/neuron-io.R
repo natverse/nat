@@ -640,6 +640,16 @@ write.neuron.swc<-function(x, file, ...){
   write.table(df, file, col.names=F, row.names=F, append=TRUE, ...)
 }
 
+write.dotprops.swc<-function(x, file, ...) {
+  df=dotprops2swc(x, ...)
+  writeLines(c("# SWC dotprops format", "# Created by nat::write.dotprops.swc",
+               "# see http://research.mssm.edu/cnic/swc.html"),
+             con=file)
+  cat("#", colnames(df), "\n", file=file, append=TRUE)
+  write.table(df, file, col.names=F, row.names=F, append=TRUE)
+}
+
+
 #' Write neurons from a neuronlist object to individual files, or a zip archive
 #' 
 #' @details See \code{\link{write.neuron}} for details of how to specify the 
