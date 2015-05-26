@@ -843,6 +843,29 @@ test_that("we can write neuron to swc file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
+test_that("we can write dotprops objects to SWC format",{
+  
+  # setup
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  
+  # write, testing out veclength param to double segment length
+  veclength=2
+  expect_is(written <- write.neurons(kcs20[1:3], dir=td, files = Name, 
+                                     format='swc', veclength=veclength),
+            'character')
+  expect_is(x <- read.neuron(written[1]), 'neuron')
+  # The key feature is that the parents are set up properly
+  # for head to tail segments
+  expect_equal(x$d$Parent[1:6], c(-1, 1, -1, 3, -1, 5))
+  # and that the segments define the original tangent vectorS
+  # multiplied by veclength as appropriate
+  seg1=data.matrix(xyzmatrix(x)[1:2,])
+  vec1=as.vector(diff(seg1))
+  expect_equivalent(vec1/veclength, kcs20[[1]]$vect[1,])
+})
+
 test_that("we can write neuron to amira hxskel file",{
   y=Cell07PNs[[1]]
   td=tempfile()

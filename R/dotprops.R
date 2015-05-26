@@ -215,6 +215,29 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   return(as.dotprops(rlist))
 }
 
+# internal function to convert a dotprops object to SWC
+# representation.
+dotprops2swc<-function(x, label=0L, veclength=1, radius=0) {
+  
+  # compute segments based on points and tangent vectors
+  halfvect=x$vect/2*veclength
+  starts=x$points-halfvect
+  stops=x$points+halfvect
+  interleaved=matrix(t(cbind(starts,stops)),ncol=3,byrow=T)
+  
+  n=nrow(x$points)
+  # make sequence of parent ids
+  # should look like -1, 1, -1, 2, -1, 3 ...
+  parents=as.vector(t(cbind(-1L, 
+                            seq.int(from=1L, length.out=n, by=2L)
+  )))
+  df=data.frame(PointNo=seq.int(2*n), Label=label)
+  df[,c("X","Y","Z")]=interleaved
+  df$R=radius
+  df$Parent=parents
+  df
+}
+
 #' all.equal method tailored to dotprops objects
 #' 
 #' @details This method is required because the direction vectors are computed
