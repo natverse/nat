@@ -579,7 +579,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
-    format='rds'
+    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds"))
     if(is.null(file)) {
       file=basename(attr(n,"file"))
       if(is.null(file))
@@ -625,6 +625,10 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
 
 # write neuron to SWC file
 write.neuron.swc<-function(x, file, ...){
+  if(is.dotprops(x)) {
+    return(write.dotprops.swc(x, file, ...))
+  }
+  # assume we have a neuron
   our_col_names<-c("PointNo","Label","X","Y","Z","W","Parent")
   if(!all(our_col_names%in%colnames(x$d))) stop("Some columns are missing!")
   df=x$d[,our_col_names]
