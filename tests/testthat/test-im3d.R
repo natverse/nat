@@ -33,6 +33,12 @@ test_that("we can read im3d files",{
   expect_error(read.im3d(v3drawfile2ch), "im3d is restricted to 3D")
   expect_equal(x<-read.im3d(v3drawfile2ch, chan=1), y<-read.im3d(v3drawfile1ch))
   expect_equal(x[,,1], read.im3d(v3drawfile2chslice)[,,1])
+  
+  # nb we can't test for strict equality because read.im3d.vaa3draw adds a
+  # boundingbox in this case whereas read.nrrd does not
+  expect_equal(dim(read.im3d('testdata/v3draw/L1DS1_crop_straight_crop_ch1.nhdr')),
+               dim(y))
+  
   # check that we can read metadata only
   expect_equal(boundingbox(read.im3d(v3drawfile1ch, ReadData = F)), 
                boundingbox(x))
