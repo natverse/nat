@@ -6,6 +6,14 @@ if(is.null(cmtk.bindir())){
 
 context("cmtk command line tools")
 
+test_that("cmtk.bindir",{
+  # nb this gets called in plenty of cases, we just need to check the case where
+  # is actually looking for the path.
+  op=options(nat.cmtk.bindir=NULL)
+  on.exit(options(op))
+  expect_is(cmtk.bindir(), 'character')
+})
+
 #' round trip test of mat2dof/dof2mat
 test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (no shears)", {
   m=matrix(c(1.1,0,0,50,
