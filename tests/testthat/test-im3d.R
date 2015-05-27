@@ -6,6 +6,8 @@ test_that("we can read im3d files",{
   expect_true(is.integer(d))
   expect_equal(sum(d!=0), 28669)
   
+  expect_equal(read.im3d("testdata/nrrd/LHMask.nhdr"), d)
+  
   expect_is(d0<-read.im3d("testdata/nrrd/LHMask.nrrd", ReadData=FALSE),'im3d')
   expect_equal(dim(d0), dim(d))
   expect_equal(length(d0), 0L)

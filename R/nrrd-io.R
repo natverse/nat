@@ -54,6 +54,9 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
     if(length(datafiles)!=1) stop("Can currently only handle exactly one datafile")
     close(fc)
     fc=file(datafiles,open='rb')
+    if(!is.null(h$lineskip)) {
+      readLines(fc, n=h$lineskip)
+    }
     file=datafiles
   }
   dataLength=prod(h$sizes)
