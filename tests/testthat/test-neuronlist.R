@@ -160,6 +160,7 @@ test_that("plot neuronlist contents",{
   nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
   op=options(nat.default.neuronlist="Cell07PNs")
   expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
+  plot3d(boundingbox(Cell07PNs[c("EBH11R", "EBH20L")]))
   options(op)
 })
 
