@@ -810,9 +810,8 @@ context("neurons writing")
 test_that("we can write neuron/dotprops to rds file",{
   x=kcs20[[1]]
   td=tempfile()
-  dir.create(td)
   on.exit(unlink(td,recursive=TRUE))
-  
+  expect_error(f<-write.neuron(x, dir=td, MakeDir = F), 'does not exist')
   expect_equal(f<-write.neuron(x, dir=td), 
                file.path(td,'FruMARCM-M001205_seg002_03.rds'))
   # can't overwrite get a warning and an NA back
