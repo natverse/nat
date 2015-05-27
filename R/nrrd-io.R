@@ -245,12 +245,15 @@ nrrd.datafiles<-function(nhdr,ReturnAbsPath=TRUE){
 
 #' Return voxel dimensions (by default absolute voxel dimensions)
 #' 
-#' @details NB Can handle off diagonal terms in space directions matrix, BUT
+#' @details NB Can handle off diagonal terms in space directions matrix, BUT 
 #'   assumes that space direction vectors are orthogonal.
+#'   
+#'   Will produce a warning if no valid dimensions can be found.
 #' @param file path to nrrd/nhdr file or a list containing a nrrd header
 #' @param ReturnAbsoluteDims Defaults to returning absolute value of dims even 
 #'   if there are any negative space directions
-#' @return voxel dimensions as numeric vector
+#' @return numeric vector of voxel dimensions (\code{NA_real_} when missing) of
+#'   length equal to the image dimension.
 #' @author jefferis
 #' @seealso \code{\link{read.nrrd.header}}
 #' @export
@@ -265,7 +268,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
     voxdims=h[["spacings"]]
   } else {
     warning("Unable to find voxel dimensions in nrrd: ",file)
-    voxdims=rep(NA,h$dimension)
+    voxdims=rep(NA_real_,h$dimension)
   }
   
   # Sometimes get -ve space dirs, take abs if requested
