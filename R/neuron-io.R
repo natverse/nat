@@ -385,7 +385,7 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
 #' stopifnot(isTRUE(getformatreader(swc)$format=='swc'))
 #' unlink(swc)
 getformatreader<-function(file, class=NULL){
-  formatsforclass<-fileformats(class=class)
+  formatsforclass<-fileformats(class=class, read = TRUE)
   if(!length(formatsforclass)) return(NULL)
   
   magiclens=sapply(formatsforclass,function(f) get(f,envir=.fileformats)$magiclen)
