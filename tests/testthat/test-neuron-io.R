@@ -30,6 +30,14 @@ test_that("we can query fileformats",{
                'hxlineset')
 })
 
+test_that("we can set new fileformats",{
+  expect_error(registerformat('rhubarb'), 'provide.*read or write')
+  # returns null on success
+  expect_null(registerformat('rhubarb', class='crumble', read=read.table))
+  expect_warning(registerformat('rhubarb', class='crumble', read=read.table),
+                 'already been registered')
+})
+  
 test_that("is.swc works", {
   expect_false(is.swc("testdata/neuron/EBT7R.am"))
   expect_false(is.swc("testdata/neuron/SequentiallyBranchingTrace.traces"))
