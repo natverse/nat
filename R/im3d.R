@@ -225,6 +225,28 @@ read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
        materials=materials)
 }
 
+read.im3d.nrrd<-function(f, ReadData=TRUE, AttachFullHeader=FALSE, 
+                         ..., chan=NA){
+  x=read.nrrd(file=f, ReadData = ReadData, AttachFullHeader=T, ...)
+  dims=attr(x,'header')$sizes
+  dims=dims[dims>1]
+  if(is.na(chan)){
+    if(length(dims)>3) stop("im3d is restricted to 3D image data")
+  } else {
+    if(ReadData)
+      x=x[,,,chan]
+    dims=dims[1:3]
+  }
+  # fetch voxel dimensions from attached header 
+  h=attr(x,'header')
+  voxdims=suppressWarnings(
+    nrrd.voxdims(h, ReturnAbsoluteDims = FALSE))
+  # drop full header if we haven't been asked for it specially
+  if(!AttachFullHeader) 
+    if(any(is.na(voxdims))) voxdims=NULL
+  im3d(x, dims=dims, voxdims=voxdims, origin=h[['space origin']])
+}
+
 #' Return voxel dimensions of an object
 #' 
 #' @description This would properly be thought of as the voxel spacing when 
