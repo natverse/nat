@@ -30,6 +30,14 @@ test_that("we can query fileformats",{
                'hxlineset')
 })
 
+test_that("we can set new fileformats",{
+  expect_error(registerformat('rhubarb'), 'provide.*read or write')
+  # returns null on success
+  expect_null(registerformat('rhubarb', class='crumble', read=read.table))
+  expect_warning(registerformat('rhubarb', class='crumble', read=read.table),
+                 'already been registered')
+})
+  
 test_that("is.swc works", {
   expect_false(is.swc("testdata/neuron/EBT7R.am"))
   expect_false(is.swc("testdata/neuron/SequentiallyBranchingTrace.traces"))
@@ -730,6 +738,9 @@ test_that("we can write multiple neurons to a zip archive", {
   owd=setwd(td)
   zip_file <- "test.zip"
   on.exit(unlink(zip_file))
+  file.create(zip_file)
+  expect_error(write.neurons(Cell07PNs[1:5], zip_file, format="swc"), 
+               'already exists')
   write.neurons(Cell07PNs[1:5], zip_file, format="swc", Force=T, subdir=Glomerulus)
   nat.utils::zipinfo(zip_file)
   zip_neurons <- read.neurons(zip_file, format="zip")
@@ -797,14 +808,35 @@ test_that("we can read a flycircuit lineset neuron w/o radius info",{
   expect_is(n, 'neuron')
 })
 
+test_that("we can update an existing neuronlist",{
+  dir.create(td<-tempfile())
+  owd=setwd(td)
+  on.exit({setwd(owd); unlink(td,recursive=TRUE)})
+  
+  write.neurons(Cell07PNs[1:3], dir='.', format = 'swc')
+  expect_is(nl3<-read.neurons(dir(patt='swc$')), 'neuronlist')
+  write.neurons(Cell07PNs[4], dir='.', format='swc')
+  
+  expect_message(nl4<-read.neurons(rev(dir(patt='swc$')), nl = nl3, 
+                                   SortOnUpdate = TRUE), 
+                 '0 modified.* 1 new')
+  # note that is the order of neurons specified in paths _not_ the order of
+  # neurons specified in the neuron list that counts.
+  expect_equal(names(nl4)[4:2], names(nl3))
+  # overwrite the last file with a different neuron
+  write.neurons(Cell07PNs[5], dir='.', format='swc', 
+                files = names(Cell07PNs)[4], Force = T)
+  expect_message(nl4<-read.neurons(dir(patt='swc$'), nl = nl4),
+                 '1 modified.* 0 new')
+})
+
 context("neurons writing")
 
 test_that("we can write neuron/dotprops to rds file",{
   x=kcs20[[1]]
   td=tempfile()
-  dir.create(td)
   on.exit(unlink(td,recursive=TRUE))
-  
+  expect_error(f<-write.neuron(x, dir=td, MakeDir = F), 'does not exist')
   expect_equal(f<-write.neuron(x, dir=td), 
                file.path(td,'FruMARCM-M001205_seg002_03.rds'))
   # can't overwrite get a warning and an NA back

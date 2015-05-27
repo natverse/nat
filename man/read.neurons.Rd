@@ -27,7 +27,9 @@ See details.}
 \item{OmitFailures}{Omit failures (when TRUE) or leave an NA value in the
 list}
 
-\item{SortOnUpdate}{Sort the neuronlist when update adds new neurons}
+\item{SortOnUpdate}{When \code{nl!=NULL} the resultant neuronlist will be
+sorted so that neurons are ordered according to the value of the
+\code{paths} argument.}
 
 \item{...}{Additional arguements to passed to read.neuron methods}
 }

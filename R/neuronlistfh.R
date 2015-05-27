@@ -481,7 +481,7 @@ remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
                              delete.extra=FALSE, ...){
   if(is.character(x)) x=read.neuronlistfh(x)
   
-  if(!inherits(x,'neuronlistfh'))
+  if(!is.neuronlistfh(x))
     stop("Unable to update object of class", class(x))
   
   remotesync(x, remote=remote, download.missing=download.missing,

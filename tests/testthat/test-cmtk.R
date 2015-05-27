@@ -6,6 +6,14 @@ if(is.null(cmtk.bindir())){
 
 context("cmtk command line tools")
 
+test_that("cmtk.bindir",{
+  # nb this gets called in plenty of cases, we just need to check the case where
+  # is actually looking for the path.
+  op=options(nat.cmtk.bindir=NULL)
+  on.exit(options(op))
+  expect_is(cmtk.bindir(), 'character')
+})
+
 #' round trip test of mat2dof/dof2mat
 test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (no shears)", {
   m=matrix(c(1.1,0,0,50,
@@ -39,7 +47,7 @@ test_that("test cmtk.mat2dof with shears", {
   params_base=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                      byrow=T)
   rownames(params_base) <- c("xlate", "rotate", "scale", "shear", "center")
-  expect_equal(cmtk.mat2dof(m),params_base,tolerance=1e-4)
+  expect_equal(cmtk.mat2dof(m, centre=c(0,0,0)),params_base,tolerance=1e-4)
   expect_equal(cmtk.mat2dof(t(m),Transpose=FALSE),params_base,tolerance=1e-4)
 })
 
@@ -78,6 +86,9 @@ test_that("cmtk.call",{
     cmtk.call('reformatx', PROCESSED.ARGS='--outfile myfile.nrrd', mask=TRUE),
     paste(reformatx,'--outfile myfile.nrrd','--mask'))
   
+  expect_match(cmtk.call('rhubarb',origin=rep(0,3)), "0,0,0")
+  expect_error(cmtk.call('rhubarb',origin=factor(LETTERS[1:2])),
+               'unrecognised argument type')
 })
 
 test_that("cmtk.statistics",{

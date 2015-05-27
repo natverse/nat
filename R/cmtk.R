@@ -239,7 +239,7 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
       } else if(is.logical(arg)){
         if(isTRUE(arg)) cmd=paste(cmd,cmtkarg)
       } else if(is.numeric(arg)){
-        arg=paste(1:3,collapse=',')
+        arg=paste(arg,collapse=',')
         cmd=paste(cmd,cmtkarg,arg)
       } else if(is.null(arg)){
         # just ifgnore null arguemnts
