@@ -131,9 +131,11 @@ test_that("can extract xyz coords from a matrix and other objects",{
   expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
   
   fake_neuron=list(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
+  real_neuron=neuron(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
   xyz1=matrix(1,ncol=3, dimnames = list(NULL, c("X","Y","Z")))
   expect_equal(xyzmatrix(fake_neuron), xyz1)
   expect_equal(xyzmatrix(1,1,1), xyz1)
+  expect_equal(xyzmatrix(real_neuron), xyzmatrix(fake_neuron))
 })
 
 test_that("can replace xyz coords of a matrix",{
