@@ -78,6 +78,9 @@ test_that("cmtk.call",{
     cmtk.call('reformatx', PROCESSED.ARGS='--outfile myfile.nrrd', mask=TRUE),
     paste(reformatx,'--outfile myfile.nrrd','--mask'))
   
+  expect_match(cmtk.call('rhubarb',origin=rep(0,3)), "0,0,0")
+  expect_error(cmtk.call('rhubarb',origin=factor(LETTERS[1:2])),
+               'unrecognised argument type')
 })
 
 test_that("cmtk.statistics",{
