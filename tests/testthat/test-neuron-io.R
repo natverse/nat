@@ -808,6 +808,28 @@ test_that("we can read a flycircuit lineset neuron w/o radius info",{
   expect_is(n, 'neuron')
 })
 
+test_that("we can update an existing neuronlist",{
+  dir.create(td<-tempfile())
+  owd=setwd(td)
+  on.exit({setwd(owd); unlink(td,recursive=TRUE)})
+  
+  write.neurons(Cell07PNs[1:3], dir='.', format = 'swc')
+  expect_is(nl3<-read.neurons(dir(patt='swc$')), 'neuronlist')
+  write.neurons(Cell07PNs[4], dir='.', format='swc')
+  
+  expect_message(nl4<-read.neurons(rev(dir(patt='swc$')), nl = nl3, 
+                                   SortOnUpdate = TRUE), 
+                 '0 modified.* 1 new')
+  # note that is the order of neurons specified in paths _not_ the order of
+  # neurons specified in the neuron list that counts.
+  expect_equal(names(nl4)[4:2], names(nl3))
+  # overwrite the last file with a different neuron
+  write.neurons(Cell07PNs[5], dir='.', format='swc', 
+                files = names(Cell07PNs)[4], Force = T)
+  expect_message(nl4<-read.neurons(dir(patt='swc$'), nl = nl4),
+                 '1 modified.* 0 new')
+})
+
 context("neurons writing")
 
 test_that("we can write neuron/dotprops to rds file",{
