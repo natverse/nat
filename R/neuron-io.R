@@ -164,7 +164,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
     unzip(paths, exdir=neurons_dir)
     paths=dir(neurons_dir, full.names = TRUE, recursive=TRUE)
   }
-  else if(inherits(paths,'neuronlistfh')){
+  else if(is.neuronlistfh(paths)){
     if(!inherits(attr(paths,'db'),'filehashRDS'))
       stop("read.neurons only supports reading neuronlistfh with an RDS format filehash")
     nlfh=paths

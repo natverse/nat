@@ -251,7 +251,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' plot3d(xyzflip)
 #' rgl.close()
 nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
-  cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X) 
+  cl=if(is.neuronlist(X) && !is.neuronlistfh(X)) class(X) 
   else c("neuronlist", 'list')
   
   if(!is.null(subset)){
@@ -288,7 +288,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
                   USE.NAMES = TRUE, subset=NULL, OmitFailures=NA){
   if(!is.neuronlist(X))
     stop("X must be a neuronlist!")
-  cl=if(is.neuronlist(X) && !inherits(X, 'neuronlistfh')) class(X)
+  cl=if(is.neuronlist(X) && !is.neuronlistfh(X)) class(X)
   else c("neuronlist",'list')
   if(!is.null(subset)){
     if(!is.character(subset)) subset=names(X)[subset]
