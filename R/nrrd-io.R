@@ -74,12 +74,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     attr(d,'datablock')$datastartpos=seek(fc)
   }
   if(AttachFullHeader) attr(d,"header")=h
-  voxdims<-nrrd.voxdims(h,ReturnAbsoluteDims = FALSE)
-  if(any(is.na(voxdims))){
-    # missing pixel size info, so just return
-    return(d)
-  }
-  im3d(d, dims=h$sizes, voxdims=voxdims, origin=h[['space origin']])
+  return(d)
 }
 
 #' Read the (text) header of a NRRD format file
