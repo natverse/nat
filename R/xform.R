@@ -158,7 +158,7 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
   } else if(is.data.frame(x) || is.matrix(x)){
     if(ncol(x)>3){
       matched_cols=match(xyzn, toupper(colnames(x)))
-      if(!any(is.na(matched_cols))) x=x[,matched_cols]
+      if(!any(is.na(matched_cols))) x=x[, matched_cols, drop=FALSE]
       else stop("Ambiguous column names. Unable to retrieve XYZ data")
     } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
   }
