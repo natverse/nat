@@ -17,7 +17,7 @@
                  class='neuron', magiclen=14L)
     
   # image formats
-  registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.nrrd, 
+  registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d.nrrd, 
                  write=write.nrrd, magic=is.nrrd,
                  class='im3d', magiclen=8L)
   registerformat('amiramesh', ext=c('.am','.amiramesh'), read=read.im3d.amiramesh, 
