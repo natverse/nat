@@ -1,3 +1,10 @@
+nat 1.6.6
+=========
+* Fixes description capitalisation/quoting for CRAN
+* Adds ability to write dotprops neuron objects to SWC format (#233)
+* fixes bug in xyzmatrix.neuron for single point neurons (#234)
+* likewise for xyzmatrix.default for 1-row >3-col matrices
+
 nat 1.6.5
 =========
 * add xyzmatrix get/set methods for class mesh3d along with xform.shape3d. This
