@@ -169,7 +169,7 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 
 #' @export
 #' @rdname xyzmatrix
-xyzmatrix.neuron<-function(x, ...) x$d[,c("X","Y","Z")]
+xyzmatrix.neuron<-function(x, ...) data.matrix(x$d[,c("X","Y","Z")])
 
 #' @export
 #' @rdname xyzmatrix
