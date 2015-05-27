@@ -738,6 +738,9 @@ test_that("we can write multiple neurons to a zip archive", {
   owd=setwd(td)
   zip_file <- "test.zip"
   on.exit(unlink(zip_file))
+  file.create(zip_file)
+  expect_error(write.neurons(Cell07PNs[1:5], zip_file, format="swc"), 
+               'already exists')
   write.neurons(Cell07PNs[1:5], zip_file, format="swc", Force=T, subdir=Glomerulus)
   nat.utils::zipinfo(zip_file)
   zip_neurons <- read.neurons(zip_file, format="zip")
