@@ -93,7 +93,7 @@ read.neuron<-function(f, format=NULL, ...){
 #'   
 #'   If the \code{paths} argument specifies a (single) directory then all files 
 #'   in that directory will be read unless an optional regex pattern is also 
-#'   specified. Similarly, if \code{paths} specifies a zip archive, all neurons
+#'   specified. Similarly, if \code{paths} specifies a zip archive, all neurons 
 #'   within the archive will be loaded.
 #'   
 #'   \code{neuronnames} must specify a unique set of names that will be used as 
@@ -121,7 +121,9 @@ read.neuron<-function(f, format=NULL, ...){
 #' @param df Optional data frame containing information about each neuron
 #' @param OmitFailures Omit failures (when TRUE) or leave an NA value in the 
 #'   list
-#' @param SortOnUpdate Sort the neuronlist when update adds new neurons
+#' @param SortOnUpdate When \code{nl!=NULL} the resultant neuronlist will be 
+#'   sorted so that neurons are ordered according to the value of the 
+#'   \code{paths} argument.
 #' @param nl An existing neuronlist to be updated (see details)
 #' @param ... Additional arguements to passed to read.neuron methods
 #' @return \code{\link{neuronlist}} object containing the neurons
