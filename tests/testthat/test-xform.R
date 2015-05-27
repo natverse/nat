@@ -129,6 +129,9 @@ test_that("can extract xyz coords from a matrix and other objects",{
   
   df=data.frame(X=1:4,Y=2:5,Z=3:6,W=1)
   expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
+  # check handling of 1 row data.frames / matrices
+  expect_is(xyz<-xyzmatrix(df[1,]), 'matrix')
+  expect_equal(xyzmatrix(data.matrix(df[1,])), xyz)
   
   fake_neuron=list(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
   real_neuron=neuron(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
