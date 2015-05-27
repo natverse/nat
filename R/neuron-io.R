@@ -214,7 +214,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
     # no paths to load => existing list is up to date
     if(!length(nn)) return(nl)
     message("There are ",length(modified_neurons)," modified neurons",
-            " and ",length(new_neurons),'new neurons')
+            " and ",length(new_neurons),' new neurons')
     paths=paths[nn]
   } else nl=neuronlist()
   # Look after the attached dataframe
