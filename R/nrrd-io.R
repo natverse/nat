@@ -5,16 +5,16 @@
 #'   used for logical indexing.
 #' @param file Path to a nrrd (or a connection for \code{read.nrrd.header})
 #' @param origin Add a user specified origin (x,y,z) to the returned object
-#' @param ReadData When FALSE just return attributes (e.g. voxel size)
+#' @param ReadData When FALSE just return attributes (i.e. the nrrd header)
 #' @param AttachFullHeader Include the full nrrd header as an attribute of the 
-#'   returned object (default FALSE)
+#'   returned object (default TRUE)
 #' @param ReadByteAsRaw Either a character vector or a logical vector specifying
 #'   when R should read 8 bit data as an R \code{raw} vector rather than 
 #'   \code{integer} vector.
 #' @param Verbose Status messages while reading
 #' @return a 3D data array with attributes compatible with gjdens objects
 #' @export
-read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData,
+read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
                     Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
   if(is.logical(ReadByteAsRaw))
     ReadByteAsRaw=ifelse(ReadByteAsRaw, 'all', 'none')

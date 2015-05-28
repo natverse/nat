@@ -5,9 +5,8 @@
 \alias{read.nrrd.header}
 \title{Read nrrd file into 3d array in memory}
 \usage{
-read.nrrd(file, origin = NULL, ReadData = TRUE,
-  AttachFullHeader = !ReadData, Verbose = FALSE,
-  ReadByteAsRaw = c("unsigned", "all", "none"))
+read.nrrd(file, origin = NULL, ReadData = TRUE, AttachFullHeader = TRUE,
+  Verbose = FALSE, ReadByteAsRaw = c("unsigned", "all", "none"))
 
 read.nrrd.header(file, Verbose = FALSE)
 }
@@ -16,10 +15,10 @@ read.nrrd.header(file, Verbose = FALSE)
 
 \item{origin}{Add a user specified origin (x,y,z) to the returned object}
 
-\item{ReadData}{When FALSE just return attributes (e.g. voxel size)}
+\item{ReadData}{When FALSE just return attributes (i.e. the nrrd header)}
 
 \item{AttachFullHeader}{Include the full nrrd header as an attribute of the
-returned object (default FALSE)}
+returned object (default TRUE)}
 
 \item{Verbose}{Status messages while reading}
 
