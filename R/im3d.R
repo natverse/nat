@@ -75,6 +75,12 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
   x
 }
 
+#' Test if an object is of class im3d
+#' @param x Object to test
+#' @return logical
+#' @family im3d
+is.im3d<-function(x) inherits(x, 'im3d')
+
 #' Convert a suitable object to an im3d object.
 #' 
 #' @details At present the only interesting method in \code{nat} is
