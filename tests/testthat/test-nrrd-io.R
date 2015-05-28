@@ -55,14 +55,14 @@ test_that("read-write.nrrd works",{
   on.exit(unlink(tf))
   write.nrrd(d,file=tf,dtype='byte')
   d2=read.nrrd(file=tf)
-  expect_equal(d, d2, tol=1e-6)
+  expect_equivalent(d, d2)
   
   # compare headers
-  h=read.nrrd.header(origlhmaskfile)
-  h2=read.nrrd.header(tf)
+  h=attr(d,'header')
+  h2=attr(d2,'header')
   common_fields=sort(intersect(names(h),names(h2)))
   expect_equal(common_fields, c("dimension", "encoding", "sizes", 
                                "space dimension", "space directions", 
-                               "space origin", "type"))
+                               "space origin", "space units", "type"))
   expect_equal(h[common_fields],h2[common_fields],tol=1e-6)
 })
