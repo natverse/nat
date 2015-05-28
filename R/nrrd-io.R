@@ -1,8 +1,13 @@
-#' Read nrrd file into 3d array in memory
+#' Read nrrd file into an array in memory
 #' 
-#' @details ReadByteAsRaw=unsigned (the default) only reads unsigned byte data 
-#'   as a raw array. This saves quite a bit of space and still allows data to be
-#'   used for logical indexing.
+#' @details \code{read.nrrd} reads data into a raw array. If you wish to 
+#'   generate a \code{\link{im3d}} object that includes spatial calibration (but
+#'   is limited to representing 3d data) then you should use
+#'   \code{\link{read.im3d}}.
+#'   
+#'   ReadByteAsRaw=unsigned (the default) only reads unsigned byte data as a raw
+#'   array. This saves quite a bit of space and still allows data to be used for
+#'   logical indexing.
 #' @param file Path to a nrrd (or a connection for \code{read.nrrd.header})
 #' @param origin Add a user specified origin (x,y,z) to the returned object
 #' @param ReadData When FALSE just return attributes (i.e. the nrrd header)
@@ -12,8 +17,10 @@
 #'   when R should read 8 bit data as an R \code{raw} vector rather than 
 #'   \code{integer} vector.
 #' @param Verbose Status messages while reading
-#' @return a 3D data array with attributes compatible with gjdens objects
+#' @return An \code{array} object, optionally with attributes from the nrrd 
+#'   header.
 #' @export
+#' @seealso \code{\link{write.nrrd}}, \code{\link{read.im3d}}
 read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
                     Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
   if(is.logical(ReadByteAsRaw))
