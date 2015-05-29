@@ -215,11 +215,11 @@ is.nrrd<-function(f=NULL, bytes=NULL, ReturnVersion=FALSE, TrustSuffix=FALSE){
   TRUE
 }
 
-nrrd.datafiles<-function(nhdr,ReturnAbsPath=TRUE){
+nrrd.datafiles<-function(nhdr, full.names=TRUE){
   if(!is.list(nhdr)){
     # we need to read in the nrrd header
     if(length(nhdr)>1) 
-      return(sapply(nhdr, nrrd.datafiles, ReturnAbsPath=ReturnAbsPath, 
+      return(sapply(nhdr, nrrd.datafiles, full.names=full.names, 
                     simplify = FALSE))
     if(!is.nrrd(nhdr)) stop("This is not a nrrd file")
     h=read.nrrd.header(nhdr)
@@ -244,12 +244,12 @@ nrrd.datafiles<-function(nhdr,ReturnAbsPath=TRUE){
     if(length(firstlineparts)==5) attr(dfs,'subdim')=as.integer(firstlineparts[5])
   } else dfs=h$datafile
   
-  if(ReturnAbsPath){
+  if(full.names){
     # check if paths begin with /
     relpaths=substring(dfs,1,1)!="/"
     if(any(relpaths)){
       nhdrpath=attr(h,"path")
-      if(is.null(nhdrpath) && ReturnAbsPath)
+      if(is.null(nhdrpath))
         stop("Unable to identify nrrd header file location to return absolute path to data files")
       dfs[relpaths]=file.path(dirname(nhdrpath),dfs[relpaths])
     }
