@@ -101,3 +101,10 @@ test_that("read/write bad nrrds", {
   expect_error(read.nrrd("testdata/nrrd/badenc.nhdr"), 'encoding')
   expect_error(write.nrrd(list('rhubarb'), tempfile()), 'nrrd only accepts')
 })
+
+test_that("nrrd.datafiles", {
+  # an internal function, but somewhat complex
+  expect_error(nrrd.datafiles('testdata/amira/AL-a_M.am'), 'not a nrrd')
+  expect_equal(nrrd.datafiles("testdata/nrrd/LHMask.nhdr"), 
+               "testdata/nrrd/LHMask.nrrd")
+})
