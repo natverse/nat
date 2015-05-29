@@ -1,4 +1,4 @@
-context("im3d")
+context("im3d io")
 
 test_that("we can read im3d files",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"),'im3d')
@@ -46,15 +46,24 @@ test_that("we can read im3d files",{
 
 test_that("round trip test for im3d is successful",{
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"),'im3d')
-  tf=tempfile(fileext='.nrrd')
-  on.exit(unlink(tf))
+  dir.create(td<-tempfile())
+  tf=tempfile(tmpdir = td, fileext='.nrrd')
+  on.exit(unlink(td, recursive = TRUE))
   
   write.im3d(d, tf, dtype='byte')
   expect_is(d2<-read.im3d(tf),'im3d')
   expect_equal(d2, d, tol=1e-6)
   tf2=tempfile(fileext='.rhubarb')
   expect_error(write.im3d(d, tf2))
+  
+  tf3=tempfile(tmpdir = td, fileext='.nhdr')
+  # also check detached nrrd
+  expect_is(write.im3d(d, tf3), 'character')
+  expect_equal(read.im3d(tf3), d, tol=1e-6)
+  expect_true(file.exists(sub("\\.nhdr$",".raw.gz",tf3)))
 })
+
+context("im3d")
 
 test_that("we can set bounding box",{
   z=im3d(,BoundingBox=c(0,1,0,2,0,4), dims=c(2,3,4))

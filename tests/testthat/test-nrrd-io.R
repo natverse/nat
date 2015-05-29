@@ -50,26 +50,33 @@ test_that("read-write.nrrd works",{
   expect_true(is.raw(d))
   expect_equal(sum(d!=0), 28669)
   
-  tf=tempfile(fileext='.nrrd')
-  on.exit(unlink(tf))
+  dir.create(td <- tempfile())
+  on.exit(unlink(td, recursive = TRUE))
+  tf=tempfile(tmpdir = td, fileext='.nrrd')
   write.nrrd(d,file=tf,dtype='byte')
   d2=read.nrrd(file=tf)
   expect_equivalent(d, d2)
+  # ... and as detached nrrd
+  tf2=tempfile(tmpdir = td, fileext = '.nhdr')
+  write.nrrd(d,file=tf2, dtype='byte')
+  d3=read.nrrd(file=tf2)
+  expect_equivalent(d, d3)
   
   # compare headers
   h=attr(d,'header')
   h2=attr(d2,'header')
+  h3=attr(d2,'header')
   common_fields=sort(intersect(names(h),names(h2)))
   expect_equal(common_fields, c("dimension", "encoding", "sizes", 
                                "space dimension", "space directions", 
                                "space origin", "space units", "type"))
   expect_equal(h[common_fields],h2[common_fields],tol=1e-6)
+  expect_equal(h[common_fields],h3[common_fields],tol=1e-6)
   
   # another example with a 1d array
   set.seed(42)
   testhist=hist(rnorm(1000), breaks = 10, plot = F)
   th=tempfile(pattern = 'testhist.nrrd')
-  on.exit(unlink(th), add = TRUE)
   write.nrrd(testhist$counts, file = th, enc = 'text', 
              header=list(axismins=testhist$breaks[1], axismaxs=max(testhist$breaks)))
   
@@ -93,4 +100,27 @@ test_that("read/write bad nrrds", {
   expect_error(read.nrrd("testdata/nrrd/badtype.nhdr"), 'data type')
   expect_error(read.nrrd("testdata/nrrd/badenc.nhdr"), 'encoding')
   expect_error(write.nrrd(list('rhubarb'), tempfile()), 'nrrd only accepts')
+})
+
+context("detached nrrd data files")
+
+test_that("nrrd.datafiles", {
+  # an internal function, but somewhat complex
+  expect_error(nrrd.datafiles('testdata/amira/AL-a_M.am'), 'not a nrrd')
+  expect_equal(nrrd.datafiles("testdata/nrrd/LHMask.nhdr"), 
+               "testdata/nrrd/LHMask.nrrd")
+
+  # check nhdrs for a list of files
+  nhdrs=dir("testdata/nrrd", pattern = '\\.nhdr$', full.names = TRUE)
+  expect_is(nhdrl<-nrrd.datafiles(nhdrs, full.names = FALSE), 'list')
+  
+  # check that we can get datafiles for LIST
+  expect_equal(nhdrl[['testdata/nrrd/datafile_list.nhdr']], 
+               paste0('slice',0:49,'.raw'))
+  
+  # check that we can get datafiles for LIST with subdim
+  # i.e. slabs of data
+  slabs=structure(c("slab0-9.raw", "slab10-19.raw", "slab20-29.raw", 
+                    "slab30-39.raw", "slab40-49.raw"), subdim = 3L)
+  expect_equal(nhdrl[['testdata/nrrd/datafile_listslab.nhdr']], slabs)
 })

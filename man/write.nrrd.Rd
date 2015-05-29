@@ -6,33 +6,65 @@
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   "byte", "short", "ushort", "int", "double"), header = attr(x, "header"),
-  endian = .Platform$endian)
+  endian = .Platform$endian, datafile = NULL)
 }
 \arguments{
 \item{x}{Data to write as an \code{array}, \code{vector} or
 \code{\link{im3d}} object.}
 
-\item{file}{Character string naming a file}
+\item{file}{Character string naming an output file (a detached nrrd header
+when \code{file} has extension 'nhdr').}
 
 \item{enc}{One of three supported nrrd encodings ("gzip", "raw", "text")}
 
 \item{dtype}{The data type to write. One of "float","byte", "short",
 "ushort", "int", "double"}
 
-\item{header}{List containing fields of nrrd header - see details.}
+\item{header}{List containing fields of nrrd header - see \emph{Header}
+section.}
 
 \item{endian}{One of "big" or "little". Defaults to \code{.Platform$endian}.}
+
+\item{datafile}{Optional name of separate file into which data should be
+written (see details).}
 }
 \description{
 Writes a lattice format file i.e. one with a regular n-d grid. When \code{x}
 is an \code{im3d} object, appropriate spatial calibration fields are added to
 the header.
 }
-\details{
-Arguments \code{enc}, \code{dtype}, and \code{endian} along with the
-  dimensions of the input (\code{x}) will override the corresponding nrrd
-  header fields from any supplied \code{header} argument. See
-  \url{http://teem.sourceforge.net/nrrd/format.html} for details of the nrrd
+\section{Detached NRRDs}{
+ NRRD files can be written in \emph{detached} format
+  (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which
+  a text \bold{nhdr} file is used to described the contents of a separate
+  (usually binary) data file. This means that the nhdr file can be inspected
+  and edited with a text editor while the datablock can be in a completely
+  raw format that can be opened even by programs that do not understand the
+  NRRD format.
+
+  If \code{file} has extension \code{.nhdr} \emph{or} \code{datafile} is
+  non-NULL, then \code{write.nrrd} will write a separate datafile. If
+  \code{datafile} is set, then it is interpeted as specifying a path relative
+  to the \bold{nhdr} file. If \code{datafile} is not specified then default
+  filenames will be chosen according to the encoding following the
+  conventions of the teem library:
+
+  \itemize{
+
+  \item raw \code{'<nhdrstem>.raw'}
+
+  \item gzip \code{'<nhdrstem>.raw.gz'}
+
+  \item text \code{'<nhdrstem>.ascii'}
+
+  }
+}
+
+\section{Header}{
+ Arguments \code{enc}, \code{dtype}, and \code{endian} along
+  with the dimensions of the input (\code{x}) will override the corresponding
+  NRRD header fields from any supplied \code{header} argument. See
+  \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD
   fields.
 }
 \seealso{

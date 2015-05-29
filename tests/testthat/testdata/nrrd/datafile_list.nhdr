@@ -1,0 +1,63 @@
+NRRD0004
+# Created by Nrrd_Writer at Wed Dec 23 15:53:01 GMT 2009
+type: uint8
+encoding: gzip
+endian: big
+dimension: 3
+sizes: 50 50 50
+space dimension: 3
+space directions: (1.399999976158142,0,0) (0,1.399999976158142,0) (0,0,1.399999976158142)
+space origin: (0,0,0)
+space units: "microns" "microns" "microns"
+line skip: 11
+data file: LIST
+slice0.raw
+slice1.raw
+slice2.raw
+slice3.raw
+slice4.raw
+slice5.raw
+slice6.raw
+slice7.raw
+slice8.raw
+slice9.raw
+slice10.raw
+slice11.raw
+slice12.raw
+slice13.raw
+slice14.raw
+slice15.raw
+slice16.raw
+slice17.raw
+slice18.raw
+slice19.raw
+slice20.raw
+slice21.raw
+slice22.raw
+slice23.raw
+slice24.raw
+slice25.raw
+slice26.raw
+slice27.raw
+slice28.raw
+slice29.raw
+slice30.raw
+slice31.raw
+slice32.raw
+slice33.raw
+slice34.raw
+slice35.raw
+slice36.raw
+slice37.raw
+slice38.raw
+slice39.raw
+slice40.raw
+slice41.raw
+slice42.raw
+slice43.raw
+slice44.raw
+slice45.raw
+slice46.raw
+slice47.raw
+slice48.raw
+slice49.raw
