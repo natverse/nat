@@ -419,10 +419,10 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   
   # set things up for detached nrrd or regular nrrd
   if(is.null(datafile)) {
-    # regular nrrd
+    # regular nrrd, append to file containing header
     fmode='ab'
   } else {
-    # detached nrrd
+    # detached nrrd, (over)write separate datafile
     fmode='wb'
     # set working dir to location of nhdr to simplify interpretation of datafile
     owd=setwd(dirname(file))
@@ -433,8 +433,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   if(enc=='text'){
     write(as.vector(x,mode=dmode),ncolumns=1,file=file,append=fmode=='ab')
   } else {
-    if(enc=="gzip") fc=gzfile(file, fmode)
-    else fc=file(file, open=fmode) # ie append, bin mode
+    fc=ifelse(enc=="gzip", gzfile, file)(file, open=fmode)
     writeBin(as.vector(x, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }
