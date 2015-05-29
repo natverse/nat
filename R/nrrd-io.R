@@ -351,7 +351,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
   cat("NRRD0004\n", file=file)
   for(n in names(h)) {
-    f=header[[n]]
+    f=h[[n]]
     # special handling for a couple of fields
     if(n=='space origin' ) {
       f=nrrdvec(f)
