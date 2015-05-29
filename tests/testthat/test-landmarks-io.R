@@ -48,8 +48,10 @@ test_that("generic landmarks I/O", {
   expect_is(read.landmarks("testdata/amira/landmarks.am"), "landmarks")
   f="testdata/landmarks/JFRC2.points"
   expect_is(l<-read.landmarks(f), "landmarks")
-  u=paste0('https://raw.githubusercontent.com/jefferis/nat/master/tests/testthat/', f)
-  expect_equal(read.landmarks(u), l)
+  if(nzchar(Sys.getenv("NAT_INTERNET_TESTS"))){
+    u=paste0('https://raw.githubusercontent.com/jefferis/nat/master/tests/testthat/', f)
+    expect_equal(read.landmarks(u), l)
+  }
   
   td<-tempfile()
   tf<-tempfile(tmpdir = td, fileext = "test.landmarks")
