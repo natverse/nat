@@ -2,14 +2,15 @@
 % Please edit documentation in R/nrrd-io.R
 \name{write.nrrd}
 \alias{write.nrrd}
-\title{Write an array or im3d object to a NRRD file with appropriate header fields}
+\title{Write array, vector or im3d object to NRRD file with appropriate header}
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   "byte", "short", "ushort", "int", "double"), header = attr(x, "header"),
   endian = .Platform$endian)
 }
 \arguments{
-\item{x}{A data array or \code{\link{im3d}} object.}
+\item{x}{Data to write as an \code{array}, \code{vector} or
+\code{\link{im3d}} object.}
 
 \item{file}{Character string naming a file}
 
