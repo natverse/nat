@@ -65,4 +65,27 @@ test_that("read-write.nrrd works",{
                                "space dimension", "space directions", 
                                "space origin", "space units", "type"))
   expect_equal(h[common_fields],h2[common_fields],tol=1e-6)
+  
+  # another example with a 1d array
+  set.seed(42)
+  testhist=hist(rnorm(1000), breaks = 10, plot = F)
+  th=tempfile(pattern = 'testhist.nrrd')
+  on.exit(unlink(th), add = TRUE)
+  write.nrrd(testhist$counts, file = th, enc = 'text', 
+             header=list(axismins=testhist$breaks[1], axismaxs=max(testhist$breaks)))
+  
+  # TODO this function could actually be useful somewhere ...
+  read.nrrd.histogram<-function(f) {
+    histdata=read.nrrd(f)
+    h=attr(histdata,'header')
+    breaks=seq(from=h$axismins, to=h$axismaxs, length.out = h$sizes+1)
+    # nb usef of c to remove attributes
+    counts=c(histdata)
+    structure(list(counts=counts, breaks=breaks,
+                   mids = 0.5 * (breaks[-1L] + breaks[-(length(breaks))]),
+                   density = counts/(sum(counts) * diff(breaks))),
+              class='histogram')
+  }
+  inhist=read.nrrd.histogram(th)
+  expect_equal(unclass(inhist), testhist[names(inhist)])
 })
