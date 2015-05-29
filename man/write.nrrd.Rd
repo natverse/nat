@@ -2,13 +2,14 @@
 % Please edit documentation in R/nrrd-io.R
 \name{write.nrrd}
 \alias{write.nrrd}
-\title{Write a 3d array to a NRRD file}
+\title{Write an array or im3d object to a NRRD file with appropriate header fields}
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
-  "byte", "short", "ushort", "int", "double"), endian = .Platform$endian)
+  "byte", "short", "ushort", "int", "double"), header = attr(x, "header"),
+  endian = .Platform$endian)
 }
 \arguments{
-\item{x}{A 3d data array}
+\item{x}{A data array or \code{\link{im3d}} object.}
 
 \item{file}{Character string naming a file}
 
@@ -17,10 +18,21 @@ write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
 \item{dtype}{The data type to write. One of "float","byte", "short",
 "ushort", "int", "double"}
 
+\item{header}{List containing fields of nrrd header - see details.}
+
 \item{endian}{One of "big" or "little". Defaults to \code{.Platform$endian}.}
 }
 \description{
-Produces a lattice format file i.e. one with a regular x,y,z grid
+Writes a lattice format file i.e. one with a regular n-d grid. When \code{x}
+is an \code{im3d} object, appropriate spatial calibration fields are added to
+the header.
+}
+\details{
+Arguments \code{enc}, \code{dtype}, and \code{endian} along with the
+  dimensions of the input (\code{x}) will override the corresponding nrrd
+  header fields from any supplied \code{header} argument. See
+  \url{http://teem.sourceforge.net/nrrd/format.html} for details of the nrrd
+  fields.
 }
 \seealso{
 \code{\link{read.nrrd}, \link{.Platform}}

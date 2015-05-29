@@ -288,20 +288,30 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   else voxdims
 }
 
-#' Write a 3d array to a NRRD file
+#' Write an array or im3d object to a NRRD file with appropriate header fields
 #' 
-#' Produces a lattice format file i.e. one with a regular x,y,z grid
-#' @param x A 3d data array
+#' Writes a lattice format file i.e. one with a regular n-d grid. When \code{x} 
+#' is an \code{im3d} object, appropriate spatial calibration fields are added to
+#' the header.
+#' 
+#' @details Arguments \code{enc}, \code{dtype}, and \code{endian} along with the
+#'   dimensions of the input (\code{x}) will override the corresponding nrrd
+#'   header fields from any supplied \code{header} argument. See 
+#'   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the nrrd 
+#'   fields.
+#'   
+#' @param x A data array or \code{\link{im3d}} object.
 #' @param file Character string naming a file
 #' @param enc One of three supported nrrd encodings ("gzip", "raw", "text")
 #' @param dtype The data type to write. One of "float","byte", "short", 
 #'   "ushort", "int", "double"
 #' @param endian One of "big" or "little". Defaults to \code{.Platform$endian}.
+#' @param header List containing fields of nrrd header - see details.
 #' @export
 #' @seealso \code{\link{read.nrrd}, \link{.Platform}}
 write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
                      dtype=c("float","byte", "short", "ushort", "int", "double"),
-                     endian=.Platform$endian){
+                     header=attr(x,'header'), endian=.Platform$endian){
   enc=match.arg(enc)
   endian=match.arg(endian, c('big','little'))
   dtype=match.arg(dtype)
@@ -313,29 +323,6 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   if(is.na(nrrdDataType))
     stop("Unable to write nrrd file for data type: ",dtype)
   
-  cat("NRRD0004\n", file=file)
-  cat("encoding: ", enc,"\ntype: ", nrrdDataType, "\n",sep="", append=TRUE, 
-      file=file)
-  cat("dimension: ", length(dim(x)), "\nsizes: ", paste(dim(x), collapse=" "),
-      "\n",sep="", append=TRUE, file=file)
-  voxdims=voxdims(x)
-  if(length(voxdims) && !(any(is.na(voxdims)))) {
-    origin=attr(x,'origin')
-    if(length(origin)){
-      # we need to write out as space origin + space directions
-      nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
-      cat("space dimension:", length(dim(x)), "\n", file=file, append=TRUE)
-      cat("space origin:", nrrdvec(origin),"\n", file=file, append=TRUE)
-      cat("space directions:",
-          nrrdvec(c(voxdims[1], 0, 0)),
-          nrrdvec(c(0, voxdims[2], 0)),
-          nrrdvec(c(0, 0, voxdims[3])),
-          '\n', file=file, append=TRUE)
-    } else {
-      cat("spacings:", voxdims,"\n", file=file, append=TRUE)
-    }
-  }
-  
   # Find data type and size for nrrd
   dtype=match.arg(dtype)	
   dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", 
@@ -344,9 +331,36 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   # moment that the binary data is written out.
   if(dtype%in%c("byte","short","ushort","int")) dmode="integer"
   if(dtype%in%c("float","double")) dmode="numeric"
-  # record byte ordering if necessary
-  if(enc!='text' && dtypesize>1)
-    cat("endian: ", endian,"\n", sep="", file=file, append=TRUE)
+  
+  h=list(type=nrrdDataType, encoding=enc, dimension=length(dim(x)), 
+         sizes=dim(x), endian=endian)
+  if(is.im3d(x)) {
+    im3dh=im3d2nrrdheader(x)
+    new_fields=setdiff(names(im3dh), names(h))
+    h[new_fields]=im3dh[new_fields]
+  }
+  if(!is.null(header)) {
+    new_fields=setdiff(names(header), names(h))
+    h[new_fields]=header[new_fields]
+  }
+  
+  # remove encoding field if not required before writing
+  if(h$encoding=='text' || dtypesize==1) h$endian=NULL
+  
+  # now write header
+  nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+  cat("NRRD0004\n", file=file)
+  for(n in names(h)) {
+    f=header[[n]]
+    # special handling for a couple of fields
+    if(n=='space origin' ) {
+      f=nrrdvec(f)
+    } else if(n=='space directions') {
+      f=apply(f, 1, nrrdvec)
+    }
+    if(length(f)>1) f=paste(f, collapse = " ")
+    cat(paste0(n, ": ", f ,"\n"), file=file, append=TRUE)
+  }
   # Single blank line terminates header
   cat("\n", file=file, append=TRUE)
   
