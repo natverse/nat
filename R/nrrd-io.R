@@ -324,15 +324,17 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
     stop("Unable to write nrrd file for data type: ",dtype)
   
   ## set up core header fields
+  goodmodes=c("logical", "numeric", "character", "raw")
   h=list(type=nrrdDataType, encoding=enc, endian=endian)
   if(is.array(x)) {
     h$dimension=length(dim(x))
     h$sizes=dim(x)
-  } else if(is.vector(x)) {
-    h$dimension=1 
+  } else if(mode(x) %in% goodmodes) {
+    h$dimension=1
     h$sizes=length(x)
   } else {
-    stop("write.nrrd only accepts arrays/matrices (including im3d) and vectors")
+    stop("write.nrrd only accepts arrays/matrices (including im3d) and vectors",
+         " of mode: ", paste(goodmodes, collapse = " "))
   }
   
   # Find data type and size for nrrd
