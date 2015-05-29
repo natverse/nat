@@ -9,5 +9,5 @@ space dimension: 3
 space directions: (1.399999976158142,0,0) (0,1.399999976158142,0) (0,0,1.399999976158142)
 space origin: (0,0,0)
 space units: "microns" "microns" "microns"
-line skip: 12
+line skip: 11
 data file: LHMask.nrrd
