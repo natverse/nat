@@ -44,7 +44,6 @@ test_that("read.nrrd.header works",{
   expect_equivalent(h, baseh)
 })
 
-
 test_that("read-write.nrrd works",{
   origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   expect_is(d<-read.nrrd(origlhmaskfile),'array')
@@ -88,4 +87,10 @@ test_that("read-write.nrrd works",{
   }
   inhist=read.nrrd.histogram(th)
   expect_equal(unclass(inhist), testhist[names(inhist)])
+})
+
+test_that("read/write bad nrrds", {
+  expect_error(read.nrrd("testdata/nrrd/badtype.nhdr"), 'data type')
+  expect_error(read.nrrd("testdata/nrrd/badenc.nhdr"), 'encoding')
+  expect_error(write.nrrd(list('rhubarb'), tempfile()), 'nrrd only accepts')
 })
