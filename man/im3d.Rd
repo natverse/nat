@@ -52,9 +52,10 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{im3d-coords}}, \code{\link{xyzpos}};
   \code{\link{im3d-io}}, \code{\link{read.im3d}},
   \code{\link{write.im3d}}; \code{\link{imexpand.grid}};
-  \code{\link{imslice}}; \code{\link{origin}};
-  \code{\link{projection}}; \code{\link{threshold}},
-  \code{\link{threshold.im3d}}; \code{\link{unmask}};
-  \code{\link{voxdims}}, \code{\link{voxdims.default}}
+  \code{\link{imslice}}; \code{\link{is.im3d}};
+  \code{\link{origin}}; \code{\link{projection}};
+  \code{\link{threshold}}, \code{\link{threshold.im3d}};
+  \code{\link{unmask}}; \code{\link{voxdims}},
+  \code{\link{voxdims.default}}
 }
 

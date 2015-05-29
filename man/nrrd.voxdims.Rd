@@ -13,7 +13,8 @@ nrrd.voxdims(file, ReturnAbsoluteDims = TRUE)
 if there are any negative space directions}
 }
 \value{
-voxel dimensions as numeric vector
+numeric vector of voxel dimensions (\code{NA_real_} when missing) of
+  length equal to the image dimension.
 }
 \description{
 Return voxel dimensions (by default absolute voxel dimensions)
@@ -21,6 +22,8 @@ Return voxel dimensions (by default absolute voxel dimensions)
 \details{
 NB Can handle off diagonal terms in space directions matrix, BUT
   assumes that space direction vectors are orthogonal.
+
+  Will produce a warning if no valid dimensions can be found.
 }
 \author{
 jefferis

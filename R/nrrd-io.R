@@ -1,20 +1,27 @@
-#' Read nrrd file into 3d array in memory
+#' Read nrrd file into an array in memory
 #' 
-#' @details ReadByteAsRaw=unsigned (the default) only reads unsigned byte data 
-#'   as a raw array. This saves quite a bit of space and still allows data to be
-#'   used for logical indexing.
+#' @details \code{read.nrrd} reads data into a raw array. If you wish to 
+#'   generate a \code{\link{im3d}} object that includes spatial calibration (but
+#'   is limited to representing 3d data) then you should use
+#'   \code{\link{read.im3d}}.
+#'   
+#'   ReadByteAsRaw=unsigned (the default) only reads unsigned byte data as a raw
+#'   array. This saves quite a bit of space and still allows data to be used for
+#'   logical indexing.
 #' @param file Path to a nrrd (or a connection for \code{read.nrrd.header})
 #' @param origin Add a user specified origin (x,y,z) to the returned object
-#' @param ReadData When FALSE just return attributes (e.g. voxel size)
+#' @param ReadData When FALSE just return attributes (i.e. the nrrd header)
 #' @param AttachFullHeader Include the full nrrd header as an attribute of the 
-#'   returned object (default FALSE)
+#'   returned object (default TRUE)
 #' @param ReadByteAsRaw Either a character vector or a logical vector specifying
 #'   when R should read 8 bit data as an R \code{raw} vector rather than 
 #'   \code{integer} vector.
 #' @param Verbose Status messages while reading
-#' @return a 3D data array with attributes compatible with gjdens objects
+#' @return An \code{array} object, optionally with attributes from the nrrd 
+#'   header.
 #' @export
-read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData,
+#' @seealso \code{\link{write.nrrd}}, \code{\link{read.im3d}}
+read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
                     Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
   if(is.logical(ReadByteAsRaw))
     ReadByteAsRaw=ifelse(ReadByteAsRaw, 'all', 'none')
@@ -74,12 +81,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=!ReadData
     attr(d,'datablock')$datastartpos=seek(fc)
   }
   if(AttachFullHeader) attr(d,"header")=h
-  voxdims<-nrrd.voxdims(h,ReturnAbsoluteDims = FALSE)
-  if(any(is.na(voxdims))){
-    # missing pixel size info, so just return
-    return(d)
-  }
-  im3d(d, dims=h$sizes, voxdims=voxdims, origin=h[['space origin']])
+  return(d)
 }
 
 #' Read the (text) header of a NRRD format file
@@ -245,12 +247,15 @@ nrrd.datafiles<-function(nhdr,ReturnAbsPath=TRUE){
 
 #' Return voxel dimensions (by default absolute voxel dimensions)
 #' 
-#' @details NB Can handle off diagonal terms in space directions matrix, BUT
+#' @details NB Can handle off diagonal terms in space directions matrix, BUT 
 #'   assumes that space direction vectors are orthogonal.
+#'   
+#'   Will produce a warning if no valid dimensions can be found.
 #' @param file path to nrrd/nhdr file or a list containing a nrrd header
 #' @param ReturnAbsoluteDims Defaults to returning absolute value of dims even 
 #'   if there are any negative space directions
-#' @return voxel dimensions as numeric vector
+#' @return numeric vector of voxel dimensions (\code{NA_real_} when missing) of
+#'   length equal to the image dimension.
 #' @author jefferis
 #' @seealso \code{\link{read.nrrd.header}}
 #' @export
@@ -265,7 +270,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
     voxdims=h[["spacings"]]
   } else {
     warning("Unable to find voxel dimensions in nrrd: ",file)
-    voxdims=rep(NA,h$dimension)
+    voxdims=rep(NA_real_,h$dimension)
   }
   
   # Sometimes get -ve space dirs, take abs if requested
