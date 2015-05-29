@@ -218,7 +218,9 @@ is.nrrd<-function(f=NULL, bytes=NULL, ReturnVersion=FALSE, TrustSuffix=FALSE){
 nrrd.datafiles<-function(nhdr,ReturnAbsPath=TRUE){
   if(!is.list(nhdr)){
     # we need to read in the nrrd header
-    if(length(nhdr)>1) return(sapply(nhdr,nrrd.datafiles))
+    if(length(nhdr)>1) 
+      return(sapply(nhdr, nrrd.datafiles, ReturnAbsPath=ReturnAbsPath, 
+                    simplify = FALSE))
     if(!is.nrrd(nhdr)) stop("This is not a nrrd file")
     h=read.nrrd.header(nhdr)
   } else h=nhdr

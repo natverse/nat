@@ -107,4 +107,6 @@ test_that("nrrd.datafiles", {
   expect_error(nrrd.datafiles('testdata/amira/AL-a_M.am'), 'not a nrrd')
   expect_equal(nrrd.datafiles("testdata/nrrd/LHMask.nhdr"), 
                "testdata/nrrd/LHMask.nrrd")
+  nhdrs=dir("testdata/nrrd", pattern = '\\.nhdr$', full.names = TRUE)
+  expect_is(nrrd.datafiles(nhdrs), 'list')
 })
