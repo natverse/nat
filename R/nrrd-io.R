@@ -336,9 +336,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
     }
   }
   
-  if(!is.list(x)) d=x else d=x$estimate
-  
-  # Find data type and size for amira
+  # Find data type and size for nrrd
   dtype=match.arg(dtype)	
   dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", 
                                            "int", "double"))]
@@ -353,11 +351,11 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   cat("\n", file=file, append=TRUE)
   
   if(enc=='text'){
-    write(as.vector(d,mode=dmode),ncolumns=1,file=file,append=TRUE)
+    write(as.vector(x,mode=dmode),ncolumns=1,file=file,append=TRUE)
   } else {
     if(enc=="gzip") fc=gzfile(file,"ab")
     else fc=file(file,open="ab") # ie append, bin mode
-    writeBin(as.vector(d, mode=dmode), fc, size=dtypesize, endian=endian)
+    writeBin(as.vector(x, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }
 }
