@@ -102,23 +102,25 @@ test_that("read/write bad nrrds", {
   expect_error(write.nrrd(list('rhubarb'), tempfile()), 'nrrd only accepts')
 })
 
+context("detached nrrd data files")
+
 test_that("nrrd.datafiles", {
   # an internal function, but somewhat complex
   expect_error(nrrd.datafiles('testdata/amira/AL-a_M.am'), 'not a nrrd')
   expect_equal(nrrd.datafiles("testdata/nrrd/LHMask.nhdr"), 
                "testdata/nrrd/LHMask.nrrd")
+
   # check nhdrs for a list of files
   nhdrs=dir("testdata/nrrd", pattern = '\\.nhdr$', full.names = TRUE)
-  expect_is(nhdrl<-nrrd.datafiles(nhdrs), 'list')
+  expect_is(nhdrl<-nrrd.datafiles(nhdrs, full.names = FALSE), 'list')
   
   # check that we can get datafiles for LIST
-  expect_equal(basename(nhdrl[['testdata/nrrd/datafile_list.nhdr']]), 
+  expect_equal(nhdrl[['testdata/nrrd/datafile_list.nhdr']], 
                paste0('slice',0:49,'.raw'))
   
   # check that we can get datafiles for LIST with subdim
   # i.e. slabs of data
-  slabs=structure(c("testdata/nrrd/slab0-9.raw", "testdata/nrrd/slab10-19.raw", 
-                    "testdata/nrrd/slab20-29.raw", "testdata/nrrd/slab30-39.raw", 
-                    "testdata/nrrd/slab40-49.raw"), subdim = 3L)
+  slabs=structure(c("slab0-9.raw", "slab10-19.raw", "slab20-29.raw", 
+                    "slab30-39.raw", "slab40-49.raw"), subdim = 3L)
   expect_equal(nhdrl[['testdata/nrrd/datafile_listslab.nhdr']], slabs)
 })
