@@ -44,7 +44,6 @@ test_that("read.nrrd.header works",{
   expect_equivalent(h, baseh)
 })
 
-
 test_that("read-write.nrrd works",{
   origlhmaskfile="testdata/nrrd/LHMask.nrrd"
   expect_is(d<-read.nrrd(origlhmaskfile),'array')
@@ -55,14 +54,43 @@ test_that("read-write.nrrd works",{
   on.exit(unlink(tf))
   write.nrrd(d,file=tf,dtype='byte')
   d2=read.nrrd(file=tf)
-  expect_equal(d, d2, tol=1e-6)
+  expect_equivalent(d, d2)
   
   # compare headers
-  h=read.nrrd.header(origlhmaskfile)
-  h2=read.nrrd.header(tf)
+  h=attr(d,'header')
+  h2=attr(d2,'header')
   common_fields=sort(intersect(names(h),names(h2)))
   expect_equal(common_fields, c("dimension", "encoding", "sizes", 
                                "space dimension", "space directions", 
-                               "space origin", "type"))
+                               "space origin", "space units", "type"))
   expect_equal(h[common_fields],h2[common_fields],tol=1e-6)
+  
+  # another example with a 1d array
+  set.seed(42)
+  testhist=hist(rnorm(1000), breaks = 10, plot = F)
+  th=tempfile(pattern = 'testhist.nrrd')
+  on.exit(unlink(th), add = TRUE)
+  write.nrrd(testhist$counts, file = th, enc = 'text', 
+             header=list(axismins=testhist$breaks[1], axismaxs=max(testhist$breaks)))
+  
+  # TODO this function could actually be useful somewhere ...
+  read.nrrd.histogram<-function(f) {
+    histdata=read.nrrd(f)
+    h=attr(histdata,'header')
+    breaks=seq(from=h$axismins, to=h$axismaxs, length.out = h$sizes+1)
+    # nb usef of c to remove attributes
+    counts=c(histdata)
+    structure(list(counts=counts, breaks=breaks,
+                   mids = 0.5 * (breaks[-1L] + breaks[-(length(breaks))]),
+                   density = counts/(sum(counts) * diff(breaks))),
+              class='histogram')
+  }
+  inhist=read.nrrd.histogram(th)
+  expect_equal(unclass(inhist), testhist[names(inhist)])
+})
+
+test_that("read/write bad nrrds", {
+  expect_error(read.nrrd("testdata/nrrd/badtype.nhdr"), 'data type')
+  expect_error(read.nrrd("testdata/nrrd/badenc.nhdr"), 'encoding')
+  expect_error(write.nrrd(list('rhubarb'), tempfile()), 'nrrd only accepts')
 })

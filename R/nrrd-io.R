@@ -288,78 +288,113 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   else voxdims
 }
 
-#' Write a 3d array to a NRRD file
+#' Write array, vector or im3d object to NRRD file with appropriate header
 #' 
-#' Produces a lattice format file i.e. one with a regular x,y,z grid
-#' @param x A 3d data array
+#' Writes a lattice format file i.e. one with a regular n-d grid. When \code{x} 
+#' is an \code{im3d} object, appropriate spatial calibration fields are added to
+#' the header.
+#' 
+#' @details Arguments \code{enc}, \code{dtype}, and \code{endian} along with the
+#'   dimensions of the input (\code{x}) will override the corresponding nrrd 
+#'   header fields from any supplied \code{header} argument. See 
+#'   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the nrrd 
+#'   fields.
+#'   
+#' @param x Data to write as an \code{array}, \code{vector} or
+#'   \code{\link{im3d}} object.
 #' @param file Character string naming a file
 #' @param enc One of three supported nrrd encodings ("gzip", "raw", "text")
 #' @param dtype The data type to write. One of "float","byte", "short", 
 #'   "ushort", "int", "double"
 #' @param endian One of "big" or "little". Defaults to \code{.Platform$endian}.
+#' @param header List containing fields of nrrd header - see details.
 #' @export
 #' @seealso \code{\link{read.nrrd}, \link{.Platform}}
 write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
                      dtype=c("float","byte", "short", "ushort", "int", "double"),
-                     endian=.Platform$endian){
+                     header=attr(x,'header'), endian=.Platform$endian){
+  ## handle core arguments
   enc=match.arg(enc)
   endian=match.arg(endian, c('big','little'))
   dtype=match.arg(dtype)
-
-  nrrdDataTypes=structure(c("uint8","uint16","int16","int32","float","double"),
-                          names=c("byte", "ushort", "short", "int", "float", "double"))
-  
+  nrrdDataTypes=c(byte="uint8",ushort="uint16",short="int16",int="int32",
+                  float="float",double="double")
   nrrdDataType=nrrdDataTypes[dtype]
   if(is.na(nrrdDataType))
     stop("Unable to write nrrd file for data type: ",dtype)
   
-  cat("NRRD0004\n", file=file)
-  cat("encoding: ", enc,"\ntype: ", nrrdDataType, "\n",sep="", append=TRUE, 
-      file=file)
-  cat("dimension: ", length(dim(x)), "\nsizes: ", paste(dim(x), collapse=" "),
-      "\n",sep="", append=TRUE, file=file)
-  voxdims=voxdims(x)
-  if(length(voxdims) && !(any(is.na(voxdims)))) {
-    origin=attr(x,'origin')
-    if(length(origin)){
-      # we need to write out as space origin + space directions
-      nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
-      cat("space dimension:", length(dim(x)), "\n", file=file, append=TRUE)
-      cat("space origin:", nrrdvec(origin),"\n", file=file, append=TRUE)
-      cat("space directions:",
-          nrrdvec(c(voxdims[1], 0, 0)),
-          nrrdvec(c(0, voxdims[2], 0)),
-          nrrdvec(c(0, 0, voxdims[3])),
-          '\n', file=file, append=TRUE)
-    } else {
-      cat("spacings:", voxdims,"\n", file=file, append=TRUE)
-    }
+  ## set up core header fields
+  goodmodes=c("logical", "numeric", "character", "raw")
+  h=list(type=nrrdDataType, encoding=enc, endian=endian)
+  if(is.array(x)) {
+    h$dimension=length(dim(x))
+    h$sizes=dim(x)
+  } else if(mode(x) %in% goodmodes) {
+    h$dimension=1
+    h$sizes=length(x)
+  } else {
+    stop("write.nrrd only accepts arrays/matrices (including im3d) and vectors",
+         " of mode: ", paste(goodmodes, collapse = " "))
   }
   
-  if(!is.list(x)) d=x else d=x$estimate
-  
-  # Find data type and size for amira
-  dtype=match.arg(dtype)	
+  # Find data type and size for nrrd
   dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", 
                                            "int", "double"))]
   # Set the data mode which will be used in the as.vector call at the
   # moment that the binary data is written out.
   if(dtype%in%c("byte","short","ushort","int")) dmode="integer"
   if(dtype%in%c("float","double")) dmode="numeric"
-  # record byte ordering if necessary
-  if(enc!='text' && dtypesize>1)
-    cat("endian: ", endian,"\n", sep="", file=file, append=TRUE)
+  
+  if(is.im3d(x)) {
+    im3dh=im3d2nrrdheader(x)
+    new_fields=setdiff(names(im3dh), names(h))
+    h[new_fields]=im3dh[new_fields]
+  }
+  if(!is.null(header)) {
+    new_fields=setdiff(names(header), names(h))
+    h[new_fields]=header[new_fields]
+  }
+  
+  # remove encoding field if not required before writing
+  if(h$encoding=='text' || dtypesize==1) h$endian=NULL
+  
+  # now write header
+  nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+  cat("NRRD0004\n", file=file)
+  for(n in names(h)) {
+    f=h[[n]]
+    # special handling for a couple of fields
+    if(n=='space origin' ) {
+      f=nrrdvec(f)
+    } else if(n=='space directions') {
+      f=apply(f, 1, nrrdvec)
+    }
+    if(length(f)>1) f=paste(f, collapse = " ")
+    cat(paste0(n, ": ", f ,"\n"), file=file, append=TRUE)
+  }
   # Single blank line terminates header
   cat("\n", file=file, append=TRUE)
   
   if(enc=='text'){
-    write(as.vector(d,mode=dmode),ncolumns=1,file=file,append=TRUE)
+    write(as.vector(x,mode=dmode),ncolumns=1,file=file,append=TRUE)
   } else {
     if(enc=="gzip") fc=gzfile(file,"ab")
     else fc=file(file,open="ab") # ie append, bin mode
-    writeBin(as.vector(d, mode=dmode), fc, size=dtypesize, endian=endian)
+    writeBin(as.vector(x, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }
+}
+
+# internal function to make key spatial nrrd header fields from im3d object
+im3d2nrrdheader<-function(x) {
+  if(!is.im3d(x)) stop("x is not an im3d object!")
+  h=list(dimension=length(dim(x)), sizes=dim(x))
+  # for im3d assume that space dimension is same as array dimension
+  h$`space dimension`=dim(x)
+  # nb not origin(x) since that will return (0,0,0) if missing
+  h$`space origin`=attr(x, 'origin')
+  h$`space directions`=diag(voxdims(x))
+  h
 }
 
 .standardNrrdType<-function(type){
