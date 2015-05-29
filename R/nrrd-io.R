@@ -362,6 +362,18 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   }
 }
 
+# internal function to make key spatial nrrd header fields from im3d object
+im3d2nrrdheader<-function(x) {
+  if(!is.im3d(x)) stop("x is not an im3d object!")
+  h=list(dimension=length(dim(x)), sizes=dim(x))
+  # for im3d assume that space dimension is same as array dimension
+  h$`space dimension`=dim(x)
+  # nb not origin(x) since that will return (0,0,0) if missing
+  h$`space origin`=attr(x, 'origin')
+  h$`space directions`=diag(voxdims(x))
+  h
+}
+
 .standardNrrdType<-function(type){
   if(type%in%c("float","double","block")) return (type)
   if(type%in%c("signed char", "int8", "int8_t")) return("int8")
