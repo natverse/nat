@@ -1,0 +1,7 @@
+NRRD0004
+encoding: raw
+type: uint8
+dimension: 3
+sizes: 51 61 6
+byteskip: 43
+datafile: L1DS1_crop_straight_crop_ch1.v3draw

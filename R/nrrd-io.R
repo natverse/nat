@@ -54,6 +54,9 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
     if(length(datafiles)!=1) stop("Can currently only handle exactly one datafile")
     close(fc)
     fc=file(datafiles,open='rb')
+    if(!is.null(h$lineskip)) {
+      readLines(fc, n=h$lineskip)
+    }
     file=datafiles
   }
   dataLength=prod(h$sizes)
@@ -64,6 +67,13 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
   if(ReadData){
     if(enc%in%c("gz","gzip")) fc=gzcon(fc)
     if(enc%in%c("gz","gzip",'raw')){
+      if(!is.null(h$byteskip)){
+        if(isSeekable(fc)) {
+          seek(fc, where=h$byteskip, origin='current')
+        } else {
+          readBin(fc, what='raw', n=h$byteskip)
+        }
+      }
       d=readBin(fc,what=dataTypes$what[i],n=dataLength,size=dataTypes$size[i],
                  signed=dataTypes$signed[i],endian=endian)
     } else if(enc%in%c("ascii","txt","text")){
