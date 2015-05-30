@@ -6,6 +6,7 @@
 \alias{boundingbox.default}
 \alias{boundingbox.im3d}
 \alias{boundingbox.list}
+\alias{boundingbox.shape3d}
 \alias{boundingbox<-}
 \title{Get the bounding box of an im3d volume or other compatible object}
 \usage{
@@ -16,6 +17,8 @@ boundingbox(x, ...)
 \method{boundingbox}{character}(x, ...)
 
 \method{boundingbox}{list}(x, ...)
+
+\method{boundingbox}{shape3d}(x, ...)
 
 \method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"),
   ...)
@@ -49,6 +52,11 @@ Get the bounding box of an im3d volume or other compatible object
 
 \code{boundingbox.list} is designed to be used on objects that
   contain 3d point information and for which \code{xyzmatrix} is defined.
+
+\code{boundingbox.shape3d} is designed to be used on objects
+  that contain 3d point information and inherit from \code{rgl}'s
+  \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
+  this applies to \code{\link{mesh3d}} objects.
 
 Set the bounding box of an im3d object
 }

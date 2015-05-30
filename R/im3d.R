@@ -381,6 +381,15 @@ boundingbox.list<-function(x, ...) {
   boundingbox(bb)
 }
 
+#' @export
+#' @description \code{boundingbox.shape3d} is designed to be used on objects 
+#'   that contain 3d point information and inherit from \code{rgl}'s 
+#'   \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
+#'   this applies to \code{\link{mesh3d}} objects.
+#'   
+#' @rdname boundingbox
+boundingbox.shape3d<-boundingbox.list
+
 #' @method boundingbox default
 #' @export
 #' @param input Whether \code{x} defines the boundingbox or bounds of the image 
