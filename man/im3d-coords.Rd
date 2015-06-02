@@ -42,6 +42,7 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{boundingbox.default}},
   \code{\link{boundingbox.im3d}},
   \code{\link{boundingbox.list}},
+  \code{\link{boundingbox.shape3d}},
   \code{\link{boundingbox<-}}; \code{\link{im3d-io}},
   \code{\link{read.im3d}}, \code{\link{write.im3d}};
   \code{\link{im3d}}; \code{\link{imexpand.grid}};
