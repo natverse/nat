@@ -3,13 +3,13 @@
 \name{write.nrrd}
 \alias{write.nrrd}
 \alias{write.nrrd.header}
-\title{Write array, vector or im3d object to NRRD file with appropriate header}
+\title{Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.}
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   "byte", "short", "ushort", "int", "double"), header = attr(x, "header"),
   endian = .Platform$endian, datafile = NULL)
 
-write.nrrd.header(h, file)
+write.nrrd.header(header, file)
 }
 \arguments{
 \item{x}{Data to write as an \code{array}, \code{vector} or
@@ -30,13 +30,11 @@ section.}
 
 \item{datafile}{Optional name of separate file into which data should be
 written (see details).}
-
-\item{h}{List containing nrrd header information}
 }
 \description{
-Writes a lattice format file i.e. one with a regular n-d grid. When \code{x}
-is an \code{im3d} object, appropriate spatial calibration fields are added to
-the header.
+\code{write.nrrd} writes an array, vector or im3d object to a
+  NRRD file. When \code{x} is an \code{im3d} object, appropriate spatial
+  calibration fields are added to the header.
 
 \code{write.nrrd.header} writes a nrrd header file. Can be used
   to make a detached nrrd (nhdr) file to make another image type on disk
@@ -47,9 +45,10 @@ the header.
   (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which
   a text \bold{nhdr} file is used to described the contents of a separate
   (usually binary) data file. This means that the nhdr file can be inspected
-  and edited with a text editor while the datablock can be in a completely
+  and edited with a text editor, while the datablock can be in a completely
   raw format that can be opened even by programs that do not understand the
-  NRRD format.
+  NRRD format. Furthermore detached NRRD header files can be written to
+  accompany non-NRRD image data so that it can be opened by nrrd readers.
 
   If \code{file} has extension \code{.nhdr} \emph{or} \code{datafile} is
   non-NULL, then \code{write.nrrd} will write a separate datafile. If
@@ -70,9 +69,10 @@ the header.
 }
 
 \section{Header}{
- Arguments \code{enc}, \code{dtype}, and \code{endian} along
-  with the dimensions of the input (\code{x}) will override the corresponding
-  NRRD header fields from any supplied \code{header} argument. See
+ For \code{write.nrrd}, arguments \code{enc}, \code{dtype},
+  and \code{endian} along with the dimensions of the input (\code{x}) will
+  override the corresponding NRRD header fields from any supplied
+  \code{header} argument. See
   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD
   fields.
 }

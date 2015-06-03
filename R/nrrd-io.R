@@ -290,19 +290,20 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   else voxdims
 }
 
-#' Write array, vector or im3d object to NRRD file with appropriate header
+#' Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.
 #' 
-#' Writes a lattice format file i.e. one with a regular n-d grid. When \code{x} 
-#' is an \code{im3d} object, appropriate spatial calibration fields are added to
-#' the header.
+#' @description \code{write.nrrd} writes an array, vector or im3d object to a
+#'   NRRD file. When \code{x} is an \code{im3d} object, appropriate spatial
+#'   calibration fields are added to the header.
 #' 
 #' @section Detached NRRDs: NRRD files can be written in \emph{detached} format 
 #'   (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which 
 #'   a text \bold{nhdr} file is used to described the contents of a separate 
 #'   (usually binary) data file. This means that the nhdr file can be inspected 
-#'   and edited with a text editor while the datablock can be in a completely 
+#'   and edited with a text editor, while the datablock can be in a completely 
 #'   raw format that can be opened even by programs that do not understand the 
-#'   NRRD format.
+#'   NRRD format. Furthermore detached NRRD header files can be written to 
+#'   accompany non-NRRD image data so that it can be opened by nrrd readers.
 #'   
 #'   If \code{file} has extension \code{.nhdr} \emph{or} \code{datafile} is 
 #'   non-NULL, then \code{write.nrrd} will write a separate datafile. If 
@@ -321,9 +322,10 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   
 #'   }
 #'   
-#' @section Header: Arguments \code{enc}, \code{dtype}, and \code{endian} along 
-#'   with the dimensions of the input (\code{x}) will override the corresponding
-#'   NRRD header fields from any supplied \code{header} argument. See 
+#' @section Header: For \code{write.nrrd}, arguments \code{enc}, \code{dtype},
+#'   and \code{endian} along with the dimensions of the input (\code{x}) will
+#'   override the corresponding NRRD header fields from any supplied
+#'   \code{header} argument. See 
 #'   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
 #'   fields.
 #'   
@@ -429,15 +431,14 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
 #' @description \code{write.nrrd.header} writes a nrrd header file. Can be used 
 #'   to make a detached nrrd (nhdr) file to make another image type on disk 
 #'   compatible with the nrrd library.
-#' @param h List containing nrrd header information
 #' @export
 #' @rdname write.nrrd
-write.nrrd.header <- function (h, file) {
+write.nrrd.header <- function (header, file) {
   # helper function
   nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
   cat("NRRD0004\n", file=file)
-  for(n in names(h)) {
-    f=h[[n]]
+  for(n in names(header)) {
+    f=header[[n]]
     # special handling for a couple of fields
     if(n=='space origin' ) {
       f=nrrdvec(f)
