@@ -2,11 +2,14 @@
 % Please edit documentation in R/nrrd-io.R
 \name{write.nrrd}
 \alias{write.nrrd}
+\alias{write.nrrd.header}
 \title{Write array, vector or im3d object to NRRD file with appropriate header}
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   "byte", "short", "ushort", "int", "double"), header = attr(x, "header"),
   endian = .Platform$endian, datafile = NULL)
+
+write.nrrd.header(h, file)
 }
 \arguments{
 \item{x}{Data to write as an \code{array}, \code{vector} or
@@ -27,11 +30,17 @@ section.}
 
 \item{datafile}{Optional name of separate file into which data should be
 written (see details).}
+
+\item{h}{List containing nrrd header information}
 }
 \description{
 Writes a lattice format file i.e. one with a regular n-d grid. When \code{x}
 is an \code{im3d} object, appropriate spatial calibration fields are added to
 the header.
+
+\code{write.nrrd.header} writes a nrrd header file. Can be used
+  to make a detached nrrd (nhdr) file to make another image type on disk
+  compatible with the nrrd library.
 }
 \section{Detached NRRDs}{
  NRRD files can be written in \emph{detached} format

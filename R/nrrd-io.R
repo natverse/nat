@@ -402,22 +402,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   # process datafile as last field in header
   h$datafile=datafile
 
-  # now write header
-  nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
-  cat("NRRD0004\n", file=file)
-  for(n in names(h)) {
-    f=h[[n]]
-    # special handling for a couple of fields
-    if(n=='space origin' ) {
-      f=nrrdvec(f)
-    } else if(n=='space directions') {
-      f=apply(f, 1, nrrdvec)
-    }
-    if(length(f)>1) f=paste(f, collapse = " ")
-    cat(paste0(n, ": ", f ,"\n"), file=file, append=TRUE)
-  }
-  # Single blank line terminates header
-  cat("\n", file=file, append=TRUE)
+  write.nrrd.header(h, file)
   
   # set things up for detached nrrd or regular nrrd
   if(is.null(datafile)) {
@@ -439,6 +424,31 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
     writeBin(as.vector(x, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }
+}
+
+#' @description \code{write.nrrd.header} writes a nrrd header file. Can be used 
+#'   to make a detached nrrd (nhdr) file to make another image type on disk 
+#'   compatible with the nrrd library.
+#' @param h List containing nrrd header information
+#' @export
+#' @rdname write.nrrd
+write.nrrd.header <- function (h, file) {
+  # helper function
+  nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+  cat("NRRD0004\n", file=file)
+  for(n in names(h)) {
+    f=h[[n]]
+    # special handling for a couple of fields
+    if(n=='space origin' ) {
+      f=nrrdvec(f)
+    } else if(n=='space directions') {
+      f=apply(f, 1, nrrdvec)
+    }
+    if(length(f)>1) f=paste(f, collapse = " ")
+    cat(paste0(n, ": ", f ,"\n"), file=file, append=TRUE)
+  }
+  # Single blank line terminates header
+  cat("\n", file=file, append=TRUE)
 }
 
 # internal function to make key spatial nrrd header fields from im3d object
