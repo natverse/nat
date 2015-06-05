@@ -50,6 +50,10 @@ cmtk.targetvolume.character <- function(target, ...) {
 #' @export
 #' @rdname cmtk.targetvolume
 cmtk.targetvolume.default <- function(target, ...) {
+  # designed to catch S3 objects that do not have class list but are
+  # nevertheless lists ... see cmtk.targetvolume.list for rationale
+  if (is.list(target))
+    return(cmtk.targetvolume(as.im3d(target)))
   # new cmtk insists that floats look like floats
   cmtkfloatvec = function(x)
     paste(sprintf("%f",x),collapse = ",")
