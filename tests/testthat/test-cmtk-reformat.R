@@ -48,4 +48,7 @@ test_that("cmtk.targetvolume works",{
   
   expect_equal(cmtk.targetvolume('testdata/amira/LHMask.Labels.rle.am'),
                "--target-grid 50,50,50:1.400000,1.400000,1.400000:95.700000,60.700000,0.700000")
+  
+  expect_equal(cmtk.targetvolume("--target-grid 50,50,50:1.400000,1.400000,1.400000"),
+               "--target-grid 50,50,50:1.400000,1.400000,1.400000")
 })
