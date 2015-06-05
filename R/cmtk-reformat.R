@@ -33,33 +33,46 @@ cmtk.targetvolume.list<-function(target, ...) {
   cmtk.targetvolume(as.im3d(target))
 }
 
-#' @export
-#' @rdname cmtk.targetvolume
-cmtk.targetvolume.default<-function(target, ...) {  
-  if(is.character(target) && !is.nrrd(target,TrustSuffix=TRUE) &&
-       isTRUE(try(is.amiramesh(target), silent=TRUE))){
-    return(cmtk.targetvolume(read.im3d(target,ReadData=FALSE)))
+cmtk.targetvolume.character <- function(target, ...) {
+  if (isTRUE(substr(target,1,2) == "--")) {
+    # we've already processed this, no action required
+    return(target)
+  }
+  if (!is.nrrd(target,TrustSuffix = TRUE) &&
+      isTRUE(try(is.amiramesh(target), silent = TRUE)
+      )) {
+    return(cmtk.targetvolume(read.im3d(target,ReadData = FALSE)))
   }
   
+  shQuote(target)
+}
+
+#' @export
+#' @rdname cmtk.targetvolume
+cmtk.targetvolume.default <- function(target, ...) {
   # new cmtk insists that floats look like floats
-  cmtkfloatvec=function(x) paste(sprintf("%f",x),collapse=",")
+  cmtkfloatvec = function(x)
+    paste(sprintf("%f",x),collapse = ",")
   
-  if(is.character(target)){
-    target=shQuote(target)
-  } else if(is.vector(target)){
+  if (is.vector(target)) {
     # specify a target range c(Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz])
-    if(length(target)==9) {
-      target=paste("--target-grid",
-                   paste(paste(target[1:3], collapse = ","),
-                         cmtkfloatvec(target[4:6]),
-                         cmtkfloatvec(target[7:9]),
-                         sep=":"))
-    } else if(length(target)==6) {
-      target=paste("--target-grid",
-                   paste(paste(target[1:3], collapse = ","),
-                         cmtkfloatvec(target[4:6]),
-                         sep=":"))
-    } else stop("Incorrect target specification: ",target)
+    if (length(target) == 9) {
+      target = paste("--target-grid",
+                     paste(
+                       paste(target[1:3], collapse = ","),
+                       cmtkfloatvec(target[4:6]),
+                       cmtkfloatvec(target[7:9]),
+                       sep = ":"
+                     ))
+    } else if (length(target) == 6) {
+      target = paste("--target-grid",
+                     paste(
+                       paste(target[1:3], collapse = ","),
+                       cmtkfloatvec(target[4:6]),
+                       sep = ":"
+                     ))
+    } else
+      stop("Incorrect target specification: ",target)
   } else {
     stop("Unrecognised target specification")
   }
