@@ -32,11 +32,11 @@ test_that("cmtk.targetvolume works",{
   # Nx,Ny,Nz:dX,dY,dZ[:Ox,Oy,Oz]
   expect_equal(cmtk.targetvolume(
     read.im3d("testdata/nrrd/LHMask.nrrd",ReadData=FALSE)),
-    '--target-grid 50,50,50:1.4,1.4,1.4:0,0,0')
+    "--target-grid 50,50,50:1.400000,1.400000,1.400000:0.000000,0.000000,0.000000")
   expect_equal(cmtk.targetvolume(c(50,50,50,1.4,1.4,1.4)),
-               '--target-grid 50,50,50:1.4,1.4,1.4')
+               "--target-grid 50,50,50:1.400000,1.400000,1.400000")
   expect_equal(cmtk.targetvolume(c(50,50,50,1.4,1.4,1.4,0,0,0)),
-               '--target-grid 50,50,50:1.4,1.4,1.4:0,0,0')
+               "--target-grid 50,50,50:1.400000,1.400000,1.400000:0.000000,0.000000,0.000000")
   expect_error(cmtk.targetvolume(c(50,50,50,1.4,1.4)),'Incorrect target')
   
   expect_equal(cmtk.targetvolume(im3d(dims = c(50,50,50), voxdims = c(1.4,1.4,1.4))),
@@ -47,5 +47,8 @@ test_that("cmtk.targetvolume works",{
   expect_error(cmtk.targetvolume(matrix(0,2,3)), 'Unrecognised target spec')
   
   expect_equal(cmtk.targetvolume('testdata/amira/LHMask.Labels.rle.am'),
-               "--target-grid 50,50,50:1.4,1.4,1.4:95.7,60.7,0.7")
+               "--target-grid 50,50,50:1.400000,1.400000,1.400000:95.700000,60.700000,0.700000")
+  
+  expect_equal(cmtk.targetvolume("--target-grid 50,50,50:1.400000,1.400000,1.400000"),
+               "--target-grid 50,50,50:1.400000,1.400000,1.400000")
 })
