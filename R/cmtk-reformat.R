@@ -40,17 +40,25 @@ cmtk.targetvolume.default<-function(target, ...) {
        isTRUE(try(is.amiramesh(target), silent=TRUE))){
     return(cmtk.targetvolume(read.im3d(target,ReadData=FALSE)))
   }
+  
+  # new cmtk insists that floats look like floats
+  cmtkfloatvec=function(x) paste(sprintf("%f",x),collapse=",")
+  
   if(is.character(target)){
     target=shQuote(target)
   } else if(is.vector(target)){
     # specify a target range c(Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz])
     if(length(target)==9) {
       target=paste("--target-grid",
-                   paste(paste(target[1:3],collapse=","),paste(target[4:6],collapse=","),
-                         paste(target[7:9],collapse=","),sep=":"))
+                   paste(paste(target[1:3], collapse = ","),
+                         cmtkfloatvec(target[4:6]),
+                         cmtkfloatvec(target[7:9]),
+                         sep=":"))
     } else if(length(target)==6) {
       target=paste("--target-grid",
-                   paste(paste(target[1:3],collapse=","),paste(target[4:6],collapse=","),sep=":"))
+                   paste(paste(target[1:3], collapse = ","),
+                         cmtkfloatvec(target[4:6]),
+                         sep=":"))
     } else stop("Incorrect target specification: ",target)
   } else {
     stop("Unrecognised target specification")
