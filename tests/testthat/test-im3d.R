@@ -64,7 +64,7 @@ test_that("round trip test for im3d is successful",{
   
   # check nrrd header fields as well in detail
   h1=attr(d,'header')
-  expect_equal(attr(d3,'header')[names(h1)], h1)
+  expect_equal(attr(d3,'header')[names(h1)], h1, tol=1e-6)
 })
 
 context("im3d")
