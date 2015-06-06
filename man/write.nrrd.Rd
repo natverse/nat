@@ -36,9 +36,7 @@ written (see details).}
   NRRD file. When \code{x} is an \code{im3d} object, appropriate spatial
   calibration fields are added to the header.
 
-\code{write.nrrd.header} writes a nrrd header file. Can be used
-  to make a detached nrrd (nhdr) file to make another image type on disk
-  compatible with the nrrd library.
+\code{write.nrrd.header} writes a nrrd header file.
 }
 \section{Detached NRRDs}{
  NRRD files can be written in \emph{detached} format

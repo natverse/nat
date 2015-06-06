@@ -432,9 +432,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   }
 }
 
-#' @description \code{write.nrrd.header} writes a nrrd header file. Can be used 
-#'   to make a detached nrrd (nhdr) file to make another image type on disk 
-#'   compatible with the nrrd library.
+#' @description \code{write.nrrd.header} writes a nrrd header file.
 #' @export
 #' @rdname write.nrrd
 write.nrrd.header <- function (header, file) {

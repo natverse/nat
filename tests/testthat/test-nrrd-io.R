@@ -124,3 +124,18 @@ test_that("nrrd.datafiles", {
                     "slab30-39.raw", "slab40-49.raw"), subdim = 3L)
   expect_equal(nhdrl[['testdata/nrrd/datafile_listslab.nhdr']], slabs)
 })
+
+context("detached nhdr")
+test_that("write.nrrd.header.for.file", {
+  expect_error(write.nrrd.header.for.file('testdata/amira/AL-a_M.am'),
+               "only raw format")
+  expect_error(write.nrrd.header.for.file('testdata/amira/landmarks.am'),
+               "read.im3d")
+  dir.create(td<-tempfile())
+  on.exit(unlink(td, recursive = TRUE))
+  file.copy('testdata/amira/VerySmallLabelField.am', 
+            amcopy <- file.path(td, "VerySmallLabelField.am"))
+  expect_is(nhdr<-write.nrrd.header.for.file(amcopy),
+               "character")
+  expect_equal(read.im3d(nhdr), read.im3d(amcopy))
+})
