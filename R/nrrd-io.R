@@ -290,19 +290,20 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   else voxdims
 }
 
-#' Write array, vector or im3d object to NRRD file with appropriate header
+#' Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.
 #' 
-#' Writes a lattice format file i.e. one with a regular n-d grid. When \code{x} 
-#' is an \code{im3d} object, appropriate spatial calibration fields are added to
-#' the header.
+#' @description \code{write.nrrd} writes an array, vector or im3d object to a
+#'   NRRD file. When \code{x} is an \code{im3d} object, appropriate spatial
+#'   calibration fields are added to the header.
 #' 
 #' @section Detached NRRDs: NRRD files can be written in \emph{detached} format 
 #'   (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which 
 #'   a text \bold{nhdr} file is used to described the contents of a separate 
 #'   (usually binary) data file. This means that the nhdr file can be inspected 
-#'   and edited with a text editor while the datablock can be in a completely 
+#'   and edited with a text editor, while the datablock can be in a completely 
 #'   raw format that can be opened even by programs that do not understand the 
-#'   NRRD format.
+#'   NRRD format. Furthermore detached NRRD header files can be written to 
+#'   accompany non-NRRD image data so that it can be opened by nrrd readers.
 #'   
 #'   If \code{file} has extension \code{.nhdr} \emph{or} \code{datafile} is 
 #'   non-NULL, then \code{write.nrrd} will write a separate datafile. If 
@@ -321,9 +322,10 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   
 #'   }
 #'   
-#' @section Header: Arguments \code{enc}, \code{dtype}, and \code{endian} along 
-#'   with the dimensions of the input (\code{x}) will override the corresponding
-#'   NRRD header fields from any supplied \code{header} argument. See 
+#' @section Header: For \code{write.nrrd}, arguments \code{enc}, \code{dtype},
+#'   and \code{endian} along with the dimensions of the input (\code{x}) will
+#'   override the corresponding NRRD header fields from any supplied
+#'   \code{header} argument. See 
 #'   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
 #'   fields.
 #'   
@@ -367,7 +369,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   ## set up core header fields
   goodmodes=c("logical", "numeric", "character", "raw")
   h=list(type=nrrdDataType, encoding=enc, endian=endian)
-  if(is.array(x)) {
+  if(is.array(x) || is.im3d(x)) {
     h$dimension=length(dim(x))
     h$sizes=dim(x)
   } else if(mode(x) %in% goodmodes) {
@@ -402,22 +404,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   # process datafile as last field in header
   h$datafile=datafile
 
-  # now write header
-  nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
-  cat("NRRD0004\n", file=file)
-  for(n in names(h)) {
-    f=h[[n]]
-    # special handling for a couple of fields
-    if(n=='space origin' ) {
-      f=nrrdvec(f)
-    } else if(n=='space directions') {
-      f=apply(f, 1, nrrdvec)
-    }
-    if(length(f)>1) f=paste(f, collapse = " ")
-    cat(paste0(n, ": ", f ,"\n"), file=file, append=TRUE)
-  }
-  # Single blank line terminates header
-  cat("\n", file=file, append=TRUE)
+  write.nrrd.header(h, file)
   
   # set things up for detached nrrd or regular nrrd
   if(is.null(datafile)) {
@@ -432,6 +419,10 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
     on.exit(setwd(owd), add = TRUE)
   }
   
+  # nothing to write, so assume we just wanted to write the header
+  if(length(x)==0) 
+    return(invisible(NULL))
+  
   if(enc=='text'){
     write(as.vector(x,mode=dmode),ncolumns=1,file=file,append=fmode=='ab')
   } else {
@@ -441,12 +432,63 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   }
 }
 
+#' @description \code{write.nrrd.header} writes a nrrd header file.
+#' @export
+#' @rdname write.nrrd
+write.nrrd.header <- function (header, file) {
+  # helper function
+  nrrdvec=function(x) sprintf("(%s)",paste(x,collapse=","))
+  cat("NRRD0004\n", file=file)
+  for(n in names(header)) {
+    f=header[[n]]
+    # special handling for a couple of fields
+    if(n=='space origin' ) {
+      f=nrrdvec(f)
+    } else if(n=='space directions') {
+      f=apply(f, 1, nrrdvec)
+    }
+    if(length(f)>1) f=paste(f, collapse = " ")
+    cat(paste0(n, ": ", f ,"\n"), file=file, append=TRUE)
+  }
+  # Single blank line terminates header
+  cat("\n", file=file, append=TRUE)
+}
+
+#' @description \code{write.nrrd.header.for.file} makes a detached nrrd (nhdr) 
+#'   file to make another image type on disk compatible with the nrrd library.
+#' @rdname write.nrrd
+#' @param infile,outfile Path to input and output file for 
+#'   \code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
+#'   default) then it will be set to \code{<infilename.nhdr>}.
+write.nrrd.header.for.file<-function(infile, outfile=NULL) {
+  if(is.null(outfile)) 
+    outfile=paste0(tools::file_path_sans_ext(infile),".nhdr")
+  x=read.im3d(infile, ReadData = FALSE)
+  if(!is.null(dd<-attr(x,'dataDef'))){
+    if(dd$HxType!='raw')
+      stop("only raw format Amiramesh files are nrrd compatible!")
+    if(nrow(dd)>1)
+      stop("I only accept Amiramesh files with one data block")
+    write.nrrd(x, outfile, enc = 'raw', dtype = dd$SimpleType, endian = dd$endian, 
+               datafile = infile, header=list(lineskip=dd$LineOffsets))
+  } else if(!is.null(nh<-attr(x,'header'))) {
+    # assume that we are dealing with a nrrd
+    # skip 1 extra line because of terminating blank line
+    nh$lineskip=length(attr(nh,"headertext"))+1
+    nh$datafile=basename(infile)
+    write.nrrd.header(header = nh, file = outfile)
+  } else {
+    stop("I don't know how to make a detached nrrd for this image type")
+  }
+  outfile
+}
+
 # internal function to make key spatial nrrd header fields from im3d object
 im3d2nrrdheader<-function(x) {
   if(!is.im3d(x)) stop("x is not an im3d object!")
   h=list(dimension=length(dim(x)), sizes=dim(x))
   # for im3d assume that space dimension is same as array dimension
-  h$`space dimension`=dim(x)
+  h$`space dimension`=length(dim(x))
   # nb not origin(x) since that will return (0,0,0) if missing
   h$`space origin`=attr(x, 'origin')
   h$`space directions`=diag(voxdims(x))

@@ -28,17 +28,15 @@ read.amiramesh<-function(file,sections=NULL,header=FALSE,simplify=TRUE,
   }
   binaryfile="binary"==tolower(sub(".*(ascii|binary).*","\\1",firstLine,ignore.case=TRUE))
   
-  if(binaryfile && is.null(endian)){
-    if(length(grep("little",firstLine,ignore.case=TRUE))>0) endian='little'
-    else endian='big'
-  }
-  
   # Check if file is gzipped
   con=if(is.gzip(file)) gzfile(file) else file(file)
   open(con, open=ifelse(binaryfile, 'rb', 'rt'))
   on.exit(try(close(con),silent=TRUE))
   h=read.amiramesh.header(con,Verbose=Verbose)
   parsedHeader=h[["dataDef"]]
+  if(is.null(endian) && is.character(parsedHeader$endian)) {
+    endian=parsedHeader$endian[1]
+  }
   if(ReadByteAsRaw){
     parsedHeader$RType[parsedHeader$SimpleType=='byte']='raw'
   }
@@ -179,6 +177,13 @@ read.amiramesh.header<-function(file, Parse=TRUE, Verbose=FALSE){
   if(!Parse) return(headerLines)
   returnList<-list(header=headerLines)
   
+  binaryfile="binary"==tolower(sub(".*(ascii|binary).*","\\1",headerLines[1],ignore.case=TRUE))
+  endian=NA
+  if(binaryfile){
+    if(length(grep("little",headerLines[1],ignore.case=TRUE))>0) endian='little'
+    else endian='big'
+  }
+
   nHeaderLines=length(headerLines)
   # trim comments and blanks & convert all white space to single spaces
   headerLines=trim(sub("(.*)#.*","\\1",headerLines,perl=TRUE))
@@ -262,6 +267,7 @@ read.amiramesh.header<-function(file, Parse=TRUE, Verbose=FALSE){
   DataDefDF$nBytes=DataDefDF$SubLength*DataDefDF$Size*DataDefDF$DataLength
   DataDefDF$HxType=HxTypes
   DataDefDF$HxLength=HxLengths
+  DataDefDF$endian=endian
   
   # FIXME Note that this assumes exactly one blank line in between each data section
   # I'm not sure if this is a required property of the amira file format

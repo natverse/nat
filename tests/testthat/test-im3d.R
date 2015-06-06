@@ -58,9 +58,13 @@ test_that("round trip test for im3d is successful",{
   
   tf3=tempfile(tmpdir = td, fileext='.nhdr')
   # also check detached nrrd
-  expect_is(write.im3d(d, tf3), 'character')
-  expect_equal(read.im3d(tf3), d, tol=1e-6)
+  expect_is(write.im3d(d, tf3, dtype='byte'), 'character')
+  expect_equal(d3<-read.im3d(tf3), d, tol=1e-6)
   expect_true(file.exists(sub("\\.nhdr$",".raw.gz",tf3)))
+  
+  # check nrrd header fields as well in detail
+  h1=attr(d,'header')
+  expect_equal(attr(d3,'header')[names(h1)], h1[names(h1)], tol=1e-6)
 })
 
 context("im3d")
