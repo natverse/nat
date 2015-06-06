@@ -138,4 +138,10 @@ test_that("write.nrrd.header.for.file", {
   expect_is(nhdr<-write.nrrd.header.for.file(amcopy),
                "character")
   expect_equal(read.im3d(nhdr), read.im3d(amcopy))
+  
+  file.copy('testdata/nrrd/LHMask.nrrd', 
+            nrrdcopy <- file.path(td, "LHMask.nrrd"))
+  expect_is(nhdr2<-write.nrrd.header.for.file(nrrdcopy),
+            "character")
+  expect_equal(read.im3d(nhdr2), read.im3d(nrrdcopy))
 })

@@ -468,6 +468,14 @@ write.nrrd.header.for.file<-function(infile, outfile=NULL) {
       stop("I only accept Amiramesh files with one data block")
     write.nrrd(x, outfile, enc = 'raw', dtype = dd$SimpleType, endian = dd$endian, 
                datafile = infile, header=list(lineskip=dd$LineOffsets))
+  } else if(!is.null(nh<-attr(x,'header'))) {
+    # assume that we are dealing with a nrrd
+    # skip 1 extra line because of terminating blank line
+    nh$lineskip=length(attr(nh,"headertext"))+1
+    nh$datafile=basename(infile)
+    write.nrrd.header(header = nh, file = outfile)
+  } else {
+    stop("I don't know how to make a detached nrrd for this image type")
   }
   outfile
 }
