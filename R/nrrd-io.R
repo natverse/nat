@@ -452,12 +452,30 @@ write.nrrd.header <- function (header, file) {
   cat("\n", file=file, append=TRUE)
 }
 
+#' @description \code{write.nrrd.header.for.file} makes a detached nrrd (nhdr) 
+#'   file to make another image type on disk compatible with the nrrd library.
+#' @rdname write.nrrd
+write.nrrd.header.for.file<-function(infile, outfile=NULL) {
+  if(is.null(outfile)) 
+    outfile=paste0(tools::file_path_sans_ext(infile),".nhdr")
+  x=read.im3d(infile, ReadData = FALSE)
+  if(!is.null(dd<-attr(x,'dataDef'))){
+    if(dd$HxType!='raw')
+      stop("only raw format Amiramesh files are nrrd compatible!")
+    if(nrow(dd)>1)
+      stop("I only accept Amiramesh files with one data block")
+    write.nrrd(x, outfile, enc = 'raw', dtype = dd$SimpleType, endian = dd$endian, 
+               datafile = infile, header=list(lineskip=dd$LineOffsets))
+  }
+  outfile
+}
+
 # internal function to make key spatial nrrd header fields from im3d object
 im3d2nrrdheader<-function(x) {
   if(!is.im3d(x)) stop("x is not an im3d object!")
   h=list(dimension=length(dim(x)), sizes=dim(x))
   # for im3d assume that space dimension is same as array dimension
-  h$`space dimension`=dim(x)
+  h$`space dimension`=length(dim(x))
   # nb not origin(x) since that will return (0,0,0) if missing
   h$`space origin`=attr(x, 'origin')
   h$`space directions`=diag(voxdims(x))
