@@ -461,8 +461,13 @@ write.nrrd.header <- function (header, file) {
 #'   \code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
 #'   default) then it will be set to \code{<infilename.nhdr>}.
 write.nrrd.header.for.file<-function(infile, outfile=NULL) {
-  if(is.null(outfile)) 
+  if(is.null(outfile)){
     outfile=paste0(tools::file_path_sans_ext(infile),".nhdr")
+    datafile=basename(infile)
+  } else {
+    datafile=infile
+  }
+    
   x=read.im3d(infile, ReadData = FALSE)
   if(!is.null(dd<-attr(x,'dataDef'))){
     if(dd$HxType!='raw')
@@ -470,12 +475,12 @@ write.nrrd.header.for.file<-function(infile, outfile=NULL) {
     if(nrow(dd)>1)
       stop("I only accept Amiramesh files with one data block")
     write.nrrd(x, outfile, enc = 'raw', dtype = dd$SimpleType, endian = dd$endian, 
-               datafile = infile, header=list(lineskip=dd$LineOffsets))
+               datafile = datafile, header=list(lineskip=dd$LineOffsets))
   } else if(!is.null(nh<-attr(x,'header'))) {
     # assume that we are dealing with a nrrd
     # skip 1 extra line because of terminating blank line
     nh$lineskip=length(attr(nh,"headertext"))+1
-    nh$datafile=basename(infile)
+    nh$datafile=datafile
     write.nrrd.header(header = nh, file = outfile)
   } else {
     stop("I don't know how to make a detached nrrd for this image type")
