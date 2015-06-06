@@ -3,6 +3,7 @@
 \name{write.nrrd}
 \alias{write.nrrd}
 \alias{write.nrrd.header}
+\alias{write.nrrd.header.for.file}
 \title{Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.}
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
@@ -10,6 +11,8 @@ write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
   endian = .Platform$endian, datafile = NULL)
 
 write.nrrd.header(header, file)
+
+write.nrrd.header.for.file(infile, outfile = NULL)
 }
 \arguments{
 \item{x}{Data to write as an \code{array}, \code{vector} or
@@ -30,6 +33,10 @@ section.}
 
 \item{datafile}{Optional name of separate file into which data should be
 written (see details).}
+
+\item{infile,outfile}{Path to input and output file for
+\code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
+default) then it will be set to \code{<infilename.nhdr>}.}
 }
 \description{
 \code{write.nrrd} writes an array, vector or im3d object to a
@@ -37,6 +44,9 @@ written (see details).}
   calibration fields are added to the header.
 
 \code{write.nrrd.header} writes a nrrd header file.
+
+\code{write.nrrd.header.for.file} makes a detached nrrd (nhdr)
+  file to make another image type on disk compatible with the nrrd library.
 }
 \section{Detached NRRDs}{
  NRRD files can be written in \emph{detached} format

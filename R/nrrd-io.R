@@ -457,6 +457,9 @@ write.nrrd.header <- function (header, file) {
 #' @description \code{write.nrrd.header.for.file} makes a detached nrrd (nhdr) 
 #'   file to make another image type on disk compatible with the nrrd library.
 #' @rdname write.nrrd
+#' @param infile,outfile Path to input and output file for 
+#'   \code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
+#'   default) then it will be set to \code{<infilename.nhdr>}.
 write.nrrd.header.for.file<-function(infile, outfile=NULL) {
   if(is.null(outfile)) 
     outfile=paste0(tools::file_path_sans_ext(infile),".nhdr")
