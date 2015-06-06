@@ -460,6 +460,7 @@ write.nrrd.header <- function (header, file) {
 #' @param infile,outfile Path to input and output file for 
 #'   \code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
 #'   default) then it will be set to \code{<infilename.nhdr>}.
+#' @export
 write.nrrd.header.for.file<-function(infile, outfile=NULL) {
   if(is.null(outfile)){
     outfile=paste0(tools::file_path_sans_ext(infile),".nhdr")
