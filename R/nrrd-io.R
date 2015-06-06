@@ -369,7 +369,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   ## set up core header fields
   goodmodes=c("logical", "numeric", "character", "raw")
   h=list(type=nrrdDataType, encoding=enc, endian=endian)
-  if(is.array(x)) {
+  if(is.array(x) || is.im3d(x)) {
     h$dimension=length(dim(x))
     h$sizes=dim(x)
   } else if(mode(x) %in% goodmodes) {
@@ -418,6 +418,10 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
     file=datafile
     on.exit(setwd(owd), add = TRUE)
   }
+  
+  # nothing to write, so assume we just wanted to write the header
+  if(length(x)==0) 
+    return(invisible(NULL))
   
   if(enc=='text'){
     write(as.vector(x,mode=dmode),ncolumns=1,file=file,append=fmode=='ab')
