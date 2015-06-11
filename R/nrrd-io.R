@@ -292,10 +292,10 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 
 #' Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.
 #' 
-#' @description \code{write.nrrd} writes an array, vector or im3d object to a
-#'   NRRD file. When \code{x} is an \code{im3d} object, appropriate spatial
+#' @description \code{write.nrrd} writes an array, vector or im3d object to a 
+#'   NRRD file. When \code{x} is an \code{im3d} object, appropriate spatial 
 #'   calibration fields are added to the header.
-#' 
+#'   
 #' @section Detached NRRDs: NRRD files can be written in \emph{detached} format 
 #'   (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which 
 #'   a text \bold{nhdr} file is used to described the contents of a separate 
@@ -321,10 +321,30 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   \item text \code{'<nhdrstem>.ascii'}
 #'   
 #'   }
+#' @section Data file paths: When a detached NRRD is written, the 
+#'   \code{datafile} can be specified either as \emph{relative} or 
+#'   \emph{absolute} path. Relative paths are strongly recommended - the best 
+#'   place is right next to the datafile. Relative paths are always specified 
+#'   with respect to the location of the \bold{nhdr} file.
 #'   
-#' @section Header: For \code{write.nrrd}, arguments \code{enc}, \code{dtype},
-#'   and \code{endian} along with the dimensions of the input (\code{x}) will
-#'   override the corresponding NRRD header fields from any supplied
+#'   The \code{datafile} argument is not processed by \code{write.nrrd} so it is
+#'   up to the caller to decide whether a relative or absolute path will be 
+#'   used.
+#'   
+#'   For \code{write.nrrd.header.for.file} if \code{outfile} is not specified 
+#'   then the nhdr file will be placed next to the original image stack and the 
+#'   \code{datafile} field will therefore just be \code{basename(infile)}. If 
+#'   outfile is specified explicitly, then \code{datafile} will be set to the 
+#'   full path in the \code{infile} argument. Therefore if you wish to specify 
+#'   \code{outfile}, you \emph{must} set the current working directory (using 
+#'   \code{setwd}) to the location in which \code{outfile} will be written to 
+#'   ensure that the path to the datafile is correct. A future TODO would add 
+#'   the ability to convert an absolute datafile path to a relaive one (by
+#'   finding the common path between datafile and nhdr folders).
+#'   
+#' @section Header: For \code{write.nrrd}, arguments \code{enc}, \code{dtype}, 
+#'   and \code{endian} along with the dimensions of the input (\code{x}) will 
+#'   override the corresponding NRRD header fields from any supplied 
 #'   \code{header} argument. See 
 #'   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
 #'   fields.
@@ -454,12 +474,15 @@ write.nrrd.header <- function (header, file) {
   cat("\n", file=file, append=TRUE)
 }
 
-#' @description \code{write.nrrd.header.for.file} makes a detached nrrd (nhdr) 
-#'   file to make another image type on disk compatible with the nrrd library.
+#' @description \code{write.nrrd.header.for.file} makes a detached NRRD
+#'   (\bold{nhdr}) file that points at another image file on disk, making it
+#'   NRRD compatible. This can be a convenient way to make NRRD inputs for other
+#'   tools e.g. CMTK and also allows the same data block to pointed to by
+#'   different nhdr files with different spatial calibration.
 #' @rdname write.nrrd
 #' @param infile,outfile Path to input and output file for 
-#'   \code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
-#'   default) then it will be set to \code{<infilename.nhdr>}.
+#'   \code{write.nrrd.header.for.file}. If \code{outfile} is \code{NULL} (the
+#'   default) then it will be set to \code{<infilestem.nhdr>}.
 #' @export
 write.nrrd.header.for.file<-function(infile, outfile=NULL) {
   if(is.null(outfile)){

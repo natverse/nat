@@ -35,8 +35,8 @@ section.}
 written (see details).}
 
 \item{infile,outfile}{Path to input and output file for
-\code{write.nrrd.header.for.file}. If \code{outputfile} is \code{NULL} (the
-default) then it will be set to \code{<infilename.nhdr>}.}
+\code{write.nrrd.header.for.file}. If \code{outfile} is \code{NULL} (the
+default) then it will be set to \code{<infilestem.nhdr>}.}
 }
 \description{
 \code{write.nrrd} writes an array, vector or im3d object to a
@@ -45,8 +45,11 @@ default) then it will be set to \code{<infilename.nhdr>}.}
 
 \code{write.nrrd.header} writes a nrrd header file.
 
-\code{write.nrrd.header.for.file} makes a detached nrrd (nhdr)
-  file to make another image type on disk compatible with the nrrd library.
+\code{write.nrrd.header.for.file} makes a detached NRRD
+  (\bold{nhdr}) file that points at another image file on disk, making it
+  NRRD compatible. This can be a convenient way to make NRRD inputs for other
+  tools e.g. CMTK and also allows the same data block to pointed to by
+  different nhdr files with different spatial calibration.
 }
 \section{Detached NRRDs}{
  NRRD files can be written in \emph{detached} format
@@ -74,6 +77,29 @@ default) then it will be set to \code{<infilename.nhdr>}.}
   \item text \code{'<nhdrstem>.ascii'}
 
   }
+}
+
+\section{Data file paths}{
+ When a detached NRRD is written, the
+  \code{datafile} can be specified either as \emph{relative} or
+  \emph{absolute} path. Relative paths are strongly recommended - the best
+  place is right next to the datafile. Relative paths are always specified
+  with respect to the location of the \bold{nhdr} file.
+
+  The \code{datafile} argument is not processed by \code{write.nrrd} so it is
+  up to the caller to decide whether a relative or absolute path will be
+  used.
+
+  For \code{write.nrrd.header.for.file} if \code{outfile} is not specified
+  then the nhdr file will be placed next to the original image stack and the
+  \code{datafile} field will therefore just be \code{basename(infile)}. If
+  outfile is specified explicitly, then \code{datafile} will be set to the
+  full path in the \code{infile} argument. Therefore if you wish to specify
+  \code{outfile}, you \emph{must} set the current working directory (using
+  \code{setwd}) to the location in which \code{outfile} will be written to
+  ensure that the path to the datafile is correct. A future TODO would add
+  the ability to convert an absolute datafile path to a relaive one (by
+  finding the common path between datafile and nhdr folders).
 }
 
 \section{Header}{
