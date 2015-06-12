@@ -79,7 +79,8 @@ xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'),
     # extract affine registrations from warp
     stop("Not yet implemented")
   }
-  cmtk.reformatx(floating = image, registrations = reg, ...)
+  # reverse order of multiple registrations.
+  cmtk.reformatx(floating = image, registrations = rev(reg), ...)
 }
 
 #' @export
