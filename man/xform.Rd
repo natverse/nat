@@ -31,8 +31,9 @@ xform(x, reg, ...)
 \arguments{
 \item{x}{an object to transform}
 
-\item{reg}{an object describing a transformation in any of the forms
-understood by \code{\link{xformpoints}} (see details).}
+\item{reg}{A registration defined by a matrix, a function, a \code{cmtkreg}
+object, or a character vector specifying a path to one or more CMTK
+registrations on disk (see Registrations section).}
 
 \item{...}{additional arguments passed to methods and eventually to
 \code{\link{xformpoints}}}
@@ -57,7 +58,11 @@ element of \code{x}.}
 }
 \description{
 \code{xform} is designed to operate on a variety of data types, especially
-objects encapsulating neurons.
+objects encapsulating neurons. \code{xform} depends on two specialised
+downstream functions \code{\link{xformpoints}} and \code{\link{xformimage}}.
+These are user visible any contain some useful documentation, but should only
+be required for expert use; in almost all circumstances, you should use only
+\code{xform}.
 
 \code{xform.character} is designed to work with files on disk.
   Presently it is restricted to images, although other datatypes may be
@@ -70,21 +75,41 @@ Methods are provided for some specialised S3 classes. Further
   \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3
   object inherits from \code{list}.
 
-  Where reg is a function, it should have a signature like \code{myfun(x,
-  ...)} where the ... \strong{must} be provided in order to swallow any
-  arguments passed from higher level functions that are not relevant to this
-  particular transformation function.
-
 TODO get this to work for matrices with more than 3 columns by
   working on xyzmatrix definition.
 
-the dotprops tangent vectors will be recalculated after the points
-  have been transformed (even though they could in theory be transformed more
-  or less correctly).
+For the \code{xform.dotprops} method, dotprops tangent vectors will
+  be recalculated from scratch after the points have been transformed (even
+  though the tangent vectors could in theory be transformed more or less
+  correctly). When there are multiple transformations, \code{xform} will take
+  care to carry out all transformations before recalculating the vectors.
 
 With \code{xform.neuronlist}, if you want to apply a different
   registration to each object in the neuronlist \code{x}, then you should use
   \code{VectoriseRegistrations=TRUE}.
+}
+\section{Registrations}{
+
+
+  When \code{reg} is a character vector, xform's specialised downstream
+  functions will check to see if it defines a path to one (or more) CMTK
+  registrations, erroring out if this is not the case. If the path does
+  indeed point to a CMTK registration, this method will hand off to
+  \code{xformpoints.cmtkreg} or \code{xformimages.cmtkreg}. A future TODO
+  would be to provide a mechanism for extending this behaviour for other
+  registration formats.
+
+  The character vector may optionally have an attribute, 'swap', a logical
+  vector of the same length indicating whether the transformation direction
+  should be swapped. At the moment only CMTK registration files are supported
+
+  If \code{reg} is a character vector of length >=1 defining a sequence of
+  registration files on disk they should proceed from sample to reference.
+
+  Where \code{reg} is a function, it should have a signature like
+  \code{myfun(x,), ...} where the \code{...} \strong{must} be provided in
+  order to swallow any arguments passed from higher level functions that are
+  not relevant to this particular transformation function.
 }
 \examples{
 \dontrun{
@@ -95,6 +120,14 @@ kc1.5=xform(kc1,function(x,...) x, k=5)
 stopifnot(isTRUE(all.equal(kc1.5,kc1.default)))
 kc1.20=xform(kc1,function(x,...) x, k=20)
 stopifnot(!isTRUE(all.equal(kc1,kc1.20)))
+
+# apply two registrations converting sample->IS2->JFRC2
+reg_seq=c("IS2_sample.list", "JFRC2_IS2.list")
+xform(kc1, reg_seq)
+# apply two registrations, swapping the direction of the second one
+# i.e. sample -> IS2 -> FCWB
+reg_seq=structure(c("IS2_sample.list", "IS2_FCWB.list"), swap=c(FALSE, TRUE))
+xform(kc1, reg_seq)
 }
 \dontrun{
 # apply reg1 to Cell07PNs[[1]], reg2 to Cell07PNs[[2]] etc

@@ -1,7 +1,10 @@
 #' Transform 3d points using a registration, affine matrix or function
 #' 
-#' @param reg A registration defined by a matrix, a function, a \code{cmtkreg}
-#'   object, or a character vector specifying a path to a CMTK registration on
+#' @description You should almost always call \code{\link{xform}} rather
+#'   calling than\code{xformpoints} directly.
+#'   
+#' @param reg A registration defined by a matrix, a function, a \code{cmtkreg} 
+#'   object, or a character vector specifying a path to a CMTK registration on 
 #'   disk (see details).
 #' @param points Nx3 matrix of points
 #' @param ... Additional arguments passed to methods
@@ -10,15 +13,9 @@ xformpoints<-function(reg, points, ...) {
   UseMethod('xformpoints')
 }
 
-#' @details When passed a character vector, xformpoints will check to see if it 
-#'   defines a path containing CMTK registration erroring out if this is not the
-#'   case. If the path does indeed point to a CMTK registration, this method
-#'   will hand off to xformpoints.cmtkreg. A future TODO would be to provide a
-#'   mechanism for extending this behaviour for other registration formats.
-#
-#'   If a list of transformations is passed in, these transformations are
-#'   performed in sequence order, such that
-#'   \code{xformpoints(c(a,b,c), x) == xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
+#' @details If a list of transformations is passed in, these transformations are
+#' performed in sequence order, such that \code{xformpoints(c(a,b,c), x) ==
+#' xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
 #' @method xformpoints character
 #' @export
 #' @rdname xformpoints
@@ -28,27 +25,27 @@ xformpoints.character<-function(reg, points, ...){
 }
 
 #' @method xformpoints cmtkreg
-#' @details Note that the direction of CMTK registrations can be the source of 
-#'   much confusion. This is because CMTK defines the \emph{forward} direction 
-#'   as the transform required to reformat an image in \emph{sample} (floating) 
-#'   space to an image in \emph{template} space. Since this operation involves 
-#'   filling a regular grid in template space by looking up the corresponding 
+#' @details Note that the direction of CMTK registrations can be the source of
+#'   much confusion. This is because CMTK defines the \emph{forward} direction
+#'   as the transform required to reformat an image in \emph{sample} (floating)
+#'   space to an image in \emph{template} space. Since this operation involves
+#'   filling a regular grid in template space by looking up the corresponding
 #'   positions in sample space, the transformation that is required is (somewhat
-#'   counterintuitively) the one that maps template to sample. However in 
-#'   neuroanatomical work, one often has points in sample space that one would 
-#'   like to transform into template space. Here one needs the \emph{inverse} 
+#'   counterintuitively) the one that maps template to sample. However in
+#'   neuroanatomical work, one often has points in sample space that one would
+#'   like to transform into template space. Here one needs the \emph{inverse}
 #'   transformation.
-#' @param transformtype Which transformation to use when the CMTK file contains 
+#' @param transformtype Which transformation to use when the CMTK file contains
 #'   both warp (default) and affine
-#' @param direction Whether to transform points from sample space to reference 
-#'   space (called \strong{inverse} by CMTK) or from reference to sample space 
-#'   (called \strong{forward} by CMTK)
+#' @param direction Whether to transform points from sample space to reference
+#'   space (called \strong{inverse} by CMTK) or from reference to sample space
+#'   (called \strong{forward} by CMTK). Default (when \code{NULL} is inverse).
 #' @param FallBackToAffine Whether to use the affine transformation for points
 #'   that fail to transform under a warping transformation.
 #' @export
 #' @rdname xformpoints
-xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'), 
-                              direction=NULL, 
+xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
+                              direction=NULL,
                               FallBackToAffine=FALSE, ...){
   if(is.list(reg)){
     # we've been given an in memory list specifying registation parameters
@@ -76,14 +73,14 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
     }
     return(points)
   }
-  
+
   # check for NAs
   nas=is.na(points[,1])
   if(sum(nas)) {
     origpoints=points
     points=points[!nas, , drop=FALSE]
   }
-  
+
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile), add = TRUE)
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
@@ -101,7 +98,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
                         col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
                         colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
   pointst <- data.matrix(cmtkOut[,1:3])
-  
+
   if(transformtype=='warp'){
     naPoints = cmtkOut$Failed =="FAILED"
     if(any(naPoints)){
@@ -113,7 +110,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
       }
     }
   }
-  
+
   if(sum(nas)){
     origpoints[!nas, ]=pointst
     origpoints

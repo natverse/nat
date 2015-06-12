@@ -30,23 +30,19 @@ both warp (default) and affine}
 
 \item{direction}{Whether to transform points from sample space to reference
 space (called \strong{inverse} by CMTK) or from reference to sample space
-(called \strong{forward} by CMTK)}
+(called \strong{forward} by CMTK). Default (when \code{NULL} is inverse).}
 
 \item{FallBackToAffine}{Whether to use the affine transformation for points
 that fail to transform under a warping transformation.}
 }
 \description{
-Transform 3d points using a registration, affine matrix or function
+You should almost always call \code{\link{xform}} rather
+  calling than\code{xformpoints} directly.
 }
 \details{
-When passed a character vector, xformpoints will check to see if it
-  defines a path containing CMTK registration erroring out if this is not the
-  case. If the path does indeed point to a CMTK registration, this method
-  will hand off to xformpoints.cmtkreg. A future TODO would be to provide a
-  mechanism for extending this behaviour for other registration formats.
-  If a list of transformations is passed in, these transformations are
-  performed in sequence order, such that
-  \code{xformpoints(c(a,b,c), x) == xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
+If a list of transformations is passed in, these transformations are
+performed in sequence order, such that \code{xformpoints(c(a,b,c), x) ==
+xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
 
 Note that the direction of CMTK registrations can be the source of
   much confusion. This is because CMTK defines the \emph{forward} direction

@@ -1,10 +1,16 @@
 #' Transform image files using a registration or affine matrix
 #' 
-#' @param reg A registration defined by a matrix or a \code{cmtkreg} object, or
-#'   a character vector specifying a path to a CMTK registration on disk (see
-#'   details).
+#' @description You should almost always call \code{\link{xform}} rather
+#'   calling than\code{xformimage} directly.
+#'   
+#' @param reg A registration defined by a matrix or a \code{cmtkreg} object, or 
+#'   a character vector specifying a path to a CMTK registration on disk (see 
+#'   details). If \code{reg} is a character vector of length >1 defining a
+#'   sequence of registration files on disk they should proceed from sample to
+#'   reference.
 #' @param image Nx3 matrix of image
-#' @param ... Additional arguments passed to methods
+#' @param ... Additional arguments passed to methods (and then eventually to 
+#'   \code{\link{cmtk.reformatx}})
 #' @return Character vector with path to xformed image.
 #' @export
 xformimage<-function(reg, image, ...) {
@@ -44,16 +50,33 @@ xformimage.character<-function(reg, image, ...){
 #'   positions in sample space, the transformation that is required is (somewhat
 #'   counterintuitively) the one that maps template to sample. However in 
 #'   neuroanatomical work, one often has points in sample space that one would 
-#'   like to transform into template space. Here one needs the \emph{inverse} 
+#'   like to transform into template space. Here one needs CMTK's \emph{inverse}
 #'   transformation.
+#'   
+#'   A second source of confusion is that when there are multiple 
+#'   transformations, CMTK's reformatx tool (wrapped by 
+#'   \code{\link{cmtk.reformatx}}) expects them to be listed:
+#'   
+#'   \code{ref_intermediate.list intermediate_sample.list}
+#'   
+#'   where \code{ref_intermediate.list} is the CMTK registration obtained with
+#'   ref as target/reference and intermediate as sample/floating image.
+#'   
+#'   For consistency, all \code{xform.*} methods expect multiple registrations
+#'   to be listed from sample to reference and this order is then swapped when
+#'   they are passed on to \code{cmtk.reformatx}.
+#'   
+#'   whereas CMTK's streamxform tool (wrapped by \code{\link{xformpoints}}) 
+#'   expects them in the opposite order.
 #' @param transformtype Which transformation to use when the CMTK file contains 
 #'   both warp (default) and affine (TODO)
 #' @param direction Whether to transform image from sample space to reference 
-#'   space (called \strong{inverse} by CMTK) or from reference to sample space 
-#'   (called \strong{forward} by CMTK)
+#'   space (called \strong{forward} by CMTK) or from reference to sample space 
+#'   (called \strong{inverse} by CMTK). Default (when \code{NULL} is forward).
 #' @export
 #' @rdname xformimage
-#' @seealso \code{\link{cmtk.reformatx}}
+#' @seealso \code{\link{cmtk.reformatx}}, \code{\link{xformpoints}}, 
+#'   \code{\link{xform}}
 xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'), 
                               direction=NULL, ...){
   if(is.list(reg)){
