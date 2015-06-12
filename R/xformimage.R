@@ -66,7 +66,13 @@ xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'),
   }
   
   transformtype=match.arg(transformtype)
-  direction=match.arg(direction,c('forward', "inverse"),several.ok=TRUE)
+  # By default, or if swap=FALSE, we will use CMTK's forward direction 
+  if(is.null(direction) && !is.null(swap<-attr(reg,'swap'))) {
+    direction=ifelse(swap, 'inverse', 'forward')
+  } else {
+    direction=match.arg(direction,c('forward', "inverse"),several.ok=TRUE)
+  }
+  
   if(any('inverse'%in%direction))
     stop("cmtk.reformatx does not handle application of inverse registrations")
   if(transformtype=='affine') {

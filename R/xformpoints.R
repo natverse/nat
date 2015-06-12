@@ -57,9 +57,15 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
     on.exit(unlink(reg,recursive=TRUE))
     write.cmtkreg(reg)
   }
-  
+
   transformtype=match.arg(transformtype)
-  direction=match.arg(direction,c("inverse",'forward'),several.ok=TRUE)
+  # By default, or if swap=FALSE, we will use CMTK's inverse direction 
+  if(is.null(direction) && !is.null(swap<-attr(reg,'swap'))) {
+    direction=ifelse(swap, 'forward', 'inverse')
+  } else {
+    direction=match.arg(direction,c("inverse",'forward'),several.ok=TRUE)
+  }
+  
   
   if(length(reg)>1 && !cmtk.version(minimum = '3.2.2')){
     # there is a bug in applying compound registrations in CMTK<=3.2.1
