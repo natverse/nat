@@ -111,6 +111,7 @@ cmtk.targetvolume.default <- function(target, ...) {
 #' @param ... additional arguments passed to CMTK \code{reformatx} after 
 #'   processing by \code{\link{cmtk.call}}.
 #' @inheritParams cmtk.targetvolume
+#' @inheritParams xformimage.cmtkreg
 #' @importFrom nat.utils makelock removelock RunCmdForNewerInput
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
@@ -126,6 +127,7 @@ cmtk.targetvolume.default <- function(target, ...) {
 #' system(cmtk.call('reformatx', help=TRUE))
 #' }
 cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
+                         direction=NULL, 
                          interpolation=c("linear", "nn", "cubic", "pv", "sinc-cosine", "sinc-hamming"),
                          dryrun=FALSE, Verbose=TRUE, MakeLock=TRUE, 
                          OverWrite=c("no","update","yes"),
@@ -163,10 +165,15 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
     } else if(Verbose) cat("Overwriting",output,"because OverWrite=\"yes\"\n")
   } else OverWrite="yes" # just for the purpose of the runtime checks below 
   
+  # deal with registrations
+  direction=match.arg(direction, c("forward", "inverse"), several.ok = T)
+  inverseflags <- sapply(direction, function(x) ifelse(x == 'forward', '', '--inverse'))
+  regspec <- paste(c(rbind(inverseflags, shQuote(path.expand(registrations)))), collapse=" ")
+
   cmd=cmtk.call('reformatx',if(Verbose) "--verbose" else NULL,
                 outfile=shQuote(output),floating=shQuote(floating),
                 mask=mask, interpolation=interpolation, ...,
-                FINAL.ARGS=c(targetspec,paste(shQuote(registrations),collapse=" ")))
+                FINAL.ARGS=c(targetspec, regspec))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
   if(dryrun) PrintCommand<-TRUE
