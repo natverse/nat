@@ -520,7 +520,7 @@ plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL,
   }
   
   # check bounding box for data
-  if(is.null(boundingbox)) boundingbox=boundingbox(x)
+  if(is.null(boundingbox)) boundingbox=boundingbox(x, na.rm=T)
   rval=mapply(plot, x, col=cols, add=add, 
               MoreArgs = list(boundingbox=boundingbox, ...), SIMPLIFY = F)
   

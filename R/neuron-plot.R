@@ -289,7 +289,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     # We are setting up the plot, so we need to find limits for axes 
     # (inverting y axis if necessary due to differing handedness)
     if(is.null(boundingbox))
-      boundingbox=boundingbox(x)
+      boundingbox=boundingbox(x, na.rm=TRUE)
     colnames(boundingbox)=c("X","Y","Z")
     myxlims <- boundingbox[,PlotAxes[1]]
     myylims <- boundingbox[,PlotAxes[2]]

@@ -152,6 +152,11 @@ test_that("plot2d neuronlist contents",{
   x<-plot(Cell07PNs, subset=!duplicated(Glomerulus), col=Glomerulus, 
           colpal=c(DA1='red','grey'))
   expect_equal(attr(x,'df')$col, c("red","grey","grey", "grey"))
+  
+  x=Cell07PNs[1:4]
+  # check we can cope with NA points and soma
+  x[[1]]$d$X[6]=NA
+  plot(x, soma=1.5)
 })
 
 context("neuronlist: plot3d")
