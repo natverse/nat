@@ -370,14 +370,15 @@ boundingbox.character<-function(x, ...) {
 }
 
 #' @export
+#' @param na.rm Whether to ignore NA points (default \code{FALSE})
 #' @description \code{boundingbox.list} is designed to be used on objects that
 #'   contain 3d point information and for which \code{xyzmatrix} is defined.
 #' @rdname boundingbox
-boundingbox.list<-function(x, ...) {
+boundingbox.list<-function(x, na.rm=FALSE, ...) {
   # we don't want to do this for data.frame objects
   if(is.data.frame(x)) NextMethod()
   xyz=xyzmatrix(x)
-  bb=apply(xyz,2,range)
+  bb=apply(xyz,2,range, na.rm=na.rm)
   boundingbox(bb)
 }
 

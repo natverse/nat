@@ -16,9 +16,9 @@ boundingbox(x, ...)
 
 \method{boundingbox}{character}(x, ...)
 
-\method{boundingbox}{list}(x, ...)
+\method{boundingbox}{list}(x, na.rm = FALSE, ...)
 
-\method{boundingbox}{shape3d}(x, ...)
+\method{boundingbox}{shape3d}(x, na.rm = FALSE, ...)
 
 \method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"),
   ...)
@@ -35,6 +35,8 @@ extract 3d points (e.g. neurons, surfaces etc), or, for
 
 \item{dims}{The number of voxels in each dimension when x is a BoundingBox
 matrix.}
+
+\item{na.rm}{Whether to ignore NA points (default \code{FALSE})}
 
 \item{input}{Whether \code{x} defines the boundingbox or bounds of the image
 (see details).}
