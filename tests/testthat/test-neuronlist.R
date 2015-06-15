@@ -156,7 +156,7 @@ test_that("plot2d neuronlist contents",{
   x=Cell07PNs[1:4]
   # check we can cope with NA points and soma
   x[[1]]$d$X[6]=NA
-  plot(x, soma=1.5)
+  plot(x, soma=1.5, PlotAxes='YZ')
 })
 
 context("neuronlist: plot3d")

@@ -342,7 +342,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
   }
   if(soma){
     somapos=x$d[x$StartPoint,PlotAxes]
-    symbols(somapos$X, somapos$Y, circles = somarad, inches = F, add=T,
+    symbols(somapos[[1]], somapos[[2]], circles = somarad, inches = F, add=T,
             bg=ifelse(is.null(col[1]), 1, col[1]), fg=NA)
   }
   invisible(PlottedPoints)
