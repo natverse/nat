@@ -34,7 +34,7 @@
 #'   closer to the root (soma) of the neuron.
 #' @param vertexlabels Integer labels for graph - the edge list is specified 
 #'   using these labels.
-#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
+#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix 
 #'   when 4th column is assumed to be diameter)
 #' @param diam Diameter of neuron at each vertex (optional)
 #' @param weights Logical value indicating whether edge weights defined by the 
@@ -44,12 +44,12 @@
 #' @param vertex.attributes,graph.attributes List of named attributes to be 
 #'   added to the graph. The elements of \code{vertex.attributes} must be 
 #'   vectors whose length is compatible with the number of elements in the 
-#'   graph. See \code{\link[igraph]{attributes}} for details.
+#'   graph. See \code{\link[igraph]{set.vertex.attribute}} for details.
 #' @return an \code{igraph} object with additional class \code{ngraph}, having a
 #'   vertex for each entry in vertexlabels, each vertex having a \code{label} 
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
-#' @seealso \code{\link{igraph}}, \code{\link[igraph]{attributes}}
+#' @seealso \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}}
 #' @export
 #' @importFrom igraph V<-
 #' @examples

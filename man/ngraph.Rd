@@ -38,7 +38,7 @@ when 4th column is assumed to be diameter)}
 \item{vertex.attributes,graph.attributes}{List of named attributes to be
 added to the graph. The elements of \code{vertex.attributes} must be
 vectors whose length is compatible with the number of elements in the
-graph. See \code{\link[igraph]{attributes}} for details.}
+graph. See \code{\link[igraph]{set.vertex.attribute}} for details.}
 
 \item{x}{Object to convert (see method descriptions)}
 
@@ -107,7 +107,7 @@ library(igraph)
 all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
 }
 \seealso{
-\code{\link{igraph}}, \code{\link[igraph]{attributes}}
+\code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}}
 
 Other neuron: \code{\link{as.neuron}},
   \code{\link{as.neuron.data.frame}},
