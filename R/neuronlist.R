@@ -486,7 +486,6 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' @return list of values of \code{plot} with subsetted dataframe as attribute 
 #'   \code{'df'}
 #' @export
-#' @method plot neuronlist
 #' @seealso \code{\link{nat-package}, \link{plot3d.neuronlist}}
 #' @examples
 #' # plot 4 cells
