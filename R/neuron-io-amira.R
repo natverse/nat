@@ -1,4 +1,5 @@
 # read neurons in the format produced by Amira skeletonize plugin
+#' @importFrom igraph as.undirected
 read.neuron.hxskel<-function(file, ...){
   ndata=read.amiramesh(file)
   required_fields=c("Coordinates", "NeighbourCount", "Radii", "NeighbourList")

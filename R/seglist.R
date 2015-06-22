@@ -73,15 +73,16 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @seealso \code{\link{ngraph},\link{igraph}}
 #' @export
 #' @method as.seglist igraph
+#' @importFrom igraph is.directed
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle degenerate cases
-  if(!is.connected(x)) stop("Graph is not fully connected!")
-  if(igraph::vcount(x)==0) {
+  if(!igraph::is.connected(x)) stop("Graph is not fully connected!")
+  if(vcount(x)==0) {
     if(Verbose) warning("Empty graph! Seglist not defined")
     return(NULL)
   }
-  if(igraph::is.directed(x) && !igraph::is.dag(x)){
+  if(is.directed(x) && !igraph::is.dag(x)){
     stop("Graph has cycles!")
   }
   

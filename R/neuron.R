@@ -161,6 +161,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
 #' @export
 #' @method as.neuron ngraph
+#' @importFrom igraph V V<- vcount decompose.graph
 #' @rdname neuron
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
@@ -175,7 +176,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # save original vertex ids
   igraph::V(x)$vid=seq.int(igraph::vcount(x))
   # check if we have multiple subgraphs
-  if(no.clusters(x)>1){
+  if(igraph::no.clusters(x)>1){
     if(!length(origin)){
       # no origin specified, will pick the biggest subtree
       # decompose into list of subgraphs

@@ -51,6 +51,7 @@
 #' @family neuron
 #' @seealso \code{\link{igraph}}, \code{\link[igraph]{attributes}}
 #' @export
+#' @importFrom igraph V<-
 #' @examples
 #' g=as.ngraph(Cell07PNs[[1]])
 #' library(igraph)
@@ -127,12 +128,13 @@ as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
   }
 }
 
+#' @importFrom igraph as.undirected as.directed
 as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
   if(inherits(x,'ngraph'))
-    if(is.directed(x)==directed) return(x)
+    if(igraph::is.directed(x)==directed) return(x)
   
-  if(is.directed(x) && !directed) x=as.undirected(x, ...)
-  else if(!is.directed(x) && directed) x=as.directed.usingroot(x, root, mode=mode, ...)
+  if(igraph::is.directed(x) && !directed) x=as.undirected(x, ...)
+  else if(!igraph::is.directed(x) && directed) x=as.directed.usingroot(x, root, mode=mode, ...)
   
   if(!inherits(x,'ngraph')){
     class(x)=c("ngraph",class(x))
@@ -171,7 +173,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' Compute the longest path (aka spine or backbone) of a neuron
 #' 
 #' @param n the neuron to consider.
-#' @param UseStartPoint Whether to use the StartPoint of the neuron (often the
+#' @param UseStartPoint Whether to use the StartPoint of the neuron (often the 
 #'   soma) as the starting point of the returned spine.
 #' @param SpatialWeights logical indicating whether spatial distances (default) 
 #'   should be used to weight segments instead of weighting each edge equally.
@@ -190,6 +192,8 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' spine(Cell07PNs[[1]], LengthOnly=TRUE)
 #' # same result since StartPoint is included in longest path
 #' spine(Cell07PNs[[1]], LengthOnly=TRUE, UseStartPoint=TRUE)
+#' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter
+#'   delete.vertices
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE) {
   ng <- as.ngraph(n, weights=SpatialWeights)
   if(UseStartPoint) {
@@ -225,6 +229,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE)
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
+#'   @importFrom igraph graph.empty add.edges
 segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALSE){
   g=graph.empty()
   pointnos=x$d$PointNo
