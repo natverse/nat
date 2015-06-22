@@ -217,7 +217,8 @@ pan3d <- function(button) {
 #' @param PlotAxes the axes for the plot.
 #' @param axes whether axes should be drawn.
 #' @param asp the \code{y/x} aspect ratio, see \code{\link{plot.window}}.
-#' @param main the title for the plot.
+#' @param main the title for the plot
+#' @param sub sub title for the plot
 #' @param xlim limits for the horizontal axis (see also boundingbox)
 #' @param ylim limits for the vertical axis (see also boundingbox)
 #' @param AxisDirections the directions for the axes. By default, R uses the 
@@ -254,7 +255,7 @@ pan3d <- function(button) {
 plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
                         WithText=FALSE, soma=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,
-                        main=x$NeuronName, xlim=NULL, ylim=NULL,
+                        main=x$NeuronName, sub=NULL, xlim=NULL, ylim=NULL,
                         AxisDirections=c(1,-1,1), add=FALSE, col=NULL,
                         PointAlpha=1, tck=NA, lwd=par("lwd"), 
                         boundingbox=NULL, ...) {
@@ -305,7 +306,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
     }
     
     plot(PlottedPoints[,PlotAxes],col=mycols,pch=20,xlim=myxlims,ylim=myylims,
-            main=main,asp=asp,axes=F,tck=tck,...)
+            main=main,sub=sub,asp=asp,axes=F,tck=tck,...)
     # Draw the axes and surrounding box
     if(axes) {
       box()

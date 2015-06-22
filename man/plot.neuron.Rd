@@ -7,9 +7,9 @@
 \method{plot}{neuron}(x, WithLine = TRUE, WithNodes = TRUE,
   WithAllPoints = FALSE, WithText = FALSE, soma = FALSE,
   PlotAxes = c("XY", "YZ", "XZ", "ZY"), axes = TRUE, asp = 1,
-  main = x$NeuronName, xlim = NULL, ylim = NULL, AxisDirections = c(1,
-  -1, 1), add = FALSE, col = NULL, PointAlpha = 1, tck = NA,
-  lwd = par("lwd"), boundingbox = NULL, ...)
+  main = x$NeuronName, sub = NULL, xlim = NULL, ylim = NULL,
+  AxisDirections = c(1, -1, 1), add = FALSE, col = NULL, PointAlpha = 1,
+  tck = NA, lwd = par("lwd"), boundingbox = NULL, ...)
 }
 \arguments{
 \item{x}{a neuron to plot.}
@@ -33,7 +33,9 @@ soma. Either a logical value or a numeric indicating the radius (default
 
 \item{asp}{the \code{y/x} aspect ratio, see \code{\link{plot.window}}.}
 
-\item{main}{the title for the plot.}
+\item{main}{the title for the plot}
+
+\item{sub}{sub title for the plot}
 
 \item{xlim}{limits for the horizontal axis (see also boundingbox)}
 
