@@ -6,9 +6,9 @@
 \title{3D plots of the elements in a neuronlist, optionally using a subset
 expression}
 \usage{
-\method{plot3d}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
-  skipRedraw = 200, WithNodes = FALSE, soma = FALSE, ...,
-  SUBSTITUTE = TRUE)
+\method{plot3d}{neuronlist}(x, subset = NULL, col = NULL,
+  colpal = rainbow, skipRedraw = 200, WithNodes = FALSE, soma = FALSE,
+  ..., SUBSTITUTE = TRUE)
 
 \method{plot3d}{character}(x, db = NULL, ...)
 }

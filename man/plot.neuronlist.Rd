@@ -5,7 +5,7 @@
 \title{2D plots of the elements in a neuronlist, optionally using a subset
 expression}
 \usage{
-\method{plot}{neuronlist}(x, subset, col = NULL, colpal = rainbow,
+\method{plot}{neuronlist}(x, subset = NULL, col = NULL, colpal = rainbow,
   add = NULL, boundingbox = NULL, ..., SUBSTITUTE = TRUE)
 }
 \arguments{

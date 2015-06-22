@@ -399,7 +399,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, skipRedraw=200,
+plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, skipRedraw=200,
                             WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
@@ -498,7 +498,7 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' # subset operation
 #' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
 #'   ylim=c(140,75), WithNodes=FALSE)
-plot.neuronlist<-function(x, subset, col=NULL, colpal=rainbow, add=NULL, 
+plot.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, add=NULL, 
                           boundingbox=NULL, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
@@ -723,7 +723,9 @@ subset.neuronlist<-function(x, subset, filterfun,
     r <- eval(e, df, parent.frame())
     if(is.function(r)) stop("Use of subset with functions is deprecated. ",
                             "Please use filterfun argument")
-    if(is.logical(r)){
+    if(is.null(r)){
+      r=nx
+    } else if(is.logical(r)){
       r=nx[r & !is.na(r)]
     } else if(is.numeric(r)){
       r=nx[na.omit(r)]
