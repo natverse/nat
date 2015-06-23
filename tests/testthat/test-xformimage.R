@@ -1,5 +1,16 @@
 context("xformimage")
 
+quicktable<-function(x) {
+  xname=deparse(substitute(x))
+  tt=tabulate(x+1)
+  levels=seq.int(from=0, length.out = length(tt))
+  nz=tt!=0L
+  
+  structure(tt[nz], .Dim = 2L, 
+            .Dimnames = structure(list(as.character(levels[nz])), .Names = xname),
+            class = "table")
+}
+
 if(!is.null(cmtk.bindir())){
   test_that("xform(image) can carry out a simple reformat operation", {
     td<-tempfile(pattern = 'xformimage_test')
@@ -15,7 +26,7 @@ if(!is.null(cmtk.bindir())){
     imout=read.im3d(out)
     baseline=structure(c(1904662L, 592730L), .Dim = 2L, .Dimnames = structure(list(
       imout = c("0", "255")), .Names = "imout"), class = "table")
-    expect_equal(table(imout), baseline)
+    expect_equal(quicktable(imout), baseline)
     # verify bounding box of output
     bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
     expect_equal(boundingbox(imout), bb_out)
@@ -45,7 +56,7 @@ if(!is.null(cmtk.bindir())){
     imout=read.im3d(out)
     baseline=structure(c(1566120L, 931272L), .Dim = 2L, .Dimnames = structure(list(
       imout = c("0", "255")), .Names = "imout"), class = "table")
-    expect_equal(table(imout), baseline)
+    expect_equal(quicktable(imout), baseline)
     # verify bounding box of output
     bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
     expect_equal(boundingbox(imout), bb_out)
