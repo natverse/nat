@@ -10,7 +10,7 @@ if(!is.null(cmtk.bindir())){
                             target='testdata/nrrd/FCWB_2um_mask.nrrd',
                             interpolation="nn",
                             out=td, Verbose=F))
-    expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask-JFRC2-444_mask.nrrd")
+    expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask_JFRC2-444_mask.nrrd")
     # check that we reformatted as expected
     imout=read.im3d(out)
     baseline=structure(c(1904662L, 592730L), .Dim = 2L, .Dimnames = structure(list(
@@ -40,7 +40,7 @@ if(!is.null(cmtk.bindir())){
                             target='testdata/nrrd/FCWB_2um_mask.nrrd',
                             interpolation="nn",
                             out=td, Verbose=F))
-    expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask-JFRC2-444_mask.nrrd")
+    expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask_JFRC2-444_mask.nrrd")
     # check that we reformatted as expected
     imout=read.im3d(out)
     baseline=structure(c(1566120L, 931272L), .Dim = 2L, .Dimnames = structure(list(
@@ -57,7 +57,7 @@ if(!is.null(cmtk.bindir())){
                             target='testdata/nrrd/FCWB_2um_mask.nrrd',
                             interpolation="nn",
                             out=td, Verbose=F))
-    expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask-JFRC2-444_mask.nrrd")
+    expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask_JFRC2-444_mask.nrrd")
     # check output files are identical
     expect_equal(tools::md5sum(file=out), md5.1)
     
