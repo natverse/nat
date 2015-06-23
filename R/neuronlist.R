@@ -89,21 +89,25 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 
 #' @method [ neuronlist
 #' @export
-"[.neuronlist" <- function(x,i,j,..., drop = TRUE) {
-  # first deal with the attached data.frame
+"[.neuronlist" <- function(x, i, j, drop) {
+  
+  # x[1] => 2 args
+  # x[1, ] or x[, 1] => 3 args
+  if(nargs()>2) {
+    # treat as data.frame
+    df=attr(x, 'df')
+    if(is.null(df)) return(NULL)
+    if(missing(drop)) return(df[i, j])
+    else return(df[i, j, drop=drop])
+  }
+  # treat as neuronlist
+  nl2=structure(NextMethod("["), class = class(x))
   df=attr(x,'df')
   if(!is.null(df)){
-    df=df[i,j,..., drop=drop]
+    df=df[i, ]
   }
-
-  if(missing(i) || !missing(j)) {
-    # just return the data.frame
-    df
-  } else {
-    nl2=structure(NextMethod("["), class = class(x))
-    attr(nl2,'df')=df
-    nl2
-  }
+  attr(nl2,'df')=df
+  nl2
 }
 
 #' Combine multiple neuronlists into a single list
