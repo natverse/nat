@@ -3,8 +3,9 @@
 #' @details if the character vector specifies an amiramesh file, it will be 
 #'   converted to a bare \code{im3d} object and then to an appropriate 
 #'   '--target-grid' specification.
-#' @param target A character vector specifying a file, an \code{im3d} object or
-#'   a 6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
+#' @param target A character vector specifying an image file on disk, an
+#'   \code{im3d} object (or an object that can be coerced to im3d) or a 6-or
+#'   9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].
 #' @param ... additional arguments passed to methods
 #' @return a character vector specifying the full cmtk reformatx '--target' or 
 #'   '--target-grid' argument
@@ -92,8 +93,9 @@ cmtk.targetvolume.default <- function(target, ...) {
 #'   \code{interpolation} must be handled manually.
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
-#' @param output The output image (defaults to targetstem-floatingstem.nrrd)
-#' @param mask Whether to treat target as a binary mask (only reformatting
+#' @param output The path to the output image (defaults to
+#'   \code{"<targetstem>_<floatingstem>.nrrd"})
+#' @param mask Whether to treat target as a binary mask (only reformatting 
 #'   positve voxels)
 #' @param interpolation What interpolation scheme to use for output image 
 #'   (defaults to linear - see details)
@@ -132,12 +134,11 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
                          dryrun=FALSE, Verbose=TRUE, MakeLock=TRUE, 
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
-  # TODO improve default ouput file name
   basestem<-function(f) tools::file_path_sans_ext(basename(as.character(f)))
   if(missing(output)){
-    output=file.path(dirname(floating),paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
+    output=file.path(dirname(floating),paste(basestem(target),"_",basestem(floating),'.nrrd',sep=""))
   } else if(isTRUE(file.info(output)$isdir)){
-    output=file.path(output,paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
+    output=file.path(output,paste(basestem(target),"_",basestem(floating),'.nrrd',sep=""))
   }
   if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
   else OverWrite=match.arg(OverWrite)
