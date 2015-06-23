@@ -95,8 +95,7 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   # x[1, ] or x[, 1] => 3 args
   if(nargs()>2) {
     # treat as data.frame
-    df=attr(x, 'df')
-    if(is.null(df)) return(NULL)
+    df=as.data.frame(x)
     if(missing(drop)) return(df[i, j])
     else return(df[i, j, drop=drop])
   }
