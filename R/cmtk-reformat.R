@@ -133,7 +133,7 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
                          OverWrite=c("no","update","yes"),
                          filesToIgnoreModTimes=NULL, ...){
   # TODO improve default ouput file name
-  basestem<-function(f) tools::file_path_sans_ext(basename(f))
+  basestem<-function(f) tools::file_path_sans_ext(basename(as.character(f)))
   if(missing(output)){
     output=file.path(dirname(floating),paste(basestem(target),"-",basestem(floating),'.nrrd',sep=""))
   } else if(isTRUE(file.info(output)$isdir)){
