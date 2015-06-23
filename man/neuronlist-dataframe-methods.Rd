@@ -2,6 +2,7 @@
 % Please edit documentation in R/neuronlist.R
 \name{neuronlist-dataframe-methods}
 \alias{[.neuronlist}
+\alias{[<-.neuronlist}
 \alias{droplevels}
 \alias{droplevels.neuronlist}
 \alias{head}
@@ -14,6 +15,8 @@
 \title{Methods for working with the dataframe attached to a neuronlist}
 \usage{
 \method{[}{neuronlist}(x, i, j, drop)
+
+\method{[}{neuronlist}(x, i, j) <- value
 
 \method{droplevels}{neuronlist}(x, except, ...)
 
@@ -34,6 +37,11 @@ only, empty. Numeric values are coerced to integer as if by
     lowest possible dimension.  The default is to drop if only one
     column is left, but \bold{not} to drop if only one row is left.}
 
+\item{value}{A suitable replacement value: it will be repeated a whole
+    number of times if necessary and it may be coerced: see the
+    Coercion section.  If \code{NULL}, deletes the column if a single
+    column is selected.}
+
 \item{except}{indices of columns from which \emph{not} to drop levels}
 
 \item{...}{Further arguments passed to default methods (and usually ignored)}
@@ -47,8 +55,10 @@ the attached dataframe with levels dropped (NB \strong{not} the
   neuronlist)
 }
 \description{
-\code{[.neuronlist} behaves like the base \code{[.data.frame}
-  for the data.frame attached to the neuronlist.
+\code{[.neuronlist} and \code{[<-.neuronlist} behave like the
+  corresponding base methods (\code{[.data.frame}, \code{[<-.data.frame})
+  allowing extraction or replacement of parts of the data.frame attached to
+  the neuronlist.
 
 \code{droplevels} Remove redundant factor levels in dataframe
   attached to neuronlist
@@ -71,13 +81,30 @@ kcs20[, 'soma_side']
 # alternative to as.data.frame(kcs20)
 kcs20[, ]
 
-# get row/column names of attached data.frame
+## can also set columns
+kcs13=kcs20[1:3]
+kcs13[,'side']=as.character(kcs13[,'soma_side'])
+head(kcs13)
+# or parts of columns
+kcs13[1,'soma_side']='R'
+kcs13['FruMARCM-M001205_seg002','soma_side']='L'
+# remove a column
+kcs13[1,'side']=NULL
+all.equal(kcs13, kcs20[1:3])
+
+# can even replace the whole data.frame like this
+kcs13[,]=kcs13[,]
+all.equal(kcs13, kcs20[1:3])
+
+## get row/column names of attached data.frame
 # (unfortunately implementing ncol/nrow is challenging)
 rownames(kcs20)
 colnames(kcs20)
 }
 \seealso{
-\code{\link{[.data.frame}}
+\code{\link{[.data.frame}},
+
+\code{\link{[<-.data.frame}}
 
 \code{\link{droplevels}}
 
