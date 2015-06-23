@@ -13,9 +13,9 @@
 \alias{with.neuronlist}
 \title{Methods for working with the dataframe attached to a neuronlist}
 \usage{
-\method{droplevels}{neuronlist}(x, except, ...)
 \method{[}{neuronlist}(x, i, j, drop)
 
+\method{droplevels}{neuronlist}(x, except, ...)
 
 \method{with}{neuronlist}(data, expr, ...)
 
@@ -61,6 +61,15 @@ the attached dataframe with levels dropped (NB \strong{not} the
 
 \code{tail} Return the last part of data.frame attached to
   neuronlist
+}
+\examples{
+## treat kcs20 as data.frame
+kcs20[1, ]
+kcs20[1:3, ]
+kcs20[, 1:4]
+kcs20[, 'soma_side']
+# alternative to as.data.frame(kcs20)
+kcs20[, ]
 }
 \seealso{
 \code{\link{[.data.frame}}

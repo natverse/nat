@@ -97,6 +97,14 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #' @inheritParams base::`[.data.frame`
 #' @name neuronlist-dataframe-methods
 #' @seealso \code{\link{[.data.frame}}
+#' @examples
+#' ## treat kcs20 as data.frame
+#' kcs20[1, ]
+#' kcs20[1:3, ]
+#' kcs20[, 1:4]
+#' kcs20[, 'soma_side']
+#' # alternative to as.data.frame(kcs20)
+#' kcs20[, ]
 "[.neuronlist" <- function(x, i, j, drop) {
   
   # x[1] => 2 args
