@@ -70,6 +70,11 @@ kcs20[, 1:4]
 kcs20[, 'soma_side']
 # alternative to as.data.frame(kcs20)
 kcs20[, ]
+
+# get row/column names of attached data.frame
+# (unfortunately implementing ncol/nrow is challenging)
+rownames(kcs20)
+colnames(kcs20)
 }
 \seealso{
 \code{\link{[.data.frame}}

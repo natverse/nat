@@ -105,6 +105,11 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #' kcs20[, 'soma_side']
 #' # alternative to as.data.frame(kcs20)
 #' kcs20[, ]
+#' 
+#' # get row/column names of attached data.frame 
+#' # (unfortunately implementing ncol/nrow is challenging)
+#' rownames(kcs20)
+#' colnames(kcs20)
 "[.neuronlist" <- function(x, i, j, drop) {
   
   # x[1] => 2 args
@@ -123,6 +128,12 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   }
   attr(nl2,'df')=df
   nl2
+}
+
+#' @export
+dimnames.neuronlist<-function(x) {
+  # this only makes sense for the attached df
+  dimnames(as.data.frame(x))
 }
 
 #' Combine multiple neuronlists into a single list
