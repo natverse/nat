@@ -88,7 +88,15 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 }
 
 #' @method [ neuronlist
+#' @description \code{[.neuronlist} behaves like the base \code{[.data.frame} 
+#'   for the data.frame attached to the neuronlist.
 #' @export
+#' @param i,j elements to extract or replace. Nnumeric or character or, for [
+#'   only, empty. Numeric values are coerced to integer as if by
+#'   \code{as.integer}. See \code{\link{[.data.frame}} for details.
+#' @inheritParams base::`[.data.frame`
+#' @name neuronlist-dataframe-methods
+#' @seealso \code{\link{[.data.frame}}
 "[.neuronlist" <- function(x, i, j, drop) {
   
   # x[1] => 2 args
