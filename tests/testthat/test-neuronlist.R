@@ -44,6 +44,12 @@ test_that("[.neuronlist does the right thing",{
   all.equal(kcs20[1:2,], as.data.frame(kcs20[1:2]))
   all.equal(kcs20[1:2,1], as.data.frame(kcs20[1:2])[[1]])
   all.equal(kcs20[,], as.data.frame(kcs20))
+  
+  attr(kcs20,'df')=NULL
+  all.equal(kcs20[1:2], c(kcs20[1], kcs20[2]))
+  all.equal(kcs20[1,], as.data.frame(kcs20[1]))
+  all.equal(kcs20[1:2,], as.data.frame(kcs20[1:2]))
+  all.equal(kcs20[,], as.data.frame(kcs20))
 })
 
 context("neuronlist: subset")
