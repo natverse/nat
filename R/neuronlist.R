@@ -116,7 +116,7 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #' kcs13[1,'soma_side']='R'
 #' kcs13['FruMARCM-M001205_seg002','soma_side']='L'
 #' # remove a column
-#' kcs13[1,'side']=NULL
+#' kcs13[,'side']=NULL
 #' all.equal(kcs13, kcs20[1:3])
 #' 
 #' # can even replace the whole data.frame like this
