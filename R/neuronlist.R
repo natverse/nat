@@ -181,12 +181,13 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' @param row.names row names (defaults to names of objects in neuronlist, which
 #'   is nearly always what you want.)
 #' @param optional ignored in this method
-#' @param ... additional arguments passed to \code{\link{data.frame}} (see
+#' @param ... additional arguments passed to \code{\link{data.frame}} (see 
 #'   examples)
 #' @export
 #' @return a \code{data.frame} with length(x) rows, named according to names(x) 
 #'   and containing the columns from the attached data.frame, when present.
-#' @seealso \code{\link{data.frame}}, \code{\link{neuronlist}}
+#' @seealso \code{\link{[.neuronlist}}, \code{\link{data.frame}},
+#'   \code{\link{neuronlist}}
 #' @examples 
 #' head(as.data.frame(kcs20))
 #' 
