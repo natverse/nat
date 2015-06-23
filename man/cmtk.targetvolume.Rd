@@ -16,8 +16,9 @@ cmtk.targetvolume(target, ...)
 \method{cmtk.targetvolume}{default}(target, ...)
 }
 \arguments{
-\item{target}{A character vector specifying a file, an \code{im3d} object or
-a 6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
+\item{target}{A character vector specifying an image file on disk, an
+\code{im3d} object (or an object that can be coerced to im3d) or a 6-or
+9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
 
 \item{...}{additional arguments passed to methods}
 }

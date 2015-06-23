@@ -15,11 +15,12 @@ cmtk.reformatx(floating, registrations, output, target, mask = FALSE,
 
 \item{registrations}{One or more CMTK format registrations on disk}
 
-\item{output}{The output image (defaults to
+\item{output}{The path to the output image (defaults to
 \code{"<targetstem>_<floatingstem>.nrrd"})}
 
-\item{target}{A character vector specifying a file, an \code{im3d} object or
-a 6-or 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
+\item{target}{A character vector specifying an image file on disk, an
+\code{im3d} object (or an object that can be coerced to im3d) or a 6-or
+9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
 
 \item{mask}{Whether to treat target as a binary mask (only reformatting
 positve voxels)}
