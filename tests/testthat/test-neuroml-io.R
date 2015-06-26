@@ -33,8 +33,14 @@ test_that("parse neuroml files", {
       expect_equal(read.neuron.neuroml(nml), read.neuron(swc), info = basename(nml))
     )
   }
+  myidentical_graph<-function(target, current, ...){
+    old_igraph = package_version(igraph::igraph.version())<'1.0'
+    if(old_igraph) isTRUE(all.equal(target, current, ...))
+    else igraph::identical_graphs(target, current)
+  }
   suppressWarnings(
-   expect_equal(as.ngraph(read.morphml(nml)[[1]]), as.ngraph(read.neuron(swc)))
+   expect_true(myidentical_graph(as.ngraph(read.morphml(nml)[[1]]), 
+                                 as.ngraph(read.neuron(swc))))
   )
 })
 
