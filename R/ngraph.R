@@ -283,3 +283,9 @@ EdgeListFromSegList<-function(SegList){
   starts=unlist(lapply(sl,function(x) x[-length(x)]))
   cbind(starts,ends)
 }
+
+all.equal.ngraph<-function(target, current, ...){
+  old_igraph = package_version(igraph::igraph.version())<'1.0'
+  if(old_igraph) NextMethod()
+  else igraph::identical_graphs(target, current)
+}
