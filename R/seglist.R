@@ -73,11 +73,11 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @seealso \code{\link{ngraph},\link{igraph}}
 #' @export
 #' @method as.seglist igraph
-#' @importFrom igraph is.directed
+#' @importFrom igraph is.directed is.connected graph.dfs degree
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle degenerate cases
-  if(!igraph::is.connected(x)) stop("Graph is not fully connected!")
+  if(!is.connected(x)) stop("Graph is not fully connected!")
   if(vcount(x)==0) {
     if(Verbose) warning("Empty graph! Seglist not defined")
     return(NULL)
@@ -93,11 +93,11 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # having separate program logic
   vids=igraph::V(x)$vid
   if(is.null(vids)){
-    vids=seq.int(igraph::vcount(x))
+    vids=seq.int(vcount(x))
   }
   
   # Floating point
-  if(igraph::vcount(x)==1) {
+  if(vcount(x)==1) {
     return(seglist(vids))
   }
   
@@ -121,8 +121,8 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   }
   
   # Now do a depth first search to ensure that ordering is correct
-  dfs=igraph::graph.dfs(x, root=origin, father=TRUE, neimode='all')
-  ncount=igraph::degree(x)
+  dfs=graph.dfs(x, root=origin, father=TRUE, neimode='all')
+  ncount=degree(x)
   # put the first vertex into the first segment
   # note that here and elsewhere the points stored in curseg will be the
   # _original_ vertex ids specified by "vid" attribute of input graph
