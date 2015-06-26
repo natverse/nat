@@ -122,19 +122,22 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   
   # Now do a depth first search to ensure that ordering is correct
   dfs=graph.dfs(x, root=origin, father=TRUE, neimode='all')
+  # cache orders for speed: dfs$order[i] is slooooow in igraph>=1.0
+  orders=as.integer(dfs$order)
   ncount=degree(x)
   # put the first vertex into the first segment
   # note that here and elsewhere the points stored in curseg will be the
   # _original_ vertex ids specified by "vid" attribute of input graph
-  curseg=vids[dfs$order[1]]
+  curseg=vids[orders[1]]
   if(length(ncount)==1) stop("Unexpected singleton point found!")
   sl=seglist()
   # we have more than 1 point in graph and some work to do!
+  fathers=as.integer(dfs$father)
   for(i in seq.int(from=2,to=length(dfs$order))){
-    curpoint=dfs$order[i]
+    curpoint=orders[i]
     if(length(curseg)==0){
       # segment start, so initialise with parent
-      curseg=vids[dfs$father[curpoint]]
+      curseg=vids[fathers[curpoint]]
     }
     # always add current point
     curseg=c(curseg,vids[curpoint])
