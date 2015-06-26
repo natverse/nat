@@ -88,14 +88,79 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 }
 
 #' @method [ neuronlist
+#' @description \code{[.neuronlist} and \code{[<-.neuronlist} behave like the 
+#'   corresponding base methods (\code{[.data.frame}, \code{[<-.data.frame}) 
+#'   allowing extraction or replacement of parts of the data.frame attached to
+#'   the neuronlist.
 #' @export
-"[.neuronlist" <- function(x,i,...) {
+#' @param i,j elements to extract or replace. Nnumeric or character or, for [ 
+#'   only, empty. Numeric values are coerced to integer as if by 
+#'   \code{as.integer}. See \code{\link{[.data.frame}} for details.
+#' @inheritParams base::`[.data.frame`
+#' @name neuronlist-dataframe-methods
+#' @seealso \code{\link{[.data.frame}}, @seealso \code{\link{[<-.data.frame}}
+#' @examples
+#' ## treat kcs20 as data.frame
+#' kcs20[1, ]
+#' kcs20[1:3, ]
+#' kcs20[, 1:4]
+#' kcs20[, 'soma_side']
+#' # alternative to as.data.frame(kcs20)
+#' kcs20[, ]
+#' 
+#' ## can also set columns
+#' kcs13=kcs20[1:3]
+#' kcs13[,'side']=as.character(kcs13[,'soma_side'])
+#' head(kcs13)
+#' # or parts of columns
+#' kcs13[1,'soma_side']='R'
+#' kcs13['FruMARCM-M001205_seg002','soma_side']='L'
+#' # remove a column
+#' kcs13[,'side']=NULL
+#' all.equal(kcs13, kcs20[1:3])
+#' 
+#' # can even replace the whole data.frame like this
+#' kcs13[,]=kcs13[,]
+#' all.equal(kcs13, kcs20[1:3])
+#' 
+#' ## get row/column names of attached data.frame 
+#' # (unfortunately implementing ncol/nrow is challenging)
+#' rownames(kcs20)
+#' colnames(kcs20)
+"[.neuronlist" <- function(x, i, j, drop) {
+  
+  # x[1] => 2 args
+  # x[1, ] or x[, 1] => 3 args
+  if(nargs()>2) {
+    # treat as data.frame
+    df=as.data.frame(x)
+    if(missing(drop)) return(df[i, j])
+    else return(df[i, j, drop=drop])
+  }
+  # treat as neuronlist
   nl2=structure(NextMethod("["), class = class(x))
   df=attr(x,'df')
   if(!is.null(df)){
-    attr(nl2,'df')=df[i,,...]
+    df=df[i, ]
   }
+  attr(nl2,'df')=df
   nl2
+}
+
+#' @export
+#' @rdname neuronlist-dataframe-methods
+"[<-.neuronlist" <- function(x, i, j, value) {
+  if(nargs()<4) return(NextMethod())
+  df=as.data.frame(x)
+  df[i,j]=value
+  attr(x,'df')=df
+  x
+}
+
+#' @export
+dimnames.neuronlist<-function(x) {
+  # this only makes sense for the attached df
+  dimnames(as.data.frame(x))
 }
 
 #' Combine multiple neuronlists into a single list
@@ -143,12 +208,13 @@ c.neuronlist<-function(..., recursive = FALSE){
 #' @param row.names row names (defaults to names of objects in neuronlist, which
 #'   is nearly always what you want.)
 #' @param optional ignored in this method
-#' @param ... additional arguments passed to \code{\link{data.frame}} (see
+#' @param ... additional arguments passed to \code{\link{data.frame}} (see 
 #'   examples)
 #' @export
 #' @return a \code{data.frame} with length(x) rows, named according to names(x) 
 #'   and containing the columns from the attached data.frame, when present.
-#' @seealso \code{\link{data.frame}}, \code{\link{neuronlist}}
+#' @seealso \code{\link{[.neuronlist}}, \code{\link{data.frame}},
+#'   \code{\link{neuronlist}}
 #' @examples 
 #' head(as.data.frame(kcs20))
 #' 

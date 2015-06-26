@@ -37,6 +37,7 @@ str(as.data.frame(kcs20, i=seq(kcs20), abc=LETTERS[seq(kcs20)],
   stringsAsFactors=FALSE))
 }
 \seealso{
-\code{\link{data.frame}}, \code{\link{neuronlist}}
+\code{\link{[.neuronlist}}, \code{\link{data.frame}},
+  \code{\link{neuronlist}}
 }
 
