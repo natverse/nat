@@ -18,7 +18,7 @@
 
 \method{[}{neuronlist}(x, i, j) <- value
 
-\method{droplevels}{neuronlist}(x, except, ...)
+\method{droplevels}{neuronlist}(x, except = NULL, ...)
 
 \method{with}{neuronlist}(data, expr, ...)
 

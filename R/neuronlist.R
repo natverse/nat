@@ -678,8 +678,8 @@ makecols<-function(cols, colpal, nitems) {
 #' @return the attached dataframe with levels dropped (NB \strong{not} the
 #'   neuronlist)
 #' @seealso \code{\link{droplevels}}
-droplevels.neuronlist<-function(x, except, ...){
-  droplevels(attr(x,'df'))
+droplevels.neuronlist<-function(x, except=NULL, ...){
+  droplevels(attr(x,'df'), except, ...)
 }
 
 #' @description \code{with} Evaluate expression in the context of dataframe
