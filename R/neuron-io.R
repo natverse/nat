@@ -219,22 +219,6 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
             " and ",length(new_neurons),' new neurons')
     paths=paths[nn]
   } else nl=neuronlist()
-  # Look after the attached dataframe
-  if(!is.null(df)){
-    matching_rows=intersect(nn,rownames(df))
-    if(length(matching_rows)){
-      missing_rows=setdiff(nn,matching_rows)
-      if(length(missing_rows))
-        stop("Some neurons are not recorded in dataframe: ",
-             paste(missing_rows,collapse=" "))
-      missing_neurons=setdiff(matching_rows,nn)
-      if(length(missing_neurons))
-        warning(length(missing_neurons), 
-                " rows in dataframe do not have a matching neuron.")
-    } else {
-      stop("Dataframe rownames do not match neuron names.")
-    }
-  }
   # Actually read in the neurons, making sure that warnings/errors are thrown
   # immediately so that we can tell which neuron generated them
   ow=options(warn=1)
@@ -272,7 +256,10 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
     }
   }
   # nb only keep dataframe rows for neurons that were successfully read in
-  attr(nl,'df')=df[names(nl),]
+  # Look after the attached dataframe
+  if(!is.null(df)){
+    data.frame(nl)=df
+  }
   nl
 }
 

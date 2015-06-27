@@ -36,9 +36,20 @@ kcs5=kcs20[1:5]
 methods(class='neuronlist')
 }
 \seealso{
-\code{\link{as.data.frame.neuronlist}}
+\code{\link{as.data.frame.neuronlist}},
+  \code{\link{neuronlist-dataframe-methods}}
 
-Other neuronlist: \code{\link{as.neuronlistfh}},
+Other neuronlist: \code{\link{*.neuronlist}},
+  \code{\link{+.neuronlist}}, \code{\link{-.neuronlist}},
+  \code{\link{/.neuronlist}}; \code{\link{[.neuronlist}},
+  \code{\link{[<-.neuronlist}}, \code{\link{droplevels}},
+  \code{\link{droplevels.neuronlist}}, \code{\link{head}},
+  \code{\link{head.neuronlist}},
+  \code{\link{neuronlist-dataframe-methods}},
+  \code{\link{neuronlist-dataframe-methods}},
+  \code{\link{tail}}, \code{\link{tail.neuronlist}},
+  \code{\link{with}}, \code{\link{with.neuronlist}};
+  \code{\link{as.neuronlistfh}},
   \code{\link{as.neuronlistfh.neuronlist}},
   \code{\link{is.neuronlistfh}},
   \code{\link{neuronlistfh}}, \code{\link{neuronlistfh}};

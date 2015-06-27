@@ -173,10 +173,19 @@ plot3d(subset(kcs20fh, type=='gamma'))
 \seealso{
 \code{\link[filehash]{filehash-class}}
 
-Other neuronlist: \code{\link{is.neuronlist}};
-  \code{\link{neuronlist}}; \code{\link{nlapply}},
-  \code{\link{nmapply}}; \code{\link{read.neurons}};
-  \code{\link{write.neurons}}
+Other neuronlist: \code{\link{*.neuronlist}},
+  \code{\link{+.neuronlist}}, \code{\link{-.neuronlist}},
+  \code{\link{/.neuronlist}}; \code{\link{[.neuronlist}},
+  \code{\link{[<-.neuronlist}}, \code{\link{droplevels}},
+  \code{\link{droplevels.neuronlist}}, \code{\link{head}},
+  \code{\link{head.neuronlist}},
+  \code{\link{neuronlist-dataframe-methods}},
+  \code{\link{neuronlist-dataframe-methods}},
+  \code{\link{tail}}, \code{\link{tail.neuronlist}},
+  \code{\link{with}}, \code{\link{with.neuronlist}};
+  \code{\link{is.neuronlist}}; \code{\link{neuronlist}};
+  \code{\link{nlapply}}, \code{\link{nmapply}};
+  \code{\link{read.neurons}}; \code{\link{write.neurons}}
 
 Other neuronlistfh: \code{\link{read.neuronlistfh}};
   \code{\link{remotesync}},
