@@ -113,5 +113,16 @@ colnames(kcs20)
 \code{\link{head}}
 
 \code{\link{tail}}
+
+Other neuronlist: \code{\link{*.neuronlist}},
+  \code{\link{+.neuronlist}}, \code{\link{-.neuronlist}},
+  \code{\link{/.neuronlist}};
+  \code{\link{as.neuronlistfh}},
+  \code{\link{as.neuronlistfh.neuronlist}},
+  \code{\link{is.neuronlistfh}},
+  \code{\link{neuronlistfh}}, \code{\link{neuronlistfh}};
+  \code{\link{is.neuronlist}}; \code{\link{neuronlist}};
+  \code{\link{nlapply}}, \code{\link{nmapply}};
+  \code{\link{read.neurons}}; \code{\link{write.neurons}}
 }
 

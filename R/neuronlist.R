@@ -3,9 +3,9 @@
 #' @description \code{neuronlist} objects consist of a list of neuron objects 
 #'   along with an optional attached dataframe containing information about the 
 #'   neurons. \code{neuronlist} objects can be indexed using their name or the 
-#'   number of the neuron like a regular list. Both the \code{list} itself and
+#'   number of the neuron like a regular list. Both the \code{list} itself and 
 #'   the attached \code{data.frame} must have the same unique (row)names. If the
-#'   \code{[} operator is used to index the list, the attached dataframe will
+#'   \code{[} operator is used to index the list, the attached dataframe will 
 #'   also be subsetted.
 #'   
 #'   It is perfectly acceptable not to pass any parameters, generating an empty 
@@ -15,7 +15,8 @@
 #'   containing information about each neuron.
 #' @return A new neuronlist object.
 #' @family neuronlist
-#' @seealso \code{\link{as.data.frame.neuronlist}}
+#' @seealso \code{\link{as.data.frame.neuronlist}},
+#'   \code{\link{neuronlist-dataframe-methods}}
 #' @export
 #' @examples
 #' # generate an empty neuronlist
@@ -99,6 +100,7 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #' @inheritParams base::`[.data.frame`
 #' @name neuronlist-dataframe-methods
 #' @seealso \code{\link{[.data.frame}}, @seealso \code{\link{[<-.data.frame}}
+#' @family neuronlist
 #' @examples
 #' ## treat kcs20 as data.frame
 #' kcs20[1, ]
@@ -698,6 +700,7 @@ makecols<-function(cols, colpal, nitems) {
 #' @export
 #' @rdname neuronlist-arithmetic
 #' @method + neuronlist
+#' @family neuronlist
 `+.neuronlist` <- function(x,y) nlapply(x,`+`,y)
 
 #' @export

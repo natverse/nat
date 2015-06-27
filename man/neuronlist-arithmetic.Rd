@@ -31,4 +31,21 @@ TODO Figure out how to document arithemtic functions in one go
 \examples{
 mn2<-Cell07PNs[1:10]*2
 }
+\seealso{
+Other neuronlist: \code{\link{[.neuronlist}},
+  \code{\link{[<-.neuronlist}}, \code{\link{droplevels}},
+  \code{\link{droplevels.neuronlist}}, \code{\link{head}},
+  \code{\link{head.neuronlist}},
+  \code{\link{neuronlist-dataframe-methods}},
+  \code{\link{neuronlist-dataframe-methods}},
+  \code{\link{tail}}, \code{\link{tail.neuronlist}},
+  \code{\link{with}}, \code{\link{with.neuronlist}};
+  \code{\link{as.neuronlistfh}},
+  \code{\link{as.neuronlistfh.neuronlist}},
+  \code{\link{is.neuronlistfh}},
+  \code{\link{neuronlistfh}}, \code{\link{neuronlistfh}};
+  \code{\link{is.neuronlist}}; \code{\link{neuronlist}};
+  \code{\link{nlapply}}, \code{\link{nmapply}};
+  \code{\link{read.neurons}}; \code{\link{write.neurons}}
+}
 
