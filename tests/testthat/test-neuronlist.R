@@ -85,7 +85,7 @@ test_that("subset.neuronlist drops NA rows", {
   data.frame(x)$Glomerulus[1]=NA
   
   expect_equal(subset(Cell07PNs, Glomerulus=='DL3'), 
-               subset(x, Glomerulus=='DL3'))
+               subset(x, Glomerulus=='DL3'), check.attributes=F)
 })
 
 aptip<-function(x) {xyz=xyzmatrix(x);any(xyz[,'X']>350 & xyz[,'Y']<40)}
