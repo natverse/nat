@@ -15,11 +15,11 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
     stop("Cannot establish root points for undirected graph")
   
   # root points are those without incoming edges
-  raw_vids=seq_len(vcount(x))
-  vertex_ids = if(type=='root') raw_vids[degree(x,mode='in')==0]
-  else if(type=='end') raw_vids[degree(x)==1]
-  else if(type=='branch') raw_vids[degree(x)>2]
+  selected = if(type=='root') degree(x,mode='in')==0
+  else if(type=='end') degree(x)==1
+  else if(type=='branch') degree(x)>2
   
+  vertex_ids=which(selected)
   if(type=='root' && exclude.isolated) {
     # only include vertex_ids with connections
     vertex_ids=vertex_ids[degree(x,vertex_ids)>0]
