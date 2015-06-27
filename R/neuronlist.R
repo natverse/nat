@@ -153,6 +153,8 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #' @rdname neuronlist-dataframe-methods
 "[<-.neuronlist" <- function(x, i, j, value) {
   if(nargs()<4) return(NextMethod())
+  # special case if we are replacing the whole 
+  if(missing(i) && missing(j)) return(data.frame(x)<-value)
   df=as.data.frame(x)
   df[i,j]=value
   attr(x,'df')=df
