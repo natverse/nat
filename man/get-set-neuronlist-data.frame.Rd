@@ -14,37 +14,33 @@ data.frame(x) <- value
 \method{data.frame}{neuronlist}(x) <- value
 }
 \arguments{
-  \item{x}{neuronlist to convert}
+\item{x}{neuronlist to convert}
 
-  \item{row.names}{row names (defaults to names of objects
-  in neuronlist, which is nearly always what you want.)}
+\item{row.names}{row names (defaults to names of objects in neuronlist, which
+is nearly always what you want.)}
 
-  \item{optional}{ignored in this method}
+\item{optional}{ignored in this method}
 
-  \item{...}{additional arguments passed to
-  \code{\link{data.frame}} (see examples)}
+\item{...}{additional arguments passed to \code{\link{data.frame}} (see
+examples)}
 
-  \item{value}{The new data.frame to be attached to
-  \code{x}}
+\item{value}{The new data.frame to be attached to \code{x}}
 }
 \value{
-for \code{as.data.frame.neuronlist}, a \code{data.frame}
-with length(x) rows, named according to names(x) and
-containing the columns from the attached data.frame, when
-present.
+for \code{as.data.frame.neuronlist}, a \code{data.frame} with
+  length(x) rows, named according to names(x) and containing the columns from
+  the attached data.frame, when present.
 
-for \code{data.frame<-.neuronlist}, a neuronlist with the
-attached data.frame.
+for \code{data.frame<-.neuronlist}, a neuronlist with the attached
+  data.frame.
 }
 \description{
-For \code{as.data.frame}, when there is no attached
-data.frame the result will be a data.frame with 0 columns
-but an appropriate number of rows, named by the objects in
-the neuronlist.
+For \code{as.data.frame}, when there is no attached data.frame the result
+will be a data.frame with 0 columns but an appropriate number of rows, named by
+the objects in the neuronlist.
 
-\code{data.frame<-} methods set the data frame attached to
-an object. At present this is only used for neuronlist
-objects.
+\code{data.frame<-} methods set the data frame attached to an
+  object. At present this is only used for neuronlist objects.
 }
 \examples{
 head(as.data.frame(kcs20))
