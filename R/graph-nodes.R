@@ -15,13 +15,14 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
     stop("Cannot establish root points for undirected graph")
   
   # root points are those without incoming edges
-  vertex_ids = if(type=='root') igraph::V(x)[igraph::degree(x,mode='in')==0]
-  else if(type=='end') igraph::V(x)[igraph::degree(x)==1]
-  else if(type=='branch') igraph::V(x)[igraph::degree(x)>2]
+  selected = if(type=='root') degree(x,mode='in')==0
+  else if(type=='end') degree(x)==1
+  else if(type=='branch') degree(x)>2
   
+  vertex_ids=which(selected)
   if(type=='root' && exclude.isolated) {
     # only include vertex_ids with connections
-    vertex_ids=vertex_ids[igraph::degree(x,vertex_ids)>0]
+    vertex_ids=vertex_ids[degree(x,vertex_ids)>0]
   }
   
   if(is.character(original.ids))
