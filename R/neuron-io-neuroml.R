@@ -126,6 +126,7 @@ process_morphml_cell<-function(cell, ...) {
   structure(list(segments=segdf, cables=cabledf), class='morphml_cell')
 }
 
+#' @importFrom stats reshape
 as.data.frame.morphml_cell<-function(x, ...){
 
   # convert neuroml to swc

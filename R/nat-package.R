@@ -66,5 +66,5 @@
 #' \code{\link{rgl}} which is used for visualisation.
 #' @docType package
 #' @keywords package
-#' @import rgl
+#' @import rgl graphics grDevices utils
 NULL

@@ -755,7 +755,6 @@ with.neuronlist<-function(data, expr, ...) {
 #' @rdname neuronlist-dataframe-methods
 #' @aliases head.neuronlist head
 #' @export
-#' @importFrom utils head
 #' @seealso \code{\link{head}}
 head.neuronlist<-function(x, ...) {
   head(as.data.frame(x), ...)
@@ -767,7 +766,6 @@ head.neuronlist<-function(x, ...) {
 #' @rdname neuronlist-dataframe-methods
 #' @aliases tail.neuronlist tail
 #' @export
-#' @importFrom utils tail
 #' @seealso \code{\link{tail}}
 tail.neuronlist<-function(x, ...) {
   tail(as.data.frame(x), ...)
@@ -826,6 +824,7 @@ tail.neuronlist<-function(x, ...) {
 #' subset(dps, names(dps)[1:100],filterfun=function(x) {sum(s3d(xyzmatrix(x)))>0},
 #'   rval='names')
 #' }
+#' @importFrom stats na.omit
 subset.neuronlist<-function(x, subset, filterfun, 
                             rval=c("neuronlist","names",'data.frame'), ...){
   rval=match.arg(rval)

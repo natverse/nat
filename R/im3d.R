@@ -448,7 +448,6 @@ dim.im3d<-function(x){
 #' Method to plot spatially calibrated image arrays
 #' @export
 #' @method image im3d
-#' @importFrom graphics image .filled.contour
 #' @param x The im3d object containing the data to be plotted  (\code{NA}s are 
 #'   allowed).
 #' @param zlim the minimum and maximum \code{z} values for which colors should 
@@ -949,7 +948,6 @@ clampmax<-function(xmin, xmax, replace.infinite=NA_real_) {
 #' @param border Color for rectangle border (see \code{\link{rect}}'s 
 #'   \code{border} argument for details).
 #' @param \dots Additional arguments for \code{plot}
-#' @importFrom graphics rect
 #' @export
 #' @examples
 #' \dontrun{
