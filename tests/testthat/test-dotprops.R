@@ -37,6 +37,12 @@ test_that("a dotprops object can be made from a nrrd, via im3d", {
   expect_equal(dp$points[1:5, ], points.expected, tol=1e-4)
 })
 
+test_that("make a dotprops object from a neuron",{
+  expect_is(x<-dotprops(Cell07PNs[[1]], k=5), 'dotprops')
+  expect_equal(xyzmatrix(x), xyzmatrix(Cell07PNs[[1]]))
+  expect_is(x<-dotprops(Cell07PNs[[1]], resample=1), 'dotprops')
+})
+
 test_that("pruning a dotprops object with itself results in no change", {
   kc1=kcs20[[1]]
   expect_equal(prune(kc1, kc1, maxdist=0), kc1)
