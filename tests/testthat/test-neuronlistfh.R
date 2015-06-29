@@ -26,6 +26,10 @@ test_that("neuronlistfh behaves like a neuronlist",{
   kcs20t=kcs20+1
   kcs20fht=kcs20fh+1
   expect_equal(kcs20t,kcs20fht)
+  
+  # data.frames
+  expect_equal(kcs20fh[1:5,], kcs20[1:5,])
+})
 })
 
 test_that("we can load a previously created on disk neuronlistfh representation",{
