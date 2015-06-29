@@ -72,10 +72,8 @@ data.frame describing results with the following columns when image
 Calculate image statistics for a nrrd or other CMTK compatible file
 }
 \details{
-When given a label mask returns a dataframe with a row for each
-  level of the label field. If GJ's modified version of CMTK statistics is
-  available this will include an extra column with the number of non-zero
-  voxels in the main image for each level of the mask.
+When given a label mask, returns a dataframe with a row for each
+  level of the label field.
 }
 \examples{
 \dontrun{

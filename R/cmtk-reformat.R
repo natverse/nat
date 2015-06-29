@@ -195,10 +195,8 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
 
 #' Calculate image statistics for a nrrd or other CMTK compatible file
 #' 
-#' @details When given a label mask returns a dataframe with a row for each 
-#'   level of the label field. If GJ's modified version of CMTK statistics is 
-#'   available this will include an extra column with the number of non-zero 
-#'   voxels in the main image for each level of the mask.
+#' @details When given a label mask, returns a dataframe with a row for each 
+#'   level of the label field.
 #' @details Note that the Entropy column (sometimes H, sometimes Entropy) will 
 #'   always be named Entropy in the returned dataframe.
 #' @param f Path to image file (any CMTK compatible format)
