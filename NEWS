@@ -1,3 +1,31 @@
+nat 1.7.0
+=========
+* implement extraction/replacement of the data.frame attached to a neuronlist
+  using the [ operator (#217)
+* fix xform of image data (#143, #199)
+* implement handling of inverted (swapped i.e. reference to sample) 
+  registrations in xform(image) (#199)
+* normalise handling of registration sequences and inversion in 
+  xform/image/points (all 3 expect reg to be in sample to ref order and for any
+  individual registration to be marked with swap=T if it is ref->sample)
+* read.nrrd no longer returns an im3d (use read.im3d) (#238)
+* teach write.nrrd to handle more diverse inputs (including #242)
+* add reading of detached nrrds (#236, #237)
+* add ability to write detached nrrds
+* add ability to make a detached nrrd from a compatible amira file on disk (#243)
+* new function is.im3d
+* fix cmtk.targetvolume for templatebrain objects (#241)
+* fix cmtk.targetvolume for --target-grid specification (#240)
+* fix names for [.neuronlistfh with null df (#250)
+* plot.neuron can cope with some NA coordinates
+* teach plot.neuron(list) to cope with NA points (#247)
+* boundingbox has an na.rm argument (#246)
+* teach droplevels.neuronlist to use extra arg (#249)
+* teach plot.neuron to plot soma (#245)
+* fix cmtk.call for numeric args (#235)
+* document return values of cmtk.statistics in more detail (#252)
+* support for igraph 1.0 (#248)
+
 nat 1.6.6
 =========
 * Fixes description capitalisation/quoting for CRAN
