@@ -37,41 +37,6 @@ test_that("with.neuronlist / droplevels behave", {
   expect_that(nlevels(droplevels(Cell07PNs)$Glomerulus),equals(4L))
 })
 
-context("neuronlist: [")
-test_that("[.neuronlist does the right thing",{
-  all.equal(kcs20[1:2], c(kcs20[1], kcs20[2]))
-  all.equal(kcs20[1,], as.data.frame(kcs20[1]))
-  all.equal(kcs20[1:2,], as.data.frame(kcs20[1:2]))
-  all.equal(kcs20[1:2,1], as.data.frame(kcs20[1:2])[[1]])
-  all.equal(kcs20[,], as.data.frame(kcs20))
-  
-  attr(kcs20,'df')=NULL
-  all.equal(kcs20[1:2], c(kcs20[1], kcs20[2]))
-  all.equal(kcs20[1,], as.data.frame(kcs20[1]))
-  all.equal(kcs20[1:2,], as.data.frame(kcs20[1:2]))
-  all.equal(kcs20[,], as.data.frame(kcs20))
-})
-
-test_that("dimnames does the right thing", {
-  expect_equal(rownames(kcs20), names(kcs20))
-  expect_equal(colnames(kcs20), names(as.data.frame(kcs20)))
-})
-
-test_that("[<-.neuronlist does the right thing",{
-  kcs13=kcs20[1:3]
-  
-  kcs13[,'side']=as.character(kcs13[,'soma_side'])
-  expect_equal(colnames(kcs13), c(colnames(kcs20), 'side'))
-  
-  # or parts of columns
-  kcs13[1,'soma_side']='R'
-  kcs13['FruMARCM-M001205_seg002','soma_side']='L'
-  all.equal(kcs13[,'side'], kcs20[1:3,'soma_side'])
-  
-  expect_null(colnames(kcs13[,]<-NULL))
-})
-
-
 context("neuronlist: subset")
 
 test_that("subset.neuronlist and [] do the same thing", {
@@ -258,4 +223,44 @@ test_that("as.data.frame.neuronlist behaves", {
   kcs20nodf=kcs20
   data.frame(kcs20nodf)=NULL
   expect_equal(as.data.frame(kcs20nodf), data.frame(row.names=names(kcs20)))
+  
+  # should reorder data.frame by rownames
+  data.frame(kcs20nodf)<-df[rev(1:nrow(df)), ]
+  expect_equal(as.data.frame(kcs20nodf), as.data.frame(kcs20))
+  rownames(df)=letters[1:nrow(df)]
+  expect_error(data.frame(kcs20nodf)<-df, 'rownames do not match')
+})
+
+context("neuronlist: [")
+test_that("[.neuronlist does the right thing",{
+  all.equal(kcs20[1:2], c(kcs20[1], kcs20[2]))
+  all.equal(kcs20[1,], as.data.frame(kcs20[1]))
+  all.equal(kcs20[1:2,], as.data.frame(kcs20[1:2]))
+  all.equal(kcs20[1:2,1], as.data.frame(kcs20[1:2])[[1]])
+  all.equal(kcs20[,], as.data.frame(kcs20))
+  
+  attr(kcs20,'df')=NULL
+  all.equal(kcs20[1:2], c(kcs20[1], kcs20[2]))
+  all.equal(kcs20[1,], as.data.frame(kcs20[1]))
+  all.equal(kcs20[1:2,], as.data.frame(kcs20[1:2]))
+  all.equal(kcs20[,], as.data.frame(kcs20))
+})
+
+test_that("dimnames does the right thing", {
+  expect_equal(rownames(kcs20), names(kcs20))
+  expect_equal(colnames(kcs20), names(as.data.frame(kcs20)))
+})
+
+test_that("[<-.neuronlist does the right thing",{
+  kcs13=kcs20[1:3]
+  
+  kcs13[,'side']=as.character(kcs13[,'soma_side'])
+  expect_equal(colnames(kcs13), c(colnames(kcs20), 'side'))
+  
+  # or parts of columns
+  kcs13[1,'soma_side']='R'
+  kcs13['FruMARCM-M001205_seg002','soma_side']='L'
+  all.equal(kcs13[,'side'], kcs20[1:3,'soma_side'])
+  
+  expect_null(colnames(kcs13[,]<-NULL))
 })
