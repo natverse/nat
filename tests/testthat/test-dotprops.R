@@ -83,6 +83,9 @@ test_that("math operators",{
   kcs13=kcs20[1:3]
   expect_equal(kcs13*-1, -kcs13)
   expect_equal(kcs13/2, kcs13*0.5)
+  # ensure that test operates directly via *.dotprops methods rather than
+  # *.neuronlist
+  expect_equal(kcs13[[1]]/2, kcs13[[1]]*0.5)
   expect_equal(scale(kcs20[[1]], center=T, scale=rep(2,3)), 
                (kcs20[[1]]-colMeans(xyzmatrix(kcs20[[1]])))*0.5)
   
