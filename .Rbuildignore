@@ -4,3 +4,4 @@
 travisbuildchildren.sh
 ^revdep$
 ^cran-comments\.md$
+inst/static_docs
