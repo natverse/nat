@@ -278,18 +278,50 @@ as.neuronlist.neuronlistfh<-function(l, ...){
 #' @export
 as.list.neuronlistfh<-function(x, ...) x
 
-#' extract a sublist from a neuronlistfh, converting to regular in memory list
-#'
-#' Note that if i is a numeric or logical indexing vector, it will be converted
-#' internally to a vector of names by using the (sorted) names of the objects
-#' in x (i.e. names(x)[i])
+#' Extract from neuronlistfh object or its attached data.frame
+#' 
+#' @description \code{[.neuronlistfh} extracts either a sublist from a 
+#'   neuronlistfh (converting it to a regular in memory list in the process) 
+#'   \emph{or} its attached data.frame.
+#'   
+#' @details Note that if i is a numeric or logical indexing vector, it will be 
+#'   converted internally to a vector of names by using the (sorted) names of 
+#'   the objects in x (i.e. names(x)[i])
 #' @param x A neuronlistfh object
-#' @param i Indices of items to extract from neuronlistfh object
-#' @param ... Additional arguments passed to neuronlistfh [] function
-#' @return A new neuronlist object (i.e. in memory)
+#' @param i,j elements to extract or replace. Numeric, logical  or character or,
+#'   for the [ get method, empty. See details and the help for 
+#'   \code{\link{[.data.frame}}.
+#' @inheritParams base::`[.data.frame`
+#' @return A new in-memory \code{neuronlist} or when using two subscripts, a 
+#'   \code{data.frame} - see examples.
 #' @export
-#' @method [ neuronlistfh
-"[.neuronlistfh" <- function(x,i,...) {
+#' @family neuronlistfh
+#' @seealso \code{\link{neuronlistfh}}, \code{\link{[.neuronlist}}, 
+#'   \code{\link{[.data.frame}}, \code{\link{[<-.data.frame}},
+#' @examples 
+#' # make a test neuronlistfh backed by a temporary folder on disk
+#' tf=tempfile('kcs20fh')
+#' kcs20fh<-as.neuronlistfh(kcs20, dbdir=tf)
+#' 
+#' # get first neurons as an in memory neuronlist
+#' class(kcs20fh[1:3])
+#' 
+#' # extract attached data.frame
+#' str(kcs20fh[,])
+#' # or part of the data.frame
+#' str(kcs20fh[1:2,1:3])
+#' 
+#' # data.frame assignment (this one changes nothing)
+#' kcs20fh[1:2,'gene_name'] <- kcs20fh[1:2,'gene_name']
+#' 
+#' # clean up
+#' unlink(tf, recursive=TRUE)
+#' 
+"[.neuronlistfh" <- function(x, i, j, drop) {
+  # treat like a data.frame
+  if(nargs()>2) {
+    return(NextMethod())
+  }
   if(!is.character(i)) i=names(x)[i]
   l=lapply(i,function(n) x[[n]])
   as.neuronlist(l,df=attr(x,'df')[i,])

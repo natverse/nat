@@ -29,7 +29,7 @@
 \arguments{
 \item{x}{A neuronlist object}
 
-\item{i,j}{elements to extract or replace. Nnumeric or character or, for [
+\item{i,j}{elements to extract or replace. Numeric or character or, for [
 only, empty. Numeric values are coerced to integer as if by
 \code{as.integer}. See \code{\link{[.data.frame}} for details.}
 

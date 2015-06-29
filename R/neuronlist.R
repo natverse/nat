@@ -94,7 +94,7 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #'   allowing extraction or replacement of parts of the data.frame attached to
 #'   the neuronlist.
 #' @export
-#' @param i,j elements to extract or replace. Nnumeric or character or, for [ 
+#' @param i,j elements to extract or replace. Numeric or character or, for [ 
 #'   only, empty. Numeric values are coerced to integer as if by 
 #'   \code{as.integer}. See \code{\link{[.data.frame}} for details.
 #' @inheritParams base::`[.data.frame`

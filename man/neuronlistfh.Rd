@@ -187,7 +187,8 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{nlapply}}, \code{\link{nmapply}};
   \code{\link{read.neurons}}; \code{\link{write.neurons}}
 
-Other neuronlistfh: \code{\link{read.neuronlistfh}};
+Other neuronlistfh: \code{\link{[.neuronlistfh}};
+  \code{\link{read.neuronlistfh}};
   \code{\link{remotesync}},
   \code{\link{remotesync.neuronlistfh}};
   \code{\link{write.neuronlistfh}}
