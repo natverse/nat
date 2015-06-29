@@ -51,6 +51,7 @@ as.dotprops<-function(x, ...){
 #' @rdname scale.neuron
 #' @include neuron.R
 #' @export
+#' @aliases scale.dotprops
 scale.dotprops<-scale.neuron
 
 #' @description \code{dotprops} makes dotprops representation from raw 3d points

@@ -332,21 +332,23 @@ as.neuron.default<-function(x, ...){
 #' @export
 `/.neuron` <- function(n,x) n*(1/x)
 
-#' Divide neuron coords by a factor (and optionally center)
-#'
-#' @details Note that if scale=TRUE, the neuron will be rescaled to unit sd in each axis
-#' likewise if center=TRUE, the neuron will be centred around the axis means
+#' Scale and centre neuron 3D coordinates
+#' 
+#' @details If \code{scale=TRUE}, the neuron will be rescaled to unit sd in each
+#'   axis. If \code{center=TRUE}, the neuron will be centred around the axis
+#'   means. See \code{base::\link{scale.default}} for additional details.
 #' @param x A neuron
 #' @param center 3-vector to subtract from x,y,z coords
 #' @param scale 3-vector used to divide x,y,z coords
 #' @return neuron with scaled coordinates
 #' @method scale neuron
 #' @export
-#' @seealso \code{\link{scale.default}}
+#' @seealso \code{\link{scale.default}}, \code{\link{*.neuron}}
+#' @aliases scale
 #' @examples
 #' n1.scaledown=scale(Cell07PNs[[1]],scale=c(2,2,3))
 #' n1.scaleup=scale(Cell07PNs[[1]],scale=1/c(2,2,3))
-scale.neuron<-function(x,center=FALSE,scale=FALSE){
+scale.neuron<-function(x, center=TRUE, scale=TRUE){
   xyzmatrix(x)<-scale(xyzmatrix(x),scale=scale,center=center)
   x
 }
