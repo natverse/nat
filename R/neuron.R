@@ -512,6 +512,7 @@ resample.neuron<-function(x, stepsize, ...) {
 # Interpolate ordered 3D points (optionally w diameter)
 # NB returns NULL if unchanged (when too short or <=2 points) 
 # and only returns _internal_ points, omitting the head and tail of a segment
+#' @importFrom stats approx
 resample_segment<-function(d, stepsize, ...) {
   # we must have at least 2 points to resample
   if(nrow(d) < 2) return(NULL)
