@@ -1,5 +1,5 @@
 context("ngraph class")
-library(igraph, quietly = TRUE)
+library(igraph, warn.conflicts = FALSE)
 
 # make a very simple neuron
 # 1 2 3b 4 5
