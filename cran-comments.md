@@ -32,8 +32,7 @@ These are either:
 Note that all other package names/external software have been capitalised in
 response to Uwe Ligges' evaluation of my submission of version 1.6.5. Note that
 there is one unquoted occurrence of 'nat' (this package's name) at the start of
-the description in order, as part of a phrase clarifying the origin of the
-package name.
+the description as part of a phrase clarifying the origin of the package name.
 
 ## Downstream dependencies
 I have also run R CMD check on downstream dependencies of nat. All packages 
