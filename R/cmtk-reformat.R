@@ -203,14 +203,55 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
 #'   always be named Entropy in the returned dataframe.
 #' @param f Path to image file (any CMTK compatible format)
 #' @param mask Optional path to a mask file
-#' @param imagetype Whether image should be treated as greyscale (default) or
+#' @param imagetype Whether image should be treated as greyscale (default) or 
 #'   label field.
 #' @param masktype Whether mask should be treated as label field or binary mask 
 #'   (default label)
 #' @param ... Additional arguments for ctmk's statistics tool processed by 
 #'   \code{\link{cmtk.call}}.
 #' @inheritParams cmtk.reformatx
-#' @return return dataframe describing results
+#' @return data.frame describing results with the following columns when image
+#'   \code{f} is of \code{imagetype='greyscale'} (optionally with a mask):
+#'   
+#'   \itemize{
+#'   
+#'   \item MaskLevel (only present when using a mask) the integer value of the 
+#'   label field for this region
+#'   
+#'   \item min The minimum voxel value within the current region
+#'   
+#'   \item max The maximum voxel value within the current region
+#'   
+#'   \item mean The mean voxel value within the current region
+#'   
+#'   \item sdev The standard deviation of voxel values within the current region
+#'   
+#'   \item n The count of \bold{all} voxel within the region (irrespective of 
+#'   their value)
+#'   
+#'   \item Entropy Information theoretic entropy of voxel value distribution 
+#'   within region
+#'   
+#'   \item sum Sum of voxel values within the region
+#'   
+#'   }
+#'   
+#'   When image \code{f} is of \code{imagetype='label'}, the following results
+#'   are returned:
+#'   
+#'   \itemize{
+#'   
+#'   \item level The integer value of the label field for this region
+#'   
+#'   \item count The number of voxels in this region
+#'   
+#'   \item surface The surface area of this region
+#'   
+#'   \item volume The volume of this region
+#'   
+#'   \item X,Y,Z 3D coordinates of the centroid of this region
+#'   
+#'   }
 #' @export
 #' @examples
 #' \dontrun{
@@ -251,3 +292,4 @@ cmtk.statistics<-function(f, mask, imagetype=c("greyscale","label"),
     read.table(text=rval,header=TRUE,skip=1,comment.char="")
   }
 }
+ 
