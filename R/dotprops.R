@@ -52,7 +52,12 @@ as.dotprops<-function(x, ...){
 #' @include neuron.R
 #' @export
 #' @aliases scale.dotprops
-scale.dotprops<-scale.neuron
+#' @description note that \code{scale.dotprops} recalculates the tangent vectors
+#'   after scaling the 3d coords. See \code{\link{dotprops}} for details.
+scale.dotprops<-function(x, center=TRUE, scale=TRUE){
+  xyzmatrix(x)<-scale(xyzmatrix(x),scale=scale,center=center)
+  dotprops(x)
+}
 
 #' @description \code{dotprops} makes dotprops representation from raw 3d points
 #'   (extracting vertices from S3 objects that have them)
