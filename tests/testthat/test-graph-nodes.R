@@ -39,6 +39,11 @@ test_that("we can identify nodes (root,branch,endpoints) from neuron",{
   expect_equal(rootpoints(n2),rootpoints(g2))
   expect_equal(endpoints(n2),endpoints(g2))
   expect_equal(branchpoints(n2),branchpoints(g2))
+  
+  # when no subtrees exist
+  expect_error(branchpoints(Cell07PNs[[1]], subtrees = 2))
+  expect_error(rootpoints(Cell07PNs[[1]], subtrees = 2))
+  expect_error(endpoints(Cell07PNs[[1]], subtrees = 2))
 })
 
 test_that("we can find nodes in more complicated neurons",{

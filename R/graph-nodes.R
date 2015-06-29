@@ -85,7 +85,7 @@ branchpoints.default<-function(x, ...) branchpoints(as.ngraph(x), ...)
 branchpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$BranchPoints)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
-  if(any(subtrees>x$nTrees)) stop("neuron only has ",nTrees," subtrees")
+  if(any(subtrees>nTrees)) stop("neuron only has ",nTrees," subtrees")
   else lapply(x$SubTrees[subtrees],
               function(x) branchpoints(as.ngraph(x)))
 }
@@ -105,7 +105,7 @@ endpoints<-function (x, ...) UseMethod("endpoints")
 endpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(endpoints=x$EndPoints)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
-  if(any(subtrees>x$nTrees)) stop("neuron only has ",nTrees," subtrees")
+  if(any(subtrees>nTrees)) stop("neuron only has ",nTrees," subtrees")
   else lapply(x$SubTrees[subtrees],
               function(x) endpoints(as.ngraph(x)))
 }
