@@ -145,8 +145,9 @@ as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
 as.directed.usingroot<-function(g, root, mode=c('out','in')){
   mode=match.arg(mode)
   # make a directed graph _keeping any attributes_
-  if(igraph::is.directed(g))
-    dg=igraph::as.directed(g,mode='arbitrary')
+  if(!igraph::is.directed(g))
+    dg=igraph::as.directed(g, mode='arbitrary')
+  else dg=g
   dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, neimode='all')
   el=igraph::get.edgelist(dg)
   

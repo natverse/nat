@@ -134,3 +134,10 @@ test_that("we can find the segmentgraph of a neuron",{
   expect_equal(E(sg)$weight, c(2, 2, 1))
   expect_true(graph.isomorphic(segmentgraph(testn, weights=FALSE), sg))
 })
+
+
+test_that("as.ngraph can convert undirected graph into an ngraph object",{
+  g1=as.ngraph(testd)
+  expect_is(g2<-as.ngraph(as.undirected(g1), root = rootpoints(g1)), 'ngraph')
+  expect_true(graph.isomorphic(g1,g2))
+})
