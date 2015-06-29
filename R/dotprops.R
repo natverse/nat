@@ -62,7 +62,8 @@ scale.dotprops<-function(x, center=TRUE, scale=TRUE){
 #' @description \code{dotprops} makes dotprops representation from raw 3d points
 #'   (extracting vertices from S3 objects that have them)
 #' @details \code{k} will default to 20 nearest neighbours when unset (i.e. when
-#'   it has default value of NA) unless \code{x} is a dotprops object.
+#'   it has default value of NA) unless \code{x} is a dotprops object (when the
+#'   original value of \code{k} is reused).
 #' @param ... Additional arguments passed to methods
 #' @export
 #' @rdname dotprops
