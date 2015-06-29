@@ -30,6 +30,16 @@ test_that("neuronlistfh behaves like a neuronlist",{
   # data.frames
   expect_equal(kcs20fh[1:5,], kcs20[1:5,])
 })
+
+test_that("subset neuronlistfh without data.frame",{
+  kcs5=kcs20[1:5]
+  data.frame(kcs5)=NULL
+  tf=tempfile('kcs5fh')
+  on.exit(unlink(tf,recursive=TRUE))
+  expect_is(kcs5fh<-as.neuronlistfh(kcs5, dbdir=tf),'neuronlistfh')
+  expect_is(kcs5again<-subset(kcs5fh, names(kcs5)), 'neuronlist')
+  # it was the names that disappeared
+  expect_equal(kcs5again, kcs5)
 })
 
 test_that("we can load a previously created on disk neuronlistfh representation",{

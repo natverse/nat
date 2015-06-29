@@ -323,7 +323,7 @@ as.list.neuronlistfh<-function(x, ...) x
     return(NextMethod())
   }
   if(!is.character(i)) i=names(x)[i]
-  l=lapply(i,function(n) x[[n]])
+  l=sapply(i,function(n) x[[n]], simplify = F, USE.NAMES = T)
   as.neuronlist(l,df=attr(x,'df')[i,])
 }
 
