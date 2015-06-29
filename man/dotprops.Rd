@@ -69,7 +69,8 @@ dotprops: Neurons as point clouds with tangent vectors (but no connectivity)
 }
 \details{
 \code{k} will default to 20 nearest neighbours when unset (i.e. when
-  it has default value of NA) unless \code{x} is a dotprops object.
+  it has default value of NA) unless \code{x} is a dotprops object (when the
+  original value of \code{k} is reused).
 }
 \references{
 The dotprops format is essentially identical to that developed in:

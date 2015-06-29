@@ -37,10 +37,12 @@ test_that("we can xform a neuronlist with multiple registrations", {
   cmtk.mat2dof(m1, f = f1<-tempfile(fileext = ".reg"))
   cmtk.mat2dof(m2, f = f2<-tempfile(fileext = ".reg"))
   
-  expect_equal(xform(Cell07PNs[1:3], c(f1, f2)), Cell07PNs[1:3])
+  # nb subset is redundant - just to check 
+  expect_equal(xform(Cell07PNs[1:3], c(f1, f2), subset=1:3), Cell07PNs[1:3])
   expect_equal(xform(Cell07PNs[1:3], c(f2, f1)), Cell07PNs[1:3])
   
-  expect_equal(xform(Cell07PNs[1:2], c(f1, f1), VectoriseRegistrations = T),
+  expect_equal(xform(Cell07PNs[1:2], c(f1, f1), subset=1:2,
+                     VectoriseRegistrations = T),
                xform(Cell07PNs[1:2], f1))
   
   unlink(c(f1,f2))

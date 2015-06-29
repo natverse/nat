@@ -11,7 +11,7 @@ Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     in NRRD and 'Amira' AmiraMesh formats and reads surfaces in 'Amira' hxsurf
     format. Traced neurons can be imported from and written to SWC and 'Amira'
     LineSet and SkeletonGraph formats. These data can then be visualised in 3D
-    via 'rgl', manipulated including applying calculated registrations, e.g. 
+    via 'rgl', manipulated including applying calculated registrations, e.g.
     using the 'CMTK' registration suite, and analysed. There is also a simple
     representation for neurons that have been subjected to 3D skeletonisation
     but not formally traced; this allows morphological comparison between
@@ -36,3 +36,40 @@ Suggests:
     XML
 License: GPL-3
 LazyData: yes
+Collate:
+    'amiralandmarks-io.R'
+    'amiramesh-io.R'
+    'cmtk-reformat.R'
+    'cmtk.R'
+    'cmtk_geometry.R'
+    'cmtk_io.R'
+    'cmtkreg.R'
+    'coordinates.R'
+    'dist3D_Segment_to_Segment.R'
+    'neuron.R'
+    'dotprops.R'
+    'graph-nodes.R'
+    'hxsurf.R'
+    'im3d.R'
+    'nat-data.R'
+    'nat-package.R'
+    'ndigest.R'
+    'neuron-io-amira.R'
+    'neuron-io-fiji.R'
+    'neuron-io-neuroml.R'
+    'neuron-io.R'
+    'neuron-plot.R'
+    'neuronlist.R'
+    'neuronlist_interactive_3d.R'
+    'neuronlist_sets.R'
+    'neuronlistfh.R'
+    'ngraph.R'
+    'nrrd-io.R'
+    'pop3d.R'
+    'potential_synapses.R'
+    'seglist.R'
+    'vaa3draw-io.R'
+    'xform.R'
+    'xformimage.R'
+    'xformpoints.R'
+    'zzz.R'

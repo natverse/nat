@@ -37,6 +37,12 @@ test_that("a dotprops object can be made from a nrrd, via im3d", {
   expect_equal(dp$points[1:5, ], points.expected, tol=1e-4)
 })
 
+test_that("make a dotprops object from a neuron",{
+  expect_is(x<-dotprops(Cell07PNs[[1]], k=5), 'dotprops')
+  expect_equal(xyzmatrix(x), xyzmatrix(Cell07PNs[[1]]))
+  expect_is(x<-dotprops(Cell07PNs[[1]], resample=1), 'dotprops')
+})
+
 test_that("pruning a dotprops object with itself results in no change", {
   kc1=kcs20[[1]]
   expect_equal(prune(kc1, kc1, maxdist=0), kc1)
@@ -70,4 +76,17 @@ test_that("We can prune a neuronlist",{
 test_that("We can prune a neuronlist with a neuronlist",{
   expect_is(pruned<-prune(kcs20[1:2], kcs20[1:2], maxdist=0), 'neuronlist')
   expect_equal(pruned, kcs20[1:2])
+})
+
+context('dotprops arithmetic')
+test_that("math operators",{
+  kcs13=kcs20[1:3]
+  expect_equal(kcs13*-1, -kcs13)
+  expect_equal(kcs13/2, kcs13*0.5)
+  # ensure that test operates directly via *.dotprops methods rather than
+  # *.neuronlist
+  expect_equal(kcs13[[1]]/2, kcs13[[1]]*0.5)
+  expect_equal(scale(kcs20[[1]], center=T, scale=rep(2,3)), 
+               (kcs20[[1]]-colMeans(xyzmatrix(kcs20[[1]])))*0.5)
+  
 })

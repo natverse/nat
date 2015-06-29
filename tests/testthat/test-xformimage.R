@@ -6,7 +6,7 @@ quicktable<-function(x) {
   levels=seq.int(from=0, length.out = length(tt))
   nz=tt!=0L
   
-  structure(tt[nz], .Dim = 2L, 
+  structure(tt[nz], .Dim = sum(nz), 
             .Dimnames = structure(list(as.character(levels[nz])), .Names = xname),
             class = "table")
 }

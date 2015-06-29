@@ -48,47 +48,22 @@ as.dotprops<-function(x, ...){
 `/.dotprops` <- function(x,y) x*(1/y)
 
 
-#' Scale and Centre dotprops coords
-#' 
-#' @details Note that if scale=TRUE, the neuron will be rescaled to unit sd in 
-#'   each axis likewise if center=TRUE, the neuron will be centred around the 
-#'   axis means
-#' @details note that this does not touch the tangent vectors, which may no 
-#'   longer be valid for anisotopic scales.
-#' @param x A dotprops object
-#' @param center 3-vector to subtract from x,y,z coords. Note that it is
-#'   possible to scale individual axes
-#' @param scale 3-vector used to divide x,y,z coords
-#' @return neuron with scaled coordinates
-#' @method scale dotprops
+#' @rdname scale.neuron
+#' @include neuron.R
 #' @export
-#' @seealso \code{\link{scale.default}}
-scale.dotprops<-function(x,center=TRUE,scale=TRUE){
-  d=xyzmatrix(x)
-  if(!is.logical(center) && any(is.na(center))){
-    # NA signals that we don't want to touch an axis
-    dd=d[,!is.na(center)]
-    centers=center[!is.na(center)]
-    dds=scale(dd,center=centers,scale=FALSE)
-    ds=d
-    ds[,!is.na(center)]=dds
-  } else if(is.logical(center) && length(center)>1){
-    # FALSE signals that we don't want to touch an axis
-    dd=d[,center]
-    dds=scale(dd,center=TRUE,scale=FALSE)
-    ds=d
-    ds[,center]=dds
-  } else {
-    ds=scale(d,scale=scale,center=center)
-  }
-  xyzmatrix(x)=ds
-  x
+#' @aliases scale.dotprops
+#' @description note that \code{scale.dotprops} recalculates the tangent vectors
+#'   after scaling the 3d coords. See \code{\link{dotprops}} for details.
+scale.dotprops<-function(x, center=TRUE, scale=TRUE){
+  xyzmatrix(x)<-scale(xyzmatrix(x),scale=scale,center=center)
+  dotprops(x)
 }
 
 #' @description \code{dotprops} makes dotprops representation from raw 3d points
 #'   (extracting vertices from S3 objects that have them)
 #' @details \code{k} will default to 20 nearest neighbours when unset (i.e. when
-#'   it has default value of NA) unless \code{x} is a dotprops object.
+#'   it has default value of NA) unless \code{x} is a dotprops object (when the
+#'   original value of \code{k} is reused).
 #' @param ... Additional arguments passed to methods
 #' @export
 #' @rdname dotprops
