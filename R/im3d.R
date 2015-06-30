@@ -83,16 +83,17 @@ is.im3d<-function(x) inherits(x, 'im3d')
 
 #' Convert a suitable object to an im3d object.
 #' 
-#' @details At present the only interesting method in \code{nat} is
-#'   \code{as.im3d.matrix} which can be used to convert a matrix of 3D points
-#'   into a 3D volume representation.
+#' @details At present the only interesting method in \code{nat} is 
+#'   \code{as.im3d.matrix} which can be used to convert a matrix of 3D points 
+#'   into a 3D volume representation. \code{\link{ind2coord}} can be used to do 
+#'   the reverse: convert a set of 3D coords to an \code{im3d} volume.
 #'   
-#'   Other than that, this is a largely a placeholder function with the
+#'   Other than that, this is a largely a placeholder function with the 
 #'   expectation that other packages may wish to provide suitable methods.
 #' @param x Object to turn into an im3d
 #' @param ... Additional arguments to pass to methods.
 #' @export
-#' @seealso im3d
+#' @seealso \code{\link{im3d}}, \code{\link{ind2coord}}
 #' @family im3d
 as.im3d <- function(x, ...) UseMethod("as.im3d")
 
