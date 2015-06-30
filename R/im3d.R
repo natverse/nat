@@ -1036,6 +1036,7 @@ imexpand.grid<-function(d){
 #' @param ijk an Nx3 matrix of pixel coordinates (1-indexed)
 #' @name im3d-coords
 #' @aliases im3d-coords xyzpos
+#' @seealso \code{\link{ind2coord}}
 #' @family im3d
 #' @export
 xyzpos<-function(d, ijk)

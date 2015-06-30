@@ -28,9 +28,13 @@ must be present, or a logical array).}
 \item{origin}{the origin.}
 }
 \description{
-Find XYZ coords corresponding to 1D indices into a 3D image
+If you have an image-like object and you want to turn it into a
+  matrix of 3D coords then you need \code{ind2coord}. For the reverse
+  operation we offer \code{\link{as.im3d.matrix}} which allows you to turn a
+  matrix of 3D coordinates into an \code{im3d} image object.
 }
 \seealso{
-\code{\link{coord2ind}}, \code{\link{sub2ind}}
+\code{\link{coord2ind}}, \code{\link{sub2ind}},
+  \code{\link{xyzpos}}, \code{\link{as.im3d.matrix}}
 }
 

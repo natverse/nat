@@ -35,6 +35,8 @@ d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
 stopifnot(all.equal(ijkpos(d,xyzpos(d,c(1,1,1))), c(1,1,1)))
 }
 \seealso{
+\code{\link{ind2coord}}
+
 Other im3d: \code{\link{as.im3d}},
   \code{\link{as.im3d.im3d}}, \code{\link{as.im3d.matrix}};
   \code{\link{boundingbox}},

@@ -1,9 +1,14 @@
 #' Find XYZ coords corresponding to 1D indices into a 3D image
 #' 
-#' @param inds indices into an image array (either 1D, for which \code{dims}
+#' @description If you have an image-like object and you want to turn it into a 
+#'   matrix of 3D coords then you need \code{ind2coord}. For the reverse
+#'   operation we offer \code{\link{as.im3d.matrix}} which allows you to turn a
+#'   matrix of 3D coordinates into an \code{im3d} image object.
+#' @param inds indices into an image array (either 1D, for which \code{dims} 
 #'   must be present, or a logical array).
 #' @param ... extra arguments passed to methods.
-#' @seealso \code{\link{coord2ind}}, \code{\link{sub2ind}}
+#' @seealso \code{\link{coord2ind}}, \code{\link{sub2ind}}, 
+#'   \code{\link{xyzpos}}, \code{\link{as.im3d.matrix}}
 #' @export
 ind2coord<-function(inds, ...) UseMethod("ind2coord")
 
@@ -90,7 +95,7 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @param aperm permutation order for axes.
 #' @param Clamp ???
 #' @param CheckRanges whether to check if coordinates are out of range.
-#' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}
+#' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp, ...){
