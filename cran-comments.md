@@ -1,16 +1,24 @@
+# nat 1.7.0
+nat 1.7.0 fixes an incompatibility with the recently updated igraph 1.0
+that is resulting in build errors for nat 1.6.6 
+(see http://cran.r-project.org/web/checks/check_results_nat.html) 
+as well as adding significant new functionality.
+
 ## Test environments
-* local OS X install, R 3.2.0
-* ubuntu 12.04 (on travis-ci), R 3.2.0
+* local OS X install, R 3.2.1
+* ubuntu 12.04 (on travis-ci), R 3.2.1
 * winbuilder (devel and release)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs on any platform.
 
-There was 1 NOTE on winbuilder release:
+There were 2 NOTEs on winbuilder release:
 
-http://win-builder.r-project.org/BODOoUYV1PhZ/00check.log
+http://win-builder.r-project.org/S5289h1Fn4JY/00check.log
 
-Possibly mis-spelled words in DESCRIPTION:
+NOTE 1: No repository set, so cyclic dependency check skipped
+
+NOTE 2: Possibly mis-spelled words in DESCRIPTION:
 
 These are either:
 
