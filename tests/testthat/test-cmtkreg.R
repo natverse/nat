@@ -22,6 +22,9 @@ test_that("(is.)cmtkreg works ok for files", {
   expect_true(is.cmtkreg(creg2))
   expect_true(is.cmtkreg(creg2,filecheck='exists'))
   expect_true(is.cmtkreg(creg2,filecheck='magic'))
+  # just using this as directory that exists but is not a registration
+  expect_false(is.cmtkreg('testdata/cmtk', 'exists'))
+  expect_false(is.cmtkreg('testdata/cmtk', 'magic'))
   
   # refer to file not directory
   expect_equal(cmtkreg("testdata/cmtk/dofv1.1wshears.list/registration"), creg2)
