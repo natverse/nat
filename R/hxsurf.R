@@ -8,15 +8,16 @@
 #' avoids duplication in the file. However, it might be convenient to add these 
 #' polygons to both regions when we read them into R, so that regions A and B in
 #' our R object are both closed surfaces. To achieve this when 
-#' \code{RegionChoice="both"}, \code{read.hxsurf} adds these polygons to region
-#' B (as well as region A) but swaps the order of the vertices defining the
+#' \code{RegionChoice="both"}, \code{read.hxsurf} adds these polygons to region 
+#' B (as well as region A) but swaps the order of the vertices defining the 
 #' polygon to ensure that the surface directionality is correct.
 #' 
 #' @param filename Character vector defining path to file
 #' @param RegionNames Character vector specifying which regions should be read 
 #'   from file. Default value of \code{NULL} => all regions.
 #' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or 
-#'   \emph{both}, should define the material of the patch. See details.
+#'   \emph{both} (default), should define the material of the patch. See
+#'   details.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
 #' @return A list with S3 class hxsurf with elements \itemize{
@@ -43,7 +44,7 @@
 #' \dontrun{
 #' read.hxsurf("my.surf", RegionChoice="both")
 #' }
-read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="Inner",
+read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
                       FallbackRegionCol="grey",Verbose=FALSE){
   # Check for header confirming file type
   firstLine=readLines(filename,n=1)

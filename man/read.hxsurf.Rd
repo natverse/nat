@@ -5,7 +5,7 @@
 \alias{read.hxsurf}
 \title{Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object}
 \usage{
-read.hxsurf(filename, RegionNames = NULL, RegionChoice = "Inner",
+read.hxsurf(filename, RegionNames = NULL, RegionChoice = "both",
   FallbackRegionCol = "grey", Verbose = FALSE)
 }
 \arguments{
@@ -15,7 +15,8 @@ read.hxsurf(filename, RegionNames = NULL, RegionChoice = "Inner",
 from file. Default value of \code{NULL} => all regions.}
 
 \item{RegionChoice}{Whether the \emph{Inner} or \emph{Outer} material, or
-\emph{both}, should define the material of the patch. See details.}
+\emph{both} (default), should define the material of the patch. See
+details.}
 
 \item{FallbackRegionCol}{Colour to set regions when no colour is defined}
 
