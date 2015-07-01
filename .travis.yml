@@ -4,7 +4,7 @@ before_install:
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
   - chmod 755 ./travis-tool.sh
   - ./travis-tool.sh bootstrap
-  - ./travis-tool.sh r_binary_install rgl RANN igraph filehash digest testthat yaml XML RcppEigen
+  - ./travis-tool.sh r_binary_install rgl RANN igraph filehash digest testthat yaml XML RcppEigen RCurl stringi stringr
   - bash <(wget -q -O- http://neuro.debian.net/_files/neurodebian-travis.sh)
   - sudo apt-get install cmtk --no-install-recommends
 install:
