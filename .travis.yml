@@ -22,6 +22,6 @@ env:
     - _R_CHECK_FORCE_SUGGESTS_=0
     - DISPLAY=:99.0
 after_success:
-  - Rscript -e 'library(covr);codecov(exlusions="R/zzz.R")'
+  - Rscript -e 'library(covr);coveralls(exlusions="R/zzz.R")'
   - chmod 755 ./travisbuildchildren.sh
   - ./travisbuildchildren.sh
