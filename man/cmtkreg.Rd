@@ -10,7 +10,7 @@ cmtkreg(x, returnDir = TRUE)
 
 as.cmtkreg(x)
 
-is.cmtkreg(x, filecheck = c("none", "exists", "magic"))
+is.cmtkreg(x, filecheck = c("none", "exists", "magic"), silent = TRUE)
 }
 \arguments{
 \item{x}{Path to a cmtk registration (either plain character vector or
@@ -22,6 +22,9 @@ the actual file containing the registration}
 \item{filecheck}{Whether to check object class only (default: 'none') or find
 amd check if registration file \strong{exists} or check \strong{magic}
 value in first line of file.}
+
+\item{silent}{Whether to suppress any error messages when checking file magic
+(default \code{TRUE} suppresses those messages)}
 }
 \description{
 \code{cmtkreg} creates an object of class \code{cmtkreg} that
@@ -32,7 +35,7 @@ value in first line of file.}
 \code{as.cmtkreg} adds class \code{cmtkreg} to objects that do not
   already inherit from it.
 
-\code{is.cmtkreg} checks if an object is a cmtk registration either by checking
-  class (default), or inspecting file.
+\code{is.cmtkreg} checks if an object is a cmtk registration
+  either by checking class (default), or inspecting file.
 }
 

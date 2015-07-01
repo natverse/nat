@@ -41,14 +41,16 @@ as.cmtkreg<-function(x){
   x
 }
 
-#' @description \code{is.cmtkreg} checks if an object is a cmtk registration either by checking 
-#'   class (default), or inspecting file.
+#' @description \code{is.cmtkreg} checks if an object is a cmtk registration
+#'   either by checking class (default), or inspecting file.
 #' @param filecheck Whether to check object class only (default: 'none') or find
-#'   amd check if registration file \strong{exists} or check \strong{magic}
+#'   amd check if registration file \strong{exists} or check \strong{magic} 
 #'   value in first line of file.
+#' @param silent Whether to suppress any error messages when checking file magic
+#'   (default \code{TRUE} suppresses those messages)
 #' @rdname cmtkreg
 #' @export
-is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
+is.cmtkreg<-function(x, filecheck=c('none','exists','magic'), silent = TRUE) {
   filecheck=match.arg(filecheck, choices = c('none','exists','magic'))
   if(filecheck=='none') return(inherits(x,'cmtkreg'))
   if(!is.character(x)) return (FALSE)
@@ -66,7 +68,7 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
     magic<-readBin(gzf,what=raw(),n=length(cmtk.magic))
     close(gzf)
     magic},
-            silent = FALSE)
+            silent = silent)
 
   return(!inherits(magic,'try-error') && 
            length(magic)==length(cmtk.magic) 
