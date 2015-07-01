@@ -40,17 +40,25 @@ A list with S3 class hxsurf with elements \itemize{
   }
 }
 \description{
-Note that when \code{RegionChoice="both"} or \code{RegionChoice=c("Inner",
-"Outer")} both polygons in inner and outer regions will be added to named
-regions. To understand the significance of this, consider two adjacent
-regions, A and B, with a shared surface. For the polygons in both A and B,
-Amira will have a patch with (say) InnerRegion A and OuterRegion B. This
-avoids duplication in the file. However, it might be convenient to add these
-polygons to both regions when we read them into R, so that regions A and B in
-our R object are both closed surfaces. To achieve this when
-\code{RegionChoice="both"}, \code{read.hxsurf} adds these polygons to region
-B (as well as region A) but swaps the order of the vertices defining the
-polygon to ensure that the surface directionality is correct.
+Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object
+}
+\details{
+Note that when \code{RegionChoice="both"} or
+  \code{RegionChoice=c("Inner", "Outer")} both polygons in inner and outer
+  regions will be added to named regions. To understand the significance of
+  this, consider two adjacent regions, A and B, with a shared surface. For
+  the polygons in both A and B, Amira will have a patch with (say)
+  InnerRegion A and OuterRegion B. This avoids duplication in the file.
+  However, it might be convenient to add these polygons to both regions when
+  we read them into R, so that regions A and B in our R object are both
+  closed surfaces. To achieve this when \code{RegionChoice="both"},
+  \code{read.hxsurf} adds these polygons to region B (as well as region A)
+  but swaps the order of the vertices defining the polygon to ensure that the
+  surface directionality is correct.
+
+  As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more
+  regions than you wanted, then try switching to \code{RegionChoice="Inner"}
+  or \code{RegionChoice="Outer"}.
 }
 \examples{
 \dontrun{

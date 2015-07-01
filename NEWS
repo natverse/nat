@@ -23,6 +23,7 @@ nat 1.7.0
 * teach droplevels.neuronlist to use extra arg (#249)
 * teach plot.neuron to plot soma (#245)
 * fix cmtk.call for numeric args (#235)
+* set read.hxsurf RegionChoice="both" by default
 * document return values of cmtk.statistics in more detail (#252)
 * support for igraph 1.0 (#248)
 

@@ -1,22 +1,27 @@
 #' Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object
 #' 
-#' Note that when \code{RegionChoice="both"} or \code{RegionChoice=c("Inner", 
-#' "Outer")} both polygons in inner and outer regions will be added to named 
-#' regions. To understand the significance of this, consider two adjacent 
-#' regions, A and B, with a shared surface. For the polygons in both A and B, 
-#' Amira will have a patch with (say) InnerRegion A and OuterRegion B. This 
-#' avoids duplication in the file. However, it might be convenient to add these 
-#' polygons to both regions when we read them into R, so that regions A and B in
-#' our R object are both closed surfaces. To achieve this when 
-#' \code{RegionChoice="both"}, \code{read.hxsurf} adds these polygons to region 
-#' B (as well as region A) but swaps the order of the vertices defining the 
-#' polygon to ensure that the surface directionality is correct.
-#' 
+#' @details Note that when \code{RegionChoice="both"} or 
+#'   \code{RegionChoice=c("Inner", "Outer")} both polygons in inner and outer 
+#'   regions will be added to named regions. To understand the significance of 
+#'   this, consider two adjacent regions, A and B, with a shared surface. For 
+#'   the polygons in both A and B, Amira will have a patch with (say) 
+#'   InnerRegion A and OuterRegion B. This avoids duplication in the file. 
+#'   However, it might be convenient to add these polygons to both regions when 
+#'   we read them into R, so that regions A and B in our R object are both 
+#'   closed surfaces. To achieve this when \code{RegionChoice="both"}, 
+#'   \code{read.hxsurf} adds these polygons to region B (as well as region A) 
+#'   but swaps the order of the vertices defining the polygon to ensure that the
+#'   surface directionality is correct.
+#'   
+#'   As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more 
+#'   regions than you wanted, then try switching to \code{RegionChoice="Inner"}
+#'   or \code{RegionChoice="Outer"}.
+#'   
 #' @param filename Character vector defining path to file
 #' @param RegionNames Character vector specifying which regions should be read 
 #'   from file. Default value of \code{NULL} => all regions.
 #' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or 
-#'   \emph{both} (default), should define the material of the patch. See
+#'   \emph{both} (default), should define the material of the patch. See 
 #'   details.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
@@ -51,8 +56,10 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+ascii",firstLine,ignore.case=T,perl=T))){
     stop(filename," does not appear to be an Amira HyperSurface ASCII file!")
   }
-  RegionChoice=match.arg(RegionChoice, c("Inner", "Outer", "both"), several.ok = TRUE)
-  if(RegionChoice[1]=="both") RegionChoice=c("Inner", "Outer")
+  initialcaps<-function(x) {substr(x,1,1)=toupper(substr(x,1,1)); x}
+  RegionChoice=match.arg(initialcaps(RegionChoice), c("Inner", "Outer", "Both"), 
+                         several.ok = TRUE)
+  if(RegionChoice[1]=="Both") RegionChoice=c("Inner", "Outer")
   t=readLines(filename)
   nLines=length(t)
   if(Verbose) cat(nLines,"lines of text to parse\n")

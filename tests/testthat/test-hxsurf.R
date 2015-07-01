@@ -1,7 +1,7 @@
 context("hxsurf (amira) surfaces")
 
 surf_file="testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
-surf=read.hxsurf(surf_file)
+surf=read.hxsurf(surf_file, RegionChoice = 'Inner')
 
 test_that("we can read hxsurf object", {
   expect_equal(nrow(surf$Vertices),2549L)
