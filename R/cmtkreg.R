@@ -55,7 +55,8 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic'), silent = TRUE) {
   if(filecheck=='none') return(inherits(x,'cmtkreg'))
   if(!is.character(x)) return (FALSE)
   
-  if(length(x)>1) return(sapply(x,is.cmtkreg,filecheck=filecheck))
+  if(length(x)>1)
+    return(sapply(x, is.cmtkreg, filecheck=filecheck, silent=silent))
   
   reg=cmtkreg(x, returnDir=FALSE)
   if(filecheck=='exists') return(!is.na(reg))
@@ -68,7 +69,7 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic'), silent = TRUE) {
     magic<-readBin(gzf,what=raw(),n=length(cmtk.magic))
     close(gzf)
     magic},
-            silent = silent)
+    silent = silent)
 
   return(!inherits(magic,'try-error') && 
            length(magic)==length(cmtk.magic) 
