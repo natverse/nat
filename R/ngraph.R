@@ -277,6 +277,58 @@ segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE,
   g
 }
 
+#' Find the Strahler order of all segments in a neuron
+#' 
+#' @description The Strahler order will be 1 for each tip segment and then 1 + 
+#'   the maximum of the Strahler order of each parent segment for internal 
+#'   segments.
+#' 
+#' @param x A neuron
+#' @details It is vital that the root of the neuron is valid since this 
+#'   determines the flow direction for calculation of the Strahler order. At 
+#'   present the function is not defined for neurons with multiple subtrees.
+#'   
+#'   Internally, this function uses \code{\link{segmentgraph}} to find a reduced 
+#'   segmentgraph for the neuron.
+#' @references \url{https://en.wikipedia.org/wiki/Strahler_number}
+#' @export
+#' @seealso \code{\link{segmentgraph}}
+strahler_order<-function(x) {
+  # convert neuron to segment graph
+  s=segmentgraph(x, weights = F)
+  
+  roots=rootpoints(s, original.ids=FALSE)
+  if(length(roots)>1)
+    stop("strahler_order not yet defined for multiple subtrees")
+  
+  # find branch tips
+  ends=endpoints(s, original.ids=FALSE)
+  # find distances from each node to a tip 
+  d=igraph::distances(s, to=ends, mode = 'out')
+  # set all infinite distances to NA
+  d[!is.finite(d)]=NA
+  # max distance from each vertex to a tip +1 to convert to 1-indexed
+  apply(d, 1, max, na.rm=T)+1
+}
+
+strahler_order2<-function(x, ...) {
+  # convert neuron to segment graph
+  s=segmentgraph(x, weights = F, reverse.edges = T)
+
+  # find branch tips - these are the roots of the reversed graph
+  tips=rootpoints(s, original.ids=FALSE)
+  ends=endpoints(s, original.ids=FALSE)
+  if(length(ends)!=length(tips)+1)
+    stop("strahler_order not yet defined for multiple subtrees")
+  # find distances from each node to a tip 
+  d=igraph::distances(s, to=tips, mode = 'in')
+  # set all infinite distances to NA
+  d[!is.finite(d)]=NA
+  # max distance from each vertex to a tip
+  apply(d, 1, max, na.rm=T)
+}
+
+
 # Construct EdgeList matrix with start and end points from SegList
 #
 # @param SegList from a \code{neuron}
