@@ -223,15 +223,19 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE)
 #'   graph in the neuron). Each edge in the output graph will match one segment 
 #'   in the original SegList.
 #' @param x neuron
-#' @param weights Whether to include the original segment lengths as weights on
+#' @param weights Whether to include the original segment lengths as weights on 
 #'   the graph.
 #' @param exclude.isolated Whether to eliminated isolated nodes
 #' @param include.xyz Whether to include 3d location as vertex attribute
+#' @param reverse.edges Whether to reverse the direction of each edge in the
+#'   output graph to point towards (rather than away from) the root (default 
+#'   \code{FALSE})
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
-#'   @importFrom igraph graph.empty add.edges
-segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALSE){
+#' @importFrom igraph graph.empty add.edges
+segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, 
+                       include.xyz=FALSE, reverse.edges=FALSE){
   g=graph.empty()
   pointnos=x$d$PointNo
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
@@ -248,6 +252,8 @@ segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALS
   
   # handle the edges - first make list full edgelist
   el=EdgeListFromSegList(simple_sts)
+  if(reverse.edges)
+    el=el[,2:1]
   # convert from original vertex ids to vids of reduced graph
   elred=match(t(el),all_nodes)
   

@@ -5,7 +5,7 @@
 \title{Return a simplified segment graph for a neuron}
 \usage{
 segmentgraph(x, weights = TRUE, exclude.isolated = FALSE,
-  include.xyz = FALSE)
+  include.xyz = FALSE, reverse.edges = FALSE)
 }
 \arguments{
 \item{x}{neuron}
@@ -16,6 +16,10 @@ the graph.}
 \item{exclude.isolated}{Whether to eliminated isolated nodes}
 
 \item{include.xyz}{Whether to include 3d location as vertex attribute}
+
+\item{reverse.edges}{Whether to reverse the direction of each edge in the
+output graph to point towards (rather than away from) the root (default
+\code{FALSE})}
 }
 \value{
 \code{igraph} object containing only nodes of neuron keeping original

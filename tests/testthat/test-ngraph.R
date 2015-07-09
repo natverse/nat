@@ -130,9 +130,14 @@ test_that("we can find the segmentgraph of a neuron",{
   
   baseline=graph(c(1,2,2,3,2,4), directed=TRUE)
   expect_true(graph.isomorphic(sg, baseline))
-    
+  
   expect_equal(E(sg)$weight, c(2, 2, 1))
   expect_true(graph.isomorphic(segmentgraph(testn, weights=FALSE), sg))
+  
+  # check that we can make a segment graph where each edge direction is
+  # reversed
+  expect_is(sgr<-segmentgraph(testn, reverse.edges = TRUE), 'igraph')
+  expect_equal(ends(sgr,E(sgr)), ends(sg,E(sg))[,2:1])
 })
 
 
