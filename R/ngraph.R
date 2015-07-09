@@ -277,11 +277,12 @@ segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE,
   g
 }
 
-#' Find the Strahler order of all segments in a neuron
+#' Find the Strahler order of each point in a neuron
 #' 
 #' @description The Strahler order will be 1 for each tip segment and then 1 + 
 #'   the maximum of the Strahler order of each parent segment for internal 
-#'   segments.
+#'   segments. Branch points will have the Strahler order of the highest segment
+#'   to which they belong
 #' 
 #' @param x A neuron
 #' @details It is vital that the root of the neuron is valid since this 
@@ -308,7 +309,25 @@ strahler_order<-function(x) {
   # set all infinite distances to NA
   d[!is.finite(d)]=NA
   # max distance from each vertex to a tip +1 to convert to 1-indexed
-  apply(d, 1, max, na.rm=T)+1
+  so_red_nodes=apply(d, 1, max, na.rm=T)+1
+  
+  # iterate over segments
+  # finding head and tail node
+  # all nodes in segment have min strahler order of head & tail
+  so_orig_nodes=integer(length(nrow(x$d)))
+  sts=as.seglist(x, all=TRUE, flatten = TRUE)
+  svids=V(s)$vid
+  topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
+  for(i in seq_along(sts)){
+    segends=topntail(sts[[i]])
+    so_segends=so_red_nodes[match(segends, svids)]
+    so_orig_nodes[segends]=so_segends
+    internal=setdiff(sts[[i]], segends)
+    if(length(internal)) {
+      so_orig_nodes[internal]=min(so_segends)
+    }
+  }
+  so_orig_nodes
 }
 
 strahler_order2<-function(x, ...) {
