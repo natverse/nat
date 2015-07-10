@@ -308,7 +308,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
 #'   
 #'   \item segments Vector of integer Strahler orders for each segment in the
 #'   neuron }
-strahler_order<-function(x, nodes=TRUE, segments=TRUE){
+strahler_order<-function(x){
   s=segmentgraph(x, weights = F)
   
   roots=rootpoints(s, original.ids=FALSE)

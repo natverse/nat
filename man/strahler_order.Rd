@@ -4,7 +4,7 @@
 \alias{strahler_order}
 \title{Find the Strahler order of each point in a neuron}
 \usage{
-strahler_order(x, nodes = TRUE, segments = TRUE)
+strahler_order(x)
 }
 \arguments{
 \item{x}{A neuron}
