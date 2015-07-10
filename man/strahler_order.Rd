@@ -12,8 +12,8 @@ strahler_order(x)
 \description{
 The Strahler order will be 1 for each tip segment and then 1 +
   the maximum of the Strahler order of each parent segment for internal
-  segments. Branch points will have the Strahler order of the highest segment
-  to which they belong
+  segments. Branch points will have the Strahler order of the closest segment
+  to the root of which they are part.
 }
 \details{
 It is vital that the root of the neuron is valid since this
