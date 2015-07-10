@@ -318,13 +318,13 @@ strahler_order<-function(x){
       so_red_nodes[i]=1L
       next
     }
-    if(length(children)==1L) {
-      stop("Error: segment graph should conist only of branch or end points")
-    }
     # we have some children
-    # if all have the same order, increment, otherwise choose the max
     child_orders=so_red_nodes[children]
-    if(max(child_orders)==min(child_orders)){
+    # if all have the same order, increment, otherwise choose the max
+    if(length(children)==1L) {
+      # this should be the root node
+      so_red_nodes[i]=max(child_orders)
+    } else if(max(child_orders)==min(child_orders)){
       so_red_nodes[i]=max(child_orders)+1L
     } else {
       so_red_nodes[i]=max(child_orders)

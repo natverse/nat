@@ -146,3 +146,8 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
   expect_is(g2<-as.ngraph(as.undirected(g1), root = rootpoints(g1)), 'ngraph')
   expect_true(graph.isomorphic(g1,g2))
 })
+
+test_that("Strahler order",{
+  n=as.neuron(testd)
+  expect_equal(strahler_order(n), c(2L, 2L, 2L, 1L, 1L, 1L))
+})
