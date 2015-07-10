@@ -4,10 +4,18 @@
 \alias{strahler_order}
 \title{Find the Strahler order of each point in a neuron}
 \usage{
-strahler_order(x)
+strahler_order(x, nodes = TRUE, segments = TRUE)
 }
 \arguments{
 \item{x}{A neuron}
+}
+\value{
+A list containing \itemize{
+
+  \item points Vector of integer Strahler orders for each point in the neuron
+
+  \item segments Vector of integer Strahler orders for each segment in the
+  neuron }
 }
 \description{
 The Strahler order will be 1 for each tip segment and then 1 +

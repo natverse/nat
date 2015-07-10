@@ -153,5 +153,6 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
 
 test_that("Strahler order",{
   n=as.neuron(testd)
-  expect_equal(strahler_order(n), c(2L, 2L, 2L, 1L, 1L, 1L))
+  expect_equal(strahler_order(n), 
+               list(points = c(2L, 2L, 2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
 })

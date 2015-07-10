@@ -302,7 +302,13 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
 #' @export
 #' @seealso \code{\link{segmentgraph}}
 #' @importFrom igraph bfs neighborhood V
-strahler_order<-function(x){
+#' @return A list containing \itemize{
+#'   
+#'   \item points Vector of integer Strahler orders for each point in the neuron
+#'   
+#'   \item segments Vector of integer Strahler orders for each segment in the
+#'   neuron }
+strahler_order<-function(x, nodes=TRUE, segments=TRUE){
   s=segmentgraph(x, weights = F)
   
   roots=rootpoints(s, original.ids=FALSE)
@@ -343,18 +349,22 @@ strahler_order<-function(x){
   # all nodes in segment have min strahler order of head & tail
   so_orig_nodes=integer(length(nrow(x$d)))
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
+  so_segs=integer(length(sts))
   svids=V(s)$vid
   topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
   for(i in seq_along(sts)){
     segends=topntail(sts[[i]])
     so_segends=so_red_nodes[match(segends, svids)]
     so_orig_nodes[segends]=so_segends
+    so_this_seg=min(so_segends)
+    so_segs[i]=so_this_seg
+    
     internal=setdiff(sts[[i]], segends)
     if(length(internal)) {
-      so_orig_nodes[internal]=min(so_segends)
+      so_orig_nodes[internal]=so_this_seg
     }
   }
-  so_orig_nodes
+  list(points=so_orig_nodes, segments=so_segs)
 }
 
 # Construct EdgeList matrix with start and end points from SegList
