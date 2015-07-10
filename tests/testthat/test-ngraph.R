@@ -138,6 +138,10 @@ test_that("we can find the segmentgraph of a neuron",{
   # reversed
   expect_is(sgr<-segmentgraph(testn, reverse.edges = TRUE), 'igraph')
   expect_equal(ends(sgr,E(sgr)), ends(sg,E(sg))[,2:1])
+  
+  # and with segment ids included
+  expect_is(sgs<-segmentgraph(testn, segids = TRUE), 'igraph')
+  expect_equal(E(sgs)$segid, 1:3)
 })
 
 

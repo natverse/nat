@@ -4,16 +4,19 @@
 \alias{segmentgraph}
 \title{Return a simplified segment graph for a neuron}
 \usage{
-segmentgraph(x, weights = TRUE, exclude.isolated = FALSE,
+segmentgraph(x, weights = TRUE, segids = FALSE, exclude.isolated = FALSE,
   include.xyz = FALSE, reverse.edges = FALSE)
 }
 \arguments{
 \item{x}{neuron}
 
-\item{weights}{Whether to include the original segment lengths as weights on
-the graph.}
+\item{weights}{Whether to include the original segment lengths as edge
+weights in the graph.}
 
-\item{exclude.isolated}{Whether to eliminated isolated nodes}
+\item{segids}{Whether to include the integer segment ids as an edge attribute
+in the graph}
+
+\item{exclude.isolated}{Whether to eliminate isolated nodes}
 
 \item{include.xyz}{Whether to include 3d location as vertex attribute}
 

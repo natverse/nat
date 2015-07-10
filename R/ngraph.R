@@ -223,18 +223,20 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE)
 #'   graph in the neuron). Each edge in the output graph will match one segment 
 #'   in the original SegList.
 #' @param x neuron
-#' @param weights Whether to include the original segment lengths as weights on 
-#'   the graph.
-#' @param exclude.isolated Whether to eliminated isolated nodes
+#' @param weights Whether to include the original segment lengths as edge
+#'   weights in the graph.
+#' @param segids Whether to include the integer segment ids as an edge attribute
+#'   in the graph
+#' @param exclude.isolated Whether to eliminate isolated nodes
 #' @param include.xyz Whether to include 3d location as vertex attribute
-#' @param reverse.edges Whether to reverse the direction of each edge in the
+#' @param reverse.edges Whether to reverse the direction of each edge in the 
 #'   output graph to point towards (rather than away from) the root (default 
 #'   \code{FALSE})
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
-#' @importFrom igraph graph.empty add.edges
-segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, 
+#' @importFrom igraph graph.empty add.edges E
+segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE, 
                        include.xyz=FALSE, reverse.edges=FALSE){
   g=graph.empty()
   pointnos=x$d$PointNo
@@ -257,11 +259,16 @@ segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE,
   # convert from original vertex ids to vids of reduced graph
   elred=match(t(el),all_nodes)
   
+  if(identical(segids, FALSE)) {
+    segids=NULL
+  } else if(isTRUE(segids)){
+    segids=seq_along(sts)
+  }
   if(weights){
     weights=seglengths(x, all=TRUE)
-    g=add.edges(g, elred, weight=weights)
+    g=add.edges(g, elred, weight=weights, segid=segids)
   } else {
-    g=add.edges(g, elred)
+    g=add.edges(g, elred, segid=segids)
   }
   
   if(include.xyz){
