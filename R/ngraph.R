@@ -367,6 +367,30 @@ strahler_order<-function(x){
   list(points=so_orig_nodes, segments=so_segs)
 }
 
+
+#' Prune a neuron by removing segments with a given Strahler order
+#' 
+#' @param x A neuron
+#' @param orderstoprune Integer indices of which Strahler orders to prune - 
+#'   defaults to the lowest two orders (\code{1:2})
+#' @param ... Additional arguments passed to \code{\link{as.neuron.data.frame}}
+#'   
+#' @return The pruned neuron
+#' @export
+#' @seealso \code{\link{strahler_order}}, \code{\link{as.neuron.data.frame}}
+#'   
+#' @examples
+#' x=Cell07PNs[[1]]
+#' pruned12=prune_strahler(x)
+#' pruned1=prune_strahler(x, 1)
+#' plot(x)
+#' plot(pruned1, lwd=3, col='blue', add=TRUE)
+#' plot(pruned12, lwd=3, col='red', add=TRUE)
+prune_strahler<-function(x, orderstoprune=1:2, ...) {
+  newdf=x$d[!strahler_order(x)$points %in% orderstoprune, ]
+  as.neuron(newdf, ...)
+}
+
 # Construct EdgeList matrix with start and end points from SegList
 #
 # @param SegList from a \code{neuron}
