@@ -32,4 +32,10 @@ The resultant graph will contain all branch and endpoints of the
   graph in the neuron). Each edge in the output graph will match one segment
   in the original SegList.
 }
+\examples{
+sg=segmentgraph(Cell07PNs[[1]])
+str(sg)
+library(igraph)
+plot(sg, edge.arrow.size=.4, vertex.size=10)
+}
 
