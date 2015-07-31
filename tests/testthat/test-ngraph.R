@@ -130,9 +130,18 @@ test_that("we can find the segmentgraph of a neuron",{
   
   baseline=graph(c(1,2,2,3,2,4), directed=TRUE)
   expect_true(graph.isomorphic(sg, baseline))
-    
+  
   expect_equal(E(sg)$weight, c(2, 2, 1))
   expect_true(graph.isomorphic(segmentgraph(testn, weights=FALSE), sg))
+  
+  # check that we can make a segment graph where each edge direction is
+  # reversed
+  expect_is(sgr<-segmentgraph(testn, reverse.edges = TRUE), 'igraph')
+  expect_equal(ends(sgr,E(sgr)), ends(sg,E(sg))[,2:1])
+  
+  # and with segment ids included
+  expect_is(sgs<-segmentgraph(testn, segids = TRUE), 'igraph')
+  expect_equal(E(sgs)$segid, 1:3)
 })
 
 
@@ -141,3 +150,23 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
   expect_is(g2<-as.ngraph(as.undirected(g1), root = rootpoints(g1)), 'ngraph')
   expect_true(graph.isomorphic(g1,g2))
 })
+
+test_that("Strahler order", {
+  n = as.neuron(testd)
+  expect_equal(strahler_order(n), list(points = c(2L, 2L, 
+    2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
+  
+  ns=structure(list(NumPoints = 3L, StartPoint = 1L, BranchPoints = integer(0), 
+    EndPoints = c(1L, 3L), nTrees = 1, NumSegs = 1L, 
+    SegList = structure(list(1:3), class = c("seglist", 
+      "list")), d = structure(list(PointNo = 1:3, Label = c(2, 
+      2, 2), X = c(1, 2, 3), Y = c(1, 1, 1), Z = c(0, 
+      0, 0), W = c(NA, NA, NA), Parent = c(-1L, 1L, 
+      2L)), .Names = c("PointNo", "Label", "X", "Y", 
+      "Z", "W", "Parent"), class = "data.frame", row.names = c(NA, 
+      -3L))), .Names = c("NumPoints", "StartPoint", 
+    "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
+    "SegList", "d"), class = c("neuron", "list"))
+  expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
+})
+

@@ -223,21 +223,27 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE)
 #'   graph in the neuron). Each edge in the output graph will match one segment 
 #'   in the original SegList.
 #' @param x neuron
-#' @param weights Whether to include the original segment lengths as weights on 
-#'   the graph.
-#' @param exclude.isolated Whether to eliminated isolated nodes
+#' @param weights Whether to include the original segment lengths as edge
+#'   weights in the graph.
+#' @param segids Whether to include the integer segment ids as an edge attribute
+#'   in the graph
+#' @param exclude.isolated Whether to eliminate isolated nodes
 #' @param include.xyz Whether to include 3d location as vertex attribute
+#' @param reverse.edges Whether to reverse the direction of each edge in the 
+#'   output graph to point towards (rather than away from) the root (default 
+#'   \code{FALSE})
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
-#' @importFrom igraph graph.empty add.edges
+#' @importFrom igraph graph.empty add.edges E
 #' @export
 #' @examples 
 #' sg=segmentgraph(Cell07PNs[[1]])
 #' str(sg)
 #' library(igraph)
 #' plot(sg, edge.arrow.size=.4, vertex.size=10)
-segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALSE){
+segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE, 
+                       include.xyz=FALSE, reverse.edges=FALSE){
   g=graph.empty()
   pointnos=x$d$PointNo
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
@@ -254,14 +260,21 @@ segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALS
   
   # handle the edges - first make list full edgelist
   el=EdgeListFromSegList(simple_sts)
+  if(reverse.edges)
+    el=el[,2:1]
   # convert from original vertex ids to vids of reduced graph
   elred=match(t(el),all_nodes)
   
+  if(identical(segids, FALSE)) {
+    segids=NULL
+  } else if(isTRUE(segids)){
+    segids=seq_along(sts)
+  }
   if(weights){
     weights=seglengths(x, all=TRUE)
-    g=add.edges(g, elred, weight=weights)
+    g=add.edges(g, elred, weight=weights, segid=segids)
   } else {
-    g=add.edges(g, elred)
+    g=add.edges(g, elred, segid=segids)
   }
   
   if(include.xyz){
@@ -275,6 +288,113 @@ segmentgraph<-function(x, weights=TRUE, exclude.isolated=FALSE, include.xyz=FALS
     g=igraph::delete.vertices(graph=g,isolated_vertices)
   }
   g
+}
+
+#' Find the Strahler order of each point in a neuron
+#' 
+#' @description The Strahler order will be 1 for each tip segment and then 1 + 
+#'   the maximum of the Strahler order of each parent segment for internal 
+#'   segments. Branch points will have the Strahler order of the closest segment
+#'   to the root of which they are part.
+#'   
+#' @param x A neuron
+#' @details It is vital that the root of the neuron is valid since this 
+#'   determines the flow direction for calculation of the Strahler order. At 
+#'   present the function is not defined for neurons with multiple subtrees.
+#'   
+#'   Internally, this function uses \code{\link{segmentgraph}} to find a reduced
+#'   segmentgraph for the neuron.
+#' @references \url{https://en.wikipedia.org/wiki/Strahler_number}
+#' @export
+#' @seealso \code{\link{segmentgraph}}
+#' @importFrom igraph bfs neighborhood V
+#' @return A list containing \itemize{
+#'   
+#'   \item points Vector of integer Strahler orders for each point in the neuron
+#'   
+#'   \item segments Vector of integer Strahler orders for each segment in the
+#'   neuron }
+strahler_order<-function(x){
+  s=segmentgraph(x, weights = F)
+  
+  roots=rootpoints(s, original.ids=FALSE)
+  if(length(roots)>1)
+    stop("strahler_order not yet defined for multiple subtrees")
+  
+  b=bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
+  
+  # find neighbours for each node
+  n=neighborhood(s, 1, mode='out')
+  # empty vector to hold order for each node
+  so_red_nodes=integer(vcount(s))
+  
+  # visit nodes in reverse order of bfs traversal
+  # this ensures that we always visit children before parents
+  for(i in rev(b$order)) {
+    children=setdiff(n[[i]], i)
+    if(length(children)==0L) {
+      # terminal node
+      so_red_nodes[i]=1L
+      next
+    }
+    # we have some children
+    child_orders=so_red_nodes[children]
+    # if all have the same order, increment, otherwise choose the max
+    if(length(children)==1L) {
+      # this should be the root node
+      so_red_nodes[i]=max(child_orders)
+    } else if(max(child_orders)==min(child_orders)){
+      so_red_nodes[i]=max(child_orders)+1L
+    } else {
+      so_red_nodes[i]=max(child_orders)
+    }
+  }
+  
+  # iterate over segments
+  # finding head and tail node
+  # all nodes in segment have min strahler order of head & tail
+  so_orig_nodes=integer(length(nrow(x$d)))
+  sts=as.seglist(x, all=TRUE, flatten = TRUE)
+  so_segs=integer(length(sts))
+  svids=V(s)$vid
+  topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
+  for(i in seq_along(sts)){
+    segends=topntail(sts[[i]])
+    so_segends=so_red_nodes[match(segends, svids)]
+    so_orig_nodes[segends]=so_segends
+    so_this_seg=min(so_segends)
+    so_segs[i]=so_this_seg
+    
+    internal=setdiff(sts[[i]], segends)
+    if(length(internal)) {
+      so_orig_nodes[internal]=so_this_seg
+    }
+  }
+  list(points=so_orig_nodes, segments=so_segs)
+}
+
+
+#' Prune a neuron by removing segments with a given Strahler order
+#' 
+#' @param x A neuron
+#' @param orderstoprune Integer indices of which Strahler orders to prune - 
+#'   defaults to the lowest two orders (\code{1:2})
+#' @param ... Additional arguments passed to \code{\link{as.neuron.data.frame}}
+#'   
+#' @return The pruned neuron
+#' @export
+#' @seealso \code{\link{strahler_order}}, \code{\link{as.neuron.data.frame}}
+#'   
+#' @examples
+#' x=Cell07PNs[[1]]
+#' pruned12=prune_strahler(x)
+#' pruned1=prune_strahler(x, 1)
+#' plot(x)
+#' plot(pruned1, lwd=3, col='blue', add=TRUE)
+#' plot(pruned12, lwd=3, col='red', add=TRUE)
+prune_strahler<-function(x, orderstoprune=1:2, ...) {
+  newdf=x$d[!strahler_order(x)$points %in% orderstoprune, ]
+  as.neuron(newdf, ...)
 }
 
 # Construct EdgeList matrix with start and end points from SegList
