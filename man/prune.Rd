@@ -55,6 +55,8 @@ plot3d(kcs20[[11]], col='green', lwd=3)
 plot3d(kcs20,col='grey')
 }
 \seealso{
+\code{\link{prune_strahler}}, \code{\link{spine}}
+
 \code{\link{subset.dotprops}}
 }
 

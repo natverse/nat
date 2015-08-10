@@ -184,7 +184,10 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #'   (\code{FALSE}, the default).
 #' @return Either a neuron object corresponding to the longest path \emph{or} 
 #'   the length of the longest path when \code{LengthOnly=TRUE}).
-#' @seealso \code{\link[igraph]{diameter}}, \code{\link[igraph]{shortest.paths}}
+#' @seealso \code{\link[igraph]{diameter}}, 
+#'   \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for 
+#'   removing lower order branches from a neuron, \code{\link{prune}} for 
+#'   removing parts of a neuron by spatial criteria.
 #' @export
 #' @examples
 #' plot3d(Cell07PNs[[1]])
@@ -193,7 +196,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' spine(Cell07PNs[[1]], LengthOnly=TRUE)
 #' # same result since StartPoint is included in longest path
 #' spine(Cell07PNs[[1]], LengthOnly=TRUE, UseStartPoint=TRUE)
-#' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter
+#' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter 
 #'   delete.vertices
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE) {
   ng <- as.ngraph(n, weights=SpatialWeights)
@@ -306,13 +309,15 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
 #'   segmentgraph for the neuron.
 #' @references \url{https://en.wikipedia.org/wiki/Strahler_number}
 #' @export
-#' @seealso \code{\link{segmentgraph}}
+#' @seealso \code{\link{prune_strahler}}, a \code{\link{segmentgraph}} (a form
+#'   of \code{\link{ngraph}}) representation is used to calculate the Strahler 
+#'   order.
 #' @importFrom igraph bfs neighborhood V
 #' @return A list containing \itemize{
 #'   
 #'   \item points Vector of integer Strahler orders for each point in the neuron
 #'   
-#'   \item segments Vector of integer Strahler orders for each segment in the
+#'   \item segments Vector of integer Strahler orders for each segment in the 
 #'   neuron }
 strahler_order<-function(x){
   s=segmentgraph(x, weights = F)
@@ -383,7 +388,11 @@ strahler_order<-function(x){
 #'   
 #' @return The pruned neuron
 #' @export
-#' @seealso \code{\link{strahler_order}}, \code{\link{as.neuron.data.frame}}
+#' @seealso \code{\link{strahler_order}}, \code{\link{spine}}, for finding the 
+#'   longest path in a neuron, \code{\link{prune}} for subsetting 
+#'   \code{dotprops} style neurons by spatial proximity, 
+#'   \code{\link{as.neuron.data.frame}}, which is used to generate the new
+#'   neuron.
 #'   
 #' @examples
 #' x=Cell07PNs[[1]]

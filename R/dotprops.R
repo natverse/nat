@@ -368,6 +368,7 @@ subset.dotprops<-function(x, subset, ...){
 #'   in x are kept.
 #' @param ... Additional arguments for methods (eventually passed to 
 #'   \code{prune.default})
+#' @seealso \code{\link{prune_strahler}}, \code{\link{spine}}
 #' @examples
 #' ## prune single neurons
 #' plot3d(kcs20[[1]],col='blue')

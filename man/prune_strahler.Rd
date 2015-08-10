@@ -29,6 +29,10 @@ plot(pruned1, lwd=3, col='blue', add=TRUE)
 plot(pruned12, lwd=3, col='red', add=TRUE)
 }
 \seealso{
-\code{\link{strahler_order}}, \code{\link{as.neuron.data.frame}}
+\code{\link{strahler_order}}, \code{\link{spine}}, for finding the
+  longest path in a neuron, \code{\link{prune}} for subsetting
+  \code{dotprops} style neurons by spatial proximity,
+  \code{\link{as.neuron.data.frame}}, which is used to generate the new
+  neuron.
 }
 

@@ -35,6 +35,8 @@ It is vital that the root of the neuron is valid since this
 \url{https://en.wikipedia.org/wiki/Strahler_number}
 }
 \seealso{
-\code{\link{segmentgraph}}
+\code{\link{prune_strahler}}, a \code{\link{segmentgraph}} (a form
+  of \code{\link{ngraph}}) representation is used to calculate the Strahler
+  order.
 }
 

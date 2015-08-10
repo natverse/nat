@@ -36,6 +36,9 @@ spine(Cell07PNs[[1]], LengthOnly=TRUE)
 spine(Cell07PNs[[1]], LengthOnly=TRUE, UseStartPoint=TRUE)
 }
 \seealso{
-\code{\link[igraph]{diameter}}, \code{\link[igraph]{shortest.paths}}
+\code{\link[igraph]{diameter}},
+  \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for
+  removing lower order branches from a neuron, \code{\link{prune}} for
+  removing parts of a neuron by spatial criteria.
 }
 
