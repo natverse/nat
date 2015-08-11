@@ -75,7 +75,6 @@ plot3d(vdnl)
 
 ## The same, but this time add some metadata to neuronlist
 # fetch table of worm neurons from wormbase
-\dontrun{
 library(rvest)
 nlurl="http://wormatlas.org/neurons/Individual\%20Neurons/Neuronframeset.html"
 wormneurons = html_table(html(nlurl), fill=TRUE)[[4]]
@@ -86,7 +85,6 @@ vdnl=read.neurons(vdurls, neuronnames=vds, df=vddf)
 # use metadata to plot a subset of neurons
 clear3d()
 plot3d(vdnl, grepl("P[1-6].app", Lineage))
-}
 }
 }
 \seealso{
