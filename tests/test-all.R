@@ -2,6 +2,10 @@ library(testthat)
 library(nat)
 library(httr)
 
+# suppress RGL in headless environments (some CRAN build machines fail otherwise)
+if(!interactive())
+  Sys.setenv(RGL_USE_NULL=TRUE)
+
 # Is internet accessible?
 internet.ok=isTRUE(try(url_ok('http://flybrain.mrc-lmb.cam.ac.uk/')))
 
