@@ -191,9 +191,22 @@ test_that("basic interactive 3d functionality",{
     "NIA8L", "NIA8R", "NNA9L", "NNC4R", "NNE1L", "OFD2L", "SDD8L", 
     "TKC8R")
   expect_equal(find.neuron(selfun, db=Cell07PNs), sel_neuron)
+  # NB equivalent because in one case the attributes on the attached data.frame 
+  # are kept, in the other case not. This a pretty obscure difference and not
+  # one that I can sort out in a hurry.
+  expect_equivalent(find.neuron(selfun, db=Cell07PNs, rval='data.frame'), 
+               Cell07PNs[sel_neuron,])
+  expect_equal(find.neuron(selfun, db=Cell07PNs, rval='neuronlist'), 
+                    Cell07PNs[sel_neuron])
   
   sel_soma=c("EBH20L", "EBH20R", "EBJ3R", "EBO15L", "EBO53L")
   expect_equal(find.soma(selfun, db=Cell07PNs), sel_soma)
+  expect_equal(find.soma(selfun, db=Cell07PNs, invert = TRUE),
+               setdiff(names(Cell07PNs), sel_soma))
+  expect_equivalent(find.soma(selfun, db=Cell07PNs, rval='data.frame'), 
+                    Cell07PNs[sel_soma,])
+  expect_equal(find.soma(selfun, db=Cell07PNs, rval='neuronlist'), 
+               Cell07PNs[sel_soma])
   
   rgl.close()
 })
