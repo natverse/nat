@@ -1,3 +1,11 @@
+nat 1.7.1
+=========
+* new functions strahler_order and prune_strahler to calculate the Strahler 
+  order of points in a neuron and to remove lower order (terminal) branches.
+* fix is.cmtkreg for non-existent files (and better handling of status messages)
+* export segmentgraph function for end users
+* enable segmentgraph to return segment ids
+
 nat 1.7.0
 =========
 * implement extraction/replacement of the data.frame attached to a neuronlist
