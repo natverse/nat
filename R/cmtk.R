@@ -78,15 +78,20 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' 
 #' @description The \href{www.nitrc.org/projects/cmtk}{Computational Morphometry
 #'   Toolkit} (CMTK) is the default image registration toolkit supported by nat.
-#'   An external CMTK installation is required in order to apply CMTK
-#'   registrations. This function attempts to locate the full path to the CMTK
+#'   An external CMTK installation is required in order to apply CMTK 
+#'   registrations. This function attempts to locate the full path to the CMTK 
 #'   executable files and can query and set an option.
 #' @details Queries options('nat.cmtk.bindir') if \code{firstdir} is not 
 #'   specified. If that does not contain the appropriate binaries, it will look 
-#'   in the system PATH and then a succession of plausible places until it finds
+#'   in the system PATH for the \code{cmtk} wrapper script installed by most 
+#'   recent cmtk installations.
+#'   
+#'   Failing that, it will look for the cmtk tool specified by \code{cmtktool}, 
+#'   first in the path and then a succession of plausible places until it finds 
 #'   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing 
 #'   \code{firstdir=NA} will stop the function from trying to locate CMTK, 
-#'   always returning NULL unless \code{check=TRUE} when it will error out.
+#'   always returning NULL unless \code{check=TRUE}, in which case it will error
+#'   out.
 #' @param firstdir Character vector specifying path containing CMTK binaries or 
 #'   NA (see details). This defaults to options('nat.cmtk.bindir').
 #' @param extradirs Where to look if CMTK is not in \code{firstdir} or the PATH
@@ -129,12 +134,12 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
   if(is.null(bindir)){
-    if(nzchar(cmtktoolpath<-Sys.which(cmtktool))){
-      bindir=dirname(cmtktoolpath)
-    } else if(nzchar(cmtkwrapperpath<-Sys.which("cmtk"))) {
+    if(nzchar(cmtkwrapperpath<-Sys.which("cmtk"))) {
       # try looking for cmtk wrapper script
       # e.g. /usr/bin/cmtk => /usr/lib/cmtk/bin
       bindir=file.path(dirname(dirname(cmtkwrapperpath)), "lib", "cmtk","bin")
+    } else if(nzchar(cmtktoolpath<-Sys.which(cmtktool))){
+      bindir=dirname(cmtktoolpath)
     } else {
       # check some plausible locations
       for(d in extradirs){
@@ -157,6 +162,8 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
     options(nat.cmtk.bindir=bindir)
   bindir
 }
+
+
 
 #' Return cmtk version or test for presence of at least a specific version
 #' 

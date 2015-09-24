@@ -39,10 +39,15 @@ The \href{www.nitrc.org/projects/cmtk}{Computational Morphometry
 \details{
 Queries options('nat.cmtk.bindir') if \code{firstdir} is not
   specified. If that does not contain the appropriate binaries, it will look
-  in the system PATH and then a succession of plausible places until it finds
+  in the system PATH for the \code{cmtk} wrapper script installed by most
+  recent cmtk installations.
+
+  Failing that, it will look for the cmtk tool specified by \code{cmtktool},
+  first in the path and then a succession of plausible places until it finds
   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing
   \code{firstdir=NA} will stop the function from trying to locate CMTK,
-  always returning NULL unless \code{check=TRUE} when it will error out.
+  always returning NULL unless \code{check=TRUE}, in which case it will error
+  out.
 }
 \section{Installation}{
  It is recommended to install released CMTK versions
