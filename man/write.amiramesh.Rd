@@ -29,8 +29,10 @@ details.}
 Write a 3d data object to an amiramesh format file
 }
 \details{
-Note that only raw or text format data can accommodate a detached
-  NRRD format header - the
+Note that only \code{'raw'} or \code{'text'} format data can
+  accommodate a detached NRRD format header since Amira's HxZip format is
+  subtly different from NRRD's gzip encoding. There is a full description
+  of the deteached NRRD format in the help for \code{\link{write.nrrd}}.
 }
 \examples{
 d=array(rnorm(1000), c(10, 10, 10))
@@ -40,6 +42,6 @@ d2=read.nrrd(paste(tf, sep='', '.nhdr'))
 all.equal(d, d2, tol=1e-6)
 }
 \seealso{
-\code{\link{.Platform}, \link{read.amiramesh}}
+\code{\link{.Platform}, \link{read.amiramesh}, \link{write.nrrd}}
 }
 
