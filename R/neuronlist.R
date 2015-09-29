@@ -346,6 +346,14 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' rgl.close()
 #' 
 #' \dontrun{
+#' # example of using plyr's .inform argument for debugging error conditions
+#' xx=nlapply(Cell07PNs, prune_strahler)
+#' # oh dear there was an error, let's get some details about the neuron
+#' # that caused the problem
+#' xx=nlapply(Cell07PNs, prune_strahler, .inform=TRUE)
+#' }
+#' 
+#' \dontrun{
 #' ## nlapply example with plyr
 #' ## dotprops.neuronlist uses nlapply under the hood
 #' ## the .progress and .parallel arguments are passed straight to 
