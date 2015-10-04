@@ -129,6 +129,7 @@ as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
 }
 
 #' @importFrom igraph as.undirected as.directed
+#' @export
 as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
   if(inherits(x,'ngraph'))
     if(igraph::is.directed(x)==directed) return(x)
