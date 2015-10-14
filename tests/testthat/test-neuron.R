@@ -194,7 +194,7 @@ test_that("we can resample neurons", {
   g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
   n=as.neuron(g,origin=3, vertexData = matrix(rnorm(12*4),ncol=4, dimnames = list(NULL, c("X","Y","Z","W"))))
   expect_is(n1<-resample(n,1), "neuron")
-  expect_equivalent(xyzmatrix(n1)[n1$StartPoint,], xyzmatrix(n)[n$StartPoint,], )
+  expect_equivalent(xyzmatrix(n1)[n1$StartPoint,], xyzmatrix(n)[n$StartPoint,])
   expect_true(all(seglengths(n1, all = T) < seglengths(n, all = T)))
   
   n=Cell07PNs[[1]]
