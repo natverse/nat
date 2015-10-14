@@ -154,7 +154,7 @@ test_that("we can calculate seglengths of neuron", {
   expect_equal(seglengths(testn, all=TRUE, flatten=FALSE), list(c(2, 2, 1)))
   expect_equal(seglength(matrix(1:3,ncol=3)), 0)
   
-  # lengths of each sedge
+  # lengths of each edge
   expect_equal(seglengths(testn, sumsegment = FALSE, all=TRUE, flatten = FALSE),
                list(list(c(1, 1), c(1, 1), 1)))  
   
@@ -164,6 +164,13 @@ test_that("we can calculate seglengths of neuron", {
                    Parent=c(-1,1:4)))
   expect_equal(seglengths(n), 4)
   expect_equal(seglengths(n, sumsegment = FALSE), list(c(1,1,1,1)))
+  
+  # multitree neuron
+  # break a segment off into separate tree
+  testd2=testd
+  testd2$Parent[5:6]=c(-1,5)
+  n2=as.neuron(testd2)
+  expect_equal(seglengths(as.neuron(n2),all = T), c(3, sqrt(5)))
 })
 
 test_that("we can resample neurons", {

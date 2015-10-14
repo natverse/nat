@@ -436,9 +436,9 @@ seglengths=function(x, all=FALSE, flatten=TRUE, sumsegment=TRUE){
   d=data.matrix(x$d[, c("X", "Y", "Z")])
   if(all && !flatten) {
     lapply(sts, function(st) sapply(st, 
-                                    function(s) seglength(d[s, ], sum=sumsegment),
+                                    function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
                                     simplify=sumsegment, USE.NAMES = FALSE ))
-  } else sapply(sts, function(s) seglength(d[s, ], sum=sumsegment),
+  } else sapply(sts, function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
                 simplify=sumsegment, USE.NAMES = FALSE)
 }
 
