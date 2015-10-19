@@ -4,7 +4,7 @@
 \alias{prune_vertices}
 \title{Prune selected vertices from a neuron}
 \usage{
-prune_vertices(x, verticestoprune)
+prune_vertices(x, verticestoprune, ...)
 }
 \arguments{
 \item{x}{A neuron to prune}
@@ -12,11 +12,16 @@ prune_vertices(x, verticestoprune)
 \item{verticestoprune}{An integer vector describing which vertices to remove.
 The special signalling value of \code{NA} drops all vertices with invalid X
 locations.}
+
+\item{...}{Additional arguments passed to \code{\link{as.neuron.ngraph}}}
 }
 \description{
 Prune selected vertices from a neuron
 }
 \details{
 uses the \code{ngraph} representation of the neuron to remove
+}
+\seealso{
+\code{\link{as.neuron.ngraph}}
 }
 

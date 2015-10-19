@@ -416,8 +416,10 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #' @param verticestoprune An integer vector describing which vertices to remove.
 #'   The special signalling value of \code{NA} drops all vertices with invalid X
 #'   locations.
+#' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
 #' @export
-prune_vertices<-function(x, verticestoprune) {
+#' @seealso \code{\link{as.neuron.ngraph}}
+prune_vertices<-function(x, verticestoprune, ...) {
   g=as.ngraph(x)
   if(length(verticestoprune)==1 && is.na(verticestoprune)) {
     verticestoprune=which(!is.finite(x$d$X))
