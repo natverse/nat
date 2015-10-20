@@ -368,7 +368,8 @@ subset.dotprops<-function(x, subset, ...){
 #'   in x are kept.
 #' @param ... Additional arguments for methods (eventually passed to 
 #'   \code{prune.default})
-#' @seealso \code{\link{prune_strahler}}, \code{\link{spine}}
+#' @seealso \code{\link{prune_strahler}}, \code{\link{spine}},
+#'   \code{\link{prune_vertices}}
 #' @examples
 #' ## prune single neurons
 #' plot3d(kcs20[[1]],col='blue')
@@ -387,10 +388,13 @@ subset.dotprops<-function(x, subset, ...){
 prune<-function(x, target, ...) UseMethod("prune")
 
 #' @export
-#' @method prune neuron
+#' @details \code{prune.neuron} depends on a more basic function
+#'   \code{\link{prune_vertices}}
 #' @rdname prune
 prune.neuron<-function(x, target, ...){
-  stop("prune.neuron is not yet implemented!")
+  indstokeep=NextMethod(return.indices=TRUE)
+  indstodrop=setdiff(seq(nrow(x$d)), which(indstokeep))
+  prune_vertices(x, indstodrop, ...)
 }
 
 #' @export
