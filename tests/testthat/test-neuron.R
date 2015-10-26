@@ -215,3 +215,16 @@ test_that("we can normalise an SWC data block", {
   expect_error(normalise_swc(Cell07PNs[[1]]$d[-2], ifMissing = 'stop'),
                regexp = "Columns.*are missing")
 })
+
+test_that("we can subset a neuron", {
+  n=Cell07PNs[[1]]
+  # keep vertices if their X location is > 2000
+  expect_is(n1<-subset(n, X>200), 'neuron')
+  npoints_dropped=sum(xyzmatrix(n)[,1]<=200)
+  expect_equal(nrow(n1$d), nrow(n$d)-npoints_dropped)
+  # diameter of neurite >1 
+  expect_equal(subset(n, W>0),n) 
+  # first 50 nodes
+  expect_equal(subset(n,1:50)$d$PointNo, 1:50)
+})
+
