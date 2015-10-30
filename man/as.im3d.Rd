@@ -17,7 +17,8 @@ as.im3d(x, ...)
 
 \item{...}{Additional arguments to pass to methods.}
 
-\item{voxdims}{The voxel dimensions}
+\item{voxdims}{Numeric vector of length 3 \emph{or} an \code{im3d} compatible
+object (see details) completely specifying the required space.}
 
 \item{origin}{the location (or centre) of the first voxel}
 
@@ -35,17 +36,36 @@ At present the only interesting method in \code{nat} is
 
   Other than that, this is a largely a placeholder function with the
   expectation that other packages may wish to provide suitable methods.
+
+\code{as.im3d.matrix} can accept any object that can be converted to
+  an im3d object in the \code{voxdims} argument This will completely specify
+  the dims, voxdims, origin etc. Any value passed to those parameters will be
+  ignored. This can be useful for producing a new im3d to match a target
+  image on disk or a \code{nat.templatebrains::templatebrain} object. See
+  examples.
 }
 \examples{
-# convert a list of neurons into an image volume
+## convert a list of neurons into an image volume
 im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1),
   BoundingBox=c(250, 410, 0, 130, 0, 120))
 \dontrun{
 write.im3d(im, 'kc20volume.nrrd')
+
+## use image dimensions of an image on disk
+# nb note use of ReadData = FALSE so that we just fetch the dimensions of
+# the target image
+diskim=read.im3d("/path/to/my/image.nrrd", ReadData = FALSE)
+im=as.im3d(xyzmatrix(kcs20), diskim)
+
+## use image dimensions of JFRC2 template brain to define the image space
+library(nat.flybrains)
+im=as.im3d(xyzmatrix(kcs20), JFRC2)
 }
 }
 \seealso{
 \code{\link{im3d}}, \code{\link{ind2coord}}
+
+\code{\link{im3d}}, \code{\link{as.im3d}}
 
 Other im3d: \code{\link{boundingbox}},
   \code{\link{boundingbox.character}},

@@ -102,36 +102,66 @@ as.im3d <- function(x, ...) UseMethod("as.im3d")
 as.im3d.im3d <- function(x, ...) x
 
 #' @export
+#' @param voxdims Numeric vector of length 3 \emph{or} an \code{im3d} compatible
+#'   object (see details) completely specifying the required space.
+#' @details \code{as.im3d.matrix} can accept any object that can be converted to
+#'   an im3d object in the \code{voxdims} argument This will completely specify 
+#'   the dims, voxdims, origin etc. Any value passed to those parameters will be
+#'   ignored. This can be useful for producing a new im3d to match a target 
+#'   image on disk or a \code{nat.templatebrains::templatebrain} object. See
+#'   examples.
 #' @inheritParams im3d
 #' @rdname as.im3d
+#' @seealso \code{\link{im3d}}, \code{\link{as.im3d}}
 #' @examples
-#' # convert a list of neurons into an image volume
+#' ## convert a list of neurons into an image volume
 #' im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
 #'   BoundingBox=c(250, 410, 0, 130, 0, 120))
 #' \dontrun{
 #' write.im3d(im, 'kc20volume.nrrd')
+#' 
+#' ## use image dimensions of an image on disk
+#' # nb note use of ReadData = FALSE so that we just fetch the dimensions of
+#' # the target image
+#' diskim=read.im3d("/path/to/my/image.nrrd", ReadData = FALSE)
+#' im=as.im3d(xyzmatrix(kcs20), diskim)
+#' 
+#' ## use image dimensions of JFRC2 template brain to define the image space
+#' library(nat.flybrains)
+#' im=as.im3d(xyzmatrix(kcs20), JFRC2)
 #' }
 as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
   if(ncol(x)!=3 || nrow(x)<2) stop("Expects an Nx3 matrix of 3D points!")
-  if(length(voxdims)!=3) stop("voxdims must have length 3")
-  
-  if(is.null(BoundingBox))
-    r=apply(x, 2, range)
-  else r=boundingbox(BoundingBox)
-  
-  if(is.null(origin)) origin=r[1,]
-  else r[1, ]=origin
-  extents=apply(r, 2, diff)
-  dims=ceiling(abs(extents/voxdims))+1
-  emptyim=im3d(dims = dims, voxdims = voxdims, origin=origin)
+  if(is.object(voxdims)){
+    emptyim=try(as.im3d(voxdims))
+    if(inherits(emptyim, 'try-error'))
+      stop("Unable to interpret voxdims as an im3d object!",
+           "It must either be an im3d or have a matching as.im3d method")
+    if(!is.null(origin) || !is.null(BoundingBox))
+      warning("origin and BoundingBox arguments are ignored when voxdims is ",
+              "an im3d-compatible object")
+    dims=dim(emptyim)
+  } else {
+    if(length(voxdims)!=3) stop("voxdims must have length 3")
+    
+    if(is.null(BoundingBox))
+      r=apply(x, 2, range)
+    else r=boundingbox(BoundingBox)
+    
+    if(is.null(origin)) origin=r[1,]
+    else r[1, ]=origin
+    extents=apply(r, 2, diff)
+    dims=ceiling(abs(extents/voxdims))+1
+    emptyim=im3d(dims = dims, voxdims = voxdims, origin=origin)
+  }
   
   breaks=mapply(function(ps, delta) c(ps[1]-delta/2, ps+delta/2), 
-                attributes(emptyim)[c("x","y","z")], voxdims)
+                attributes(emptyim)[c("x","y","z")], voxdims(emptyim))
   i=cut(x[,1], breaks = breaks[[1]], labels = F)
   j=cut(x[,2], breaks = breaks[[2]], labels = F)
   k=cut(x[,3], breaks = breaks[[3]], labels = F)
   t3d=fast3dintegertable(i, j, k, dims[1], dims[2], dims[3])
-  im3d(t3d, voxdims = voxdims, origin=origin, ...)
+  im3d(t3d, emptyim, ...)
 }
 
 fast3dintegertable<-function (a, b, c, nlevelsa = max(a), nlevelsb = max(b), 

@@ -126,6 +126,12 @@ test_that("we can construct an im3d from a set of points",{
   expect_is(im<-as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
                         BoundingBox=c(250, 410, 0, 130, 0, 120)), "im3d")
   expect_equal(dim(im), c(161, 131, 121))
+  testim=im3d(dims = c(256, 128, 105), 
+                voxdims = c(0.622087976539589, 0.622088062622309, 0.62208801843318))
+  expect_is(im2<-as.im3d(xyzmatrix(kcs20), testim), 'im3d')
+  expect_equal(boundingbox(im2), boundingbox(testim))
+  expect_equal(dim(im2), dim(testim))
+  expect_warning(as.im3d(xyzmatrix(kcs20), testim, origin = c(3,4,5)))
 })
 
 context("im3d boundingbox and friends")
