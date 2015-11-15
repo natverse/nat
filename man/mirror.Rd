@@ -83,14 +83,11 @@ plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
 
 \dontrun{
 ## Example with an image
-# note that we calculate the mirrorAxisSize by finding the bounding box of
-# the image and adding the two values for the first (X) axis
-bim=boundingbox(read.im3d(img, ReadData = F))
-img_mirrorAxisSize=sum(bim[,1])
 # note as for any CMTK image registration, we must specify a target image
 # (just the same as the input here) as well as an output image (obviously).
-mirror('myimage.nrrd', mirrorAxisSize=img_mirrorAxisSize, target='myimage.nrrd',
-  output='myimage-flipped.nrrd')
+# note also that as a convenience mirror calculates the mirrorAxisSize for us
+# so this can be
+mirror('myimage.nrrd', target='myimage.nrrd', output='myimage-flipped.nrrd')
 }
 }
 \seealso{

@@ -104,10 +104,9 @@ if(!is.null(cmtk.bindir())){
     reg="testdata/cmtk/FCWB_mirror_level-01.list"
     img="testdata/nrrd/FCWB_2um_mask.nrrd"
     bim=boundingbox(read.im3d(img, ReadData = F))
-    maxs=sum(bim[,1])
     tf=tempfile(fileext = '.nrrd')
     on.exit(unlink(tf))
-    mirror(img, mirrorAxisSize = maxs, output=tf, target=img)
+    mirror(img, output=tf, target=img)
     expect_true(file.exists(tf))
     expect_equal(boundingbox(tf), bim)
   })

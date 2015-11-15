@@ -352,14 +352,11 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' 
 #' \dontrun{
 #' ## Example with an image
-#' # note that we calculate the mirrorAxisSize by finding the bounding box of 
-#' # the image and adding the two values for the first (X) axis
-#' bim=boundingbox(read.im3d(img, ReadData = F))
-#' img_mirrorAxisSize=sum(bim[,1])
 #' # note as for any CMTK image registration, we must specify a target image 
 #' # (just the same as the input here) as well as an output image (obviously).
-#' mirror('myimage.nrrd', mirrorAxisSize=img_mirrorAxisSize, target='myimage.nrrd',
-#'   output='myimage-flipped.nrrd')
+#' # note also that as a convenience mirror calculates the mirrorAxisSize for us
+#' # so this can be 
+#' mirror('myimage.nrrd', target='myimage.nrrd', output='myimage-flipped.nrrd')
 #' }
 mirror<-function(x, ...) UseMethod('mirror')
 
@@ -385,6 +382,16 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
   if(length(mirrorAxis)!=1 || is.na(mirrorAxis) || mirrorAxis<0 || mirrorAxis>3)
     stop("Invalid mirror axis")
+  
+  if(is.character(x) && missing(mirrorAxisSize)) {
+    if(!file.exists(x)) stop("Presumptive image file does not exist:", x)
+    fr=getformatreader(x, class = 'im3d')
+    if(is.null(fr))
+      stop("mirror currently only operates on *image* files. See ?fileformats or output of\n",
+           "fileformats(class='im3d',rval = 'info') for details of acceptable formats.")
+    im=read.im3d(x, ReadData = FALSE)
+    mirrorAxisSize=boundingbox(im)
+  }
   
   # Handle variety of mirrorAxisSize specifications
   lma=length(mirrorAxisSize>1)
