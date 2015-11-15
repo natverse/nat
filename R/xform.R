@@ -313,7 +313,19 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' @description mirroring with a warping registration can be used to account 
 #'   e.g. for the asymmetry between brain hemispheres.
 #'   
-#'   This function is agnostic re node vs cell data, but for node data 
+#' @details The \code{mirrorAxisSize} argument can be specified in 3 ways for 
+#'   the x axis with extreme values, x0+x1: \itemize{
+#'   
+#'   \item a single number equal to x0+x1
+#'   
+#'   \item a 2-vector c(x0, x1) [recommended]
+#'   
+#'   \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the
+#'   relevant axis specified by \code{mirrorAxis} will be extracted.
+#'   
+#'   }
+#'   
+#'   This function is agnostic re node vs cell data, but for node data
 #'   BoundingBox should be supplied while for cell, it should be bounds. See 
 #'   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
 #'   
@@ -351,11 +363,13 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' }
 mirror<-function(x, ...) UseMethod('mirror')
 
-#' @param mirrorAxisSize The bounding box of the axis to mirror
+#' @param mirrorAxisSize A single number specifying the size of the axis to 
+#'   mirror or a 2 vector (recommended) or 2x3 matrix specifying the
+#'   \code{\link{boundingbox}} (see details).
 #' @param mirrorAxis Axis to mirror (default \code{"X"}). Can also be an integer
 #'   in range \code{1:3}.
-#' @param warpfile Path to (optional) CMTK registration that specifies a
-#'   (usually non-rigid) transformation to be applied \emph{after} the simple
+#' @param warpfile Path to (optional) CMTK registration that specifies a 
+#'   (usually non-rigid) transformation to be applied \emph{after} the simple 
 #'   mirroring.
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
@@ -371,6 +385,14 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
   if(length(mirrorAxis)!=1 || is.na(mirrorAxis) || mirrorAxis<0 || mirrorAxis>3)
     stop("Invalid mirror axis")
+  
+  # Handle variety of mirrorAxisSize specifications
+  lma=length(mirrorAxisSize>1)
+  if(lma>1){
+    if(lma==6) mirrorAxisSize=mirrorAxisSize[,mirrorAxis]
+    else if(lma!=2) stop("Unrecognised mirrorAxisSize specification!")
+    mirrorAxisSize=sum(mirrorAxisSize)
+  }
   
   # construct homogeneous affine mirroring transform
   mirrormat=diag(4)

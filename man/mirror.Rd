@@ -19,7 +19,9 @@ mirror(x, ...)
 \item{...}{additional arguments passed to methods or eventually to
 \code{xform}}
 
-\item{mirrorAxisSize}{The bounding box of the axis to mirror}
+\item{mirrorAxisSize}{A single number specifying the size of the axis to
+mirror or a 2 vector (recommended) or 2x3 matrix specifying the
+\code{\link{boundingbox}} (see details).}
 
 \item{mirrorAxis}{Axis to mirror (default \code{"X"}). Can also be an integer
 in range \code{1:3}.}
@@ -46,6 +48,19 @@ Object with transformed points
 \description{
 mirroring with a warping registration can be used to account
   e.g. for the asymmetry between brain hemispheres.
+}
+\details{
+The \code{mirrorAxisSize} argument can be specified in 3 ways for
+  the x axis with extreme values, x0+x1: \itemize{
+
+  \item a single number equal to x0+x1
+
+  \item a 2-vector c(x0, x1) [recommended]
+
+  \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the
+  relevant axis specified by \code{mirrorAxis} will be extracted.
+
+  }
 
   This function is agnostic re node vs cell data, but for node data
   BoundingBox should be supplied while for cell, it should be bounds. See
