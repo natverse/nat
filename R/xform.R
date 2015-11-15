@@ -337,6 +337,18 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' y=kcs20[[1]]
 #' plot3d(y, col='red')
 #' plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
+#' 
+#' \dontrun{
+#' ## Example with an image
+#' # note that we calculate the mirrorAxisSize by finding the bounding box of 
+#' # the image and adding the two values for the first (X) axis
+#' bim=boundingbox(read.im3d(img, ReadData = F))
+#' img_mirrorAxisSize=sum(bim[,1])
+#' # note as for any CMTK image registration, we must specify a target image 
+#' # (just the same as the input here) as well as an output image (obviously).
+#' mirror('myimage.nrrd', mirrorAxisSize=img_mirrorAxisSize, target='myimage.nrrd',
+#'   output='myimage-flipped.nrrd')
+#' }
 mirror<-function(x, ...) UseMethod('mirror')
 
 #' @param mirrorAxisSize The bounding box of the axis to mirror
