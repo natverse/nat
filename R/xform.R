@@ -318,7 +318,7 @@ xyzmatrix.mesh3d<-function(x, ...){
 #'   
 #'   \item a single number equal to x0+x1
 #'   
-#'   \item a 2-vector c(x0, x1) [recommended]
+#'   \item a 2-vector c(x0, x1) (\bold{recommended})
 #'   
 #'   \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the
 #'   relevant axis specified by \code{mirrorAxis} will be extracted.
@@ -352,16 +352,35 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' 
 #' \dontrun{
 #' ## Example with an image
-#' # note as for any CMTK image registration, we must specify a target image 
-#' # (just the same as the input here) as well as an output image (obviously).
-#' # note also that as a convenience mirror calculates the mirrorAxisSize for us
-#' # so this can be 
-#' mirror('myimage.nrrd', target='myimage.nrrd', output='myimage-flipped.nrrd')
+#' # note that we must specify an output image (obviously) but that as a
+#' # convenience mirror calculates the mirrorAxisSize for us
+#' mirror('myimage.nrrd', output='myimage-mirrored.nrrd', warpfile='myimage_mirror')
+#' 
+#' # Simple flip along a different axis
+#' mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y", transform='flip')
 #' }
 mirror<-function(x, ...) UseMethod('mirror')
 
+#' @export
+#' @description \code{mirror.character} handles images on disk
+#' @param output Path to the output image
+#' @param target Path to the image defining the target grid (defaults to the
+#'   input image - hard to see when this would not be wanted).
+#' @rdname mirror
+mirror.character<-function(x, output, mirrorAxisSize=NULL, target=x, ...){
+  if(is.null(mirrorAxisSize)){
+    if(!file.exists(x)) stop("Presumptive image file does not exist:", x)
+    fr=getformatreader(x, class = 'im3d')
+    if(is.null(fr))
+      stop("mirror currently only operates on *image* files. See ?fileformats or output of\n",
+           "fileformats(class='im3d',rval = 'info') for details of acceptable formats.")
+    im=read.im3d(x, ReadData = FALSE)
+    NextMethod(mirrorAxisSize=boundingbox(im))
+  } else NextMethod()
+}
+
 #' @param mirrorAxisSize A single number specifying the size of the axis to 
-#'   mirror or a 2 vector (recommended) or 2x3 matrix specifying the
+#'   mirror or a 2 vector (\bold{recommended}) or 2x3 matrix specifying the 
 #'   \code{\link{boundingbox}} (see details).
 #' @param mirrorAxis Axis to mirror (default \code{"X"}). Can also be an integer
 #'   in range \code{1:3}.
@@ -382,16 +401,6 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
   if(length(mirrorAxis)!=1 || is.na(mirrorAxis) || mirrorAxis<0 || mirrorAxis>3)
     stop("Invalid mirror axis")
-  
-  if(is.character(x) && missing(mirrorAxisSize)) {
-    if(!file.exists(x)) stop("Presumptive image file does not exist:", x)
-    fr=getformatreader(x, class = 'im3d')
-    if(is.null(fr))
-      stop("mirror currently only operates on *image* files. See ?fileformats or output of\n",
-           "fileformats(class='im3d',rval = 'info') for details of acceptable formats.")
-    im=read.im3d(x, ReadData = FALSE)
-    mirrorAxisSize=boundingbox(im)
-  }
   
   # Handle variety of mirrorAxisSize specifications
   lma=length(mirrorAxisSize>1)
