@@ -368,10 +368,15 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   if(is.null(warpfile) || transform=='flip') {
     xform(x, reg=mirrormat, ...)
   } else {
-    # only apply xform once since this looks after e.g. recalculating dotprops
-    # vectors
-    xyzmatrix(x)=xformpoints(xyzmatrix(x), reg = mirrormat)
-    xform(x, reg=warpfile, transformtype=transform, ...)
+    # Combine registrations: 
+    # 1) to avoid loss of image quality
+    # 2) to apply xform just once since this looks after e.g. recalculating 
+    #    dotprops vectors
+    # FIXME this does assume that warpfile is a CMTK registration.
+    mirror_regfile = as.cmtkreg(tempfile(fileext = ".list"))
+    on.exit(unlink(mirror_regfile, recursive = TRUE))
+    write.cmtkreg(affmat2cmtkparams(mirrormat), mirror_regfile)
+    xform(x, reg=c(mirror_regfile,warpfile), transformtype=transform, ...)
   }
 }
 
