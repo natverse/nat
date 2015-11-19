@@ -2,11 +2,15 @@
 % Please edit documentation in R/xform.R
 \name{mirror}
 \alias{mirror}
+\alias{mirror.character}
 \alias{mirror.default}
 \alias{mirror.neuronlist}
 \title{Mirror 3d object about a given axis, optionally using a warping registration}
 \usage{
 mirror(x, ...)
+
+\method{mirror}{character}(x, output, mirrorAxisSize = NULL, target = x,
+  ...)
 
 \method{mirror}{default}(x, mirrorAxisSize, mirrorAxis = c("X", "Y", "Z"),
   warpfile = NULL, transform = c("warp", "affine", "flip"), ...)
@@ -14,12 +18,20 @@ mirror(x, ...)
 \method{mirror}{neuronlist}(x, subset = NULL, OmitFailures = NA, ...)
 }
 \arguments{
-\item{x}{Object with 3d points (with named cols X,Y,Z)}
+\item{x}{Object with 3d points (with named cols X,Y,Z) or path to image on
+disk.}
 
 \item{...}{additional arguments passed to methods or eventually to
-\code{xform}}
+\code{\link{xform}}}
 
-\item{mirrorAxisSize}{The bounding box of the axis to mirror}
+\item{output}{Path to the output image}
+
+\item{mirrorAxisSize}{A single number specifying the size of the axis to
+mirror or a 2 vector (\bold{recommended}) or 2x3 matrix specifying the
+\code{\link{boundingbox}} (see details).}
+
+\item{target}{Path to the image defining the target grid (defaults to the
+input image - hard to see when this would not be wanted).}
 
 \item{mirrorAxis}{Axis to mirror (default \code{"X"}). Can also be an integer
 in range \code{1:3}.}
@@ -47,6 +59,21 @@ Object with transformed points
 mirroring with a warping registration can be used to account
   e.g. for the asymmetry between brain hemispheres.
 
+\code{mirror.character} handles images on disk
+}
+\details{
+The \code{mirrorAxisSize} argument can be specified in 3 ways for
+  the x axis with extreme values, x0+x1: \itemize{
+
+  \item a single number equal to x0+x1
+
+  \item a 2-vector c(x0, x1) (\bold{recommended})
+
+  \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the
+  relevant axis specified by \code{mirrorAxis} will be extracted.
+
+  }
+
   This function is agnostic re node vs cell data, but for node data
   BoundingBox should be supplied while for cell, it should be bounds. See
   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
@@ -65,6 +92,18 @@ clear3d()
 y=kcs20[[1]]
 plot3d(y, col='red')
 plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
+
+\dontrun{
+## Example with an image
+# note that we must specify an output image (obviously) but that as a
+# convenience mirror calculates the mirrorAxisSize for us
+mirror('myimage.nrrd', output='myimage-mirrored.nrrd',
+  warpfile='myimage_mirror.list')
+
+# Simple flip along a different axis
+mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y",
+  transform='flip')
+}
 }
 \seealso{
 \code{\link{xform}, \link{boundingbox}}

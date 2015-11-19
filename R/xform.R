@@ -313,6 +313,18 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' @description mirroring with a warping registration can be used to account 
 #'   e.g. for the asymmetry between brain hemispheres.
 #'   
+#' @details The \code{mirrorAxisSize} argument can be specified in 3 ways for 
+#'   the x axis with extreme values, x0+x1: \itemize{
+#'   
+#'   \item a single number equal to x0+x1
+#'   
+#'   \item a 2-vector c(x0, x1) (\bold{recommended})
+#'   
+#'   \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the 
+#'   relevant axis specified by \code{mirrorAxis} will be extracted.
+#'   
+#'   }
+#'   
 #'   This function is agnostic re node vs cell data, but for node data 
 #'   BoundingBox should be supplied while for cell, it should be bounds. See 
 #'   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
@@ -320,9 +332,10 @@ xyzmatrix.mesh3d<-function(x, ...){
 #'   See \code{\link{nlapply}} for details of the \code{subset} and 
 #'   \code{OmitFailures} arguments.
 #'   
-#' @param x Object with 3d points (with named cols X,Y,Z)
+#' @param x Object with 3d points (with named cols X,Y,Z) or path to image on
+#'   disk.
 #' @param ... additional arguments passed to methods or eventually to 
-#'   \code{xform}
+#'   \code{\link{xform}}
 #' @return Object with transformed points
 #' @export
 #' @seealso \code{\link{xform}, \link{boundingbox}}
@@ -337,13 +350,45 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' y=kcs20[[1]]
 #' plot3d(y, col='red')
 #' plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
+#' 
+#' \dontrun{
+#' ## Example with an image
+#' # note that we must specify an output image (obviously) but that as a
+#' # convenience mirror calculates the mirrorAxisSize for us
+#' mirror('myimage.nrrd', output='myimage-mirrored.nrrd', 
+#'   warpfile='myimage_mirror.list')
+#' 
+#' # Simple flip along a different axis
+#' mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y", 
+#'   transform='flip')
+#' }
 mirror<-function(x, ...) UseMethod('mirror')
 
-#' @param mirrorAxisSize The bounding box of the axis to mirror
+#' @export
+#' @description \code{mirror.character} handles images on disk
+#' @param output Path to the output image
+#' @param target Path to the image defining the target grid (defaults to the
+#'   input image - hard to see when this would not be wanted).
+#' @rdname mirror
+mirror.character<-function(x, output, mirrorAxisSize=NULL, target=x, ...){
+  if(is.null(mirrorAxisSize)){
+    if(!file.exists(x)) stop("Presumptive image file does not exist:", x)
+    fr=getformatreader(x, class = 'im3d')
+    if(is.null(fr))
+      stop("mirror currently only operates on *image* files. See ?fileformats or output of\n",
+           "fileformats(class='im3d',rval = 'info') for details of acceptable formats.")
+    im=read.im3d(x, ReadData = FALSE)
+    NextMethod(mirrorAxisSize=boundingbox(im))
+  } else NextMethod()
+}
+
+#' @param mirrorAxisSize A single number specifying the size of the axis to 
+#'   mirror or a 2 vector (\bold{recommended}) or 2x3 matrix specifying the 
+#'   \code{\link{boundingbox}} (see details).
 #' @param mirrorAxis Axis to mirror (default \code{"X"}). Can also be an integer
 #'   in range \code{1:3}.
-#' @param warpfile Path to (optional) CMTK registration that specifies a
-#'   (usually non-rigid) transformation to be applied \emph{after} the simple
+#' @param warpfile Path to (optional) CMTK registration that specifies a 
+#'   (usually non-rigid) transformation to be applied \emph{after} the simple 
 #'   mirroring.
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
@@ -360,6 +405,14 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   if(length(mirrorAxis)!=1 || is.na(mirrorAxis) || mirrorAxis<0 || mirrorAxis>3)
     stop("Invalid mirror axis")
   
+  # Handle variety of mirrorAxisSize specifications
+  lma=length(mirrorAxisSize>1)
+  if(lma>1){
+    if(lma==6) mirrorAxisSize=mirrorAxisSize[,mirrorAxis]
+    else if(lma!=2) stop("Unrecognised mirrorAxisSize specification!")
+    mirrorAxisSize=sum(mirrorAxisSize)
+  }
+  
   # construct homogeneous affine mirroring transform
   mirrormat=diag(4)
   mirrormat[mirrorAxis, 4]=mirrorAxisSize
@@ -368,10 +421,15 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   if(is.null(warpfile) || transform=='flip') {
     xform(x, reg=mirrormat, ...)
   } else {
-    # only apply xform once since this looks after e.g. recalculating dotprops
-    # vectors
-    xyzmatrix(x)=xformpoints(xyzmatrix(x), reg = mirrormat)
-    xform(x, reg=warpfile, transformtype=transform, ...)
+    # Combine registrations: 
+    # 1) to avoid loss of image quality
+    # 2) to apply xform just once since this looks after e.g. recalculating 
+    #    dotprops vectors
+    # FIXME this does assume that warpfile is a CMTK registration.
+    mirror_regfile = as.cmtkreg(tempfile(fileext = ".list"))
+    on.exit(unlink(mirror_regfile, recursive = TRUE))
+    write.cmtkreg(affmat2cmtkparams(mirrormat), mirror_regfile)
+    xform(x, reg=c(mirror_regfile,warpfile), transformtype=transform, ...)
   }
 }
 
