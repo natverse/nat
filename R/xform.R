@@ -320,21 +320,22 @@ xyzmatrix.mesh3d<-function(x, ...){
 #'   
 #'   \item a 2-vector c(x0, x1) (\bold{recommended})
 #'   
-#'   \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the
+#'   \item the \code{\link{boundingbox}} for the 3D data to be mirrored: the 
 #'   relevant axis specified by \code{mirrorAxis} will be extracted.
 #'   
 #'   }
 #'   
-#'   This function is agnostic re node vs cell data, but for node data
+#'   This function is agnostic re node vs cell data, but for node data 
 #'   BoundingBox should be supplied while for cell, it should be bounds. See 
 #'   \code{\link{boundingbox}} for details of BoundingBox vs bounds.
 #'   
 #'   See \code{\link{nlapply}} for details of the \code{subset} and 
 #'   \code{OmitFailures} arguments.
 #'   
-#' @param x Object with 3d points (with named cols X,Y,Z)
+#' @param x Object with 3d points (with named cols X,Y,Z) or path to image on
+#'   disk.
 #' @param ... additional arguments passed to methods or eventually to 
-#'   \code{xform}
+#'   \code{\link{xform}}
 #' @return Object with transformed points
 #' @export
 #' @seealso \code{\link{xform}, \link{boundingbox}}
@@ -354,10 +355,12 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' ## Example with an image
 #' # note that we must specify an output image (obviously) but that as a
 #' # convenience mirror calculates the mirrorAxisSize for us
-#' mirror('myimage.nrrd', output='myimage-mirrored.nrrd', warpfile='myimage_mirror')
+#' mirror('myimage.nrrd', output='myimage-mirrored.nrrd', 
+#'   warpfile='myimage_mirror.list')
 #' 
 #' # Simple flip along a different axis
-#' mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y", transform='flip')
+#' mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y", 
+#'   transform='flip')
 #' }
 mirror<-function(x, ...) UseMethod('mirror')
 

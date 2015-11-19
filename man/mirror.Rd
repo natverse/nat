@@ -18,10 +18,11 @@ mirror(x, ...)
 \method{mirror}{neuronlist}(x, subset = NULL, OmitFailures = NA, ...)
 }
 \arguments{
-\item{x}{Object with 3d points (with named cols X,Y,Z)}
+\item{x}{Object with 3d points (with named cols X,Y,Z) or path to image on
+disk.}
 
 \item{...}{additional arguments passed to methods or eventually to
-\code{xform}}
+\code{\link{xform}}}
 
 \item{output}{Path to the output image}
 
@@ -96,10 +97,12 @@ plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
 ## Example with an image
 # note that we must specify an output image (obviously) but that as a
 # convenience mirror calculates the mirrorAxisSize for us
-mirror('myimage.nrrd', output='myimage-mirrored.nrrd', warpfile='myimage_mirror')
+mirror('myimage.nrrd', output='myimage-mirrored.nrrd',
+  warpfile='myimage_mirror.list')
 
 # Simple flip along a different axis
-mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y", transform='flip')
+mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y",
+  transform='flip')
 }
 }
 \seealso{
