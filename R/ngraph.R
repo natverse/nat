@@ -409,6 +409,26 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
   as.neuron(newdf, ...)
 }
 
+#' Prune selected vertices from a neuron
+#' 
+#' @details uses the \code{ngraph} representation of the neuron to remove
+#' @param x A neuron to prune
+#' @param verticestoprune An integer vector describing which vertices to remove.
+#'   The special signalling value of \code{NA} drops all vertices with invalid X
+#'   locations.
+#' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
+#' @export
+#' @seealso \code{\link{as.neuron.ngraph}}
+prune_vertices<-function(x, verticestoprune, ...) {
+  g=as.ngraph(x)
+  if(length(verticestoprune)==1 && is.na(verticestoprune)) {
+    verticestoprune=which(!is.finite(x$d$X))
+  }
+  dg=igraph::delete.vertices(g, verticestoprune)
+  # delete.vertices will return an igraph
+  as.neuron(as.ngraph(dg))
+}
+
 # Construct EdgeList matrix with start and end points from SegList
 #
 # @param SegList from a \code{neuron}

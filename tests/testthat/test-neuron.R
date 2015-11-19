@@ -154,7 +154,7 @@ test_that("we can calculate seglengths of neuron", {
   expect_equal(seglengths(testn, all=TRUE, flatten=FALSE), list(c(2, 2, 1)))
   expect_equal(seglength(matrix(1:3,ncol=3)), 0)
   
-  # lengths of each sedge
+  # lengths of each edge
   expect_equal(seglengths(testn, sumsegment = FALSE, all=TRUE, flatten = FALSE),
                list(list(c(1, 1), c(1, 1), 1)))  
   
@@ -164,6 +164,13 @@ test_that("we can calculate seglengths of neuron", {
                    Parent=c(-1,1:4)))
   expect_equal(seglengths(n), 4)
   expect_equal(seglengths(n, sumsegment = FALSE), list(c(1,1,1,1)))
+  
+  # multitree neuron
+  # break a segment off into separate tree
+  testd2=testd
+  testd2$Parent[5:6]=c(-1,5)
+  n2=as.neuron(testd2)
+  expect_equal(seglengths(as.neuron(n2),all = T), c(3, sqrt(5)))
 })
 
 test_that("we can resample neurons", {
@@ -187,7 +194,7 @@ test_that("we can resample neurons", {
   g=ngraph(c(0,1,1,2, 3,4,4,5,5,6, 7,8,8,9,9,10,10,11),vertexlabels=0:11)
   n=as.neuron(g,origin=3, vertexData = matrix(rnorm(12*4),ncol=4, dimnames = list(NULL, c("X","Y","Z","W"))))
   expect_is(n1<-resample(n,1), "neuron")
-  expect_equivalent(xyzmatrix(n1)[n1$StartPoint,], xyzmatrix(n)[n$StartPoint,], )
+  expect_equivalent(xyzmatrix(n1)[n1$StartPoint,], xyzmatrix(n)[n$StartPoint,])
   expect_true(all(seglengths(n1, all = T) < seglengths(n, all = T)))
   
   n=Cell07PNs[[1]]
@@ -208,3 +215,16 @@ test_that("we can normalise an SWC data block", {
   expect_error(normalise_swc(Cell07PNs[[1]]$d[-2], ifMissing = 'stop'),
                regexp = "Columns.*are missing")
 })
+
+test_that("we can subset a neuron", {
+  n=Cell07PNs[[1]]
+  # keep vertices if their X location is > 2000
+  expect_is(n1<-subset(n, X>200), 'neuron')
+  npoints_dropped=sum(xyzmatrix(n)[,1]<=200)
+  expect_equal(nrow(n1$d), nrow(n$d)-npoints_dropped)
+  # diameter of neurite >1 
+  expect_equal(subset(n, W>0),n) 
+  # first 50 nodes
+  expect_equal(subset(n,1:50)$d$PointNo, 1:50)
+})
+
