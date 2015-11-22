@@ -1,3 +1,20 @@
+nat 1.7.2
+=========
+* new function subset.neuron can keep/remove individual vertices from a neuron 
+  based on internal variables such as position, width, vertex number etc while
+  still producing a valid neuron with an appropriate graph structure (#261)
+* this depends on a new low level function prune_vertices that can remove 
+  specified vertices
+* this has also enabled the prune.neuron method to be defined for the first time
+  enabling pruning by spatial proximity ()
+* teach mirror to work with image data (#265) and enable better handling of the 
+  mirrorAxisSize by allowing this to be supplied as a bounding box (#254)
+* teach as.im3d.matrix to use an im3d object to specify the desired space (#263)
+  This enables for example a set or tracings to be turned into volume data that
+  exactly matches a specific template brain.
+* fix bug: seglengths fails for neurons with multiple trees bug (#257)
+* fix bug: xformpoint.cmtkreg fails for in memory registration lists (#259)
+
 nat 1.7.1
 =========
 * new functions strahler_order and prune_strahler to calculate the Strahler 
