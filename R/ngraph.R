@@ -403,10 +403,11 @@ strahler_order<-function(x){
 #' plot(pruned1, lwd=3, col='blue', add=TRUE)
 #' plot(pruned12, lwd=3, col='red', add=TRUE)
 prune_strahler<-function(x, orderstoprune=1:2, ...) {
-  newdf=x$d[!strahler_order(x)$points %in% orderstoprune, ]
-  if(nrow(newdf)<1) 
-    stop("No points left after pruning! Consider lowering orderstorprune.")
-  as.neuron(newdf, ...)
+  tryCatch(
+    prune_vertices(x, which(strahler_order(x)$points %in% orderstoprune), ...),
+    error = function(c) stop(paste0("No points left after pruning. ",
+                                    "Consider lowering orders to prune!"))
+    )
 }
 
 #' Prune selected vertices from a neuron
