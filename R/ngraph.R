@@ -426,7 +426,7 @@ prune_vertices<-function(x, verticestoprune, ...) {
   }
   dg=igraph::delete.vertices(g, verticestoprune)
   # delete.vertices will return an igraph
-  as.neuron(as.ngraph(dg))
+  as.neuron(as.ngraph(dg), ...)
 }
 
 # Construct EdgeList matrix with start and end points from SegList
