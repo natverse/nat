@@ -7,7 +7,7 @@
 prune_strahler(x, orderstoprune = 1:2, ...)
 }
 \arguments{
-\item{x}{A neuron}
+\item{x}{A \code{neuron}}
 
 \item{orderstoprune}{Integer indices of which Strahler orders to prune -
 defaults to the lowest two orders (\code{1:2})}
@@ -15,7 +15,7 @@ defaults to the lowest two orders (\code{1:2})}
 \item{...}{Additional arguments passed to \code{\link{as.neuron.data.frame}}}
 }
 \value{
-The pruned neuron
+The pruned \code{neuron}
 }
 \description{
 Prune a neuron by removing segments with a given Strahler order

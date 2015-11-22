@@ -382,12 +382,12 @@ strahler_order<-function(x){
 
 #' Prune a neuron by removing segments with a given Strahler order
 #' 
-#' @param x A neuron
+#' @param x A \code{neuron}
 #' @param orderstoprune Integer indices of which Strahler orders to prune - 
 #'   defaults to the lowest two orders (\code{1:2})
 #' @param ... Additional arguments passed to \code{\link{as.neuron.data.frame}}
 #'   
-#' @return The pruned neuron
+#' @return The pruned \code{neuron}
 #' @export
 #' @seealso \code{\link{strahler_order}}, \code{\link{spine}}, for finding the 
 #'   longest path in a neuron, \code{\link{prune}} for subsetting 
@@ -412,14 +412,18 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 
 #' Prune selected vertices from a neuron
 #' 
-#' @details uses the \code{ngraph} representation of the neuron to remove
+#' @details uses the \code{ngraph} representation of the neuron to remove 
+#'   points. It is relatively low-level function and you will probably want to 
+#'   use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and friends
+#'   in most cases.
 #' @param x A neuron to prune
 #' @param verticestoprune An integer vector describing which vertices to remove.
 #'   The special signalling value of \code{NA} drops all vertices with invalid X
 #'   locations.
 #' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
 #' @export
-#' @seealso \code{\link{as.neuron.ngraph}}
+#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
+#'   \code{\link{prune.neuron}}
 prune_vertices<-function(x, verticestoprune, ...) {
   g=as.ngraph(x)
   if(length(verticestoprune)==1 && is.na(verticestoprune)) {

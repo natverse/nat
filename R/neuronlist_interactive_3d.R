@@ -15,7 +15,7 @@
 #' @return Character vector of names of selected neurons, neuronlist, or 
 #'   data.frame of attached metadata according to the value of \code{rval}.
 #' @export
-#' @seealso \code{\link{select3d}, \link{subset.neuronlist}}
+#' @seealso \code{\link{select3d}, \link{find.soma}, \link{subset.neuronlist}}
 #' @examples
 #' \dontrun{
 #' plot3d(kcs20)

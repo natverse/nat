@@ -28,15 +28,25 @@ A \code{neuronlist}, character vector of names or the attached
 Subset neuronlist returning either new neuronlist or names of chosen neurons
 }
 \details{
-The subset expression should evaluate to one of
-\itemize{
+The subset expression should evaluate to one of \itemize{
+
   \item character vector of names
+
   \item logical vector
+
   \item vector of numeric indices
-}
+
+  }
+
   Any missing names are dropped with a warning. The \code{filterfun}
   expression is wrapped in a try. Neurons returning an error will be dropped
   with a warning.
+
+  You may also be interested in \code{\link{find.neuron}}, which enables
+  objects in a neuronlist to be subsetted by a 3D selection box. In addition
+  \code{\link{subset.neuron}}, \code{\link{subset.dotprops}} methods exist:
+  these are used to remove points from neurons (rather than to remove neurons
+  from neuronlists).
 }
 \examples{
 da1pns=subset(Cell07PNs,Glomerulus=='DA1')
@@ -69,6 +79,7 @@ subset(dps, names(dps)[1:100],filterfun=function(x) {sum(s3d(xyzmatrix(x)))>0},
 }
 }
 \seealso{
-\code{\link{neuronlist}, \link{subset.data.frame}}
+\code{\link{neuronlist}, \link{find.neuron},
+  \link{subset.data.frame}, \link{subset.neuron}, \link{subset.dotprops}}
 }
 

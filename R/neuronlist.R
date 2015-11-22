@@ -781,28 +781,38 @@ tail.neuronlist<-function(x, ...) {
 
 #' Subset neuronlist returning either new neuronlist or names of chosen neurons
 #' 
-#' @details 
-#' The subset expression should evaluate to one of
-#' \itemize{
+#' @details The subset expression should evaluate to one of \itemize{
+#'   
 #'   \item character vector of names
+#'   
 #'   \item logical vector
+#'   
 #'   \item vector of numeric indices
-#' }
+#'   
+#'   }
+#'   
 #'   Any missing names are dropped with a warning. The \code{filterfun}
 #'   expression is wrapped in a try. Neurons returning an error will be dropped
 #'   with a warning.
+#'   
+#'   You may also be interested in \code{\link{find.neuron}}, which enables 
+#'   objects in a neuronlist to be subsetted by a 3D selection box. In addition 
+#'   \code{\link{subset.neuron}}, \code{\link{subset.dotprops}} methods exist: 
+#'   these are used to remove points from neurons (rather than to remove neurons
+#'   from neuronlists).
 #' @param x a neuronlist
 #' @param subset An expression that can be evaluated in the context of the 
 #'   dataframe attached to the neuronlist. See details.
-#' @param filterfun a function which can be applied to each neuron returning
+#' @param filterfun a function which can be applied to each neuron returning 
 #'   \code{TRUE} when that neuron should be included in the return list.
 #' @param rval What to return (character vector, default='neuronlist')
 #' @param ... additional arguments passed to \code{filterfun}
-#' @return A \code{neuronlist}, character vector of names or the attached
+#' @return A \code{neuronlist}, character vector of names or the attached 
 #'   data.frame according to the value of \code{rval}
 #' @export
 #' @method subset neuronlist
-#' @seealso \code{\link{neuronlist}, \link{subset.data.frame}}
+#' @seealso \code{\link{neuronlist}, \link{find.neuron}, 
+#'   \link{subset.data.frame}, \link{subset.neuron}, \link{subset.dotprops}}
 #' @examples
 #' da1pns=subset(Cell07PNs,Glomerulus=='DA1')
 #' with(da1pns,stopifnot(all(Glomerulus=='DA1')))

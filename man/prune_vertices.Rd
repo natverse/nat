@@ -20,8 +20,12 @@ Prune selected vertices from a neuron
 }
 \details{
 uses the \code{ngraph} representation of the neuron to remove
+  points. It is relatively low-level function and you will probably want to
+  use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and friends
+  in most cases.
 }
 \seealso{
-\code{\link{as.neuron.ngraph}}
+\code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
+  \code{\link{prune.neuron}}
 }
 
