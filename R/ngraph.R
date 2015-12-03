@@ -78,7 +78,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
   if(!is.null(xyz)) {
     if(ncol(xyz)==4 && is.null(diam)){
       diam=xyz[,4]
-      xyz=xyz[,1:3]
+      xyz=xyz[, 1:3, drop=FALSE]
     }
     xyzmatrix(g)<-xyz
   }
