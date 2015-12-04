@@ -346,7 +346,7 @@ fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5
   for(i in seq_along(missing)){
     download.file(url=paste0(attr(fh, 'remote'), missing[i]),
                   destfile=file.path(objDir,missing[i]),
-                  quiet=quiet)
+                  quiet=quiet, mode = 'wb')
     if(progress) setTxtProgressBar(tpb,i)
   }
 }
@@ -415,7 +415,7 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
     if(!file.exists(cached.neuronlistfh) || update){
       tmpFile <- tempfile()
       on.exit(unlink(tmpFile))
-      download.file(url=file, destfile=tmpFile, ...)
+      download.file(url=file, destfile=tmpFile, mode='wb', ...)
       obj <- readRDS(tmpFile)
       
       # fix paths in our new object
