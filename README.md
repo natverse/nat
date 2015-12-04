@@ -100,15 +100,15 @@ devtools::install_github("jefferis/nat")
 
 The **nat** package includes extensive unit tests which are run along with R's
 (extremely fastidious) package check routines by the [Travis](http://travis-ci.org/jefferis/nat)
-continuous integration server. The master branch is therefore considered very stable.
+continuous integration server. The master branch is therefore considered very stable
+and may well contain fixes or enhancements over released versions. 
 However, you can install the latest point release version as follows:
 
 ```r
 devtools::install_github("jefferis/nat",ref="release")
 ```
-if you want to have the latest confirmed stable version. The same syntax can
-be used to install any arbitrary version that you want from github. See `?install_github`
-for details.
+The same syntax can be used to install any arbitrary version that you want 
+from github. See `?install_github` for details.
 
 Note: Windows users need [Rtools](http://www.murdoch-sutherland.com/Rtools/) to
 install in this way, but devtools should offer to install this for you if you
