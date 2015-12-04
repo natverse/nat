@@ -71,6 +71,11 @@ test_that("equivalence of seglist and swc methods for as.ngraph.neuron",{
   expect_true(myidentical_graph(g3,g3s))
 })
 
+test_that("we can construct an empty ngraph",{
+  expect_is(ngraph(matrix(nrow=0,ncol=2),vertexlabels = 1, xyz=cbind(0,0,0,0)),
+            'ngraph')
+})
+
 test_that("we can find the length of the spine of a neuron", {
   n <- Cell07PNs[[1]]
   spine.length <- spine(n, LengthOnly = TRUE)
