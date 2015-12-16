@@ -4,7 +4,7 @@
 \alias{summary.neuronlist}
 \title{Summary statistics for neurons in a neuronlist (e.g. cable length, nodes)}
 \usage{
-\method{summary}{neuronlist}(object)
+\method{summary}{neuronlist}(object, ...)
 }
 \arguments{
 \item{object}{The \code{neuronlist} to summarise}

@@ -6,7 +6,7 @@
 #' @export
 #' @examples 
 #' summary(Cell07PNs)
-summary.neuronlist<-function(object) {
+summary.neuronlist<-function(object, ...) {
   l=lapply(object, summary)
   d=do.call(rbind, l)
   cbind(data.frame(object),d)
