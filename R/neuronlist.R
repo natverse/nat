@@ -154,7 +154,12 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 "[<-.neuronlist" <- function(x, i, j, value) {
   if(nargs()<4) return(NextMethod())
   # special case if we are replacing the whole 
-  if(missing(i) && missing(j)) return(data.frame(x)<-value)
+  if(missing(i) && missing(j)) {
+    # `data.frame<-.neuronlist` is supposed to return the neuronlist but 
+    # actually returns the data.frame for reasons that I haven't yet fathomed
+    data.frame(x)<-value
+    return(x)
+  }
   df=as.data.frame(x)
   df[i,j]=value
   attr(x,'df')=df
