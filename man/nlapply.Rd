@@ -66,12 +66,16 @@ When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
 
   \itemize{
 
-  \item .progress set to \code{"text"} for a basic progress bar
+  \item \code{.inform} set to \code{TRUE} to give more informative error
+  messages that should indicate which neurons are failing for a given applied
+  function.
 
-  \item .parallel set to \code{TRUE} for parallelisation after registering a
-  parallel backend (see below).
+  \item \code{.progress} set to \code{"text"} for a basic progress bar
 
-  \item .paropts Additional arguments for parallel computation. See
+  \item \code{.parallel} set to \code{TRUE} for parallelisation after
+  registering a parallel backend (see below).
+
+  \item \code{.paropts} Additional arguments for parallel computation. See
   \code{\link[plyr]{llply}} for details.
 
   }
