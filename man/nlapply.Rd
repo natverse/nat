@@ -5,7 +5,7 @@
 \alias{nmapply}
 \title{lapply and mapply for neuronlists (with optional parallelisation)}
 \usage{
-nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA)
+nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA, .progress = "auto")
 
 nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   subset = NULL, OmitFailures = NA)
@@ -25,6 +25,11 @@ subset are passed through unmodified.}
 error. The default value (\code{NA}) will result in nlapply stopping with
 an error message the moment there is an eror. For other values, see
 details.}
+
+\item{.progress}{Character vector specifying the type of progress bar (see
+\code{\link[plyr]{create_progress_bar}} for options.) The default value of
+\code{"auto"} shows a progress bar in interactive use when there are >=10
+elements in \code{X}.}
 
 \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 

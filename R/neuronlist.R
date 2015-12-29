@@ -333,6 +333,10 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   error. The default value (\code{NA}) will result in nlapply stopping with 
 #'   an error message the moment there is an eror. For other values, see 
 #'   details.
+#' @param .progress Character vector specifying the type of progress bar (see 
+#'   \code{\link[plyr]{create_progress_bar}} for options.) The default value of 
+#'   \code{"auto"} shows a progress bar in interactive use when there are >=10
+#'   elements in \code{X}.
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -374,7 +378,12 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' plot3d(kcs20[1:3])
 #' plot3d(xyzflip)
 #' rgl.close()
-nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
+nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, .progress='auto'){
+  
+  if(.progress=='auto') {
+    if(length(X)>=10 && interactive()) .progress="text"
+    else .progress="none"
+  }
   cl=if(is.neuronlist(X) && !is.neuronlistfh(X)) class(X) 
   else c("neuronlist", 'list')
   
@@ -385,7 +394,7 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA){
   }
   TFUN = if(is.na(OmitFailures)) FUN 
   else function(...) try(FUN(...), silent=TRUE)
-  rval=structure(plyr::llply(X, TFUN, ...), class=cl, df=attr(X, 'df'))
+  rval=structure(plyr::llply(X, TFUN, ..., .progress=.progress), class=cl, df=attr(X, 'df'))
   
   if(isTRUE(OmitFailures))
     failures=sapply(rval, inherits, 'try-error')
