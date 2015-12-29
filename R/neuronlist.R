@@ -204,7 +204,7 @@ c.neuronlist<-function(..., recursive = FALSE){
   if(!is.null(new.df))
     rownames(new.df)=neuron_names
 
-  as.neuronlist(NextMethod(...), df = new.df)
+  as.neuronlist(NextMethod(args), df = new.df)
 }
 
 #' Get or set the attached data.frame of a neuronlist
