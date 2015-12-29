@@ -21,6 +21,9 @@ test_that("c.neuronlist behaves", {
   c610.nodf=Cell07PNs[6:10]
   attr(c610.nodf,'df')=NULL
   expect_equivalent(c(Cell07PNs[1:5], c610.nodf), Cell07PNs[1:10])
+  
+  expect_equivalent(kcs20[1:6], c(kcs20[1:2], kcs20[3:4], kcs20[5:6]), 
+                    "combine more than 2 neuronlists")
   expect_error(c(Cell07PNs[1:5], NULL))
   expect_error(c(Cell07PNs[1:5], Cell07PNs[1:5]), "neurons with the same name")
 })
