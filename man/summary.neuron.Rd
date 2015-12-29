@@ -55,7 +55,7 @@ A \code{data.frame} summarising the tree properties of the neuron
 # summary for a whole neuronlist
 summary(Cell07PNs)
 # including the attached data.frame with additional metadata
-head(summary(Cell07PNs, include.attached.dataframe = FALSE)
+head(summary(Cell07PNs, include.attached.dataframe = FALSE))
 # for a single regular format neuron
 summary(Cell07PNs[[1]])
 # for a single dotprops format neuron

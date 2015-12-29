@@ -15,7 +15,7 @@
 #' # summary for a whole neuronlist
 #' summary(Cell07PNs)
 #' # including the attached data.frame with additional metadata
-#' head(summary(Cell07PNs, include.attached.dataframe = FALSE)
+#' head(summary(Cell07PNs, include.attached.dataframe = FALSE))
 summary.neuronlist<-function(object, ..., include.attached.dataframe=FALSE) {
   l=lapply(object, summary)
   d=do.call(rbind, l)
