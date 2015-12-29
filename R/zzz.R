@@ -1,6 +1,14 @@
 .onLoad <- function(libname, pkgname) {
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
   
+  # Stop RGL trying to initialise a graphics device:
+  # 1. if we are not running interactively AND 
+  # 2. we have not been specifically instructed
+  #    about this choice via the rgl.useNULL option.
+  if(!interactive() && is.null(getOption('rgl.useNULL'))){
+    options(rgl.useNULL=TRUE)
+  }
+  
   # Register file formats: neuron tracings
   registerformat('swc', read=read.neuron.swc, write=write.neuron.swc, 
                  class='neuron')
