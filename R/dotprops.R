@@ -313,18 +313,37 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' Subset points in dotprops object that match given conditions
 #' 
 #' @details \code{subset} defines either logical or numeric indices, in which
-#'   case these are simply applied to the matrices that define the points, vect
-#'   etc OR a function (which is called with the 3d points array and returns T/F
+#'   case these are simply applied to the matrices that define the \code{points}, \code{vect} fields of the \code{dotprops} object
+#'   etc OR a function (which is called with the 3d points array and returns T/F.
+#'   OR an expression 
 #'   vector).
 #' @param x A dotprops object
-#' @param subset A subset of points defined by indices or a function (see Details)
+#' @param subset A subset of points defined by indices, an expression or a function (see Details)
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted dotprops object
 #' @method subset dotprops
 #' @export
-#' @seealso \code{prune.dotprops}
+#' @seealso \code{prune.dotprops}, \code{subset.neuron}
 #' @examples
+#' ## subset using indices ...
+#' dp=kcs20[[10]]
+#' dp1=subset(dp, 1:50)
+#' 
+#' # ... or an expression
+#' dp2=subset(dp, alpha>0.7)
+#' front=subset(dp, points[,'Z']<40)
+#' # use a helper function
+#' between=function(x, lower, upper) x>=lower & x<=upper
+#' middle=middle=subset(dp, between(points[,'Z'], 40, 60))
+#' 
+#' # plot results in 3d
+#' plot3d(front, col='red')
+#' plot3d(middle, col='green')
+#' plot3d(dp, col='blue')
+#' 
 #' \dontrun{
+#' 
+#' ## subset using an selection function
 #' s3d=select3d()
 #' dp1=subset(dp,s3d(points))
 #' # special case of previous version
