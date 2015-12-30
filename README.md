@@ -125,3 +125,22 @@ under Linux (where we compile from source) and Mac (where we compile or use the
 MacOSX-10.6-x86_64.dmg binary installers). We have also used 
 [neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
 Travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
+
+## Problems
+If you want some help using **nat**, then please use the following resources
+
+* [nat.examples](https://github.com/jefferis/nat.examples) sample code
+* [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
+  we normally respond promptly and you will also be helping future users.
+
+If you think that you have found a bug
+
+* Install the development version of nat using devtools (see section Development 
+  version above)
+* Check the [github issues](https://github.com/jefferis/nat/issues) and 
+  * file a  bug report if this seems to be a new problem
+  * comment on an existing bug report 
+* Write to the [nat-user](https://groups.google.com/forum/#!forum/nat-user) list
+  for help.
+
+Thanks for your interest in *nat*!
