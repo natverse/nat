@@ -443,7 +443,7 @@ boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
     if(missing(dims)) stop("must supply dimensions when input is of type bounds!")
     # we need to find the voxel dimensions in order to subtract off a
     # half voxel dim in each axis
-    halfVoxelDims=voxdims(x, dims=dims)/2
+    halfVoxelDims=diff(x)/dims/2
     x[1,]=x[1,]+halfVoxelDims
     x[2,]=x[2,]-halfVoxelDims
   }
