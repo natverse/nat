@@ -15,6 +15,7 @@ default) suppresses interactive rgl windows when running in batch
 * Fix bug in read.neuronlistfh on Windows (#268)
 * Fix bug when constructing an ngraph with a single node (#267)
 * Fix bug in `[<-.neuronlist` when assigning a whole data.frame using (#256)
+* Fix bug in bounding box with input = "bounds" (#273)
 * Documentation improvements (especiall package overview - see ?nat)
 
 nat 1.7.2
