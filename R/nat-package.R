@@ -88,7 +88,16 @@
 #'   
 #'   }
 #'   
-#' @section rgl: \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}} package 
+#' @section Surface Data: \bold{nat} can read, write, transform and subset 
+#'   surface (mesh) objects defined by Amira's HxSurface class. See 
+#'   \code{\link{read.hxsurf}} and links therein. In addition hxsurf objects can
+#'   be converted to the \code{\link[rgl]{mesh3d}} format, which provides a link
+#'   to the \code{\link[rgl]{rgl}} package and also to packages for morphometrics
+#'   and sophisticated mesh manipulation such as 
+#'   \href{https://cran.r-project.org/web/packages/Morpho/}{Morpho} and
+#'   \href{https://cran.r-project.org/web/packages/Rvcg/}{Rvcg}.
+#'   
+#' @section rgl Package: \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}} package 
 #'   extensively for 3D visualisation. rgl's core function is to provide 
 #'   interactive visualisation (usually in an X11 window depending on OpenGL - 
 #'   and therefore on a graphics card or OpenGL software emulator) but recently 
