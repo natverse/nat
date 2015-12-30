@@ -294,3 +294,25 @@ test_that("clampmax works",{
   expect_true(max(p, na.rm=T)<=10)
   expect_true(min(p, na.rm=T)>=0)
 })
+
+
+context("im3d plotting")
+test_that("image.im3d works",{
+  LHMask=read.im3d('testdata/nrrd/LHMask.nrrd')
+  op=par(no.readonly = TRUE)
+  layout(matrix(c(1, 2), ncol = 2L), widths = c(1, 0.2))
+  
+  baseline=list(zlim = 0:1, nlevels.actual = 21L, nlevels.orig = 20, 
+                levels = c(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 
+                           0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 
+                           1),
+                colors = c("#000080", "#002894", "#0050A8", "#0078BC", 
+                           "#00A1D0", "#00C9E4", "#00F1F8", "#1AFFE4", "#43FFBB",
+                           "#6BFF93", "#93FF6B", "#BBFF43", "#E4FF1A", "#FFF100",
+                           "#FFC900", "#FFA100", "#FF7800", "#FF5000", "#FF2800",
+                           "#FF0000")
+                )
+  expect_equal(rval<-image(imslice(LHMask,10), asp=TRUE), baseline)
+  expect_null(imscalebar(rval))
+  par(op)
+})
