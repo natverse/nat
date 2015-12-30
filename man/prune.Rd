@@ -40,7 +40,8 @@ prune an object by removing points near (or far) from a target object
 }
 \details{
 \code{prune.neuron} depends on a more basic function
-  \code{\link{prune_vertices}}
+  \code{\link{prune_vertices}} and is also related to
+  \code{\link{subset.neuron}}.
 }
 \examples{
 ## prune single neurons
@@ -61,6 +62,8 @@ plot3d(kcs20,col='grey')
 \seealso{
 \code{\link{prune_strahler}}, \code{\link{spine}},
   \code{\link{prune_vertices}}
+
+\code{\link{subset.neuron}}
 
 \code{\link{subset.dotprops}}
 }

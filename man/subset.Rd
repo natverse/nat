@@ -4,12 +4,12 @@
 \alias{subset}
 \title{Subset methods for different nat objects}
 \description{
-These methods enable subsets of some nat objects including neuronlists and
-dotprops objects to be obtained. See the help for each individual method for
+These methods enable subsets of some nat objects including neurons and
+neuronlists to be obtained. See the help for each individual method for
 details.
 }
 \seealso{
-\code{\link{subset.dotprops}}, \code{\link{subset.hxsurf}},
-  \code{\link{subset.neuronlist}}
+\code{\link{subset.neuron}}, \code{\link{subset.dotprops}},
+  \code{\link{subset.hxsurf}}, \code{\link{subset.neuronlist}}
 }
 

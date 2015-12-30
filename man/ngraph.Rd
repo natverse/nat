@@ -107,7 +107,9 @@ library(igraph)
 all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
 }
 \seealso{
-\code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}}
+\code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
+  \code{\link{subset.neuron}} for example of graph-based manipulation of a
+  neuron.
 
 Other neuron: \code{\link{as.neuron}},
   \code{\link{as.neuron.data.frame}},

@@ -388,9 +388,11 @@ subset.dotprops<-function(x, subset, ...){
 prune<-function(x, target, ...) UseMethod("prune")
 
 #' @export
-#' @details \code{prune.neuron} depends on a more basic function
-#'   \code{\link{prune_vertices}}
+#' @details \code{prune.neuron} depends on a more basic function 
+#'   \code{\link{prune_vertices}} and is also related to
+#'   \code{\link{subset.neuron}}.
 #' @rdname prune
+#' @seealso \code{\link{subset.neuron}}
 prune.neuron<-function(x, target, ...){
   indstokeep=NextMethod(return.indices=TRUE)
   indstodrop=setdiff(seq(nrow(x$d)), which(indstokeep))
