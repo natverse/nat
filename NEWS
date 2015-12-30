@@ -1,3 +1,7 @@
+nat 1.8.1
+=========
+* fix non-canonical URLs to CRAN packages (thanks to Uwe Ligges)
+
 nat 1.8.0
 =========
 This is tagged as a major release because of a change in behaviour that (by 
