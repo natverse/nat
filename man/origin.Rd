@@ -2,7 +2,7 @@
 % Please edit documentation in R/im3d.R
 \name{origin}
 \alias{origin}
-\title{Return the space origin of a 3d image object}
+\title{Return the space origin of a 3D image object}
 \usage{
 origin(x, ...)
 }

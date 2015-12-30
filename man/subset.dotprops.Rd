@@ -22,7 +22,7 @@ Subset points in dotprops object that match given conditions
 \details{
 \code{subset} defines either logical or numeric indices, in which
   case these are simply applied to the matrices that define the \code{points}, \code{vect} fields of the \code{dotprops} object
-  etc OR a function (which is called with the 3d points array and returns T/F.
+  etc OR a function (which is called with the 3D points array and returns T/F.
   OR an expression
   vector).
 }
@@ -38,7 +38,7 @@ front=subset(dp, points[,'Z']<40)
 between=function(x, lower, upper) x>=lower & x<=upper
 middle=middle=subset(dp, between(points[,'Z'], 40, 60))
 
-# plot results in 3d
+# plot results in 3D
 plot3d(front, col='red')
 plot3d(middle, col='green')
 plot3d(dp, col='blue')

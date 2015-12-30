@@ -537,7 +537,7 @@ resample_segment<-function(d, stepsize, ...) {
   diffs=diff(dxyz)
   cumlength=c(0,cumsum(sqrt(rowSums(diffs*diffs))))
   
-  # find 3d position of new internal points
+  # find 3D position of new internal points
   # using linear approximation on existing segments
   # make an emty list for results
   dnew=list()
@@ -560,7 +560,7 @@ resample_segment<-function(d, stepsize, ...) {
 #'   \item logical or numeric indices, in which case these are simply used to 
 #'   index the vertices in the order of the
 #'   
-#'   \item a function (which is called with the 3d points array and returns T/F 
+#'   \item a function (which is called with the 3D points array and returns T/F 
 #'   vector)
 #'   
 #'   \item an expression evaluated in the context of the \code{x$d} data.frame 

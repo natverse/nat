@@ -2,7 +2,7 @@
 % Please edit documentation in R/neuronlist_interactive_3d.R
 \name{find.neuron}
 \alias{find.neuron}
-\title{Find neurons within a 3d selection box (usually drawn in rgl window)}
+\title{Find neurons within a 3D selection box (usually drawn in rgl window)}
 \usage{
 find.neuron(sel3dfun = select3d(), indices = names(db),
   db = getOption("nat.default.neuronlist"), threshold = 0, invert = FALSE,
@@ -29,7 +29,7 @@ Character vector of names of selected neurons, neuronlist, or
   data.frame of attached metadata according to the value of \code{rval}.
 }
 \description{
-Find neurons within a 3d selection box (usually drawn in rgl window)
+Find neurons within a 3D selection box (usually drawn in rgl window)
 }
 \details{
 Uses \code{\link{subset.neuronlist}}, so can work on dotprops or
@@ -38,7 +38,7 @@ Uses \code{\link{subset.neuronlist}}, so can work on dotprops or
 \examples{
 \dontrun{
 plot3d(kcs20)
-# draw a 3d selection e.g. around tip of vertical lobe when ready
+# draw a 3D selection e.g. around tip of vertical lobe when ready
 find.neuron(db=kcs20)
 # would return 9 neurons
 # make a standalone selection function

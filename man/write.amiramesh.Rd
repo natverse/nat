@@ -2,7 +2,7 @@
 % Please edit documentation in R/amiramesh-io.R
 \name{write.amiramesh}
 \alias{write.amiramesh}
-\title{Write a 3d data object to an amiramesh format file}
+\title{Write a 3D data object to an amiramesh format file}
 \usage{
 write.amiramesh(x, file, enc = c("binary", "raw", "text", "hxzip"),
   dtype = c("float", "byte", "short", "ushort", "int", "double"),
@@ -26,7 +26,7 @@ to the amiramesh file allowing it to be opened by a NRRD reader. See
 details.}
 }
 \description{
-Write a 3d data object to an amiramesh format file
+Write a 3D data object to an amiramesh format file
 }
 \details{
 Note that only \code{'raw'} or \code{'text'} format data can

@@ -2,7 +2,7 @@
 % Please edit documentation in R/im3d.R
 \name{imslice}
 \alias{imslice}
-\title{Slice out a 3d subarray (or 2d matrix) from a 3d image array}
+\title{Slice out a 3D subarray (or 2d matrix) from a 3D image array}
 \usage{
 imslice(x, slice, slicedim = "z", drop = TRUE)
 }
@@ -15,10 +15,10 @@ imslice(x, slice, slicedim = "z", drop = TRUE)
 will be removed.}
 
 \item{drop}{Whether singleton dimensions will be dropped (default: TRUE)
-conveting 3d array to 2d matrix.}
+conveting 3D array to 2d matrix.}
 }
 \description{
-Slice out a 3d subarray (or 2d matrix) from a 3d image array
+Slice out a 3D subarray (or 2d matrix) from a 3D image array
 }
 \details{
 Note the sample locations stored in the x,y,z attributes will be

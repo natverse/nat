@@ -32,7 +32,7 @@ An array with additional class \code{im3d}
 \code{im3d} objects consist of a data array with attributes defining the
 spatial positions at which the voxels are located. There should always be a
 \code{BoundingBox} attribute which defines the physical extent of the volume
-in the same manner as the Amira 3d visualisation and analysis software. This
+in the same manner as the Amira 3D visualisation and analysis software. This
 corresponds to the \strong{node} centers option in the
 \href{http://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
 }

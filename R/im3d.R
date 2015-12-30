@@ -3,7 +3,7 @@
 #' \code{im3d} objects consist of a data array with attributes defining the 
 #' spatial positions at which the voxels are located. There should always be a 
 #' \code{BoundingBox} attribute which defines the physical extent of the volume 
-#' in the same manner as the Amira 3d visualisation and analysis software. This 
+#' in the same manner as the Amira 3D visualisation and analysis software. This 
 #' corresponds to the \strong{node} centers option in the 
 #' \href{http://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
 #' @param x The object to turn into an im3d
@@ -343,7 +343,7 @@ voxdims.default<-function(x, dims, ...){
 #'   an im3d BoundingBox, you should pass the argument \code{input='bounds'}.
 #' @param x A vector or matrix specifying a bounding box, an \code{im3d} object,
 #'   any object with base class list for which \code{\link{xyzmatrix}} can 
-#'   extract 3d points (e.g. neurons, surfaces etc), or, for 
+#'   extract 3D points (e.g. neurons, surfaces etc), or, for 
 #'   \code{boundingbox.character}, a character vector specifying a file.
 #' @inheritParams voxdims
 #' @return a \code{matrix} with 2 rows and 3 columns with 
@@ -377,7 +377,7 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   } else NULL
 }
 
-#' Return the space origin of a 3d image object
+#' Return the space origin of a 3D image object
 #' 
 #' @description Defined as the first coordinates (x,y,z) of the bounding box, 
 #'   which in turn matches the nrrd definition of the location of the "centre" 
@@ -403,7 +403,7 @@ boundingbox.character<-function(x, ...) {
 #' @export
 #' @param na.rm Whether to ignore NA points (default \code{FALSE})
 #' @description \code{boundingbox.list} is designed to be used on objects that
-#'   contain 3d point information and for which \code{xyzmatrix} is defined.
+#'   contain 3D point information and for which \code{xyzmatrix} is defined.
 #' @rdname boundingbox
 boundingbox.list<-function(x, na.rm=FALSE, ...) {
   # we don't want to do this for data.frame objects
@@ -415,7 +415,7 @@ boundingbox.list<-function(x, na.rm=FALSE, ...) {
 
 #' @export
 #' @description \code{boundingbox.shape3d} is designed to be used on objects 
-#'   that contain 3d point information and inherit from \code{rgl}'s 
+#'   that contain 3D point information and inherit from \code{rgl}'s 
 #'   \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
 #'   this applies to \code{\link{mesh3d}} objects.
 #'   
@@ -491,7 +491,7 @@ dim.im3d<-function(x){
 #' @param xlab,ylab each a character string giving the labels for the x and y 
 #'   axis.  Default to the \sQuote{call names} of \code{x} or \code{y}, or to 
 #'   \code{""} if these were unspecified.
-#' @param plotdims Which dimensions of 3d \code{im3d} object to plot (character 
+#' @param plotdims Which dimensions of 3D \code{im3d} object to plot (character 
 #'   vector). Defaults to \code{c('x','y')}
 #' @param flipdims Which dimensions to flip (character vector). Defaults to 
 #'   flipping y.
@@ -616,7 +616,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
                  levels=levels,colors=col))
 }
 
-#' Make 2D (orthogonal) projection of 3d image data
+#' Make 2D (orthogonal) projection of 3D image data
 #' 
 #' @param a Array of image data (im3d format)
 #' @param projdim The image dimension down which to project
@@ -758,14 +758,14 @@ flip.vector=function(x, ...) rev(x)
 #' @export
 flip.matrix=function(x, ...) flip.array(x, ...)
 
-#' Slice out a 3d subarray (or 2d matrix) from a 3d image array
+#' Slice out a 3D subarray (or 2d matrix) from a 3D image array
 #' 
 #' @param x An im3d objet
 #' @param slice Indices defining the slices to keep
 #' @param slicedim Character vector or integer defining axis from which slices 
 #'   will be removed.
 #' @param drop Whether singleton dimensions will be dropped (default: TRUE) 
-#'   conveting 3d array to 2d matrix.
+#'   conveting 3D array to 2d matrix.
 #' @details Note the sample locations stored in the x,y,z attributes will be 
 #'   updated appropriately. FIXME: Should we also update bounding box?
 #' @export

@@ -5,7 +5,7 @@
 \alias{mirror.character}
 \alias{mirror.default}
 \alias{mirror.neuronlist}
-\title{Mirror 3d object about a given axis, optionally using a warping registration}
+\title{Mirror 3D object about a given axis, optionally using a warping registration}
 \usage{
 mirror(x, ...)
 
@@ -18,7 +18,7 @@ mirror(x, ...)
 \method{mirror}{neuronlist}(x, subset = NULL, OmitFailures = NA, ...)
 }
 \arguments{
-\item{x}{Object with 3d points (with named cols X,Y,Z) or path to image on
+\item{x}{Object with 3D points (with named cols X,Y,Z) or path to image on
 disk.}
 
 \item{...}{additional arguments passed to methods or eventually to

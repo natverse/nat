@@ -28,7 +28,7 @@ boundingbox(x) <- value
 \arguments{
 \item{x}{A vector or matrix specifying a bounding box, an \code{im3d} object,
 any object with base class list for which \code{\link{xyzmatrix}} can
-extract 3d points (e.g. neurons, surfaces etc), or, for
+extract 3D points (e.g. neurons, surfaces etc), or, for
 \code{boundingbox.character}, a character vector specifying a file.}
 
 \item{...}{Additional arguments for methods}
@@ -53,10 +53,10 @@ a \code{matrix} with 2 rows and 3 columns with
 Get the bounding box of an im3d volume or other compatible object
 
 \code{boundingbox.list} is designed to be used on objects that
-  contain 3d point information and for which \code{xyzmatrix} is defined.
+  contain 3D point information and for which \code{xyzmatrix} is defined.
 
 \code{boundingbox.shape3d} is designed to be used on objects
-  that contain 3d point information and inherit from \code{rgl}'s
+  that contain 3D point information and inherit from \code{rgl}'s
   \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
   this applies to \code{\link{mesh3d}} objects.
 

@@ -1,4 +1,4 @@
-#' Transform the 3d location of objects such as neurons
+#' Transform the 3D location of objects such as neurons
 #' 
 #' \code{xform} is designed to operate on a variety of data types, especially 
 #' objects encapsulating neurons. \code{xform} depends on two specialised 
@@ -161,12 +161,12 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
   }
 }
 
-#' Get and assign coordinates for classes containing 3d vertex data
+#' Get and assign coordinates for classes containing 3D vertex data
 #' 
-#' \code{xyzmatrix} gets coordinates from objects containing 3d vertex data
-#' @param x object containing 3d coordinates
+#' \code{xyzmatrix} gets coordinates from objects containing 3D vertex data
+#' @param x object containing 3D coordinates
 #' @param ... additional arguments passed to methods
-#' @return For \code{xyzmatrix}: Nx3 matrix containing 3d coordinates
+#' @return For \code{xyzmatrix}: Nx3 matrix containing 3D coordinates
 #' @export
 #' @examples 
 #' # see all available methods for different classes
@@ -177,7 +177,7 @@ xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
 #' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
-#' @details Note that \code{xyzmatrix} can extract or set 3d coordinates in a 
+#' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
 #'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
 #'   \bold{or} has 3 columns named X,Y,Z or x,y,z.
 #' @rdname xyzmatrix
@@ -308,7 +308,7 @@ xyzmatrix.mesh3d<-function(x, ...){
   x
 }
 
-#' Mirror 3d object about a given axis, optionally using a warping registration
+#' Mirror 3D object about a given axis, optionally using a warping registration
 #' 
 #' @description mirroring with a warping registration can be used to account 
 #'   e.g. for the asymmetry between brain hemispheres.
@@ -332,7 +332,7 @@ xyzmatrix.mesh3d<-function(x, ...){
 #'   See \code{\link{nlapply}} for details of the \code{subset} and 
 #'   \code{OmitFailures} arguments.
 #'   
-#' @param x Object with 3d points (with named cols X,Y,Z) or path to image on
+#' @param x Object with 3D points (with named cols X,Y,Z) or path to image on
 #'   disk.
 #' @param ... additional arguments passed to methods or eventually to 
 #'   \code{\link{xform}}

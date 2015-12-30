@@ -2,7 +2,7 @@
 % Please edit documentation in R/im3d.R
 \name{projection}
 \alias{projection}
-\title{Make 2D (orthogonal) projection of 3d image data}
+\title{Make 2D (orthogonal) projection of 3D image data}
 \usage{
 projection(a, projdim = "z", projfun = c("integrate", "mean", "sum"),
   na.rm = T, mask = NULL, ...)
@@ -24,7 +24,7 @@ image data when calculating function results. default: \code{TRUE}}
 \item{...}{Additional arguments for projfun}
 }
 \description{
-Make 2D (orthogonal) projection of 3d image data
+Make 2D (orthogonal) projection of 3D image data
 }
 \details{
 Note that \code{projfun} must have an argument \code{na.rm} like the

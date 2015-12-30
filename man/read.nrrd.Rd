@@ -40,7 +40,7 @@ Read the (text) header of a NRRD format file
 \details{
 \code{read.nrrd} reads data into a raw array. If you wish to
   generate a \code{\link{im3d}} object that includes spatial calibration (but
-  is limited to representing 3d data) then you should use
+  is limited to representing 3D data) then you should use
   \code{\link{read.im3d}}.
 
   ReadByteAsRaw=unsigned (the default) only reads unsigned byte data as a raw

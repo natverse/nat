@@ -555,7 +555,7 @@ is.amiratype<-function(type) {
   }
 }
 
-#' Write a 3d data object to an amiramesh format file
+#' Write a 3D data object to an amiramesh format file
 #' @inheritParams write.im3d
 #' @param enc Encoding of the data. NB "raw" and "binary" are synonyms.
 #' @param dtype Data type to write to disk

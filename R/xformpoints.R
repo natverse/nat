@@ -1,4 +1,4 @@
-#' Transform 3d points using a registration, affine matrix or function
+#' Transform 3D points using a registration, affine matrix or function
 #' 
 #' @description You should almost always call \code{\link{xform}} rather
 #'   calling than\code{xformpoints} directly.

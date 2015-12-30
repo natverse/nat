@@ -5,7 +5,7 @@
 \alias{xformpoints.character}
 \alias{xformpoints.cmtkreg}
 \alias{xformpoints.default}
-\title{Transform 3d points using a registration, affine matrix or function}
+\title{Transform 3D points using a registration, affine matrix or function}
 \usage{
 xformpoints(reg, points, ...)
 

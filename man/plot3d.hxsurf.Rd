@@ -2,7 +2,7 @@
 % Please edit documentation in R/hxsurf.R
 \name{plot3d.hxsurf}
 \alias{plot3d.hxsurf}
-\title{Plot amira surface objects in 3d using rgl}
+\title{Plot amira surface objects in 3D using rgl}
 \usage{
 \method{plot3d}{hxsurf}(x, materials = NULL, col = NULL, ...)
 }
@@ -20,7 +20,7 @@ available), or \code{rainbow} otherwise.}
 \item{...}{Additional arguments passed to}
 }
 \description{
-Plot amira surface objects in 3d using rgl
+Plot amira surface objects in 3D using rgl
 }
 \examples{
 plot3d(kcs20)

@@ -27,7 +27,7 @@ Subset neuron by keeping only vertices that match given conditions
   \item logical or numeric indices, in which case these are simply used to
   index the vertices in the order of the
 
-  \item a function (which is called with the 3d points array and returns T/F
+  \item a function (which is called with the 3D points array and returns T/F
   vector)
 
   \item an expression evaluated in the context of the \code{x$d} data.frame

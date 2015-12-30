@@ -8,7 +8,7 @@
 \alias{xform.list}
 \alias{xform.neuronlist}
 \alias{xform.shape3d}
-\title{Transform the 3d location of objects such as neurons}
+\title{Transform the 3D location of objects such as neurons}
 \usage{
 xform(x, reg, ...)
 

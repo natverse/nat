@@ -13,14 +13,14 @@
 ind2coord<-function(inds, ...) UseMethod("ind2coord")
 
 
-#' @param dims dimensions of 3d image array.
+#' @param dims dimensions of 3D image array.
 #' @param voxdims vector of 3 voxel dimensions (width, height, depth).
 #' @param origin the origin.
 #' @export
 #' @rdname ind2coord
 ind2coord.default<-function(inds, dims, voxdims, origin, ...){
   if(length(dims) != 3 )
-    stop('coords2ind only handles 3d data')
+    stop('coords2ind only handles 3D data')
   if(is.matrix(voxdims))
     voxdims=as.numeric(voxdims)
   if(length(voxdims)!=length(dims))
@@ -113,7 +113,7 @@ coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=F
   }
   
   if(length(imdims) != 3)
-    stop('coord2ind only handles 3d data')
+    stop('coord2ind only handles 3D data')
   
   if(!is.matrix(coords))
     coords=matrix(coords,byrow=TRUE,ncol=length(coords))

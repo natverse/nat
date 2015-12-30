@@ -1,4 +1,4 @@
-#' Find neurons within a 3d selection box (usually drawn in rgl window)
+#' Find neurons within a 3D selection box (usually drawn in rgl window)
 #' 
 #' @details Uses \code{\link{subset.neuronlist}}, so can work on dotprops or 
 #'   neuron lists.
@@ -19,7 +19,7 @@
 #' @examples
 #' \dontrun{
 #' plot3d(kcs20)
-#' # draw a 3d selection e.g. around tip of vertical lobe when ready
+#' # draw a 3D selection e.g. around tip of vertical lobe when ready
 #' find.neuron(db=kcs20)
 #' # would return 9 neurons
 #' # make a standalone selection function
@@ -46,7 +46,7 @@ find.neuron<-function(sel3dfun=select3d(), indices=names(db),
   subset(db, subset=indices, filterfun=selfun, rval=rval)
 }
 
-#' Find neurons with soma inside 3d selection box (usually drawn in rgl window)
+#' Find neurons with soma inside 3D selection box (usually drawn in rgl window)
 #' 
 #' @details Can work on \code{neuronlist}s containing \code{neuron} objects 
 #'   \emph{or} \code{neuronlist}s whose attached data.frame contains soma 

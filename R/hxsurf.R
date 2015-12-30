@@ -204,7 +204,7 @@ write.hxsurf <- function(surf, filename) {
   close(fc)
 }
 
-#' Plot amira surface objects in 3d using rgl
+#' Plot amira surface objects in 3D using rgl
 #' 
 #' @param x An hxsurf surface object
 #' @param materials Character vector or \code{\link{regex}} naming materials to

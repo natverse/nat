@@ -152,7 +152,7 @@ as.data.frame.morphml_cell<-function(x, ...){
       ndodgy=sum(fap!=1, na.rm = TRUE)
       warning(ndodgy," cable(s) connect at somewhere other than the end of their parent segment!\n",
               "Presently these will be connected to the distal point of the parent segment.\n",
-              "In future it might make sense to introduce an appropriately located 3d point, ",
+              "In future it might make sense to introduce an appropriately located 3D point, ",
               "splitting the parent segment in two.")
     }
   }

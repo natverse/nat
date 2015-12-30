@@ -5,7 +5,7 @@
 \title{plot3d methods for different nat objects}
 \description{
 These methods enable nat objects including neuronlists and dotprops objects
-to be plotted in 3d. See the help for each individual method for details along
+to be plotted in 3D. See the help for each individual method for details along
 with the help for the generic in the rgl package.
 }
 \examples{

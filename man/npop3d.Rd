@@ -2,7 +2,7 @@
 % Please edit documentation in R/pop3d.R
 \name{npop3d}
 \alias{npop3d}
-\title{Remove plotted neurons or other 3d objects}
+\title{Remove plotted neurons or other 3D objects}
 \usage{
 npop3d(x, slow = FALSE, type = "shapes")
 }

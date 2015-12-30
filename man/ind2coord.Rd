@@ -21,7 +21,7 @@ must be present, or a logical array).}
 
 \item{...}{extra arguments passed to methods.}
 
-\item{dims}{dimensions of 3d image array.}
+\item{dims}{dimensions of 3D image array.}
 
 \item{voxdims}{vector of 3 voxel dimensions (width, height, depth).}
 

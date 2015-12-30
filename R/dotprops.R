@@ -53,13 +53,13 @@ as.dotprops<-function(x, ...){
 #' @export
 #' @aliases scale.dotprops
 #' @description note that \code{scale.dotprops} recalculates the tangent vectors
-#'   after scaling the 3d coords. See \code{\link{dotprops}} for details.
+#'   after scaling the 3D coords. See \code{\link{dotprops}} for details.
 scale.dotprops<-function(x, center=TRUE, scale=TRUE){
   xyzmatrix(x)<-scale(xyzmatrix(x),scale=scale,center=center)
   dotprops(x)
 }
 
-#' @description \code{dotprops} makes dotprops representation from raw 3d points
+#' @description \code{dotprops} makes dotprops representation from raw 3D points
 #'   (extracting vertices from S3 objects that have them)
 #' @details \code{k} will default to 20 nearest neighbours when unset (i.e. when
 #'   it has default value of NA) unless \code{x} is a dotprops object (when the
@@ -108,7 +108,7 @@ dotprops.im3d <- function(x, ...) {
 
 #' @export
 dotprops.list<-function(x, ...) {
-  # FIXME - change to an abstract base class for objects with 3d vertices
+  # FIXME - change to an abstract base class for objects with 3D vertices
   # rather than the completely generic list
   dotprops(xyzmatrix(x), ...)
 }
@@ -314,7 +314,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' 
 #' @details \code{subset} defines either logical or numeric indices, in which
 #'   case these are simply applied to the matrices that define the \code{points}, \code{vect} fields of the \code{dotprops} object
-#'   etc OR a function (which is called with the 3d points array and returns T/F.
+#'   etc OR a function (which is called with the 3D points array and returns T/F.
 #'   OR an expression 
 #'   vector).
 #' @param x A dotprops object
@@ -336,7 +336,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' between=function(x, lower, upper) x>=lower & x<=upper
 #' middle=middle=subset(dp, between(points[,'Z'], 40, 60))
 #' 
-#' # plot results in 3d
+#' # plot results in 3D
 #' plot3d(front, col='red')
 #' plot3d(middle, col='green')
 #' plot3d(dp, col='blue')
@@ -383,7 +383,7 @@ subset.dotprops<-function(x, subset, ...){
 #' prune an object by removing points near (or far) from a target object
 #' @export
 #' @param x The object to prune. (e.g. \code{dotprops} object, see details)
-#' @param target Another object with 3d points that will determine which points 
+#' @param target Another object with 3D points that will determine which points 
 #'   in x are kept.
 #' @param ... Additional arguments for methods (eventually passed to 
 #'   \code{prune.default})
@@ -440,7 +440,7 @@ prune.neuronlist<-function(x, target, ...){
 #' @param maxdist The threshold distance for keeping points
 #' @param keep Whether to keep points in x that are near or far from the target
 #' @param return.indices Whether to return the indices that pass the test rather
-#'   than the 3d object/points (default \code{FALSE})
+#'   than the 3D object/points (default \code{FALSE})
 #' @importFrom nabor knn
 prune.default<-function(x, target, maxdist, keep=c("near","far"), 
                         return.indices=FALSE, ...){

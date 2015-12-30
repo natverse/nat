@@ -234,7 +234,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, LengthOnly=FALSE)
 #' @param segids Whether to include the integer segment ids as an edge attribute
 #'   in the graph
 #' @param exclude.isolated Whether to eliminate isolated nodes
-#' @param include.xyz Whether to include 3d location as vertex attribute
+#' @param include.xyz Whether to include 3D location as vertex attribute
 #' @param reverse.edges Whether to reverse the direction of each edge in the 
 #'   output graph to point towards (rather than away from) the root (default 
 #'   \code{FALSE})

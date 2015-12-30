@@ -1,4 +1,4 @@
-#' Remove plotted neurons or other 3d objects
+#' Remove plotted neurons or other 3D objects
 #' 
 #' The normal usage will not specify \code{x} in which case the last neurons
 #' plotted by \code{plot3d.neuronlist} or any of its friends will be removed.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/neuronlist_interactive_3d.R
 \name{find.soma}
 \alias{find.soma}
-\title{Find neurons with soma inside 3d selection box (usually drawn in rgl window)}
+\title{Find neurons with soma inside 3D selection box (usually drawn in rgl window)}
 \usage{
 find.soma(sel3dfun = select3d(), indices = names(db),
   db = getOption("nat.default.neuronlist"), invert = FALSE,
@@ -26,7 +26,7 @@ the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.}
 Character vector of names of selected neurons
 }
 \description{
-Find neurons with soma inside 3d selection box (usually drawn in rgl window)
+Find neurons with soma inside 3D selection box (usually drawn in rgl window)
 }
 \details{
 Can work on \code{neuronlist}s containing \code{neuron} objects

@@ -2,7 +2,7 @@
 % Please edit documentation in R/neuron-plot.R
 \name{plot3d.neuron}
 \alias{plot3d.neuron}
-\title{Plot neurons in 3d using rgl library}
+\title{Plot neurons in 3D using rgl library}
 \usage{
 \method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
   WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
@@ -43,7 +43,7 @@ list of rgl plotting ids (invisibly) separated into
   \code{\link[rgl]{plot3d}} for details.
 }
 \description{
-Plot neurons in 3d using rgl library
+Plot neurons in 3D using rgl library
 }
 \details{
 Note that when WithText=TRUE, the numeric identifiers plotted are

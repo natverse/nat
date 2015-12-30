@@ -24,7 +24,7 @@ of the given colors will be used to color an equispaced interval of this
 range. The \emph{midpoints} of the intervals cover the range, so that
 values just outside the range will be plotted.}
 
-\item{plotdims}{Which dimensions of 3d \code{im3d} object to plot (character
+\item{plotdims}{Which dimensions of 3D \code{im3d} object to plot (character
 vector). Defaults to \code{c('x','y')}}
 
 \item{flipdims}{Which dimensions to flip (character vector). Defaults to

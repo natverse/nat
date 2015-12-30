@@ -56,7 +56,7 @@ be resampled. See \code{\link{resample.neuron}}.}
 \description{
 dotprops: Neurons as point clouds with tangent vectors (but no connectivity)
 
-\code{dotprops} makes dotprops representation from raw 3d points
+\code{dotprops} makes dotprops representation from raw 3D points
   (extracting vertices from S3 objects that have them)
 
 \code{dotprops.dotprops} will default to the original vale of

@@ -18,7 +18,7 @@ in the graph}
 
 \item{exclude.isolated}{Whether to eliminate isolated nodes}
 
-\item{include.xyz}{Whether to include 3d location as vertex attribute}
+\item{include.xyz}{Whether to include 3D location as vertex attribute}
 
 \item{reverse.edges}{Whether to reverse the direction of each edge in the
 output graph to point towards (rather than away from) the root (default

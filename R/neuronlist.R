@@ -671,7 +671,7 @@ plot.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, add=NULL,
   invisible(rval)
 }
 
-# internal utility function to handle colours for plot(3d).neuronlist
+# internal utility function to handle colours for plot(3D).neuronlist
 # see plot3d.neuronlist for details
 # @param nitems Number of items for which colours must be made
 makecols<-function(cols, colpal, nitems) {
@@ -848,12 +848,12 @@ tail.neuronlist<-function(x, ...) {
 #' stopifnot(all.equal(subset(kcs20,type=='gamma' & odds),
 #'             subset(kcs20,type=='gamma' & rep(c(TRUE,FALSE),10))))
 #' \dontrun{
-#' # make a 3d selection function using interactive rgl::select3d() function
+#' # make a 3D selection function using interactive rgl::select3d() function
 #' s3d=select3d()
-#' # Apply a 3d search function to the first 100 neurons in the neuronlist dataset
+#' # Apply a 3D search function to the first 100 neurons in the neuronlist dataset
 #' subset(dps[1:100],filterfun=function(x) {sum(s3d(xyzmatrix(x)))>0},
 #'   rval='names')
-#' # combine a search by metadata, neuropil location and 3d location
+#' # combine a search by metadata, neuropil location and 3D location
 #' subset(dps, Gender=="M" & rAL>1000, function(x) sum(s3d(x))>0, rval='name')
 #' # The same but specifying indices directly, which can be considerably faster
 #' # when neuronlist is huge and memory is in short supply
