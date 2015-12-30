@@ -3,7 +3,7 @@ nat 1.8.0 includes both fixes and significant new functionality.
 
 ## Test environments
 * local OS X install, R 3.2.3
-* ubuntu 12.04 (on travis-ci), R 3.2.1
+* ubuntu 12.04 (on travis-ci), R 3.2.3
 * winbuilder (devel and release)
 
 http://win-builder.r-project.org/Gm9K0rOu3yGr/
