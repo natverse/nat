@@ -46,8 +46,33 @@ n2=subset(n, W>1)
 # first 50 nodes
 n3=subset(n,1:50)
 
+## subset neuron by graph structure
+# first plot neuron and show the point that we will use to divide the neuron
+n=Cell07PNs[[1]]
+plot(n)
+# this neuron has a tag defining a point at which the neuron enters a brain
+# region (AxonLHEP = Axon Lateral Horn Entry Point)
+points(t(xyzmatrix(n)[n$AxonLHEP, 1:2]), pch=19, cex=2.5)
+
+# now find the points downstream (distal) of that with respect to the root
+ng=as.ngraph(n)
+# use a depth first search
+distal_points=igraph::dfs(ng, root=n$AxonLHEP, unreachable=FALSE,
+  neimode='out')$order
+distal_tree=subset(n, distal_points)
+plot(distal_tree, add=TRUE, col='red', lwd=2)
+
+# Find proximal tree as well
+# nb this does not include the AxonLHEP itself as defined here
+proximal_points=setdiff(igraph::V(ng), distal_points)
+proximal_tree=subset(n, proximal_points)
+plot(proximal_tree, add=TRUE, col='blue', lwd=2)
+
 \dontrun{
+## subset using interactively defined spatial regions
 plot3d(n)
+# nb you can save this select3d object using save or saveRDS functions
+# for future non-interactive use
 s3d=select3d()
 n4=subset(n, s3d(xyzmatrix(n)))
 # special case of previous version
