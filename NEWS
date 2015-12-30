@@ -1,3 +1,22 @@
+nat 1.8.0
+=========
+This is tagged as a major release because of a change in behaviour that (by 
+default) suppresses interactive rgl windows when running in batch 
+(non-interactive) mode. See ?nat "rgl Package" section for details.
+
+* nat will only activate an rgl display in interactive mode, otherwise 
+  defaulting to rgl's NULL mode display. This should help run nat in batch mode
+  situations including knitr runs, the CRAN build server etc. (#272)
+* Add summary.neuron(list) functions to calculate tree statistics such as number
+ of nodes and cable length for neurons/neuronlists (#269)
+* Automate progress bar in nlapply - this will always show in interactive mode
+  when there are more than 10 neurons being processed. (#271)
+* Fix bug in c.neuronlist when combining more than 2 neuronlists (#270)
+* Fix bug in read.neuronlistfh on Windows (#268)
+* Fix bug when constructing an ngraph with a single node (#267)
+* Fix bug in `[<-.neuronlist` when assigning a whole data.frame using (#256)
+* Documentation improvements (especiall package overview - see ?nat)
+
 nat 1.7.2
 =========
 * new function subset.neuron can keep/remove individual vertices from a neuron 
