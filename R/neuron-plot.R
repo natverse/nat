@@ -370,7 +370,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' \dontrun{
 #' plot3d(kcs20)
 #' # plot bounding box (in matching colours) for each neuron
-#' # NB makes used of nlapply/neuronlist in slightly unsusual context - 
+#' # NB makes use of nlapply/neuronlist in slightly unsusual context - 
 #' # plot3d.neuronlist can cope with lists containing anything with
 #' # a valid plot3d method.
 #' plot3d(nlapply(kcs20,boundingbox))
