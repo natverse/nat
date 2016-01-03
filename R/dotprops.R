@@ -279,6 +279,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' @seealso \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d}, 
 #'   \link[rgl]{segments3d}}
 #' @examples
+#' \donttest{
 #' open3d()
 #' plot3d(kcs20[[1]])
 #' clear3d()
@@ -286,6 +287,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' clear3d()
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
+#' }
 plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black', 
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
   # rgl's generic plot3d will dispatch on this
@@ -337,9 +339,11 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' middle=middle=subset(dp, between(points[,'Z'], 40, 60))
 #' 
 #' # plot results in 3D
+#' \donttest{
 #' plot3d(front, col='red')
 #' plot3d(middle, col='green')
 #' plot3d(dp, col='blue')
+#' }
 #' 
 #' \dontrun{
 #' 
@@ -391,19 +395,27 @@ subset.dotprops<-function(x, subset, ...){
 #'   \code{\link{prune_vertices}}
 #' @examples
 #' ## prune single neurons
+#' \donttest{
 #' plot3d(kcs20[[1]],col='blue')
 #' plot3d(kcs20[[2]],col='red')
+#' }
 #' # prune neuron 2 down to points that are close to neuron 1
 #' neuron2_close=prune(kcs20[[2]], target=kcs20[[1]], maxdist=10)
+#' \donttest{
 #' plot3d(neuron2_close, col='cyan', lwd=3)
+#' }
 #' neuron2_far=prune(kcs20[[2]], target=kcs20[[1]], maxdist=10, keep='far')
+#' \donttest{
 #' plot3d(neuron2_far, col='magenta', lwd=3)
+#' }
 #' 
 #' ## Prune a neuron with a neuronlist
 #' pruned=prune(kcs20[[11]], kcs20[setdiff(1:20, 11)], maxdist=8)
+#' \donttest{
 #' plot3d(pruned, col='red', lwd=3)
 #' plot3d(kcs20[[11]], col='green', lwd=3)
 #' plot3d(kcs20,col='grey')
+#' }
 prune<-function(x, target, ...) UseMethod("prune")
 
 #' @export

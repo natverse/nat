@@ -18,14 +18,15 @@ A list of RGL object IDs.
 Plot a bounding box in 3D
 }
 \examples{
-# plot some neurons
-clear3d()
-# NB skipRedraw draws all neurons in one go
-plot3d(kcs20, skipRedraw = TRUE)
-# plot the bounding box of all the neurons
+# find the bounding box of all the neurons in a list
+boundingbox(kcs20)
+boundingbox(kcs20[1:3])
+\donttest{
+# plot those neurons
+plot3d(kcs20)
+# ... with their bounding box
 plot3d(boundingbox(kcs20))
 
-\dontrun{
 plot3d(kcs20)
 # plot bounding box (in matching colours) for each neuron
 # NB makes use of nlapply/neuronlist in slightly unsusual context -

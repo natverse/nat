@@ -92,9 +92,9 @@ plot3d.character will check if options('nat.default.neuronlist') has
 \examples{
 open3d()
 plot3d(kcs20,type=='gamma',col='green')
+\donttest{
 clear3d()
 plot3d(kcs20,col=type)
-\dontrun{
 plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
 # Note use of default colour for non DA1 neurons
@@ -104,7 +104,8 @@ plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),
   col=c("red","green")[factor(Glomerulus)])
 # the same but not specifying colours explicitly
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),col=Glomerulus)
-
+}
+\dontrun{
 ## more complex colouring strategies for a larger neuron set
 # see https://github.com/jefferis/frulhns for details
 library(frulhns)

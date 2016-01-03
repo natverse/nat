@@ -39,9 +39,11 @@ between=function(x, lower, upper) x>=lower & x<=upper
 middle=middle=subset(dp, between(points[,'Z'], 40, 60))
 
 # plot results in 3D
+\donttest{
 plot3d(front, col='red')
 plot3d(middle, col='green')
 plot3d(dp, col='blue')
+}
 
 \dontrun{
 

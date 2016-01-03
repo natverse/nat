@@ -48,6 +48,7 @@ Tangent vectors are plotted by \code{segments3d} and centered on the
   colours for each line segment, blending them if they are different).
 }
 \examples{
+\donttest{
 open3d()
 plot3d(kcs20[[1]])
 clear3d()
@@ -55,6 +56,7 @@ plot3d(kcs20[[1]],col='red')
 clear3d()
 plot3d(kcs20[[1]],col='red',lwd=2)
 plot3d(kcs20[[2]],col='green',lwd=2)
+}
 }
 \seealso{
 \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d},

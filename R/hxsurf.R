@@ -220,8 +220,9 @@ write.hxsurf <- function(surf, filename) {
 #' @family hxsurf
 #' @examples 
 #' plot3d(kcs20)
-#' plot3d(MBL.surf, alpha=0.3)
+#' plot3d(MBL.surf)
 #' 
+#' \donttest{
 #' # plot only vertical lobe
 #' clear3d()
 #' plot3d(MBL.surf, materials="VL", alpha=0.3)
@@ -230,6 +231,7 @@ write.hxsurf <- function(surf, filename) {
 #' clear3d()
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
+#' }
 plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   # skip so that the scene is updated only once per hxsurf object
   skip <- par3d(skipRedraw = TRUE)
@@ -300,14 +302,16 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' @export
 #' @family hxsurf
 #' @examples
-#' plot3d(kcs20)
 #' # plot only vertical lobe
 #' vertical_lobe=subset(MBL.surf, "VL")
+#' \donttest{
 #' plot3d(vertical_lobe, alpha=0.3)
+#' plot3d(kcs20)
 #' 
 #' # there is also a shortcut for this
 #' clear3d()
 #' plot3d(MBL.surf, "VL", alpha=0.3)
+#' }
 subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...){
   rval=match.arg(rval)
   if(!is.null(subset)){

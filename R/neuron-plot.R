@@ -32,14 +32,18 @@
 #' open3d()
 #' plot3d(Cell07PNs[[1]],col='red')
 #' plot3d(Cell07PNs[[2]],col='green')
+#' \donttest{
 #' # clear the current plot
+#' clear3d()
 #' plot3d(Cell07PNs[[2]],col='blue',add=FALSE)
 #' # plot the number of all nodes
+#' clear3d()
 #' plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 #' # include cell bodies
 #' plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 #' plot3d(Cell07PNs[5], col='red', soma=3)
 #' rgl.close()
+#' }
 plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
                         WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE,
                         add=TRUE, col=NULL, soma=FALSE, ...){
@@ -360,14 +364,15 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' @export
 #' @seealso \code{\link{boundingbox}}
 #' @examples
-#' # plot some neurons
-#' clear3d()
-#' # NB skipRedraw draws all neurons in one go
-#' plot3d(kcs20, skipRedraw = TRUE)
-#' # plot the bounding box of all the neurons
+#' # find the bounding box of all the neurons in a list
+#' boundingbox(kcs20)
+#' boundingbox(kcs20[1:3])
+#' \donttest{
+#' # plot those neurons
+#' plot3d(kcs20)
+#' # ... with their bounding box
 #' plot3d(boundingbox(kcs20))
 #' 
-#' \dontrun{
 #' plot3d(kcs20)
 #' # plot bounding box (in matching colours) for each neuron
 #' # NB makes use of nlapply/neuronlist in slightly unsusual context - 
