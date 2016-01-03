@@ -123,10 +123,12 @@ stopifnot(all.equal(d1,d2))
 # flip first neuron in X, second in Y and 3rd in Z
 xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
  mirrorAxisSize=c(400,20,30))
+\donttest{
 open3d()
 plot3d(kcs20[1:3])
 plot3d(xyzflip)
 rgl.close()
+}
 }
 \seealso{
 \code{\link{lapply}}

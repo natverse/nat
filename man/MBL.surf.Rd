@@ -9,8 +9,11 @@ This surface object is in the same space as the 20 Kenyon cells in
 \code{\link{kcs20}}.
 }
 \examples{
+\donttest{
 plot3d(kcs20)
 plot3d(MBL.surf, alpha=0.3)
+}
+
 \dontrun{
 ## originally generated as follows
 library(nat.flybrains)

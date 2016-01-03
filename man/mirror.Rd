@@ -84,14 +84,20 @@ The \code{mirrorAxisSize} argument can be specified in 3 ways for
 \examples{
 nopen3d()
 x=Cell07PNs[[1]]
+mx=mirror(x,168)
+\donttest{
 plot3d(x,col='red')
-plot3d(mirror(x,168),col='green')
+plot3d(mx,col='green')
+}
 
 # also works with dotprops objects
 clear3d()
 y=kcs20[[1]]
+my=mirror(y,mirrorAxisSize=564.2532,transform='flip')
+\donttest{
 plot3d(y, col='red')
-plot3d(mirror(y,mirrorAxisSize=564.2532,transform='flip'), col='green')
+plot3d(my, col='green')
+}
 
 \dontrun{
 ## Example with an image

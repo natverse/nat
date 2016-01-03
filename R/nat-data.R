@@ -45,7 +45,9 @@ NULL
 #' table(with(kcs20, type))
 #' nopen3d()
 #' # see plot3d.neuronlist documentation for more details
+#' \donttest{
 #' plot3d(kcs20, col=type)
+#' }
 NULL
 
 #' Surface object (hxsurf) for the left mushroom body in FCWB template space
@@ -57,8 +59,11 @@ NULL
 #' @docType data
 #' @seealso \code{\link{hxsurf}}
 #' @examples 
+#' \donttest{
 #' plot3d(kcs20)
 #' plot3d(MBL.surf, alpha=0.3)
+#' }
+#' 
 #' \dontrun{
 #' ## originally generated as follows
 #' library(nat.flybrains)

@@ -383,10 +383,12 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' # flip first neuron in X, second in Y and 3rd in Z
 #' xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
 #'  mirrorAxisSize=c(400,20,30))
+#' \donttest{
 #' open3d()
 #' plot3d(kcs20[1:3])
 #' plot3d(xyzflip)
 #' rgl.close()
+#' }
 nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, .progress='auto'){
   
   if(.progress=='auto') {
@@ -513,9 +515,9 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' @examples
 #' open3d()
 #' plot3d(kcs20,type=='gamma',col='green')
+#' \donttest{
 #' clear3d()
 #' plot3d(kcs20,col=type)
-#' \dontrun{
 #' plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 #' plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
 #' # Note use of default colour for non DA1 neurons
@@ -525,7 +527,8 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #'   col=c("red","green")[factor(Glomerulus)])
 #' # the same but not specifying colours explicitly
 #' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),col=Glomerulus)
-#' 
+#' }
+#' \dontrun{
 #' ## more complex colouring strategies for a larger neuron set
 #' # see https://github.com/jefferis/frulhns for details
 #' library(frulhns)

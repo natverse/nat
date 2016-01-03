@@ -16,7 +16,9 @@ head(kcs20)
 table(with(kcs20, type))
 nopen3d()
 # see plot3d.neuronlist documentation for more details
+\donttest{
 plot3d(kcs20, col=type)
+}
 }
 \references{
 [1] Chiang A.S., Lin C.Y., Chuang C.C., Chang H.M., Hsieh C.H.,

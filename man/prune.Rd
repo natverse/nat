@@ -45,19 +45,27 @@ prune an object by removing points near (or far) from a target object
 }
 \examples{
 ## prune single neurons
+\donttest{
 plot3d(kcs20[[1]],col='blue')
 plot3d(kcs20[[2]],col='red')
+}
 # prune neuron 2 down to points that are close to neuron 1
 neuron2_close=prune(kcs20[[2]], target=kcs20[[1]], maxdist=10)
+\donttest{
 plot3d(neuron2_close, col='cyan', lwd=3)
+}
 neuron2_far=prune(kcs20[[2]], target=kcs20[[1]], maxdist=10, keep='far')
+\donttest{
 plot3d(neuron2_far, col='magenta', lwd=3)
+}
 
 ## Prune a neuron with a neuronlist
 pruned=prune(kcs20[[11]], kcs20[setdiff(1:20, 11)], maxdist=8)
+\donttest{
 plot3d(pruned, col='red', lwd=3)
 plot3d(kcs20[[11]], col='green', lwd=3)
 plot3d(kcs20,col='grey')
+}
 }
 \seealso{
 \code{\link{prune_strahler}}, \code{\link{spine}},

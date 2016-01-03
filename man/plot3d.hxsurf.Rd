@@ -24,8 +24,9 @@ Plot amira surface objects in 3D using rgl
 }
 \examples{
 plot3d(kcs20)
-plot3d(MBL.surf, alpha=0.3)
+plot3d(MBL.surf)
 
+\donttest{
 # plot only vertical lobe
 clear3d()
 plot3d(MBL.surf, materials="VL", alpha=0.3)
@@ -34,6 +35,7 @@ plot3d(MBL.surf, materials="VL", alpha=0.3)
 clear3d()
 plot3d(MBL.surf, alpha=0.3,
   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
+}
 }
 \seealso{
 \code{\link{read.hxsurf}}
