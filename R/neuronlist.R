@@ -541,7 +541,8 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, skipRedraw=200,
+plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, 
+                            skipRedraw=ifelse(interactive(), 200L, TRUE),
                             WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){

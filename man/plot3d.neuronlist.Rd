@@ -7,8 +7,8 @@
 expression}
 \usage{
 \method{plot3d}{neuronlist}(x, subset = NULL, col = NULL,
-  colpal = rainbow, skipRedraw = 200, WithNodes = FALSE, soma = FALSE,
-  ..., SUBSTITUTE = TRUE)
+  colpal = rainbow, skipRedraw = ifelse(interactive(), 200L, TRUE),
+  WithNodes = FALSE, soma = FALSE, ..., SUBSTITUTE = TRUE)
 
 \method{plot3d}{character}(x, db = NULL, ...)
 }
