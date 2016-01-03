@@ -1,3 +1,8 @@
+nat 1.8.2
+=========
+* roll back rgl NULL mode changes from 1.8.0 in favour of less invasive approach
+  of marking the majority of rgl based plotting examples as donttest (#274)
+
 nat 1.8.1
 =========
 * fix non-canonical URLs to CRAN packages (thanks to Uwe Ligges)
