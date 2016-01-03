@@ -10,6 +10,7 @@
 #'   
 #' @export
 #' @rdname summary.neuron
+#' @aliases summary
 #' @seealso \code{\link{seglengths}}
 #' @examples 
 #' # summary for a whole neuronlist
