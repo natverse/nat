@@ -29,7 +29,7 @@ Find which points of an object are inside a surface
 }
 \details{
 Note that \code{hxsurf} surface objects will be converted to
-  \code{mesh3d} before being passed to  \code{Rvcg::vcgClost}, so if you are
+  \code{mesh3d} before being passed to \code{Rvcg::vcgClost}, so if you are
   testing repeatedly against the same surface, it may make sense to
   pre-convert.
 }
