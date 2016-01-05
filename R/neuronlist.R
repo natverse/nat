@@ -143,7 +143,9 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   nl2=structure(NextMethod("["), class = class(x))
   df=attr(x,'df')
   if(!is.null(df)){
-    df=df[i, ]
+    # we never want to drop because the result must be a data.frame 
+    # even when it only has one column
+    df=df[i, , drop=FALSE]
   }
   attr(nl2,'df')=df
   nl2
