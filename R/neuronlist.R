@@ -136,14 +136,19 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   if(nargs()>2) {
     # treat as data.frame
     df=as.data.frame(x)
-    if(missing(drop)) return(df[i, j])
+    if(missing(drop)) {
+      if(missing(i) && missing(j)) return(df[i, j, drop=FALSE])
+      return(df[i, j])
+    }
     else return(df[i, j, drop=drop])
   }
   # treat as neuronlist
   nl2=structure(NextMethod("["), class = class(x))
   df=attr(x,'df')
   if(!is.null(df)){
-    df=df[i, ]
+    # we never want to drop because the result must be a data.frame 
+    # even when it only has one column
+    df=df[i, , drop=FALSE]
   }
   attr(nl2,'df')=df
   nl2

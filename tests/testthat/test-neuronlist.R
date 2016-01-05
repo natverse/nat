@@ -258,6 +258,15 @@ test_that("[.neuronlist does the right thing",{
   all.equal(kcs20[1:2,1], as.data.frame(kcs20[1:2])[[1]])
   all.equal(kcs20[,], as.data.frame(kcs20))
   
+  kcs13=kcs20[1:3]
+  # keep a single column in attached data.frame
+  kcs13[,]=kcs13[, 1, drop=F]
+  expect_equal(colnames(as.data.frame(kcs13[1:2])), 
+               colnames(as.data.frame(kcs13)), 
+               "one column data.frames column names are retained")
+  expect_equal(kcs13[,], as.data.frame(kcs13))
+  expect_equal(kcs13[,drop=TRUE], as.data.frame(kcs13)[,])
+  
   attr(kcs20,'df')=NULL
   all.equal(kcs20[1:2], c(kcs20[1], kcs20[2]))
   all.equal(kcs20[1,], as.data.frame(kcs20[1]))
