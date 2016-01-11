@@ -78,7 +78,7 @@ test_that("we can construct an empty ngraph",{
 
 test_that("we can find the length of the spine of a neuron", {
   n <- Cell07PNs[[1]]
-  spine.length <- spine(n, LengthOnly = TRUE)
+  spine.length <- spine(n, rval='length')
   spine.length.expected <- 186.085903694106
   expect_equal(spine.length, spine.length.expected, tolerance=1e-4)
 })
@@ -88,12 +88,12 @@ test_that("we can find the path of the spine of a neuron", {
   expect_is(spine <- spine(n), 'neuron')
   spine.expected <- readRDS('testdata/neuron/testCell07PNs1_spine.rds')
   expect_equal(spine, spine.expected)
-  expect_equal(spine(n, LengthOnly = T), 186.0859, tol=1e-4)
+  expect_equal(spine(n, rval='length'), 186.0859, tol=1e-4)
   
   # check that we get the same result when using start point,
   # since that is part of result
   expect_equal(spine(n, UseStartPoint = T), spine.expected)
-  expect_equal(spine(n, UseStartPoint = T, LengthOnly = T), 186.0859, tol=1e-4)
+  expect_equal(spine(n, UseStartPoint = T, rval='length'), 186.0859, tol=1e-4)
   
   # check that can cope with point labels other than 1:n
   n$d$PointNo=n$d$PointNo+1

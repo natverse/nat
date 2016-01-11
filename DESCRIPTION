@@ -74,3 +74,4 @@ Collate:
     'xformimage.R'
     'xformpoints.R'
     'zzz.R'
+RoxygenNote: 5.0.1.9000
