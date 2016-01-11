@@ -84,7 +84,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
     }
     xyzmatrix(g)<-xyz
   }
-  if(!is.null(diam)) V(g)$diam=diam
+  if(!is.null(diam)) igraph::V(g)$diam=diam
   for(n in names(vertex.attributes)){
     g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
   }
@@ -102,6 +102,9 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
 #' @export
 #' @rdname ngraph
 as.ngraph<-function(x, ...) UseMethod('as.ngraph')
+
+#' @export
+as.ngraph.ngraph<-function(x, ...) x
 
 #' @description \code{as.ngraph.dataframe} construct ngraph from a data.frame 
 #'   containing SWC format data

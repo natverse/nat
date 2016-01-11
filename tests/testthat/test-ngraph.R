@@ -76,6 +76,11 @@ test_that("we can construct an empty ngraph",{
             'ngraph')
 })
 
+test_that("as.ngraph",{
+  expect_is(g<-as.ngraph(Cell07PNs[[1]]), 'ngraph')
+  expect_equal(g, as.ngraph(g))
+})
+
 test_that("we can find the length of the spine of a neuron", {
   n <- Cell07PNs[[1]]
   spine.length <- spine(n, rval='length')
