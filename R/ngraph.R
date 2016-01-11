@@ -427,27 +427,43 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 
 #' Prune selected vertices from a neuron
 #' 
-#' @details uses the \code{ngraph} representation of the neuron to remove 
-#'   points. It is relatively low-level function and you will probably want to 
-#'   use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and friends 
-#'   in most cases.
-#' @param x A neuron to prune
+#' @details \code{prune_vertices} is  a relatively low-level function and you 
+#'   will probably want to use \code{\link{subset.neuron}} or 
+#'   \code{\link{prune.neuron}} and friends in most cases.
+#'   
+#'   \code{prune_vertices} first converts its input to the \code{\link{ngraph}} 
+#'   representation of the neuron to remove points. The input \code{x} can 
+#'   therefore be in any form compatible with \code{\link{as.ngraph}}. There is 
+#'   an additional requirement that the input must be compatible with 
+#'   \code{\link{xyzmatrix}} if \code{invert=TRUE} or \code{verticestoprune=NA}.
+#'   
+#' @param x A \code{\link{neuron}} to prune. This can be any object that can be 
+#'   converted by \code{\link{as.ngraph}} --- see details.
 #' @param verticestoprune An integer vector describing which vertices to remove.
 #'   The special signalling value of \code{NA} drops all vertices with invalid X
 #'   locations.
-#' @param invert Whether to keep vertices rather than dropping them (default
+#' @param invert Whether to keep vertices rather than dropping them (default 
 #'   FALSE).
 #' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
 #' @export
 #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
 #'   \code{\link{prune.neuron}}
+#' @examples 
+#' n=prune_vertices(Cell07PNs[[1]], 1:25)
+#' # original neuron
+#' plot(Cell07PNs[[1]])
+#' # with pruned neuron superimposed
+#' plot(n, col='green', lwd=3, add=TRUE)
 prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   g=as.ngraph(x)
   if(length(verticestoprune)==1 && is.na(verticestoprune)) {
-    badverts=!is.finite(x$d$X)
+    badverts=!is.finite(xyzmatrix(x)[,'X'])
     verticestoprune=which(if(invert) !badverts else badverts)
   } else {
-    if(invert) verticestoprune=setdiff(seq_len(nrow(x$d)), verticestoprune)
+    if(invert) {
+      nvertices=nrow(xyzmatrix(x))
+      verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
+    }
   }
   dg=igraph::delete.vertices(g, verticestoprune)
   # delete.vertices will return an igraph

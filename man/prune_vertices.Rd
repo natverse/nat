@@ -7,13 +7,14 @@
 prune_vertices(x, verticestoprune, invert = FALSE, ...)
 }
 \arguments{
-\item{x}{A neuron to prune}
+\item{x}{A \code{\link{neuron}} to prune. This can be any object that can be 
+converted by \code{\link{as.ngraph}} --- see details.}
 
 \item{verticestoprune}{An integer vector describing which vertices to remove.
 The special signalling value of \code{NA} drops all vertices with invalid X
 locations.}
 
-\item{invert}{Whether to keep vertices rather than dropping them (default
+\item{invert}{Whether to keep vertices rather than dropping them (default 
 FALSE).}
 
 \item{...}{Additional arguments passed to \code{\link{as.neuron.ngraph}}}
@@ -22,10 +23,22 @@ FALSE).}
 Prune selected vertices from a neuron
 }
 \details{
-uses the \code{ngraph} representation of the neuron to remove 
-  points. It is relatively low-level function and you will probably want to 
-  use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and friends 
-  in most cases.
+\code{prune_vertices} is  a relatively low-level function and you 
+  will probably want to use \code{\link{subset.neuron}} or 
+  \code{\link{prune.neuron}} and friends in most cases.
+  
+  \code{prune_vertices} first converts its input to the \code{\link{ngraph}} 
+  representation of the neuron to remove points. The input \code{x} can 
+  therefore be in any form compatible with \code{\link{as.ngraph}}. There is 
+  an additional requirement that the input must be compatible with 
+  \code{\link{xyzmatrix}} if \code{invert=TRUE} or \code{verticestoprune=NA}.
+}
+\examples{
+n=prune_vertices(Cell07PNs[[1]], 1:25)
+# original neuron
+plot(Cell07PNs[[1]])
+# with pruned neuron superimposed
+plot(n, col='green', lwd=3, add=TRUE)
 }
 \seealso{
 \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
