@@ -4,13 +4,16 @@
 \alias{subset.neuron}
 \title{Subset neuron by keeping only vertices that match given conditions}
 \usage{
-\method{subset}{neuron}(x, subset, ...)
+\method{subset}{neuron}(x, subset, invert = FALSE, ...)
 }
 \arguments{
 \item{x}{A neuron object}
 
 \item{subset}{A subset of points defined by indices, an expression, or a 
 function (see Details)}
+
+\item{invert}{Whether to invert the subset criteria - a convenience when
+selecting by function or indices.}
 
 \item{...}{Additional parameters (passsed on to \code{\link{prune_vertices}})}
 }
@@ -32,7 +35,7 @@ Subset neuron by keeping only vertices that match given conditions
   
   \item an expression evaluated in the context of the \code{x$d} data.frame 
   containing the SWC specification of the points and connectivity of the 
-  neuron. This can therefore refer e.g. to the x,y,z location of vertices in 
+  neuron. This can therefore refer e.g. to the X,Y,Z location of vertices in 
   the neuron.
   
   }
@@ -44,7 +47,9 @@ n1=subset(n, X>200)
 # diameter of neurite >1 
 n2=subset(n, W>1)
 # first 50 nodes
-n3=subset(n,1:50)
+n3=subset(n, 1:50)
+# everything but first 50 nodes
+n4=subset(n, 1:50, invert=TRUE)
 
 ## subset neuron by graph structure
 # first plot neuron and show the point that we will use to divide the neuron
@@ -91,7 +96,7 @@ plot3d(n10.crop, col='red')
 }
 }
 \seealso{
-\code{\link{prune.neuron}}, \code{\link{prune_vertices}},
+\code{\link{prune.neuron}}, \code{\link{prune_vertices}}, 
   \code{\link{subset.dotprops}}
 }
 

@@ -426,20 +426,25 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #' 
 #' @details uses the \code{ngraph} representation of the neuron to remove 
 #'   points. It is relatively low-level function and you will probably want to 
-#'   use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and friends
+#'   use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and friends 
 #'   in most cases.
 #' @param x A neuron to prune
 #' @param verticestoprune An integer vector describing which vertices to remove.
 #'   The special signalling value of \code{NA} drops all vertices with invalid X
 #'   locations.
+#' @param invert Whether to keep vertices rather than dropping them (default
+#'   FALSE).
 #' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
 #' @export
-#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
+#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
 #'   \code{\link{prune.neuron}}
-prune_vertices<-function(x, verticestoprune, ...) {
+prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   g=as.ngraph(x)
   if(length(verticestoprune)==1 && is.na(verticestoprune)) {
-    verticestoprune=which(!is.finite(x$d$X))
+    badverts=!is.finite(x$d$X)
+    verticestoprune=which(if(invert) !badverts else badverts)
+  } else {
+    if(invert) verticestoprune=setdiff(seq_len(nrow(x$d)), verticestoprune)
   }
   dg=igraph::delete.vertices(g, verticestoprune)
   # delete.vertices will return an igraph

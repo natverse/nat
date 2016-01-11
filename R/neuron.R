@@ -565,17 +565,19 @@ resample_segment<-function(d, stepsize, ...) {
 #'   
 #'   \item an expression evaluated in the context of the \code{x$d} data.frame 
 #'   containing the SWC specification of the points and connectivity of the 
-#'   neuron. This can therefore refer e.g. to the x,y,z location of vertices in 
+#'   neuron. This can therefore refer e.g. to the X,Y,Z location of vertices in 
 #'   the neuron.
 #'   
 #'   }
 #' @param x A neuron object
 #' @param subset A subset of points defined by indices, an expression, or a 
 #'   function (see Details)
+#' @param invert Whether to invert the subset criteria - a convenience when
+#'   selecting by function or indices.
 #' @param ... Additional parameters (passsed on to \code{\link{prune_vertices}})
 #' @return subsetted neuron
 #' @export
-#' @seealso \code{\link{prune.neuron}}, \code{\link{prune_vertices}},
+#' @seealso \code{\link{prune.neuron}}, \code{\link{prune_vertices}}, 
 #'   \code{\link{subset.dotprops}}
 #' @examples
 #' n=Cell07PNs[[1]]
@@ -584,7 +586,9 @@ resample_segment<-function(d, stepsize, ...) {
 #' # diameter of neurite >1 
 #' n2=subset(n, W>1)
 #' # first 50 nodes
-#' n3=subset(n,1:50)
+#' n3=subset(n, 1:50)
+#' # everything but first 50 nodes
+#' n4=subset(n, 1:50, invert=TRUE)
 #' 
 #' ## subset neuron by graph structure
 #' # first plot neuron and show the point that we will use to divide the neuron
@@ -629,7 +633,7 @@ resample_segment<-function(d, stepsize, ...) {
 #' n10.crop = nlapply(n10, subset, X>250)
 #' plot3d(n10.crop, col='red')
 #' }
-subset.neuron<-function(x, subset, ...){
+subset.neuron<-function(x, subset, invert=FALSE, ...){
   e <- substitute(subset)
   r <- eval(e, x$d, parent.frame())
   if (!is.logical(r) && !is.numeric(r)) {
@@ -642,6 +646,6 @@ subset.neuron<-function(x, subset, ...){
     r <- which(r)
   } else if(!is.numeric(r)) 
     stop("Subset must evaluate to a logical or numeric index")
-  indstodrop=setdiff(seq(nrow(x$d)), r)
-  prune_vertices(x, indstodrop, ...)
+  # nb !invert since prune_vertices drops vertices whereas subset.neuron keeps vertices
+  prune_vertices(x, r, invert=!invert, ...)
 }

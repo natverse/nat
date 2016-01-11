@@ -222,8 +222,9 @@ test_that("we can subset a neuron", {
   expect_is(n1<-subset(n, X>200), 'neuron')
   npoints_dropped=sum(xyzmatrix(n)[,1]<=200)
   expect_equal(nrow(n1$d), nrow(n$d)-npoints_dropped)
-  # diameter of neurite >1 
-  expect_equal(subset(n, W>0),n) 
+  # diameter of neurite >0
+  expect_equal(subset(n, W>0),n)
+  expect_equal(subset(n, W>1), subset(n, W<=1, invert=TRUE)) 
   # first 50 nodes
   expect_equal(subset(n,1:50)$d$PointNo, 1:50)
 })
