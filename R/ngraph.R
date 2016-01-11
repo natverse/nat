@@ -230,8 +230,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE,
     }
   }
   if(rval=='ids') return(as.integer(longestpath))
-  spineGraph <- delete.vertices(ng, setdiff(V(ng), longestpath))
-  as.neuron(as.ngraph(spineGraph), vertexData=n$d[match(V(spineGraph)$label,n$d$PointNo), ])
+  prune_vertices(ng, longestpath, invert = TRUE)
 }
 
 #' Return a simplified segment graph for a neuron
