@@ -89,6 +89,7 @@ test_that("we can find the path of the spine of a neuron", {
   spine.expected <- readRDS('testdata/neuron/testCell07PNs1_spine.rds')
   expect_equal(spine, spine.expected)
   expect_equal(spine(n, rval='length'), 186.0859, tol=1e-4)
+  expect_equal(spine(n, rval='ids'), spine.expected$d$PointNo)
   
   # check that we get the same result when using start point,
   # since that is part of result

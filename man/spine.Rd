@@ -4,25 +4,31 @@
 \alias{spine}
 \title{Compute the longest path (aka spine or backbone) of a neuron}
 \usage{
-spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, LengthOnly = FALSE)
+spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, rval = c("neuron",
+  "length", "ids"))
 }
 \arguments{
 \item{n}{the neuron to consider.}
 
-\item{UseStartPoint}{Whether to use the StartPoint of the neuron (often the
+\item{UseStartPoint}{Whether to use the StartPoint of the neuron (often the 
 soma) as the starting point of the returned spine.}
 
-\item{SpatialWeights}{logical indicating whether spatial distances (default)
+\item{SpatialWeights}{logical indicating whether spatial distances (default) 
 should be used to weight segments instead of weighting each edge equally.}
 
-\item{LengthOnly}{logical indicating whether only the length of the longest
-path should be returned (when \code{TRUE}) or whether a neuron pruned down
-to the the sequence of vertices along the path should be returned
-(\code{FALSE}, the default).}
+\item{rval}{Character vector indicating the return type, one of 
+\code{'neuron'}, \code{'length'} or \code{'ids'}. See \bold{Value} section.}
 }
 \value{
-Either a neuron object corresponding to the longest path \emph{or}
-  the length of the longest path when \code{LengthOnly=TRUE}).
+Either \itemize{
+  
+  \item a neuron object corresponding to the longest path \emph{or}
+  
+  \item the length of the longest path (when \code{rval="length"}) \emph{or}
+  
+  \item an integer vector of raw point indices (when \code{rval="ids"}).
+  
+  }
 }
 \description{
 Compute the longest path (aka spine or backbone) of a neuron
@@ -33,14 +39,14 @@ plot3d(Cell07PNs[[1]])
 plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
 }
 # just extract length
-spine(Cell07PNs[[1]], LengthOnly=TRUE)
+spine(Cell07PNs[[1]], rval='length')
 # same result since StartPoint is included in longest path
-spine(Cell07PNs[[1]], LengthOnly=TRUE, UseStartPoint=TRUE)
+spine(Cell07PNs[[1]], rval='length', UseStartPoint=TRUE)
 }
 \seealso{
-\code{\link[igraph]{diameter}},
-  \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for
-  removing lower order branches from a neuron, \code{\link{prune}} for
+\code{\link[igraph]{diameter}}, 
+  \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for 
+  removing lower order branches from a neuron, \code{\link{prune}} for 
   removing parts of a neuron by spatial criteria.
 }
 
