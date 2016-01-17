@@ -186,6 +186,9 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #'   should be used to weight segments instead of weighting each edge equally.
 #' @param rval Character vector indicating the return type, one of 
 #'   \code{'neuron'}, \code{'length'} or \code{'ids'}. See \bold{Value} section.
+#' @param invert When \code{invert=TRUE} the spine is pruned away instead of 
+#'   being selected. This is only valid when \code{rval='neuron'} or
+#'   \code{rval='ids'}.
 #' @return Either \itemize{
 #'   
 #'   \item a neuron object corresponding to the longest path \emph{or}
@@ -201,20 +204,31 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #'   removing parts of a neuron by spatial criteria.
 #' @export
 #' @examples
+#' pn.spine=spine(Cell07PNs[[1]])
 #' \donttest{
 #' plot3d(Cell07PNs[[1]])
-#' plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
+#' plot3d(pn.spine, lwd=4, col='black')
 #' }
 #' # just extract length
 #' spine(Cell07PNs[[1]], rval='length')
 #' # same result since StartPoint is included in longest path
 #' spine(Cell07PNs[[1]], rval='length', UseStartPoint=TRUE)
+#' 
+#' # extract everything but the spine
+#' antispine=spine(Cell07PNs[[1]], invert=TRUE)
+#' \donttest{
+#' plot3d(Cell07PNs[[1]])
+#' plot3d(antispine, lwd=4, col='red')
+#' }
+#' 
 #' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter 
 #'   delete.vertices
-spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, 
+spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
                   rval=c("neuron", "length", "ids")) {
   ng <- as.ngraph(n, weights=SpatialWeights)
   rval=match.arg(rval)
+  if(invert && rval=="length") 
+    stop("invert=TRUE is not implemented for rval='length'")
   if(UseStartPoint) {
     # Find longest shortest path from given start point to all end points
     lps=shortest.paths(graph = ng, n$StartPoint, to = n$EndPoints, 
@@ -229,8 +243,12 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE,
       longestpath=get.diameter(ng, directed=FALSE)
     }
   }
-  if(rval=='ids') return(as.integer(longestpath))
-  prune_vertices(ng, longestpath, invert = TRUE)
+  if(rval=='ids') {
+    if(invert) {
+      return(as.integer(setdiff(igraph::V(ng), longestpath)))
+    } else return(as.integer(longestpath))
+  }
+  prune_vertices(ng, longestpath, invert = !invert)
 }
 
 #' Return a simplified segment graph for a neuron
