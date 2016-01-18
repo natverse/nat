@@ -4,8 +4,8 @@
 \alias{spine}
 \title{Compute the longest path (aka spine or backbone) of a neuron}
 \usage{
-spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, rval = c("neuron",
-  "length", "ids"))
+spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, invert = FALSE,
+  rval = c("neuron", "length", "ids"))
 }
 \arguments{
 \item{n}{the neuron to consider.}
@@ -15,6 +15,10 @@ soma) as the starting point of the returned spine.}
 
 \item{SpatialWeights}{logical indicating whether spatial distances (default) 
 should be used to weight segments instead of weighting each edge equally.}
+
+\item{invert}{When \code{invert=TRUE} the spine is pruned away instead of 
+being selected. This is only valid when \code{rval='neuron'} or
+\code{rval='ids'}.}
 
 \item{rval}{Character vector indicating the return type, one of 
 \code{'neuron'}, \code{'length'} or \code{'ids'}. See \bold{Value} section.}
@@ -34,14 +38,23 @@ Either \itemize{
 Compute the longest path (aka spine or backbone) of a neuron
 }
 \examples{
+pn.spine=spine(Cell07PNs[[1]])
 \donttest{
 plot3d(Cell07PNs[[1]])
-plot3d(spine(Cell07PNs[[1]]), lwd=4, col='black')
+plot3d(pn.spine, lwd=4, col='black')
 }
 # just extract length
 spine(Cell07PNs[[1]], rval='length')
 # same result since StartPoint is included in longest path
 spine(Cell07PNs[[1]], rval='length', UseStartPoint=TRUE)
+
+# extract everything but the spine
+antispine=spine(Cell07PNs[[1]], invert=TRUE)
+\donttest{
+plot3d(Cell07PNs[[1]])
+plot3d(antispine, lwd=4, col='red')
+}
+
 }
 \seealso{
 \code{\link[igraph]{diameter}}, 

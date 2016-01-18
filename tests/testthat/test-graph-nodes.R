@@ -55,7 +55,7 @@ test_that("we can find nodes in more complicated neurons",{
   expect_equal(rootpoints(testn),1)
   expect_error(rootpoints(testn,subtrees=2))
   
-  # now more complicated neurons - isloated point 
+  # now more complicated neurons - isolated point 
   testd=data.frame(PointNo=1:6,Label=2,
                    X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
                    Parent=c(-1,1:4,-1))
