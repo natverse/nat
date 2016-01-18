@@ -107,6 +107,17 @@ test_that("we can find the path of the spine of a neuron", {
   expect_equal(spine, spine.expected)
 })
 
+test_that("we can find the inverse of the spine", {
+  n <- Cell07PNs[[1]]
+  neuron.length=sum(seglengths(n))
+  expect_is(antispine<-spine(n, invert = TRUE), 'neuron')
+  expect_equal(sum(seglengths(antispine, all = TRUE)),
+               neuron.length-spine(n, rval='length'),
+               tolerance=1e-4)
+  expect_equal(spine(n, invert = TRUE, rval = 'ids'),
+               match(antispine$d$PointNo, n$d$PointNo))
+})
+
 test_that("setting of graph attributes",{
   gatts=list(name='testneuron',nclass="PN")
   expect_is(testg <- as.ngraph(testd, graph.attributes = gatts, 

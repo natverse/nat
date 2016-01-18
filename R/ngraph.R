@@ -248,7 +248,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
       return(as.integer(setdiff(igraph::V(ng), longestpath)))
     } else return(as.integer(longestpath))
   }
-  prune_vertices(ng, longestpath, invert = !invert)
+  prune_edges(ng, edges = longestpath, invert = !invert)
 }
 
 #' Return a simplified segment graph for a neuron
