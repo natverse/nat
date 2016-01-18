@@ -245,7 +245,12 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
   }
   if(rval=='ids') {
     if(invert) {
-      return(as.integer(setdiff(igraph::V(ng), longestpath)))
+      # find complement of the spine path
+      ie=igraph::difference(igraph::E(ng), igraph::E(ng, path=longestpath))
+      # find edge matrix of that path
+      edgemat=igraph::ends(ng, ie, names = FALSE)
+      # nb transpose and then vectorise to interleave row-wise
+      return(unique(as.integer(t(edgemat))))
     } else return(as.integer(longestpath))
   }
   prune_edges(ng, edges = longestpath, invert = !invert)
