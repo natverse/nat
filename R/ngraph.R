@@ -442,11 +442,18 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
     )
 }
 
-#' Prune selected vertices from a neuron
+#' Prune selected vertices or edges from a neuron
 #' 
-#' @details \code{prune_vertices} is  a relatively low-level function and you 
-#'   will probably want to use \code{\link{subset.neuron}} or 
-#'   \code{\link{prune.neuron}} and friends in most cases.
+#' @description \code{prune_vertices} removes vertices from a neuron
+#' 
+#' @details These are relatively low-level functions and you will probably want 
+#'   to use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and 
+#'   friends in many cases.
+#'   
+#'   Note that \code{prune_vertices} and \code{prune_edges} both use \bold{raw} 
+#'   vertex ids to specify the vertices/edges to be removed. If you want to use
+#'   the id in the PointNo field, then you must translate yourself (see
+#'   examples).
 #'   
 #'   \code{prune_vertices} first converts its input to the \code{\link{ngraph}} 
 #'   representation of the neuron to remove points. The input \code{x} can 
@@ -462,6 +469,7 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #' @param invert Whether to keep vertices rather than dropping them (default 
 #'   FALSE).
 #' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
+#' @return A pruned \code{neuron}
 #' @export
 #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
 #'   \code{\link{prune.neuron}}
@@ -471,6 +479,10 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #' plot(Cell07PNs[[1]])
 #' # with pruned neuron superimposed
 #' plot(n, col='green', lwd=3, add=TRUE)
+#' 
+#' # use the PointNo field (= the original id from an SWC file)
+#' n2=prune_vertices(n, match(26:30, n$d$PointNo))
+#' 
 prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   g=as.ngraph(x)
   if(length(verticestoprune)==1 && is.na(verticestoprune)) {
@@ -484,6 +496,33 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   }
   dg=igraph::delete.vertices(g, verticestoprune)
   # delete.vertices will return an igraph
+  as.neuron(as.ngraph(dg), ...)
+}
+
+#' @description \code{prune_edges} removes edges (and any unreferenced vertices)
+#' @param edges The edges to remove. Either an Nx2 matrix, each row specifying a
+#'   single edge defined by its \bold{raw} edge id, an integer vector defining a
+#'   \emph{path} of raw vertex ids or an \code{igraph.es} edge sequence --- see
+#'   the \code{P} and \code{path} arguments of \code{igraph::\link[igraph]{E}}
+#'   for details.
+#' @export
+#' @rdname prune_vertices
+prune_edges<-function(x, edges, invert=FALSE, ...) {
+  g=as.ngraph(x)
+  if(!inherits(edges, "igraph.es")){
+    if(is.matrix(edges)){
+      edges=igraph::E(g, P = as.vector(t(edges)))
+    } else if(is.numeric(edges)) {
+      edges=igraph::E(g, path = as.vector(t(edges)))
+    } else stop("I can't understand the edges you have given me!")
+  }
+  
+  if(invert) edges=igraph::difference(igraph::E(g), edges)
+  
+  dg=igraph::delete_edges(g, edges = edges)
+  
+  # remove unreferenced vertices
+  dg=igraph::delete_vertices(dg, which(igraph::degree(dg, mode='all')==0))
   as.neuron(as.ngraph(dg), ...)
 }
 
