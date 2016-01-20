@@ -102,6 +102,12 @@ test_that("we can read neurons in swc format", {
   expect_equal(n$NeuronName,'EBT7R.CNG')
 })
 
+test_that("we can read swc data into an ngraph object", {
+  swc='testdata/neuron/EBT7R.CNG.swc'
+  expect_is(ng<-read.ngraph.swc(swc),'ngraph')
+  expect_equal(as.neuron(ng), read.neuron(swc))
+})
+
 test_that("we get an error when trying to read a non-neuron file", {
   nrrd="testdata/nrrd/LHMask.nrrd"
   expect_error(read.neuron(nrrd))

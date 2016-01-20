@@ -467,25 +467,50 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 }
 
 #' Read a neuron in swc file format
-#' 
-#' This function should normally only be called from read.neuron and is not 
-#' designed for use by end users.
+#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully 
+#'   parsed \code{\link{neuron}} representation.
+#' @details These functions will accept SWC neurons with multiple trees and 
+#'   arbitrary point index order. However only \code{read.ngraph.swc} will
+#'   accept SWC files with cycles.
+#'   
+#'   These functions would normally be called from \code{read.neuron(s)} rather 
+#'   than used directly.
 #' @section SWC Format: According to 
 #'   \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
-#' @param ... Additional arguments passed to \code{as.neuron()} and then on to 
-#'   \code{neuron()}
+#' @param ... Additional arguments. \code{read.neuron.swc} passes theseto 
+#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
+#'   \code{read.neuron.swc} passes them to \code{\link{ngraph}}.
 #' @seealso \code{\link{is.swc}}
 read.neuron.swc<-function(f, ...){
+  d=read.swc(f)
+  # multiply by 2 to get diam which is what I work with internally
+  d$W=d$W*2
+  as.neuron(d, InputFileName=f, ...)
+}
+
+# internal function that just reads a table of SWC format data
+read.swc<-function(f){
   ColumnNames<-c("PointNo","Label","X","Y","Z","W","Parent")
   d=read.table(f, header = FALSE, sep = "", quote = "\"'", dec = ".",
                col.names=ColumnNames, check.names = TRUE, fill = FALSE,
                strip.white = TRUE, blank.lines.skip = TRUE, comment.char = "#",
                colClasses=c("integer",'integer','numeric','numeric','numeric','numeric','integer'))
+  d
+}
+
+#' @rdname read.neuron.swc
+#' @inheritParams ngraph
+#' @export
+#' @description \code{read.ngraph.swc} reads an SWC file on disk into the more 
+#'   generic (and forgiving) \code{\link{ngraph}} representation which provides
+#'   a bridge to the \code{\link[igraph]{igraph}} library.
+read.ngraph.swc<-function(f, weights=FALSE, directed=TRUE, ...){
+  d=read.swc(f)
   # multiply by 2 to get diam which is what I work with internally
   d$W=d$W*2
-  as.neuron(d, InputFileName=f, ...)
+  as.ngraph(d, weights=weights, directed=directed, ...)
 }
 
 #' Test if a file is an SWC format neuron
