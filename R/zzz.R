@@ -4,6 +4,8 @@
   # Register file formats: neuron tracings
   registerformat('swc', read=read.neuron.swc, write=write.neuron.swc, 
                  class='neuron')
+  # nb we cannot (yet) register formats with the same name but different classes
+  registerformat('swcng', ext='.swc', read=read.ngraph.swc, class='ngraph')
   registerformat('neuroml', ext=c('.xml','.nml'), read=read.neuron.neuroml, 
     class='neuron', magic=is.neuroml, magiclen=8L)
   registerformat('fijitraces', ext=c('.traces','.xml'), read=read.neuron.fiji, 

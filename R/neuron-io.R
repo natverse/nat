@@ -7,7 +7,10 @@
 #'   At the moment the following formats are supported using file readers 
 #'   already included with the nat package: \itemize{
 #'   
-#'   \item \bold{swc} See \code{\link{read.neuron.swc}}
+#'   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also 
+#'   return an \code{\link{ngraph}} object containing the neuron structure in a
+#'   (permissive) general graph format that also contains the 3D positions for
+#'   each vertex.
 #'   
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
 #'   
@@ -25,11 +28,13 @@
 #'   
 #'   }
 #' @export
-#' @param f Path to file. This can be a URL, in which case the file is
+#' @param f Path to file. This can be a URL, in which case the file is 
 #'   downloaded to a temporary location before reading.
 #' @param format The file format of the neuron. When \code{format=NULL}, the 
 #'   default, \code{read.neuron} will infer the file format from the extension 
 #'   or file header (aka magic) using the \code{fileformats} registry.
+#' @param class The class of the returned object - presently either 
+#'   \code{"neuron"} or \code{"ngraph"}
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{read.neurons}, \link{fileformats}}
 #' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and 
@@ -37,7 +42,6 @@
 #'   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
 #'   1283--98. 
 #'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
-#'     
 #' @examples
 #' \dontrun{
 #' # note that we override the default NeuronName field
@@ -49,7 +53,7 @@
 #' # show the currently registered file formats that we can read
 #' fileformats(class='neuron', read=TRUE)
 #' }
-read.neuron<-function(f, format=NULL, ...){
+read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
   if(grepl("^http[s]{0,1}://", f)) {
     url=f
     # download remote url to local file in tempdir
@@ -68,12 +72,15 @@ read.neuron<-function(f, format=NULL, ...){
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
   } else {
-    ffs=getformatreader(f, class = 'neuron')
+    class=match.arg(class, choices = c("neuron", "ngraph"))
+    ffs=getformatreader(f, class = class)
     if(is.null(ffs)) {
       # as a special test, check to see if this looks like an swc file
       # we don't do this by default since is.swc is a little slow
-      if(is.swc(f)) n=read.neuron.swc(f, ...)
-      else stop("Unable to identify file type of:", f)
+      if(is.swc(f)) {
+        if(class=='neuron') n=read.neuron.swc(f, ...)
+        else n=read.ngraph.swc(f, ...)
+      } else stop("Unable to identify file type of:", f)
     } else {
       n=match.fun(ffs$read)(f, ...)
     }
@@ -83,7 +90,7 @@ read.neuron<-function(f, format=NULL, ...){
   }
   # make sure that neuron actually inherits from neuron
   # we can rely on dotprops/neuronlist objects to have the correct class
-  if(is.dotprops(n) || is.neuronlist(n)) n else as.neuron(n)
+  if(is.dotprops(n) || inherits(n, 'ngraph') || is.neuronlist(n)) n else as.neuron(n)
 }
 
 #' Read one or more neurons from file to a neuronlist in memory

@@ -1,7 +1,7 @@
 context("neuron fileformats")
 
 test_that("we can query fileformats",{
-  expect_equal(fileformats(ext='swc',rval='names'),'swc')
+  expect_equal(fileformats(ext='swc',rval='names'), c('swc','swcng'))
   expect_equal(fileformats(ext='am', class='neuron', rval='names'),
                c('hxlineset','hxskel'))
   expect_is(fileformats(class='neuron',rval='info'),'matrix')
@@ -104,7 +104,7 @@ test_that("we can read neurons in swc format", {
 
 test_that("we can read swc data into an ngraph object", {
   swc='testdata/neuron/EBT7R.CNG.swc'
-  expect_is(ng<-read.ngraph.swc(swc),'ngraph')
+  expect_is(ng<-read.neuron(swc, class='ngraph'),'ngraph')
   expect_equal(as.neuron(ng), read.neuron(swc))
 })
 
