@@ -504,6 +504,11 @@ read.swc<-function(f){
                col.names=ColumnNames, check.names = TRUE, fill = FALSE,
                strip.white = TRUE, blank.lines.skip = TRUE, comment.char = "#",
                colClasses=c("integer",'integer','numeric','numeric','numeric','numeric','integer'))
+  badpids=d$Parent < -1
+  if(any(badpids)) {
+    warning("Invalid negative point index in file: ",f, ". Converting to -1")
+    d$Parent[badpids]=-1
+  }
   d
 }
 
