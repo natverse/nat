@@ -4,15 +4,18 @@
 \alias{read.neuron}
 \title{Read a single neuron from a file}
 \usage{
-read.neuron(f, format = NULL, ...)
+read.neuron(f, format = NULL, class = c("neuron", "ngraph"), ...)
 }
 \arguments{
-\item{f}{Path to file. This can be a URL, in which case the file is
+\item{f}{Path to file. This can be a URL, in which case the file is 
 downloaded to a temporary location before reading.}
 
 \item{format}{The file format of the neuron. When \code{format=NULL}, the 
 default, \code{read.neuron} will infer the file format from the extension 
 or file header (aka magic) using the \code{fileformats} registry.}
+
+\item{class}{The class of the returned object - presently either 
+\code{"neuron"} or \code{"ngraph"}}
 
 \item{...}{additional arguments passed to format-specific readers}
 }
@@ -27,7 +30,10 @@ This function will handle \code{neuron} and \code{dotprops} objects
   At the moment the following formats are supported using file readers 
   already included with the nat package: \itemize{
   
-  \item \bold{swc} See \code{\link{read.neuron.swc}}
+  \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also 
+  return an \code{\link{ngraph}} object containing the neuron structure in a
+  (permissive) general graph format that also contains the 3D positions for
+  each vertex.
   
   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
   

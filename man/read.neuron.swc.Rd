@@ -2,19 +2,41 @@
 % Please edit documentation in R/neuron-io.R
 \name{read.neuron.swc}
 \alias{read.neuron.swc}
+\alias{read.ngraph.swc}
 \title{Read a neuron in swc file format}
 \usage{
 read.neuron.swc(f, ...)
+
+read.ngraph.swc(f, weights = FALSE, directed = TRUE, ...)
 }
 \arguments{
 \item{f}{path to file}
 
-\item{...}{Additional arguments passed to \code{as.neuron()} and then on to 
-\code{neuron()}}
+\item{...}{Additional arguments. \code{read.neuron.swc} passes theseto 
+\code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
+\code{read.neuron.swc} passes them to \code{\link{ngraph}}.}
+
+\item{weights}{Logical value indicating whether edge weights defined by the 
+3D distance between points should be added to graph (default \code{FALSE}) 
+\emph{or} a numeric vector of weights.}
+
+\item{directed}{Whether the resultant graph should be directed (default TRUE)}
 }
 \description{
-This function should normally only be called from read.neuron and is not 
-designed for use by end users.
+\code{read.neuron.swc} reads an SWC file on disk into a fully 
+  parsed \code{\link{neuron}} representation.
+
+\code{read.ngraph.swc} reads an SWC file on disk into the more 
+  generic (and forgiving) \code{\link{ngraph}} representation which provides
+  a bridge to the \code{\link[igraph]{igraph}} library.
+}
+\details{
+These functions will accept SWC neurons with multiple trees and 
+  arbitrary point index order. However only \code{read.ngraph.swc} will
+  accept SWC files with cycles.
+  
+  These functions would normally be called from \code{read.neuron(s)} rather 
+  than used directly.
 }
 \section{SWC Format}{
  According to 
