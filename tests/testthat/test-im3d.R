@@ -226,12 +226,24 @@ test_that("we can make projections",{
   expect_equal(pd, sd)
 })
 
-context("im3d unmask, threshold")
+context("im3d unmask, mask, threshold")
 
 test_that("unmask works",{
   i=im3d(array(1:6,1:3),voxdims=c(2,3,4))
   # unmask a vector of im3d contents by original im3d returns original
   expect_equal(unmask(as.vector(i),i),i)
+})
+
+test_that("mask works",{
+  m=im3d(array(1:6,1:3),voxdims=c(2,3,4))
+  materials(m)<-data.frame(name=c('left','right'), id=2:3)
+  i=im3d(array(1:6,1:3), voxdims=c(2,3,4))
+  # unmask a vector of im3d contents by original im3d returns original
+  expect_is(mask(i, m, levels = 1), 'im3d')
+  expect_is(mask(i, m, levels = 1, rval='values'), 'integer')
+  expect_equal(sum(mask(i, m, levels = 1, invert = TRUE)), sum(2:6))
+  expect_equal(sum(mask(i, m, levels = c("left", "right"))), sum(1:2))
+  expect_equal(mask(i, m), i)
 })
 
 test_that("threshold works",{

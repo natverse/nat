@@ -893,6 +893,66 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
   rval
 }
 
+#' Mask an object, typically to produce a copy with some values zeroed out
+#' 
+#' @param x Object to be masked
+#' @param \dots Additional arguments passed to methods
+#' @export
+mask<-function(x, ...) UseMethod("mask")
+
+#' @method mask im3d
+#' @param mask An im3d object, an array or a vector with dimensions compatible 
+#'   with x.
+#' @param levels Optional numeric vector of pixel values or character vector 
+#'   defining named \code{\link{materials}}.
+#' @param rval Whether to return an im3d object based on \code{x} or just the 
+#'   values from \code{x} matching the mask.
+#' @param invert Whether to invert the voxel selection (default \code{FALSE})
+#' @return an oject with attributes matching \code{x} and elements with value 
+#'   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and 
+#'   \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as 
+#'   appropriate.
+#' @details Note that \code{mask.im3d} passes \dots arguments on to im3d
+#' @rdname mask
+#' @return A copy of x with
+#' @family im3d
+#' @export
+#' @examples
+#' x=im3d(array(rnorm(1000),dim=c(10,10,10)), BoundingBox=c(20,200,100,200,200,300))
+#' m=array(1:5,dim=c(10,10,10))
+#' image(x[,,1])
+#' image(mask(x, mask=m, levels=1)[,,1])
+#' image(mask(x, mask=m, levels=1:2)[,,1])
+mask.im3d<-function(x, mask, levels=NULL, rval=c("im3d", "values"), invert=FALSE, ...){
+  if(is.logical(mask)) {
+    m=mask
+  } else if(is.numeric(mask)){
+    if(is.null(levels)){
+      m=mask>0
+    } else {
+      if(is.character(levels)){
+        mats=materials(mask)
+        if(is.null(mats))
+          stop("Can only use character levels when mask has materials")
+        # FIXME in due course we may provide the actual levels as part of the 
+        # materials data.frame
+        # nb these ids will be 1 indexed but pixels will start from 0
+        levels=mats$id[match(levels, mats$name)]-1
+      }
+      m=mask%in%levels
+    }
+  }
+  rval=match.arg(rval)
+  if(rval=="im3d"){
+    # zero out any values outside the mask
+    x[if(invert) m else !m]=0
+    x
+  } else{
+    # just return the selected values
+    x[if(invert) !m else m]
+  }
+}
+
 #' Threshold an object, typically to produce a mask
 #' @param x Object to be thresholded
 #' @param \dots Additional arguments passed to methods
