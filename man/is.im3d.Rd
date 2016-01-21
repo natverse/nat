@@ -20,8 +20,8 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{boundingbox}}, \code{\link{im3d-coords}},
   \code{\link{im3d-io}}, \code{\link{im3d}},
   \code{\link{imexpand.grid}}, \code{\link{imslice}},
-  \code{\link{origin}}, \code{\link{projection}},
-  \code{\link{threshold}}, \code{\link{unmask}},
-  \code{\link{voxdims}}
+  \code{\link{mask}}, \code{\link{origin}},
+  \code{\link{projection}}, \code{\link{threshold}},
+  \code{\link{unmask}}, \code{\link{voxdims}}
 }
 
