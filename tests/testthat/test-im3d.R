@@ -244,6 +244,7 @@ test_that("mask works",{
   expect_equal(sum(mask(i, m, levels = 1, invert = TRUE)), sum(2:6))
   expect_equal(sum(mask(i, m, levels = c("left", "right"))), sum(1:2))
   expect_equal(mask(i, m), i)
+  expect_warning(sum(mask(i, m, levels = c("rhubarb"))), "Dropping levels")
 })
 
 test_that("threshold works",{

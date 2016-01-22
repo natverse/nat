@@ -937,7 +937,14 @@ mask.im3d<-function(x, mask, levels=NULL, rval=c("im3d", "values"), invert=FALSE
         # FIXME in due course we may provide the actual levels as part of the 
         # materials data.frame
         # nb these ids will be 1 indexed but pixels will start from 0
-        levels=mats$id[match(levels, mats$name)]-1
+        clevels=levels
+        levels=mats$id[match(clevels, mats$name)]-1
+        if(any(is.na(levels))) {
+          bad_levels=clevels[is.na(levels)]
+          warning("Dropping levels: ", paste(bad_levels, collapse=" "), 
+                  " not present in materials(", deparse(substitute(mask)), ")!")
+          levels=na.omit(levels)
+        }
       }
       m=mask%in%levels
     }
