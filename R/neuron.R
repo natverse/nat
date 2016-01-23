@@ -558,7 +558,8 @@ resample_segment<-function(d, stepsize, ...) {
 #'   one of \itemize{
 #'   
 #'   \item logical or numeric indices, in which case these are simply used to 
-#'   index the vertices in the order of the
+#'   index the vertices in the order of the data.frame \code{x$d}. Note that any
+#'   NA values are ignored.
 #'   
 #'   \item a function (which is called with the 3D points array and returns T/F 
 #'   vector)
@@ -572,7 +573,7 @@ resample_segment<-function(d, stepsize, ...) {
 #' @param x A neuron object
 #' @param subset A subset of points defined by indices, an expression, or a 
 #'   function (see Details)
-#' @param invert Whether to invert the subset criteria - a convenience when
+#' @param invert Whether to invert the subset criteria - a convenience when 
 #'   selecting by function or indices.
 #' @param ... Additional parameters (passsed on to \code{\link{prune_vertices}})
 #' @return subsetted neuron
@@ -644,8 +645,9 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
   if(is.logical(r)) {
     r <- r & !is.na(r)
     r <- which(r)
-  } else if(!is.numeric(r)) 
-    stop("Subset must evaluate to a logical or numeric index")
+  } else if(is.numeric(r)) {
+    r=r[!is.na(r)]
+  } else stop("Subset must evaluate to a logical or numeric index")
   # nb !invert since prune_vertices drops vertices whereas subset.neuron keeps vertices
   prune_vertices(x, r, invert=!invert, ...)
 }

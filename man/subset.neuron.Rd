@@ -12,7 +12,7 @@
 \item{subset}{A subset of points defined by indices, an expression, or a 
 function (see Details)}
 
-\item{invert}{Whether to invert the subset criteria - a convenience when
+\item{invert}{Whether to invert the subset criteria - a convenience when 
 selecting by function or indices.}
 
 \item{...}{Additional parameters (passsed on to \code{\link{prune_vertices}})}
@@ -28,7 +28,8 @@ Subset neuron by keeping only vertices that match given conditions
   one of \itemize{
   
   \item logical or numeric indices, in which case these are simply used to 
-  index the vertices in the order of the
+  index the vertices in the order of the data.frame \code{x$d}. Note that any
+  NA values are ignored.
   
   \item a function (which is called with the 3D points array and returns T/F 
   vector)

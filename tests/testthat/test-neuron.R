@@ -229,3 +229,9 @@ test_that("we can subset a neuron", {
   expect_equal(subset(n,1:50)$d$PointNo, 1:50)
 })
 
+test_that("we can subset a neuron with a vertex sequence", {
+  n = Cell07PNs[[1]]
+  n_graph_dfs = igraph::dfs(as.ngraph(n), root = 48, neimode = "out", unreachable = FALSE)
+  expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = F), 'neuron')
+  expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = T), 'neuron')
+})
