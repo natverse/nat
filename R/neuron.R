@@ -644,8 +644,9 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
   if(is.logical(r)) {
     r <- r & !is.na(r)
     r <- which(r)
-  } else if(!is.numeric(r)) 
-    stop("Subset must evaluate to a logical or numeric index")
+  } else if(is.numeric(r)) {
+    r=r[!is.na(r)]
+  } else stop("Subset must evaluate to a logical or numeric index")
   # nb !invert since prune_vertices drops vertices whereas subset.neuron keeps vertices
   prune_vertices(x, r, invert=!invert, ...)
 }
