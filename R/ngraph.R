@@ -493,6 +493,9 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
     badverts=!is.finite(xyzmatrix(x)[,'X'])
     verticestoprune=which(if(invert) !badverts else badverts)
   } else {
+    # because igraph.vs sequences are atttached to a specific graph
+    if(inherits(verticestoprune, "igraph.vs")) 
+      verticestoprune=as.integer(verticestoprune)
     if(invert) {
       nvertices=nrow(xyzmatrix(x))
       verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
