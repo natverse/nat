@@ -322,15 +322,19 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
   }
   rval=match.arg(rval)
   if(rval=='names'){
-    currentformats
-  } else if(rval=='info'){
-    t(sapply(currentformats,function(x) {
-      fx=get(x, envir=.fileformats)
-      c(fx[c('ext','class')],read=!is.null(fx$read),write=!is.null(fx$write),
-        magic=!is.null(fx$magic))
-    }))
+    return(currentformats)
+  }
+  fi=mget(currentformats, envir=.fileformats)
+  if(rval=='info'){
+    l=lapply(currentformats, function(f) {
+      fx=fi[[f]]
+      data.frame(format=f, class=fx$class, ext=fx$ext, 
+                 read=!is.null(fx$read), write=!is.null(fx$write),
+                 magic=!is.null(fx$magic))
+    })
+    do.call(rbind, l)
   } else if(rval=='all') {
-    mget(currentformats, envir=.fileformats)
+    fi
   }
 }
 

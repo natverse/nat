@@ -4,7 +4,7 @@ test_that("we can query fileformats",{
   expect_equal(fileformats(ext='swc',rval='names'), c('swc','swcng'))
   expect_equal(fileformats(ext='am', class='neuron', rval='names'),
                c('hxlineset','hxskel'))
-  expect_is(fileformats(class='neuron',rval='info'),'matrix')
+  expect_is(fileformats(class='neuron',rval='info'),'data.frame')
   
   expect_is(fw<-getformatwriter(file='test.rds', class='neuron'),'list')
   expect_equal(fw$ext,'.rds')
