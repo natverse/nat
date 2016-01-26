@@ -227,6 +227,9 @@ test_that("we can subset a neuron", {
   expect_equal(subset(n, W>1), subset(n, W<=1, invert=TRUE)) 
   # first 50 nodes
   expect_equal(subset(n,1:50)$d$PointNo, 1:50)
+  # function
+  f <- function(xyz) xyz[,3]>100
+  expect_equal(subset(n, f), subset(n, Z>100))
 })
 
 test_that("we can subset a neuron with a vertex sequence", {
