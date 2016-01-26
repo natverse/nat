@@ -464,13 +464,11 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #'   representation of the neuron to remove points. The input \code{x} can 
 #'   therefore be in any form compatible with \code{\link{as.ngraph}}. There is 
 #'   an additional requirement that the input must be compatible with 
-#'   \code{\link{xyzmatrix}} if \code{invert=TRUE} or \code{verticestoprune=NA}.
+#'   \code{\link{xyzmatrix}} if \code{invert=TRUE}.
 #'   
 #' @param x A \code{\link{neuron}} to prune. This can be any object that can be 
 #'   converted by \code{\link{as.ngraph}} --- see details.
 #' @param verticestoprune An integer vector describing which vertices to remove.
-#'   The special signalling value of \code{NA} drops all vertices with invalid X
-#'   locations.
 #' @param invert Whether to keep vertices rather than dropping them (default 
 #'   FALSE).
 #' @param ... Additional arguments passed to \code{\link{as.neuron.ngraph}}
@@ -489,17 +487,13 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #' n2=prune_vertices(n, match(26:30, n$d$PointNo))
 prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   g=as.ngraph(x)
-  if(length(verticestoprune)==1 && is.na(verticestoprune)) {
-    badverts=!is.finite(xyzmatrix(x)[,'X'])
-    verticestoprune=which(if(invert) !badverts else badverts)
-  } else {
-    # because igraph.vs sequences are atttached to a specific graph
-    if(inherits(verticestoprune, "igraph.vs")) 
-      verticestoprune=as.integer(verticestoprune)
-    if(invert) {
-      nvertices=nrow(xyzmatrix(x))
-      verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
-    }
+  
+  # because igraph.vs sequences are atttached to a specific graph
+  if(inherits(verticestoprune, "igraph.vs")) 
+    verticestoprune=as.integer(verticestoprune)
+  if(invert) {
+    nvertices=nrow(xyzmatrix(x))
+    verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
   }
   dg=igraph::delete.vertices(g, verticestoprune)
   # delete.vertices will return an igraph

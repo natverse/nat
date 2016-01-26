@@ -13,9 +13,7 @@ prune_edges(x, edges, invert = FALSE, ...)
 \item{x}{A \code{\link{neuron}} to prune. This can be any object that can be 
 converted by \code{\link{as.ngraph}} --- see details.}
 
-\item{verticestoprune}{An integer vector describing which vertices to remove.
-The special signalling value of \code{NA} drops all vertices with invalid X
-locations.}
+\item{verticestoprune}{An integer vector describing which vertices to remove.}
 
 \item{invert}{Whether to keep vertices rather than dropping them (default 
 FALSE).}
@@ -50,7 +48,7 @@ These are relatively low-level functions and you will probably want
   representation of the neuron to remove points. The input \code{x} can 
   therefore be in any form compatible with \code{\link{as.ngraph}}. There is 
   an additional requirement that the input must be compatible with 
-  \code{\link{xyzmatrix}} if \code{invert=TRUE} or \code{verticestoprune=NA}.
+  \code{\link{xyzmatrix}} if \code{invert=TRUE}.
 }
 \examples{
 n=prune_vertices(Cell07PNs[[1]], 1:25)
