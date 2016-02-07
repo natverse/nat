@@ -99,10 +99,11 @@ plot3d(n10.crop, col='red')
 library(nat.flybrains)
 # extract left lateral horn surface and convert to mesh3d 
 lh=as.mesh3d(subset(IS2NP.surf, "LH_L"))
-# subset neuron wit this surface
+# subset neuron with this surface
 x=subset(Cell07PNs[[1]], function(x) pointsinside(x, lh))
 shade3d(lh, alpha=0.3)
 plot3d(x, lwd=3, col='blue')
+# Now find the parts of the neuron outside the surface
 y=subset(Cell07PNs[[1]], function(x) Negate(pointsinside)(x, lh))
 plot3d(y, col='red', lwd=2)
 }
