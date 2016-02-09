@@ -32,5 +32,9 @@ Note that \code{hxsurf} surface objects will be converted to
   \code{mesh3d} before being passed to \code{Rvcg::vcgClost}, so if you are 
   testing repeatedly against the same surface, it may make sense to 
   pre-convert.
+  
+  Note also that if the point is some distance (> 2 twice the diagonal
+  boundingbox of the mesh) then the distance will be returned as 1e12. This 
+  behaviour is defined by the \code{Rvcg::vcgClost} function.
 }
 

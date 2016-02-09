@@ -366,6 +366,10 @@ NULL
 #'   \code{mesh3d} before being passed to \code{Rvcg::vcgClost}, so if you are 
 #'   testing repeatedly against the same surface, it may make sense to 
 #'   pre-convert.
+#'   
+#'   Note also that if the point is some distance (> 2 twice the diagonal
+#'   boundingbox of the mesh) then the distance will be returned as 1e12. This 
+#'   behaviour is defined by the \code{Rvcg::vcgClost} function.
 #' @param x an object with 3D points.
 #' @param surf an \code{hxsurf} or \code{mesh3d} object defining the reference 
 #'   surface.
@@ -387,5 +391,6 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3
     surf=as.mesh3d(surf, ...)
   }
   rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
-  switch(rval, logical=rmesh$quality>0, distance=rmesh$quality, mesh3d=rmesh)
+  switch(rval, logical=rmesh$quality>0 & rmesh$quality<1e12, 
+         distance=rmesh$quality, mesh3d=rmesh)
 }
