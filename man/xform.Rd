@@ -71,7 +71,7 @@ be required for expert use; in almost all circumstances, you should use only
 \details{
 Methods are provided for some specialised S3 classes. Further 
   methods can of course be constructed for user-defined S3 classes. However 
-  this will probalbly not be necessary if the \code{xyzmatrix} and 
+  this will probably not be necessary if the \code{xyzmatrix} and 
   \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3 
   object inherits from \code{list}.
 
