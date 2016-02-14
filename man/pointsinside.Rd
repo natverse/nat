@@ -33,8 +33,9 @@ Note that \code{hxsurf} surface objects will be converted to
   testing repeatedly against the same surface, it may make sense to 
   pre-convert.
   
-  Note also that if the point is some distance (> 2 twice the diagonal
-  boundingbox of the mesh) then the distance will be returned as 1e12. This 
-  behaviour is defined by the \code{Rvcg::vcgClost} function.
+  Note also that if the point is some distance (> 2 twice the diagonal 
+  boundingbox of the mesh) then the distance will be returned as NA (or 1e12 
+  for older versions of the \code{Rvcg} package). This behaviour is defined
+  by the \code{Rvcg::vcgClost} function.
 }
 
