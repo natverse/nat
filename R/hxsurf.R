@@ -391,6 +391,6 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3
     surf=as.mesh3d(surf, ...)
   }
   rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
-  switch(rval, logical=rmesh$quality>0 & rmesh$quality<1e12, 
+  switch(rval, logical=is.finite(rmesh$quality) & rmesh$quality>0 & rmesh$quality<1e12, 
          distance=rmesh$quality, mesh3d=rmesh)
 }
