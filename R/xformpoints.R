@@ -124,23 +124,11 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
 #' @export
 #' @rdname xformpoints
 xformpoints.reglist<-function(reg, points, ...){
-  if(length(reg)==1) return(xformpoints(reg[[1]], points, ...))
-  regclasses <- sapply(reg, function(x) class(x)[1], USE.NAMES = FALSE)
-  # FIXME how do we handle inversion
-  
-  if(isTRUE(all(regclasses=="matrix"))){
-    # compose transformations into single matrix
-    # note that this needs to be done in reverse order to match the order in
-    # which matrix multiplication would otherwise happen
-    reg=Reduce("%*%", rev(reg))
-    xformpoints(reg, points, ...)
-  } else {
-    #
-    for(r in reg){
-      points=xformpoints(r, points, ...)
-    }
-    points
+  reg=simplify_reglist(reg)
+  for(r in reg){
+    points=xformpoints(r, points, ...)
   }
+  points
 }
 
 #' @method xformpoints default
