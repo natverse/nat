@@ -31,11 +31,32 @@ cmtkreg<-function(x, returnDir=TRUE){
   as.cmtkreg(ifelse(returnDir,regdir,reg))
 }
 
-#' @description \code{as.cmtkreg} adds class \code{cmtkreg} to objects that do not
-#'   already inherit from it.
+#' @description \code{as.cmtkreg} converts objects to class \code{cmtkreg},
+#'   minimally just by adding an approriate class attribute.
+#' @param ... Additional arguments passed to methods. Currently ignored.
 #' @rdname cmtkreg
 #' @export
-as.cmtkreg<-function(x){
+as.cmtkreg<-function(x, ...) UseMethod("as.cmtkreg")
+
+
+#' @rdname cmtkreg
+#' @export
+as.cmtkreg.matrix <- function(x, ...) {
+  cmtkreglist(x, ...)
+}
+
+#' @rdname cmtkreg
+#' @export
+as.cmtkreg.reglist <- function(x, ...) {
+  outseq=cmtkreg(x)
+  swapped=as.logical(lapply(x, function(x) isTRUE(attr(x,'swap'))))
+  if(any(swapped)) attr(outseq, 'swap')=swapped
+  outseq
+}
+
+#' @rdname cmtkreg
+#' @export
+as.cmtkreg.default<-function(x, ...){
   if(!inherits(x,'cmtkreg'))
     class(x)=c("cmtkreg",class(x))
   x

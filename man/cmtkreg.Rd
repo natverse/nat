@@ -2,13 +2,19 @@
 % Please edit documentation in R/cmtkreg.R
 \name{cmtkreg}
 \alias{as.cmtkreg}
+\alias{as.cmtkreg.default}
+\alias{as.cmtkreg.reglist}
 \alias{cmtkreg}
 \alias{is.cmtkreg}
 \title{Create and test cmtkreg objects that specify path to a CMTK registration}
 \usage{
 cmtkreg(x, returnDir = TRUE)
 
-as.cmtkreg(x)
+as.cmtkreg(x, ...)
+
+\method{as.cmtkreg}{reglist}(x, ...)
+
+\method{as.cmtkreg}{default}(x, ...)
 
 is.cmtkreg(x, filecheck = c("none", "exists", "magic"))
 }
@@ -18,6 +24,8 @@ cmtkreg object)}
 
 \item{returnDir}{Whether to return the registration directory (default) or 
 the actual file containing the registration}
+
+\item{...}{Additional arguments passed to methods. Currently ignored.}
 
 \item{filecheck}{Whether to check object class only (default: 'none') or find
 amd check if registration file \strong{exists} or check \strong{magic} 
@@ -29,8 +37,8 @@ value in first line of file.}
   registrations. This is simply a character vector that also has class
   cmtkreg.
 
-\code{as.cmtkreg} adds class \code{cmtkreg} to objects that do not
-  already inherit from it.
+\code{as.cmtkreg} converts objects to class \code{cmtkreg},
+  minimally just by adding an approriate class attribute.
 
 \code{is.cmtkreg} checks if an object is a cmtk registration
   either by checking class (default), or inspecting file.
