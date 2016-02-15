@@ -48,6 +48,8 @@ as.cmtkreg.matrix <- function(x, ...) {
 #' @rdname cmtkreg
 #' @export
 as.cmtkreg.reglist <- function(x, ...) {
+  if(!all(sapply(x, is.character))) 
+    stop("I cannot convert this reglist to a CMTK compatible format")
   outseq=cmtkreg(x)
   swapped=as.logical(lapply(x, function(x) isTRUE(attr(x,'swap'))))
   if(any(swapped)) attr(outseq, 'swap')=swapped
