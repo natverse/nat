@@ -10,7 +10,7 @@
 #'   the actual file containing the registration
 #' @export
 cmtkreg<-function(x, returnDir=TRUE){
-  if(length(x)>1) return(sapply(x,cmtkreg,returnDir=returnDir))
+  if(length(x)>1) return(as.cmtkreg(sapply(x,cmtkreg,returnDir=returnDir)))
   
   x=path.expand(x)
   if(!file.exists(x)) {
