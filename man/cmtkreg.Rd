@@ -3,6 +3,7 @@
 \name{cmtkreg}
 \alias{as.cmtkreg}
 \alias{as.cmtkreg.default}
+\alias{as.cmtkreg.matrix}
 \alias{as.cmtkreg.reglist}
 \alias{cmtkreg}
 \alias{is.cmtkreg}
@@ -11,6 +12,8 @@
 cmtkreg(x, returnDir = TRUE)
 
 as.cmtkreg(x, ...)
+
+\method{as.cmtkreg}{matrix}(x, ...)
 
 \method{as.cmtkreg}{reglist}(x, ...)
 
