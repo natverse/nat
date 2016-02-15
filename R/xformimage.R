@@ -106,6 +106,13 @@ xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'),
 
 #' @export
 #' @rdname xformimage
+xformimage.reglist<-function(reg, image, ...){
+  reg=simplify_reglist(reg, as.cmtk = TRUE)
+  xformimage(reg, image=image, ...)
+}
+
+#' @export
+#' @rdname xformimage
 xformimage.default<-function(reg, image, ...){
   if(is.matrix(reg)) {
     # convert to a CMTK registration params (in memory)

@@ -5,6 +5,7 @@
 \alias{xformimage.character}
 \alias{xformimage.cmtkreg}
 \alias{xformimage.default}
+\alias{xformimage.reglist}
 \title{Transform image files using a registration or affine matrix}
 \usage{
 xformimage(reg, image, ...)
@@ -13,6 +14,8 @@ xformimage(reg, image, ...)
 
 \method{xformimage}{cmtkreg}(reg, image, transformtype = c("warp", "affine"),
   direction = NULL, ...)
+
+\method{xformimage}{reglist}(reg, image, ...)
 
 \method{xformimage}{default}(reg, image, ...)
 }
