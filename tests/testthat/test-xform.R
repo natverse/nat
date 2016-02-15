@@ -106,7 +106,7 @@ if(!is.null(cmtk.bindir())){
     bim=boundingbox(read.im3d(img, ReadData = F))
     tf=tempfile(fileext = '.nrrd')
     on.exit(unlink(tf))
-    mirror(img, output=tf, target=img)
+    mirror(img, warpfile=reg, output=tf, target=img)
     expect_true(file.exists(tf))
     expect_equal(boundingbox(tf), bim)
   })
