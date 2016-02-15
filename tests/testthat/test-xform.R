@@ -94,7 +94,7 @@ if(!is.null(cmtk.bindir())){
     # nb this registration doesn't actually make any sense as mirroring
     # registration but it does produce some valid data
     m=matrix(c(0,0,0,300,200,50), ncol=3, byrow = T)
-    expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reg))
+    expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reglist(diag(4), reg)))
     baseline=matrix(c(NA,NA,NA,300.953189,183.401797,40.7112503), 
                     ncol=3, byrow = T)
     expect_equal(tm, baseline)
@@ -106,7 +106,7 @@ if(!is.null(cmtk.bindir())){
     bim=boundingbox(read.im3d(img, ReadData = F))
     tf=tempfile(fileext = '.nrrd')
     on.exit(unlink(tf))
-    mirror(img, warpfile=reg, output=tf, target=img)
+    mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img)
     expect_true(file.exists(tf))
     expect_equal(boundingbox(tf), bim)
   })
