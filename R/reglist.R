@@ -33,6 +33,27 @@ reglist <- function(..., swap=NULL){
   l
 }
 
+
+#' @description \code{c.reglist} combines multiple \code{reglist}s into a single
+#'   \code{reglist}.
+#'   
+#' @param ... reglists to combine
+#' @param recursive Presently ignored
+#' @export
+#' @seealso \code{\link[base]{c}}
+#' @rdname reglist
+#' @examples
+#' I=diag(4)
+#' S=I
+#' diag(S)=c(1, 2, 3, 1)
+#' rl=reglist(S, I)
+#' rl2=c(rl, 'path/to/my/reg.list')
+#' rl3=c(reglist('path/to/my/reg.list'), rl)
+c.reglist<-function(..., recursive = FALSE){
+  structure(NextMethod(), class='reglist')
+}
+
+
 # Helper function indicating if a registration/reglist has the swap attribute
 swapped<-function(x){
   if(inherits(x, 'reglist')) return(sapply(x, swapped))

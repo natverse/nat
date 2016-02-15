@@ -15,3 +15,16 @@ test_that('We can simplify reglists',{
   rl[[4]]=function(x, ...) x
   expect_error(simplify_reglist(rl, as.cmtk = TRUE), "cannot convert.*CMTK")
 })
+
+test_that("we cam combine reglists",{
+  I=diag(4)
+  S=I
+  diag(S)=c(1, 2, 3, 1)
+  rl=reglist(S, I)
+  expect_equal(c(reglist(S), reglist(I)), rl)
+  p='path/to/my/reg.list'
+  rl2=c(rl, p)
+  rl3=
+  expect_equal(c(rl, p), reglist(S, I, p))
+  expect_equal(c(reglist(p), rl), reglist(p, S, I))
+})
