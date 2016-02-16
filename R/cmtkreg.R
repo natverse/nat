@@ -10,7 +10,7 @@
 #'   the actual file containing the registration
 #' @export
 cmtkreg<-function(x, returnDir=TRUE){
-  if(length(x)>1) return(sapply(x,cmtkreg,returnDir=returnDir))
+  if(length(x)>1) return(as.cmtkreg(sapply(x,cmtkreg,returnDir=returnDir)))
   
   x=path.expand(x)
   if(!file.exists(x)) {
@@ -31,11 +31,34 @@ cmtkreg<-function(x, returnDir=TRUE){
   as.cmtkreg(ifelse(returnDir,regdir,reg))
 }
 
-#' @description \code{as.cmtkreg} adds class \code{cmtkreg} to objects that do not
-#'   already inherit from it.
+#' @description \code{as.cmtkreg} converts objects to class \code{cmtkreg},
+#'   minimally just by adding an approriate class attribute.
+#' @param ... Additional arguments passed to methods. Currently ignored.
 #' @rdname cmtkreg
 #' @export
-as.cmtkreg<-function(x){
+as.cmtkreg<-function(x, ...) UseMethod("as.cmtkreg")
+
+
+#' @rdname cmtkreg
+#' @export
+as.cmtkreg.matrix <- function(x, ...) {
+  cmtkreglist(x, ...)
+}
+
+#' @rdname cmtkreg
+#' @export
+as.cmtkreg.reglist <- function(x, ...) {
+  if(!all(sapply(x, is.character))) 
+    stop("I cannot convert this reglist to a CMTK compatible format")
+  outseq=cmtkreg(x)
+  swapped=as.logical(lapply(x, function(x) isTRUE(attr(x,'swap'))))
+  if(any(swapped)) attr(outseq, 'swap')=swapped
+  outseq
+}
+
+#' @rdname cmtkreg
+#' @export
+as.cmtkreg.default<-function(x, ...){
   if(!inherits(x,'cmtkreg'))
     class(x)=c("cmtkreg",class(x))
   x

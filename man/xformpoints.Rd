@@ -5,6 +5,7 @@
 \alias{xformpoints.character}
 \alias{xformpoints.cmtkreg}
 \alias{xformpoints.default}
+\alias{xformpoints.reglist}
 \title{Transform 3D points using a registration, affine matrix or function}
 \usage{
 xformpoints(reg, points, ...)
@@ -13,6 +14,8 @@ xformpoints(reg, points, ...)
 
 \method{xformpoints}{cmtkreg}(reg, points, transformtype = c("warp",
   "affine"), direction = NULL, FallBackToAffine = FALSE, ...)
+
+\method{xformpoints}{reglist}(reg, points, ...)
 
 \method{xformpoints}{default}(reg, points, ...)
 }

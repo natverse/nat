@@ -67,6 +67,7 @@ Collate:
     'nrrd-io.R'
     'pop3d.R'
     'potential_synapses.R'
+    'reglist.R'
     'seglist.R'
     'summary.R'
     'vaa3draw-io.R'

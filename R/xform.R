@@ -393,9 +393,10 @@ mirror.character<-function(x, output, mirrorAxisSize=NULL, target=x, ...){
 #'   \code{\link{boundingbox}} (see details).
 #' @param mirrorAxis Axis to mirror (default \code{"X"}). Can also be an integer
 #'   in range \code{1:3}.
-#' @param warpfile Path to (optional) CMTK registration that specifies a 
-#'   (usually non-rigid) transformation to be applied \emph{after} the simple 
-#'   mirroring.
+#' @param warpfile Optional registration or \code{\link{reglist}} to be applied
+#'   \emph{after} the simple mirroring.. It is called warpfile for historical
+#'   reasons, since it is normally the path to a CMTK registration that
+#'   specifies a non-rigid transformation to correct asymmetries in an image.
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
 #' @method mirror default
@@ -428,14 +429,7 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
     xform(x, reg=mirrormat, ...)
   } else {
     # Combine registrations: 
-    # 1) to avoid loss of image quality
-    # 2) to apply xform just once since this looks after e.g. recalculating 
-    #    dotprops vectors
-    # FIXME this does assume that warpfile is a CMTK registration.
-    mirror_regfile = as.cmtkreg(tempfile(fileext = ".list"))
-    on.exit(unlink(mirror_regfile, recursive = TRUE))
-    write.cmtkreg(affmat2cmtkparams(mirrormat), mirror_regfile)
-    xform(x, reg=c(mirror_regfile,warpfile), transformtype=transform, ...)
+    xform(x, reg=c(reglist(mirrormat), warpfile), transformtype=transform, ...)
   }
 }
 

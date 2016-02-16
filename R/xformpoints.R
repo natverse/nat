@@ -121,6 +121,17 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   }
 }
 
+#' @export
+#' @rdname xformpoints
+xformpoints.reglist<-function(reg, points, ...){
+  reg=simplify_reglist(reg)
+  on.exit(unlinktempfiles_reglist(reg))
+  for(r in reg){
+    points=xformpoints(r, points, ...)
+  }
+  points
+}
+
 #' @method xformpoints default
 #' @export
 #' @rdname xformpoints

@@ -36,9 +36,10 @@ input image - hard to see when this would not be wanted).}
 \item{mirrorAxis}{Axis to mirror (default \code{"X"}). Can also be an integer
 in range \code{1:3}.}
 
-\item{warpfile}{Path to (optional) CMTK registration that specifies a 
-(usually non-rigid) transformation to be applied \emph{after} the simple 
-mirroring.}
+\item{warpfile}{Optional registration or \code{\link{reglist}} to be applied
+\emph{after} the simple mirroring.. It is called warpfile for historical
+reasons, since it is normally the path to a CMTK registration that
+specifies a non-rigid transformation to correct asymmetries in an image.}
 
 \item{transform}{whether to use warp (default) or affine component of 
 registration, or simply flip about midplane of axis.}
