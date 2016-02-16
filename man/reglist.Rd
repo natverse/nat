@@ -10,15 +10,13 @@ reglist(..., swap = NULL)
 \method{c}{reglist}(..., recursive = FALSE)
 }
 \arguments{
-\item{...}{One or more transformations}
+\item{...}{One or more transformations/reglists to combine}
 
 \item{swap}{A vector of the same length as \code{...} indicating whether the 
 direction of each transformation should be swapped (i.e. mapping reference 
 -> sample).}
 
 \item{recursive}{Presently ignored}
-
-\item{...}{reglists to combine}
 }
 \description{
 A \code{reglist} is read as a set of transformations to be 

@@ -16,7 +16,7 @@
 #'   think of as as the natural direction of the transformation (see 
 #'   \code{\link{xformpoints.cmtkreg}} for discussion).
 #'   
-#' @param ... One or more transformations
+#' @param ... One or more transformations/reglists to combine
 #' @param swap A vector of the same length as \code{...} indicating whether the 
 #'   direction of each transformation should be swapped (i.e. mapping reference 
 #'   -> sample).
