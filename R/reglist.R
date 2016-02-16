@@ -37,7 +37,6 @@ reglist <- function(..., swap=NULL){
 #' @description \code{c.reglist} combines multiple \code{reglist}s into a single
 #'   \code{reglist}.
 #'   
-#' @param ... reglists to combine
 #' @param recursive Presently ignored
 #' @export
 #' @seealso \code{\link[base]{c}}
@@ -66,7 +65,27 @@ unlinktempfiles_reglist<-function(reg){
     unlink(tfs, recursive = TRUE)
 }
 
-# helper function to simplify a registration list 
+#' Simplify a registration list
+#' 
+#' @details This function \itemize{
+#'   
+#'   \item inverts any affine matrices with attribute \code{"swap"}
+#'   
+#'   \item collapses multiple affine matrices into a single affine
+#'   
+#'   \item optionally converts all registrations to CMTK on disk registrations 
+#'   when possible.
+#'   
+#'   }
+#'   
+#'   Note that 
+#'   
+#' @param reg A registration list (\code{\link{reglist}}) containing one or more
+#'   transformations.
+#' @param as.cmtk Whether to convert to a vector of CMTK format registrations
+#'   (see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} converts 
+#' @export
+#' @seealso \code{\link{reglist}}, \code{\link{xform}}, \code{\link{cmtkreg}}
 simplify_reglist<-function(reg, as.cmtk=FALSE) {
   regclasses <- sapply(reg, function(x) class(x)[1], USE.NAMES = FALSE)
   
@@ -84,7 +103,12 @@ simplify_reglist<-function(reg, as.cmtk=FALSE) {
     reg=Reduce("%*%", rev(reg))
     return(ifelse(as.cmtk, as.cmtkreg(reg), reglist(reg)))
   }
-  if(as.cmtk){
+  if(is.null(as.cmtk) && any(regclasses%in% c("cmtkreg", "character")) && 
+     all(regclasses%in% c("cmtkreg", "character", "matrix"))) {
+    # we only have cmtk and homogeneous affine transforms so let's simplify
+    # to turn this into a single CMTK call
+  }
+  if(isTRUE(as.cmtk)) {
     # convert any affine matrices to cmtkreg
     tfs=NULL
     if(nm<-sum(regclasses=="matrix")) {
