@@ -108,6 +108,8 @@ xformimage.cmtkreg<-function(reg, image, transformtype=c('warp','affine'),
 #' @rdname xformimage
 xformimage.reglist<-function(reg, image, ...){
   reg=simplify_reglist(reg, as.cmtk = TRUE)
+  # delete any registrations that we had to write to temp files
+  on.exit(unlinktempfiles_reglist(reg))
   xformimage(reg, image=image, ...)
 }
 
