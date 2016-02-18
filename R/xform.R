@@ -100,6 +100,10 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
 #' @rdname xform
 xform.shape3d<-xform.list
 
+#' @export
+#' @rdname xform
+xform.neuron<-xform.list
+
 #' @method xform dotprops
 #' @export
 #' @rdname xform

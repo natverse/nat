@@ -6,6 +6,7 @@
 \alias{xform.default}
 \alias{xform.dotprops}
 \alias{xform.list}
+\alias{xform.neuron}
 \alias{xform.neuronlist}
 \alias{xform.shape3d}
 \title{Transform the 3D location of objects such as neurons}
@@ -22,6 +23,9 @@ xform(x, reg, ...)
 
 \method{xform}{shape3d}(x, reg, FallBackToAffine = TRUE,
   na.action = "error", ...)
+
+\method{xform}{neuron}(x, reg, FallBackToAffine = TRUE, na.action = "error",
+  ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
