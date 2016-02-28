@@ -21,7 +21,7 @@
 #'   direction of each transformation should be swapped (i.e. mapping reference 
 #'   -> sample).
 #' @details The swap argument is provided as a convenience, but an attribute
-#'   \code{'swap'} can also be set directly on each reigstration.
+#'   \code{'swap'} can also be set directly on each registration.
 #' @export
 #' @seealso \code{\link{xform}}
 reglist <- function(..., swap=NULL){
@@ -78,15 +78,21 @@ unlinktempfiles_reglist<-function(reg){
 #'   
 #'   }
 #'   
-#'   Note that 
+#'   Note that if any of the registrations are in CMTK format, the default 
+#'   behaviour is to try to convert all of the other registrations into CMTK 
+#'   format to enable them to be passed to CMTK in a single command. If 
+#'   \code{as.cmtk=TRUE} then there will be an error if this is not possible.
 #'   
 #' @param reg A registration list (\code{\link{reglist}}) containing one or more
 #'   transformations.
-#' @param as.cmtk Whether to convert to a vector of CMTK format registrations
-#'   (see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} converts 
+#' @param as.cmtk Whether to convert to a vector of CMTK format registrations 
+#'   (see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} 
+#'   converts all registrations to CMTK if any one registration is in CMTK 
+#'   format (thus enabling them to be applied by CMTK tools in a single call).
+#'   See details.
 #' @export
 #' @seealso \code{\link{reglist}}, \code{\link{xform}}, \code{\link{cmtkreg}}
-simplify_reglist<-function(reg, as.cmtk=FALSE) {
+simplify_reglist<-function(reg, as.cmtk=NULL) {
   regclasses <- sapply(reg, function(x) class(x)[1], USE.NAMES = FALSE)
   
   # first invert any affine matrices
@@ -107,6 +113,7 @@ simplify_reglist<-function(reg, as.cmtk=FALSE) {
      all(regclasses%in% c("cmtkreg", "character", "matrix"))) {
     # we only have cmtk and homogeneous affine transforms so let's simplify
     # to turn this into a single CMTK call
+    as.cmtk=TRUE
   }
   if(isTRUE(as.cmtk)) {
     # convert any affine matrices to cmtkreg

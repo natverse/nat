@@ -4,14 +4,17 @@
 \alias{simplify_reglist}
 \title{Simplify a registration list}
 \usage{
-simplify_reglist(reg, as.cmtk = FALSE)
+simplify_reglist(reg, as.cmtk = NULL)
 }
 \arguments{
 \item{reg}{A registration list (\code{\link{reglist}}) containing one or more
 transformations.}
 
-\item{as.cmtk}{Whether to convert to a vector of CMTK format registrations
-(see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} converts}
+\item{as.cmtk}{Whether to convert to a vector of CMTK format registrations 
+(see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} 
+converts all registrations to CMTK if any one registration is in CMTK 
+format (thus enabling them to be applied by CMTK tools in a single call).
+See details.}
 }
 \description{
 Simplify a registration list
@@ -28,7 +31,10 @@ This function \itemize{
   
   }
   
-  Note that
+  Note that if any of the registrations are in CMTK format, the default 
+  behaviour is to try to convert all of the other registrations into CMTK 
+  format to enable them to be passed to CMTK in a single command. If 
+  \code{as.cmtk=TRUE} then there will be an error if this is not possible.
 }
 \seealso{
 \code{\link{reglist}}, \code{\link{xform}}, \code{\link{cmtkreg}}
