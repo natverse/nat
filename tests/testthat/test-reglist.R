@@ -6,10 +6,12 @@ test_that('We can simplify reglists',{
           reg)
   expect_is(rl, 'reglist')
   expect_equal(length(rl), 3L)
-  expect_equal(simplify_reglist(rl), rl)
+  expect_equal(simplify_reglist(rl, as.cmtk = FALSE), rl)
   expect_is(srl<-simplify_reglist(rl, as.cmtk = T), 'cmtkreg')
   expect_equal(length(srl), 3L)
   expect_equal(srl[3], rl[[3]])
+  # the default should convert to cmtk in this case
+  expect_is(simplify_reglist(rl), "cmtkreg")
   
   # this can't be simplified
   rl[[4]]=function(x, ...) x
