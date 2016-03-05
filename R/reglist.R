@@ -24,10 +24,13 @@
 #'   \code{'swap'} can also be set directly on each registration.
 #' @export
 #' @seealso \code{\link{xform}}
-reglist <- function(..., swap=NULL){
+reglist <- function(..., swap=NULL) {
   l=list(...)
+  if(length(l)==1 && inherits(l[[1]], 'reglist')) l=l[[1]]
   if(!is.null(swap)){
-    l=mapply(function(x, s) {attr(x,'swap')=s;x}, l, swap)
+    if(length(swap)!=length(l)) 
+      stop("swap must have the same length as the number of registrations!")
+    l=mapply(function(x, s) {attr(x,'swap')=s;x}, l, swap, SIMPLIFY = FALSE)
   } 
   class(l)='reglist'
   l
