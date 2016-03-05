@@ -110,7 +110,8 @@ simplify_reglist<-function(reg, as.cmtk=NULL) {
     # note that this needs to be done in reverse order to match the order in
     # which matrix multiplication would otherwise happen
     reg=Reduce("%*%", rev(reg))
-    return(ifelse(as.cmtk, as.cmtkreg(reg), reglist(reg)))
+    if(isTRUE(as.cmtk)) return(as.cmtkreg(reg)) else return(reglist(reg))
+    
   }
   if(is.null(as.cmtk) && any(regclasses%in% c("cmtkreg", "character")) && 
      all(regclasses%in% c("cmtkreg", "character", "matrix"))) {

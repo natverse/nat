@@ -16,9 +16,14 @@ test_that('We can simplify reglists',{
   # this can't be simplified
   rl[[4]]=function(x, ...) x
   expect_error(simplify_reglist(rl, as.cmtk = TRUE), "cannot convert.*CMTK")
+  
+  # check that we can invert affine registrations
+  # affine followed by inverse should give identity
+  rl2=reglist(c(rl[2],rl[2]), swap=c(F,T))
+  expect_equal(simplify_reglist(rl2), reglist(rgl::identityMatrix()))
 })
 
-test_that("we cam combine reglists",{
+test_that("we can combine reglists",{
   I=diag(4)
   S=I
   diag(S)=c(1, 2, 3, 1)
