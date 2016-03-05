@@ -36,6 +36,10 @@ reglist <- function(..., swap=NULL) {
   l
 }
 
+#' @export
+"[.reglist" <- function(x, i) {
+  structure(NextMethod(), class='reglist')
+}
 
 #' @description \code{c.reglist} combines multiple \code{reglist}s into a single
 #'   \code{reglist}.
