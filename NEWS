@@ -1,3 +1,29 @@
+nat 1.8.3
+=========
+* nat now handles compound registrations via reglist objects (#286).
+  These can contain homogeneous affine, CMTK registrations (in disk or in memory)
+  and R functions (which can be used to wrap arbitrary registration types not 
+  directly supported by nat). NB xformimage.reglist will currently only work for 
+  CMTK compatible registrations.
+* add mask(.im3d) function to zero out parts of an image (#285)
+  Looks after im3d attributes and material name to integer pixel level mapping.
+* add read.ngraph.swc which can be used to read even malformed SWC files (such
+  as those containing cycles) (#282). 
+  This is exposed by giving read.neuron an argument class, which can be set to 
+  'ngraph' instead of 'neuron'.
+  Inspired by https://github.com/BigNeuron/BigNeuron-Wiki/wiki/BigNeuron-Imperial-College-London-Hackathon-Discussion-Notes
+* add prune_edges to delete by specifying neuron edges rather than vertices (#280)
+* Give give spine an invert option (#279) using prune_edges
+* Teach spine to return point ids (#278)
+* fix bug in pointsinside for distant points (#290)
+* fix subsetting neuronlists with a single column data.frame drops column name
+  (#276)
+* Fix invert option of subset/prune_vertices returns an error with igraph::dfs 
+  points (#288)
+* Fix fileformats(, rval='info') to return a well-formatted data.frame
+* The idiom neuronlist[,] will never drop columns (since it is a useful shortcut
+  for as.data.frame(neuronlist)) (#277)
+
 nat 1.8.2
 =========
 * roll back rgl NULL mode changes from 1.8.0 in favour of less invasive approach
