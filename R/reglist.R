@@ -109,13 +109,16 @@ simplify_reglist<-function(reg, as.cmtk=NULL) {
     reg[mats_to_invert]=lapply(reg[mats_to_invert], solve)
   }
   # then compose affine transformations into single matrix
-  # TODO Do this if there are any sequential transforms to simplify
-  if(isTRUE(all(regclasses=="matrix"))){
+  if(isTRUE(sum(regclasses=="matrix")>1)){
     # note that this needs to be done in reverse order to match the order in
     # which matrix multiplication would otherwise happen
-    reg=Reduce("%*%", rev(reg))
-    if(isTRUE(as.cmtk)) return(as.cmtkreg(reg)) else return(reglist(reg))
-    
+    for(i in rev(seq_along(reg)[-1])){
+      if(isTRUE(all(regclasses[c(i,i-1)]=='matrix'))){
+        reg[[i-1]]=reg[[i]]%*%reg[[i-1]]
+        reg[[i]]=NULL
+        regclasses=regclasses[-i]
+      }
+    }
   }
   if(is.null(as.cmtk) && any(regclasses%in% c("cmtkreg", "character")) && 
      all(regclasses%in% c("cmtkreg", "character", "matrix"))) {
