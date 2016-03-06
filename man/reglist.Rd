@@ -40,7 +40,7 @@ A \code{reglist} is read as a set of transformations to be
 }
 \details{
 The swap argument is provided as a convenience, but an attribute
-  \code{'swap'} can also be set directly on each reigstration.
+  \code{'swap'} can also be set directly on each registration.
 }
 \examples{
 I=diag(4)

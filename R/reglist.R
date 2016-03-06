@@ -21,18 +21,25 @@
 #'   direction of each transformation should be swapped (i.e. mapping reference 
 #'   -> sample).
 #' @details The swap argument is provided as a convenience, but an attribute
-#'   \code{'swap'} can also be set directly on each reigstration.
+#'   \code{'swap'} can also be set directly on each registration.
 #' @export
 #' @seealso \code{\link{xform}}
-reglist <- function(..., swap=NULL){
+reglist <- function(..., swap=NULL) {
   l=list(...)
+  if(length(l)==1 && inherits(l[[1]], 'reglist')) l=l[[1]]
   if(!is.null(swap)){
-    l=mapply(function(x, s) {attr(x,'swap')=s;x}, l, swap)
+    if(length(swap)!=length(l)) 
+      stop("swap must have the same length as the number of registrations!")
+    l=mapply(function(x, s) {attr(x,'swap')=s;x}, l, swap, SIMPLIFY = FALSE)
   } 
   class(l)='reglist'
   l
 }
 
+#' @export
+"[.reglist" <- function(x, i) {
+  structure(NextMethod(), class='reglist')
+}
 
 #' @description \code{c.reglist} combines multiple \code{reglist}s into a single
 #'   \code{reglist}.
@@ -78,15 +85,21 @@ unlinktempfiles_reglist<-function(reg){
 #'   
 #'   }
 #'   
-#'   Note that 
+#'   Note that if any of the registrations are in CMTK format, the default 
+#'   behaviour is to try to convert all of the other registrations into CMTK 
+#'   format to enable them to be passed to CMTK in a single command. If 
+#'   \code{as.cmtk=TRUE} then there will be an error if this is not possible.
 #'   
 #' @param reg A registration list (\code{\link{reglist}}) containing one or more
 #'   transformations.
-#' @param as.cmtk Whether to convert to a vector of CMTK format registrations
-#'   (see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} converts 
+#' @param as.cmtk Whether to convert to a vector of CMTK format registrations 
+#'   (see \code{\link{cmtkreg}}). The default value of \code{as.cmtk=NULL} 
+#'   converts all registrations to CMTK if any one registration is in CMTK 
+#'   format (thus enabling them to be applied by CMTK tools in a single call).
+#'   See details.
 #' @export
 #' @seealso \code{\link{reglist}}, \code{\link{xform}}, \code{\link{cmtkreg}}
-simplify_reglist<-function(reg, as.cmtk=FALSE) {
+simplify_reglist<-function(reg, as.cmtk=NULL) {
   regclasses <- sapply(reg, function(x) class(x)[1], USE.NAMES = FALSE)
   
   # first invert any affine matrices
@@ -96,17 +109,22 @@ simplify_reglist<-function(reg, as.cmtk=FALSE) {
     reg[mats_to_invert]=lapply(reg[mats_to_invert], solve)
   }
   # then compose affine transformations into single matrix
-  # TODO Do this if there are any sequential transforms to simplify
-  if(isTRUE(all(regclasses=="matrix"))){
+  if(isTRUE(sum(regclasses=="matrix")>1)){
     # note that this needs to be done in reverse order to match the order in
     # which matrix multiplication would otherwise happen
-    reg=Reduce("%*%", rev(reg))
-    return(ifelse(as.cmtk, as.cmtkreg(reg), reglist(reg)))
+    for(i in rev(seq_along(reg)[-1])){
+      if(isTRUE(all(regclasses[c(i,i-1)]=='matrix'))){
+        reg[[i-1]]=reg[[i]]%*%reg[[i-1]]
+        reg[[i]]=NULL
+        regclasses=regclasses[-i]
+      }
+    }
   }
   if(is.null(as.cmtk) && any(regclasses%in% c("cmtkreg", "character")) && 
      all(regclasses%in% c("cmtkreg", "character", "matrix"))) {
     # we only have cmtk and homogeneous affine transforms so let's simplify
     # to turn this into a single CMTK call
+    as.cmtk=TRUE
   }
   if(isTRUE(as.cmtk)) {
     # convert any affine matrices to cmtkreg
