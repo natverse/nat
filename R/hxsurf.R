@@ -144,7 +144,8 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
     headerSecStart <- grep(paste0(" ", regionName, " \\{"), headerLines)[1]
     headerSecEnd <- closeBraces[closeBraces > headerSecStart][1]
     # Extract colour information
-    colorLine <- grep("Color", headerLines[headerSecStart:headerSecEnd], value=T)
+    if(is.na(headerSecStart) || is.na(headerSecEnd)) colorLine=character()
+    else colorLine <- grep("Color", headerLines[headerSecStart:headerSecEnd], value=T)
     if(length(colorLine) > 0) {
       rgbValues <- strsplit(regmatches(colorLine, gregexpr("[0-9]$|[0-9][^\\.]|[0-9]\\.[0-9]+", colorLine, perl=T))[[1]], " ")
       color <- rgb(rgbValues[[1]], rgbValues[[2]], rgbValues[[3]])
