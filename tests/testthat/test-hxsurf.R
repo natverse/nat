@@ -43,6 +43,11 @@ test_that("we can use fallback colour for surfaces", {
   expect_equal(tet.hxsurf2, tet.hxsurf)
 })
 
+test_that("we can cope with malformed materials/patch headers", {
+  expect_is(s <- read.hxsurf("testdata/amira/malformed_labels.surf"), 'hxsurf')
+  expect_equal(s$RegionList, c("Interior", "D"))
+})
+
 test_that("we can identify reader/writer for hxsurf", {
   expect_equal(getformatreader(surf_file)$class, 'hxsurf')
   expect_equal(getformatwriter(class=class(surf))$class, 'hxsurf')

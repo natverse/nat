@@ -98,6 +98,10 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   for(i in 1:nPatches){
     if(Verbose) cat("TriangleDefline =",TriangleDeflines[i],"\n")
     PatchHeader<-remainingLines[PatchStarts[i]:TriangleDeflines[i]]
+    # remove any opening braces - these would cause a problem if on same line
+    PatchHeader=sub("^\\s*\\{\\s*","",PatchHeader)
+    # convert all whitespace to single spaces
+    PatchHeader=gsub("\\s+"," ",PatchHeader)
     if(Verbose) cat("PatchHeader is",length(PatchHeader),"lines long\n")
     # note use of RegionChoice to switch naming between inner and outer
     for(RegChoice in RegionChoice) {
@@ -141,7 +145,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   closeBraces <- grep("}", headerLines)
   for(regionName in d$RegionList) {
     # Find section in headerLines corresponding to this region
-    headerSecStart <- grep(paste0(" ", regionName, " \\{"), headerLines)[1]
+    headerSecStart <- grep(paste0("^\\s*", regionName, "(\\s+ \\{){0,1}"), headerLines)[1]
     headerSecEnd <- closeBraces[closeBraces > headerSecStart][1]
     # Extract colour information
     colorLine <- grep("Color", headerLines[headerSecStart:headerSecEnd], value=T)
