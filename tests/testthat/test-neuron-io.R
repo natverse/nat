@@ -140,7 +140,7 @@ test_that("we can read in neurons as a neuronlist",{
                info = 'check equality of neuron read by read.neuron & read.neurons')
   
   # check that problem files are named on error/warning
-  expect_message(read.neurons('testdata/neuron/Neurites.am'),
+  expect_message(expect_warning(read.neurons('testdata/neuron/Neurites.am')),
                  regexp = 'While reading file.*Neurites\\.am')
 })
 
