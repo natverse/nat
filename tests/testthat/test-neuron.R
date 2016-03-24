@@ -138,12 +138,12 @@ test_that("we can plot neurons in 2D", {
 
 test_that("we can plot neurons in 3D", {
   plottedLines <- plot3d(Cell07PNs[[1]], soma=3, WithText=T, WithNodes = T, WithAllPoints=T)$lines
-  expect_more_than(plottedLines, 0)
+  expect_gt(plottedLines, 0)
 })
 
 test_that("we can plot dotprops in 3D", {
   plottedSegments <- plot3d(kcs20[[1]])$segments
-  expect_more_than(plottedSegments, 0)
+  expect_gt(plottedSegments, 0)
 })
 
 context("neuron seglengths/resampling")
