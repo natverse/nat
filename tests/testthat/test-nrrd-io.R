@@ -130,7 +130,7 @@ test_that("write.nrrd.header.for.file", {
   expect_error(write.nrrd.header.for.file('testdata/amira/AL-a_M.am'),
                "only raw format")
   expect_error(write.nrrd.header.for.file('testdata/amira/landmarks.am'),
-               "read.im3d")
+               "Unable to read.*am")
   dir.create(td<-tempfile())
   on.exit(unlink(td, recursive = TRUE))
   file.copy('testdata/amira/VerySmallLabelField.am', 
