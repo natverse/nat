@@ -14,9 +14,8 @@ if(is.null(cmtk.bindir())){
 checkRoundTripFromMat=function(mat,
                                test.cmtk=!is.null(cmtk_numeric_version) &&
                                  cmtk_numeric_version>=numeric_version("2.4.0")){
-  params=affmat2cmtkparams(mat)
-  m2=cmtkparams2affmat(params)
-  expect_equal(mat,m2,tolerance=1e-5)
+  params1=affmat2cmtkparams(mat)
+  expect_equal(cmtkparams2affmat(params1), mat, tolerance=1e-5)
   if(test.cmtk){
     # repeat with cmtk tools
     params2=cmtk.mat2dof(mat)
@@ -31,8 +30,7 @@ checkRoundTripFromMat=function(mat,
 test_that("round trip works for challenging affine matrix", {
   #ReCompositionAffineShear123CentreMirrorXYZ
   params=c(100,50,10,3,4,5,-1.1,-0.9,-1,0.05,0.02,0.03,5,10,20)
-  mat=cmtkparams2affmat(params)
-  checkRoundTripFromMat(mat)
+  checkRoundTripFromMat(cmtkparams2affmat(params))
 })
 
 test_that("compose affine with shear works", {
