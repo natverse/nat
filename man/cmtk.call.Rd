@@ -4,7 +4,8 @@
 \alias{cmtk.call}
 \title{Utility function to create a call to a cmtk commandline tool}
 \usage{
-cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL)
+cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL,
+  RETURN.TYPE = c("string", "list"))
 }
 \arguments{
 \item{tool}{Name of the CMTK tool}
@@ -17,10 +18,20 @@ processed by the callee. Placed immediately after cmtk tool.}
 \item{FINAL.ARGS}{Character vector of arguments that have already been 
 processed by the callee. Placed at the end of the call after optional 
 arguments.}
+
+\item{RETURN.TYPE}{Sets return type to a character string or list (the latter
+is suitable for use with \code{\link{system2}})}
 }
 \value{
-a string of the form \code{"<tool> <PROCESSED.ARGS> <...> 
-  <FINAL.ARGS>"}
+\emph{Either} a string of the form \code{"<tool> <PROCESSED.ARGS> 
+  <...> <FINAL.ARGS>"} \emph{or} a list containing elements \itemize{
+  
+  \item command A character vector of length 1 indicating the full path to 
+  the CMTK tool, shell quoted for protection.
+  
+  \item args A character vector of arguments of length 0 or greater.
+  
+  }
 }
 \description{
 Utility function to create a call to a cmtk commandline tool
@@ -39,8 +50,8 @@ arguments in ... will be processed as follows:
   \item{character vectors}{ (which must be of length 1) will be passed on as 
   \code{--arg-name arg} i.e. quoting is left up to callee.}
   
-  \item{numeric vectors}{ will be collapsed with commas if of length greater
-  than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will
+  \item{numeric vectors}{ will be collapsed with commas if of length greater 
+  than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will 
   result in \code{--target-offset 1,2,3}}
   
   }

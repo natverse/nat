@@ -211,8 +211,8 @@ cmtk.version<-function(minimum=NULL){
 #'   \item{character vectors}{ (which must be of length 1) will be passed on as 
 #'   \code{--arg-name arg} i.e. quoting is left up to callee.}
 #'   
-#'   \item{numeric vectors}{ will be collapsed with commas if of length greater
-#'   than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will
+#'   \item{numeric vectors}{ will be collapsed with commas if of length greater 
+#'   than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will 
 #'   result in \code{--target-offset 1,2,3}}
 #'   
 #'   }
@@ -223,8 +223,17 @@ cmtk.version<-function(minimum=NULL){
 #' @param FINAL.ARGS Character vector of arguments that have already been 
 #'   processed by the callee. Placed at the end of the call after optional 
 #'   arguments.
-#' @return a string of the form \code{"<tool> <PROCESSED.ARGS> <...> 
-#'   <FINAL.ARGS>"}
+#' @param RETURN.TYPE Sets return type to a character string or list (the latter
+#'   is suitable for use with \code{\link{system2}})
+#' @return \emph{Either} a string of the form \code{"<tool> <PROCESSED.ARGS> 
+#'   <...> <FINAL.ARGS>"} \emph{or} a list containing elements \itemize{
+#'   
+#'   \item command A character vector of length 1 indicating the full path to 
+#'   the CMTK tool, shell quoted for protection.
+#'   
+#'   \item args A character vector of arguments of length 0 or greater.
+#'   
+#'   }
 #' @seealso \code{\link{cmtk.bindir}}
 #' @export
 #' @examples
@@ -234,10 +243,13 @@ cmtk.version<-function(minimum=NULL){
 #' # get help for a cmtk tool
 #' system(cmtk.call('reformatx', help=TRUE))
 #' }
-cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
+cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL, RETURN.TYPE=c("string", "list")){
+  RETURN.TYPE=match.arg(RETURN.TYPE)
   cmd=shQuote(file.path(cmtk.bindir(check=TRUE),tool))
+  cmtkargs=character()
+  
   if(!is.null(PROCESSED.ARGS)){
-    cmd=paste(cmd, paste(PROCESSED.ARGS, collapse=' '))
+    cmtkargs=c(cmtkargs, PROCESSED.ARGS)
   }
   
   if(!missing(...)){
@@ -247,25 +259,29 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
       cmtkarg=cmtk.arg.name(n)
       if(is.character(arg)){
         if(length(arg)!=1) stop("character arguments must have length 1")
-        cmd=paste(cmd,cmtkarg,arg)
+        cmtkargs=c(cmtkargs, cmtkarg, arg)
       } else if(is.logical(arg)){
-        if(isTRUE(arg)) cmd=paste(cmd,cmtkarg)
+        if(isTRUE(arg)) cmtkargs=c(cmtkargs, cmtkarg)
       } else if(is.numeric(arg)){
-        arg=paste(arg,collapse=',')
-        cmd=paste(cmd,cmtkarg,arg)
+        arg=paste(arg, collapse=',')
+        cmtkargs=c(cmtkargs, arg)
       } else if(is.null(arg)){
         # just ifgnore null arguemnts
       } else {
         stop("unrecognised argument type")
       }
     }
+    
   }
   
   if(!is.null(FINAL.ARGS)){
-    cmd=paste(cmd, paste(FINAL.ARGS, collapse=' '))
+    cmtkargs=c(cmtkargs, FINAL.ARGS)
   }
-  
-  cmd
+  if(RETURN.TYPE=="string") {
+    paste(cmd, paste(cmtkargs, collapse = " "))
+  } else {
+    list(command=cmd, args=cmtkargs)
+  }
 }
 
 # utility function to make a cmtk argument name from a valid R argument
