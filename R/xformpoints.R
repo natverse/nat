@@ -85,7 +85,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile), add = TRUE)
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
-  streamxform=file.path(cmtk.bindir(check=TRUE),'streamxform')
+  streamxform=shQuote(file.path(cmtk.bindir(check=TRUE),'streamxform'))
   # TODO enable CMTK affine transforms using internal R code even when
   # CMTK command line tools are missing.
   inverseflags <- unlist(lapply(direction, function(x) ifelse(x == 'forward', '', '--inverse')))
