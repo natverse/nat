@@ -23,7 +23,7 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
     write.cmtkreg(params,foldername=reg)
   }
   
-  cmd=paste(dof2mat,ifelse(Transpose,'--transpose',''),shQuote(path.expand(reg)))
+  cmd=paste(shQuote(dof2mat),ifelse(Transpose,'--transpose',''),shQuote(path.expand(reg)))
   rval=system(cmd,intern=TRUE)
   numbers=as.numeric(unlist(strsplit(rval,"\t")))
   matrix(numbers,ncol=4,byrow=TRUE)
@@ -56,7 +56,8 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
   write.table(m, file=inf, sep='\t', row.names=F, col.names=F)
   # always transpose because mat2dof appears to read the matrix with last column being 0 0 0 1
   
-  cmd=if(Transpose) paste(mat2dof,'--transpose') else mat2dof
+  cmd=shQuote(mat2dof)
+  if(Transpose) cmd=paste(cmd,'--transpose')
   if(!is.null(centre)) {
     if(length(centre)!=3) stop("Must supply 3-vector for centre")
     cmd=paste(cmd,'--center',paste(centre, collapse=","))
