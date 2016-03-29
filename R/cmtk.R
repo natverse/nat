@@ -124,8 +124,12 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/usr/local/lib/cmtk/bin',
                                   '/usr/local/bin','/opt/local/bin',
                                   '/opt/local/lib/cmtk/bin/',
-                                  '/Applications/IGSRegistrationTools/bin'),
+                                  '/Applications/IGSRegistrationTools/bin',
+                                  'C:\\Program Files\\CMTK-3.3\\CMTK\\lib\\cmtk\\bin'),
                       set=FALSE, check=FALSE, cmtktool='gregxform'){
+  # TODO check pure Windows vs cygwin
+  if(isTRUE(.Platform$OS.type=="windows" && tools::file_ext(cmtktool)!="exe"))
+    cmtktool=paste0(cmtktool,".exe")
   bindir=NULL
   if(!is.null(firstdir)) {
     bindir=firstdir
