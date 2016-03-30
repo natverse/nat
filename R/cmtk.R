@@ -196,9 +196,12 @@ cmtk.version<-function(minimum=NULL){
   else cmtk_numeric_version
 }
 
-#' Utility function to create a call to a cmtk commandline tool
+#' Utility function to create and run calls to CMTK commandline tools
 #' 
-#' @details arguments in ... will be processed as follows:
+#' @description \code{cmtk.call} processes arguments into a form compatible with
+#'   CMTK command line tools.
+#'   
+#' @details  \code{cmtk.call} processes arguments in ... as follows:
 #'   
 #'   \itemize{
 #'   
@@ -219,7 +222,8 @@ cmtk.version<-function(minimum=NULL){
 #' @param tool Name of the CMTK tool
 #' @param PROCESSED.ARGS Character vector of arguments that have already been 
 #'   processed by the callee. Placed immediately after cmtk tool.
-#' @param ... Additional named arguments to be processed. See details.
+#' @param ... Additional named arguments to be processed by (\code{cmtk.call}, 
+#'   see details) or passed to \code{system2} (\code{cmtk.system2}).
 #' @param FINAL.ARGS Character vector of arguments that have already been 
 #'   processed by the callee. Placed at the end of the call after optional 
 #'   arguments.
@@ -245,7 +249,7 @@ cmtk.version<-function(minimum=NULL){
 #' }
 cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL, RETURN.TYPE=c("string", "list")){
   RETURN.TYPE=match.arg(RETURN.TYPE)
-  cmd=shQuote(file.path(cmtk.bindir(check=TRUE),tool))
+  cmd=file.path(cmtk.bindir(check=TRUE),tool)
   cmtkargs=character()
   
   if(!is.null(PROCESSED.ARGS)){
@@ -264,9 +268,9 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL, RETURN.TYPE
         if(isTRUE(arg)) cmtkargs=c(cmtkargs, cmtkarg)
       } else if(is.numeric(arg)){
         arg=paste(arg, collapse=',')
-        cmtkargs=c(cmtkargs, arg)
+        cmtkargs=c(cmtkargs, cmtkarg, arg)
       } else if(is.null(arg)){
-        # just ifgnore null arguemnts
+        # just ignore null arguemnts
       } else {
         stop("unrecognised argument type")
       }
@@ -278,10 +282,36 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL, RETURN.TYPE
     cmtkargs=c(cmtkargs, FINAL.ARGS)
   }
   if(RETURN.TYPE=="string") {
-    paste(cmd, paste(cmtkargs, collapse = " "))
+    paste(shQuote(cmd), paste(cmtkargs, collapse = " "))
   } else {
     list(command=cmd, args=cmtkargs)
   }
+}
+
+
+#' @description \code{cmtk.system2} actually calls a cmtk tool using a call list
+#'   produced by \code{cmtk.call}
+#'   
+#' @param cmtkcall A list containing processed arguments prepared by 
+#'   \code{cmtk.call(RETURN.TYPE="list")}
+#' @param moreargs Additional arguments to add to the processed call
+#'   
+#' @return See the help of \code{\link{system2}} for details.
+#' @export
+#' 
+#' @examples
+#' \dontrun{
+#' cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"))
+#' # capture response into an R variable
+#' helptext=cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"),
+#'   stdout=TRUE)
+#' }
+#' @rdname cmtk.call
+cmtk.system2 <- function(cmtkcall, moreargs=NULL, ...){
+  if(!is.null(moreargs))
+    cmtkcall$args=c(cmtkcall$args, moreargs)
+  fullargs=c(cmtkcall, ...)
+  do.call(system2, fullargs)
 }
 
 # utility function to make a cmtk argument name from a valid R argument
