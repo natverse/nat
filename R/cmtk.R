@@ -47,31 +47,32 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
 #' @family cmtk-geometry
 #' @export
 cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
-  mat2dof=file.path(cmtk.bindir(check=TRUE),'mat2dof')
-  if(version) return(system2(mat2dof,'--version',stdout=TRUE))
+  
+  if(version) {
+    ver=cmtk.system2(cmtk.call('mat2dof', version=TRUE, RETURN.TYPE = 'list'), stdout=TRUE)
+    return(ver)
+  }
   if(!is.matrix(m) || nrow(m)!=4 || ncol(m)!=4) stop("Please give me a homogeneous affine matrix (4x4)")
   inf=tempfile()
-  on.exit(unlink(inf),add=TRUE)
+  on.exit(unlink(inf), add=TRUE)
   
   write.table(m, file=inf, sep='\t', row.names=F, col.names=F)
   # always transpose because mat2dof appears to read the matrix with last column being 0 0 0 1
   
-  cmd=shQuote(mat2dof)
-  if(Transpose) cmd=paste(cmd,'--transpose')
   if(!is.null(centre)) {
     if(length(centre)!=3) stop("Must supply 3-vector for centre")
-    cmd=paste(cmd,'--center',paste(centre, collapse=","))
   }
+  cmtkcall=cmtk.call('mat2dof', transpose=Transpose, center=centre, RETURN.TYPE = 'list')
+  
   if(is.null(f)){
-    cmd=paste(cmd,sep="<",shQuote(inf))
-    params=read.table(text=system(cmd,intern=T),sep='\t',comment.char="")[,2]
+    res=cmtk.system2(cmtkcall, stdin=inf, stdout=TRUE)
+    params=read.table(text=res, sep='\t',comment.char="")[,2]
     if(length(params)!=15) stop("Trouble reading mat2dof response")
     numbers <- matrix(params, ncol=3, byrow=TRUE)
     rownames(numbers) <- c("xlate", "rotate", "scale", "shear", "center")
     return(numbers)
   } else {
-    cmd=paste(cmd,'--list',shQuote(path.expand(f)),"<",shQuote(inf))
-    return(system(cmd)==0)
+    cmtk.system2(cmtkcall, moreargs=c('--list', path.expand(f)), stdin=inf)==0
   }
 }
 
