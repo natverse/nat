@@ -13,8 +13,7 @@
 #' @family cmtk-geometry
 #' @export
 cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
-  dof2mat=file.path(cmtk.bindir(check=TRUE),"dof2mat")
-  if(version) return(system2(dof2mat,'--version',stdout=TRUE))
+  if(version) return(cmtk.system2(cmtk.call("dof2mat", version=TRUE, RETURN.TYPE = 'list'), stdout=TRUE))
   
   if(is.numeric(reg)){
     params<-reg
@@ -23,8 +22,8 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
     write.cmtkreg(params,foldername=reg)
   }
   
-  cmd=paste(shQuote(dof2mat),ifelse(Transpose,'--transpose',''),shQuote(path.expand(reg)))
-  rval=system(cmd,intern=TRUE)
+  call=cmtk.call("dof2mat", transpose=Transpose, RETURN.TYPE = 'list')
+  rval=cmtk.system2(call, moreargs = path.expand(reg), stdout=TRUE)
   numbers=as.numeric(unlist(strsplit(rval,"\t")))
   matrix(numbers,ncol=4,byrow=TRUE)
 }
