@@ -126,10 +126,17 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
 xformpoints.reglist<-function(reg, points, ...){
   reg=simplify_reglist(reg)
   on.exit(unlinktempfiles_reglist(reg))
-  for(r in reg){
-    points=xformpoints(r, points, ...)
+  # if we still have a reglist, all we can do is apply the transforms one by one
+  if(inherits(reg, 'reglist')){
+    for(r in reg){
+      points=xformpoints(r, points, ...)
+    }
+    points
+  } else {
+    # we have a specialised structure (most likely a cmtkreg object) that we
+    # should be able to apply in one shot
+    xformpoints(reg, points)
   }
-  points
 }
 
 #' @method xformpoints default
