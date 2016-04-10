@@ -820,10 +820,10 @@ test_that("we can update an existing neuronlist",{
   on.exit({setwd(owd); unlink(td,recursive=TRUE)})
   
   write.neurons(Cell07PNs[1:3], dir='.', format = 'swc')
-  expect_is(nl3<-read.neurons(dir(patt='swc$')), 'neuronlist')
+  expect_is(nl3<-read.neurons(dir(pattern='swc$')), 'neuronlist')
   write.neurons(Cell07PNs[4], dir='.', format='swc')
   
-  expect_message(nl4<-read.neurons(rev(dir(patt='swc$')), nl = nl3, 
+  expect_message(nl4<-read.neurons(rev(dir(pattern='swc$')), nl = nl3, 
                                    SortOnUpdate = TRUE), 
                  '0 modified.* 1 new')
   # note that is the order of neurons specified in paths _not_ the order of
@@ -832,7 +832,7 @@ test_that("we can update an existing neuronlist",{
   # overwrite the last file with a different neuron
   write.neurons(Cell07PNs[5], dir='.', format='swc', 
                 files = names(Cell07PNs)[4], Force = T)
-  expect_message(nl4<-read.neurons(dir(patt='swc$'), nl = nl4),
+  expect_message(nl4<-read.neurons(dir(pattern='swc$'), nl = nl4),
                  '1 modified.* 0 new')
 })
 
