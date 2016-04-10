@@ -1,14 +1,14 @@
 context("CMTK geometry")
 
-if(is.null(cmtk.bindir())){
-  cmtk_numeric_version=NULL
-} else {
+if(isTRUE(nzchar(cmtk.bindir()))){
   cmtk_version=cmtk.dof2mat(version=TRUE)
   cmtk_numeric_version=numeric_version(sub("([0-9.]+).*",'\\1',cmtk_version))
   test_that("cMTK version is >2.4", {
     expect_true(cmtk_numeric_version>=numeric_version("2.4.0"),
                 'nat depends on CMTK>=2.4.0 for affine matrix (de)composition fixes')
   })
+} else {
+  cmtk_numeric_version=NULL
 }
 
 checkRoundTripFromMat=function(mat,

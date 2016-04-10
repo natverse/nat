@@ -5,8 +5,9 @@ test_that("xform can use a function to define a registration", {
   expect_equal(xform(n,reg=function(x,...) -x),n*c(-1,-1,-1))
 })
 
-if(!is.null(cmtk.bindir())){
+
 test_that("xform gives same result as xformpoints", {
+  skip_if_not(nzchar(cmtk.bindir()))
   reg2="testdata/cmtk/dofv1.1wshears.list"
   creg2=cmtkreg(reg2)
   
@@ -14,7 +15,6 @@ test_that("xform gives same result as xformpoints", {
   expect_equal(data.matrix(xform(n,reg=creg2)$d[,c("X","Y","Z")]),
                xformpoints(creg2,n$d[,c("X","Y","Z")]))
 })
-}
 
 test_that("xform with affine matrix gives same result as neuron arithmetic", {
   n=Cell07PNs[[1]]
@@ -25,8 +25,9 @@ test_that("xform with affine matrix gives same result as neuron arithmetic", {
   expect_equal(xform(n,reg=affmat),scale(n,scale=1/scalefacs,center=FALSE))
 })
 
-if(!is.null(cmtk.bindir())){
+
 test_that("we can xform a neuronlist with multiple registrations", {
+  skip_if_not(nzchar(cmtk.bindir()))
   # construct a pair of CMTK affine registrations where f2 is the
   # inverse of f1
   scalefacs=c(1,1.1,1.2)
@@ -51,21 +52,21 @@ test_that("we can xform a neuronlist with multiple registrations", {
   
   unlink(c(f1,f2))
 })
-}
 
-if(!is.null(cmtk.bindir())){
-  test_that("we can xform points with non-rigid reg and handle bad points", {
-    reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
-    m=matrix(c(4:9, -200,-200,-200), ncol=3, byrow = T)
-    baselinem=matrix(NA_real_, ncol=3, nrow=3)
-    baselinem[2,]=c(2.65463188, 13.857304, 14.7245891)
-    expect_warning(tm<-xform(m, reg), "2 points .*not.*transformed")
-    expect_equal(tm, baselinem)
-    expect_error(xform(m, reg, na.action='error'), "2 points")
-    # nb should not drop dimensions
-    expect_equal(xform(m, reg, na.action='drop'), baselinem[2, , drop=FALSE])
-  })
-}
+
+test_that("we can xform points with non-rigid reg and handle bad points", {
+  skip_if_not(nzchar(cmtk.bindir()))
+  reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
+  m=matrix(c(4:9, -200,-200,-200), ncol=3, byrow = T)
+  baselinem=matrix(NA_real_, ncol=3, nrow=3)
+  baselinem[2,]=c(2.65463188, 13.857304, 14.7245891)
+  expect_warning(tm<-xform(m, reg), "2 points .*not.*transformed")
+  expect_equal(tm, baselinem)
+  expect_error(xform(m, reg, na.action='error'), "2 points")
+  # nb should not drop dimensions
+  expect_equal(xform(m, reg, na.action='drop'), baselinem[2, , drop=FALSE])
+})
+
 
 test_that("mirror with flip only gives same result as neuron arithmetic", {
   n=Cell07PNs[[1]]
@@ -92,29 +93,30 @@ test_that("we can mirror raw points", {
   expect_equal(g(g(xyz)),xyz)
 })
 
-if(!is.null(cmtk.bindir())){
-  test_that("we can mirror with a non-rigid registration", {
-    reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
-    # nb this registration doesn't actually make any sense as mirroring
-    # registration but it does produce some valid data
-    m=matrix(c(0,0,0,300,200,50), ncol=3, byrow = T)
-    expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reglist(diag(4), reg)))
-    baseline=matrix(c(NA,NA,NA,300.953189,183.401797,40.7112503), 
-                    ncol=3, byrow = T)
-    expect_equal(tm, baseline)
-  })
-  
-  test_that("we can mirror some image data", {
-    reg="testdata/cmtk/FCWB_mirror_level-01.list"
-    img="testdata/nrrd/FCWB_2um_mask.nrrd"
-    bim=boundingbox(read.im3d(img, ReadData = F))
-    tf=tempfile(fileext = '.nrrd')
-    on.exit(unlink(tf))
-    mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img)
-    expect_true(file.exists(tf))
-    expect_equal(boundingbox(tf), bim)
-  })
-}
+
+test_that("we can mirror with a non-rigid registration", {
+  skip_if_not(nzchar(cmtk.bindir()))
+  reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
+  # nb this registration doesn't actually make any sense as mirroring
+  # registration but it does produce some valid data
+  m=matrix(c(0,0,0,300,200,50), ncol=3, byrow = T)
+  expect_warning(tm<-mirror(m, mirrorAxisSize = 636.396, warpfile = reglist(diag(4), reg)))
+  baseline=matrix(c(NA,NA,NA,300.953189,183.401797,40.7112503), 
+                  ncol=3, byrow = T)
+  expect_equal(tm, baseline)
+})
+
+test_that("we can mirror some image data", {
+  skip_if_not(nzchar(cmtk.bindir()))
+  reg="testdata/cmtk/FCWB_mirror_level-01.list"
+  img="testdata/nrrd/FCWB_2um_mask.nrrd"
+  bim=boundingbox(read.im3d(img, ReadData = F))
+  tf=tempfile(fileext = '.nrrd')
+  on.exit(unlink(tf))
+  mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img)
+  expect_true(file.exists(tf))
+  expect_equal(boundingbox(tf), bim)
+})
 
 test_that("we can mirror using different forms of axis specification", {
   n=Cell07PNs[[1]]
