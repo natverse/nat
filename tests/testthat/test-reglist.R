@@ -18,6 +18,9 @@ test_that('We can simplify reglists',{
   rl[[4]]=function(x, ...) x
   expect_error(simplify_reglist(rl, as.cmtk = TRUE), "cannot convert.*CMTK")
   
+  # make sure we can simplify a single cmtkreg
+  expect_is(simplify_reglist(reglist(reg)), 'cmtkreg')
+  
   # check that we can invert affine registrations
   # affine followed by inverse should give identity
   rl2=reglist(c(rl[2],rl[2]), swap=c(F,T))

@@ -10,7 +10,7 @@
 #'   the actual file containing the registration
 #' @export
 cmtkreg<-function(x, returnDir=TRUE){
-  if(length(x)>1) return(as.cmtkreg(sapply(x,cmtkreg,returnDir=returnDir)))
+  if(length(x)>1) return(as.cmtkreg(sapply(x,cmtkreg,returnDir=returnDir, USE.NAMES = FALSE)))
   
   x=path.expand(x)
   if(!file.exists(x)) {
@@ -50,7 +50,9 @@ as.cmtkreg.matrix <- function(x, ...) {
 as.cmtkreg.reglist <- function(x, ...) {
   if(!all(sapply(x, is.character))) 
     stop("I cannot convert this reglist to a CMTK compatible format")
-  outseq=cmtkreg(x)
+  
+  # cmtkreg expects a character vector
+  outseq=cmtkreg(unlist(x, use.names = F))
   swapped=as.logical(lapply(x, function(x) isTRUE(attr(x,'swap'))))
   if(any(swapped)) attr(outseq, 'swap')=swapped
   outseq
