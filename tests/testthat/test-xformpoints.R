@@ -23,9 +23,8 @@ test_that("xformpoints can use a matrix to define a registration", {
   expect_equal(xformpoints(taff,points=xyz),t(t(xyz)+c(50,100,20)))
 })
 
+if(!is.null(cmtk.bindir())){
 test_that("xformpoints.cmtkreg works ok", {
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   reg2="testdata/cmtk/dofv1.1wshears.list"
   creg2=cmtkreg(reg2)
   reg3 <- "testdata/cmtk/dofv2.4wshears.list"
@@ -65,3 +64,4 @@ test_that("xformpoints.cmtkreg works ok", {
                xformpoints(creg2,points=xyz,direction='forward'),
                tolerance=1e-6)
 })
+}

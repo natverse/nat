@@ -1,10 +1,12 @@
 # tests for cmtk command line tools
 
+if(is.null(cmtk.bindir())){
+  message("skipping cmtk command line tool tests since CMTK is not installed")
+} else {
+
 context("cmtk command line tools")
 
 test_that("cmtk.bindir",{
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   # nb this gets called in plenty of cases, we just need to check the case where
   # is actually looking for the path.
   op=options(nat.cmtk.bindir=NULL)
@@ -14,7 +16,6 @@ test_that("cmtk.bindir",{
 
 #' round trip test of mat2dof/dof2mat
 test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (no shears)", {
-  skip_if_not(nzchar(cmtk.bindir()))
   m=matrix(c(1.1,0,0,50,
              0,1.2,0,60,
              0,0,1.1,20,
@@ -28,8 +29,6 @@ test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (no shears)", {
 })
 
 test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (with shears)", {
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   m=structure(c(0.911236, 0.00295678, 0.00483363, 0, -0.045134, 1.105, 
                 -0.104863, 0, -0.0475781, 0.0580714, 0.997261, 0, -88.3912, -56.1266, 
                 -5.21284, 1), .Dim = c(4L, 4L))
@@ -42,8 +41,6 @@ test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (with shears)", {
 })
 
 test_that("test cmtk.mat2dof with shears", {
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   m=structure(c(0.993768, -0.0869434, -0.0697565, 0, 0.199117, 1.08527, 
                 0.0504537, 0, 0.303757, 0.211115, 1.19715, 0, 100, 50, 50, 1),
               .Dim = c(4L, 4L))
@@ -55,8 +52,6 @@ test_that("test cmtk.mat2dof with shears", {
 })
 
 test_that("test cmtk.dof2mat with v2.4 registration or in memory parameters", {
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   reg=file.path('testdata','cmtk','dofv2.4wshears.list')
   params=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                 byrow=T)
@@ -69,8 +64,6 @@ test_that("test cmtk.dof2mat with v2.4 registration or in memory parameters", {
 })
 
 test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   reg=file.path('testdata','cmtk','dofv1.1wshears.list')
   params=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                 byrow=T)
@@ -82,8 +75,6 @@ test_that("cmtk.dof2mat can compose legacy 1.1 affine parameters", {
 })
 
 test_that("cmtk.call",{
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   reformatx=shQuote(file.path(cmtk.bindir(check=TRUE),'reformatx'))
   expect_equal(cmtk.call('reformatx',PROCESSED.ARGS='--outfile myfile.nrrd'),
                paste(reformatx,'--outfile myfile.nrrd'))
@@ -101,8 +92,6 @@ test_that("cmtk.call",{
 })
 
 test_that("cmtk.statistics",{
-  skip_if_not(nzchar(cmtk.bindir()))
-  
   lhmaskfile="testdata/nrrd/LHMask.nrrd"
   statsnrrd="testdata/nrrd/dataforstats.nrrd"
   baseline_a=structure(list(min = 0, max = 1, mean = 0.22935, sdev = 0.42042, 
@@ -146,6 +135,7 @@ test_that("cmtk.statistics",{
   expect_equal(cmtk.statistics(lhmaskfile, imagetype = 'label'), baseline_label)
 })
 
+}
 
 test_that("cmtk.arg.names works",{
   expect_equal(cmtk.arg.name('mask'),'--mask')
