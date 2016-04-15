@@ -1,11 +1,12 @@
 #' Transform 3D points using a registration, affine matrix or function
 #' 
-#' @description You should almost always call \code{\link{xform}} rather
-#'   calling than\code{xformpoints} directly.
+#' @description You should almost always call \code{\link{xform}} rather calling
+#'   than\code{xformpoints} directly.
 #'   
-#' @param reg A registration defined by a matrix, a function, a \code{cmtkreg} 
-#'   object, or a character vector specifying a path to a CMTK registration on 
-#'   disk (see details).
+#' @param reg A registration defined by a matrix, a function, a
+#'   \code{\link{cmtkreg}} object, a \code{\link{reglist}} object containing a
+#'   sequence of arbitrary registrations, or a character vector specifying
+#'   path(s) to registrations on disk (see details).
 #' @param points Nx3 matrix of points
 #' @param ... Additional arguments passed to methods
 #' @export
@@ -20,8 +21,20 @@ xformpoints<-function(reg, points, ...) {
 #' @export
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
-    if (is.cmtkreg(reg[1], filecheck='magic')) xformpoints(as.cmtkreg(reg), points, ...)
-    else stop("Cannot identify registration class")
+    if (is.cmtkreg(reg[1], filecheck='magic')){
+      reg=as.cmtkreg(reg)
+    } else {
+      if(all(file.exists(reg))){
+        rl <- try(lapply(reg, readRDS), silent = T)
+        # looks like an on disk reglist
+        if(inherits( rl, 'try-error')) stop("Cannot identify registration class")
+        rl=lapply(rl, reglist)
+        reg = if(length(rl)==1) rl[[1]] else do.call(c, rl)
+      } else {
+        stop("some registrations do not seem to exist on disk")
+      }
+    }
+  xformpoints(reg, points, ...)
 }
 
 #' @method xformpoints cmtkreg

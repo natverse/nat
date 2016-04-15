@@ -36,7 +36,7 @@ xform(x, reg, ...)
 \item{x}{an object to transform}
 
 \item{reg}{A registration defined by a matrix, a function, a \code{cmtkreg} 
-object, or a character vector specifying a path to one or more CMTK 
+object, or a character vector specifying a path to one or more 
 registrations on disk (see Registrations section).}
 
 \item{...}{additional arguments passed to methods and eventually to 
@@ -65,7 +65,7 @@ element of \code{x}.}
 objects encapsulating neurons. \code{xform} depends on two specialised 
 downstream functions \code{\link{xformpoints}} and \code{\link{xformimage}}. 
 These are user visible any contain some useful documentation, but should only
-be required for expert use; in almost all circumstances, you should use only
+be required for expert use; in almost all circumstances, you should use only 
 \code{xform}.
 
 \code{xform.character} is designed to work with files on disk.
@@ -96,16 +96,25 @@ With \code{xform.neuronlist}, if you want to apply a different
 
   
   When \code{reg} is a character vector, xform's specialised downstream 
-  functions will check to see if it defines a path to one (or more) CMTK 
-  registrations, erroring out if this is not the case. If the path does 
-  indeed point to a CMTK registration, this method will hand off to 
-  \code{xformpoints.cmtkreg} or \code{xformimages.cmtkreg}. A future TODO 
-  would be to provide a mechanism for extending this behaviour for other 
-  registration formats.
+  functions will check to see if it defines a path to one (or more) 
+  registrations on disk. These can be of two classes
   
-  The character vector may optionally have an attribute, 'swap', a logical 
-  vector of the same length indicating whether the transformation direction 
-  should be swapped. At the moment only CMTK registration files are supported
+  \itemize{
+  
+  \item CMTK registrations
+  
+  \item \code{\link{reglist}} objects saved in R's \code{RDS} format (see 
+  \code{\link{readRDS}}) which can contain any sequence of registrations 
+  supported by nat.
+  
+  }
+  
+  If the path does indeed point to a CMTK registration, this method will hand
+  off to \code{xformpoints.cmtkreg} or \code{xformimages.cmtkreg}. In this
+  case, the character vector may optionally have an attribute, 'swap', a
+  logical vector of the same length indicating whether the transformation
+  direction should be swapped. At the moment only CMTK registration files are
+  supported.
   
   If \code{reg} is a character vector of length >=1 defining a sequence of 
   registration files on disk they should proceed from sample to reference.

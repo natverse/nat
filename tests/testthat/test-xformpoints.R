@@ -64,4 +64,23 @@ test_that("xformpoints.cmtkreg works ok", {
                xformpoints(creg2,points=xyz,direction='forward'),
                tolerance=1e-6)
 })
+  
+test_that("xformpoints.character can work with reglist objects on disk",{
+  dir.create(td <- tempfile(pattern = 'regdir1'))
+  on.exit(unlink(td, recursive = T))
+  
+  m1=t(rgl::translationMatrix(10, 20, 30))
+  m2=t(rgl::rotationMatrix(10, 1, 2, 3))
+  
+  saveRDS(reglist(m1, m2), file = file.path(td,'rhubarb_crumble.rds'))
+  saveRDS(reglist(m1), file = file.path(td,'rhubarb.rds'))
+  saveRDS(reglist(m2), file = file.path(td,'crumble.rds'))
+  pts=matrix(rnorm(12), ncol=3)
+  m=m2 %*% m1
+  
+  expect_equal(xform(pts, reg = file.path(td,'rhubarb_crumble.rds')),
+               xform(pts, m))
+  expect_equal(xform(pts, reg = file.path(td,c('rhubarb.rds','crumble.rds'))),
+               xform(pts, m))
+})  
 }

@@ -20,9 +20,10 @@ xformpoints(reg, points, ...)
 \method{xformpoints}{default}(reg, points, ...)
 }
 \arguments{
-\item{reg}{A registration defined by a matrix, a function, a \code{cmtkreg} 
-object, or a character vector specifying a path to a CMTK registration on 
-disk (see details).}
+\item{reg}{A registration defined by a matrix, a function, a
+\code{\link{cmtkreg}} object, a \code{\link{reglist}} object containing a
+sequence of arbitrary registrations, or a character vector specifying
+path(s) to registrations on disk (see details).}
 
 \item{points}{Nx3 matrix of points}
 
@@ -39,8 +40,8 @@ space (called \strong{inverse} by CMTK) or from reference to sample space
 that fail to transform under a warping transformation.}
 }
 \description{
-You should almost always call \code{\link{xform}} rather
-  calling than\code{xformpoints} directly.
+You should almost always call \code{\link{xform}} rather calling
+  than\code{xformpoints} directly.
 }
 \details{
 If a list of transformations is passed in, these transformations are
