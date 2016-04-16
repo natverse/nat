@@ -37,6 +37,8 @@ find.neuron<-function(sel3dfun=select3d(), indices=names(db),
     stop("Please pass a neuronlist in argument db or set options",
          "(nat.default.neuronlist='myfavneuronlist'). See ?nat for details.")
   if(is.character(db)) db=get(db)
+  if(missing(sel3dfun) || !is.function(sel3dfun)) 
+    stop("Please provide a selection function!")
   selfun=function(x){
     pointsinside=sel3dfun(na.omit(xyzmatrix(x)))
     sum(pointsinside, na.rm=T)>threshold
