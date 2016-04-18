@@ -552,6 +552,73 @@ resample_segment<-function(d, stepsize, ...) {
   as.data.frame(dnew)
 }
 
+#' Smooth the 3D coordinates of a neuron skeleton
+#'
+#' \code{smooth_neuron} smooths a neuron. 
+#' @param n Neuron to smooth
+#' @param method Smoothing method
+#' @param ... Additional parameters passed to segment smoothing functions
+#'
+#' @return A new neuron with smoothed 3d coordinates
+#' @export
+#'
+#' @examples
+#' ns=smooth_neuron(Cell07PNs[[1]], sigma=2)
+#' \donttest{
+#' plot3d(Cell07PNs[[1]], col='grey')
+#' plot3d(ns, col='red')
+#' }
+smooth_neuron <- function(n, method=c("gauss", "spline"), ...) {
+  method=match.arg(method)
+  FUN=get(paste0('smooth_segment_', method), mode='function')
+  # iterate over segments
+  d=xyzmatrix(n)
+  if(any(is.na(d[,1:3])))
+    stop("Unable to resample neurons with NA points")
+  
+  # fetch all segments and process each segment in turn
+  sl=as.seglist(n, all = T, flatten = T)
+  for (i in seq_along(sl)){
+    s=sl[[i]]
+    # interpolate this segment
+    d[s,]=FUN(d[s, , drop=FALSE], ...)
+  }
+  xyzmatrix(n) <- d
+  n
+}
+
+#' @rdname smooth_neuron
+#' @param xyz A block of 3D coordindates defining an unbranched segment
+#' @param sigma The standard deviation of the Gaussian smoothing kernel (which
+#'   has the same spatial units as the object being smoothed)
+smooth_segment_gauss <- function(xyz, sigma, ...){
+  if(nrow(xyz)<2) return(xyz)
+  # make variable t as the cumulative position along segment
+  t=c(0,cumsum(seglength(xyz, sum = F)))
+  
+  xyzt=xyz
+  
+  for(i in 2:(nrow(xyz)-1)){
+    weights=dnorm(abs(t-t[i]), sd = sigma)
+    weights=weights/sum(weights)
+    xyzt[i,]=colSums(xyz*weights)
+  }
+  xyzt
+}
+
+smooth_segment_spline <- function(xyz, ...) {
+  if(nrow(xyz)<4) return(xyz)
+  # make variable t as the cumulative position along segment
+  t=c(0,cumsum(seglength(xyz, sum = F)))
+  # ensure that ends are fixed
+  w=rep(1,nrow(xyz))
+  w[1]=1e6
+  w[length(w)]=w[1]
+  
+  fittedxyz=apply(xyz, 2, function(u) smooth.spline(t, u, w=w, ...)$y)
+  fittedxyz
+}
+
 #' Subset neuron by keeping only vertices that match given conditions
 #' 
 #' @details \code{subset} defines which vertices of the neuron to keep and is 
