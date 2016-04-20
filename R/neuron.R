@@ -602,7 +602,7 @@ resample_segment<-function(d, stepsize, ...) {
 #' # now find the points downstream (distal) of that with respect to the root
 #' ng=as.ngraph(n)
 #' # use a depth first search 
-#' distal_points=igraph::dfs(ng, root=n$AxonLHEP, unreachable=FALSE, 
+#' distal_points=igraph::graph.dfs(ng, root=n$AxonLHEP, unreachable=FALSE, 
 #'   neimode='out')$order
 #' distal_tree=subset(n, distal_points)
 #' plot(distal_tree, add=TRUE, col='red', lwd=2)

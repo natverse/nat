@@ -22,7 +22,7 @@ Depends:
     rgl
 Imports:
     nabor,
-    igraph,
+    igraph (>= 0.7.1),
     methods,
     filehash,
     digest,

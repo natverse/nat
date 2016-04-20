@@ -246,9 +246,9 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
   if(rval=='ids') {
     if(invert) {
       # find complement of the spine path
-      ie=igraph::difference(igraph::E(ng), igraph::E(ng, path=longestpath))
+      ie=setdiff(igraph::E(ng), igraph::E(ng, path=longestpath))
       # find edge matrix of that path
-      edgemat=igraph::ends(ng, ie, names = FALSE)
+      edgemat=igraph::get.edges(ng, ie)
       # nb transpose and then vectorise to interleave row-wise
       return(unique(as.integer(t(edgemat))))
     } else return(as.integer(longestpath))
@@ -350,7 +350,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
 #' @seealso \code{\link{prune_strahler}}, a \code{\link{segmentgraph}} (a form
 #'   of \code{\link{ngraph}}) representation is used to calculate the Strahler 
 #'   order.
-#' @importFrom igraph bfs neighborhood V
+#' @importFrom igraph graph.bfs neighborhood V
 #' @return A list containing \itemize{
 #'   
 #'   \item points Vector of integer Strahler orders for each point in the neuron
@@ -364,7 +364,7 @@ strahler_order<-function(x){
   if(length(roots)>1)
     stop("strahler_order not yet defined for multiple subtrees")
   
-  b=bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
+  b=graph.bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
   
   # find neighbours for each node
   n=neighborhood(s, 1, mode='out')
@@ -528,12 +528,12 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
     } else stop("I can't understand the edges you have given me!")
   }
   
-  if(invert) edges=igraph::difference(igraph::E(g), edges)
+  if(invert) edges=setdiff(igraph::E(g), edges)
   
-  dg=igraph::delete_edges(g, edges = edges)
+  dg=igraph::delete.edges(g, edges = edges)
   
   # remove unreferenced vertices
-  dg=igraph::delete_vertices(dg, which(igraph::degree(dg, mode='all')==0))
+  dg=igraph::delete.vertices(dg, which(igraph::degree(dg, mode='all')==0))
   as.neuron(as.ngraph(dg), ...)
 }
 
