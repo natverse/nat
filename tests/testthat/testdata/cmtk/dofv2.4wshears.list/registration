@@ -1,0 +1,14 @@
+! TYPEDSTREAM 2.4
+
+registration {
+	reference_study "reference"
+	floating_study "floating"
+	affine_xform {
+		xlate 100 50 50
+		rotate 3 4 5
+		scale 1 1.1 1.2
+		shear 0.1 0.2 0.3
+		center 0 0 0
+	}
+
+}
