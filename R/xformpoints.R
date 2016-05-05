@@ -120,7 +120,7 @@ cmtk.streamxform <- function(points, reg, direction, transformtype) {
   # will be preceded by the inverse flag
   regargs="--"
   for(i in seq_along(reg)){
-    regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, reg[i])
+    regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, shQuote(reg[i]))
   }
   
   outfile=tempfile()
