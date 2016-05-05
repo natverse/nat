@@ -8,6 +8,7 @@
 cmtk.bindir(firstdir = getOption("nat.cmtk.bindir"), extradirs = c("~/bin",
   "/usr/local/lib/cmtk/bin", "/usr/local/bin", "/opt/local/bin",
   "/opt/local/lib/cmtk/bin/", "/Applications/IGSRegistrationTools/bin",
+  "C:\\\\cygwin64\\\\usr\\\\local\\\\lib\\\\cmtk\\\\bin",
   "C:\\\\Program Files\\\\CMTK-3.3\\\\CMTK\\\\lib\\\\cmtk\\\\bin"),
   set = FALSE, check = FALSE, cmtktool = "gregxform")
 }
