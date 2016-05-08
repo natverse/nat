@@ -23,7 +23,7 @@ cmtk.reformatx(floating, registrations, output, target, mask = FALSE,
 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
 
 \item{mask}{Whether to treat target as a binary mask (only reformatting 
-positve voxels)}
+positive voxels)}
 
 \item{direction}{Whether to transform image from sample space to reference
 space (called \strong{forward} by CMTK) or from reference to sample space
