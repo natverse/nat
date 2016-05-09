@@ -176,7 +176,7 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
   # if first registration starts with --inverse then we must prepend --
   regargs=ifelse(direction[1]=="inverse", "--", "")
   for(i in seq_along(registrations)){
-    regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, registrations[i])
+    regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, shQuote(registrations[i]))
   }
   
   # contruct a cmtk call with all these arguments
