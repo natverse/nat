@@ -127,6 +127,27 @@ MacOSX-10.6-x86_64.dmg binary installers). We have also used
 Travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
 
 ## Problems
+### CMTK+nat on Windows
+
+We have much less experience using CMTK on Windows than on Mac/Linux platforms.
+Experiments in May 2016 suggest that the best option is to use the cygwin
+CMTK distribution (cygwin provides a linux like environment). Here are the steps we
+took:
+
+* Install [Cygwin](https://www.cygwin.com/) accepting the default path `C:\cygwin64`
+* When you run Cygwin's setup.exe, you should also install all *fftw3* packages. 
+  (fftw3 is a CMTK dependency which provides fast fourier transform functions)
+* Download `CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to the cygwin folder (`C:\cygwin64`)
+* Start a Cygwin terminal and issue the following command 
+  `tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to extract CMTK to the cygwin folder.
+* Copy all the `C:\cygwin64\bin\cyg*.dll` files to `C:\Windows\System32\` and
+  `C:\Windows\SysWOw64\` (this seems to be necessary when starting executables 
+  from a Windows shell - presumably there is a way to avoid this.)
+* The nat function `cmtk.bindir()` should now correctly identify the cmtk binary
+  directory. You can test that the executables are working by doing e.g. 
+  `cmtk.dof2mat(version = TRUE)` which should then responsd with "3.3.1" if you 
+  have installed the CMTK version we have just mentioned.
+
 If you want some help using **nat**, then please use the following resources
 
 * [nat.examples](https://github.com/jefferis/nat.examples) sample code
