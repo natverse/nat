@@ -126,7 +126,6 @@ MacOSX-10.6-x86_64.dmg binary installers). We have also used
 [neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
 Travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
 
-## Problems
 ### CMTK+nat on Windows
 
 We have much less experience using CMTK on Windows than on Mac/Linux platforms.
