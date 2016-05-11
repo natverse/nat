@@ -424,6 +424,7 @@ prune<-function(x, target, ...) UseMethod("prune")
 #'   \code{\link{subset.neuron}}.
 #' @rdname prune
 #' @seealso \code{\link{subset.neuron}}
+#' @family neuron
 prune.neuron<-function(x, target, ...){
   indstokeep=NextMethod(return.indices=TRUE)
   indstodrop=setdiff(seq(nrow(x$d)), which(indstokeep))

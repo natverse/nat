@@ -50,9 +50,10 @@ rootpoints.default<-function(x, ...) rootpoints(as.ngraph(x), ...)
 #' @rdname rootpoints
 #' @method rootpoints neuron
 #' @export
-#' @param subtrees Integer index of the fully connected subtree in
-#'   \code{x$SubTrees}. Only applicable when a \code{neuron} consists of
+#' @param subtrees Integer index of the fully connected subtree in 
+#'   \code{x$SubTrees}. Only applicable when a \code{neuron} consists of 
 #'   multiple unconnected subtrees.
+#' @family neuron
 rootpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$StartPoint)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)

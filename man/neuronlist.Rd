@@ -17,7 +17,8 @@ A new neuronlist object.
 }
 \description{
 \code{neuronlist} objects consist of a list of neuron objects 
-  along with an optional attached dataframe containing information about the 
+  (usually of class \code{\link{neuron}} or \code{\link{dotprops}}) along 
+  with an optional attached dataframe containing information about the 
   neurons. \code{neuronlist} objects can be indexed using their name or the 
   number of the neuron like a regular list. Both the \code{list} itself and 
   the attached \code{data.frame} must have the same unique (row)names. If the
@@ -32,12 +33,17 @@ A new neuronlist object.
 nl=neuronlist()
 # slice an existing neuronlist with regular indexing
 kcs5=kcs20[1:5]
+
+# extract a single neuron from a neuronlist
+n1=Cell07PNs[[1]]
+
 # list all methods for neuronlist objects
 methods(class='neuronlist')
 }
 \seealso{
-\code{\link{as.data.frame.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}}
+\code{\link{as.data.frame.neuronlist}}, 
+  \code{\link{neuronlist-dataframe-methods}}, \code{\link{neuron}}, 
+  \code{\link{dotprops}}
 
 Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{is.neuronlist}},

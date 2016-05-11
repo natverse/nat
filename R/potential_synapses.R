@@ -28,6 +28,7 @@ potential_synapses.neuronlist<-function(a, b, s, ...) {
 #' @method potential_synapses neuron
 #' @export
 #' @rdname potential_synapses
+#' @family neuron
 potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct", "approx"), ...) {
   method=match.arg(method, c("direct","approx"))
   
