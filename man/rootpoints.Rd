@@ -44,8 +44,8 @@ endpoints(x, ...)
 
 \item{...}{Further arguments passed to methods}
 
-\item{subtrees}{Integer index of the fully connected subtree in
-\code{x$SubTrees}. Only applicable when a \code{neuron} consists of
+\item{subtrees}{Integer index of the fully connected subtree in 
+\code{x$SubTrees}. Only applicable when a \code{neuron} consists of 
 multiple unconnected subtrees.}
 }
 \value{
@@ -59,5 +59,12 @@ Return the branchpoints of a neuron or graph
 \details{
 \code{branchpoints.neuron} returns a list if more than one subtree is
   specified
+}
+\seealso{
+Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
+  \code{\link{plot.neuron}},
+  \code{\link{potential_synapses}}, \code{\link{prune}},
+  \code{\link{resample}}, \code{\link{spine}},
+  \code{\link{subset.neuron}}
 }
 

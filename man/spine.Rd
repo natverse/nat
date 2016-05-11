@@ -61,5 +61,11 @@ plot3d(antispine, lwd=4, col='red')
   \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for 
   removing lower order branches from a neuron, \code{\link{prune}} for 
   removing parts of a neuron by spatial criteria.
+
+Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
+  \code{\link{plot.neuron}},
+  \code{\link{potential_synapses}}, \code{\link{prune}},
+  \code{\link{resample}}, \code{\link{rootpoints}},
+  \code{\link{subset.neuron}}
 }
 

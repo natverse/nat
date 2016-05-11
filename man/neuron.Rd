@@ -113,11 +113,41 @@ When the graph vertices have a label attribute derived from PointNo,
   the origin is assumed to be specified with respect to the vertex labels 
   rather than the raw vertex ids.
 }
+\examples{
+## See help for functions listed in See Also for more detailed examples
+## Basic properties
+# a sample neuron 
+n = Cell07PNs[[1]]
+# inspect its internal structure
+str(n)
+# summary of 3D points
+summary(xyzmatrix(n))
+# identify 3d location of endpoints
+xyzmatrix(n)[endpoints(n),]
+
+## Neurons as graphs
+# convert to graph and find longest paths by number of nodes
+ng=as.ngraph(n)
+hist(igraph::distances(ng))
+# ... or in distances  microns
+ngw=as.ngraph(n, weights=TRUE)
+hist(igraph::distances(ngw))
+
+## Other methods
+# plot
+plot(n)
+# all methods for neuron objects
+methods(class = 'neuron')
+}
 \seealso{
 \code{\link{neuronlist}}
 
 \code{\link{graph.dfs}, \link{as.seglist}}
 
-Other neuron: \code{\link{ngraph}}
+Other neuron: \code{\link{ngraph}},
+  \code{\link{plot.neuron}},
+  \code{\link{potential_synapses}}, \code{\link{prune}},
+  \code{\link{resample}}, \code{\link{rootpoints}},
+  \code{\link{spine}}, \code{\link{subset.neuron}}
 }
 

@@ -223,6 +223,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' 
 #' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter 
 #'   delete.vertices
+#' @family neuron
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
                   rval=c("neuron", "length", "ids")) {
   ng <- as.ngraph(n, weights=SpatialWeights)

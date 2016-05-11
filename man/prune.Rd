@@ -74,5 +74,11 @@ plot3d(kcs20,col='grey')
 \code{\link{subset.neuron}}
 
 \code{\link{subset.dotprops}}
+
+Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
+  \code{\link{plot.neuron}},
+  \code{\link{potential_synapses}}, \code{\link{resample}},
+  \code{\link{rootpoints}}, \code{\link{spine}},
+  \code{\link{subset.neuron}}
 }
 

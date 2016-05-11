@@ -111,6 +111,10 @@ all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
   \code{\link{subset.neuron}} for example of graph-based manipulation of a
   neuron.
 
-Other neuron: \code{\link{neuron}}
+Other neuron: \code{\link{neuron}},
+  \code{\link{plot.neuron}},
+  \code{\link{potential_synapses}}, \code{\link{prune}},
+  \code{\link{resample}}, \code{\link{rootpoints}},
+  \code{\link{spine}}, \code{\link{subset.neuron}}
 }
 

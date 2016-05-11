@@ -256,6 +256,7 @@ pan3d <- function(button) {
 #' plot(Cell07PNs[[4]], WithNodes=FALSE, soma=TRUE)
 #' # Plot with soma of defined radius
 #' plot(Cell07PNs[[4]], WithNodes=FALSE, soma=1.25)
+#' @family neuron
 plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
                         WithText=FALSE, soma=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,

@@ -44,4 +44,10 @@ Stepanyants A, Chklovskii DB.
 Trends Neurosci. 2005 Jul;28(7):387-94.
 \url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
 }
+\seealso{
+Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
+  \code{\link{plot.neuron}}, \code{\link{prune}},
+  \code{\link{resample}}, \code{\link{rootpoints}},
+  \code{\link{spine}}, \code{\link{subset.neuron}}
+}
 

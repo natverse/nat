@@ -99,5 +99,10 @@ plot(Cell07PNs[[4]], WithNodes=FALSE, soma=1.25)
 }
 \seealso{
 \code{\link{plot3d.neuron}}
+
+Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
+  \code{\link{potential_synapses}}, \code{\link{prune}},
+  \code{\link{resample}}, \code{\link{rootpoints}},
+  \code{\link{spine}}, \code{\link{subset.neuron}}
 }
 

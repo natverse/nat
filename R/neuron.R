@@ -35,9 +35,34 @@
 #'   (\code{NULL}) sets NeuronName to the file name without the file extension.
 #' @param MD5 Logical indicating whether to calculate MD5 hash of input
 #' @importFrom tools md5sum
+#' @examples 
+#' ## See help for functions listed in See Also for more detailed examples
+#' ## Basic properties
+#' # a sample neuron 
+#' n = Cell07PNs[[1]]
+#' # inspect its internal structure
+#' str(n)
+#' # summary of 3D points
+#' summary(xyzmatrix(n))
+#' # identify 3d location of endpoints
+#' xyzmatrix(n)[endpoints(n),]
+#' 
+#' ## Neurons as graphs
+#' # convert to graph and find longest paths by number of nodes
+#' ng=as.ngraph(n)
+#' hist(igraph::distances(ng))
+#' # ... or in distances  microns
+#' ngw=as.ngraph(n, weights=TRUE)
+#' hist(igraph::distances(ngw))
+#' 
+#' ## Other methods
+#' # plot
+#' plot(n)
+#' # all methods for neuron objects
+#' methods(class = 'neuron')
 neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPoints,
                  SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL, ...,
-                 MD5=TRUE){
+                 MD5=TRUE){get
   
   coreFieldOrder=c("NumPoints", "StartPoint", "BranchPoints", 
                "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
@@ -471,6 +496,7 @@ resample<-function(x, ...) UseMethod("resample")
 #' @export
 #' @rdname resample
 #' @seealso \code{\link{approx}}, \code{\link{seglengths}}
+#' @family neuron
 resample.neuron<-function(x, stepsize, ...) {
   # extract original vertex array before resampling
   cols=c("X","Y","Z")
@@ -646,6 +672,7 @@ resample_segment<-function(d, stepsize, ...) {
 #' y=subset(Cell07PNs[[1]], function(x) Negate(pointsinside)(x, lh))
 #' plot3d(y, col='red', lwd=2)
 #' }
+#' @family neuron
 subset.neuron<-function(x, subset, invert=FALSE, ...){
   e <- substitute(subset)
   r <- eval(e, x$d, parent.frame())
