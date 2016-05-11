@@ -17,7 +17,8 @@
   registerformat('hxlineset', ext='.am', read=read.neuron.hxlineset, 
                  write=write.neuron.hxlineset, magic=is.hxlineset,
                  class='neuron', magiclen=14L)
-    
+  registerformat('vtk', ext='.vtk', write=write.vtk.neuron, class='neuron')
+  
   # image formats
   registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d.nrrd, 
                  write=write.nrrd, magic=is.nrrd,

@@ -71,6 +71,7 @@ Collate:
     'seglist.R'
     'summary.R'
     'vaa3draw-io.R'
+    'vtk-io.R'
     'xform.R'
     'xformimage.R'
     'xformpoints.R'
