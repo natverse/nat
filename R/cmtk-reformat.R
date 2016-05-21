@@ -173,8 +173,10 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
     # need to recycle manually
     direction=rep(direction, length(registrations))
   }
-  # if first registration starts with --inverse then we must prepend --
-  regargs=ifelse(direction[1]=="inverse", "--", "")
+  # reformatx docs say that if first registration starts with --inverse then we 
+  # must prepend -- but this seems not to be the case
+  # regargs=ifelse(direction[1]=="inverse", "--", "")
+  regargs=character()
   for(i in seq_along(registrations)){
     regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, shQuote(registrations[i]))
   }
