@@ -6,6 +6,7 @@
 #' @param datatype The VTK data type (one of float or double)
 #' @param WriteAllSubTrees Whether to write all subtrees in the neuron or just 
 #'   the main tree.
+#' @param ... Additional arguments to methods
 #'   
 #' @export
 #' @examples 
@@ -18,7 +19,7 @@ write.vtk <-function(x, file, ...) UseMethod("write.vtk")
 
 #' @export
 #' @rdname write.vtk
-write.vtk.neuron <-function(x, file, datatype=c("float","double"), title = file, WriteAllSubTrees=TRUE){
+write.vtk.neuron <-function(x, file, datatype=c("float","double"), title = file, WriteAllSubTrees=TRUE, ...){
   file.create(file)
   points=xyzmatrix(x)
   if(ncol(points)!=3) stop("Expect N rows x 3 cols of 3d points")

@@ -8,12 +8,14 @@
 write.vtk(x, file, ...)
 
 \method{write.vtk}{neuron}(x, file, datatype = c("float", "double"),
-  title = file, WriteAllSubTrees = TRUE)
+  title = file, WriteAllSubTrees = TRUE, ...)
 }
 \arguments{
 \item{x}{Object to write}
 
 \item{file}{Path to output file}
+
+\item{...}{Additional arguments to methods}
 
 \item{datatype}{The VTK data type (one of float or double)}
 
