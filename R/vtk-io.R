@@ -41,7 +41,7 @@ write.vtk.neuron <-function(x, file, datatype=c("float","double"), title = file,
       paste("POINTS",length(chosenVertices),datatype),sep="\n",file=fc)
   
   write.table(points[chosenVertices,],col.names=F,row.names=F,file=fc)
-  cat("LINES", length(SegList), length(usl)+length(SegList), "\n", file = fc)
-  lapply(SegList,function(x) cat(length(x), x-1, "\n", file=fc))
+  cat(paste("LINES", length(SegList), length(usl)+length(SegList)), "\n", sep="", file = fc)
+  lapply(SegList,function(x) cat(length(x)," ", paste(x-1, collapse = " "), "\n", sep="", file=fc))
   invisible()
 }
