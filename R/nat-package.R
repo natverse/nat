@@ -39,6 +39,10 @@
 #'   the \code{myneuronlist[i,j]} notation (see 
 #'   \code{\link{neuronlist-dataframe-methods}}).
 #'   
+#'   Neurons can be read in to a neuronlist using \code{\link{read.neurons}} or 
+#'   written out using \code{\link{write.neurons}} with support for many of the
+#'   most common formats including swc.
+#'   
 #'   Metadata can be used to colour or subset the neurons during plotting (see 
 #'   \code{\link{plot3d.neuronlist}} and \code{\link{subset.neuronlist}}). 
 #'   Interactive 3D selection of neurons in a neuronlist is also possible using 
@@ -92,13 +96,13 @@
 #'   surface (mesh) objects defined by Amira's HxSurface class. See 
 #'   \code{\link{read.hxsurf}} and links therein. In addition hxsurf objects can
 #'   be converted to the \code{\link[rgl]{mesh3d}} format, which provides a link
-#'   to the \code{\link[rgl]{rgl}} package and also to packages for morphometrics
-#'   and sophisticated mesh manipulation such as 
-#'   \href{http://cran.r-project.org/package=Morpho}{Morpho} and
+#'   to the \code{\link[rgl]{rgl}} package and also to packages for 
+#'   morphometrics and sophisticated mesh manipulation such as 
+#'   \href{http://cran.r-project.org/package=Morpho}{Morpho} and 
 #'   \href{http://cran.r-project.org/package=Rvcg}{Rvcg}.
 #'   
-#' @section rgl Package: \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}} package 
-#'   extensively for 3D visualisation. rgl's core function is to provide 
+#' @section rgl Package: \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}} 
+#'   package extensively for 3D visualisation. rgl's core function is to provide
 #'   interactive visualisation (usually in an X11 window depending on OpenGL - 
 #'   and therefore on a graphics card or OpenGL software emulator) but recently 
 #'   significant functionality for static snapshots and embedding results in 
@@ -108,6 +112,15 @@
 #'   non-interactive R sessions. If you want to use nat in interactive 
 #'   environments where X11 is not available, you may want to set 
 #'   \code{options(rgl.useNULL=TRUE)} manually before loading nat.
+#'   
+#'   
+#' @section File Formats: \bold{nat} supports multiple input and output data 
+#'   formats for the object classes. There is a registry-based mechanism which 
+#'   allows support for reading or writing specific file formats to be plugged 
+#'   in to reasonably generic functions such as \code{\link{read.neurons}}. It 
+#'   is perfectly possible for other R packages or end users to extend the 
+#'   supported list of file types by registering new read/write or 
+#'   identification functions.
 #'   
 #' @section Package Options: The following options can be set to specify default
 #'   behaviour.
