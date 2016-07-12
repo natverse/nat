@@ -487,7 +487,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #'   These functions would normally be called from \code{read.neuron(s)} rather 
 #'   than used directly.
 #' @section SWC Format: According to 
-#'   \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC file format has a
+#'   \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
 #' @param ... Additional arguments. \code{read.neuron.swc} passes theseto 

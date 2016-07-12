@@ -40,7 +40,7 @@ These functions will accept SWC neurons with multiple trees and
 }
 \section{SWC Format}{
  According to 
-  \url{http://www.soton.ac.uk/~dales/morpho/morpho_doc} SWC file format has a
+  \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
   radius not a diameter specification
 }
 \seealso{
