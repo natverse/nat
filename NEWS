@@ -1,3 +1,13 @@
+nat 1.8.4
+=========
+* fix  build failures with testthat >=0.12 (#293)
+* ensure that nat still works with igraph <1.0 (#298)
+* fix read.hxsurf failure when a region is not listed in the Parameters section (#291)
+* Protect find.neuron from trying to filter with a neuronlist (#299)
+* Fix simplification of reglist containing one cmtkreg (#297)
+* Don't lose swap attribute when >1 cmtk registrations in reglist (#296)
+* Documentation improvements for neurons and file formats
+
 nat 1.8.3
 =========
 * nat now handles compound registrations via reglist objects (#286).
