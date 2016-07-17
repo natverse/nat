@@ -1,10 +1,10 @@
-# nat 1.8.1
-nat 1.8.1 fixes some non-canonical URLs to CRAN packages spotted by Uwe Ligges 
-in 1.8.0
+# nat 1.8.4
+nat 1.8.4 fixes a breakage due to changes in behaviour for testthat >0.12 as 
+well as providing some new functionality.
 
 ## Test environments
-* local OS X install, R 3.2.3
-* ubuntu 12.04 (on travis-ci), R 3.2.3
+* local OS X install, R 3.3.1
+* ubuntu 12.04 (on travis-ci), R 3.2.5
 * winbuilder (devel and release)
 
 http://win-builder.r-project.org/Ih4Jz8HF1aP2
@@ -14,9 +14,22 @@ Running R CMD check --as-cran gave
 
 no ERRORs or WARNINGs and 1 NOTE:
 
-* checking package dependencies ... NOTE
-  No repository set, so cyclic dependency check skipped
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Greg Jefferis <jefferis@gmail.com>’
 
-## Downstream dependencies
-I have also run R CMD check on downstream dependencies of nat. All packages 
-passed.
+Found the following (possibly) invalid URLs:
+  URL: http://dx.doi.org/10.1038/nature10428 (moved to /nature/journal/v478/n7368/full/nature10428.html)
+    From: README.md
+    Status: 401
+    Message: Unauthorized
+
+I have left this dx.doi.org URL in place since it will always redirect to the 
+current location of the article on the Nature website (which is not guaranteed).
+The Unauthorized message comes up because the article is paywalled (I do not see
+it at work).
+
+## Tests
+Note that some tests have been marked as donttest to reduce the standard test
+time including on CRAN. I have succesfully run all tests using 
+
+  R CMD CHECK --run-donttest --as-cran
