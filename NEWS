@@ -1,3 +1,15 @@
+nat 1.8.5
+=========
+The main feature of this release is improved support for nat+CMTK on Windows.
+
+* teach voxdims.character to get voxel dimensions straight from image file on 
+  disk enhancement (#303)
+* teach coord2ind to accept nat.templatebrains objects for imdims (#302)
+* add simple smooth_neuron function (#300)
+* fix bug reading amira surfaces when Color precedes Id (#305)
+* cmtk.reformatx needs to use system2 (#301)
+* Don't use shell features on Windows (#295)
+
 nat 1.8.4
 =========
 * fix  build failures with testthat >=0.12 (#293)
