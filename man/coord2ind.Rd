@@ -15,7 +15,8 @@ coord2ind(coords, ...)
 
 \item{...}{extra arguments passed to methods.}
 
-\item{imdims}{array dimensions of 3D image.}
+\item{imdims}{array dimensions of 3D image \emph{OR} an object for which a 
+\code{\link{as.im3d}} object has been defined (see Details).}
 
 \item{voxdims}{vector of 3 voxels dimensions (width, height, depth).}
 
@@ -29,6 +30,24 @@ coord2ind(coords, ...)
 }
 \description{
 Find 1D indices into a 3D image given spatial coordinates
+}
+\details{
+\code{coord2ind} is designed to cope with any user-defined class for
+  which an as.im3d method exists. Presently the only example in the nat.* 
+  ecosystem is \code{nat.templatebrains::as.im3d.templatebrain}. The 
+  existence of an \code{as.im3d} method implies that 
+  \code{voxdims},\code{origin}, and \code{dim} functions can be called. This
+  is the necessary information required to convert i,j,k logical indices into
+  x,y,z spatial indices.
+}
+\examples{
+coord2ind(cbind(1,2,3), imdims = c(1024,512,218), 
+  voxdims = c(0.622088, 0.622088, 0.622088), origin = c(0,0,0))
+\dontrun{
+## repeat but using a templatebrain object to specify the coordinate system
+library(nat.flybrains)
+coord2ind(cbind(1,2,3), JFRC2)
+}
 }
 \seealso{
 \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}

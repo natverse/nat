@@ -83,13 +83,29 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 
 #' Find 1D indices into a 3D image given spatial coordinates
 #' 
+#' @details \code{coord2ind} is designed to cope with any user-defined class for
+#'   which an as.im3d method exists. Presently the only example in the nat.* 
+#'   ecosystem is \code{nat.templatebrains::as.im3d.templatebrain}. The 
+#'   existence of an \code{as.im3d} method implies that 
+#'   \code{voxdims},\code{origin}, and \code{dim} functions can be called. This
+#'   is the necessary information required to convert i,j,k logical indices into
+#'   x,y,z spatial indices.
 #' @param coords spatial coordinates of image voxels.
 #' @param ... extra arguments passed to methods.
 #' @export
+#' @examples 
+#' coord2ind(cbind(1,2,3), imdims = c(1024,512,218), 
+#'   voxdims = c(0.622088, 0.622088, 0.622088), origin = c(0,0,0))
+#' \dontrun{
+#' ## repeat but using a templatebrain object to specify the coordinate system
+#' library(nat.flybrains)
+#' coord2ind(cbind(1,2,3), JFRC2)
+#' }
 coord2ind <- function(coords, ...) UseMethod("coord2ind")
 
 
-#' @param imdims array dimensions of 3D image.
+#' @param imdims array dimensions of 3D image \emph{OR} an object for which a 
+#'   \code{\link{as.im3d}} object has been defined (see Details).
 #' @param voxdims vector of 3 voxels dimensions (width, height, depth).
 #' @param origin the origin of the 3D image.
 #' @param aperm permutation order for axes.
@@ -99,12 +115,13 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp, ...){
-  if(inherits(imdims, 'im3d')) {
+  if(is.object(imdims)){
+    if(!inherits(imdims, "im3d"))
+      imdims=as.im3d(imdims)
     voxdims <- voxdims(imdims)
     origin <- origin(imdims)
     imdims <- dim(imdims)
-  }
-  else if(is.array(imdims)){
+  } else if(is.array(imdims)){
     if(missing(voxdims))
       voxdims=as.numeric(voxdims(imdims))
     if(missing(origin))
