@@ -151,6 +151,8 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
     colorLine <- grep("Color", headerLines[headerSecStart:headerSecEnd], value=T)
     if(length(colorLine) > 0) {
       rgbValues <- strsplit(regmatches(colorLine, gregexpr("[0-9]$|[0-9][^\\.]|[0-9]\\.[0-9]+", colorLine, perl=T))[[1]], " ")
+      # clean up any trailing commas
+      rgbValues <- gsub("[,}]","", rgbValues)
       color <- rgb(rgbValues[[1]], rgbValues[[2]], rgbValues[[3]])
     } else {
       color <- FallbackRegionCol

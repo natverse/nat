@@ -43,6 +43,14 @@ test_that("we can use fallback colour for surfaces", {
   expect_equal(tet.hxsurf2, tet.hxsurf)
 })
 
+test_that("we can cope with Color line preceding id", {
+  tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
+  tet.hxsurf2=read.hxsurf("testdata/amira/tetrahedron-colswap.surf")
+  tet.hxsurf3=read.hxsurf("testdata/amira/tetrahedron-colbrace.surf")
+  expect_equal(tet.hxsurf2, tet.hxsurf)
+  expect_equal(tet.hxsurf3, tet.hxsurf)
+})
+
 test_that("we can cope with malformed materials/patch headers", {
   expect_is(s <- read.hxsurf("testdata/amira/malformed_labels.surf"), 'hxsurf')
   expect_equal(s$RegionList, c("Interior", "D"))
