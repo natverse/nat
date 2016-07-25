@@ -13,8 +13,7 @@
 #' @family cmtk-geometry
 #' @export
 cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
-  dof2mat=file.path(cmtk.bindir(check=TRUE),"dof2mat")
-  if(version) return(system2(dof2mat,'--version',stdout=TRUE))
+  if(version) return(cmtk.system2(cmtk.call("dof2mat", version=TRUE, RETURN.TYPE = 'list'), stdout=TRUE))
   
   if(is.numeric(reg)){
     params<-reg
@@ -23,8 +22,8 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
     write.cmtkreg(params,foldername=reg)
   }
   
-  cmd=paste(dof2mat,ifelse(Transpose,'--transpose',''),shQuote(path.expand(reg)))
-  rval=system(cmd,intern=TRUE)
+  call=cmtk.call("dof2mat", transpose=Transpose, RETURN.TYPE = 'list')
+  rval=cmtk.system2(call, moreargs = path.expand(reg), stdout=TRUE)
   numbers=as.numeric(unlist(strsplit(rval,"\t")))
   matrix(numbers,ncol=4,byrow=TRUE)
 }
@@ -47,30 +46,32 @@ cmtk.dof2mat<-function(reg, Transpose=TRUE, version=FALSE){
 #' @family cmtk-geometry
 #' @export
 cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
-  mat2dof=file.path(cmtk.bindir(check=TRUE),'mat2dof')
-  if(version) return(system2(mat2dof,'--version',stdout=TRUE))
+  
+  if(version) {
+    ver=cmtk.system2(cmtk.call('mat2dof', version=TRUE, RETURN.TYPE = 'list'), stdout=TRUE)
+    return(ver)
+  }
   if(!is.matrix(m) || nrow(m)!=4 || ncol(m)!=4) stop("Please give me a homogeneous affine matrix (4x4)")
   inf=tempfile()
-  on.exit(unlink(inf),add=TRUE)
+  on.exit(unlink(inf), add=TRUE)
   
   write.table(m, file=inf, sep='\t', row.names=F, col.names=F)
   # always transpose because mat2dof appears to read the matrix with last column being 0 0 0 1
   
-  cmd=if(Transpose) paste(mat2dof,'--transpose') else mat2dof
   if(!is.null(centre)) {
     if(length(centre)!=3) stop("Must supply 3-vector for centre")
-    cmd=paste(cmd,'--center',paste(centre, collapse=","))
   }
+  cmtkcall=cmtk.call('mat2dof', transpose=Transpose, center=centre, RETURN.TYPE = 'list')
+  
   if(is.null(f)){
-    cmd=paste(cmd,sep="<",shQuote(inf))
-    params=read.table(text=system(cmd,intern=T),sep='\t',comment.char="")[,2]
+    res=cmtk.system2(cmtkcall, stdin=inf, stdout=TRUE)
+    params=read.table(text=res, sep='\t',comment.char="")[,2]
     if(length(params)!=15) stop("Trouble reading mat2dof response")
     numbers <- matrix(params, ncol=3, byrow=TRUE)
     rownames(numbers) <- c("xlate", "rotate", "scale", "shear", "center")
     return(numbers)
   } else {
-    cmd=paste(cmd,'--list',shQuote(path.expand(f)),"<",shQuote(inf))
-    return(system(cmd)==0)
+    cmtk.system2(cmtkcall, moreargs=c('--list', path.expand(f)), stdin=inf)==0
   }
 }
 
@@ -124,8 +125,13 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
                       extradirs=c('~/bin','/usr/local/lib/cmtk/bin',
                                   '/usr/local/bin','/opt/local/bin',
                                   '/opt/local/lib/cmtk/bin/',
-                                  '/Applications/IGSRegistrationTools/bin'),
+                                  '/Applications/IGSRegistrationTools/bin',
+                                  'C:\\cygwin64\\usr\\local\\lib\\cmtk\\bin',
+                                  'C:\\Program Files\\CMTK-3.3\\CMTK\\lib\\cmtk\\bin'),
                       set=FALSE, check=FALSE, cmtktool='gregxform'){
+  # TODO check pure Windows vs cygwin
+  if(isTRUE(.Platform$OS.type=="windows" && tools::file_ext(cmtktool)!="exe"))
+    cmtktool=paste0(cmtktool,".exe")
   bindir=NULL
   if(!is.null(firstdir)) {
     bindir=firstdir
@@ -191,9 +197,12 @@ cmtk.version<-function(minimum=NULL){
   else cmtk_numeric_version
 }
 
-#' Utility function to create a call to a cmtk commandline tool
+#' Utility function to create and run calls to CMTK commandline tools
 #' 
-#' @details arguments in ... will be processed as follows:
+#' @description \code{cmtk.call} processes arguments into a form compatible with
+#'   CMTK command line tools.
+#'   
+#' @details  \code{cmtk.call} processes arguments in ... as follows:
 #'   
 #'   \itemize{
 #'   
@@ -206,20 +215,30 @@ cmtk.version<-function(minimum=NULL){
 #'   \item{character vectors}{ (which must be of length 1) will be passed on as 
 #'   \code{--arg-name arg} i.e. quoting is left up to callee.}
 #'   
-#'   \item{numeric vectors}{ will be collapsed with commas if of length greater
-#'   than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will
+#'   \item{numeric vectors}{ will be collapsed with commas if of length greater 
+#'   than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will 
 #'   result in \code{--target-offset 1,2,3}}
 #'   
 #'   }
 #' @param tool Name of the CMTK tool
 #' @param PROCESSED.ARGS Character vector of arguments that have already been 
 #'   processed by the callee. Placed immediately after cmtk tool.
-#' @param ... Additional named arguments to be processed. See details.
+#' @param ... Additional named arguments to be processed by (\code{cmtk.call}, 
+#'   see details) or passed to \code{system2} (\code{cmtk.system2}).
 #' @param FINAL.ARGS Character vector of arguments that have already been 
 #'   processed by the callee. Placed at the end of the call after optional 
 #'   arguments.
-#' @return a string of the form \code{"<tool> <PROCESSED.ARGS> <...> 
-#'   <FINAL.ARGS>"}
+#' @param RETURN.TYPE Sets return type to a character string or list (the latter
+#'   is suitable for use with \code{\link{system2}})
+#' @return \emph{Either} a string of the form \code{"<tool> <PROCESSED.ARGS> 
+#'   <...> <FINAL.ARGS>"} \emph{or} a list containing elements \itemize{
+#'   
+#'   \item command A character vector of length 1 indicating the full path to 
+#'   the CMTK tool, shell quoted for protection.
+#'   
+#'   \item args A character vector of arguments of length 0 or greater.
+#'   
+#'   }
 #' @seealso \code{\link{cmtk.bindir}}
 #' @export
 #' @examples
@@ -229,10 +248,13 @@ cmtk.version<-function(minimum=NULL){
 #' # get help for a cmtk tool
 #' system(cmtk.call('reformatx', help=TRUE))
 #' }
-cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
-  cmd=shQuote(file.path(cmtk.bindir(check=TRUE),tool))
+cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL, RETURN.TYPE=c("string", "list")){
+  RETURN.TYPE=match.arg(RETURN.TYPE)
+  cmd=file.path(cmtk.bindir(check=TRUE),tool)
+  cmtkargs=character()
+  
   if(!is.null(PROCESSED.ARGS)){
-    cmd=paste(cmd, paste(PROCESSED.ARGS, collapse=' '))
+    cmtkargs=c(cmtkargs, PROCESSED.ARGS)
   }
   
   if(!missing(...)){
@@ -242,25 +264,55 @@ cmtk.call<-function(tool, PROCESSED.ARGS=NULL, ..., FINAL.ARGS=NULL){
       cmtkarg=cmtk.arg.name(n)
       if(is.character(arg)){
         if(length(arg)!=1) stop("character arguments must have length 1")
-        cmd=paste(cmd,cmtkarg,arg)
+        cmtkargs=c(cmtkargs, cmtkarg, arg)
       } else if(is.logical(arg)){
-        if(isTRUE(arg)) cmd=paste(cmd,cmtkarg)
+        if(isTRUE(arg)) cmtkargs=c(cmtkargs, cmtkarg)
       } else if(is.numeric(arg)){
-        arg=paste(arg,collapse=',')
-        cmd=paste(cmd,cmtkarg,arg)
+        arg=paste(arg, collapse=',')
+        cmtkargs=c(cmtkargs, cmtkarg, arg)
       } else if(is.null(arg)){
-        # just ifgnore null arguemnts
+        # just ignore null arguemnts
       } else {
         stop("unrecognised argument type")
       }
     }
+    
   }
   
   if(!is.null(FINAL.ARGS)){
-    cmd=paste(cmd, paste(FINAL.ARGS, collapse=' '))
+    cmtkargs=c(cmtkargs, FINAL.ARGS)
   }
-  
-  cmd
+  if(RETURN.TYPE=="string") {
+    paste(shQuote(cmd), paste(cmtkargs, collapse = " "))
+  } else {
+    list(command=cmd, args=cmtkargs)
+  }
+}
+
+
+#' @description \code{cmtk.system2} actually calls a cmtk tool using a call list
+#'   produced by \code{cmtk.call}
+#'   
+#' @param cmtkcall A list containing processed arguments prepared by 
+#'   \code{cmtk.call(RETURN.TYPE="list")}
+#' @param moreargs Additional arguments to add to the processed call
+#'   
+#' @return See the help of \code{\link{system2}} for details.
+#' @export
+#' 
+#' @examples
+#' \dontrun{
+#' cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"))
+#' # capture response into an R variable
+#' helptext=cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"),
+#'   stdout=TRUE)
+#' }
+#' @rdname cmtk.call
+cmtk.system2 <- function(cmtkcall, moreargs=NULL, ...){
+  if(!is.null(moreargs))
+    cmtkcall$args=c(cmtkcall$args, moreargs)
+  fullargs=c(cmtkcall, ...)
+  do.call(system2, fullargs)
 }
 
 # utility function to make a cmtk argument name from a valid R argument

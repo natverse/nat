@@ -985,3 +985,16 @@ test_that("write.neurons works",{
   files_found=dir(td,recursive=T,pattern='swc$')
   expect_true(all(basename(written_files)%in%basename(files_found)))
 })
+
+
+context("vtk-io")
+
+test_that("we can write a neuron to vtk format", {
+  testd=data.frame(PointNo=1:6,Label=2L,
+                   X=c(1:5,3),Y=c(rep(1,5),2),Z=0,W=NA,
+                   Parent=c(-1,1:4,3))
+  testn=as.neuron(testd)
+  tf <- tempfile(fileext = '.vtk')
+  write.vtk(testn, tf)
+  readLines(tf)
+})

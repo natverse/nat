@@ -2,15 +2,21 @@
 % Please edit documentation in R/im3d.R
 \name{voxdims}
 \alias{voxdims}
+\alias{voxdims.character}
 \alias{voxdims.default}
+\alias{voxdims.im3d}
 \title{Return voxel dimensions of an object}
 \usage{
 voxdims(x, ...)
 
+\method{voxdims}{im3d}(x, ...)
+
+\method{voxdims}{character}(x, ...)
+
 \method{voxdims}{default}(x, dims, ...)
 }
 \arguments{
-\item{x}{An \code{im3d} object with associated voxel dimensions or a 2 x 3 
+\item{x}{An \code{im3d} object with associated voxel dimensions, a path to  or a 2 x 3 
 BoundingBox \code{matrix}.}
 
 \item{...}{Additional arguments for methods}

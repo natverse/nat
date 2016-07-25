@@ -288,7 +288,7 @@ read.im3d.nrrd<-function(f, ReadData=TRUE, AttachFullHeader=FALSE,
 #' 
 #' @description This would properly be thought of as the voxel spacing when 
 #'   voxels are assumed not to have a physical extent (only a location).
-#' @param x An \code{im3d} object with associated voxel dimensions or a 2 x 3 
+#' @param x An \code{im3d} object with associated voxel dimensions, a path to  or a 2 x 3 
 #'   BoundingBox \code{matrix}.
 #' @param ... Additional arguments for methods
 #' @return A numeric vector of length 3, NA when missing.
@@ -300,9 +300,19 @@ read.im3d.nrrd<-function(f, ReadData=TRUE, AttachFullHeader=FALSE,
 voxdims<-function(x, ...) UseMethod("voxdims")
 
 #' @export
+#' @rdname voxdims
 voxdims.im3d<-function(x, ...){
   voxdims(boundingbox(x), dim(x), ...)
 }
+
+#' @export
+#' @rdname voxdims
+voxdims.character<-function(x, ...) {
+  if(!file.exists(x))
+    stop("Unable to find a file at path: ",x)
+  voxdims(read.im3d(x, ReadData=FALSE))
+}
+
 
 #' @export
 #' @method voxdims default

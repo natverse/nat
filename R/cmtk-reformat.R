@@ -96,7 +96,7 @@ cmtk.targetvolume.default <- function(target, ...) {
 #' @param output The path to the output image (defaults to
 #'   \code{"<targetstem>_<floatingstem>.nrrd"})
 #' @param mask Whether to treat target as a binary mask (only reformatting 
-#'   positve voxels)
+#'   positive voxels)
 #' @param interpolation What interpolation scheme to use for output image 
 #'   (defaults to linear - see details)
 #' @param dryrun Just print command
@@ -166,30 +166,48 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
     } else if(Verbose) cat("Overwriting",output,"because OverWrite=\"yes\"\n")
   } else OverWrite="yes" # just for the purpose of the runtime checks below 
   
+  
   # deal with registrations
   direction=match.arg(direction, c("forward", "inverse"), several.ok = T)
-  inverseflags <- sapply(direction, function(x) ifelse(x == 'forward', '', '--inverse'))
-  regspec <- paste(c(rbind(inverseflags, shQuote(path.expand(registrations)))), collapse=" ")
-
-  cmd=cmtk.call('reformatx',if(Verbose) "--verbose" else NULL,
-                outfile=shQuote(output),floating=shQuote(floating),
-                mask=mask, interpolation=interpolation, ...,
-                FINAL.ARGS=c(targetspec, regspec))
+  if(length(registrations)>1 && length(direction)==1){
+    # need to recycle manually
+    direction=rep(direction, length(registrations))
+  }
+  # reformatx docs say that if first registration starts with --inverse then we 
+  # must prepend -- but this seems not to be the case
+  # regargs=ifelse(direction[1]=="inverse", "--", "")
+  regargs=character()
+  for(i in seq_along(registrations)){
+    regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, shQuote(registrations[i]))
+  }
+  
+  # contruct a cmtk call with all these arguments
+  reformatxcall=cmtk.call(tool='reformatx', RETURN.TYPE='list',
+                          outfile=shQuote(output), floating=shQuote(floating),
+                          interpolation=interpolation, mask=mask,
+                          verbose=Verbose, FINAL.ARGS=c(targetspec, regargs))
+  # and then wrap it in an expression that actually runs the tool for later use
+  reformatxexpr=expression(cmtk.system2(reformatxcall, stderr=Verbose, stdout=Verbose))
   lockfile=paste(output,".lock",sep="")
   PrintCommand<-FALSE
   if(dryrun) PrintCommand<-TRUE
   if(!dryrun) {
-    if(!MakeLock) system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
+    if(!MakeLock) eval(reformatxexpr)
     else if(makelock(lockfile)){
       if(OverWrite=="update")
-        PrintCommand<-RunCmdForNewerInput(cmd,filesToCheck,output,Verbose=Verbose)
+        PrintCommand<-RunCmdForNewerInput(reformatxexpr,
+                                          filesToCheck,output,Verbose=Verbose)
       else {
-        PrintCommand<-TRUE;system(cmd, ignore.stderr=!Verbose, ignore.stdout=!Verbose)
+        PrintCommand<-TRUE
+        eval(reformatxexpr)
       }
       removelock(lockfile)
     } else if(Verbose) cat("Unable to make lockfile:",lockfile,"\n")
   }
-  if(Verbose||dryrun && PrintCommand) cat("cmd:\n",cmd,"\n") 
+  if(Verbose||dryrun && PrintCommand) {
+    cmd=paste(shQuote(reformatxcall$command), paste(reformatxcall$args, collapse = " "))
+    cat("cmd:\n",cmd,"\n")
+  }
   return(output)
 }
 

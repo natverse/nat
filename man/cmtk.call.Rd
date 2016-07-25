@@ -2,9 +2,13 @@
 % Please edit documentation in R/cmtk.R
 \name{cmtk.call}
 \alias{cmtk.call}
-\title{Utility function to create a call to a cmtk commandline tool}
+\alias{cmtk.system2}
+\title{Utility function to create and run calls to CMTK commandline tools}
 \usage{
-cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL)
+cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL,
+  RETURN.TYPE = c("string", "list"))
+
+cmtk.system2(cmtkcall, moreargs = NULL, ...)
 }
 \arguments{
 \item{tool}{Name of the CMTK tool}
@@ -12,21 +16,43 @@ cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL)
 \item{PROCESSED.ARGS}{Character vector of arguments that have already been 
 processed by the callee. Placed immediately after cmtk tool.}
 
-\item{...}{Additional named arguments to be processed. See details.}
+\item{...}{Additional named arguments to be processed by (\code{cmtk.call}, 
+see details) or passed to \code{system2} (\code{cmtk.system2}).}
 
 \item{FINAL.ARGS}{Character vector of arguments that have already been 
 processed by the callee. Placed at the end of the call after optional 
 arguments.}
+
+\item{RETURN.TYPE}{Sets return type to a character string or list (the latter
+is suitable for use with \code{\link{system2}})}
+
+\item{cmtkcall}{A list containing processed arguments prepared by 
+\code{cmtk.call(RETURN.TYPE="list")}}
+
+\item{moreargs}{Additional arguments to add to the processed call}
 }
 \value{
-a string of the form \code{"<tool> <PROCESSED.ARGS> <...> 
-  <FINAL.ARGS>"}
+\emph{Either} a string of the form \code{"<tool> <PROCESSED.ARGS> 
+  <...> <FINAL.ARGS>"} \emph{or} a list containing elements \itemize{
+  
+  \item command A character vector of length 1 indicating the full path to 
+  the CMTK tool, shell quoted for protection.
+  
+  \item args A character vector of arguments of length 0 or greater.
+  
+  }
+
+See the help of \code{\link{system2}} for details.
 }
 \description{
-Utility function to create a call to a cmtk commandline tool
+\code{cmtk.call} processes arguments into a form compatible with
+  CMTK command line tools.
+
+\code{cmtk.system2} actually calls a cmtk tool using a call list
+  produced by \code{cmtk.call}
 }
 \details{
-arguments in ... will be processed as follows:
+\code{cmtk.call} processes arguments in ... as follows:
   
   \itemize{
   
@@ -39,8 +65,8 @@ arguments in ... will be processed as follows:
   \item{character vectors}{ (which must be of length 1) will be passed on as 
   \code{--arg-name arg} i.e. quoting is left up to callee.}
   
-  \item{numeric vectors}{ will be collapsed with commas if of length greater
-  than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will
+  \item{numeric vectors}{ will be collapsed with commas if of length greater 
+  than 1 and then passed on unquoted e.g. \code{target.offset=c(1,2,3)} will 
   result in \code{--target-offset 1,2,3}}
   
   }
@@ -51,6 +77,12 @@ cmtk.call("reformatx",'--outfile=out.nrrd', floating='floating.nrrd',
   mask=TRUE, target.offset=c(1,2,3), FINAL.ARGS=c('target.nrrd','reg.list'))
 # get help for a cmtk tool
 system(cmtk.call('reformatx', help=TRUE))
+}
+\dontrun{
+cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"))
+# capture response into an R variable
+helptext=cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"),
+  stdout=TRUE)
 }
 }
 \seealso{

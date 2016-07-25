@@ -71,50 +71,37 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
 
   transformtype=match.arg(transformtype)
   # By default, or if swap=FALSE, we will use CMTK's inverse direction 
-  if(is.null(direction) && !is.null(swap<-attr(reg,'swap'))) {
-    direction=ifelse(swap, 'forward', 'inverse')
+  if(is.null(direction)) {
+    if(!is.null(swap<-attr(reg,'swap'))) {
+      direction=ifelse(swap, 'forward', 'inverse')
+    } else {
+      direction="inverse"
+    }
   } else {
     direction=match.arg(direction,c("inverse",'forward'),several.ok=TRUE)
   }
   
-  
-  if(length(reg)>1 && !cmtk.version(minimum = '3.2.2')){
+  if(length(reg)>1){
+    # need to recycle manually
+    if(length(direction)==1) direction=rep(direction, length(reg))
+    if(!cmtk.version(minimum = '3.2.2')){
     # there is a bug in applying compound registrations in CMTK<=3.2.1
     # see https://github.com/jefferis/cmtk/commit/209168d892d8980e47
-    if(length(direction)==1) direction=rep(direction, length(reg))
-    for(i in seq_along(reg)) {
-      points=xformpoints.cmtkreg(reg[[i]], direction=direction[[i]], points=points, transformtype=transformtype, FallBackToAffine=FallBackToAffine, ...)
+      for(i in seq_along(reg)) {
+        points=xformpoints.cmtkreg(reg[[i]], direction=direction[[i]], points=points, transformtype=transformtype, FallBackToAffine=FallBackToAffine, ...)
+      }
+      return(points)
     }
-    return(points)
   }
-
   # check for NAs
   nas=is.na(points[,1])
   if(sum(nas)) {
     origpoints=points
     points=points[!nas, , drop=FALSE]
   }
-
-  pointsfile=tempfile(fileext=".txt")
-  on.exit(unlink(pointsfile), add = TRUE)
-  write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
-  streamxform=file.path(cmtk.bindir(check=TRUE),'streamxform')
-  # TODO enable CMTK affine transforms using internal R code even when
-  # CMTK command line tools are missing.
-  inverseflags <- unlist(lapply(direction, function(x) ifelse(x == 'forward', '', '--inverse')))
-  regcmd <- paste(c(rbind(inverseflags, shQuote(path.expand(reg)))), collapse=" ")
-  outfile=tempfile()
-  on.exit(unlink(outfile), add=TRUE)
-  cmd=paste(streamxform,ifelse(transformtype=='affine','--affine-only',''), '--',
-            regcmd,'<',shQuote(pointsfile),">",shQuote(outfile))
-  if(system(cmd,ignore.stderr=TRUE)!=0) stop("Error running CMTK streamxform!")
-  cmtkOut <- read.table(outfile,
-                        col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
-                        colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
-  pointst <- data.matrix(cmtkOut[,1:3])
-
+  pointst=cmtk.streamxform(points, reg, direction, transformtype)
   if(transformtype=='warp'){
-    naPoints = cmtkOut$Failed =="FAILED"
+    naPoints=is.na(pointst[,1])
     if(any(naPoints)){
       if(FallBackToAffine) {
         affpoints = xformpoints(reg,points[naPoints,,drop=FALSE],transformtype='affine')
@@ -132,6 +119,41 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
     dimnames(pointst)=dimnames(points)
     pointst
   }
+}
+
+cmtk.streamxform <- function(points, reg, direction, transformtype) {
+  pointsfile=tempfile(fileext=".txt")
+  on.exit(unlink(pointsfile))
+  write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
+  
+  # TODO enable CMTK affine transforms using internal R code even when
+  # CMTK command line tools are missing.
+
+  # nb this -- is defensive since it may be required if the first transform
+  # will be preceded by the inverse flag
+  regargs="--"
+  for(i in seq_along(reg)){
+    regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, shQuote(reg[i]))
+  }
+  
+  outfile=tempfile()
+  on.exit(unlink(outfile), add=TRUE)
+  rval=cmtk.system2(cmtk.call(tool='streamxform', affine.only=transformtype=='affine', RETURN.TYPE='list'),
+                    moreargs = regargs,
+                    stdin=pointsfile, 
+                    stdout=outfile,
+                    stderr=FALSE)
+  
+  if(rval!=0) stop("Error running CMTK streamxform!")
+  cmtkOut <- read.table(outfile,
+                        col.names=c('X', 'Y', 'Z', 'Failed'), row.names=NULL,
+                        colClasses=c(rep('numeric', 3), 'factor'), fill=TRUE)
+  pointst <- data.matrix(cmtkOut[,1:3])
+  naPoints = cmtkOut$Failed =="FAILED"
+  if(any(naPoints)){
+    pointst[naPoints,]=NA_real_
+  }
+  pointst
 }
 
 #' @export
