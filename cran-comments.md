@@ -7,7 +7,7 @@ well as providing some new functionality.
 * ubuntu 12.04 (on travis-ci), R 3.2.5
 * winbuilder (devel and release)
 
-http://win-builder.r-project.org/Ih4Jz8HF1aP2
+http://win-builder.r-project.org/UwuUTD6g7r0B/
 
 ## R CMD check results
 Running R CMD check --as-cran gave
@@ -27,6 +27,24 @@ I have left this dx.doi.org URL in place since it will always redirect to the
 current location of the article on the Nature website (which is not guaranteed).
 The Unauthorized message comes up because the article is paywalled (I do not see
 it at work).
+
+Winbuilder also came up with one note:
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Greg Jefferis <jefferis@gmail.com>'
+
+Possibly mis-spelled words in DESCRIPTION:
+  AmiraMesh (11:25)
+  LineSet (13:5)
+  NRRD (11:8)
+  NeuroAnatomy (3:8, 9:14)
+  SWC (12:64)
+  SkeletonGraph (13:17)
+  hxsurf (11:73)
+  nat (9:36)
+  skeletonisation (16:63)
+  
+but I believe that these are all false positives.
 
 ## Tests
 Note that some tests have been marked as donttest to reduce the standard test
