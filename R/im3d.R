@@ -813,7 +813,7 @@ imslice<-function(x, slice, slicedim='z', drop=TRUE){
   sliceDimChar=letters[23+slicedim]
   if(!is.na(sliceDimChar)){
     attr(rval,'SliceDim')=sliceDimChar
-    attr(rval,sliceDimChar)=attr(rval,sliceDimChar)[slice]
+    attr(rval,sliceDimChar)=attr(x,sliceDimChar)[slice]
   } else{
     attr(rval,'SliceDim')=slicedim
   }

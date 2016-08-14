@@ -215,6 +215,11 @@ test_that("we can slice out subarray from image",{
 
   i3=im3d(array(1:4,c(2,2)),voxdims=c(2,3,4))
   expect_equal(imslice(i, 1:2), i3)
+  
+  # check that we can successfully extract the position of slice in new 
+  # singleton dimension
+  i5=im3d(array(1:24, dim = c(2,3,4)),voxdims=c(2,3,4))
+  expect_equal(attr(imslice(i5,2),'z'), 4)
 })
 
 test_that("we can make projections",{
