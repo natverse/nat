@@ -617,6 +617,7 @@ smooth_neuron <- function(n, method=c("gauss", "spline"), ...) {
 #' @param xyz A block of 3D coordindates defining an unbranched segment
 #' @param sigma The standard deviation of the Gaussian smoothing kernel (which
 #'   has the same spatial units as the object being smoothed)
+#' @importFrom stats dnorm
 smooth_segment_gauss <- function(xyz, sigma, ...){
   if(nrow(xyz)<2) return(xyz)
   # make variable t as the cumulative position along segment
@@ -632,6 +633,7 @@ smooth_segment_gauss <- function(xyz, sigma, ...){
   xyzt
 }
 
+#' @importFrom stats smooth.spline
 smooth_segment_spline <- function(xyz, ...) {
   if(nrow(xyz)<4) return(xyz)
   # make variable t as the cumulative position along segment
