@@ -3,6 +3,7 @@
 \name{xform}
 \alias{xform}
 \alias{xform.character}
+\alias{xform.data.frame}
 \alias{xform.default}
 \alias{xform.dotprops}
 \alias{xform.list}
@@ -26,6 +27,8 @@ xform(x, reg, ...)
 
 \method{xform}{neuron}(x, reg, FallBackToAffine = TRUE, na.action = "error",
   ...)
+
+\method{xform}{data.frame}(x, reg, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
@@ -78,6 +81,11 @@ Methods are provided for some specialised S3 classes. Further
   this will probably not be necessary if the \code{xyzmatrix} and 
   \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3 
   object inherits from \code{list}.
+  
+  Note that given the behaviour of the \code{xyzmatrix} functions, the
+  \code{xform.data.frame} method will transform the x,y,z or X,Y,Z columns of
+  a data.frame if the data.frame has more than 3 columns, erroring out if no
+  such unique columns exist.
 
 TODO get this to work for matrices with more than 3 columns by
   working on xyzmatrix definition.

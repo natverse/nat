@@ -44,6 +44,11 @@
 #'   \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3 
 #'   object inherits from \code{list}.
 #'   
+#'   Note that given the behaviour of the \code{xyzmatrix} functions, the
+#'   \code{xform.data.frame} method will transform the x,y,z or X,Y,Z columns of
+#'   a data.frame if the data.frame has more than 3 columns, erroring out if no
+#'   such unique columns exist.
+#'   
 #' @param x an object to transform
 #' @param reg A registration defined by a matrix, a function, a \code{cmtkreg} 
 #'   object, or a character vector specifying a path to one or more 
@@ -112,6 +117,15 @@ xform.shape3d<-xform.list
 #' @export
 #' @rdname xform
 xform.neuron<-xform.list
+
+#' @export
+#' @rdname xform
+xform.data.frame <- function(x, reg, ...) {
+  points=xyzmatrix(x)
+  pointst=xform(points,reg, ...)
+  xyzmatrix(x)<-pointst
+  x
+}
 
 #' @method xform dotprops
 #' @export

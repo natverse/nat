@@ -25,6 +25,16 @@ test_that("xform with affine matrix gives same result as neuron arithmetic", {
   expect_equal(xform(n,reg=affmat),scale(n,scale=1/scalefacs,center=FALSE))
 })
 
+test_that("we can xform a data.frame",{
+  scalefacs=c(1,1.1,1.2)
+  affmat=matrix(0,4,4)
+  diag(affmat)=c(scalefacs,1)
+  df=as.data.frame(kcs20)
+  expect_is(tdf <- xform(df, affmat), 'data.frame')
+  expect_equivalent(xyzmatrix(tdf), scale(xyzmatrix(df), center = F, scale = 1/scalefacs))
+})
+
+
 if(!is.null(cmtk.bindir())){
 test_that("we can xform a neuronlist with multiple registrations", {
   # construct a pair of CMTK affine registrations where f2 is the
