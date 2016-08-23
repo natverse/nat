@@ -59,6 +59,10 @@ test_that("we can xform a neuronlist with multiple registrations", {
   expect_equal(xform(Cell07PNs[1:2], reglist(m1,m2)), Cell07PNs[1:2])
   expect_equal(xform(Cell07PNs[1:2], reglist(f1, f1, swap=c(F,T))), Cell07PNs[1:2])
   
+  # check inversion
+  rl=reglist(m1,m2)
+  expect_equal(simplify_reglist(rl), simplify_reglist(invert_reglist(rl)))
+  
   unlink(c(f1,f2))
 })
 }

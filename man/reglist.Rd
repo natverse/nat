@@ -2,10 +2,13 @@
 % Please edit documentation in R/reglist.R
 \name{reglist}
 \alias{c.reglist}
+\alias{invert_reglist}
 \alias{reglist}
 \title{A simple wrapper class for multiple transformations}
 \usage{
 reglist(..., swap = NULL)
+
+invert_reglist(x)
 
 \method{c}{reglist}(..., recursive = FALSE)
 }
@@ -15,6 +18,8 @@ reglist(..., swap = NULL)
 \item{swap}{A vector of the same length as \code{...} indicating whether the 
 direction of each transformation should be swapped (i.e. mapping reference 
 -> sample).}
+
+\item{x}{A reglist object to invert}
 
 \item{recursive}{Presently ignored}
 }
@@ -35,6 +40,8 @@ A \code{reglist} is read as a set of transformations to be
   think of as as the natural direction of the transformation (see 
   \code{\link{xformpoints.cmtkreg}} for discussion).
 
+\code{invert_reglist} inverts a reglist object
+
 \code{c.reglist} combines multiple \code{reglist}s into a single
   \code{reglist}.
 }
@@ -42,7 +49,24 @@ A \code{reglist} is read as a set of transformations to be
 The swap argument is provided as a convenience, but an attribute
   \code{'swap'} can also be set directly on each registration.
 }
+\section{Inversion}{
+ \code{invert_reglist} takes a minimal approach to 
+  inversion. It reverses the order of the individual elements of the 
+  registration and tags each of them with a swap attribute (or changes the
+  value of the attribute if it already exists)
+}
 \examples{
+I=diag(4)
+S=I
+diag(S)=c(1, 2, 3, 1)
+rl=reglist(S, I)
+rli=invert_reglist(rl)
+
+## We can check the inversion by simplifying
+m=simplify_reglist(rl)[[1]]
+mi=simplify_reglist(rli)[[1]]
+# NB solve will invert a homogeneous affine matrix
+all.equal(m, solve(mi))
 I=diag(4)
 S=I
 diag(S)=c(1, 2, 3, 1)

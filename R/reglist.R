@@ -36,6 +36,30 @@ reglist <- function(..., swap=NULL) {
   l
 }
 
+#' @description \code{invert_reglist} inverts a reglist object
+#' @section Inversion: \code{invert_reglist} takes a minimal approach to 
+#'   inversion. It reverses the order of the individual elements of the 
+#'   registration and tags each of them with a swap attribute (or changes the
+#'   value of the attribute if it already exists)
+#' @param x A reglist object to invert
+#' @export
+#' @rdname reglist
+#' @examples 
+#' I=diag(4)
+#' S=I
+#' diag(S)=c(1, 2, 3, 1)
+#' rl=reglist(S, I)
+#' rli=invert_reglist(rl)
+#' 
+#' ## We can check the inversion by simplifying
+#' m=simplify_reglist(rl)[[1]]
+#' mi=simplify_reglist(rli)[[1]]
+#' # NB solve will invert a homogeneous affine matrix
+#' all.equal(m, solve(mi))
+invert_reglist <- function(x) {
+  reglist(rev(x), swap=!swapped(x))
+}
+
 #' @export
 "[.reglist" <- function(x, i) {
   structure(NextMethod(), class='reglist')
