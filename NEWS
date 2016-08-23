@@ -1,3 +1,10 @@
+nat 1.8.6
+=========
+* Add xform.data.frame method (#309)
+* Add invert_reglist function (#308)
+* Fix bug in imslice storing position of new singleton dim (#306)
+* Fix namespace issues for smooth_neuron
+
 nat 1.8.5
 =========
 The main feature of this release is improved support for nat+CMTK on Windows.
