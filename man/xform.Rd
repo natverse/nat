@@ -33,7 +33,7 @@ xform(x, reg, ...)
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
 \method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA,
-  VectoriseRegistrations = FALSE)
+  VectoriseRegistrations = FALSE, TransformDFCoords = TRUE)
 }
 \arguments{
 \item{x}{an object to transform}
