@@ -150,6 +150,13 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   }
   # treat as neuronlist
   nl2=structure(NextMethod("["), class = class(x))
+  # now handle attributes
+  # first general attributes
+  atts=attributes(x)
+  atts_to_copy=atts[setdiff(names(atts),c("names","dim","dimnames","df"))]
+  atts_to_copy[['names']]=names(nl2)
+  attributes(nl2) <- atts_to_copy
+  # and then specialcase the metadata data.frame
   df=attr(x,'df')
   if(!is.null(df)){
     # we never want to drop because the result must be a data.frame 
