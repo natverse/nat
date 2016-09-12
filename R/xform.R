@@ -180,12 +180,31 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #' nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
 #' }
 xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
-                           VectoriseRegistrations=FALSE) {
-  if(VectoriseRegistrations) {
+                           VectoriseRegistrations=FALSE, TransformDFCoords=TRUE) {
+  # first transform objects in the neuronlist
+  tx=if(VectoriseRegistrations) {
     nmapply(xform, x, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
   } else {
     nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
   }
+  # then check if there is an attached data.frame with things that look like
+  # soma coordinates
+  if(TransformDFCoords && !is.null(df<-as.data.frame(x))) {
+    matched_cols=match(c("X","Y","Z"), toupper(colnames(df)))
+    if(all(is.finite(matched_cols))) {
+      # we have some data to transform
+      if(VectoriseRegistrations) {
+        stop("Not yet implemented")
+      } else {
+        # let's assume that if we were able to transform the neuron, then we
+        # insist on being able to transform the soma
+        # but we just keep rows for neurons in our result neuronlist
+        df=df[names(tx),,drop=FALSE]
+        data.frame(tx) <- xform(df, reg, na.action = 'error')
+      }
+    }
+  }
+  tx
 }
 
 #' Get and assign coordinates for classes containing 3D vertex data
