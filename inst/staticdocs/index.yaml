@@ -5,7 +5,6 @@ Package Help:
 Neurons (traced):
   desc: Functions for working with traced neurons (fully connected tree structures)
   topics:
-  - read.landmarks
   - neuron
   - read.neuron
   - write.neuron
@@ -68,12 +67,13 @@ Collections of Neurons with Remote Data (neuronlistfh):
     - remotesync
     - as.neuronlist.neuronlistfh
     - '[.neuronlistfh'
-Surfaces (hxsurf, mesh3d):
+Surfaces and Landmarks (hxsurf, mesh3d):
   desc: Functions for working with surface data, either in a class hxsurf 
     modeled on Amira's representation of surfaces or the rgl::mesh3d class.
   topics:
     - read.hxsurf
     - write.hxsurf
+    - read.landmarks
     - plot3d.hxsurf
     - subset.hxsurf
     - as.mesh3d
