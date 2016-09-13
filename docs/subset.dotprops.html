@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>subset.dotprops. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Subset points in dotprops object that match given conditions</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">subset</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A dotprops object</dd>
+      <dt>subset</dt>
+      <dd>A subset of points defined by indices, an expression or a function (see Details)</dd>
+      <dt>...</dt>
+      <dd>Additional parameters (currently ignored)</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+subsetted dotprops object
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Subset points in dotprops object that match given conditions</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>subset</code> defines either logical or numeric indices, in which
+  case these are simply applied to the matrices that define the <code>points</code>, <code>vect</code> fields of the <code>dotprops</code> object
+  etc OR a function (which is called with the 3D points array and returns T/F.
+  OR an expression 
+  vector).</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## subset using indices ...</span>
+<span class="symbol">dp</span><span class="assignement">=</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">10</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="symbol">dp1</span><span class="assignement">=</span><span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">dp</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">:</span><span class="number">50</span><span class="keyword">)</span>
+
+<span class="comment"># ... or an expression</span>
+<span class="symbol">dp2</span><span class="assignement">=</span><span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">dp</span><span class="keyword">,</span> <span class="symbol">alpha</span><span class="keyword">&gt;</span><span class="number">0.7</span><span class="keyword">)</span>
+<span class="symbol">front</span><span class="assignement">=</span><span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">dp</span><span class="keyword">,</span> <span class="symbol">points</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">'Z'</span><span class="keyword">]</span><span class="keyword">&lt;</span><span class="number">40</span><span class="keyword">)</span>
+<span class="comment"># use a helper function</span>
+<span class="symbol">between</span><span class="assignement">=</span><span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">x</span><span class="keyword">,</span> <span class="formalargs">lower</span><span class="keyword">,</span> <span class="formalargs">upper</span><span class="keyword">)</span> <span class="symbol">x</span><span class="keyword">&gt;=</span><span class="symbol">lower</span> <span class="keyword">&amp;</span> <span class="symbol">x</span>&lt;=<span class="symbol">upper</span>
+<span class="symbol">middle</span><span class="assignement">=</span><span class="symbol">middle</span><span class="assignement">=</span><span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">dp</span><span class="keyword">,</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/ade4/topics/between'>between</a></span><span class="keyword">(</span><span class="symbol">points</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">'Z'</span><span class="keyword">]</span><span class="keyword">,</span> <span class="number">40</span><span class="keyword">,</span> <span class="number">60</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="comment"># plot results in 3D</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">front</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">middle</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'green'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">dp</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'blue'</span><span class="keyword">)</span>
+
+
+<span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># </span>
+<span class="comment"># ## subset using an selection function</span>
+<span class="comment"># s3d=select3d()</span>
+<span class="comment"># dp1=subset(dp,s3d(points))</span>
+<span class="comment"># # special case of previous version</span>
+<span class="comment"># dp2=subset(dp,s3d)</span>
+<span class="comment"># # keep the points that were removed from dp2</span>
+<span class="comment"># dp2.not=subset(dp,Negate(s3d))</span>
+<span class="comment"># stopifnot(all.equal(dp1,dp2))</span>
+<span class="comment"># dp2=subset(dp,alpha&gt;0.5 &amp; s3d(pointd))</span>
+<span class="comment"># dp3=subset(dp,1:10)</span>
+<span class="comment"># </span>
+<span class="comment"># ## subset each dotprops object in a whole neuronlist</span>
+<span class="comment"># plot3d(kcs20)</span>
+<span class="comment"># s3d=select3d()</span>
+<span class="comment"># kcs20.partial = nlapply(kcs20, subset, s3d)</span>
+<span class="comment"># clear3d()</span>
+<span class="comment"># plot3d(kcs20.partial, col='red')</span>
+<span class="comment"># plot3d(kcs20, col='grey')</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>subset.dotprops</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code>prune.dotprops</code>, <code>subset.neuron</code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

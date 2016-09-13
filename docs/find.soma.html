@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>find.soma. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Find neurons with soma inside 3D selection box (usually drawn in rgl window)</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='find.soma.html'>find.soma</a></span><span class="keyword">(</span><span class="argument">sel3dfun</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/select3d'>select3d</a></span><span class="keyword">(</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">indices</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/names'>names</a></span><span class="keyword">(</span><span class="symbol">db</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">db</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span><span class="keyword">(</span><span class="string">"nat.default.neuronlist"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">invert</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span>
+  <span class="argument">rval</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"names"</span><span class="keyword">,</span> <span class="string">"neuronlist"</span><span class="keyword">,</span> <span class="string">"data.frame"</span><span class="keyword">)</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>sel3dfun</dt>
+      <dd>A <code><a href='http://www.rdocumentation.org/packages/rgl/topics/select3d'>select3d</a></code> style function to indicate if points
+are within region</dd>
+      <dt>indices</dt>
+      <dd>Names of neurons to search (defaults to all neurons in list)</dd>
+      <dt>db</dt>
+      <dd><code>neuronlist</code> to search. Can also be a character vector naming 
+the neuronlist. Defaults to <code>options(&#39;nat.default.neuronlist&#39;)</code>.</dd>
+      <dt>invert</dt>
+      <dd>Whether to return neurons outside the selection box (default 
+<code>FALSE</code>)</dd>
+      <dt>rval</dt>
+      <dd>What to return (character vector, default=&#39;names&#39;)</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Character vector of names of selected neurons
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Find neurons with soma inside 3D selection box (usually drawn in rgl window)</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Can work on <code>neuronlist</code>s containing <code>neuron</code> objects 
+  <em>or</em> <code>neuronlist</code>s whose attached data.frame contains soma 
+  positions specified in columns called X,Y,Z  .</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>find.soma</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='http://www.rdocumentation.org/packages/rgl/topics/select3d'>select3d</a>, <a href='subset.neuronlist.html'>subset.neuronlist</a>, <a href='find.neuron.html'>find.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

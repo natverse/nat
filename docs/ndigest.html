@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>ndigest. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Calculated normalised digest value for an object</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='ndigest.html'>ndigest</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuronlistfh</span>
+<span class="functioncall"><a href='ndigest.html'>ndigest</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='ndigest.html'>ndigest</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">absoluteVectors</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='ndigest.html'>ndigest</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">fieldsToExclude</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"InputFileName"</span><span class="keyword">,</span> <span class="string">"CreatedAt"</span><span class="keyword">,</span>
+  <span class="string">"NodeName"</span><span class="keyword">,</span> <span class="string">"InputFileStat"</span><span class="keyword">,</span> <span class="string">"InputFileMD5"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>Object for which a normalised digest will be computed.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods and then on to 
+<code><a href='http://www.rdocumentation.org/packages/digest/topics/digest'>digest</a></code></dd>
+      <dt>absoluteVectors</dt>
+      <dd>Whether to check only the absolute value of
+eigenvectors for equality (default TRUE, see details)</dd>
+      <dt>fieldsToExclude</dt>
+      <dd>Character vector naming the neuron fields to exclude</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A character string containing the digest of the supplied object 
+  computed by <code><a href='http://www.rdocumentation.org/packages/digest/topics/digest'>digest</a></code>.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>The <em>normalised</em> digest should exclude any fields or 
+  attributes irrelevant to the core contents of the object (e.g. timestamps, 
+  absolute location of the input files on disk etc). In theory then, this
+  value should be constant for the same data regardless of the particular
+  machine on which the digest is being computed.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>ndigest.neuronlistfh</code> only considers the <code>keyfilemap</code> and
+  <code>df</code> (metadata data.frame) when computing the hash value. See
+  <code><a href='neuronlistfh.html'>neuronlistfh</a></code> for the significance of these two fields.</p>
+
+      <p><code>ndigest.dotprops</code> ignores any <code>mtime</code> or <code>file</code>
+  attributes. It also converts tangent vectors to absolute values (when 
+  <code>absoluteVectors=TRUE</code>) because the direction vectors are computed 
+  using an eigenvector decomposition where the sign of the eigenvector is 
+  essentially random and subject to small numerical instabilities. Therefore 
+  it does not usually make sense to rely on the value of vect exactly.</p>
+
+      <p><code>ndigest.neuron</code> ignores the following fields:</p>
+
+      <p><ul>
+<li> InputFileName</p>
+
+      <p></li>
+<li> CreatedAt</p>
+
+      <p></li>
+<li> NodeName</p>
+
+      <p></li>
+<li> InputFileStat</p>
+
+      <p></li>
+<li> InputFileMD5</p>
+
+      <p></li>
+</ul></p>
+
+      <p></p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/stopifnot'>stopifnot</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span><span class="keyword">(</span><span class="functioncall"><a href='ndigest.html'>ndigest</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span><span class="keyword">,</span> <span class="string">"4c045b0343938259cd9986494fc1c2b0"</span><span class="keyword">)</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>ndigest</li><li>ndigest.dotprops</li><li>ndigest.neuron</li><li>ndigest.neuronlistfh</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='http://www.rdocumentation.org/packages/digest/topics/digest'>digest</a></code></p>
+
+      <p><code><a href='all.equal.dotprops.html'>all.equal.dotprops</a></code></p>
+
+      <p><code><a href='all.equal.neuron.html'>all.equal.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

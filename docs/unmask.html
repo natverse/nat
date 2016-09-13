@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>unmask. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Make im3d image array containing values at locations defined by a mask</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='unmask.html'>unmask</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">mask</span><span class="keyword">,</span> <span class="argument">default</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA</span><span class="keyword">,</span> <span class="argument">attributes.</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/attributes'>attributes</a></span><span class="keyword">(</span><span class="symbol">mask</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">copyAttributes</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>the data to place on a regular grid</dd>
+      <dt>mask</dt>
+      <dd>An <code>im3d</code> regular image array where non-zero voxels are the 
+selected element.</dd>
+      <dt>default</dt>
+      <dd>Value for regions outside the mask (default: NA)</dd>
+      <dt>attributes.</dt>
+      <dd>Attributes to set on new object. Defaults to attributes of
+<code>mask</code></dd>
+      <dt>copyAttributes</dt>
+      <dd>Whether to copy over attributes (including <code>dim</code>) 
+from the mask to the returned object. default: <code>TRUE</code></dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A new <code>im3d</code> object with attributes/dimensions defined by 
+  <code>mask</code> and values from <code>x</code>. If <code>copyAttributes</code> is 
+  <code>FALSE</code>, then it will have mode of <code>x</code> and length of <code>mask</code> 
+  but no other attributes.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Make im3d image array containing values at locations defined by a mask</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The values in x will be placed into a grid defined by the dimensions
+  of the <code>mask</code> in the order defined by the standard R linear 
+  subscripting of arrays (see e.g. <code><a href='http://www.rdocumentation.org/packages/base/topics/which'>arrayInd</a></code>).</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># # read in a mask</span>
+<span class="comment"># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd', package='nat'))</span>
+<span class="comment"># # pick out all the non zero values</span>
+<span class="comment"># inmask=LHMask[LHMask!=0]</span>
+<span class="comment"># # fill the non-zero elements of the mask with a vector that iterates over the</span>
+<span class="comment"># # values 0:9</span>
+<span class="comment"># stripes=unmask(seq(inmask)%%10, LHMask)</span>
+<span class="comment"># # make an image from one slice of that result array</span>
+<span class="comment"># image(imslice(stripes,11), asp=TRUE)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>unmask</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
+  <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='im3d.html'>im3d</a></code>,
+  <code><a href='imexpand.grid.html'>imexpand.grid</a></code>, <code><a href='imslice.html'>imslice</a></code>,
+  <code><a href='is.im3d.html'>is.im3d</a></code>, <code><a href='mask.html'>mask</a></code>,
+  <code><a href='origin.html'>origin</a></code>, <code><a href='projection.html'>projection</a></code>,
+  <code><a href='threshold.html'>threshold</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

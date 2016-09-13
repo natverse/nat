@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>cmtk.call. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Utility function to create and run calls to CMTK commandline tools</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='cmtk.call.html'>cmtk.call</a></span><span class="keyword">(</span><span class="symbol">tool</span><span class="keyword">,</span> <span class="argument">PROCESSED.ARGS</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">,</span> <span class="argument">FINAL.ARGS</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">RETURN.TYPE</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"string"</span><span class="keyword">,</span> <span class="string">"list"</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='cmtk.call.html'>cmtk.system2</a></span><span class="keyword">(</span><span class="symbol">cmtkcall</span><span class="keyword">,</span> <span class="argument">moreargs</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>tool</dt>
+      <dd>Name of the CMTK tool</dd>
+      <dt>PROCESSED.ARGS</dt>
+      <dd>Character vector of arguments that have already been 
+processed by the callee. Placed immediately after cmtk tool.</dd>
+      <dt>...</dt>
+      <dd>Additional named arguments to be processed by (<code>cmtk.call</code>, 
+see details) or passed to <code>system2</code> (<code>cmtk.system2</code>).</dd>
+      <dt>FINAL.ARGS</dt>
+      <dd>Character vector of arguments that have already been 
+processed by the callee. Placed at the end of the call after optional 
+arguments.</dd>
+      <dt>RETURN.TYPE</dt>
+      <dd>Sets return type to a character string or list (the latter
+is suitable for use with <code><a href='http://www.rdocumentation.org/packages/base/topics/system2'>system2</a></code>)</dd>
+      <dt>cmtkcall</dt>
+      <dd>A list containing processed arguments prepared by 
+<code>cmtk.call(RETURN.TYPE=&quot;list&quot;)</code></dd>
+      <dt>moreargs</dt>
+      <dd>Additional arguments to add to the processed call</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+<em>Either</em> a string of the form <code>&quot;&lt;tool&gt; &lt;PROCESSED.ARGS&gt; 
+  &lt;...&gt; &lt;FINAL.ARGS&gt;&quot;</code> <em>or</em> a list containing elements <ul>
+<li> command A character vector of length 1 indicating the full path to 
+  the CMTK tool, shell quoted for protection.</p>
+
+      <p></li>
+<li> args A character vector of arguments of length 0 or greater.</p>
+
+      <p></li>
+</ul></p>
+
+      <p>See the help of <code><a href='http://www.rdocumentation.org/packages/base/topics/system2'>system2</a></code> for details.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>cmtk.call</code> processes arguments into a form compatible with
+  CMTK command line tools.</p>
+
+      <p><code>cmtk.system2</code> actually calls a cmtk tool using a call list
+  produced by <code>cmtk.call</code></p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>cmtk.call</code> processes arguments in ... as follows:</p>
+
+      <p><ul>
+<li>argument names will be converted from <code>arg.name</code> to 
+  <code>--arg-name</code></p>
+
+      <p></li>
+<li>logical vectors (which must be of length 1) will be passed on as 
+  <code>--arg-name</code></p>
+
+      <p></li>
+<li>character vectors (which must be of length 1) will be passed on as 
+  <code>--arg-name arg</code> i.e. quoting is left up to callee.</p>
+
+      <p></li>
+<li>numeric vectors will be collapsed with commas if of length greater 
+  than 1 and then passed on unquoted e.g. <code>target.offset=c(1,2,3)</code> will 
+  result in <code>--target-offset 1,2,3</code></p>
+
+      <p></li>
+</ul></p>
+
+      <p></p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># cmtk.call("reformatx",'--outfile=out.nrrd', floating='floating.nrrd',</span>
+<span class="comment">#   mask=TRUE, target.offset=c(1,2,3), FINAL.ARGS=c('target.nrrd','reg.list'))</span>
+<span class="comment"># # get help for a cmtk tool</span>
+<span class="comment"># system(cmtk.call('reformatx', help=TRUE))</span>
+<span class="comment">## ---------------------------------------------</span>
+<span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"))</span>
+<span class="comment"># # capture response into an R variable</span>
+<span class="comment"># helptext=cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"),</span>
+<span class="comment">#   stdout=TRUE)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>cmtk.call</li><li>cmtk.system2</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='cmtk.bindir.html'>cmtk.bindir</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

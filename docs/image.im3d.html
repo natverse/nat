@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>image.im3d. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Method to plot spatially calibrated image arrays</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for im3d</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">xlim</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ylim</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">zlim</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">plotdims</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">flipdims</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="string">"y"</span><span class="keyword">,</span> <span class="argument">filled.contour</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">asp</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span>
+  <span class="argument">axes</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">xlab</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ylab</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">nlevels</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">20</span><span class="keyword">,</span>
+  <span class="argument">levels</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/pretty'>pretty</a></span><span class="keyword">(</span><span class="symbol">zlim</span><span class="keyword">,</span> <span class="symbol">nlevels</span> <span class="keyword">+</span> <span class="number">1</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">color.palette</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/grDevices/topics/colorRamp'>colorRampPalette</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"navy"</span><span class="keyword">,</span> <span class="string">"cyan"</span><span class="keyword">,</span> <span class="string">"yellow"</span><span class="keyword">,</span> <span class="string">"red"</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">col</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall">color.palette</span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/length'>length</a></span><span class="keyword">(</span><span class="symbol">levels</span><span class="keyword">)</span> <span class="keyword">-</span> <span class="number">1</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">useRaster</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>The im3d object containing the data to be plotted  (<code>NA</code>s are 
+allowed).</dd>
+      <dt>xlim, ylim</dt>
+      <dd>ranges for the plotted <code>x</code> and <code>y</code> values, 
+defaulting to the BoundingBox of x.</dd>
+      <dt>zlim</dt>
+      <dd>the minimum and maximum <code>z</code> values for which colors should 
+be plotted, defaulting to the range of the finite values of <code>z</code>. Each 
+of the given colors will be used to color an equispaced interval of this 
+range. The <em>midpoints</em> of the intervals cover the range, so that 
+values just outside the range will be plotted.</dd>
+      <dt>plotdims</dt>
+      <dd>Which dimensions of 3D <code>im3d</code> object to plot (character 
+vector). Defaults to <code>c(&#39;x&#39;,&#39;y&#39;)</code></dd>
+      <dt>flipdims</dt>
+      <dd>Which dimensions to flip (character vector). Defaults to 
+flipping y.</dd>
+      <dt>filled.contour</dt>
+      <dd>Whether to use a <code><a href='http://www.rdocumentation.org/packages/graphics/topics/filled.contour'>filled.contour</a></code> plot 
+instead of a regular <code><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a></code> plot.</dd>
+      <dt>asp</dt>
+      <dd>Whether to have a a square aspect ratio (logical, default: 
+<code>FALSE</code>)</dd>
+      <dt>axes</dt>
+      <dd>Whether to plot axes (default: <code>FALSE</code>)</dd>
+      <dt>xlab, ylab</dt>
+      <dd>each a character string giving the labels for the x and y 
+axis.  Default to the &#145;call names&#146; of <code>x</code> or <code>y</code>, or to 
+<code>&quot;&quot;</code> if these were unspecified.</dd>
+      <dt>nlevels</dt>
+      <dd>The number of colour levels in z</dd>
+      <dt>levels</dt>
+      <dd>The levels at which to break z values</dd>
+      <dt>color.palette</dt>
+      <dd>The colour palette from which <code>col</code> will be 
+selected.</dd>
+      <dt>col</dt>
+      <dd>a list of colors such as that generated by <code><a href='http://www.rdocumentation.org/packages/grDevices/topics/palettes'>rainbow</a></code>, 
+<code><a href='http://www.rdocumentation.org/packages/grDevices/topics/palettes'>heat.colors</a></code>, <code><a href='http://www.rdocumentation.org/packages/grDevices/topics/palettes'>topo.colors</a></code>, 
+<code><a href='http://www.rdocumentation.org/packages/grDevices/topics/palettes'>terrain.colors</a></code> or similar functions.</dd>
+      <dt>useRaster</dt>
+      <dd>Whether to use <code><a href='http://www.rdocumentation.org/packages/graphics/topics/rasterImage'>rasterImage</a></code> to plot images as a
+bitmap (much faster for large images). default <code>useRaster=NULL</code> checks
+<code><a href='http://www.rdocumentation.org/packages/grDevices/topics/dev.capabilities'>dev.capabilities</a></code> to see if raster images are supported.</dd>
+      <dt>...</dt>
+      <dd>graphical parameters for <code><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></code> or 
+<code><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a></code> may also be passed as arguments to this 
+function.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A <code>list</code> with elements:</p>
+
+      <p><ul>
+<li>zlim The z (intensity limits)</p>
+
+      <p></li>
+<li>nlevels.actual The actual number of plotted levels</p>
+
+      <p></li>
+<li>nlevels.orig The requested number of plotted levels</p>
+
+      <p></li>
+<li>levels The chosen levels</p>
+
+      <p></li>
+<li>colors A character vector of colours </li>
+</ul></p>
+
+      <p></dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Method to plot spatially calibrated image arrays</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))</span>
+<span class="comment"># image(imslice(LHMask,10), asp=TRUE)</span>
+<span class="comment"># # useRaster is appreciably quicker in most cases</span>
+<span class="comment"># image(imslice(LHMask,10), asp=TRUE, useRaster=TRUE)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>image.im3d</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>fileformats. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Set or return list of registered file formats that we can read</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='fileformats.html'>fileformats</a></span><span class="keyword">(</span><span class="argument">format</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ext</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">read</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">write</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">class</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">rval</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"names"</span><span class="keyword">,</span> <span class="string">"info"</span><span class="keyword">,</span> <span class="string">"all"</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='fileformats.html'>registerformat</a></span><span class="keyword">(</span><span class="argument">format</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ext</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">format</span><span class="keyword">,</span> <span class="argument">read</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">write</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">magic</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">magiclen</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA_integer_</span><span class="keyword">,</span> <span class="argument">class</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">)</span>
+
+<span class="functioncall"><a href='fileformats.html'>getformatreader</a></span><span class="keyword">(</span><span class="symbol">file</span><span class="keyword">,</span> <span class="argument">class</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">)</span>
+
+<span class="functioncall"><a href='fileformats.html'>getformatwriter</a></span><span class="keyword">(</span><span class="argument">format</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">file</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ext</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">class</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>format</dt>
+      <dd>Character vector naming the format</dd>
+      <dt>ext</dt>
+      <dd>Character vector of file extensions (including periods)</dd>
+      <dt>read, write</dt>
+      <dd>Functions to read and write this format</dd>
+      <dt>class</dt>
+      <dd>The S3 class for the format (character vector e.g. &#39;neuron&#39;)</dd>
+      <dt>rval</dt>
+      <dd>Character vector choosing what kind of return value 
+<code>fileformats</code> will give.</dd>
+      <dt>magic</dt>
+      <dd>Function to test whether a file is of this format</dd>
+      <dt>magiclen</dt>
+      <dd>Optional integer specifying maximum number of bytes required 
+from file header to determine file&#39;s type.</dd>
+      <dt>file</dt>
+      <dd>Path to a file</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+<ul>
+<li> <code>fileformats</code> returns a character vector, matrix or list 
+  according to the value of rval.</p>
+
+      <p></li>
+<li> <code>getformatreader</code> returns a list. The reader can be accessed 
+  with <code>$read</code> and the format can be acessed by <code>$format</code>.</p>
+
+      <p></li>
+<li> <code>getformatwriter</code> returns a list. The writer can be accessed 
+  with <code>$write</code>.</li>
+</ul></p>
+
+      <p></dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>fileformats</code> returns format names, a format definition 
+  list or a table of information about the formats that match the given 
+  filter conditions.</p>
+
+      <p><code>registerformat</code> registers a format in the io registry</p>
+
+      <p><code>getformatreader</code> gets the function to read a file</p>
+
+      <p><code>getformatwriter</code> gets the function to write a file</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>if a <code>format</code> argument is passed to <code>fileformats</code> it will
+  be matched wigth partial string matching and iif a unique match exists that
+  will be returned.</p>
+
+      <p><code>getformatreader</code> starts by reading a set number of bytes from 
+  the start off the current file and then checks using file extension and 
+  magic functions to see if it can identify the file. Presently formats are 
+  in a queue in alphabetical order, dispatching on the first match.</p>
+
+    </div>
+
+    <div class="getformatwriter output file">
+      <h2>getformatwriter output file</h2>
+
+      <p>If <code>getformatwriter</code> is passed a 
+  <code>file</code> argument, it will be processed based on the registered 
+  fileformats information and the <code>ext</code> argument to give a final output 
+  path in the <code>$file</code> element of the returned <code>list</code>.</p>
+
+      <p>If <code>ext=&#39;.someext&#39;</code> <code>getformatwriter</code> will use the specified 
+  extension to overwrite the default value returned by <code>fileformats</code>.</p>
+
+      <p>If <code>ext=NULL</code>, the default, and <code>file=&#39;somefilename.someext&#39;</code>
+  then <code>file</code> will be untouched and <code>ext</code> will be set to
+  <code>&#39;someext&#39;</code> (overriding the value returned by <code>fileformats</code>).</p>
+
+      <p>If <code>file=&#39;somefile_without_extension&#39;</code> then the suppplied or 
+  calculated extension will be appended to <code>file</code>.</p>
+
+      <p>If <code>ext=NA</code> then the input <code>file</code> name will not be touched (even 
+  if it has no extension at all).</p>
+
+      <p>Note that if <code>ext=NULL</code> or <code>ext=NA</code>, then only the specified 
+  format or, failing that, the <code>file</code> extension will be used to query 
+  the fileformats database for a match.</p>
+
+      <p>See <code><a href='write.neuron.html'>write.neuron</a></code> for code to make this discussion more 
+  concrete.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># information about the currently registered file formats</span>
+<span class="functioncall"><a href='fileformats.html'>fileformats</a></span><span class="keyword">(</span><span class="argument">rval</span><span class="argument">=</span><span class="string">'info'</span><span class="keyword">)</span></div>
+<div class='output'>           format     class            ext  read write magic
+1  amiralandmarks landmarks .landmarkAscii  TRUE  TRUE  TRUE
+2  amiralandmarks landmarks   .landmarkBin  TRUE  TRUE  TRUE
+3  amiralandmarks landmarks            .am  TRUE  TRUE  TRUE
+4  amiralandmarks landmarks     .amiramesh  TRUE  TRUE  TRUE
+5       amiramesh      im3d            .am  TRUE  TRUE  TRUE
+6       amiramesh      im3d     .amiramesh  TRUE  TRUE  TRUE
+7   cmtklandmarks landmarks     .landmarks  TRUE  TRUE  TRUE
+8   fijilandmarks landmarks        .points  TRUE FALSE  TRUE
+9      fijitraces    neuron        .traces  TRUE FALSE  TRUE
+10     fijitraces    neuron           .xml  TRUE FALSE  TRUE
+11      hxlineset    neuron            .am  TRUE  TRUE  TRUE
+12         hxskel    neuron            .am  TRUE  TRUE  TRUE
+13         hxsurf    hxsurf          .surf  TRUE  TRUE  TRUE
+14         hxsurf    hxsurf            .am  TRUE  TRUE  TRUE
+15         hxsurf    hxsurf     .amiramesh  TRUE  TRUE  TRUE
+16        neuroml    neuron           .xml  TRUE FALSE  TRUE
+17        neuroml    neuron           .nml  TRUE FALSE  TRUE
+18           nrrd      im3d          .nrrd  TRUE  TRUE  TRUE
+19           nrrd      im3d          .nhdr  TRUE  TRUE  TRUE
+20            rds    neuron           .rds  TRUE  TRUE FALSE
+21            swc    neuron           .swc  TRUE  TRUE FALSE
+22          swcng    ngraph           .swc  TRUE FALSE FALSE
+23       vaa3draw      im3d           .v3d  TRUE FALSE  TRUE
+24       vaa3draw      im3d        .v3draw  TRUE FALSE  TRUE
+25            vtk    neuron           .vtk FALSE  TRUE FALSE
+</div>
+<div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,</span>
+<span class="comment">#   class='neuron')</span>
+<span class="comment">## ---------------------------------------------</span>
+<span class="symbol">swc</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span><span class="keyword">(</span><span class="argument">fileext</span> <span class="argument">=</span> <span class="string">'.swc'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='write.neuron.html'>write.neuron</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="symbol">swc</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/stopifnot'>stopifnot</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/Logic'>isTRUE</a></span><span class="keyword">(</span><span class="functioncall"><a href='fileformats.html'>getformatreader</a></span><span class="keyword">(</span><span class="symbol">swc</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">format</span>==<span class="string">'swc'</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span><span class="keyword">(</span><span class="symbol">swc</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>fileformats</li><li>getformatreader</li><li>getformatwriter</li><li>registerformat</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='write.neuron.html'>write.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

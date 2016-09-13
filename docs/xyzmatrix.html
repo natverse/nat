@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>xyzmatrix. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Get and assign coordinates for classes containing 3D vertex data</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">y</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">z</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuronlist</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for hxsurf</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for igraph</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for mesh3d</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span>
+
+<span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span>
+
+<span class="comment"># S3 method for hxsurf</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span>
+
+<span class="comment"># S3 method for igraph</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span>
+
+<span class="comment"># S3 method for shape3d</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>object containing 3D coordinates</dd>
+      <dt>...</dt>
+      <dd>additional arguments passed to methods</dd>
+      <dt>y, z</dt>
+      <dd>separate y and z coordinates</dd>
+      <dt>value</dt>
+      <dd>Nx3 matrix specifying new xyz coords</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+For <code>xyzmatrix</code>: Nx3 matrix containing 3D coordinates</p>
+
+      <p>For <code>xyzmatrix&lt;-</code>: Original object with modified coords
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>xyzmatrix</code> gets coordinates from objects containing 3D vertex data</p>
+
+      <p><code>xyzmatrix&lt;-</code> assigns xyz elements of neuron or dotprops
+  object and can also handle matrix like objects with columns named X, Y, Z
+  or x, y, z.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that <code>xyzmatrix</code> can extract or set 3D coordinates in a 
+  <code>matrix</code> or <code>data.frame</code> that <b>either</b> has exactly 3 columns
+  <b>or</b> has 3 columns named X,Y,Z or x,y,z.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># see all available methods for different classes</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/utils/topics/methods'>methods</a></span><span class="keyword">(</span><span class="string">'xyzmatrix'</span><span class="keyword">)</span></div>
+<div class='output'>[1] xyzmatrix.default    xyzmatrix.dotprops   xyzmatrix.hxsurf     xyzmatrix.igraph    
+[5] xyzmatrix.mesh3d     xyzmatrix.neuron     xyzmatrix.neuronlist
+see &#39;?methods&#39; for accessing help and source code
+</div>
+<div class='input'><span class="comment"># ... and for the assignment method</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/utils/topics/methods'>methods</a></span><span class="keyword">(</span><span class="string">'xyzmatrix&lt;-'</span><span class="keyword">)</span></div>
+<div class='output'>[1] xyzmatrix&lt;-.default  xyzmatrix&lt;-.dotprops xyzmatrix&lt;-.hxsurf   xyzmatrix&lt;-.igraph  
+[5] xyzmatrix&lt;-.neuron   xyzmatrix&lt;-.shape3d 
+see &#39;?methods&#39; for accessing help and source code
+</div>
+<div class='input'><span class="symbol">n</span><span class="assignement">=</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">n</span><span class="keyword">)</span><span class="assignement">&lt;-</span><span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">n</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/stopifnot'>stopifnot</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/Logic'>isTRUE</a></span><span class="keyword">(</span>
+  <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span><span class="keyword">(</span><span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">n</span><span class="keyword">)</span><span class="keyword">,</span><span class="functioncall"><a href='xyzmatrix.html'>xyzmatrix</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="keyword">)</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>xyzmatrix</li><li>xyzmatrix.default</li><li>xyzmatrix.dotprops</li><li>xyzmatrix.hxsurf</li><li>xyzmatrix.igraph</li><li>xyzmatrix.mesh3d</li><li>xyzmatrix.neuron</li><li>xyzmatrix.neuronlist</li><li>xyzmatrix&amp;lt;-</li><li>xyzmatrix&amp;lt;-.dotprops</li><li>xyzmatrix&amp;lt;-.hxsurf</li><li>xyzmatrix&amp;lt;-.igraph</li><li>xyzmatrix&amp;lt;-.neuron</li><li>xyzmatrix&amp;lt;-.shape3d</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='xyzmatrix.html'>xyzmatrix</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

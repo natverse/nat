@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>normalise_swc. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Normalise an SWC format block of neuron morphology data</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='normalise_swc.html'>normalise_swc</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">requiredColumns</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"PointNo"</span><span class="keyword">,</span> <span class="string">"Label"</span><span class="keyword">,</span> <span class="string">"X"</span><span class="keyword">,</span> <span class="string">"Y"</span><span class="keyword">,</span> <span class="string">"Z"</span><span class="keyword">,</span> <span class="string">"W"</span><span class="keyword">,</span>
+  <span class="string">"Parent"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">ifMissing</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"usedefaults"</span><span class="keyword">,</span> <span class="string">"warning"</span><span class="keyword">,</span> <span class="string">"stop"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">includeExtraCols</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">defaultValue</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/list'>list</a></span><span class="keyword">(</span><span class="argument">PointNo</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/seq'>seq.int</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">Label</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">2L</span><span class="keyword">,</span> <span class="argument">X</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA_real_</span><span class="keyword">,</span> <span class="argument">Y</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA_real_</span><span class="keyword">,</span> <span class="argument">Z</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA_real_</span><span class="keyword">,</span> <span class="argument">W</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA_real_</span><span class="keyword">,</span> <span class="argument">Parent</span> <span class="argument">=</span>
+  <span class="number">NA_integer_</span><span class="keyword">)</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A data.frame containing neuron morphology data</dd>
+      <dt>requiredColumns</dt>
+      <dd>Character vector naming columns we should have</dd>
+      <dt>ifMissing</dt>
+      <dd>What to do if <code>x</code> is missing a required column</dd>
+      <dt>includeExtraCols</dt>
+      <dd>Whether to include any extra columns include in 
+codex</dd>
+      <dt>defaultValue</dt>
+      <dd>A list containing default values to use for any missing 
+columns</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A data.frame containing the normalised block of SWC data with 
+  standard columns in standard order.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Normalise an SWC format block of neuron morphology data</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that row.names of the resultant data.frame will be set to NULL
+  so that they have completely standard values.</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>normalise_swc</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='neuron.html'>as.neuron.data.frame</a></code>, <code><a href='seglist2swc.html'>seglist2swc</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

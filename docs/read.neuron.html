@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>read.neuron. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Read a single neuron from a file</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='read.neuron.html'>read.neuron</a></span><span class="keyword">(</span><span class="symbol">f</span><span class="keyword">,</span> <span class="argument">format</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">class</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"neuron"</span><span class="keyword">,</span> <span class="string">"ngraph"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>f</dt>
+      <dd>Path to file. This can be a URL, in which case the file is 
+downloaded to a temporary location before reading.</dd>
+      <dt>format</dt>
+      <dd>The file format of the neuron. When <code>format=NULL</code>, the 
+default, <code>read.neuron</code> will infer the file format from the extension 
+or file header (aka magic) using the <code>fileformats</code> registry.</dd>
+      <dt>class</dt>
+      <dd>The class of the returned object - presently either 
+<code>&quot;neuron&quot;</code> or <code>&quot;ngraph&quot;</code></dd>
+      <dt>...</dt>
+      <dd>additional arguments passed to format-specific readers</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Read a single neuron from a file</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>This function will handle <code>neuron</code> and <code>dotprops</code> objects 
+  saved in R .rds or .rda format by default. Additional file formats can be 
+  registered using <code>fileformats</code>.</p>
+
+      <p>At the moment the following formats are supported using file readers 
+  already included with the nat package: <ul>
+<li> <b>swc</b> See <code><a href='read.neuron.swc.html'>read.neuron.swc</a></code>. SWC files can also 
+  return an <code><a href='ngraph.html'>ngraph</a></code> object containing the neuron structure in a
+  (permissive) general graph format that also contains the 3D positions for
+  each vertex.</p>
+
+      <p></li>
+<li> <b>neuroml</b> See <code><a href='read.neuron.neuroml.html'>read.neuron.neuroml</a></code></p>
+
+      <p></li>
+<li> <b>fijitraces</b> See <code><a href='read.neuron.fiji.html'>read.neuron.fiji</a></code>. The file format
+  used by the <a href = 'http://fiji.sc/Simple_Neurite_Tracer'>Simple Neurite 
+  Tracer</a> plugin of Fiji/ImageJ.</p>
+
+      <p></li>
+<li> <b>hxlineset,hxskel</b> Two distinct fileformats used by Amira. 
+  <code>hxlineset</code> is the generic one, <code>hxskel</code> is used by the 
+  hxskeletonize extension of Schmitt and Evers (see refs).</p>
+
+      <p></li>
+<li> <b>rda,rds</b> Native R cross-platform binary formats (see 
+  <code><a href='http://www.rdocumentation.org/packages/base/topics/load'>load</a>, <a href='http://www.rdocumentation.org/packages/base/topics/readRDS'>readRDS</a></code>). Note that RDS only contains a single 
+  unnamed neuron, whereas rda contains one or more named neurons.</p>
+
+      <p></li>
+</ul></p>
+
+      <p></p>
+
+    </div>
+
+    <div class="References">
+      <h2>References</h2>
+
+      <p>Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and 
+  Obermayer, K. (2004). New methods for the computer-assisted 3-D 
+  reconstruction of neurons from confocal image stacks. Neuroimage 4, 
+  1283--98. 
+  <a href = 'http://dx.doi.org/10.1016/j.neuroimage.2004.06.047'>doi:10.1016/j.neuroimage.2004.06.047</a></p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># # note that we override the default NeuronName field</span>
+<span class="comment"># n=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",package='nat'),</span>
+<span class="comment">#   NeuronName="EBT7R")</span>
+<span class="comment"># # use a function to set the NeuronName field</span>
+<span class="comment"># n3=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",package='nat'),</span>
+<span class="comment">#   NeuronName=function(x) sub("\\..*","",x))</span>
+<span class="comment"># # show the currently registered file formats that we can read</span>
+<span class="comment"># fileformats(class='neuron', read=TRUE)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>read.neuron</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='read.neurons.html'>read.neurons</a>, <a href='fileformats.html'>fileformats</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

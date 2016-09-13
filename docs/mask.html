@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>mask. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Mask an object, typically to produce a copy with some values zeroed out</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='mask.html'>mask</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for im3d</span>
+<span class="functioncall"><a href='mask.html'>mask</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">mask</span><span class="keyword">,</span> <span class="argument">levels</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">rval</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"im3d"</span><span class="keyword">,</span> <span class="string">"values"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">invert</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>Object to be masked</dd>
+      <dt>mask</dt>
+      <dd>An im3d object, an array or a vector with dimensions compatible 
+with x.</dd>
+      <dt>levels</dt>
+      <dd>Optional numeric vector of pixel values or character vector 
+defining named <code><a href='materials.html'>materials</a></code>.</dd>
+      <dt>rval</dt>
+      <dd>Whether to return an im3d object based on <code>x</code> or just the 
+values from <code>x</code> matching the mask.</dd>
+      <dt>invert</dt>
+      <dd>Whether to invert the voxel selection (default <code>FALSE</code>)</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+an oject with attributes matching <code>x</code> and elements with value 
+  <code>as.vector(TRUE, mode=mode)</code> i.e. <code>TRUE, 1, 0x01</code> and 
+  <code>as.vector(FALSE, mode=mode)</code> i.e. <code>FALSE, 0, 0x00</code> as 
+  appropriate.</p>
+
+      <p>A copy of x with
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Mask an object, typically to produce a copy with some values zeroed out</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that <code>mask.im3d</code> passes ... arguments on to im3d</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="symbol">x</span><span class="assignement">=</span><span class="functioncall"><a href='im3d.html'>im3d</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/array'>array</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span><span class="keyword">(</span><span class="number">1000</span><span class="keyword">)</span><span class="keyword">,</span><span class="argument">dim</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">10</span><span class="keyword">,</span><span class="number">10</span><span class="keyword">,</span><span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">BoundingBox</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">20</span><span class="keyword">,</span><span class="number">200</span><span class="keyword">,</span><span class="number">100</span><span class="keyword">,</span><span class="number">200</span><span class="keyword">,</span><span class="number">200</span><span class="keyword">,</span><span class="number">300</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="symbol">m</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/array'>array</a></span><span class="keyword">(</span><span class="number">1</span><span class="keyword">:</span><span class="number">5</span><span class="keyword">,</span><span class="argument">dim</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">10</span><span class="keyword">,</span><span class="number">10</span><span class="keyword">,</span><span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">[</span><span class="keyword">,</span><span class="keyword">,</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<p><img src='mask-2.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span><span class="keyword">(</span><span class="functioncall"><a href='mask.html'>mask</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">mask</span><span class="argument">=</span><span class="symbol">m</span><span class="keyword">,</span> <span class="argument">levels</span><span class="argument">=</span><span class="number">1</span><span class="keyword">)</span><span class="keyword">[</span><span class="keyword">,</span><span class="keyword">,</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<p><img src='mask-4.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/image'>image</a></span><span class="keyword">(</span><span class="functioncall"><a href='mask.html'>mask</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">mask</span><span class="argument">=</span><span class="symbol">m</span><span class="keyword">,</span> <span class="argument">levels</span><span class="argument">=</span><span class="number">1</span><span class="keyword">:</span><span class="number">2</span><span class="keyword">)</span><span class="keyword">[</span><span class="keyword">,</span><span class="keyword">,</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<p><img src='mask-6.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>mask</li><li>mask.im3d</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
+  <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='im3d.html'>im3d</a></code>,
+  <code><a href='imexpand.grid.html'>imexpand.grid</a></code>, <code><a href='imslice.html'>imslice</a></code>,
+  <code><a href='is.im3d.html'>is.im3d</a></code>, <code><a href='origin.html'>origin</a></code>,
+  <code><a href='projection.html'>projection</a></code>, <code><a href='threshold.html'>threshold</a></code>,
+  <code><a href='unmask.html'>unmask</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

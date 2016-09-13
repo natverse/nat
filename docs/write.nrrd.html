@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>write.nrrd. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='write.nrrd.html'>write.nrrd</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">file</span><span class="keyword">,</span> <span class="argument">enc</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"gzip"</span><span class="keyword">,</span> <span class="string">"raw"</span><span class="keyword">,</span> <span class="string">"text"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dtype</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"float"</span><span class="keyword">,</span>
+  <span class="string">"byte"</span><span class="keyword">,</span> <span class="string">"short"</span><span class="keyword">,</span> <span class="string">"ushort"</span><span class="keyword">,</span> <span class="string">"int"</span><span class="keyword">,</span> <span class="string">"double"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">header</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/attr'>attr</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="string">"header"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">endian</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">.Platform</span><span class="keyword">$</span><span class="symbol">endian</span><span class="keyword">,</span> <span class="argument">datafile</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">)</span>
+
+<span class="functioncall"><a href='write.nrrd.html'>write.nrrd.header</a></span><span class="keyword">(</span><span class="symbol">header</span><span class="keyword">,</span> <span class="symbol">file</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='write.nrrd.html'>write.nrrd.header.for.file</a></span><span class="keyword">(</span><span class="symbol">infile</span><span class="keyword">,</span> <span class="argument">outfile</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>Data to write as an <code>array</code>, <code>vector</code> or 
+<code><a href='im3d.html'>im3d</a></code> object.</dd>
+      <dt>file</dt>
+      <dd>Character string naming an output file (a detached nrrd header 
+when <code>file</code> has extension &#39;nhdr&#39;).</dd>
+      <dt>enc</dt>
+      <dd>One of three supported nrrd encodings (&quot;gzip&quot;, &quot;raw&quot;, &quot;text&quot;)</dd>
+      <dt>dtype</dt>
+      <dd>The data type to write. One of &quot;float&quot;,&quot;byte&quot;, &quot;short&quot;, 
+&quot;ushort&quot;, &quot;int&quot;, &quot;double&quot;</dd>
+      <dt>header</dt>
+      <dd>List containing fields of nrrd header - see <em>Header</em> 
+section.</dd>
+      <dt>endian</dt>
+      <dd>One of &quot;big&quot; or &quot;little&quot;. Defaults to <code>.Platform$endian</code>.</dd>
+      <dt>datafile</dt>
+      <dd>Optional name of separate file into which data should be 
+written (see details).</dd>
+      <dt>infile, outfile</dt>
+      <dd>Path to input and output file for 
+<code>write.nrrd.header.for.file</code>. If <code>outfile</code> is <code>NULL</code> (the
+default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>write.nrrd</code> writes an array, vector or im3d object to a 
+  NRRD file. When <code>x</code> is an <code>im3d</code> object, appropriate spatial 
+  calibration fields are added to the header.</p>
+
+      <p><code>write.nrrd.header</code> writes a nrrd header file.</p>
+
+      <p><code>write.nrrd.header.for.file</code> makes a detached NRRD
+  (<b>nhdr</b>) file that points at another image file on disk, making it
+  NRRD compatible. This can be a convenient way to make NRRD inputs for other
+  tools e.g. CMTK and also allows the same data block to pointed to by
+  different nhdr files with different spatial calibration.</p>
+
+    </div>
+
+    <div class="Detached NRRDs">
+      <h2>Detached NRRDs</h2>
+
+      <p>NRRD files can be written in <em>detached</em> format 
+  (see <a href = 'http://teem.sourceforge.net/nrrd/format.html#detached'>http://teem.sourceforge.net/nrrd/format.html#detached</a>) in which 
+  a text <b>nhdr</b> file is used to described the contents of a separate 
+  (usually binary) data file. This means that the nhdr file can be inspected 
+  and edited with a text editor, while the datablock can be in a completely 
+  raw format that can be opened even by programs that do not understand the 
+  NRRD format. Furthermore detached NRRD header files can be written to 
+  accompany non-NRRD image data so that it can be opened by nrrd readers.</p>
+
+      <p>If <code>file</code> has extension <code>.nhdr</code> <em>or</em> <code>datafile</code> is 
+  non-NULL, then <code>write.nrrd</code> will write a separate datafile. If 
+  <code>datafile</code> is set, then it is interpeted as specifying a path relative
+  to the <b>nhdr</b> file. If <code>datafile</code> is not specified then default 
+  filenames will be chosen according to the encoding following the 
+  conventions of the teem library:</p>
+
+      <p><ul>
+<li> raw <code>&#39;&lt;nhdrstem&gt;.raw&#39;</code></p>
+
+      <p></li>
+<li> gzip <code>&#39;&lt;nhdrstem&gt;.raw.gz&#39;</code></p>
+
+      <p></li>
+<li> text <code>&#39;&lt;nhdrstem&gt;.ascii&#39;</code></p>
+
+      <p></li>
+</ul></p>
+
+      <p></p>
+
+    </div>
+
+    <div class="Data file paths">
+      <h2>Data file paths</h2>
+
+      <p>When a detached NRRD is written, the 
+  <code>datafile</code> can be specified either as <em>relative</em> or 
+  <em>absolute</em> path. Relative paths are strongly recommended - the best 
+  place is right next to the datafile. Relative paths are always specified 
+  with respect to the location of the <b>nhdr</b> file.</p>
+
+      <p>The <code>datafile</code> argument is not processed by <code>write.nrrd</code> so it is
+  up to the caller to decide whether a relative or absolute path will be 
+  used.</p>
+
+      <p>For <code>write.nrrd.header.for.file</code> if <code>outfile</code> is not specified 
+  then the nhdr file will be placed next to the original image stack and the 
+  <code>datafile</code> field will therefore just be <code>basename(infile)</code>. If 
+  outfile is specified explicitly, then <code>datafile</code> will be set to the 
+  full path in the <code>infile</code> argument. Therefore if you wish to specify 
+  <code>outfile</code>, you <em>must</em> set the current working directory (using 
+  <code>setwd</code>) to the location in which <code>outfile</code> will be written to 
+  ensure that the path to the datafile is correct. A future TODO would add 
+  the ability to convert an absolute datafile path to a relaive one (by
+  finding the common path between datafile and nhdr folders).</p>
+
+    </div>
+
+    <div class="Header">
+      <h2>Header</h2>
+
+      <p>For <code>write.nrrd</code>, arguments <code>enc</code>, <code>dtype</code>, 
+  and <code>endian</code> along with the dimensions of the input (<code>x</code>) will 
+  override the corresponding NRRD header fields from any supplied 
+  <code>header</code> argument. See 
+  <a href = 'http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a> for details of the NRRD 
+  fields.</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>write.nrrd</li><li>write.nrrd.header</li><li>write.nrrd.header.for.file</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='read.nrrd.html'>read.nrrd</a>, <a href='http://www.rdocumentation.org/packages/base/topics/Platform'>.Platform</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

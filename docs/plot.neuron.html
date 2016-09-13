@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>plot.neuron. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Plot a 2D projection of a neuron</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">WithLine</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">WithNodes</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span>
+  <span class="argument">WithAllPoints</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">WithText</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">soma</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span>
+  <span class="argument">PlotAxes</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"XY"</span><span class="keyword">,</span> <span class="string">"YZ"</span><span class="keyword">,</span> <span class="string">"XZ"</span><span class="keyword">,</span> <span class="string">"ZY"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">axes</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">asp</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span>
+  <span class="argument">main</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">x</span><span class="keyword">$</span><span class="symbol">NeuronName</span><span class="keyword">,</span> <span class="argument">sub</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">xlim</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ylim</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">AxisDirections</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">1</span><span class="keyword">,</span> <span class="keyword">-</span><span class="number">1</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">add</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">col</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">PointAlpha</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span>
+  <span class="argument">tck</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA</span><span class="keyword">,</span> <span class="argument">lwd</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/par'>par</a></span><span class="keyword">(</span><span class="string">"lwd"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">boundingbox</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>a neuron to plot.</dd>
+      <dt>WithLine</dt>
+      <dd>whether to plot lines for all segments in neuron.</dd>
+      <dt>WithNodes</dt>
+      <dd>whether points should only be drawn for nodes (branch/end 
+points)</dd>
+      <dt>WithAllPoints</dt>
+      <dd>whether points should be drawn for all points in neuron.</dd>
+      <dt>WithText</dt>
+      <dd>whether to label plotted points with their id.</dd>
+      <dt>soma</dt>
+      <dd>Whether to plot a circle at neuron&#39;s origin representing the 
+soma. Either a logical value or a numeric indicating the radius (default 
+<code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</dd>
+      <dt>PlotAxes</dt>
+      <dd>the axes for the plot.</dd>
+      <dt>axes</dt>
+      <dd>whether axes should be drawn.</dd>
+      <dt>asp</dt>
+      <dd>the <code>y/x</code> aspect ratio, see <code><a href='http://www.rdocumentation.org/packages/graphics/topics/plot.window'>plot.window</a></code>.</dd>
+      <dt>main</dt>
+      <dd>the title for the plot</dd>
+      <dt>sub</dt>
+      <dd>sub title for the plot</dd>
+      <dt>xlim</dt>
+      <dd>limits for the horizontal axis (see also boundingbox)</dd>
+      <dt>ylim</dt>
+      <dd>limits for the vertical axis (see also boundingbox)</dd>
+      <dt>AxisDirections</dt>
+      <dd>the directions for the axes. By default, R uses the 
+bottom-left for the origin, whilst most graphics software uses the 
+top-left. The default value of <code>c(1, -1, 1)</code> makes the produced plot 
+consistent with the latter.</dd>
+      <dt>add</dt>
+      <dd>Whether the plot should be superimposed on one already present 
+(default: <code>FALSE</code>).</dd>
+      <dt>col</dt>
+      <dd>the color in which to draw the lines between nodes.</dd>
+      <dt>PointAlpha</dt>
+      <dd>the value of alpha to use in plotting the nodes.</dd>
+      <dt>tck</dt>
+      <dd>length of tick mark as fraction of plotting region (negative 
+number is outside graph, positive number is inside, 0 suppresses ticks, 1 
+creates gridlines).</dd>
+      <dt>lwd</dt>
+      <dd>line width relative to the default (default=1).</dd>
+      <dt>boundingbox</dt>
+      <dd>A 2 x 3 matrix (ideally of class 
+<code><a href='boundingbox.html'>boundingbox</a></code>) that enables the plot axis limits to be set 
+without worrying about axis selection or reversal (see details)</dd>
+      <dt>...</dt>
+      <dd>additional arguments passed to plot</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+list of plotted points (invisibly)
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Plot a 2D projection of a neuron</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>This functions sets the axis ranges based on the chosen
+  <code>PlotAxes</code> and the range of the data in <code>x</code>. It is still possible
+  to use <code>PlotAxes</code> in combination with a <code>boundingbox</code>, for
+  example to set the range of a plot of a number of objects.</p>
+
+      <p>nat assumes the default axis convention used in biological imaging, where
+  the origin of the y axis is the top rather than the bottom of the plot.
+  This is achieved by reversing the y axis of the 2D plot when the second
+  data axis is the Y axis of the 3D data. Other settings can be achieved by
+  modfiying the AxisDirections argument.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># Draw first example neuron</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<div class='input'><span class="comment"># Overlay second example neuron</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">add</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span></div>
+<p><img src='plot.neuron-3.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="comment"># Clear the current plot and draw the third neuron from a different view</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">3</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">PlotAxes</span><span class="argument">=</span><span class="string">"YZ"</span><span class="keyword">)</span></div>
+<p><img src='plot.neuron-5.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="comment"># Just plot the end points for the fourth example neuron</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">4</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">WithNodes</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span></div>
+<div class='input'><span class="comment"># Plot with soma (of default radius)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">4</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">WithNodes</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">soma</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span></div>
+<p><img src='plot.neuron-8.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="comment"># Plot with soma of defined radius</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">4</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">WithNodes</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">soma</span><span class="argument">=</span><span class="number">1.25</span><span class="keyword">)</span></div>
+<p><img src='plot.neuron-10.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>plot.neuron</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='plot3d.neuron.html'>plot3d.neuron</a></code></p>
+
+      <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
+  <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
+  <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

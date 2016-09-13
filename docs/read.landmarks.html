@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>read.landmarks. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Generic functions to read/write landmarks in any supported format</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='read.landmarks.html'>read.landmarks</a></span><span class="keyword">(</span><span class="symbol">f</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='read.landmarks.html'>write.landmarks</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">file</span><span class="keyword">,</span> <span class="argument">format</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="string">"amiralandmarks"</span><span class="keyword">,</span> <span class="argument">ext</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">Force</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">MakeDir</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>f</dt>
+      <dd>Path to a file (can also be a URL)</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed on to format specific functions</dd>
+      <dt>x</dt>
+      <dd>The landmarks object to write. Can also be a plain <code>matrix</code> or 
+<code>data.frame</code>.</dd>
+      <dt>file</dt>
+      <dd>The path to the output file. If this does not end in an extension
+like <code>.landmarksAscii</code>, then one will be added based on the value of 
+the <code>ext</code> argument.</dd>
+      <dt>format</dt>
+      <dd>Character vector specifying output format. Defaults to 
+<code>&quot;amiralandmarks&quot;</code>. Partial matching is used (e.g. amira is
+sufficient).</dd>
+      <dt>ext</dt>
+      <dd>Optional character vector specifying a new or non-standard 
+extension to use for output file, including the period (e.g. 
+<code>ext=&#39;.am&#39;</code>). When <code>ext=NULL</code>, the default, the default extension
+for the selected <code>format</code> will be added if <code>f</code> does not have an 
+extension. When <code>ext=NA</code>, the extension will not be modified and no 
+extension will be appended if <code>f</code> does not have one.</dd>
+      <dt>Force</dt>
+      <dd>Whether to overwrite an existing file</dd>
+      <dt>MakeDir</dt>
+      <dd>Whether to create directory implied by <code>file</code> argument.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+for <code>read.landmarks</code> a matrix or list of additional class 
+  landmarks, where the rownames specify the names of each landmark if 
+  available.</p>
+
+      <p>For <code>write.landmarks</code> the path to the written file, invisibly.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Generic functions to read/write landmarks in any supported format</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Presently the supported formats are <ul>
+<li> Amira</p>
+
+      <p></li>
+<li> CMTK</p>
+
+      <p></li>
+<li> Fiji (see <a href = 'http://fiji.sc/Name_Landmarks_and_Register'>http://fiji.sc/Name_Landmarks_and_Register</a>) </li>
+</ul></p>
+
+      <p>See examples section for how to produce a listing of all currently 
+  available formats with <code>fileformats</code>.</p>
+
+    </div>
+
+    <div class="Paired landmarks">
+      <h2>Paired landmarks</h2>
+
+      <p>Only the amiralandmarks format supports the use of
+  paired landmarks</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Listing of supported fileformats for landmarks</span>
+<span class="functioncall"><a href='fileformats.html'>fileformats</a></span><span class="keyword">(</span><span class="argument">class</span> <span class="argument">=</span> <span class="string">'landmarks'</span><span class="keyword">,</span> <span class="argument">rval</span> <span class="argument">=</span> <span class="string">"info"</span><span class="keyword">)</span></div>
+<div class='output'>          format     class            ext read write magic
+1 amiralandmarks landmarks .landmarkAscii TRUE  TRUE  TRUE
+2 amiralandmarks landmarks   .landmarkBin TRUE  TRUE  TRUE
+3 amiralandmarks landmarks            .am TRUE  TRUE  TRUE
+4 amiralandmarks landmarks     .amiramesh TRUE  TRUE  TRUE
+5  cmtklandmarks landmarks     .landmarks TRUE  TRUE  TRUE
+6  fijilandmarks landmarks        .points TRUE FALSE  TRUE
+</div>
+<div class='input'>
+<span class="comment">## round trip tests</span>
+<span class="symbol">m</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/matrix'>matrix</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span><span class="keyword">(</span><span class="number">6</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">ncol</span><span class="argument">=</span><span class="number">3</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/colnames'>rownames</a></span><span class="keyword">(</span><span class="symbol">m</span><span class="keyword">)</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"nose"</span><span class="keyword">,</span> <span class="string">"ear"</span><span class="keyword">)</span>
+<span class="symbol">f</span><span class="assignement">=</span><span class="functioncall"><a href='read.landmarks.html'>write.landmarks</a></span><span class="keyword">(</span><span class="symbol">m</span><span class="keyword">,</span> <span class="argument">file</span><span class="argument">=</span><span class="string">'knee'</span><span class="keyword">,</span> <span class="argument">format</span><span class="argument">=</span><span class="string">'cmtk'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='read.landmarks.html'>read.landmarks</a></span><span class="keyword">(</span><span class="symbol">f</span><span class="keyword">)</span></div>
+<div class='output'>           [,1]      [,2]      [,3]
+nose -0.5785249 -1.919233 -1.114761
+ear  -0.1691090 -1.534266  1.597812
+attr(,&quot;class&quot;)
+[1] &quot;landmarks&quot; &quot;matrix&quot;   
+</div>
+<div class='input'>
+<span class="comment"># write in amira format which does not support named landmarks</span>
+<span class="symbol">f2</span><span class="assignement">=</span><span class="functioncall"><a href='read.landmarks.html'>write.landmarks</a></span><span class="keyword">(</span><span class="symbol">m</span><span class="keyword">,</span> <span class="argument">file</span><span class="argument">=</span><span class="string">'knee'</span><span class="keyword">,</span> <span class="argument">format</span><span class="argument">=</span><span class="string">'amira'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='read.landmarks.html'>read.landmarks</a></span><span class="keyword">(</span><span class="symbol">f2</span><span class="keyword">)</span></div>
+<div class='output'>           [,1]      [,2]      [,3]
+[1,] -0.5785249 -1.919233 -1.114761
+[2,] -0.1691090 -1.534266  1.597812
+attr(,&quot;class&quot;)
+[1] &quot;landmarks&quot; &quot;matrix&quot;   
+</div>
+<div class='input'>
+<span class="comment"># clean up</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="symbol">f</span><span class="keyword">,</span><span class="symbol">f2</span><span class="keyword">)</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>read.landmarks</li><li>write.landmarks</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='fileformats.html'>fileformats</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

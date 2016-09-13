@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>plot.neuronlist. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>2D plots of the elements in a neuronlist, optionally using a subset 
+expression</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for neuronlist</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">col</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">colpal</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">rainbow</span><span class="keyword">,</span>
+  <span class="argument">add</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">boundingbox</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">,</span> <span class="argument">SUBSTITUTE</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>a neuron list or, for <code>plot3d.character</code>, a character vector of
+neuron names. The default neuronlist used by plot3d.character can be set by
+using <code>options(nat.default.neuronlist=&#39;mylist&#39;)</code>. See 
+?<code><a href='nat-package.html'>nat</a></code> for details.</dd>
+      <dt>subset</dt>
+      <dd>Expression evaluating to logical mask for neurons. See details.</dd>
+      <dt>col</dt>
+      <dd>An expression specifying a colour evaluated in the context of the 
+dataframe attached to nl (after any subsetting). See details.</dd>
+      <dt>colpal</dt>
+      <dd>A vector of colours or a function that generates colours</dd>
+      <dt>add</dt>
+      <dd>Logical specifying whether to add data to an existing plot or make
+a new one. The default value of <code>NULL</code> creates a new plot with the 
+first neuron in the neuronlist and then adds the remaining neurons.</dd>
+      <dt>boundingbox</dt>
+      <dd>A 2 x 3 matrix (ideally of class 
+<code><a href='boundingbox.html'>boundingbox</a></code>) that enables the plot axis limits to be set 
+without worrying about axis selection or reversal (see details)</dd>
+      <dt>...</dt>
+      <dd>options passed on to plot (such as colours, line width etc)</dd>
+      <dt>SUBSTITUTE</dt>
+      <dd>Whether to <code>substitute</code> the expressions passed as 
+arguments <code>subset</code> and <code>col</code>. Default: <code>TRUE</code>. For expert 
+use only, when calling from another function.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+list of values of <code>plot</code> with subsetted dataframe as attribute 
+  <code>&#39;df&#39;</code>
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>2D plots of the elements in a neuronlist, optionally using a subset 
+expression</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The col and subset parameters are evaluated in the context of the 
+  dataframe attribute of the neuronlist. If col evaluates to a factor and 
+  colpal is a named vector then colours will be assigned by matching factor 
+  levels against the named elements of colpal. If there is one unnamed level,
+  this will be used as catch-all default value (see examples).</p>
+
+      <p>If col evaluates to a factor and colpal is a function then it will be used
+  to generate colours with the same number of levels as are used in col.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># plot 4 cells</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">4</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<p><img src='plot.neuronlist-2.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="comment"># modify some default plot arguments</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">4</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">ylim</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">140</span><span class="keyword">,</span><span class="number">75</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">main</span><span class="argument">=</span><span class="string">'First 4 neurons'</span><span class="keyword">)</span></div>
+<p><img src='plot.neuronlist-4.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="comment"># plot one class of neurons in red and all the others in grey</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="symbol">Glomerulus</span><span class="keyword">,</span> <span class="argument">colpal</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="argument">DA1</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span> <span class="string">'grey'</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">WithNodes</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span></div>
+<p><img src='plot.neuronlist-6.png' alt='' width='540' height='400' /></p>
+<div class='input'><span class="comment"># subset operation</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">,</span> <span class="argument">subset</span><span class="argument">=</span><span class="symbol">Glomerulus</span><span class="keyword">%in%</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"DA1"</span><span class="keyword">,</span> <span class="string">"DP1m"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="symbol">Glomerulus</span><span class="keyword">,</span>
+  <span class="argument">ylim</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">140</span><span class="keyword">,</span><span class="number">75</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">WithNodes</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span></div>
+<p><img src='plot.neuronlist-8.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>plot.neuronlist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='nat-package.html'>nat-package</a>, <a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

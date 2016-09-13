@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>subset.hxsurf. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Subset hxsurf object to specified regions</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for hxsurf</span>
+<span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">drop</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">rval</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"hxsurf"</span><span class="keyword">,</span>
+  <span class="string">"names"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A dotprops object</dd>
+      <dt>subset</dt>
+      <dd>Character vector specifying regions to keep. Interpreted as 
+<code><a href='http://www.rdocumentation.org/packages/base/topics/regex'>regex</a></code> if of length 1 and no fixed match.</dd>
+      <dt>drop</dt>
+      <dd>Whether to drop unused vertices after subsetting (default:
+<code>TRUE</code>)</dd>
+      <dt>rval</dt>
+      <dd>Whether to return a new <code>hxsurf</code> object or just the names of
+the matching regions</dd>
+      <dt>...</dt>
+      <dd>Additional parameters (currently ignored)</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+subsetted hxsurf object
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Subset hxsurf object to specified regions</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># plot only vertical lobe</span>
+<span class="symbol">vertical_lobe</span><span class="assignement">=</span><span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">MBL.surf</span><span class="keyword">,</span> <span class="string">"VL"</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">vertical_lobe</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.3</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span>
+
+<span class="comment"># there is also a shortcut for this</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/scene'>clear3d</a></span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">MBL.surf</span><span class="keyword">,</span> <span class="string">"VL"</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.3</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>subset.hxsurf</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p>Other hxsurf: <code><a href='as.mesh3d.html'>as.mesh3d</a></code>,
+  <code><a href='materials.html'>materials</a></code>, <code><a href='plot3d.hxsurf.html'>plot3d.hxsurf</a></code>,
+  <code><a href='read.hxsurf.html'>read.hxsurf</a></code>, <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

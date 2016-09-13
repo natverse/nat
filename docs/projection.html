@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>projection. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Make 2D (orthogonal) projection of 3D image data</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='projection.html'>projection</a></span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="argument">projdim</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="string">"z"</span><span class="keyword">,</span> <span class="argument">projfun</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"integrate"</span><span class="keyword">,</span> <span class="string">"mean"</span><span class="keyword">,</span> <span class="string">"sum"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">na.rm</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">T</span><span class="keyword">,</span> <span class="argument">mask</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>a</dt>
+      <dd>Array of image data (im3d format)</dd>
+      <dt>projdim</dt>
+      <dd>The image dimension down which to project</dd>
+      <dt>projfun</dt>
+      <dd>The function that collapses each vector of image data down to 
+a single pixel. Can be a character vector naming a function or a function. 
+See details.</dd>
+      <dt>na.rm</dt>
+      <dd>Logical indicating whether to ignore <code>NA</code> values in the 
+image data when calculating function results. default: <code>TRUE</code></dd>
+      <dt>mask</dt>
+      <dd>A mask with the same extent as the image.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments for projfun</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Make 2D (orthogonal) projection of 3D image data</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that <code>projfun</code> must have an argument <code>na.rm</code> like the
+  S3 Summary <code><a href='http://www.rdocumentation.org/packages/base/topics/groupGeneric'>groupGeneric</a></code> functions such as <code>sum, min</code> 
+  etc.</p>
+
+      <p>Note also that the BoundingBox of a 2d projection is not well-defined for
+  the axis along which the projection was made. Presently both the evaluation
+  location and the BoundingBox extremes are set to 0 after a projection is
+  made but FIXME this is not completely satisfactory. Perhaps defining this
+  to be NA or the midpoint of the orginal axis would be better justified.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))</span>
+<span class="comment"># d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)</span>
+<span class="comment"># op=par(mfrow=c(1,2))</span>
+<span class="comment"># rval=image(projection(d,projfun=max))</span>
+<span class="comment"># image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)</span>
+<span class="comment"># par(op)</span>
+<span class="comment">## ---------------------------------------------</span>
+<span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))</span>
+<span class="comment"># image(projection(LHMask),asp=TRUE)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>projection</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='http://www.rdocumentation.org/packages/base/topics/groupGeneric'>groupGeneric</a></code>, <code><a href='clampmax.html'>clampmax</a></code></p>
+
+      <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
+  <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='im3d.html'>im3d</a></code>,
+  <code><a href='imexpand.grid.html'>imexpand.grid</a></code>, <code><a href='imslice.html'>imslice</a></code>,
+  <code><a href='is.im3d.html'>is.im3d</a></code>, <code><a href='mask.html'>mask</a></code>,
+  <code><a href='origin.html'>origin</a></code>, <code><a href='threshold.html'>threshold</a></code>,
+  <code><a href='unmask.html'>unmask</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

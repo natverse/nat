@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>summary.neuronlist. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Summary statistics for neurons (e.g. cable length, number of nodes)</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for neuronlist</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">object</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">,</span> <span class="argument">include.attached.dataframe</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">object</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">object</span><span class="keyword">,</span> <span class="argument">veclength</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>object</dt>
+      <dd>The neuron or neuronlist to summarise</dd>
+      <dt>...</dt>
+      <dd>For <code>summary.neuronlist</code> additional arguments passed on to 
+summary methods for individual neurons</dd>
+      <dt>include.attached.dataframe</dt>
+      <dd>Whether to include the neuronlists attached
+metadata in the returned data.frame.</dd>
+      <dt>veclength</dt>
+      <dd>The vector length to assume for each segment so that a cable
+length estimate can be made.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A <code>data.frame</code> summarising the tree properties of the neuron 
+  with columns <ul>
+<li>root</p>
+
+      <p></li>
+<li>nodes</p>
+
+      <p></li>
+<li>segments</p>
+
+      <p></li>
+<li>branchpoints</p>
+
+      <p></li>
+<li>endpoints</p>
+
+      <p></li>
+<li>cable.length</p>
+
+      <p></li>
+</ul></p>
+
+      <p></dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>summary.neuronlist</code> computes tree statistics for all the 
+  neurons in a neuronlist object</p>
+
+      <p><code>summary.neuron</code> computes statistics for individual neurons</p>
+
+      <p><code>summary.dotprops</code> computes statistics for individual
+  neurons in dotprops format. Note the <code>veclength</code> argument.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># summary for a whole neuronlist</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">)</span></div>
+<div class='output'>       root nodes segments branchpoints endpoints cable.length
+EBH11R    1   180       33           16        18     297.1763
+EBH20L    1   200       26           12        15     327.0929
+EBH20R    1   199       25           12        14     347.6153
+EBI12L    1   169       23           11        13     294.4680
+EBI22R    1   160       27           13        15     303.0150
+EBJ23L    1   156       28           13        16     292.3298
+EBJ3R     1   118       32           15        18     286.0233
+EBN19L    1   162       31           15        17     314.7040
+EBO15L    1   167       39           19        21     350.7743
+EBO53L    1   175       26           12        15     314.9850
+ECA34L    1   446      149           72        78     910.0081
+ECB3L     1   366      124           57        68     936.4803
+LI23L     1   188       29           14        16     236.5884
+LIC2R     1   279       27           13        15     416.1551
+LJ5L      1   154       29           14        16     241.9808
+MC3B      1   118       27           13        15     280.7168
+MH16L     1   171       22           10        13     261.7648
+MM14L     1   216       23           11        13     305.3770
+NA7L      1   121       13            6         8     186.6893
+NH15L     1    83       26           12        15     212.3443
+NH29B     1   101       34           16        19     231.5922
+NI16L     1   122       28           13        16     226.2681
+NIA8L     1   961       32           15        18     387.3223
+NIA8R     1   797       25           12        14     332.0756
+NNA9L     2  2481      171           84        88     991.4211
+NNC4R     2  1902      125           61        65     863.8289
+NNE1L     1  2500      163           78        86    1013.2454
+OFD2L     1  2439      161           77        85     992.2950
+OKC9R     1  2556      144           67        78    1013.5630
+SDD8L     2  2452      151           74        78    1007.6639
+SH21L     1   148       19            9        11     234.8228
+SL20L     1   213       30           14        17     258.2600
+TKC8R     2   605       11            4         8     253.7726
+TL4R      1   135       25           11        15     211.1676
+TS7L      1   176       33           16        18     244.8527
+TT27R     1   168       30           14        17     226.0329
+VA15R     1   147       17            8        10     213.8872
+VA20R     1   160       21           10        12     215.0711
+VB37L     1   162       14            6         9     218.7555
+VB58L     1   154       17            8        10     231.9512
+</div>
+<div class='input'><span class="comment"># including the attached data.frame with additional metadata</span>
+<span class="functioncall"><a href='neuronlist-dataframe-methods.html'>head</a></span><span class="keyword">(</span><span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">,</span> <span class="argument">include.attached.dataframe</span> <span class="argument">=</span> <span class="number">FALSE</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<div class='output'>       root nodes segments branchpoints endpoints cable.length
+EBH11R    1   180       33           16        18     297.1763
+EBH20L    1   200       26           12        15     327.0929
+EBH20R    1   199       25           12        14     347.6153
+EBI12L    1   169       23           11        13     294.4680
+EBI22R    1   160       27           13        15     303.0150
+EBJ23L    1   156       28           13        16     292.3298
+</div>
+<div class='input'><span class="comment"># for a single regular format neuron</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<div class='output'>  root nodes segments branchpoints endpoints cable.length
+1    1   180       33           16        18     297.1763
+</div>
+<div class='input'><span class="comment"># for a single dotprops format neuron</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<div class='output'>  nodes cable.length
+1   284          284
+</div>
+<div class='input'><span class="comment"># specify a different estimate for the cable length associated with a single</span>
+<span class="comment"># point in the neuron</span>
+<span class="functioncall"><a href='summary.neuron.html'>summary</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">veclength</span><span class="argument">=</span><span class="number">1.2</span><span class="keyword">)</span></div>
+<div class='output'>  nodes cable.length
+1   284        340.8
+</div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>summary</li><li>summary.dotprops</li><li>summary.neuron</li><li>summary.neuronlist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='seglengths.html'>seglengths</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

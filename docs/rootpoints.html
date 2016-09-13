@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>rootpoints. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Return the root or branch points of a neuron or graph</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='rootpoints.html'>rootpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='rootpoints.html'>rootpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='rootpoints.html'>rootpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">subtrees</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for igraph</span>
+<span class="functioncall"><a href='rootpoints.html'>rootpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='rootpoints.html'>branchpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='rootpoints.html'>branchpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='rootpoints.html'>branchpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">subtrees</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for igraph</span>
+<span class="functioncall"><a href='rootpoints.html'>branchpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='rootpoints.html'>endpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='rootpoints.html'>endpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">subtrees</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for igraph</span>
+<span class="functioncall"><a href='rootpoints.html'>endpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='rootpoints.html'>endpoints</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>Neuron or other object which might have roots</dd>
+      <dt>...</dt>
+      <dd>Further arguments passed to methods</dd>
+      <dt>subtrees</dt>
+      <dd>Integer index of the fully connected subtree in 
+<code>x$SubTrees</code>. Only applicable when a <code>neuron</code> consists of 
+multiple unconnected subtrees.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Integer point number of root/branch point
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>A neuron may have multiple subtrees and therefore multiple roots</p>
+
+      <p>Return the branchpoints of a neuron or graph</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>branchpoints.neuron</code> returns a list if more than one subtree is
+  specified</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>branchpoints</li><li>branchpoints.default</li><li>branchpoints.igraph</li><li>branchpoints.neuron</li><li>endpoints</li><li>endpoints.default</li><li>endpoints.igraph</li><li>endpoints.neuron</li><li>rootpoints</li><li>rootpoints.default</li><li>rootpoints.igraph</li><li>rootpoints.neuron</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+  <code><a href='plot.neuron.html'>plot.neuron</a></code>,
+  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
+  <code><a href='resample.html'>resample</a></code>, <code><a href='spine.html'>spine</a></code>,
+  <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

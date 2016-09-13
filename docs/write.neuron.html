@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>write.neuron. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Write out a neuron in any of the file formats we know about</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='write.neuron.html'>write.neuron</a></span><span class="keyword">(</span><span class="symbol">n</span><span class="keyword">,</span> <span class="argument">file</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">dir</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">format</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ext</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">Force</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">MakeDir</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>n</dt>
+      <dd>A neuron</dd>
+      <dt>file</dt>
+      <dd>Path to output file</dd>
+      <dt>dir</dt>
+      <dd>Path to directory (this will replace dirname(file) if specified)</dd>
+      <dt>format</dt>
+      <dd>Unique abbreviation of one of the registered file formats for 
+neurons including &#39;swc&#39;, &#39;hxlineset&#39;, &#39;hxskel&#39;</dd>
+      <dt>ext</dt>
+      <dd>Will replace the default extension for the filetype and should 
+include the period eg <code>ext=&#39;.amiramesh&#39;</code> or <code>ext=&#39;_reg.swc&#39;</code>. The
+special value of ext=NA will prevent the extension from being changed or 
+added e.g. if the desired file name does not have an extension.</dd>
+      <dt>Force</dt>
+      <dd>Whether to overwrite an existing file</dd>
+      <dt>MakeDir</dt>
+      <dd>Whether to create directory implied by <code>file</code> argument.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to selected writer function</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+return value
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>If file is not specified the neuron&#39;s InputFileName field will be checked 
+(for a dotprops object it will be the <code>&#39;file&#39;</code> attribute). If this is 
+missing there will be an error. If dir is specified it will be combined with 
+basename(file). If file is specified but format is not, it will be inferred 
+from file&#39;s extension.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that if <code>file</code> does not have an extension then the default
+  extension for the specified <code>format</code> will be appended. This behaviour
+  can be suppressed by setting <code>ext=NA</code>.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># show the currently registered file formats that we can write</span>
+<span class="functioncall"><a href='fileformats.html'>fileformats</a></span><span class="keyword">(</span><span class="argument">class</span><span class="argument">=</span><span class="string">'neuron'</span><span class="keyword">,</span> <span class="argument">write</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span></div>
+<div class='output'>[1] &quot;hxlineset&quot; &quot;hxskel&quot;    &quot;rds&quot;       &quot;swc&quot;       &quot;vtk&quot;      
+</div>
+<div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># write.neuron(Cell07PNs[[1]], file='myneuron.swc')</span>
+<span class="comment"># # writes out "myneuron.swc" in SWC format</span>
+<span class="comment"># write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')</span>
+<span class="comment"># # writes out "myneuron.amiramesh" in Amira hxlineset format</span>
+<span class="comment"># write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')</span>
+<span class="comment"># # writes out "myneuron.am" in Amira hxlineset format</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>write.neuron</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='fileformats.html'>fileformats</a>, <a href='http://www.rdocumentation.org/packages/base/topics/readRDS'>saveRDS</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

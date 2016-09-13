@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>as.neuronlist. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Make a list of neurons that can be used for coordinate plotting/analysis</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='as.neuronlist.html'>as.neuronlist</a></span><span class="keyword">(</span><span class="symbol">l</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='as.neuronlist.html'>as.neuronlist</a></span><span class="keyword">(</span><span class="symbol">l</span><span class="keyword">,</span> <span class="argument">df</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">AddClassToNeurons</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>l</dt>
+      <dd>An existing list or a single neuron to start a list</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods</dd>
+      <dt>df</dt>
+      <dd>the data.frame to attach with additional metadata.</dd>
+      <dt>AddClassToNeurons</dt>
+      <dd>Whether to ensure neurons have class <code>neuron</code>
+(see details).</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+neuronlist with attr(&#39;df&#39;)
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Make a list of neurons that can be used for coordinate plotting/analysis</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that <code>as.neuronlist</code> can cope with both <code>neurons</code> and
+  <code>dotprops</code> objects but <code>AddClassToNeurons</code> will only apply to 
+  things that look like neurons but don&#39;t have a class of <code>neuron</code>.</p>
+
+      <p>See <code><a href='neuronlist.html'>neuronlist</a></code> details for more information.</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>as.neuronlist</li><li>as.neuronlist.default</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='is.neuronlist.html'>is.neuronlist</a></code>,<code><a href='neuron.html'>is.neuron</a></code>,<code><a href='dotprops.html'>is.dotprops</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

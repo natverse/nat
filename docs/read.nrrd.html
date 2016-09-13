@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>read.nrrd. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Read nrrd file into an array in memory</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='read.nrrd.html'>read.nrrd</a></span><span class="keyword">(</span><span class="symbol">file</span><span class="keyword">,</span> <span class="argument">origin</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">ReadData</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">AttachFullHeader</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span>
+  <span class="argument">Verbose</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">ReadByteAsRaw</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"unsigned"</span><span class="keyword">,</span> <span class="string">"all"</span><span class="keyword">,</span> <span class="string">"none"</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='read.nrrd.html'>read.nrrd.header</a></span><span class="keyword">(</span><span class="symbol">file</span><span class="keyword">,</span> <span class="argument">Verbose</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>file</dt>
+      <dd>Path to a nrrd (or a connection for <code>read.nrrd.header</code>)</dd>
+      <dt>origin</dt>
+      <dd>Add a user specified origin (x,y,z) to the returned object</dd>
+      <dt>ReadData</dt>
+      <dd>When FALSE just return attributes (i.e. the nrrd header)</dd>
+      <dt>AttachFullHeader</dt>
+      <dd>Include the full nrrd header as an attribute of the 
+returned object (default TRUE)</dd>
+      <dt>Verbose</dt>
+      <dd>Status messages while reading</dd>
+      <dt>ReadByteAsRaw</dt>
+      <dd>Either a character vector or a logical vector specifying
+when R should read 8 bit data as an R <code>raw</code> vector rather than 
+<code>integer</code> vector.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+An <code>array</code> object, optionally with attributes from the nrrd 
+  header.</p>
+
+      <p>A list with elements for the key nrrd header fields
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Read nrrd file into an array in memory</p>
+
+      <p>Read the (text) header of a NRRD format file</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>read.nrrd</code> reads data into a raw array. If you wish to 
+  generate a <code><a href='im3d.html'>im3d</a></code> object that includes spatial calibration (but
+  is limited to representing 3D data) then you should use
+  <code><a href='im3d-io.html'>read.im3d</a></code>.</p>
+
+      <p>ReadByteAsRaw=unsigned (the default) only reads unsigned byte data as a raw
+  array. This saves quite a bit of space and still allows data to be used for
+  logical indexing.</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>read.nrrd</li><li>read.nrrd.header</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='write.nrrd.html'>write.nrrd</a></code>, <code><a href='im3d-io.html'>read.im3d</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

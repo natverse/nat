@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>coord2ind. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Find 1D indices into a 3D image given spatial coordinates</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='coord2ind.html'>coord2ind</a></span><span class="keyword">(</span><span class="symbol">coords</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='coord2ind.html'>coord2ind</a></span><span class="keyword">(</span><span class="symbol">coords</span><span class="keyword">,</span> <span class="symbol">imdims</span><span class="keyword">,</span> <span class="argument">voxdims</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">origin</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="symbol">aperm</span><span class="keyword">,</span> <span class="argument">Clamp</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">CheckRanges</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="keyword">!</span><span class="symbol">Clamp</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>coords</dt>
+      <dd>spatial coordinates of image voxels.</dd>
+      <dt>...</dt>
+      <dd>extra arguments passed to methods.</dd>
+      <dt>imdims</dt>
+      <dd>array dimensions of 3D image <em>OR</em> an object for which a 
+<code><a href='as.im3d.html'>as.im3d</a></code> object has been defined (see Details).</dd>
+      <dt>voxdims</dt>
+      <dd>vector of 3 voxels dimensions (width, height, depth).</dd>
+      <dt>origin</dt>
+      <dd>the origin of the 3D image.</dd>
+      <dt>aperm</dt>
+      <dd>permutation order for axes.</dd>
+      <dt>Clamp</dt>
+      <dd>???</dd>
+      <dt>CheckRanges</dt>
+      <dd>whether to check if coordinates are out of range.</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Find 1D indices into a 3D image given spatial coordinates</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>coord2ind</code> is designed to cope with any user-defined class for
+  which an as.im3d method exists. Presently the only example in the nat.* 
+  ecosystem is <code>nat.templatebrains::as.im3d.templatebrain</code>. The 
+  existence of an <code>as.im3d</code> method implies that 
+  <code>voxdims</code>,<code>origin</code>, and <code>dim</code> functions can be called. This
+  is the necessary information required to convert i,j,k logical indices into
+  x,y,z spatial indices.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='coord2ind.html'>coord2ind</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/cbind'>cbind</a></span><span class="keyword">(</span><span class="number">1</span><span class="keyword">,</span><span class="number">2</span><span class="keyword">,</span><span class="number">3</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">imdims</span> <span class="argument">=</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">1024</span><span class="keyword">,</span><span class="number">512</span><span class="keyword">,</span><span class="number">218</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">voxdims</span> <span class="argument">=</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">0.622088</span><span class="keyword">,</span> <span class="number">0.622088</span><span class="keyword">,</span> <span class="number">0.622088</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">origin</span> <span class="argument">=</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">0</span><span class="keyword">,</span><span class="number">0</span><span class="keyword">,</span><span class="number">0</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<div class='output'>[1] 2624515
+</div>
+<div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># ## repeat but using a templatebrain object to specify the coordinate system</span>
+<span class="comment"># library(nat.flybrains)</span>
+<span class="comment"># coord2ind(cbind(1,2,3), JFRC2)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>coord2ind</li><li>coord2ind.default</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='ind2coord.html'>ind2coord</a></code>, <code><a href='sub2ind.html'>sub2ind</a></code>, <code><a href='im3d-coords.html'>ijkpos</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

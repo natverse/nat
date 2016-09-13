@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Home. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <div class="row">
+  <div class="span8">
+    <h1>nat: NeuroAnatomy Toolbox</h1>
+
+<p><a href="http://dx.doi.org/10.5281/zenodo.10171"><img src="https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg" alt="DOI"/></a> 
+<a href="https://github.com/jefferis/nat/releases/latest"><img src="https://img.shields.io/github/release/jefferis/nat.svg" alt="Release Version"/></a> 
+<a href="http://cran.r-project.org/package=nat"><img src="http://www.r-pkg.org/badges/version/nat" alt="CRAN_Status_Badge"/></a> 
+<a href="https://travis-ci.org/jefferis/nat"><img src="https://img.shields.io/travis/jefferis/nat.svg" alt="Build Status"/></a> 
+<a href="https://coveralls.io/r/jefferis/nat?branch=master"><img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"/></a></p>
+
+<p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
+single neurons. See <a href="https://github.com/jefferis/nat.examples">nat.examples</a> and <a href="https://github.com/jefferis/frulhns">frulhns</a> for sample code.</p>
+
+<p><strong>nat</strong> is a cleaned up version of <a href="https://github.com/jefferis/AnalysisSuite">code</a> that has been used in a number of papers from our group including:</p>
+
+<p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" alt="Cell 2007 Cover" title="Olfactory Projection Neuron Mapping"/></a>
+<a href="http://dx.doi.org/10.1016/j.cub.2010.07.045"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" alt="CB 2010 Cover" title="fruitless Circuit Mapping"/></a>
+<a href="http://dx.doi.org/10.1038/nature10428"><img src="http://www.nature.com/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" alt="Nature 2011" title="Food and Pheromone Integration"/></a>
+<a href="http://dx.doi.org/10.1016/j.cell.2013.11.025"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"/></a></p>
+
+<h1>Quick Start</h1>
+
+<p>For the impatient &hellip;</p>
+
+<pre><code class="r"># install
+install.packages(&quot;nat&quot;)
+# use
+library(nat)
+
+# plot some test data (?kcs20 for details)
+# Drosophila Kenyon cells processed from raw data at http://flycircuit.tw
+head(kcs20)
+open3d()
+plot3d(kcs20, col=type)
+# get help
+?nat
+</code></pre>
+
+<p>A larger data set, 300 olfactory projection neurons from <a href="http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=si:grosjean_and_silbering_2011">Grosjean et al 2011</a>:</p>
+
+<pre><code class="r">load(url(&quot;http://flybrain.mrc-lmb.cam.ac.uk/si/grosjean11/MyNeuronsFCIR.rda&quot;))
+plot3d(MyNeurons[[1]])
+clear3d()
+head(MyNeurons)
+
+# 3d plot of neurons from olfactory glomeruli beginning DM
+# coloured by glomerulus
+rval=plot3d(MyNeurons, subset=grepl(&quot;^DM&quot;,Glomerulus), col=factor(Glomerulus),
+  lwd=2, WithNodes=FALSE)
+# make a legend so that you know which colours match which glomerulus
+with(attr(rval,&#39;df&#39;), legend(&#39;center&#39;, legend = unique(Glomerulus), fill=unique(col)))
+
+# more help
+?plot3d.neuronlist
+?subset.neuronlist
+</code></pre>
+
+<h1>Details</h1>
+
+<h2>Prerequisites</h2>
+
+<p><strong>nat</strong> is an R package and therefore runs on Mac/Linux/Windows. The only pre-requisite for most functionality is a recent version of R (&gt;=3.1.0 recommended).</p>
+
+<ul>
+<li><a href="http://www.r-project.org">http://www.r-project.org</a></li>
+</ul>
+
+<p>3D visualisation is provided by the rgl package based on OpenGL. On Mac OS X if 
+you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11
+window manager, installed. This is no longer a default install since Mac OS X 
+10.8, but the OS should offer to it install it for you if something tries to use
+it. Alternatively you can get it directly from 
+<a href="https://xquartz.macosforge.org/landing/">https://xquartz.macosforge.org/landing/</a>. This page is also linked from the 
+<a href="http://cran.r-project.org/bin/macosx/">Download R for (Mac) OS X</a> page.</p>
+
+<p>If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately – see section <em>External Dependencies</em> below. </p>
+
+<h2>Installation</h2>
+
+<p>As of v1.0 there is a released version on CRAN. This is normally updated only
+every few months.</p>
+
+<pre><code class="r">install.packages(&quot;nat&quot;)
+</code></pre>
+
+<p>If you wish to run the package tests, it is necessary to install with all dependencies:</p>
+
+<pre><code class="r">install.packages(&quot;nat&quot;, dependencies=TRUE)
+</code></pre>
+
+<h3>Development version</h3>
+
+<p><strong>nat</strong> remains under quite active development, so you may wish to install the
+development version directly from github. The recommended way to do this is to
+install Hadley Wickham&#39;s invaluable <a href="http://CRAN.R-project.org/package=devtools">devtools</a>
+package (if you have not already done so) and then use that to install nat.</p>
+
+<pre><code class="r"># install devtools if required
+if (!require(&quot;devtools&quot;)) install.packages(&quot;devtools&quot;)
+# then install nat
+devtools::install_github(&quot;jefferis/nat&quot;)
+</code></pre>
+
+<p>The <strong>nat</strong> package includes extensive unit tests which are run along with R&#39;s
+(extremely fastidious) package check routines by the <a href="http://travis-ci.org/jefferis/nat">Travis</a>
+continuous integration server. The master branch is therefore considered very stable
+and may well contain fixes or enhancements over released versions. 
+However, you can install the latest point release version as follows:</p>
+
+<pre><code class="r">devtools::install_github(&quot;jefferis/nat&quot;,ref=&quot;release&quot;)
+</code></pre>
+
+<p>The same syntax can be used to install any arbitrary version that you want 
+from github. See <code>?install_github</code> for details.</p>
+
+<p>Note: Windows users need <a href="http://www.murdoch-sutherland.com/Rtools/">Rtools</a> to
+install in this way, but devtools should offer to install this for you if you
+do not already have it.</p>
+
+<h2>External Dependencies</h2>
+
+<p><strong>nat</strong> is self sufficient for core functionality, but the transformation of 3D
+data using Computational Morphometry Toolkit (CMTK) registrations depends on an
+external installation of that toolkit. CMTK binaries can be downloaded for
+Windows, Linux and Mac at <a href="http://www.nitrc.org/projects/cmtk/">http://www.nitrc.org/projects/cmtk/</a>. Source code is 
+available from the same site or an unofficial mirror repository at 
+<a href="https://github.com/jefferis/cmtk">https://github.com/jefferis/cmtk</a>. We have extensive experience of using CMTK
+under Linux (where we compile from source) and Mac (where we compile or use the
+MacOSX-10.6-x86_64.dmg binary installers). We have also used 
+<a href="http://neuro.debian.net/pkgs/cmtk.html">neurodebian</a> to install as part of the
+Travis continuous integration setup (see the project&#39;s <a href="https://github.com/jefferis/nat/blob/master/.travis.yml">.travis.yml</a> file).</p>
+
+<h3>CMTK+nat on Windows</h3>
+
+<p>We have much less experience using CMTK on Windows than on Mac/Linux platforms.
+Experiments in May 2016 suggest that the best option is to use the cygwin
+CMTK distribution (cygwin provides a linux like environment). Here are the steps we
+took:</p>
+
+<ul>
+<li>Install <a href="https://www.cygwin.com/">Cygwin</a> accepting the default path <code>C:\cygwin64</code></li>
+<li>When you run Cygwin&#39;s setup.exe, you should also install all <em>fftw3</em> packages. 
+(fftw3 is a CMTK dependency which provides fast fourier transform functions)</li>
+<li>Download <code>CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to the cygwin folder (<code>C:\cygwin64</code>)</li>
+<li>Start a Cygwin terminal and issue the following command 
+<code>tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to extract CMTK to the cygwin folder.</li>
+<li>Copy all the <code>C:\cygwin64\bin\cyg*.dll</code> files to <code>C:\Windows\System32\</code> and
+<code>C:\Windows\SysWOw64\</code> (this seems to be necessary when starting executables 
+from a Windows shell - presumably there is a way to avoid this.)</li>
+<li>The nat function <code>cmtk.bindir()</code> should now correctly identify the cmtk binary
+directory. You can test that the executables are working by doing e.g. 
+<code>cmtk.dof2mat(version = TRUE)</code> which should then responsd with &ldquo;3.3.1&rdquo; if you 
+have installed the CMTK version we have just mentioned.</li>
+</ul>
+
+<h2>Help</h2>
+
+<p>If you want some help using <strong>nat</strong>, then please use the following resources</p>
+
+<ul>
+<li>Start with the overview package documentation (<code>?nat</code>)</li>
+<li><a href="https://github.com/jefferis/nat.examples">nat.examples</a> sample code</li>
+<li><a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> Google group - 
+we normally respond promptly and you will also be helping future users.</li>
+</ul>
+
+<h2>Problems</h2>
+
+<p>If you think that you have found a bug</p>
+
+<ul>
+<li>Install the development version of nat using devtools (see section Development 
+version above)</li>
+<li>Check the <a href="https://github.com/jefferis/nat/issues?q=is%3Aissue">github issues</a> and 
+
+<ul>
+<li><a href="https://github.com/jefferis/nat/issues/new">file a  bug report</a> if this seems to be a new problem</li>
+<li>comment on an existing bug report </li>
+</ul></li>
+<li>Write to the <a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> list
+for help.</li>
+</ul>
+
+<p>Thanks for your interest in <em>nat</em>!</p>
+
+  </div>
+
+  <div class="span3 offset1 sidebar">
+        <h2>Authors</h2>
+    <ul>
+      <li><a href='mailto:jefferis@gmail.com'>Gregory Jefferis</a> [aut, cre]</li>
+      <li>James Manton [aut]</li>
+    </ul>
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

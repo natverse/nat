@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>clampmax. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Return function that finds maximum of its inputs within a clamping range</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='clampmax.html'>clampmax</a></span><span class="keyword">(</span><span class="symbol">xmin</span><span class="keyword">,</span> <span class="symbol">xmax</span><span class="keyword">,</span> <span class="argument">replace.infinite</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA_real_</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>xmin, xmax</dt>
+      <dd>clamping range. If xmax is missing xmin should be a vector 
+of length 2.</dd>
+      <dt>replace.infinite</dt>
+      <dd>The value with which to replace non-finite values 
+<em>in the input vector</em>. When codereplace.infinite=FALSE no action is 
+taken. The default value of <code>NA</code> will result in e.g. <code>Inf</code> being 
+mapped to <code>NA</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A function with signature <code>f(x, ..., na.rm)</code>
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Return function that finds maximum of its inputs within a clamping range</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that by default infinite values in the input vector are 
+  converted to <code>NA</code>s before the being compared with the clampmax range.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))</span>
+<span class="comment"># d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)</span>
+<span class="comment"># op=par(mfrow=c(1,2))</span>
+<span class="comment"># rval=image(projection(d,projfun=max))</span>
+<span class="comment"># image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)</span>
+<span class="comment"># par(op)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>clampmax</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

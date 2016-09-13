@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>read.neuron.swc. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Read a neuron in swc file format</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='read.neuron.swc.html'>read.neuron.swc</a></span><span class="keyword">(</span><span class="symbol">f</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='read.neuron.swc.html'>read.ngraph.swc</a></span><span class="keyword">(</span><span class="symbol">f</span><span class="keyword">,</span> <span class="argument">weights</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">directed</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>f</dt>
+      <dd>path to file</dd>
+      <dt>...</dt>
+      <dd>Additional arguments. <code>read.neuron.swc</code> passes theseto 
+<code><a href='neuron.html'>as.neuron</a></code> and then on to <code><a href='neuron.html'>neuron</a></code>. 
+<code>read.neuron.swc</code> passes them to <code><a href='ngraph.html'>ngraph</a></code>.</dd>
+      <dt>weights</dt>
+      <dd>Logical value indicating whether edge weights defined by the 
+3D distance between points should be added to graph (default <code>FALSE</code>) 
+<em>or</em> a numeric vector of weights.</dd>
+      <dt>directed</dt>
+      <dd>Whether the resultant graph should be directed (default TRUE)</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p><code>read.neuron.swc</code> reads an SWC file on disk into a fully 
+  parsed <code><a href='neuron.html'>neuron</a></code> representation.</p>
+
+      <p><code>read.ngraph.swc</code> reads an SWC file on disk into the more 
+  generic (and forgiving) <code><a href='ngraph.html'>ngraph</a></code> representation which provides
+  a bridge to the <code><a href='http://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> library.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>These functions will accept SWC neurons with multiple trees and 
+  arbitrary point index order. However only <code>read.ngraph.swc</code> will
+  accept SWC files with cycles.</p>
+
+      <p>These functions would normally be called from <code>read.neuron(s)</code> rather 
+  than used directly.</p>
+
+    </div>
+
+    <div class="SWC Format">
+      <h2>SWC Format</h2>
+
+      <p>According to 
+  <a href = 'http://research.mssm.edu/cnic/swc.html'>http://research.mssm.edu/cnic/swc.html</a> SWC file format has a
+  radius not a diameter specification</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>read.neuron.swc</li><li>read.ngraph.swc</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='is.swc.html'>is.swc</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

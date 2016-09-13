@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>boundingbox. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Get the bounding box of an im3d volume or other compatible object</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for im3d</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">dims</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/dim'>dim</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for character</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for list</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">na.rm</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for shape3d</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">na.rm</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">dims</span><span class="keyword">,</span> <span class="argument">input</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"boundingbox"</span><span class="keyword">,</span> <span class="string">"bounds"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span> <span class="assignement">&lt;-</span> <span class="symbol">value</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A vector or matrix specifying a bounding box, an <code>im3d</code> object,
+any object with base class list for which <code><a href='xyzmatrix.html'>xyzmatrix</a></code> can 
+extract 3D points (e.g. neurons, surfaces etc), or, for 
+<code>boundingbox.character</code>, a character vector specifying a file.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments for methods</dd>
+      <dt>dims</dt>
+      <dd>The number of voxels in each dimension when x is a BoundingBox 
+matrix.</dd>
+      <dt>na.rm</dt>
+      <dd>Whether to ignore NA points (default <code>FALSE</code>)</dd>
+      <dt>input</dt>
+      <dd>Whether <code>x</code> defines the boundingbox or bounds of the image 
+(see details).</dd>
+      <dt>value</dt>
+      <dd>The object which will provide the new boundingbox information.
+This can be be either an im3d object with a boundingbox or a vector or
+matrix defined according to <code>boundingbox.default</code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+a <code>matrix</code> with 2 rows and 3 columns with 
+  <code>class=&#39;boundingbox&#39;</code> or <em>NULL</em> when missing.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Get the bounding box of an im3d volume or other compatible object</p>
+
+      <p><code>boundingbox.list</code> is designed to be used on objects that
+  contain 3D point information and for which <code>xyzmatrix</code> is defined.</p>
+
+      <p><code>boundingbox.shape3d</code> is designed to be used on objects 
+  that contain 3D point information and inherit from <code>rgl</code>&#39;s 
+  <code>shape3d</code> class and for which <code>xyzmatrix</code> is defined. Presently
+  this applies to <code><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>mesh3d</a></code> objects.</p>
+
+      <p>Set the bounding box of an im3d object</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The bounding box is defined as the position of the voxels at the two
+  opposite corners of the cuboid encompassing an image, <em>when each voxel
+  is assumed to have a single position (sometimes thought of as its centre) 
+  <strong>and no physical extent.</strong></em> When written as a vector it should look 
+  like: <code>c(x0,x1,y0,y1,z0,z1)</code>. When written as a matrix it should look 
+  like: <code>rbind(c(x0,y0,z0),c(x1,y1,z1))</code> where x0,y0,z0 is the position 
+  of the origin.</p>
+
+      <p>Note that there are two competing definitions for the physical extent of an
+  image that are discussed e.g. 
+  <a href = 'http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a>. The definition that 
+  makes most sense depends largely on whether you think of a pixel as a 
+  little square with some defined area (and therefore a voxel as a cube with 
+  some defined volume) <em>or</em> you take the view that you can only define 
+  with certainty the grid points at which image data was acquired. The first 
+  view implies a physical extent which we call the  <code>bounds=dim(x) * 
+  c(dx,dy,dz)</code>; the second is defined as <code>BoundingBox=dim(x)-1 * 
+  c(dx,dy,dz)</code> and assumes that the extent of the image is defined by a 
+  cuboid including the sample points at the extreme corner of the grid. Amira
+  takes this second view and this is the one we favour given our background 
+  in microscopy. If you wish to convert a <code>bounds</code> type definition into 
+  an im3d BoundingBox, you should pass the argument <code>input=&#39;bounds&#39;</code>.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="argument">x0</span><span class="argument">=</span><span class="number">0</span><span class="keyword">,</span><span class="argument">x1</span><span class="argument">=</span><span class="number">10</span><span class="keyword">,</span><span class="argument">y0</span><span class="argument">=</span><span class="number">0</span><span class="keyword">,</span><span class="argument">y1</span><span class="argument">=</span><span class="number">20</span><span class="keyword">,</span><span class="argument">z0</span><span class="argument">=</span><span class="number">0</span><span class="keyword">,</span><span class="argument">z1</span><span class="argument">=</span><span class="number">30</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<div class='output'>     [,1] [,2] [,3]
+[1,]    0    0    0
+[2,]   10   20   30
+attr(,&quot;class&quot;)
+[1] &quot;boundingbox&quot;
+</div>
+<div class='input'><span class="comment"># bounding box for a neuron</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<div class='output'>         [,1]      [,2]      [,3]
+[1,] 186.8660  90.36325  88.20393
+[2,] 289.5364 132.70932 157.29700
+attr(,&quot;class&quot;)
+[1] &quot;boundingbox&quot;
+</div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>boundingbox</li><li>boundingbox.character</li><li>boundingbox.default</li><li>boundingbox.im3d</li><li>boundingbox.list</li><li>boundingbox.shape3d</li><li>boundingbox&amp;lt;-</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='plot3d.boundingbox.html'>plot3d.boundingbox</a></code></p>
+
+      <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+  <code><a href='im3d-coords.html'>im3d-coords</a></code>, <code><a href='im3d-io.html'>im3d-io</a></code>,
+  <code><a href='im3d.html'>im3d</a></code>, <code><a href='imexpand.grid.html'>imexpand.grid</a></code>,
+  <code><a href='imslice.html'>imslice</a></code>, <code><a href='is.im3d.html'>is.im3d</a></code>,
+  <code><a href='mask.html'>mask</a></code>, <code><a href='origin.html'>origin</a></code>,
+  <code><a href='projection.html'>projection</a></code>, <code><a href='threshold.html'>threshold</a></code>,
+  <code><a href='unmask.html'>unmask</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>mirror. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Mirror 3D object about a given axis, optionally using a warping registration</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='mirror.html'>mirror</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for character</span>
+<span class="functioncall"><a href='mirror.html'>mirror</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">output</span><span class="keyword">,</span> <span class="argument">mirrorAxisSize</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">target</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">x</span><span class="keyword">,</span>
+  <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='mirror.html'>mirror</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">mirrorAxisSize</span><span class="keyword">,</span> <span class="argument">mirrorAxis</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"X"</span><span class="keyword">,</span> <span class="string">"Y"</span><span class="keyword">,</span> <span class="string">"Z"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">warpfile</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">transform</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"warp"</span><span class="keyword">,</span> <span class="string">"affine"</span><span class="keyword">,</span> <span class="string">"flip"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuronlist</span>
+<span class="functioncall"><a href='mirror.html'>mirror</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">OmitFailures</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>Object with 3D points (with named cols X,Y,Z) or path to image on
+disk.</dd>
+      <dt>...</dt>
+      <dd>additional arguments passed to methods or eventually to 
+<code><a href='xform.html'>xform</a></code></dd>
+      <dt>output</dt>
+      <dd>Path to the output image</dd>
+      <dt>mirrorAxisSize</dt>
+      <dd>A single number specifying the size of the axis to 
+mirror or a 2 vector (<b>recommended</b>) or 2x3 matrix specifying the 
+<code><a href='boundingbox.html'>boundingbox</a></code> (see details).</dd>
+      <dt>target</dt>
+      <dd>Path to the image defining the target grid (defaults to the
+input image - hard to see when this would not be wanted).</dd>
+      <dt>mirrorAxis</dt>
+      <dd>Axis to mirror (default <code>&quot;X&quot;</code>). Can also be an integer
+in range <code>1:3</code>.</dd>
+      <dt>warpfile</dt>
+      <dd>Optional registration or <code><a href='reglist.html'>reglist</a></code> to be applied
+<em>after</em> the simple mirroring.. It is called warpfile for historical
+reasons, since it is normally the path to a CMTK registration that
+specifies a non-rigid transformation to correct asymmetries in an image.</dd>
+      <dt>transform</dt>
+      <dd>whether to use warp (default) or affine component of 
+registration, or simply flip about midplane of axis.</dd>
+      <dt>subset</dt>
+      <dd>For <code>mirror.neuronlist</code> indices
+(character/logical/integer) that specify a subset of the members of
+<code>x</code> to be transformed.</dd>
+      <dt>OmitFailures</dt>
+      <dd>Whether to omit neurons for which <code>FUN</code> gives an 
+error. The default value (<code>NA</code>) will result in nlapply stopping with 
+an error message the moment there is an eror. For other values, see 
+details.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Object with transformed points
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>mirroring with a warping registration can be used to account 
+  e.g. for the asymmetry between brain hemispheres.</p>
+
+      <p><code>mirror.character</code> handles images on disk</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The <code>mirrorAxisSize</code> argument can be specified in 3 ways for 
+  the x axis with extreme values, x0+x1: <ul>
+<li> a single number equal to x0+x1</p>
+
+      <p></li>
+<li> a 2-vector c(x0, x1) (<b>recommended</b>)</p>
+
+      <p></li>
+<li> the <code><a href='boundingbox.html'>boundingbox</a></code> for the 3D data to be mirrored: the 
+  relevant axis specified by <code>mirrorAxis</code> will be extracted.</p>
+
+      <p></li>
+</ul></p>
+
+      <p>This function is agnostic re node vs cell data, but for node data 
+  BoundingBox should be supplied while for cell, it should be bounds. See 
+  <code><a href='boundingbox.html'>boundingbox</a></code> for details of BoundingBox vs bounds.</p>
+
+      <p>See <code><a href='nlapply.html'>nlapply</a></code> for details of the <code>subset</code> and 
+  <code>OmitFailures</code> arguments.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='nopen3d.html'>nopen3d</a></span><span class="keyword">(</span><span class="keyword">)</span></div>
+<div class='output'>glX 
+  2 
+</div>
+<div class='input'><span class="symbol">x</span><span class="assignement">=</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="symbol">mx</span><span class="assignement">=</span><span class="functioncall"><a href='mirror.html'>mirror</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span><span class="number">168</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">mx</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'green'</span><span class="keyword">)</span>
+
+
+<span class="comment"># also works with dotprops objects</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/scene'>clear3d</a></span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="symbol">y</span><span class="assignement">=</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="symbol">my</span><span class="assignement">=</span><span class="functioncall"><a href='mirror.html'>mirror</a></span><span class="keyword">(</span><span class="symbol">y</span><span class="keyword">,</span><span class="argument">mirrorAxisSize</span><span class="argument">=</span><span class="number">564.2532</span><span class="keyword">,</span><span class="argument">transform</span><span class="argument">=</span><span class="string">'flip'</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">y</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">my</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'green'</span><span class="keyword">)</span>
+
+
+<span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># ## Example with an image</span>
+<span class="comment"># # note that we must specify an output image (obviously) but that as a</span>
+<span class="comment"># # convenience mirror calculates the mirrorAxisSize for us</span>
+<span class="comment"># mirror('myimage.nrrd', output='myimage-mirrored.nrrd', </span>
+<span class="comment">#   warpfile='myimage_mirror.list')</span>
+<span class="comment"># </span>
+<span class="comment"># # Simple flip along a different axis</span>
+<span class="comment"># mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y", </span>
+<span class="comment">#   transform='flip')</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>mirror</li><li>mirror.character</li><li>mirror.default</li><li>mirror.neuronlist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='xform.html'>xform</a>, <a href='boundingbox.html'>boundingbox</a></code></p>
+
+      <p><code><a href='nlapply.html'>nlapply</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

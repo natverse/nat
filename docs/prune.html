@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>prune. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>prune an object by removing points near (or far) from a target object</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">target</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">target</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">target</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuronlist</span>
+<span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">target</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">target</span><span class="keyword">,</span> <span class="symbol">maxdist</span><span class="keyword">,</span> <span class="argument">keep</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"near"</span><span class="keyword">,</span> <span class="string">"far"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">return.indices</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>The object to prune. (e.g. <code>dotprops</code> object, see details)</dd>
+      <dt>target</dt>
+      <dd>Another object with 3D points that will determine which points 
+in x are kept.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments for methods (eventually passed to 
+<code>prune.default</code>)</dd>
+      <dt>maxdist</dt>
+      <dd>The threshold distance for keeping points</dd>
+      <dt>keep</dt>
+      <dd>Whether to keep points in x that are near or far from the target</dd>
+      <dt>return.indices</dt>
+      <dd>Whether to return the indices that pass the test rather
+than the 3D object/points (default <code>FALSE</code>)</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>prune an object by removing points near (or far) from a target object</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p><code>prune.neuron</code> depends on a more basic function 
+  <code><a href='prune_vertices.html'>prune_vertices</a></code> and is also related to
+  <code><a href='subset.neuron.html'>subset.neuron</a></code>.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## prune single neurons</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'blue'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">)</span>
+
+<span class="comment"># prune neuron 2 down to points that are close to neuron 1</span>
+<span class="symbol">neuron2_close</span><span class="assignement">=</span><span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">target</span><span class="argument">=</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">maxdist</span><span class="argument">=</span><span class="number">10</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">neuron2_close</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'cyan'</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">3</span><span class="keyword">)</span>
+
+<span class="symbol">neuron2_far</span><span class="assignement">=</span><span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">target</span><span class="argument">=</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">maxdist</span><span class="argument">=</span><span class="number">10</span><span class="keyword">,</span> <span class="argument">keep</span><span class="argument">=</span><span class="string">'far'</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">neuron2_far</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'magenta'</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">3</span><span class="keyword">)</span>
+
+
+<span class="comment">## Prune a neuron with a neuronlist</span>
+<span class="symbol">pruned</span><span class="assignement">=</span><span class="functioncall"><a href='prune.html'>prune</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">11</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="symbol">kcs20</span><span class="keyword">[</span><span class="functioncall"><a href='setdiff.html'>setdiff</a></span><span class="keyword">(</span><span class="number">1</span><span class="keyword">:</span><span class="number">20</span><span class="keyword">,</span> <span class="number">11</span><span class="keyword">)</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">maxdist</span><span class="argument">=</span><span class="number">8</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">pruned</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">3</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[[</span><span class="number">11</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'green'</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">3</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'grey'</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>prune</li><li>prune.default</li><li>prune.dotprops</li><li>prune.neuron</li><li>prune.neuronlist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='prune_strahler.html'>prune_strahler</a></code>, <code><a href='spine.html'>spine</a></code>,
+  <code><a href='prune_vertices.html'>prune_vertices</a></code></p>
+
+      <p><code><a href='subset.neuron.html'>subset.neuron</a></code></p>
+
+      <p><code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
+
+      <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+  <code><a href='plot.neuron.html'>plot.neuron</a></code>,
+  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='resample.html'>resample</a></code>,
+  <code><a href='rootpoints.html'>rootpoints</a></code>, <code><a href='spine.html'>spine</a></code>,
+  <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

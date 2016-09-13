@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>remotesync. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Synchronise a remote object</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='remotesync.html'>remotesync</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">remote</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/attr'>attr</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="string">"remote"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">download.missing</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span>
+  <span class="argument">delete.extra</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuronlistfh</span>
+<span class="functioncall"><a href='remotesync.html'>remotesync</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">remote</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/attr'>attr</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="string">"remote"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">download.missing</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">delete.extra</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">indices</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span>
+  <span class="argument">update.object</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>Object to synchronise with a remote URL</dd>
+      <dt>remote</dt>
+      <dd>The remote URL to update from</dd>
+      <dt>download.missing</dt>
+      <dd>Whether to download missing objects (default TRUE)</dd>
+      <dt>delete.extra</dt>
+      <dd>Whether to delete objects (default TRUE)</dd>
+      <dt>indices</dt>
+      <dd>Character vector naming neurons to update (default
+<code>indices=NULL</code> implies all neurons).</dd>
+      <dt>update.object</dt>
+      <dd>Whether to update the <code>neuronlistfh</code> object itself 
+on disk (default TRUE). Note that this assumes that the <code>neuronlistfh</code>
+object has not been renamed after it was downloaded.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+The updated <code>neuronlistfh</code> object (invisibly)
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Synchronise a remote object</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># kcs20=read.neuronlistfh('http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds')</span>
+<span class="comment"># # update object from the web</span>
+<span class="comment"># kcs20=remotesync(kcs20)</span>
+<span class="comment"># # download all neurons with significant innervation of the vertical lobe</span>
+<span class="comment"># mbvl_neurons=subset(kcs20, (MB_VL_R+MB_VL_L)&gt;200, rval='names')</span>
+<span class="comment"># kcs20=remotesync(kcs20, indices=mbvl_neurons, download.missing=TRUE)</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>remotesync</li><li>remotesync.neuronlistfh</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p>Other neuronlistfh: <code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a></code>,
+  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>,
+  <code><a href='read.neuronlistfh.html'>read.neuronlistfh</a></code>,
+  <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

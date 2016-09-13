@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>prune_strahler. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Prune a neuron by removing segments with a given Strahler order</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='prune_strahler.html'>prune_strahler</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">orderstoprune</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">:</span><span class="number">2</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A <code>neuron</code></dd>
+      <dt>orderstoprune</dt>
+      <dd>Integer indices of which Strahler orders to prune - 
+defaults to the lowest two orders (<code>1:2</code>)</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to <code><a href='neuron.html'>as.neuron.data.frame</a></code></dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+The pruned <code>neuron</code>
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Prune a neuron by removing segments with a given Strahler order</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="symbol">x</span><span class="assignement">=</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="symbol">pruned12</span><span class="assignement">=</span><span class="functioncall"><a href='prune_strahler.html'>prune_strahler</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span>
+<span class="symbol">pruned1</span><span class="assignement">=</span><span class="functioncall"><a href='prune_strahler.html'>prune_strahler</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span></div>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">pruned1</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">3</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'blue'</span><span class="keyword">,</span> <span class="argument">add</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span></div>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">pruned12</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">3</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span> <span class="argument">add</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span></div>
+<p><img src='prune_strahler-4.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>prune_strahler</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='strahler_order.html'>strahler_order</a></code>, <code><a href='spine.html'>spine</a></code>, for finding the 
+  longest path in a neuron, <code><a href='prune.html'>prune</a></code> for subsetting 
+  <code>dotprops</code> style neurons by spatial proximity, 
+  <code><a href='neuron.html'>as.neuron.data.frame</a></code>, which is used to generate the new
+  neuron.</p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

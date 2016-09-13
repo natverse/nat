@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>segmentgraph. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Return a simplified segment graph for a neuron</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='segmentgraph.html'>segmentgraph</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">weights</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">segids</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">exclude.isolated</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span>
+  <span class="argument">include.xyz</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">reverse.edges</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>neuron</dd>
+      <dt>weights</dt>
+      <dd>Whether to include the original segment lengths as edge
+weights in the graph.</dd>
+      <dt>segids</dt>
+      <dd>Whether to include the integer segment ids as an edge attribute
+in the graph</dd>
+      <dt>exclude.isolated</dt>
+      <dd>Whether to eliminate isolated nodes</dd>
+      <dt>include.xyz</dt>
+      <dd>Whether to include 3D location as vertex attribute</dd>
+      <dt>reverse.edges</dt>
+      <dd>Whether to reverse the direction of each edge in the 
+output graph to point towards (rather than away from) the root (default 
+<code>FALSE</code>)</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+<code>igraph</code> object containing only nodes of neuron keeping original
+  labels (<code>x$d$PointNo</code> =&gt; <code>V(g)$label</code>) and vertex indices 
+  (<code>1:nrow(x$d)</code> =&gt; <code>V(g)$vid)</code>.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Return a simplified segment graph for a neuron</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The resultant graph will contain all branch and endpoints of the 
+  original neuron. This will be constructed from the SegList field, or where 
+  present, the SubTrees field (containing multiple SegLists for each isolated
+  graph in the neuron). Each edge in the output graph will match one segment 
+  in the original SegList.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="symbol">sg</span><span class="assignement">=</span><span class="functioncall"><a href='segmentgraph.html'>segmentgraph</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/utils/topics/str'>str</a></span><span class="keyword">(</span><span class="symbol">sg</span><span class="keyword">)</span></div>
+<div class='output'>IGRAPH D-W- 34 33 -- 
++ attr: label (v/n), vid (v/n), weight (e/n)
++ edges:
+ [1]  1-&gt; 2  2-&gt; 3  2-&gt; 4  4-&gt; 5  5-&gt; 6  5-&gt; 7  4-&gt; 8  8-&gt; 9  9-&gt;10  9-&gt;11  8-&gt;12 12-&gt;13 12-&gt;14 14-&gt;15
+[15] 15-&gt;16 15-&gt;17 14-&gt;18 18-&gt;19 19-&gt;20 19-&gt;21 21-&gt;22 21-&gt;23 23-&gt;24 23-&gt;25 18-&gt;26 26-&gt;27 27-&gt;28 27-&gt;29
+[29] 26-&gt;30 30-&gt;31 30-&gt;32 32-&gt;33 32-&gt;34
+</div>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">igraph</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span><span class="keyword">(</span><span class="symbol">sg</span><span class="keyword">,</span> <span class="argument">edge.arrow.size</span><span class="argument">=</span><span class="number">.4</span><span class="keyword">,</span> <span class="argument">vertex.size</span><span class="argument">=</span><span class="number">10</span><span class="keyword">)</span></div>
+<p><img src='segmentgraph-4.png' alt='' width='540' height='400' /></p></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>segmentgraph</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

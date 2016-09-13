@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>potential_synapses. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Calculate number of potential synapses between two neurons</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='potential_synapses.html'>potential_synapses</a></span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="symbol">b</span><span class="keyword">,</span> <span class="symbol">s</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuronlist</span>
+<span class="functioncall"><a href='potential_synapses.html'>potential_synapses</a></span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="symbol">b</span><span class="keyword">,</span> <span class="symbol">s</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='potential_synapses.html'>potential_synapses</a></span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="symbol">b</span><span class="keyword">,</span> <span class="symbol">s</span><span class="keyword">,</span> <span class="argument">sigma</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">s</span><span class="keyword">,</span> <span class="symbol">bounds</span><span class="keyword">,</span>
+  <span class="argument">method</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"direct"</span><span class="keyword">,</span> <span class="string">"approx"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for dotprops</span>
+<span class="functioncall"><a href='potential_synapses.html'>potential_synapses</a></span><span class="keyword">(</span><span class="symbol">a</span><span class="keyword">,</span> <span class="symbol">b</span><span class="keyword">,</span> <span class="symbol">s</span><span class="keyword">,</span> <span class="argument">sigma</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">s</span><span class="keyword">,</span> <span class="argument">seglength</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">1</span><span class="keyword">,</span>
+  <span class="argument">bounds</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">method</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"direct"</span><span class="keyword">,</span> <span class="string">"approx"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>a, b</dt>
+      <dd>neurons or neuronlists</dd>
+      <dt>s</dt>
+      <dd>the approach distance to consider a potential synapse</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods</dd>
+      <dt>sigma</dt>
+      <dd>the smoothing parameter in the approximate method (see details)</dd>
+      <dt>bounds</dt>
+      <dd>Optional bounding box to restrict comparison</dd>
+      <dt>method</dt>
+      <dd>Whether to use the direct or approximate method (see details)</dd>
+      <dt>seglength</dt>
+      <dd>how long to consider each distance between points.</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>This implements the method of Stepanyants and Chklovskii</p>
+
+    </div>
+
+    <div class="References">
+      <h2>References</h2>
+
+      <p>Neurogeometry and potential synaptic connectivity.
+Stepanyants A, Chklovskii DB.
+Trends Neurosci. 2005 Jul;28(7):387-94.
+<a href = 'http://dx.doi.org/10.1016/j.tins.2005.05.006'>http://dx.doi.org/10.1016/j.tins.2005.05.006</a></p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='potential_synapses.html'>potential_synapses</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">,</span> <span class="symbol">Cell07PNs</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">3</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">s</span><span class="argument">=</span><span class="number">2</span><span class="keyword">)</span></div>
+<div class='output'>       EBH11R
+EBH11R    902
+EBH20L    219
+EBH20R    192
+</div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>potential_synapses</li><li>potential_synapses.dotprops</li><li>potential_synapses.neuron</li><li>potential_synapses.neuronlist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+  <code><a href='plot.neuron.html'>plot.neuron</a></code>, <code><a href='prune.html'>prune</a></code>,
+  <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
+  <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

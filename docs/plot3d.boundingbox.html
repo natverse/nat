@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>plot3d.boundingbox. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Plot a bounding box in 3D</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for boundingbox</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>the <code><a href='boundingbox.html'>boundingbox</a></code> object to plot.</dd>
+      <dt>...</dt>
+      <dd>additional arguments to pass to <code><a href='http://www.rdocumentation.org/packages/rgl/topics/3dobjects'>segments3d</a></code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+A list of RGL object IDs.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Plot a bounding box in 3D</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># find the bounding box of all the neurons in a list</span>
+<span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span></div>
+<div class='output'>         [,1]     [,2]     [,3]
+[1,] 284.5940  24.1869  21.4379
+[2,] 404.6951 122.9557 102.8015
+attr(,&quot;class&quot;)
+[1] &quot;boundingbox&quot;
+</div>
+<div class='input'><span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">3</span><span class="keyword">]</span><span class="keyword">)</span></div>
+<div class='output'>         [,1]     [,2]    [,3]
+[1,] 285.0244  25.2430 21.4379
+[2,] 390.7747 114.6351 98.3324
+attr(,&quot;class&quot;)
+[1] &quot;boundingbox&quot;
+</div>
+<div class='input'>
+<span class="comment"># plot those neurons</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span>
+<span class="comment"># ... with their bounding box</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="functioncall"><a href='boundingbox.html'>boundingbox</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span><span class="keyword">)</span>
+
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span>
+<span class="comment"># plot bounding box (in matching colours) for each neuron</span>
+<span class="comment"># NB makes use of nlapply/neuronlist in slightly unsusual context - </span>
+<span class="comment"># plot3d.neuronlist can cope with lists containing anything with</span>
+<span class="comment"># a valid plot3d method.</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="functioncall"><a href='nlapply.html'>nlapply</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">,</span><span class="symbol">boundingbox</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<div class='output'>  |                                                                                                     |                                                                                             |   0%  |                                                                                                     |=====                                                                                        |   5%  |                                                                                                     |=========                                                                                    |  10%  |                                                                                                     |==============                                                                               |  15%  |                                                                                                     |===================                                                                          |  20%  |                                                                                                     |=======================                                                                      |  25%  |                                                                                                     |============================                                                                 |  30%  |                                                                                                     |=================================                                                            |  35%  |                                                                                                     |=====================================                                                        |  40%  |                                                                                                     |==========================================                                                   |  45%  |                                                                                                     |==============================================                                               |  50%  |                                                                                                     |===================================================                                          |  55%  |                                                                                                     |========================================================                                     |  60%  |                                                                                                     |============================================================                                 |  65%  |                                                                                                     |=================================================================                            |  70%  |                                                                                                     |======================================================================                       |  75%  |                                                                                                     |==========================================================================                   |  80%  |                                                                                                     |===============================================================================              |  85%  |                                                                                                     |====================================================================================         |  90%  |                                                                                                     |========================================================================================     |  95%  |                                                                                                     |=============================================================================================| 100%
+</div>
+<div class='input'></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>plot3d.boundingbox</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='boundingbox.html'>boundingbox</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

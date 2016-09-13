@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>reglist. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>A simple wrapper class for multiple transformations</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='reglist.html'>reglist</a></span><span class="keyword">(</span><span class="symbol">...</span><span class="keyword">,</span> <span class="argument">swap</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">)</span>
+
+<span class="functioncall"><a href='reglist.html'>invert_reglist</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for reglist</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="symbol">...</span><span class="keyword">,</span> <span class="argument">recursive</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>...</dt>
+      <dd>One or more transformations/reglists to combine</dd>
+      <dt>swap</dt>
+      <dd>A vector of the same length as <code>...</code> indicating whether the 
+direction of each transformation should be swapped (i.e. mapping reference 
+-&gt; sample).</dd>
+      <dt>x</dt>
+      <dd>A reglist object to invert</dd>
+      <dt>recursive</dt>
+      <dd>Presently ignored</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>A <code>reglist</code> is read as a set of transformations to be 
+  applied sequentially starting with the first element, then applying the 
+  second transformation to the result of the first and so on. Each individual
+  transformation is considered to map data from the sample (floating/moving) 
+  space to the reference (fixed/template) space.</p>
+
+      <p>Each transformation may have an attribute <code>&quot;swap&quot;</code> indicating that the
+  natural direction of the transformation should be swapped (i.e. inverted). 
+  This can be done trivially in the case of affine transformations, 
+  expensively for others such as CMTK registrations (see 
+  <code><a href='cmtkreg.html'>cmtkreg</a></code>) and not at all for others. Note that the term &#39;swap&#39;
+  is used to avoid a direct equivalence with inversion - many registration 
+  tools use the term <em>inverse</em> for directions that one might naively 
+  think of as as the natural direction of the transformation (see 
+  <code><a href='xformpoints.html'>xformpoints.cmtkreg</a></code> for discussion).</p>
+
+      <p><code>invert_reglist</code> inverts a reglist object</p>
+
+      <p><code>c.reglist</code> combines multiple <code>reglist</code>s into a single
+  <code>reglist</code>.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>The swap argument is provided as a convenience, but an attribute
+  <code>&#39;swap&#39;</code> can also be set directly on each registration.</p>
+
+    </div>
+
+    <div class="Inversion">
+      <h2>Inversion</h2>
+
+      <p><code>invert_reglist</code> takes a minimal approach to 
+  inversion. It reverses the order of the individual elements of the 
+  registration and tags each of them with a swap attribute (or changes the
+  value of the attribute if it already exists)</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="symbol">I</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/diag'>diag</a></span><span class="keyword">(</span><span class="number">4</span><span class="keyword">)</span>
+<span class="symbol">S</span><span class="assignement">=</span><span class="symbol">I</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/diag'>diag</a></span><span class="keyword">(</span><span class="symbol">S</span><span class="keyword">)</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">1</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span>
+<span class="symbol">rl</span><span class="assignement">=</span><span class="functioncall"><a href='reglist.html'>reglist</a></span><span class="keyword">(</span><span class="symbol">S</span><span class="keyword">,</span> <span class="symbol">I</span><span class="keyword">)</span>
+<span class="symbol">rli</span><span class="assignement">=</span><span class="functioncall"><a href='reglist.html'>invert_reglist</a></span><span class="keyword">(</span><span class="symbol">rl</span><span class="keyword">)</span>
+
+<span class="comment">## We can check the inversion by simplifying</span>
+<span class="symbol">m</span><span class="assignement">=</span><span class="functioncall"><a href='simplify_reglist.html'>simplify_reglist</a></span><span class="keyword">(</span><span class="symbol">rl</span><span class="keyword">)</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="symbol">mi</span><span class="assignement">=</span><span class="functioncall"><a href='simplify_reglist.html'>simplify_reglist</a></span><span class="keyword">(</span><span class="symbol">rli</span><span class="keyword">)</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span>
+<span class="comment"># NB solve will invert a homogeneous affine matrix</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span><span class="keyword">(</span><span class="symbol">m</span><span class="keyword">,</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/solve'>solve</a></span><span class="keyword">(</span><span class="symbol">mi</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<div class='output'>[1] TRUE
+</div>
+<div class='input'><span class="symbol">I</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/diag'>diag</a></span><span class="keyword">(</span><span class="number">4</span><span class="keyword">)</span>
+<span class="symbol">S</span><span class="assignement">=</span><span class="symbol">I</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/diag'>diag</a></span><span class="keyword">(</span><span class="symbol">S</span><span class="keyword">)</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">1</span><span class="keyword">,</span> <span class="number">2</span><span class="keyword">,</span> <span class="number">3</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">)</span>
+<span class="symbol">rl</span><span class="assignement">=</span><span class="functioncall"><a href='reglist.html'>reglist</a></span><span class="keyword">(</span><span class="symbol">S</span><span class="keyword">,</span> <span class="symbol">I</span><span class="keyword">)</span>
+<span class="symbol">rl2</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="symbol">rl</span><span class="keyword">,</span> <span class="string">'path/to/my/reg.list'</span><span class="keyword">)</span>
+<span class="symbol">rl3</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="functioncall"><a href='reglist.html'>reglist</a></span><span class="keyword">(</span><span class="string">'path/to/my/reg.list'</span><span class="keyword">)</span><span class="keyword">,</span> <span class="symbol">rl</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>c.reglist</li><li>invert_reglist</li><li>reglist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='xform.html'>xform</a></code></p>
+
+      <p><code><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

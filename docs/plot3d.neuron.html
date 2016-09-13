@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>plot3d.neuron. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Plot neurons in 3D using rgl library</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for neuron</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">WithLine</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">NeuronNames</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span>
+  <span class="argument">WithNodes</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">WithAllPoints</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">WithText</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span>
+  <span class="argument">PlotSubTrees</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">add</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">col</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">soma</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>A neuron to plot</dd>
+      <dt>WithLine</dt>
+      <dd>Whether to plot lines for all segments in neuron</dd>
+      <dt>NeuronNames</dt>
+      <dd>Logical indicating whether to label the neuron in the plot
+using the NeuronName field <strong>or</strong> a character vector of names.</dd>
+      <dt>WithNodes</dt>
+      <dd>Whether to plot dots for branch and end points</dd>
+      <dt>WithAllPoints</dt>
+      <dd>Whether to plot dots for all points in the neuron</dd>
+      <dt>WithText</dt>
+      <dd>Whether to label plotted points with their numeric id (see 
+details)</dd>
+      <dt>PlotSubTrees</dt>
+      <dd>Whether to plot all sub trees when the neuron is not 
+fully connected.</dd>
+      <dt>add</dt>
+      <dd>Whether to add the neuron to existing rgl plot rather than 
+clearing the scene (default TRUE)</dd>
+      <dt>col</dt>
+      <dd>Colour specification (see rgl materials)</dd>
+      <dt>soma</dt>
+      <dd>Whether to plot a sphere at neuron&#39;s origin representing the 
+soma. Either a logical value or a numeric indicating the radius (default 
+<code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to rgl::lines3d</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+list of rgl plotting ids (invisibly) separated into 
+  <code>lines,points,texts</code> according to plot element. See 
+  <code><a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code> for details.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Plot neurons in 3D using rgl library</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that when WithText=TRUE, the numeric identifiers plotted are
+  <em>raw indices</em> into the <code>x$d</code> array, <em>not</em> the values of the
+  <code>PointNo</code> column.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment"># A new plot would have been opened if required</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/par3d'>open3d</a></span><span class="keyword">(</span><span class="keyword">)</span></div>
+<div class='output'>glX 
+  6 
+</div>
+<div class='input'><span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'green'</span><span class="keyword">)</span>
+
+<span class="comment"># clear the current plot</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/scene'>clear3d</a></span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'blue'</span><span class="keyword">,</span><span class="argument">add</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span>
+<span class="comment"># plot the number of all nodes</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/scene'>clear3d</a></span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">2</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span><span class="argument">WithText</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">,</span><span class="argument">add</span><span class="argument">=</span><span class="number">FALSE</span><span class="keyword">)</span>
+<span class="comment"># include cell bodies</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[</span><span class="number">3</span><span class="keyword">:</span><span class="number">4</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span> <span class="argument">soma</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[</span><span class="number">5</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span> <span class="argument">soma</span><span class="argument">=</span><span class="number">3</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl.open'>rgl.close</a></span><span class="keyword">(</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>plot3d.neuron</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a>, <a href='plot3d.dotprops.html'>plot3d.dotprops</a>, 
+  <a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

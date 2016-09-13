@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>cmtk.reformatx. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Reformat an image with a CMTK registration using the reformatx tool</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='cmtk.reformatx.html'>cmtk.reformatx</a></span><span class="keyword">(</span><span class="symbol">floating</span><span class="keyword">,</span> <span class="symbol">registrations</span><span class="keyword">,</span> <span class="symbol">output</span><span class="keyword">,</span> <span class="symbol">target</span><span class="keyword">,</span> <span class="argument">mask</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span>
+  <span class="argument">direction</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">interpolation</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"linear"</span><span class="keyword">,</span> <span class="string">"nn"</span><span class="keyword">,</span> <span class="string">"cubic"</span><span class="keyword">,</span> <span class="string">"pv"</span><span class="keyword">,</span>
+  <span class="string">"sinc-cosine"</span><span class="keyword">,</span> <span class="string">"sinc-hamming"</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">dryrun</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">Verbose</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span>
+  <span class="argument">MakeLock</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">OverWrite</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"no"</span><span class="keyword">,</span> <span class="string">"update"</span><span class="keyword">,</span> <span class="string">"yes"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">filesToIgnoreModTimes</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>floating</dt>
+      <dd>The floating image to be reformatted</dd>
+      <dt>registrations</dt>
+      <dd>One or more CMTK format registrations on disk</dd>
+      <dt>output</dt>
+      <dd>The path to the output image (defaults to
+<code>&quot;&lt;targetstem&gt;_&lt;floatingstem&gt;.nrrd&quot;</code>)</dd>
+      <dt>target</dt>
+      <dd>A character vector specifying an image file on disk, an
+<code>im3d</code> object (or an object that can be coerced to im3d) or a 6-or
+9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].</dd>
+      <dt>mask</dt>
+      <dd>Whether to treat target as a binary mask (only reformatting 
+positive voxels)</dd>
+      <dt>direction</dt>
+      <dd>Whether to transform image from sample space to reference
+space (called <strong>forward</strong> by CMTK) or from reference to sample space
+(called <strong>inverse</strong> by CMTK). Default (when <code>NULL</code> is forward).</dd>
+      <dt>interpolation</dt>
+      <dd>What interpolation scheme to use for output image 
+(defaults to linear - see details)</dd>
+      <dt>dryrun</dt>
+      <dd>Just print command</dd>
+      <dt>Verbose</dt>
+      <dd>Whether to show cmtk status messages and be verbose about file
+update checks. Sets command line <code>--verbose</code> option.</dd>
+      <dt>MakeLock</dt>
+      <dd>Whether to use a lock file to allow simple parallelisation 
+(see <code>makelock</code>)</dd>
+      <dt>OverWrite</dt>
+      <dd>Whether to OverWrite an existing output file. One of 
+c(&quot;no&quot;,&quot;update&quot;,&quot;yes&quot;). When OverWrite=&#39;update&#39; 
+<code><a href='http://www.rdocumentation.org/packages/nat.utils/topics/RunCmdForNewerInput'>RunCmdForNewerInput</a></code> is used to determine if the output is 
+older than any of the input files.</dd>
+      <dt>filesToIgnoreModTimes</dt>
+      <dd>Input files whose modification time should not 
+be checked when determining if new output is required.</dd>
+      <dt>...</dt>
+      <dd>additional arguments passed to CMTK <code>reformatx</code> after 
+processing by <code><a href='cmtk.call.html'>cmtk.call</a></code>.</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+the path to the ouput image (whether or not it was re-created afresh)
+  or <code>NA_character_</code> if no output was possible.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Reformat an image with a CMTK registration using the reformatx tool</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that if you are reformatting a mask then you will need to 
+  change the interpolation to &quot;nn&quot;, since interpolating between e.g. mask 
+  levels 72 and 74 with 73 may have unintened consequences. Presently we have
+  no way of knowing whether an image should be treated as a mask, so the 
+  <code>interpolation</code> must be handled manually.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="comment">## Not run: ------------------------------------</span>
+<span class="comment"># cmtk.reformatx('myimage.nrrd', target='template.nrrd',</span>
+<span class="comment">#   registrations='template_myimage.list')</span>
+<span class="comment"># </span>
+<span class="comment"># # get full listing of command line options  </span>
+<span class="comment"># system(cmtk.call('reformatx', help=TRUE))</span>
+<span class="comment">## ---------------------------------------------</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>cmtk.reformatx</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='cmtk.bindir.html'>cmtk.bindir</a>, <a href='cmtk.call.html'>cmtk.call</a>, <a href='http://www.rdocumentation.org/packages/nat.utils/topics/makelock'>makelock</a>, 
+  <a href='http://www.rdocumentation.org/packages/nat.utils/topics/RunCmdForNewerInput'>RunCmdForNewerInput</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

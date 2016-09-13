@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>Cell07PNs. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Cell07PNs: 40 Sample Projection Neurons from Jefferis, Potter et al 2007</h1>
+
+<div class="row">
+  <div class="span8">
+        
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>These R lists (which have additional class neuronlist) contain 40 traced 
+olfactory projection neurons from Jefferis, Potter et al 2007 that have been 
+transformed onto the IS2 template brain (Cachero, Ostrovsky et al 2010).</p>
+
+    </div>
+
+    <div class="References">
+      <h2>References</h2>
+
+      <p>Jefferis G.S.X.E., Potter C.J., Chan A.M., Marin E.C., Rohlfing 
+T., Maurer C.R.J., and Luo L. (2007). Comprehensive maps of Drosophila higher
+olfactory centers: spatially segregated fruit and pheromone representation. 
+Cell 128 (6), 1187--1203. 
+<a href = 'http://dx.doi.org/10.1016/j.cell.2007.01.040'>doi:10.1016/j.cell.2007.01.040</a></p>
+
+      <p>Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E. 
+(2010). Sexual dimorphism in the fly brain. Curr Biol 20 (18), 1589--601. 
+<a href = 'http://dx.doi.org/10.1016/j.cub.2010.07.045'>doi:10.1016/j.cub.2010.07.045</a></p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='neuronlist-dataframe-methods.html'>head</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">)</span></div>
+<div class='output'>        Brain RegistrationScore Notes Glomerulus Batch Directory Traced Scored.By Sex Include     ID
+EBH11R EBH11R                 4              DA1   PN2    unsure    yes       ACH   M         EBH11R
+EBH20L EBH20L                 4              DL3   PN2   unsure2    yes       ACH             EBH20L
+EBH20R EBH20R                 4              DA1   PN2   unsure2    yes       ACH   M         EBH20R
+EBI12L EBI12L                 4              DA1   PN2   unsure3    yes       ACH   F         EBI12L
+EBI22R EBI22R                 4              DL3   PN2   unsure3    yes       ACH             EBI22R
+EBJ23L EBJ23L                 4              DL3   PN2   unsure4    yes       ACH             EBJ23L
+       HaveWarp HaveAsc                                          TraceFile AscBatch Status GlomSeq
+EBH11R     TRUE    TRUE /GD/projects/PN2/TransformedTraces/DA1/EBH11R.tasc      New              1
+EBH20L     TRUE    TRUE /GD/projects/PN2/TransformedTraces/DL3/EBH20L.tasc      New              1
+EBH20R     TRUE    TRUE /GD/projects/PN2/TransformedTraces/DA1/EBH20R.tasc      New              2
+EBI12L     TRUE    TRUE /GD/projects/PN2/TransformedTraces/DA1/EBI12L.tasc      New              3
+EBI22R     TRUE    TRUE /GD/projects/PN2/TransformedTraces/DL3/EBI22R.tasc      New              2
+EBJ23L     TRUE    TRUE /GD/projects/PN2/TransformedTraces/DL3/EBJ23L.tasc      New              3
+       NumNAs MBP1 MBP2 LHBP PNType Seq nTrees StartPoint           CreatedAt
+EBH11R      0   34   48   75    iPN  13      1          1 2006-01-17 15:21:14
+EBH20L      0   29   29   77    iPN  15      1          1 2006-01-17 15:21:14
+EBH20R      0   24   80  147    iPN  16      1          1 2006-01-17 15:21:14
+EBI12L      0   29   59   89    iPN  18      1          1 2006-01-17 15:21:15
+EBI22R      0   34   34   56    iPN  20      1          1 2006-01-17 15:21:15
+EBJ23L      0   23   23   52    iPN  21      1          1 2006-01-17 15:21:15
+                                                                                            WarpFile
+EBH11R  /GD/projects/PN2/allreg/warp/unsure/average-goodbrains_EBH11R101_warp_m0g40c4e1e-1x16r3.list
+EBH20L /GD/projects/PN2/allreg/warp/unsure2/average-goodbrains_EBH20L101_warp_m0g40c4e1e-1x16r3.list
+EBH20R /GD/projects/PN2/allreg/warp/unsure2/average-goodbrains_EBH20R101_warp_m0g40c4e1e-1x16r3.list
+EBI12L /GD/projects/PN2/allreg/warp/unsure3/average-goodbrains_EBI12L101_warp_m0g40c4e1e-1x16r3.list
+EBI22R /GD/projects/PN2/allreg/warp/unsure3/average-goodbrains_EBI22R101_warp_m0g40c4e1e-1x16r3.list
+EBJ23L /GD/projects/PN2/allreg/warp/unsure4/average-goodbrains_EBJ23L101_warp_m0g40c4e1e-1x16r3.list
+</div>
+<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/table'>table</a></span><span class="keyword">(</span><span class="functioncall"><a href='neuronlist-dataframe-methods.html'>with</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">,</span><span class="symbol">Glomerulus</span><span class="keyword">)</span><span class="keyword">)</span></div>
+<div class='output'>
+     1      D    DA1    DA3    DC1    DC2    DC3    DL1    DL3    DL5    DL6    DM1    DM2    DM3 
+     0      0     11      0      0      0      0      0     10      0      0      0      0      0 
+   DM5    DM6   DP1m NP5194 NP6099   VA1d  VA1lm    VA2    VA3    VA6   VA7l   VA7m    VC2   VL2p 
+     0      0      8      0      0     11      0      0      0      0      0      0      0      0 
+ VL2pP    VM1    VM2    VM3    VM7   acj6   vDA1 vVA1lm   vVL1 vmulti 
+     0      0      0      0      0      0      0      0      0      0 
+</div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>Cell07PNs</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='neuronlist-dataframe-methods.html'>head.neuronlist</a></code>, <code><a href='neuronlist-dataframe-methods.html'>with.neuronlist</a></code></p>
+
+      <p>Other nat-data: <code><a href='MBL.surf.html'>MBL.surf</a></code>, <code><a href='kcs20.html'>kcs20</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

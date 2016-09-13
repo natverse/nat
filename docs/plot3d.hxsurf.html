@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>plot3d.hxsurf. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Plot amira surface objects in 3D using rgl</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="comment"># S3 method for hxsurf</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="argument">materials</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">col</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>An hxsurf surface object</dd>
+      <dt>materials</dt>
+      <dd>Character vector or <code><a href='http://www.rdocumentation.org/packages/base/topics/regex'>regex</a></code> naming materials to
+plot (defaults to all materials in x). See <code><a href='subset.hxsurf.html'>subset.hxsurf</a></code>.</dd>
+      <dt>col</dt>
+      <dd>Character vector specifying colors for the materials, or a 
+function that will be called with the number of materials to plot. When 
+<code>NULL</code> (default) will use meterial colours defined in Amira (if 
+available), or <code>rainbow</code> otherwise.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Plot amira surface objects in 3D using rgl</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">MBL.surf</span><span class="keyword">)</span>
+
+
+<span class="comment"># plot only vertical lobe</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/scene'>clear3d</a></span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">MBL.surf</span><span class="keyword">,</span> <span class="argument">materials</span><span class="argument">=</span><span class="string">"VL"</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.3</span><span class="keyword">)</span>
+
+<span class="comment"># everything except vertical lobe</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/scene'>clear3d</a></span><span class="keyword">(</span><span class="keyword">)</span>
+<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">MBL.surf</span><span class="keyword">,</span> <span class="argument">alpha</span><span class="argument">=</span><span class="number">0.3</span><span class="keyword">,</span>
+  <span class="argument">materials</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/grep'>grep</a></span><span class="keyword">(</span><span class="string">"VL"</span><span class="keyword">,</span> <span class="symbol">MBL.surf</span><span class="keyword">$</span><span class="symbol">RegionList</span><span class="keyword">,</span> <span class="argument">value</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">,</span> <span class="argument">invert</span> <span class="argument">=</span> <span class="number">TRUE</span><span class="keyword">)</span><span class="keyword">)</span></div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>plot3d.hxsurf</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='read.hxsurf.html'>read.hxsurf</a></code></p>
+
+      <p>Other hxsurf: <code><a href='as.mesh3d.html'>as.mesh3d</a></code>,
+  <code><a href='materials.html'>materials</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
+  <code><a href='subset.hxsurf.html'>subset.hxsurf</a></code>, <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

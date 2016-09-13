@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>xformimage. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Transform image files using a registration or affine matrix</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='xformimage.html'>xformimage</a></span><span class="keyword">(</span><span class="symbol">reg</span><span class="keyword">,</span> <span class="symbol">image</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for character</span>
+<span class="functioncall"><a href='xformimage.html'>xformimage</a></span><span class="keyword">(</span><span class="symbol">reg</span><span class="keyword">,</span> <span class="symbol">image</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for cmtkreg</span>
+<span class="functioncall"><a href='xformimage.html'>xformimage</a></span><span class="keyword">(</span><span class="symbol">reg</span><span class="keyword">,</span> <span class="symbol">image</span><span class="keyword">,</span> <span class="argument">transformtype</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"warp"</span><span class="keyword">,</span> <span class="string">"affine"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">direction</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for reglist</span>
+<span class="functioncall"><a href='xformimage.html'>xformimage</a></span><span class="keyword">(</span><span class="symbol">reg</span><span class="keyword">,</span> <span class="symbol">image</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+
+<span class="comment"># S3 method for default</span>
+<span class="functioncall"><a href='xformimage.html'>xformimage</a></span><span class="keyword">(</span><span class="symbol">reg</span><span class="keyword">,</span> <span class="symbol">image</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>reg</dt>
+      <dd>A registration defined by a matrix or a <code>cmtkreg</code> object, or
+a character vector specifying a path to a CMTK registration on disk (see
+details). If <code>reg</code> is a character vector of length &gt;1 defining a
+sequence of registration files on disk they should proceed from sample to
+reference.</dd>
+      <dt>image</dt>
+      <dd>Nx3 matrix of image</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods (and then eventually to
+<code><a href='cmtk.reformatx.html'>cmtk.reformatx</a></code>)</dd>
+      <dt>transformtype</dt>
+      <dd>Which transformation to use when the CMTK file contains
+both warp (default) and affine (TODO)</dd>
+      <dt>direction</dt>
+      <dd>Whether to transform image from sample space to reference
+space (called <strong>forward</strong> by CMTK) or from reference to sample space
+(called <strong>inverse</strong> by CMTK). Default (when <code>NULL</code> is forward).</dd>
+    </dl>
+    
+    <div class="Value">
+      <h2>Value</h2>
+
+      <p><dl>
+Character vector with path to xformed image.
+</dl></p>
+
+    </div>
+
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>You should almost always call <code><a href='xform.html'>xform</a></code> rather
+  calling than<code>xformimage</code> directly.</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>When passed a character vector, xformimage will check to see if it
+  defines a path containing CMTK registration erroring out if this is not the
+  case. If the path does indeed point to a CMTK registration, this method
+  will hand off to xformimage.cmtkreg. A future TODO would be to provide a
+  mechanism for extending this behaviour for other registration formats.
+  If a list of transformations is passed in, these transformations are passed
+  to the cmtk reformatx tool in the order received. Note that there is
+  presently no support for <ul>
+<li> using the inverse of a registration</p>
+
+      <p></li>
+<li> specifying a mask</p>
+
+      <p></li>
+<li> passing additional arguments to reformatx</p>
+
+      <p></li>
+</ul></p>
+
+      <p>Note that the direction of CMTK registrations can be the source of
+  much confusion. This is because CMTK defines the <em>forward</em> direction
+  as the transform required to reformat an image in <em>sample</em> (floating)
+  space to an image in <em>template</em> space. Since this operation involves
+  filling a regular grid in template space by looking up the corresponding
+  positions in sample space, the transformation that is required is (somewhat
+  counterintuitively) the one that maps template to sample. However in
+  neuroanatomical work, one often has points in sample space that one would
+  like to transform into template space. Here one needs CMTK&#39;s <em>inverse</em>
+  transformation.</p>
+
+      <p>A second source of confusion is that when there are multiple
+  transformations, CMTK&#39;s reformatx tool (wrapped by
+  <code><a href='cmtk.reformatx.html'>cmtk.reformatx</a></code>) expects them to be listed:</p>
+
+      <p><code>ref_intermediate.list intermediate_sample.list</code></p>
+
+      <p>where <code>ref_intermediate.list</code> is the CMTK registration obtained with
+  ref as target/reference and intermediate as sample/floating image.</p>
+
+      <p>For consistency, all <code>xform.*</code> methods expect multiple registrations
+  to be listed from sample to reference and this order is then swapped when
+  they are passed on to <code>cmtk.reformatx</code>.</p>
+
+      <p>whereas CMTK&#39;s streamxform tool (wrapped by <code><a href='xformpoints.html'>xformpoints</a></code>)
+  expects them in the opposite order.</p>
+
+    </div>
+      </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>xformimage</li><li>xformimage.character</li><li>xformimage.cmtkreg</li><li>xformimage.default</li><li>xformimage.reglist</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='cmtk.reformatx.html'>cmtk.reformatx</a></code>, <code><a href='xformpoints.html'>xformpoints</a></code>,
+  <code><a href='xform.html'>xform</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

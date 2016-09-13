@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+<title>write.amiramesh. nat 1.8.6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="">
+
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/bootstrap-responsive.css" rel="stylesheet">
+<link href="css/highlight.css" rel="stylesheet">
+<link href="css/staticdocs.css" rel="stylesheet">
+
+<!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+  </head>
+
+  <body>
+    <div class="navbar">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" href="index.html">nat 1.8.6</a>
+      <div class="nav">
+        <ul class="nav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="reference.html">Reference</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div class="container">
+      <header>
+        
+      </header>
+      
+      <h1>Write a 3D data object to an amiramesh format file</h1>
+
+<div class="row">
+  <div class="span8">
+    <h2>Usage</h2>
+    <pre><span class="functioncall"><a href='write.amiramesh.html'>write.amiramesh</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">file</span><span class="keyword">,</span> <span class="argument">enc</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"binary"</span><span class="keyword">,</span> <span class="string">"raw"</span><span class="keyword">,</span> <span class="string">"text"</span><span class="keyword">,</span> <span class="string">"hxzip"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">dtype</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"float"</span><span class="keyword">,</span> <span class="string">"byte"</span><span class="keyword">,</span> <span class="string">"short"</span><span class="keyword">,</span> <span class="string">"ushort"</span><span class="keyword">,</span> <span class="string">"int"</span><span class="keyword">,</span> <span class="string">"double"</span><span class="keyword">)</span><span class="keyword">,</span>
+  <span class="argument">endian</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="symbol">.Platform</span><span class="keyword">$</span><span class="symbol">endian</span><span class="keyword">,</span> <span class="argument">WriteNrrdHeader</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">)</span></pre>
+    
+    <h2>Arguments</h2>
+    <dl>
+      <dt>x</dt>
+      <dd>The image data to write (an im3d, or capable of being interpreted as
+such)</dd>
+      <dt>file</dt>
+      <dd>Character vector describing a single file</dd>
+      <dt>enc</dt>
+      <dd>Encoding of the data. NB &quot;raw&quot; and &quot;binary&quot; are synonyms.</dd>
+      <dt>dtype</dt>
+      <dd>Data type to write to disk</dd>
+      <dt>endian</dt>
+      <dd>Endianness of data block. Defaults to current value of 
+<code>.Platform$endian</code>.</dd>
+      <dt>WriteNrrdHeader</dt>
+      <dd>Whether to write a separate detached nrrd header next 
+to the amiramesh file allowing it to be opened by a NRRD reader. See 
+details.</dd>
+    </dl>
+    
+    <div class="Description">
+      <h2>Description</h2>
+
+      <p>Write a 3D data object to an amiramesh format file</p>
+
+    </div>
+
+    <div class="Details">
+      <h2>Details</h2>
+
+      <p>Note that only <code>&#39;raw&#39;</code> or <code>&#39;text&#39;</code> format data can
+  accommodate a detached NRRD format header since Amira&#39;s HxZip format is
+  subtly different from NRRD&#39;s gzip encoding. There is a full description 
+  of the deteached NRRD format in the help for <code><a href='write.nrrd.html'>write.nrrd</a></code>.</p>
+
+    </div>
+    
+    <h2 id="examples">Examples</h2>
+    <pre class="examples"><div class='input'><span class="symbol">d</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/array'>array</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span><span class="keyword">(</span><span class="number">1000</span><span class="keyword">)</span><span class="keyword">,</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">10</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">,</span> <span class="number">10</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="symbol">tf</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/tempfile'>tempfile</a></span><span class="keyword">(</span><span class="argument">fileext</span><span class="argument">=</span><span class="string">'.am'</span><span class="keyword">)</span>
+<span class="functioncall"><a href='write.amiramesh.html'>write.amiramesh</a></span><span class="keyword">(</span><span class="functioncall"><a href='im3d.html'>im3d</a></span><span class="keyword">(</span><span class="symbol">d</span><span class="keyword">,</span> <span class="argument">voxdims</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">0.5</span><span class="keyword">,</span><span class="number">0.5</span><span class="keyword">,</span><span class="number">1</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">,</span> <span class="argument">file</span><span class="argument">=</span><span class="symbol">tf</span><span class="keyword">,</span> <span class="argument">WriteNrrdHeader</span><span class="argument">=</span><span class="number">TRUE</span><span class="keyword">)</span>
+<span class="symbol">d2</span><span class="assignement">=</span><span class="functioncall"><a href='read.nrrd.html'>read.nrrd</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/paste'>paste</a></span><span class="keyword">(</span><span class="symbol">tf</span><span class="keyword">,</span> <span class="argument">sep</span><span class="argument">=</span><span class="string">''</span><span class="keyword">,</span> <span class="string">'.nhdr'</span><span class="keyword">)</span><span class="keyword">)</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span><span class="keyword">(</span><span class="symbol">d</span><span class="keyword">,</span> <span class="symbol">d2</span><span class="keyword">,</span> <span class="argument">tol</span><span class="argument">=</span><span class="number">1e-6</span><span class="keyword">)</span></div>
+<div class='output'>[1] &quot;Attributes: &lt; Length mismatch: comparison on first 1 components &gt;&quot;
+</div></pre>
+  </div>
+  <div class="span4 sidebar">
+    <!-- <ul>
+      <li>write.amiramesh</li>
+    </ul>
+    <ul>
+      
+    </ul> -->
+
+    <h2>See also</h2>
+      <p><code><a href='http://www.rdocumentation.org/packages/base/topics/Platform'>.Platform</a>, <a href='amiramesh-io.html'>read.amiramesh</a>, <a href='write.nrrd.html'>write.nrrd</a></code></p>
+
+    
+
+
+  </div>
+</div>
+      
+      <footer>
+      <p class="pull-right"><a href="#">Back to top</a></p>
+<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
+      </footer>
+    </div>
+  </body>
+</html>
