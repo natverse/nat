@@ -497,5 +497,5 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 #' @rdname mirror
 #' @seealso \code{\link{nlapply}}
 mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
-  mirror(x, subset=subset, OmitFailures=OmitFailures, ...)
+  NextMethod()
 }
