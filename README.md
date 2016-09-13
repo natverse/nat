@@ -150,8 +150,9 @@ took:
 ## Help
 If you want some help using **nat**, then please use the following resources
 
-* Start with the overview package documentation (`?nat`)
+* Start with the [overview package documentation](http://jefferis.github.io/nat/nat-package.html) (`?nat` in R)
 * [nat.examples](https://github.com/jefferis/nat.examples) sample code
+* Use the thematically organised [function reference documentation](http://jefferis.github.io/nat/reference.html)
 * [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
