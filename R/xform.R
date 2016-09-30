@@ -120,10 +120,16 @@ xform.neuron<-xform.list
 
 #' @export
 #' @rdname xform
-xform.data.frame <- function(x, reg, ...) {
+xform.data.frame <- function(x, reg, subset=NULL, ...) {
   points=xyzmatrix(x)
+  if(!is.null(subset))
+    points = points[subset, , drop=FALSE]
   pointst=xform(points,reg, ...)
-  xyzmatrix(x)<-pointst
+  if(is.null(subset)) {
+    xyzmatrix(x) <- pointst
+  } else {
+    xyzmatrix(x)[subset, ] <- pointst
+  }
   x
 }
 
