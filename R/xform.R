@@ -214,8 +214,13 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
         # let's assume that if we were able to transform the neuron, then we
         # insist on being able to transform the soma
         # but we just keep rows for neurons in our result neuronlist
+        # given that choice we need to convert our subset expression into rownames
+        # because numeric indices will get out of register
+        if(!is.null(subset) && !is.character(subset))
+          subset=rownames(df)[subset]
         df=df[names(tx),,drop=FALSE]
-        data.frame(tx) <- xform(df, reg, na.action = 'error')
+        
+        data.frame(tx) <- xform(df, reg, na.action = 'error', subset = subset)
       }
     }
   }
