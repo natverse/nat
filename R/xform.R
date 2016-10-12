@@ -120,10 +120,16 @@ xform.neuron<-xform.list
 
 #' @export
 #' @rdname xform
-xform.data.frame <- function(x, reg, ...) {
+xform.data.frame <- function(x, reg, subset=NULL, ...) {
   points=xyzmatrix(x)
+  if(!is.null(subset))
+    points = points[subset, , drop=FALSE]
   pointst=xform(points,reg, ...)
-  xyzmatrix(x)<-pointst
+  if(is.null(subset)) {
+    xyzmatrix(x) <- pointst
+  } else {
+    xyzmatrix(x)[subset, ] <- pointst
+  }
   x
 }
 
@@ -164,12 +170,21 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #' @details With \code{xform.neuronlist}, if you want to apply a different 
 #'   registration to each object in the neuronlist \code{x}, then you should use
 #'   \code{VectoriseRegistrations=TRUE}.
+#'   
+#'   When \code{x}'s attached data.frame contains columns called x,y,z or X,Y,Z 
+#'   then these are assumed to be coordinates and also transformed when 
+#'   \code{TransformDFCoords=TRUE} (the default). This provides a mechanism for 
+#'   transforming the soma positions of \code{neuronlist} objects containing
+#'   \code{dotprops} objects.
 #' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
 #'   that specify a subset of the members of \code{x} to be transformed.
 #' @param VectoriseRegistrations When \code{FALSE}, the default, each element of
 #'   \code{reg} will be applied sequentially to each element of \code{x}. When 
 #'   \code{TRUE}, it is assumed that there is one element of \code{reg} for each
 #'   element of \code{x}.
+#' @param TransformDFCoords If the metadata \code{data.frame} attached to 
+#'   \code{x} includes columns that look like x,y,z coordinates, transform those
+#'   as well.
 #' @inheritParams nlapply
 #' @export
 #' @rdname xform
@@ -180,12 +195,36 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #' nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
 #' }
 xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
-                           VectoriseRegistrations=FALSE) {
-  if(VectoriseRegistrations) {
+                           VectoriseRegistrations=FALSE, TransformDFCoords=TRUE) {
+  # first transform objects in the neuronlist
+  tx=if(VectoriseRegistrations) {
     nmapply(xform, x, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
   } else {
     nlapply(x, FUN=xform, reg=reg, ..., subset=subset, OmitFailures=OmitFailures)
   }
+  # then check if there is an attached data.frame with things that look like
+  # soma coordinates
+  if(TransformDFCoords && !is.null(df<-as.data.frame(x))) {
+    matched_cols=match(c("X","Y","Z"), toupper(colnames(df)))
+    if(all(is.finite(matched_cols))) {
+      # we have some data to transform
+      if(VectoriseRegistrations) {
+        stop("Not yet implemented")
+      } else {
+        # let's assume that if we were able to transform the neuron, then we
+        # insist on being able to transform the soma
+        # but we just keep rows for neurons in our result neuronlist
+        # given that choice we need to convert our subset expression into rownames
+        # because numeric indices will get out of register
+        if(!is.null(subset) && !is.character(subset))
+          subset=rownames(df)[subset]
+        df=df[names(tx),,drop=FALSE]
+        
+        data.frame(tx) <- xform(df, reg, na.action = 'error', subset = subset)
+      }
+    }
+  }
+  tx
 }
 
 #' Get and assign coordinates for classes containing 3D vertex data
@@ -469,5 +508,5 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 #' @rdname mirror
 #' @seealso \code{\link{nlapply}}
 mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
-  nlapply(x, FUN=mirror, ..., subset=subset, OmitFailures=OmitFailures)
+  NextMethod()
 }

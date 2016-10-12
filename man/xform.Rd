@@ -33,7 +33,7 @@ xform(x, reg, ...)
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
 \method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA,
-  VectoriseRegistrations = FALSE)
+  VectoriseRegistrations = FALSE, TransformDFCoords = TRUE)
 }
 \arguments{
 \item{x}{an object to transform}
@@ -62,6 +62,10 @@ details.}
 \code{reg} will be applied sequentially to each element of \code{x}. When 
 \code{TRUE}, it is assumed that there is one element of \code{reg} for each
 element of \code{x}.}
+
+\item{TransformDFCoords}{If the metadata \code{data.frame} attached to 
+\code{x} includes columns that look like x,y,z coordinates, transform those
+as well.}
 }
 \description{
 \code{xform} is designed to operate on a variety of data types, especially 
@@ -99,6 +103,12 @@ For the \code{xform.dotprops} method, dotprops tangent vectors will
 With \code{xform.neuronlist}, if you want to apply a different 
   registration to each object in the neuronlist \code{x}, then you should use
   \code{VectoriseRegistrations=TRUE}.
+  
+  When \code{x}'s attached data.frame contains columns called x,y,z or X,Y,Z 
+  then these are assumed to be coordinates and also transformed when 
+  \code{TransformDFCoords=TRUE} (the default). This provides a mechanism for 
+  transforming the soma positions of \code{neuronlist} objects containing
+  \code{dotprops} objects.
 }
 \section{Registrations}{
 
