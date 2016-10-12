@@ -68,8 +68,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   dataStart=grep("^\\s*Vertices\\s*",t)[1]
   if(Verbose) cat("Data start line =",dataStart,"\n")
   headerLines=t[seq(dataStart-1)]
-  trim=function(x) sub('^\\s+', '', sub('\\s+$', '', x, perl = TRUE), perl = TRUE)
-  getfield=function(fName,textLines=headerLines,pos=2) unlist(strsplit(trim(textLines[grep(fName,textLines)]),"\\s+",perl=TRUE))[pos]
+  getfield=function(fName,textLines=headerLines,pos=2) unlist(strsplit(trimws(textLines[grep(fName,textLines)]),"\\s+",perl=TRUE))[pos]
   nVertices=as.numeric(getfield("Vertices",t[dataStart],2))
   if(Verbose) cat("nVertices =",nVertices,"\n")
   

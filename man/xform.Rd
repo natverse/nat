@@ -28,7 +28,7 @@ xform(x, reg, ...)
 \method{xform}{neuron}(x, reg, FallBackToAffine = TRUE, na.action = "error",
   ...)
 
-\method{xform}{data.frame}(x, reg, ...)
+\method{xform}{data.frame}(x, reg, subset = NULL, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 

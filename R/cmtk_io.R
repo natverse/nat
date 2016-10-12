@@ -23,12 +23,6 @@ read.cmtkreg <- function(filename, ReturnRegistrationOnly=FALSE, ...){
   else return(r)
 }
 
-#' @title nat package internal functions
-#' @description Utility function to trim whitespace at start and end of lines
-#' @rdname nat-internal
-#' @param t Character vector to trim
-trim<-function(t) sub('[[:space:]]+$', '', sub('^[[:space:]]+', '', t))
-
 #' Read CMTK TypedStream file to a list in memory
 #' 
 #' This function is primarily of developer interest. End users will typically 
@@ -76,7 +70,7 @@ read.cmtk<-function(con, CheckLabel=TRUE){
     if(length(thisLine)==0) break
     
     # trim and split it up by white space
-    thisLine=trim(thisLine)
+    thisLine=trimws(thisLine)
     
     # skip if this is a blank line
     if(nchar(thisLine)==0) next
@@ -120,7 +114,7 @@ read.cmtk<-function(con, CheckLabel=TRUE){
       # nb -1 since we have read one line of 30 already
       numLinesToRead=ceiling(numItems/30)-1
       #cat("numLinesToRead=",numLinesToRead)
-      x=c(items,trim(readLines(con,numLinesToRead,ok=FALSE)))
+      x=c(items,trimws(readLines(con,numLinesToRead,ok=FALSE)))
       #x=paste(x,collapse="")
       bits=strsplit(x,"")
       bits=as.raw(unlist(bits))
