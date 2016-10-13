@@ -5,4 +5,5 @@ travisbuildchildren.sh
 ^revdep$
 ^cran-comments\.md$
 ^inst/staticdocs.*
-^docs/
+^docs$
+travis-tool.sh
