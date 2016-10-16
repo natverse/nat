@@ -145,8 +145,8 @@ took:
   `C:\Windows\SysWOw64\` (this seems to be necessary when starting executables 
   from a Windows shell - presumably there is a way to avoid this.)
 * The nat function `cmtk.bindir()` should now correctly identify the cmtk binary
-  directory. You can test that the executables are working by doing e.g. 
-  `cmtk.dof2mat(version = TRUE)` which should then responsd with "3.3.1" if you 
+  directory. You can test that the executables are working by trying the followin in R `library(nat);cmtk.dof2mat(version = TRUE)`
+  which should then responsd with "3.3.1" if you 
   have installed the CMTK version we have just mentioned.
 
 ## Help
