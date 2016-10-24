@@ -50,6 +50,6 @@ all.equal(x, y)
 all.equal(x, y, fieldsToExclude='NeuronName')
 }
 \seealso{
-\code{\link{all.equal}}
+\code{\link[base]{all.equal}}
 }
 

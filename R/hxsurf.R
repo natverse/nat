@@ -212,7 +212,7 @@ write.hxsurf <- function(surf, filename) {
 #' Plot amira surface objects in 3D using rgl
 #' 
 #' @param x An hxsurf surface object
-#' @param materials Character vector or \code{\link{regex}} naming materials to
+#' @param materials Character vector or \code{\link[base]{regex}} naming materials to
 #'   plot (defaults to all materials in x). See \code{\link{subset.hxsurf}}.
 #' @param col Character vector specifying colors for the materials, or a 
 #'   function that will be called with the number of materials to plot. When 
@@ -296,7 +296,7 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
 #' 
 #' @param x A dotprops object
 #' @param subset Character vector specifying regions to keep. Interpreted as 
-#'   \code{\link{regex}} if of length 1 and no fixed match.
+#'   \code{\link[base]{regex}} if of length 1 and no fixed match.
 #' @param drop Whether to drop unused vertices after subsetting (default:
 #'   \code{TRUE})
 #' @param rval Whether to return a new \code{hxsurf} object or just the names of

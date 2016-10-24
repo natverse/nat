@@ -11,7 +11,7 @@
 \item{x}{A dotprops object}
 
 \item{subset}{Character vector specifying regions to keep. Interpreted as 
-\code{\link{regex}} if of length 1 and no fixed match.}
+\code{\link[base]{regex}} if of length 1 and no fixed match.}
 
 \item{drop}{Whether to drop unused vertices after subsetting (default:
 \code{TRUE})}

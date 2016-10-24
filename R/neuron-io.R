@@ -120,8 +120,8 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' @param paths Paths to neuron input files \emph{or} a directory containing 
 #'   neurons \emph{or} a \code{\link{neuronlistfh}} object, \emph{or} a zip 
 #'   archive containing multiple neurons.
-#' @param pattern If paths is a directory, \link{regex} that file names must 
-#'   match.
+#' @param pattern If paths is a directory, \code{\link[base]{regex}} that file
+#'   names must match.
 #' @param neuronnames Character vector or function that specifies neuron names. 
 #'   See details.
 #' @param format File format for neuron (see \code{\link{read.neuron}})

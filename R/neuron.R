@@ -392,7 +392,7 @@ scale.neuron<-function(x, center=TRUE, scale=TRUE){
 #' @param ... additional arguments passed to \code{all.equal}
 #' @method all.equal neuron
 #' @export
-#' @seealso \code{\link{all.equal}}
+#' @seealso \code{\link[base]{all.equal}}
 #' @examples
 #' x=Cell07PNs[[1]]
 #' y=x

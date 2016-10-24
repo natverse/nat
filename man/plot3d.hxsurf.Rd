@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{An hxsurf surface object}
 
-\item{materials}{Character vector or \code{\link{regex}} naming materials to
+\item{materials}{Character vector or \code{\link[base]{regex}} naming materials to
 plot (defaults to all materials in x). See \code{\link{subset.hxsurf}}.}
 
 \item{col}{Character vector specifying colors for the materials, or a 
