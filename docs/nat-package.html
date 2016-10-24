@@ -87,7 +87,7 @@ neuroanatomical data, especially representations of neurons.</p>
   in these circumstances.</p>
 
       <p><code>neuron</code> objects containing connected trees can be converted to 
-  <code>ngraph</code> objects, a lightweight wrapper around the 
+  <code><a href='ngraph.html'>ngraph</a></code> objects, a lightweight wrapper around the 
   <code><a href='http://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> library&#39;s <code><a href='http://www.rdocumentation.org/packages/igraph/topics/make_graph'>graph</a></code> class that 
   preserves 3D coordinate information. This allows neurons to be manipulated 
   based on their graph structure, e.g. by finding all nodes upstream (closer 
@@ -109,7 +109,7 @@ neuroanatomical data, especially representations of neurons.</p>
   <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>).</p>
 
       <p>Neurons can be read in to a neuronlist using <code><a href='read.neurons.html'>read.neurons</a></code> or 
-  written out using <code><a href='write.neurons.html'>write.neurons</a></code> with support for many of the
+  written out using <code><a href='write.neurons.html'>write.neurons</a></code> with support for many of the 
   most common formats including swc.</p>
 
       <p>Metadata can be used to colour or subset the neurons during plotting (see 
@@ -213,11 +213,11 @@ neuroanatomical data, especially representations of neurons.</p>
 
       <p><b>nat</b> supports multiple input and output data 
   formats for the object classes. There is a registry-based mechanism which 
-  allows support for reading or writing specific file formats to be plugged 
-  in to reasonably generic functions such as <code><a href='read.neurons.html'>read.neurons</a></code>. It 
-  is perfectly possible for other R packages or end users to extend the 
-  supported list of file types by registering new read/write or 
-  identification functions.</p>
+  allows support for reading or writing specific file formats (see 
+  <code><a href='fileformats.html'>fileformats</a></code>) to be plugged in to reasonably generic functions
+  such as <code><a href='read.neurons.html'>read.neurons</a></code>. It is perfectly possible for other R 
+  packages or end users to extend the supported list of file types by 
+  registering new read/write or identification functions.</p>
 
     </div>
 
@@ -258,8 +258,11 @@ neuroanatomical data, especially representations of neurons.</p>
     </ul> -->
 
     <h2>See also</h2>
-      <p><code><a href='dotprops.html'>dotprops</a>,<a href='neuron.html'>neuron</a>,<a href='plot3d.neuronlist.html'>plot3d.neuronlist</a>,<a href='xform.html'>xform</a></code>, 
-<code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code> which is used for visualisation.</p>
+      <p><code><a href='neuron.html'>neuron</a></code>, <code><a href='dotprops.html'>dotprops</a></code>, 
+  <code><a href='neuronlist.html'>neuronlist</a></code>, <code><a href='plot3d.html'>plot3d</a></code>, <code><a href='xform.html'>xform</a></code>, 
+  <code><a href='im3d.html'>im3d</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>, <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code> which is 
+  used for visualisation, <code><a href='fileformats.html'>fileformats</a></code>,
+  <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='cmtk.bindir.html'>cmtk</a></code>.</p>
 
     
 

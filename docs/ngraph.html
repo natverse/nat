@@ -176,27 +176,8 @@ an <code>igraph</code> object with additional class <code>ngraph</code>, having 
     
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'><span class="symbol">g</span><span class="assignement">=</span><span class="functioncall"><a href='ngraph.html'>as.ngraph</a></span><span class="keyword">(</span><span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">)</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">igraph</span><span class="keyword">)</span></div>
-<strong class='message'>
-Attaching package: ‘igraph’
-</strong>
-<strong class='message'>The following object is masked from ‘package:nat’:
-
-    union
-</strong>
-<strong class='message'>The following object is masked from ‘package:rgl’:
-
-    %&gt;%
-</strong>
-<strong class='message'>The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-</strong>
-<strong class='message'>The following object is masked from ‘package:base’:
-
-    union
-</strong>
-<div class='input'><span class="comment"># check that vertex attributes of graph match X position</span>
+<span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/library'>library</a></span><span class="keyword">(</span><span class="symbol">igraph</span><span class="keyword">)</span>
+<span class="comment"># check that vertex attributes of graph match X position</span>
 <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/igraph/topics/V'>V</a></span><span class="keyword">(</span><span class="symbol">g</span><span class="keyword">)</span><span class="keyword">$</span><span class="symbol">X</span><span class="keyword">,</span> <span class="symbol">Cell07PNs</span><span class="keyword">[[</span><span class="number">1</span><span class="keyword">]</span><span class="keyword">]</span><span class="keyword">$</span><span class="symbol">d</span><span class="keyword">$</span><span class="symbol">X</span><span class="keyword">)</span></div>
 <div class='output'>[1] TRUE
 </div></pre>
