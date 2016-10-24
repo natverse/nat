@@ -135,6 +135,9 @@ Experiments in May 2016 suggest that the best option is to use the cygwin
 CMTK distribution (cygwin provides a linux like environment). Here are the steps we
 took:
 
+* You must ensure that you have at least version [nat v1.8.5](https://github.com/jefferis/nat/releases/tag/v1.8.5). 
+  It is recommended that follow the steps for installing the development version of
+  nat straight from github as desribed in section **Development version**
 * Install [Cygwin](https://www.cygwin.com/) accepting the default path `C:\cygwin64`
 * When you run Cygwin's setup.exe, you should also install all *fftw3* packages. 
   (fftw3 is a CMTK dependency which provides fast fourier transform functions)
