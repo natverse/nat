@@ -40,7 +40,7 @@ from file's extension.
 }
 \details{
 Note that if \code{file} does not have an extension then the default
-  extension for the specified \code{format} will be appended. This behaviour
+  extension for the specified \code{format} will be appended. This behaviour 
   can be suppressed by setting \code{ext=NA}.
 }
 \examples{
@@ -56,6 +56,7 @@ write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
 }
 }
 \seealso{
-\code{\link{fileformats}, \link{saveRDS}}
+\code{\link{write.neuron}}, \code{\link{fileformats}},
+  \code{\link{saveRDS}}
 }
 

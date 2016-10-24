@@ -8,8 +8,8 @@
 #'   already included with the nat package: \itemize{
 #'   
 #'   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also 
-#'   return an \code{\link{ngraph}} object containing the neuron structure in a
-#'   (permissive) general graph format that also contains the 3D positions for
+#'   return an \code{\link{ngraph}} object containing the neuron structure in a 
+#'   (permissive) general graph format that also contains the 3D positions for 
 #'   each vertex.
 #'   
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
@@ -36,12 +36,14 @@
 #' @param class The class of the returned object - presently either 
 #'   \code{"neuron"} or \code{"ngraph"}
 #' @param ... additional arguments passed to format-specific readers
-#' @seealso \code{\link{read.neurons}, \link{fileformats}}
+#' @seealso \code{\link{write.neuron}}, \code{\link{read.neurons}},
+#'   \code{\link{fileformats}}
 #' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and 
 #'   Obermayer, K. (2004). New methods for the computer-assisted 3-D 
 #'   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
 #'   1283--98. 
 #'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
+#'   
 #' @examples
 #' \dontrun{
 #' # note that we override the default NeuronName field
@@ -120,7 +122,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' @param paths Paths to neuron input files \emph{or} a directory containing 
 #'   neurons \emph{or} a \code{\link{neuronlistfh}} object, \emph{or} a zip 
 #'   archive containing multiple neurons.
-#' @param pattern If paths is a directory, \code{\link[base]{regex}} that file
+#' @param pattern If paths is a directory, \code{\link[base]{regex}} that file 
 #'   names must match.
 #' @param neuronnames Character vector or function that specifies neuron names. 
 #'   See details.
@@ -135,7 +137,8 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' @param ... Additional arguements to passed to read.neuron methods
 #' @return \code{\link{neuronlist}} object containing the neurons
 #' @export
-#' @seealso \code{\link{read.neuron}}
+#' @seealso \code{\link{read.neuron}}, \code{\link{write.neurons}},
+#'   \code{\link{fileformats}}
 #' @family neuronlist
 #' @examples
 #' \dontrun{
@@ -574,7 +577,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' from file's extension.
 #' 
 #' @details Note that if \code{file} does not have an extension then the default
-#'   extension for the specified \code{format} will be appended. This behaviour
+#'   extension for the specified \code{format} will be appended. This behaviour 
 #'   can be suppressed by setting \code{ext=NA}.
 #'   
 #' @param n A neuron
@@ -591,7 +594,8 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param ... Additional arguments passed to selected writer function
 #' @return return value
 #' @export
-#' @seealso \code{\link{fileformats}, \link{saveRDS}}
+#' @seealso  \code{\link{write.neuron}}, \code{\link{fileformats}},
+#'   \code{\link{saveRDS}}
 #' @examples
 #' # show the currently registered file formats that we can write
 #' fileformats(class='neuron', write=TRUE)
@@ -702,7 +706,8 @@ write.dotprops.swc<-function(x, file, ...) {
 #' @return the path to the output file(s), absolute when this is a zip file.
 #' @author jefferis
 #' @export
-#' @seealso \code{\link{write.neuron}}
+#' @seealso \code{\link{write.neuron}}, \code{\link{read.neurons}},
+#'   \code{\link{fileformats}}
 #' @family neuronlist
 #' @examples
 #' \dontrun{

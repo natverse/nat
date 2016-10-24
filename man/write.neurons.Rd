@@ -69,7 +69,8 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 jefferis
 }
 \seealso{
-\code{\link{write.neuron}}
+\code{\link{write.neuron}}, \code{\link{read.neurons}},
+  \code{\link{fileformats}}
 
 Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{is.neuronlist}},

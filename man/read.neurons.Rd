@@ -12,7 +12,7 @@ read.neurons(paths, pattern = NULL, neuronnames = basename, format = NULL,
 neurons \emph{or} a \code{\link{neuronlistfh}} object, \emph{or} a zip 
 archive containing multiple neurons.}
 
-\item{pattern}{If paths is a directory, \code{\link[base]{regex}} that file
+\item{pattern}{If paths is a directory, \code{\link[base]{regex}} that file 
 names must match.}
 
 \item{neuronnames}{Character vector or function that specifies neuron names. 
@@ -88,7 +88,8 @@ plot3d(vdnl, grepl("P[1-6].app", Lineage))
 }
 }
 \seealso{
-\code{\link{read.neuron}}
+\code{\link{read.neuron}}, \code{\link{write.neurons}},
+  \code{\link{fileformats}}
 
 Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{is.neuronlist}},

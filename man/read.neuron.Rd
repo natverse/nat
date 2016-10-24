@@ -31,8 +31,8 @@ This function will handle \code{neuron} and \code{dotprops} objects
   already included with the nat package: \itemize{
   
   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also 
-  return an \code{\link{ngraph}} object containing the neuron structure in a
-  (permissive) general graph format that also contains the 3D positions for
+  return an \code{\link{ngraph}} object containing the neuron structure in a 
+  (permissive) general graph format that also contains the 3D positions for 
   each vertex.
   
   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
@@ -71,6 +71,7 @@ Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
 }
 \seealso{
-\code{\link{read.neurons}, \link{fileformats}}
+\code{\link{write.neuron}}, \code{\link{read.neurons}},
+  \code{\link{fileformats}}
 }
 

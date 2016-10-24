@@ -31,7 +31,7 @@ neuroanatomical data, especially representations of neurons.
   in these circumstances.
   
   \code{neuron} objects containing connected trees can be converted to 
-  \code{ngraph} objects, a lightweight wrapper around the 
+  \code{\link{ngraph}} objects, a lightweight wrapper around the 
   \code{\link{igraph}} library's \code{\link[igraph]{graph}} class that 
   preserves 3D coordinate information. This allows neurons to be manipulated 
   based on their graph structure, e.g. by finding all nodes upstream (closer 
@@ -50,7 +50,7 @@ neuroanatomical data, especially representations of neurons.
   \code{\link{neuronlist-dataframe-methods}}).
   
   Neurons can be read in to a neuronlist using \code{\link{read.neurons}} or 
-  written out using \code{\link{write.neurons}} with support for many of the
+  written out using \code{\link{write.neurons}} with support for many of the 
   most common formats including swc.
   
   Metadata can be used to colour or subset the neurons during plotting (see 
@@ -88,8 +88,8 @@ neuroanatomical data, especially representations of neurons.
   format.
   
   Spatial information can be queried with \code{\link{voxdims}}, 
-  \code{\link{boundingbox}} and \code{\link{ijkpos}, \link{xyzpos}} methods. 
-  You can convert between voxel data and coordinate (vertex) -based 
+  \code{\link{boundingbox}} and \code{\link{ijkpos}}, \code{\link{xyzpos}}
+  methods. You can convert between voxel data and coordinate (vertex) -based 
   representations using the following functions:
   
   \itemize{
@@ -135,11 +135,11 @@ neuroanatomical data, especially representations of neurons.
 \section{File Formats}{
  \bold{nat} supports multiple input and output data 
   formats for the object classes. There is a registry-based mechanism which 
-  allows support for reading or writing specific file formats to be plugged 
-  in to reasonably generic functions such as \code{\link{read.neurons}}. It 
-  is perfectly possible for other R packages or end users to extend the 
-  supported list of file types by registering new read/write or 
-  identification functions.
+  allows support for reading or writing specific file formats (see 
+  \code{\link{fileformats}}) to be plugged in to reasonably generic functions
+  such as \code{\link{read.neurons}}. It is perfectly possible for other R 
+  packages or end users to extend the supported list of file types by 
+  registering new read/write or identification functions.
 }
 
 \section{Package Options}{
@@ -164,8 +164,11 @@ neuroanatomical data, especially representations of neurons.
   }
 }
 \seealso{
-\code{\link{dotprops},\link{neuron},\link{plot3d.neuronlist},\link{xform}}, 
-\code{\link{rgl}} which is used for visualisation.
+\code{\link{neuron}}, \code{\link{dotprops}}, 
+  \code{\link{neuronlist}}, \code{\link{nlapply}}, \code{\link[nat]{plot3d}},
+  \code{\link{xform}}, \code{\link{im3d}}, \code{\link{read.hxsurf}},
+  \code{\link{rgl}} which is used for visualisation,
+  \code{\link{fileformats}}, \code{\link{read.neurons}}, \code{\link{cmtk}}.
 }
 \keyword{package}
 

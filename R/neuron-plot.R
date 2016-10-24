@@ -19,14 +19,14 @@
 #'   soma. Either a logical value or a numeric indicating the radius (default 
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
 #' @param ... Additional arguments passed to rgl::lines3d
-#' @return list of rgl plotting ids (invisibly) separated into 
-#'   \code{lines,points,texts} according to plot element. See 
-#'   \code{\link[rgl]{plot3d}} for details.
-#' @seealso \code{\link{plot3d.neuronlist}, \link{plot3d.dotprops}, 
-#'   \link[rgl]{plot3d}}
-#' @details Note that when WithText=TRUE, the numeric identifiers plotted are
-#'   \emph{raw indices} into the \code{x$d} array, \emph{not} the values of the
-#'   \code{PointNo} column.
+#' @return list of rgl plotting ids (invisibly) separated into \code{lines}, 
+#'   \code{points}, \code{texts} according to plot element. See 
+#'   \code{rgl::\link[rgl]{plot3d}} for details.
+#' @seealso \code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}}, 
+#'   \code{nat::\link[nat]{plot3d}}, \code{rgl::\link[rgl]{plot3d}}
+#' @details Note that when \code{WithText=TRUE}, the numeric identifiers plotted
+#'   are \emph{raw indices} into the \code{x$d} array of the \code{neuron},
+#'   \emph{not} the values of the \code{PointNo} column.
 #' @examples
 #' # A new plot would have been opened if required
 #' open3d()
