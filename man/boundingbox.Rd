@@ -6,6 +6,7 @@
 \alias{boundingbox.default}
 \alias{boundingbox.im3d}
 \alias{boundingbox.list}
+\alias{boundingbox.neuron}
 \alias{boundingbox.shape3d}
 \alias{boundingbox<-}
 \title{Get the bounding box of an im3d volume or other compatible object}
@@ -17,6 +18,8 @@ boundingbox(x, ...)
 \method{boundingbox}{character}(x, ...)
 
 \method{boundingbox}{list}(x, na.rm = FALSE, ...)
+
+\method{boundingbox}{neuron}(x, na.rm = FALSE, ...)
 
 \method{boundingbox}{shape3d}(x, na.rm = FALSE, ...)
 

@@ -423,6 +423,10 @@ boundingbox.list<-function(x, na.rm=FALSE, ...) {
   boundingbox(bb)
 }
 
+#' @rdname boundingbox
+#' @export
+boundingbox.neuron<-boundingbox.list
+
 #' @export
 #' @description \code{boundingbox.shape3d} is designed to be used on objects 
 #'   that contain 3D point information and inherit from \code{rgl}'s 
