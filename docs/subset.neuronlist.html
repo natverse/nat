@@ -130,14 +130,14 @@ A <code>neuronlist</code>, character vector of names or the attached
 <span class="symbol">apbps</span><span class="assignement">=</span><span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">,</span><span class="argument">filterfun</span><span class="argument">=</span><span class="symbol">aptip</span><span class="keyword">)</span>
 <span class="comment"># look at which neurons are present in the subsetted neuronlist</span>
 <span class="functioncall"><a href='neuronlist-dataframe-methods.html'>head</a></span><span class="keyword">(</span><span class="symbol">apbps</span><span class="keyword">)</span></div>
-<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender
-GadMARCM-F000142_seg002 GadMARCM-F000142_seg002 Gad1-F-300043 10647         L   FALSE Gad1-Gal4      F
-GadMARCM-F000423_seg001 GadMARCM-F000423_seg001 Gad1-F-300107  9541         R    TRUE Gad1-Gal4      F
-ChaMARCM-F000586_seg002 ChaMARCM-F000586_seg002  Cha-F-300150  7113         R    TRUE  Cha-Gal4      F
-                               X        Y        Z                exemplar cluster  idx type
-GadMARCM-F000142_seg002 349.5917 78.18986 96.69280 GadMARCM-F000142_seg002      71 1535 apbp
-GadMARCM-F000423_seg001 401.4795 76.32671 97.92564 GadMARCM-F000423_seg001      61 1265 apbp
-ChaMARCM-F000586_seg002 340.1020 79.79322 92.21622 ChaMARCM-F000586_seg002      52  898 apbp
+<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender        X
+GadMARCM-F000142_seg002 GadMARCM-F000142_seg002 Gad1-F-300043 10647         L   FALSE Gad1-Gal4      F 349.5917
+GadMARCM-F000423_seg001 GadMARCM-F000423_seg001 Gad1-F-300107  9541         R    TRUE Gad1-Gal4      F 401.4795
+ChaMARCM-F000586_seg002 ChaMARCM-F000586_seg002  Cha-F-300150  7113         R    TRUE  Cha-Gal4      F 340.1020
+                               Y        Z                exemplar cluster  idx type
+GadMARCM-F000142_seg002 78.18986 96.69280 GadMARCM-F000142_seg002      71 1535 apbp
+GadMARCM-F000423_seg001 76.32671 97.92564 GadMARCM-F000423_seg001      61 1265 apbp
+ChaMARCM-F000586_seg002 79.79322 92.21622 ChaMARCM-F000586_seg002      52  898 apbp
 </div>
 <div class='input'><span class="comment"># combine global variables with dataframe columns</span>
 <span class="symbol">odds</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">TRUE</span><span class="keyword">,</span><span class="number">FALSE</span><span class="keyword">)</span><span class="keyword">,</span><span class="number">10</span><span class="keyword">)</span>

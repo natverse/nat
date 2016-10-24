@@ -129,20 +129,20 @@ the attached dataframe with levels dropped (NB <strong>not</strong> the
     <h2 id="examples">Examples</h2>
     <pre class="examples"><div class='input'><span class="comment">## treat kcs20 as data.frame</span>
 <span class="symbol">kcs20</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">,</span> <span class="keyword">]</span></div>
-<div class='output'>                                      gene_name         Name idid soma_side flipped   Driver Gender
-FruMARCM-M001205_seg002 FruMARCM-M001205_seg002 fru-M-500112 1024         L   FALSE fru-Gal4      M
-                               X       Y        Z                exemplar cluster idx  type
-FruMARCM-M001205_seg002 361.4849 95.0448 84.10259 FruMARCM-M001205_seg002       9 156 gamma
+<div class='output'>                                      gene_name         Name idid soma_side flipped   Driver Gender        X       Y
+FruMARCM-M001205_seg002 FruMARCM-M001205_seg002 fru-M-500112 1024         L   FALSE fru-Gal4      M 361.4849 95.0448
+                               Z                exemplar cluster idx  type
+FruMARCM-M001205_seg002 84.10259 FruMARCM-M001205_seg002       9 156 gamma
 </div>
 <div class='input'><span class="symbol">kcs20</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">3</span><span class="keyword">,</span> <span class="keyword">]</span></div>
-<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender
-FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L   FALSE  fru-Gal4      M
-GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L   FALSE Gad1-Gal4      F
-GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R    TRUE Gad1-Gal4      F
-                               X         Y        Z                exemplar cluster  idx  type
-FruMARCM-M001205_seg002 361.4849  95.04480 84.10259 FruMARCM-M001205_seg002       9  156 gamma
-GadMARCM-F000122_seg001 367.8332 105.86755 94.73446 GadMARCM-F000122_seg001      70 1519 gamma
-GadMARCM-F000050_seg001 382.8279  61.73213 97.28057 GadMARCM-F000050_seg001      57 1132    ab
+<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender        X
+FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L   FALSE  fru-Gal4      M 361.4849
+GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L   FALSE Gad1-Gal4      F 367.8332
+GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R    TRUE Gad1-Gal4      F 382.8279
+                                Y        Z                exemplar cluster  idx  type
+FruMARCM-M001205_seg002  95.04480 84.10259 FruMARCM-M001205_seg002       9  156 gamma
+GadMARCM-F000122_seg001 105.86755 94.73446 GadMARCM-F000122_seg001      70 1519 gamma
+GadMARCM-F000050_seg001  61.73213 97.28057 GadMARCM-F000050_seg001      57 1132    ab
 </div>
 <div class='input'><span class="symbol">kcs20</span><span class="keyword">[</span><span class="keyword">,</span> <span class="number">1</span><span class="keyword">:</span><span class="number">4</span><span class="keyword">]</span></div>
 <div class='output'>                                      gene_name          Name  idid soma_side
@@ -173,62 +173,62 @@ Levels: L M R
 </div>
 <div class='input'><span class="comment"># alternative to as.data.frame(kcs20)</span>
 <span class="symbol">kcs20</span><span class="keyword">[</span><span class="keyword">,</span> <span class="keyword">]</span></div>
-<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender
-FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L   FALSE  fru-Gal4      M
-GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L   FALSE Gad1-Gal4      F
-GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R    TRUE Gad1-Gal4      F
-GadMARCM-F000142_seg002 GadMARCM-F000142_seg002 Gad1-F-300043 10647         L   FALSE Gad1-Gal4      F
-FruMARCM-F000270_seg001 FruMARCM-F000270_seg001  fru-F-400045  9758         L   FALSE  fru-Gal4      F
-FruMARCM-F001115_seg002 FruMARCM-F001115_seg002  fru-F-300059  6182         R    TRUE  fru-Gal4      F
-FruMARCM-M001051_seg002 FruMARCM-M001051_seg002  fru-M-100078  1500         R    TRUE  fru-Gal4      M
-GadMARCM-F000423_seg001 GadMARCM-F000423_seg001 Gad1-F-300107  9541         R    TRUE Gad1-Gal4      F
-ChaMARCM-F000586_seg002 ChaMARCM-F000586_seg002  Cha-F-300150  7113         R    TRUE  Cha-Gal4      F
-FruMARCM-M001339_seg001 FruMARCM-M001339_seg001  fru-M-300145  1145         R    TRUE  fru-Gal4      M
-GadMARCM-F000476_seg001 GadMARCM-F000476_seg001 Gad1-F-400089  9612         R    TRUE Gad1-Gal4      F
-FruMARCM-F000085_seg001 FruMARCM-F000085_seg001  fru-F-400017 11472         R    TRUE  fru-Gal4      F
-FruMARCM-F000706_seg001 FruMARCM-F000706_seg001  fru-F-000031  7810         R    TRUE  fru-Gal4      F
-FruMARCM-M000842_seg002 FruMARCM-M000842_seg002  fru-M-400058  1689         L   FALSE  fru-Gal4      M
-FruMARCM-F001494_seg002 FruMARCM-F001494_seg002  fru-F-200098  6341         R    TRUE  fru-Gal4      F
-FruMARCM-F000188_seg001 FruMARCM-F000188_seg001  fru-F-200021  6405         R    TRUE  fru-Gal4      F
-GadMARCM-F000071_seg001 GadMARCM-F000071_seg001 Gad1-F-300023 10541         R    TRUE Gad1-Gal4      F
-FruMARCM-M000115_seg001 FruMARCM-M000115_seg001  fru-M-100014  2389         L   FALSE  fru-Gal4      M
-GadMARCM-F000442_seg002 GadMARCM-F000442_seg002 Gad1-F-700033  9569         R    TRUE Gad1-Gal4      F
-FruMARCM-F001929_seg001 FruMARCM-F001929_seg001  fru-F-400181  4694         L   FALSE  fru-Gal4      F
-                               X         Y         Z                exemplar cluster  idx  type
-FruMARCM-M001205_seg002 361.4849  95.04480  84.10259 FruMARCM-M001205_seg002       9  156 gamma
-GadMARCM-F000122_seg001 367.8332 105.86755  94.73446 GadMARCM-F000122_seg001      70 1519 gamma
-GadMARCM-F000050_seg001 382.8279  61.73213  97.28057 GadMARCM-F000050_seg001      57 1132    ab
-GadMARCM-F000142_seg002 349.5917  78.18986  96.69280 GadMARCM-F000142_seg002      71 1535  apbp
-FruMARCM-F000270_seg001 387.5236 114.80344  87.84156 FruMARCM-F000270_seg001      64 1331    ab
-FruMARCM-F001115_seg002 352.0216 121.72034 100.52308 FruMARCM-F001115_seg002      44  795    ab
-FruMARCM-M001051_seg002 338.7782 118.68985  95.47755 FruMARCM-M001051_seg002      16  268    ab
-GadMARCM-F000423_seg001 401.4795  76.32671  97.92564 GadMARCM-F000423_seg001      61 1265  apbp
-ChaMARCM-F000586_seg002 340.1020  79.79322  92.21622 ChaMARCM-F000586_seg002      52  898  apbp
-FruMARCM-M001339_seg001 393.1358 102.42494  92.82986 FruMARCM-M001339_seg001      12  190    ab
-GadMARCM-F000476_seg001 339.5274  60.45391  94.78038 GadMARCM-F000476_seg001      63 1295 gamma
-FruMARCM-F000085_seg001 344.0347  78.32091 100.64333 FruMARCM-F000085_seg001      76 1718 gamma
-FruMARCM-F000706_seg001 406.5796  80.13186  94.32588 FruMARCM-F000706_seg001      53 1007    ab
-FruMARCM-M000842_seg002 403.8388  62.06659  89.97595 FruMARCM-M000842_seg002      18  318    ab
-FruMARCM-F001494_seg002 348.3770 115.99559  95.77683 FruMARCM-F001494_seg002      48  827    ab
-FruMARCM-F000188_seg001 329.2778  78.68618  92.02949 FruMARCM-F000188_seg001      49  842    ab
-GadMARCM-F000071_seg001 341.3460  77.38931  91.88780 GadMARCM-F000071_seg001      69 1484 gamma
-FruMARCM-M000115_seg001 388.2444  65.12638  91.88102 FruMARCM-M000115_seg001      22  406 gamma
-GadMARCM-F000442_seg002 348.7375  78.76781  89.38335 GadMARCM-F000442_seg002      62 1277 gamma
-FruMARCM-F001929_seg001 372.0023 115.12707  91.70584 FruMARCM-F001929_seg001      36  610    ab
+<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender        X
+FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L   FALSE  fru-Gal4      M 361.4849
+GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L   FALSE Gad1-Gal4      F 367.8332
+GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R    TRUE Gad1-Gal4      F 382.8279
+GadMARCM-F000142_seg002 GadMARCM-F000142_seg002 Gad1-F-300043 10647         L   FALSE Gad1-Gal4      F 349.5917
+FruMARCM-F000270_seg001 FruMARCM-F000270_seg001  fru-F-400045  9758         L   FALSE  fru-Gal4      F 387.5236
+FruMARCM-F001115_seg002 FruMARCM-F001115_seg002  fru-F-300059  6182         R    TRUE  fru-Gal4      F 352.0216
+FruMARCM-M001051_seg002 FruMARCM-M001051_seg002  fru-M-100078  1500         R    TRUE  fru-Gal4      M 338.7782
+GadMARCM-F000423_seg001 GadMARCM-F000423_seg001 Gad1-F-300107  9541         R    TRUE Gad1-Gal4      F 401.4795
+ChaMARCM-F000586_seg002 ChaMARCM-F000586_seg002  Cha-F-300150  7113         R    TRUE  Cha-Gal4      F 340.1020
+FruMARCM-M001339_seg001 FruMARCM-M001339_seg001  fru-M-300145  1145         R    TRUE  fru-Gal4      M 393.1358
+GadMARCM-F000476_seg001 GadMARCM-F000476_seg001 Gad1-F-400089  9612         R    TRUE Gad1-Gal4      F 339.5274
+FruMARCM-F000085_seg001 FruMARCM-F000085_seg001  fru-F-400017 11472         R    TRUE  fru-Gal4      F 344.0347
+FruMARCM-F000706_seg001 FruMARCM-F000706_seg001  fru-F-000031  7810         R    TRUE  fru-Gal4      F 406.5796
+FruMARCM-M000842_seg002 FruMARCM-M000842_seg002  fru-M-400058  1689         L   FALSE  fru-Gal4      M 403.8388
+FruMARCM-F001494_seg002 FruMARCM-F001494_seg002  fru-F-200098  6341         R    TRUE  fru-Gal4      F 348.3770
+FruMARCM-F000188_seg001 FruMARCM-F000188_seg001  fru-F-200021  6405         R    TRUE  fru-Gal4      F 329.2778
+GadMARCM-F000071_seg001 GadMARCM-F000071_seg001 Gad1-F-300023 10541         R    TRUE Gad1-Gal4      F 341.3460
+FruMARCM-M000115_seg001 FruMARCM-M000115_seg001  fru-M-100014  2389         L   FALSE  fru-Gal4      M 388.2444
+GadMARCM-F000442_seg002 GadMARCM-F000442_seg002 Gad1-F-700033  9569         R    TRUE Gad1-Gal4      F 348.7375
+FruMARCM-F001929_seg001 FruMARCM-F001929_seg001  fru-F-400181  4694         L   FALSE  fru-Gal4      F 372.0023
+                                Y         Z                exemplar cluster  idx  type
+FruMARCM-M001205_seg002  95.04480  84.10259 FruMARCM-M001205_seg002       9  156 gamma
+GadMARCM-F000122_seg001 105.86755  94.73446 GadMARCM-F000122_seg001      70 1519 gamma
+GadMARCM-F000050_seg001  61.73213  97.28057 GadMARCM-F000050_seg001      57 1132    ab
+GadMARCM-F000142_seg002  78.18986  96.69280 GadMARCM-F000142_seg002      71 1535  apbp
+FruMARCM-F000270_seg001 114.80344  87.84156 FruMARCM-F000270_seg001      64 1331    ab
+FruMARCM-F001115_seg002 121.72034 100.52308 FruMARCM-F001115_seg002      44  795    ab
+FruMARCM-M001051_seg002 118.68985  95.47755 FruMARCM-M001051_seg002      16  268    ab
+GadMARCM-F000423_seg001  76.32671  97.92564 GadMARCM-F000423_seg001      61 1265  apbp
+ChaMARCM-F000586_seg002  79.79322  92.21622 ChaMARCM-F000586_seg002      52  898  apbp
+FruMARCM-M001339_seg001 102.42494  92.82986 FruMARCM-M001339_seg001      12  190    ab
+GadMARCM-F000476_seg001  60.45391  94.78038 GadMARCM-F000476_seg001      63 1295 gamma
+FruMARCM-F000085_seg001  78.32091 100.64333 FruMARCM-F000085_seg001      76 1718 gamma
+FruMARCM-F000706_seg001  80.13186  94.32588 FruMARCM-F000706_seg001      53 1007    ab
+FruMARCM-M000842_seg002  62.06659  89.97595 FruMARCM-M000842_seg002      18  318    ab
+FruMARCM-F001494_seg002 115.99559  95.77683 FruMARCM-F001494_seg002      48  827    ab
+FruMARCM-F000188_seg001  78.68618  92.02949 FruMARCM-F000188_seg001      49  842    ab
+GadMARCM-F000071_seg001  77.38931  91.88780 GadMARCM-F000071_seg001      69 1484 gamma
+FruMARCM-M000115_seg001  65.12638  91.88102 FruMARCM-M000115_seg001      22  406 gamma
+GadMARCM-F000442_seg002  78.76781  89.38335 GadMARCM-F000442_seg002      62 1277 gamma
+FruMARCM-F001929_seg001 115.12707  91.70584 FruMARCM-F001929_seg001      36  610    ab
 </div>
 <div class='input'>
 <span class="comment">## can also set columns</span>
 <span class="symbol">kcs13</span><span class="assignement">=</span><span class="symbol">kcs20</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">3</span><span class="keyword">]</span>
 <span class="symbol">kcs13</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">'side'</span><span class="keyword">]</span><span class="assignement">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/character'>as.character</a></span><span class="keyword">(</span><span class="symbol">kcs13</span><span class="keyword">[</span><span class="keyword">,</span><span class="string">'soma_side'</span><span class="keyword">]</span><span class="keyword">)</span>
 <span class="functioncall"><a href='neuronlist-dataframe-methods.html'>head</a></span><span class="keyword">(</span><span class="symbol">kcs13</span><span class="keyword">)</span></div>
-<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender
-FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L   FALSE  fru-Gal4      M
-GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L   FALSE Gad1-Gal4      F
-GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R    TRUE Gad1-Gal4      F
-                               X         Y        Z                exemplar cluster  idx  type side
-FruMARCM-M001205_seg002 361.4849  95.04480 84.10259 FruMARCM-M001205_seg002       9  156 gamma    L
-GadMARCM-F000122_seg001 367.8332 105.86755 94.73446 GadMARCM-F000122_seg001      70 1519 gamma    L
-GadMARCM-F000050_seg001 382.8279  61.73213 97.28057 GadMARCM-F000050_seg001      57 1132    ab    R
+<div class='output'>                                      gene_name          Name  idid soma_side flipped    Driver Gender        X
+FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L   FALSE  fru-Gal4      M 361.4849
+GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L   FALSE Gad1-Gal4      F 367.8332
+GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R    TRUE Gad1-Gal4      F 382.8279
+                                Y        Z                exemplar cluster  idx  type side
+FruMARCM-M001205_seg002  95.04480 84.10259 FruMARCM-M001205_seg002       9  156 gamma    L
+GadMARCM-F000122_seg001 105.86755 94.73446 GadMARCM-F000122_seg001      70 1519 gamma    L
+GadMARCM-F000050_seg001  61.73213 97.28057 GadMARCM-F000050_seg001      57 1132    ab    R
 </div>
 <div class='input'><span class="comment"># or parts of columns</span>
 <span class="symbol">kcs13</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">,</span><span class="string">'soma_side'</span><span class="keyword">]</span><span class="assignement">=</span><span class="string">'R'</span>
@@ -248,17 +248,15 @@ GadMARCM-F000050_seg001 382.8279  61.73213 97.28057 GadMARCM-F000050_seg001     
 <span class="comment">## get row/column names of attached data.frame </span>
 <span class="comment"># (unfortunately implementing ncol/nrow is challenging)</span>
 <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/colnames'>rownames</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span></div>
-<div class='output'> [1] &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot; &quot;GadMARCM-F000050_seg001&quot;
- [4] &quot;GadMARCM-F000142_seg002&quot; &quot;FruMARCM-F000270_seg001&quot; &quot;FruMARCM-F001115_seg002&quot;
- [7] &quot;FruMARCM-M001051_seg002&quot; &quot;GadMARCM-F000423_seg001&quot; &quot;ChaMARCM-F000586_seg002&quot;
-[10] &quot;FruMARCM-M001339_seg001&quot; &quot;GadMARCM-F000476_seg001&quot; &quot;FruMARCM-F000085_seg001&quot;
-[13] &quot;FruMARCM-F000706_seg001&quot; &quot;FruMARCM-M000842_seg002&quot; &quot;FruMARCM-F001494_seg002&quot;
-[16] &quot;FruMARCM-F000188_seg001&quot; &quot;GadMARCM-F000071_seg001&quot; &quot;FruMARCM-M000115_seg001&quot;
-[19] &quot;GadMARCM-F000442_seg002&quot; &quot;FruMARCM-F001929_seg001&quot;
+<div class='output'> [1] &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot; &quot;GadMARCM-F000050_seg001&quot; &quot;GadMARCM-F000142_seg002&quot;
+ [5] &quot;FruMARCM-F000270_seg001&quot; &quot;FruMARCM-F001115_seg002&quot; &quot;FruMARCM-M001051_seg002&quot; &quot;GadMARCM-F000423_seg001&quot;
+ [9] &quot;ChaMARCM-F000586_seg002&quot; &quot;FruMARCM-M001339_seg001&quot; &quot;GadMARCM-F000476_seg001&quot; &quot;FruMARCM-F000085_seg001&quot;
+[13] &quot;FruMARCM-F000706_seg001&quot; &quot;FruMARCM-M000842_seg002&quot; &quot;FruMARCM-F001494_seg002&quot; &quot;FruMARCM-F000188_seg001&quot;
+[17] &quot;GadMARCM-F000071_seg001&quot; &quot;FruMARCM-M000115_seg001&quot; &quot;GadMARCM-F000442_seg002&quot; &quot;FruMARCM-F001929_seg001&quot;
 </div>
 <div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/colnames'>colnames</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">)</span></div>
-<div class='output'> [1] &quot;gene_name&quot; &quot;Name&quot;      &quot;idid&quot;      &quot;soma_side&quot; &quot;flipped&quot;   &quot;Driver&quot;    &quot;Gender&quot;    &quot;X&quot;        
- [9] &quot;Y&quot;         &quot;Z&quot;         &quot;exemplar&quot;  &quot;cluster&quot;   &quot;idx&quot;       &quot;type&quot;     
+<div class='output'> [1] &quot;gene_name&quot; &quot;Name&quot;      &quot;idid&quot;      &quot;soma_side&quot; &quot;flipped&quot;   &quot;Driver&quot;    &quot;Gender&quot;    &quot;X&quot;         &quot;Y&quot;        
+[10] &quot;Z&quot;         &quot;exemplar&quot;  &quot;cluster&quot;   &quot;idx&quot;       &quot;type&quot;     
 </div></pre>
   </div>
   <div class="span4 sidebar">

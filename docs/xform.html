@@ -76,14 +76,14 @@
   <span class="symbol">...</span><span class="keyword">)</span>
 
 <span class="comment"># S3 method for data.frame</span>
-<span class="functioncall"><a href='xform.html'>xform</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">reg</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
+<span class="functioncall"><a href='xform.html'>xform</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">reg</span><span class="keyword">,</span> <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
 
 <span class="comment"># S3 method for dotprops</span>
 <span class="functioncall"><a href='xform.html'>xform</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">reg</span><span class="keyword">,</span> <span class="argument">FallBackToAffine</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">)</span>
 
 <span class="comment"># S3 method for neuronlist</span>
 <span class="functioncall"><a href='xform.html'>xform</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span> <span class="symbol">reg</span><span class="keyword">,</span> <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">,</span> <span class="argument">OmitFailures</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA</span><span class="keyword">,</span>
-  <span class="argument">VectoriseRegistrations</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">)</span></pre>
+  <span class="argument">VectoriseRegistrations</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">TransformDFCoords</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">)</span></pre>
     
     <h2>Arguments</h2>
     <dl>
@@ -114,6 +114,10 @@ details.</dd>
 <code>reg</code> will be applied sequentially to each element of <code>x</code>. When 
 <code>TRUE</code>, it is assumed that there is one element of <code>reg</code> for each
 element of <code>x</code>.</dd>
+      <dt>TransformDFCoords</dt>
+      <dd>If the metadata <code>data.frame</code> attached to 
+<code>x</code> includes columns that look like x,y,z coordinates, transform those
+as well.</dd>
     </dl>
     
     <div class="Description">
@@ -158,6 +162,12 @@ be required for expert use; in almost all circumstances, you should use only
       <p>With <code>xform.neuronlist</code>, if you want to apply a different 
   registration to each object in the neuronlist <code>x</code>, then you should use
   <code>VectoriseRegistrations=TRUE</code>.</p>
+
+      <p>When <code>x</code>&#39;s attached data.frame contains columns called x,y,z or X,Y,Z 
+  then these are assumed to be coordinates and also transformed when 
+  <code>TransformDFCoords=TRUE</code> (the default). This provides a mechanism for 
+  transforming the soma positions of <code>neuronlist</code> objects containing
+  <code>dotprops</code> objects.</p>
 
     </div>
 

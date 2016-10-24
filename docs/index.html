@@ -57,7 +57,8 @@
 <a href="https://github.com/jefferis/nat/releases/latest"><img src="https://img.shields.io/github/release/jefferis/nat.svg" alt="Release Version"/></a> 
 <a href="http://cran.r-project.org/package=nat"><img src="http://www.r-pkg.org/badges/version/nat" alt="CRAN_Status_Badge"/></a> 
 <a href="https://travis-ci.org/jefferis/nat"><img src="https://img.shields.io/travis/jefferis/nat.svg" alt="Build Status"/></a> 
-<a href="https://coveralls.io/r/jefferis/nat?branch=master"><img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"/></a></p>
+<a href="https://coveralls.io/r/jefferis/nat?branch=master"><img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"/></a>
+<a href="http://jefferis.github.io/nat/reference.html"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"/></a></p>
 
 <p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
 single neurons. See <a href="https://github.com/jefferis/nat.examples">nat.examples</a> and <a href="https://github.com/jefferis/frulhns">frulhns</a> for sample code.</p>
@@ -199,8 +200,8 @@ took:</p>
 <code>C:\Windows\SysWOw64\</code> (this seems to be necessary when starting executables 
 from a Windows shell - presumably there is a way to avoid this.)</li>
 <li>The nat function <code>cmtk.bindir()</code> should now correctly identify the cmtk binary
-directory. You can test that the executables are working by doing e.g. 
-<code>cmtk.dof2mat(version = TRUE)</code> which should then responsd with &ldquo;3.3.1&rdquo; if you 
+directory. You can test that the executables are working by trying the followin in R <code>library(nat);cmtk.dof2mat(version = TRUE)</code>
+which should then responsd with &ldquo;3.3.1&rdquo; if you 
 have installed the CMTK version we have just mentioned.</li>
 </ul>
 
@@ -209,8 +210,9 @@ have installed the CMTK version we have just mentioned.</li>
 <p>If you want some help using <strong>nat</strong>, then please use the following resources</p>
 
 <ul>
-<li>Start with the overview package documentation (<code>?nat</code>)</li>
+<li>Start with the <a href="http://jefferis.github.io/nat/nat-package.html">overview package documentation</a> (<code>?nat</code> in R)</li>
 <li><a href="https://github.com/jefferis/nat.examples">nat.examples</a> sample code</li>
+<li>Use the thematically organised <a href="http://jefferis.github.io/nat/reference.html">function reference documentation</a></li>
 <li><a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> Google group - 
 we normally respond promptly and you will also be helping future users.</li>
 </ul>
