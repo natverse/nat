@@ -19,7 +19,6 @@ single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and
 
 ## Quick Start
 
-
 For the impatient ...
 
 ```r
@@ -59,7 +58,7 @@ with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(
 
 ## Installation
 
-A confirmed stable version of **nat** can be installed fromn CRAN. 
+A confirmed stable version of **nat** can be installed from CRAN. 
 
 ```r
 install.packages("nat")
