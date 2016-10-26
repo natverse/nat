@@ -146,7 +146,8 @@ took:
   `tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to extract CMTK to the cygwin folder.
 * Copy all the `C:\cygwin64\bin\cyg*.dll` files to `C:\Windows\System32\` and
   `C:\Windows\SysWOw64\` (this seems to be necessary when starting executables 
-  from a Windows shell - presumably there is a way to avoid this.)
+  from a Windows shell - presumably there is a way to avoid this. You may need 
+  admin privileges to copy these files into a system folder.)
 * The nat function `cmtk.bindir()` should now correctly identify the cmtk binary
   directory. You can test that the executables are working by trying the followin in R `library(nat);cmtk.dof2mat(version = TRUE)`
   which should then responsd with "3.3.1" if you 
