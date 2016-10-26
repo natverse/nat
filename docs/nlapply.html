@@ -1,244 +1,0 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-<title>nlapply. nat 1.8.6</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="">
-
-<link href="css/bootstrap.css" rel="stylesheet">
-<link href="css/bootstrap-responsive.css" rel="stylesheet">
-<link href="css/highlight.css" rel="stylesheet">
-<link href="css/staticdocs.css" rel="stylesheet">
-
-<!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-<script type="text/javascript"
-  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-  </head>
-
-  <body>
-    <div class="navbar">
-  <div class="navbar-inner">
-    <div class="container">
-      <a class="brand" href="index.html">nat 1.8.6</a>
-      <div class="nav">
-        <ul class="nav">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="reference.html">Reference</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-    <div class="container">
-      <header>
-        
-      </header>
-      
-      <h1>lapply and mapply for neuronlists (with optional parallelisation)</h1>
-
-<div class="row">
-  <div class="span8">
-    <h2>Usage</h2>
-    <pre><span class="functioncall"><a href='nlapply.html'>nlapply</a></span><span class="keyword">(</span><span class="symbol">X</span><span class="keyword">,</span> <span class="symbol">FUN</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">,</span> <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">OmitFailures</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA</span><span class="keyword">,</span> <span class="argument">.progress</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="string">"auto"</span><span class="keyword">)</span>
-
-<span class="functioncall"><a href='nlapply.html'>nmapply</a></span><span class="keyword">(</span><span class="symbol">FUN</span><span class="keyword">,</span> <span class="symbol">X</span><span class="keyword">,</span> <span class="symbol">...</span><span class="keyword">,</span> <span class="argument">MoreArgs</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">SIMPLIFY</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">FALSE</span><span class="keyword">,</span> <span class="argument">USE.NAMES</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">TRUE</span><span class="keyword">,</span>
-  <span class="argument">subset</span>&nbsp;<span class="argument">=</span>&nbsp;NULL<span class="keyword">,</span> <span class="argument">OmitFailures</span>&nbsp;<span class="argument">=</span>&nbsp;<span class="number">NA</span><span class="keyword">)</span></pre>
-    
-    <h2>Arguments</h2>
-    <dl>
-      <dt>X</dt>
-      <dd>A neuronlist</dd>
-      <dt>FUN</dt>
-      <dd>Function to be applied to each element of X</dd>
-      <dt>...</dt>
-      <dd>Additional arguments for FUN (see details)</dd>
-      <dt>subset</dt>
-      <dd>Character, numeric or logical vector specifying on which subset
-of <code>X</code> the function <code>FUN</code> should be applied. Elements outside the
-subset are passed through unmodified.</dd>
-      <dt>OmitFailures</dt>
-      <dd>Whether to omit neurons for which <code>FUN</code> gives an 
-error. The default value (<code>NA</code>) will result in nlapply stopping with 
-an error message the moment there is an eror. For other values, see 
-details.</dd>
-      <dt>.progress</dt>
-      <dd>Character vector specifying the type of progress bar (see 
-<code><a href='http://www.rdocumentation.org/packages/plyr/topics/create_progress_bar'>create_progress_bar</a></code> for options.) The default value of 
-<code>&quot;auto&quot;</code> shows a progress bar in interactive use when there are &gt;=10
-elements in <code>X</code>.</dd>
-      <dt>MoreArgs</dt>
-      <dd>a list of other arguments to <code>FUN</code>.</dd>
-      <dt>SIMPLIFY</dt>
-      <dd>logical or character string; attempt to reduce the
-    result to a vector, matrix or higher dimensional array; see
-    the <code>simplify</code> argument of <code><a href='http://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></code>.</dd>
-      <dt>USE.NAMES</dt>
-      <dd>logical; use names if the first ... argument has
-    names, or if it is a character vector, use that character vector as
-    the names.</dd>
-    </dl>
-    
-    <div class="Value">
-      <h2>Value</h2>
-
-      <p><dl>
-A neuronlist
-</dl></p>
-
-    </div>
-
-    <div class="Description">
-      <h2>Description</h2>
-
-      <p>versions of lapply and mapply that look after the class and 
-  attached dataframe of neuronlist objects. <code>nlapply</code> can apply a 
-  function to only a <code>subset</code> of elements in the input neuronlist. 
-  Internally <code>nlapply</code> uses <code>plyr::llply</code> thereby enabling progress
-  bars and simple parallelisation (see plyr section and examples).</p>
-
-    </div>
-
-    <div class="Details">
-      <h2>Details</h2>
-
-      <p>When <code>OmitFailures</code> is not <code>NA</code>, <code>FUN</code> will be 
-  wrapped in a call to <code>try</code> to ensure that failure for any single 
-  neuron does not abort the nlapply/nmapply call. When 
-  <code>OmitFailures=TRUE</code> the resultant neuronlist will be subsetted down to
-  return values for which <code>FUN</code> evaluated successfully. When 
-  <code>OmitFailures=FALSE</code>, &quot;try-error&quot; objects will be left in place. In 
-  either of the last 2 cases error messages will not be printed because the 
-  call is wrapped as <code>try(expr, silent=TRUE)</code>.</p>
-
-    </div>
-
-    <div class="plyr">
-      <h2>plyr</h2>
-
-      <p>The arguments of most interest from plyr are:</p>
-
-      <p><ul>
-<li> <code>.inform</code> set to <code>TRUE</code> to give more informative error 
-  messages that should indicate which neurons are failing for a given applied
-  function.</p>
-
-      <p></li>
-<li> <code>.progress</code> set to <code>&quot;text&quot;</code> for a basic progress bar</p>
-
-      <p></li>
-<li> <code>.parallel</code> set to <code>TRUE</code> for parallelisation after
-  registering a parallel backend (see below).</p>
-
-      <p></li>
-<li> <code>.paropts</code> Additional arguments for parallel computation. See 
-  <code><a href='http://www.rdocumentation.org/packages/plyr/topics/llply'>llply</a></code> for details.</p>
-
-      <p></li>
-</ul></p>
-
-      <p>Before using parallel code within an R session you must register a suitable
-  parallel backend. The simplest example is the multicore option provided by 
-  the <code>doMC</code> package that is suitable for a spreading computational load
-  across multiple cores on a single machine. An example is provided below.</p>
-
-      <p>Note that the progess bar and parallel options cannot be used at the same 
-  time. You may want to start a potentially long-running job with the 
-  progress bar option and then abort and re-run with <code>.parallel=TRUE</code> if
-  it looks likely to take a very long time.</p>
-
-    </div>
-    
-    <h2 id="examples">Examples</h2>
-    <pre class="examples"><div class='input'><span class="comment">## nlapply example</span>
-<span class="symbol">kcs.reduced</span><span class="assignement">=</span><span class="functioncall"><a href='nlapply.html'>nlapply</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">,</span><span class="keyword">function</span><span class="keyword">(</span><span class="formalargs">x</span><span class="keyword">)</span> <span class="functioncall"><a href='subset.html'>subset</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">,</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span><span class="keyword">(</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span><span class="keyword">(</span><span class="symbol">x</span><span class="keyword">$</span><span class="symbol">points</span><span class="keyword">)</span><span class="keyword">,</span><span class="number">50</span><span class="keyword">)</span><span class="keyword">)</span><span class="keyword">)</span></div>
-<div class='output'>  |                                                                                                                      |                                                                                                              |   0%  |                                                                                                                      |======                                                                                                        |   5%  |                                                                                                                      |===========                                                                                                   |  10%  |                                                                                                                      |================                                                                                              |  15%  |                                                                                                                      |======================                                                                                        |  20%  |                                                                                                                      |============================                                                                                  |  25%  |                                                                                                                      |=================================                                                                             |  30%  |                                                                                                                      |======================================                                                                        |  35%  |                                                                                                                      |============================================                                                                  |  40%  |                                                                                                                      |==================================================                                                            |  45%  |                                                                                                                      |=======================================================                                                       |  50%  |                                                                                                                      |============================================================                                                  |  55%  |                                                                                                                      |==================================================================                                            |  60%  |                                                                                                                      |========================================================================                                      |  65%  |                                                                                                                      |=============================================================================                                 |  70%  |                                                                                                                      |==================================================================================                            |  75%  |                                                                                                                      |========================================================================================                      |  80%  |                                                                                                                      |==============================================================================================                |  85%  |                                                                                                                      |===================================================================================================           |  90%  |                                                                                                                      |========================================================================================================      |  95%  |                                                                                                                      |==============================================================================================================| 100%
-</div>
-<div class='input'><span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/par3d'>open3d</a></span><span class="keyword">(</span><span class="keyword">)</span></div>
-<div class='output'>glX 
-  3 
-</div>
-<div class='input'><span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs.reduced</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'red'</span><span class="keyword">,</span> <span class="argument">lwd</span><span class="argument">=</span><span class="number">2</span><span class="keyword">)</span>
-<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">,</span><span class="argument">col</span><span class="argument">=</span><span class="string">'grey'</span><span class="keyword">)</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl.open'>rgl.close</a></span><span class="keyword">(</span><span class="keyword">)</span>
-
-<span class="comment">## Not run: ------------------------------------</span>
-<span class="comment"># # example of using plyr's .inform argument for debugging error conditions</span>
-<span class="comment"># xx=nlapply(Cell07PNs, prune_strahler)</span>
-<span class="comment"># # oh dear there was an error, let's get some details about the neuron</span>
-<span class="comment"># # that caused the problem</span>
-<span class="comment"># xx=nlapply(Cell07PNs, prune_strahler, .inform=TRUE)</span>
-<span class="comment">## ---------------------------------------------</span>
-
-<span class="comment">## Not run: ------------------------------------</span>
-<span class="comment"># ## nlapply example with plyr</span>
-<span class="comment"># ## dotprops.neuronlist uses nlapply under the hood</span>
-<span class="comment"># ## the .progress and .parallel arguments are passed straight to </span>
-<span class="comment"># system.time(d1&lt;-dotprops(kcs20,resample=1,k=5,.progress='text'))</span>
-<span class="comment"># ## plyr+parallel</span>
-<span class="comment"># library(doMC)</span>
-<span class="comment"># # can also specify cores e.g. registerDoMC(cores=4)</span>
-<span class="comment"># registerDoMC()</span>
-<span class="comment"># system.time(d2&lt;-dotprops(kcs20,resample=1,k=5,.parallel=TRUE))</span>
-<span class="comment"># stopifnot(all.equal(d1,d2))</span>
-<span class="comment">## ---------------------------------------------</span>
-
-<span class="comment">## nmapply example</span>
-<span class="comment"># flip first neuron in X, second in Y and 3rd in Z</span>
-<span class="symbol">xyzflip</span><span class="assignement">=</span><span class="functioncall"><a href='nlapply.html'>nmapply</a></span><span class="keyword">(</span><span class="symbol">mirror</span><span class="keyword">,</span> <span class="symbol">kcs20</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">3</span><span class="keyword">]</span><span class="keyword">,</span> <span class="argument">mirrorAxis</span> <span class="argument">=</span> <span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="string">"X"</span><span class="keyword">,</span><span class="string">"Y"</span><span class="keyword">,</span><span class="string">"Z"</span><span class="keyword">)</span><span class="keyword">,</span>
- <span class="argument">mirrorAxisSize</span><span class="argument">=</span><span class="functioncall"><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></span><span class="keyword">(</span><span class="number">400</span><span class="keyword">,</span><span class="number">20</span><span class="keyword">,</span><span class="number">30</span><span class="keyword">)</span><span class="keyword">)</span>
-
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/par3d'>open3d</a></span><span class="keyword">(</span><span class="keyword">)</span></div>
-<div class='output'>glX 
-  4 
-</div>
-<div class='input'><span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">kcs20</span><span class="keyword">[</span><span class="number">1</span><span class="keyword">:</span><span class="number">3</span><span class="keyword">]</span><span class="keyword">)</span>
-<span class="functioncall"><a href='plot3d.html'>plot3d</a></span><span class="keyword">(</span><span class="symbol">xyzflip</span><span class="keyword">)</span>
-<span class="functioncall"><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl.open'>rgl.close</a></span><span class="keyword">(</span><span class="keyword">)</span></div></pre>
-  </div>
-  <div class="span4 sidebar">
-    <!-- <ul>
-      <li>nlapply</li><li>nmapply</li>
-    </ul>
-    <ul>
-      
-    </ul> -->
-
-    <h2>See also</h2>
-      <p><code><a href='http://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></code></p>
-
-      <p><code><a href='http://www.rdocumentation.org/packages/base/topics/mapply'>mapply</a></code></p>
-
-      <p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
-  <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
-  <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p>
-
-    
-
-
-  </div>
-</div>
-      
-      <footer>
-      <p class="pull-right"><a href="#">Back to top</a></p>
-<p>Built by <a href="https://github.com/hadley/staticdocs">staticdocs</a>. Styled with <a href="https://getbootstrap.com/2.0.4/">bootstrap</a>.</p>
-      </footer>
-    </div>
-  </body>
-</html>
