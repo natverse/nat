@@ -17,8 +17,8 @@ single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and
 [![Nature 2011](http://www.nature.com/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg "Food and Pheromone Integration")](http://dx.doi.org/10.1038/nature10428)
 [<img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"/>](http://dx.doi.org/10.1016/j.cell.2013.11.025)
 
-Quick Start
-===========
+## Quick Start
+
 
 For the impatient ...
 
@@ -57,8 +57,8 @@ with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(
 ?subset.neuronlist
 ```
 
-# Details
-## Prerequisites
+## Details
+### Prerequisites
 **nat** is an R package and therefore runs on Mac/Linux/Windows. The only pre-requisite for most functionality is a recent version of R (>=3.1.0 recommended).
 
 * http://www.r-project.org
@@ -73,7 +73,7 @@ https://xquartz.macosforge.org/landing/. This page is also linked from the
 
 If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately – see section *External Dependencies* below. 
 
-## Installation
+### Installation
 As of v1.0 there is a released version on CRAN. This is normally updated only
 every few months.
 
@@ -87,7 +87,7 @@ If you wish to run the package tests, it is necessary to install with all depend
 install.packages("nat", dependencies=TRUE)
 ```
 
-### Development version
+#### Development version
 **nat** remains under quite active development, so you may wish to install the
 development version directly from github. The recommended way to do this is to
 install Hadley Wickham's invaluable [devtools](http://CRAN.R-project.org/package=devtools)
@@ -116,7 +116,7 @@ Note: Windows users need [Rtools](http://www.murdoch-sutherland.com/Rtools/) to
 install in this way, but devtools should offer to install this for you if you
 do not already have it.
 
-## External Dependencies
+### External Dependencies
 **nat** is self sufficient for core functionality, but the transformation of 3D
 data using Computational Morphometry Toolkit (CMTK) registrations depends on an
 external installation of that toolkit. CMTK binaries can be downloaded for
@@ -128,7 +128,7 @@ MacOSX-10.6-x86_64.dmg binary installers). We have also used
 [neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
 Travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
 
-### CMTK+nat on Windows
+#### CMTK+nat on Windows
 
 We have much less experience using CMTK on Windows than on Mac/Linux platforms.
 Experiments in May 2016 suggest that the best option is to use the cygwin
@@ -152,7 +152,7 @@ took:
   which should then responsd with "3.3.1" if you 
   have installed the CMTK version we have just mentioned.
 
-## Help
+### Help
 If you want some help using **nat**, then please use the following resources
 
 * Start with the [overview package documentation](http://jefferis.github.io/nat/nat-package.html) (`?nat` in R)
@@ -161,7 +161,7 @@ If you want some help using **nat**, then please use the following resources
 * [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
-## Problems
+### Problems
 If you think that you have found a bug
 
 * Install the development version of nat using devtools (see section Development 
