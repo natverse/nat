@@ -51,6 +51,9 @@
         <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../articles/index.html">Articles</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -100,7 +103,7 @@ neuroanatomical data, especially representations of neurons.</p>
   in these circumstances.</p>
     <p><code>neuron</code> objects containing connected trees can be converted to 
   <code><a href='ngraph.html'>ngraph</a></code> objects, a lightweight wrapper around the 
-  <code>igraph</code> library&#39;s <code><a href='http://www.rdocumentation.org/packages/make_graph/topics/igraph'>graph</a></code> class that 
+  <code>igraph</code> library&#39;s <code><a href='http://www.rdocumentation.org/packages/igraph/topics/make_graph'>graph</a></code> class that 
   preserves 3D coordinate information. This allows neurons to be manipulated 
   based on their graph structure, e.g. by finding all nodes upstream (closer 
   to the root) or downstream of a given node. The <code><a href='neuron.html'>as.neuron</a></code> 
@@ -173,21 +176,21 @@ neuroanatomical data, especially representations of neurons.</p>
     <p><b>nat</b> can read, write, transform and subset 
   surface (mesh) objects defined by Amira&#39;s HxSurface class. See 
   <code><a href='read.hxsurf.html'>read.hxsurf</a></code> and links therein. In addition hxsurf objects can
-  be converted to the <code><a href='http://www.rdocumentation.org/packages/mesh3d/topics/rgl'>mesh3d</a></code> format, which provides a link
-  to the <code><a href='http://www.rdocumentation.org/packages/rgl-package/topics/rgl'>rgl</a></code> package and also to packages for 
+  be converted to the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>mesh3d</a></code> format, which provides a link
+  to the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code> package and also to packages for 
   morphometrics and sophisticated mesh manipulation such as 
   <a href = 'Morpho'>http://cran.r-project.org/package=Morpho</a> and 
   <a href = 'Rvcg'>http://cran.r-project.org/package=Rvcg</a>.</p>
     
     <h2 class="hasAnchor" id="rgl-package"><a class="anchor" href="#rgl-package"></a>rgl Package</h2>
 
-    <p><b>nat</b> uses the <b><code><a href='http://www.rdocumentation.org/packages/rgl-package/topics/rgl'>rgl</a></code></b> 
+    <p><b>nat</b> uses the <b><code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code></b> 
   package extensively for 3D visualisation. rgl&#39;s core function is to provide
   interactive visualisation (usually in an X11 window depending on OpenGL - 
   and therefore on a graphics card or OpenGL software emulator) but recently 
   significant functionality for static snapshots and embedding results in 
   reports such as web pages has been added. With this in mind, Duncan Murdoch
-  has added the <code><a href='http://www.rdocumentation.org/packages/rgl.useNULL/topics/rgl'>rgl.useNULL</a></code> option. As of nat 1.8.0, 
+  has added the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl.useNULL'>rgl.useNULL</a></code> option. As of nat 1.8.0, 
   <code>options(rgl.useNULL=TRUE)</code> will be set before nat is loaded in 
   non-interactive R sessions. If you want to use nat in interactive 
   environments where X11 is not available, you may want to set 

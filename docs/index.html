@@ -18,6 +18,9 @@
       <ul class="nav navbar-nav"><li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="articles/index.html">Articles</a>
+</li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
   <a href="https://github.com/jefferis/nat">
     <span class="fa fa-github fa-lg"></span>
@@ -70,81 +73,42 @@ rval=<span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(MyNeuron
 ?plot3d.neuronlist
 ?subset.neuronlist</code></pre></div>
 </div>
-<div id="details" class="section level2">
+<div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#details" class="anchor"></a>Details</h2>
-<div id="prerequisites" class="section level3">
-<h3 class="hasAnchor">
-<a href="#prerequisites" class="anchor"></a>Prerequisites</h3>
-<p><strong>nat</strong> is an R package and therefore runs on Mac/Linux/Windows. The only pre-requisite for most functionality is a recent version of R (&gt;=3.1.0 recommended).</p>
-<ul><li><a href="http://www.r-project.org" class="uri">http://www.r-project.org</a></li>
-</ul><p>3D visualisation is provided by the rgl package based on OpenGL. On Mac OS X if you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11 window manager, installed. This is no longer a default install since Mac OS X 10.8, but the OS should offer to it install it for you if something tries to use it. Alternatively you can get it directly from <a href="https://xquartz.macosforge.org/landing/" class="uri">https://xquartz.macosforge.org/landing/</a>. This page is also linked from the <a href="http://cran.r-project.org/bin/macosx/">Download R for (Mac) OS X</a> page.</p>
-<p>If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately &ndash; see section <em>External Dependencies</em> below.</p>
-</div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h3>
-<p>As of v1.0 there is a released version on CRAN. This is normally updated only every few months.</p>
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>A confirmed stable version of <strong>nat</strong> can be installed fromn CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"nat"</span>)</code></pre></div>
-<p>If you wish to run the package tests, it is necessary to install with all dependencies:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"nat"</span>, <span class="dt">dependencies=</span><span class="ot">TRUE</span>)</code></pre></div>
-<div id="development-version" class="section level4">
-<h4 class="hasAnchor">
-<a href="#development-version" class="anchor"></a>Development version</h4>
-<p><strong>nat</strong> remains under quite active development, so you may wish to install the development version directly from github. The recommended way to do this is to install Hadley Wickham&rsquo;s invaluable <a href="http://CRAN.R-project.org/package=devtools">devtools</a> package (if you have not already done so) and then use that to install nat.</p>
+<p>However, <strong>nat</strong> remains under quite active development, so we generally recommend installing the latest development version directly from github using the <a href="http://CRAN.R-project.org/package=devtools">devtools</a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install devtools if required</span>
-if (!<span class="kw">require</span>(<span class="st">"devtools"</span>)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+if (!<span class="kw">requireNamespace</span>(<span class="st">"devtools"</span>)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 <span class="co"># then install nat</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
-<p>The <strong>nat</strong> package includes extensive unit tests which are run along with R&rsquo;s (extremely fastidious) package check routines by the <a href="http://travis-ci.org/jefferis/nat">Travis</a> continuous integration server. The master branch is therefore considered very stable and may well contain fixes or enhancements over released versions. However, you can install the latest point release version as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"</span>,<span class="dt">ref=</span><span class="st">"release"</span>)</code></pre></div>
-<p>The same syntax can be used to install any arbitrary version that you want from github. See <code>?install_github</code> for details.</p>
-<p>Note: Windows users need <a href="http://www.murdoch-sutherland.com/Rtools/">Rtools</a> to install in this way, but devtools should offer to install this for you if you do not already have it.</p>
 </div>
-</div>
-<div id="external-dependencies" class="section level3">
-<h3 class="hasAnchor">
-<a href="#external-dependencies" class="anchor"></a>External Dependencies</h3>
-<p><strong>nat</strong> is self sufficient for core functionality, but the transformation of 3D data using Computational Morphometry Toolkit (CMTK) registrations depends on an external installation of that toolkit. CMTK binaries can be downloaded for Windows, Linux and Mac at <a href="http://www.nitrc.org/projects/cmtk/" class="uri">http://www.nitrc.org/projects/cmtk/</a>. Source code is available from the same site or an unofficial mirror repository at <a href="https://github.com/jefferis/cmtk" class="uri">https://github.com/jefferis/cmtk</a>. We have extensive experience of using CMTK under Linux (where we compile from source) and Mac (where we compile or use the MacOSX-10.6-x86_64.dmg binary installers). We have also used <a href="http://neuro.debian.net/pkgs/cmtk.html">neurodebian</a> to install as part of the Travis continuous integration setup (see the project&rsquo;s <a href="https://github.com/jefferis/nat/blob/master/.travis.yml">.travis.yml</a> file).</p>
-<div id="cmtknat-on-windows" class="section level4">
-<h4 class="hasAnchor">
-<a href="#cmtknat-on-windows" class="anchor"></a>CMTK+nat on Windows</h4>
-<p>We have much less experience using CMTK on Windows than on Mac/Linux platforms. Experiments in May 2016 suggest that the best option is to use the cygwin CMTK distribution (cygwin provides a linux like environment). Here are the steps we took:</p>
-<ul><li>You must ensure that you have at least version <a href="https://github.com/jefferis/nat/releases/tag/v1.8.5">nat v1.8.5</a>. It is recommended that follow the steps for installing the development version of nat straight from github as desribed in section <strong>Development version</strong>
-</li>
-<li>Install <a href="https://www.cygwin.com/">Cygwin</a> accepting the default path <code>C:\cygwin64</code>
-</li>
-<li>When you run Cygwin&rsquo;s setup.exe, you should also install all <em>fftw3</em> packages. (fftw3 is a CMTK dependency which provides fast fourier transform functions)</li>
-<li>Download <code>CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to the cygwin folder (<code>C:\cygwin64</code>)</li>
-<li>Start a Cygwin terminal and issue the following command <code>tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to extract CMTK to the cygwin folder.</li>
-<li>Copy all the <code>C:\cygwin64\bin\cyg*.dll</code> files to <code>C:\Windows\System32\</code> and <code>C:\Windows\SysWOw64\</code> (this seems to be necessary when starting executables from a Windows shell - presumably there is a way to avoid this.)</li>
-<li>The nat function <code><a href="reference/cmtk.bindir.html">cmtk.bindir()</a></code> should now correctly identify the cmtk binary directory. You can test that the executables are working by trying the followin in R <code>library(nat);cmtk.dof2mat(version = TRUE)</code> which should then responsd with &ldquo;3.3.1&rdquo; if you have installed the CMTK version we have just mentioned.</li>
-</ul></div>
-</div>
-<div id="help" class="section level3">
-<h3 class="hasAnchor">
-<a href="#help" class="anchor"></a>Help</h3>
+<div id="help" class="section level2">
+<h2 class="hasAnchor">
+<a href="#help" class="anchor"></a>Help</h2>
 <p>If you want some help using <strong>nat</strong>, then please use the following resources</p>
-<ul><li>Start with the <a href="http://jefferis.github.io/nat/nat-package.html">overview package documentation</a> (<code><a href="reference/nat-package.html">?nat</a></code> in R)</li>
+<ul><li>For installation issues, see the <a href="http://jefferis.github.io/nat/articles/Installation.html">Installation vignette</a>
+</li>
+<li>Start with the <a href="http://jefferis.github.io/nat/reference/nat-package.html">overview package documentation</a> (<code><a href="reference/nat-package.html">?nat</a></code> in R)</li>
+<li>Thematically organised <a href="http://jefferis.github.io/nat/reference/">function reference documentation</a>
+</li>
 <li>
 <a href="https://github.com/jefferis/nat.examples">nat.examples</a> sample code</li>
-<li>Use the thematically organised <a href="http://jefferis.github.io/nat/reference.html">function reference documentation</a>
-</li>
 <li>
 <a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> Google group - we normally respond promptly and you will also be helping future users.</li>
 </ul></div>
-<div id="problems" class="section level3">
-<h3 class="hasAnchor">
-<a href="#problems" class="anchor"></a>Problems</h3>
+<div id="problems" class="section level2">
+<h2 class="hasAnchor">
+<a href="#problems" class="anchor"></a>Problems</h2>
 <p>If you think that you have found a bug</p>
-<ul><li>Install the development version of nat using devtools (see section Development version above)</li>
+<ul><li>Install the development version of nat using devtools (see above)</li>
 <li>Check the <a href="https://github.com/jefferis/nat/issues?q=is%3Aissue">github issues</a> and</li>
 <li>
 <a href="https://github.com/jefferis/nat/issues/new">file a bug report</a> if this seems to be a new problem</li>
 <li>comment on an existing bug report</li>
 <li>Write to the <a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> list for help.</li>
 </ul><p>Thanks for your interest in <em>nat</em>!</p>
-</div>
 </div>
 </div>
   </div>
@@ -169,7 +133,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
   <img src="https://img.shields.io/travis/jefferis/nat.svg" alt="Build Status"></a></li>
 <li><a href="https://coveralls.io/r/jefferis/nat?branch=master">
   <img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"></a></li>
-<li><a href="http://jefferis.github.io/nat/reference.html">
+<li><a href="http://jefferis.github.io/nat/reference/">
   <img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a></li>
 </ul></body></html></div>
   </div>
