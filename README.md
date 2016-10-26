@@ -57,116 +57,39 @@ with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(
 ?subset.neuronlist
 ```
 
-## Details
-### Prerequisites
-**nat** is an R package and therefore runs on Mac/Linux/Windows. The only pre-requisite for most functionality is a recent version of R (>=3.1.0 recommended).
+## Installation
 
-* http://www.r-project.org
-
-3D visualisation is provided by the rgl package based on OpenGL. On Mac OS X if 
-you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11
-window manager, installed. This is no longer a default install since Mac OS X 
-10.8, but the OS should offer to it install it for you if something tries to use
-it. Alternatively you can get it directly from 
-https://xquartz.macosforge.org/landing/. This page is also linked from the 
-[Download R for (Mac) OS X](http://cran.r-project.org/bin/macosx/) page.
-
-If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately – see section *External Dependencies* below. 
-
-### Installation
-As of v1.0 there is a released version on CRAN. This is normally updated only
-every few months.
+A confirmed stable version of **nat** can be installed fromn CRAN. 
 
 ```r
 install.packages("nat")
-```
+````
 
-If you wish to run the package tests, it is necessary to install with all dependencies:
-
-```r
-install.packages("nat", dependencies=TRUE)
-```
-
-#### Development version
-**nat** remains under quite active development, so you may wish to install the
-development version directly from github. The recommended way to do this is to
-install Hadley Wickham's invaluable [devtools](http://CRAN.R-project.org/package=devtools)
-package (if you have not already done so) and then use that to install nat.
+However, **nat** remains under quite active development, so we generally
+recommend installing the latest development version directly from github using
+the [devtools](http://CRAN.R-project.org/package=devtools) package.
 
 ```r
 # install devtools if required
-if (!require("devtools")) install.packages("devtools")
+if (!requireNamespace("devtools")) install.packages("devtools")
 # then install nat
 devtools::install_github("jefferis/nat")
 ```
 
-The **nat** package includes extensive unit tests which are run along with R's
-(extremely fastidious) package check routines by the [Travis](http://travis-ci.org/jefferis/nat)
-continuous integration server. The master branch is therefore considered very stable
-and may well contain fixes or enhancements over released versions. 
-However, you can install the latest point release version as follows:
-
-```r
-devtools::install_github("jefferis/nat",ref="release")
-```
-The same syntax can be used to install any arbitrary version that you want 
-from github. See `?install_github` for details.
-
-Note: Windows users need [Rtools](http://www.murdoch-sutherland.com/Rtools/) to
-install in this way, but devtools should offer to install this for you if you
-do not already have it.
-
-### External Dependencies
-**nat** is self sufficient for core functionality, but the transformation of 3D
-data using Computational Morphometry Toolkit (CMTK) registrations depends on an
-external installation of that toolkit. CMTK binaries can be downloaded for
-Windows, Linux and Mac at <http://www.nitrc.org/projects/cmtk/>. Source code is 
-available from the same site or an unofficial mirror repository at 
-<https://github.com/jefferis/cmtk>. We have extensive experience of using CMTK
-under Linux (where we compile from source) and Mac (where we compile or use the
-MacOSX-10.6-x86_64.dmg binary installers). We have also used 
-[neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
-Travis continuous integration setup (see the project's [.travis.yml](https://github.com/jefferis/nat/blob/master/.travis.yml) file).
-
-#### CMTK+nat on Windows
-
-We have much less experience using CMTK on Windows than on Mac/Linux platforms.
-Experiments in May 2016 suggest that the best option is to use the cygwin
-CMTK distribution (cygwin provides a linux like environment). Here are the steps we
-took:
-
-* You must ensure that you have at least version [nat v1.8.5](https://github.com/jefferis/nat/releases/tag/v1.8.5). 
-  It is recommended that follow the steps for installing the development version of
-  nat straight from github as desribed in section **Development version**
-* Install [Cygwin](https://www.cygwin.com/) accepting the default path `C:\cygwin64`
-* When you run Cygwin's setup.exe, you should also install all *fftw3* packages. 
-  (fftw3 is a CMTK dependency which provides fast fourier transform functions)
-* Download `CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to the cygwin folder (`C:\cygwin64`)
-* Start a Cygwin terminal and issue the following command 
-  `tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to extract CMTK to the cygwin folder.
-* Copy all the `C:\cygwin64\bin\cyg*.dll` files to `C:\Windows\System32\` and
-  `C:\Windows\SysWOw64\` (this seems to be necessary when starting executables 
-  from a Windows shell - presumably there is a way to avoid this. You may need 
-  admin privileges to copy these files into a system folder.)
-* The nat function `cmtk.bindir()` should now correctly identify the cmtk binary
-  directory. You can test that the executables are working by trying the followin in R `library(nat);cmtk.dof2mat(version = TRUE)`
-  which should then responsd with "3.3.1" if you 
-  have installed the CMTK version we have just mentioned.
-
-### Help
+## Help
 If you want some help using **nat**, then please use the following resources
 
-* Start with the [overview package documentation](http://jefferis.github.io/nat/nat-package.html) (`?nat` in R)
+* For installation issues, see the [Installation vignette](http://jefferis.github.io/nat/articles/Installation.html)
+* Start with the [overview package documentation](http://jefferis.github.io/nat/reference/nat-package.html) (`?nat` in R)
+* Thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/)
 * [nat.examples](https://github.com/jefferis/nat.examples) sample code
-* Use the thematically organised [function reference documentation](http://jefferis.github.io/nat/reference.html)
 * [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
-### Problems
+## Problems
 If you think that you have found a bug
 
-* Install the development version of nat using devtools (see section Development 
-  version above)
+* Install the development version of nat using devtools (see above)
 * Check the [github issues](https://github.com/jefferis/nat/issues?q=is%3Aissue) and 
   * [file a  bug report](https://github.com/jefferis/nat/issues/new) if this seems to be a new problem
   * comment on an existing bug report 
