@@ -36,7 +36,9 @@ Suggests:
     Rvcg,
     testthat,
     httr,
-    XML
+    XML,
+    knitr,
+    rmarkdown
 License: GPL-3
 LazyData: yes
 Collate:
@@ -80,3 +82,4 @@ Collate:
     'xformpoints.R'
     'zzz.R'
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr
