@@ -6,4 +6,4 @@ travisbuildchildren.sh
 ^cran-comments\.md$
 ^_pkgdown\.yml$
 ^docs$
-travis-tool.sh
+^build-cmtk.sh$
