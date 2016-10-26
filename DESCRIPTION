@@ -7,7 +7,7 @@ Authors@R: c(
     person("James", "Manton", role = c("aut"))
     )
 Maintainer: Greg Jefferis <jefferis@gmail.com>
-URL: https://github.com/jefferis/nat http://jefferislab.org
+URL: https://github.com/jefferis/nat, http://jefferislab.org
 BugReports: https://github.com/jefferis/nat/issues
 Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     biological image data, especially traced neurons. Reads and writes 3D images
