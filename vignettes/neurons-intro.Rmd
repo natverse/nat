@@ -27,14 +27,19 @@ library(knitr)
 ```
 
 ## Load Data
-We're going to look at a data set of 300 olfactory projection neurons originally 
-published as Supplemental Information to accompany [Grosjean et al 2011](http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=si:grosjean_and_silbering_2011):
+We're going to look at a data set of olfactory projection neurons originally 
+published as Supplemental Information to accompany 
+[Jefferis, Potter et al, Cell (2007)](http://dx.doi.org/10.1016/j.cell.2007.01.040):
 
-First we load the data.
+A subset of the original data are distributed as a sample data object with the
+**nat** package. The 
 
-```{r, rgl=TRUE}
-load(url("http://flybrain.mrc-lmb.cam.ac.uk/si/grosjean11/MyNeuronsFCIR.rda"))
+```{r}
+data("Cell07PNs")
 ```
+
+For more information about these data see [Cell07PNs](http://jefferis.github.io/nat/reference/Cell07PNs.html).
+
 
 ## Neurons and Neuronlists
 There are a number of basic built in types of data in R such as vectors and matrices, 
@@ -47,29 +52,29 @@ We will look at two key classes that **nat** defines for handling 3D structures 
 * `neuron`
 * `neuronlist`
 
-The `load` statement above resulted in a `neuronlist` object called `MyNeurons` 
-containing `r length(MyNeurons)` `neuron` objects. `neuronlist` objects are key 
+The `load` statement above resulted in a `neuronlist` object called `Cell07PNs` 
+containing `r length(Cell07PNs)` `neuron` objects. `neuronlist` objects are key 
 data structures in nat for convenient handling of collections of neurons.
 ```{r}
-length(MyNeurons)
-class(MyNeurons)
+length(Cell07PNs)
+class(Cell07PNs)
 
 # we can select neurons by indexing 
-first5=MyNeurons[1:5]
+first5=Cell07PNs[1:5]
 summary(first5)
 ```
 
 Each neuron in the neuronlist has an associated name which can be used to select
 it.
 ```{r}
-n=MyNeurons[['CT12T']]
-all.equal(n, MyNeurons[[2]])
+n=Cell07PNs[['CT12T']]
+all.equal(n, Cell07PNs[[2]])
 ```
 ### Neuron internals
 
 ```{r}
 # overview of neuron object
-str(MyNeurons[[1]], max=1)
+str(Cell07PNs[[1]], max=1)
 
 ```
 
@@ -80,12 +85,12 @@ Then use the `head` function to give a summary of the attached metadata in this
 neuronlist and use the `with` function to carry out a calculation using column(s)
 of metadata.
 ```{r}
-df=as.data.frame(MyNeurons)
+df=as.data.frame(Cell07PNs)
 nrow(df)
-# rownames of data.frame are the same as names of MyNeurons list.
-all.equal(rownames(df), names(MyNeurons))
-head(MyNeurons)
-with(MyNeurons, table(Glomerulus))
+# rownames of data.frame are the same as names of Cell07PNs list.
+all.equal(rownames(df), names(Cell07PNs))
+head(Cell07PNs)
+with(Cell07PNs, table(Glomerulus))
 ```
 
 You can use columns in the attached metadata in expressions that select or 
@@ -93,42 +98,45 @@ operate on the neurons in the list.
 
 ```{r}
 #  subset.neuronlist method (which you call using the subset function)
-dl1n=subset(MyNeurons, Glomerulus=="DL1")
+dl1n=subset(Cell07PNs, Glomerulus=="DL1")
 
 ```
+
+## Iterating over the neurons in a neuronlist
+
 
 
 ## Plots
 We can plot a single neuron (the first) like so.
 
 ```{r, fig.width=8, fig.height=4}
-plot(MyNeurons[[1]])
+plot(Cell07PNs[[1]])
 ```
 
 The purple node higlights the root or soma of the neuron, red nodes are branch
 points, green nodes are end points.
 
 ```{r, fig.width=8, fig.height=4}
-plot(MyNeurons[[1]], col='red', WithText=T)
+plot(Cell07PNs[[1]], col='red', WithText=T)
 ```
 Multiple neurons can be plotted by indexing the neuronlist
 
 ```{r, fig.width=8, fig.height=4}
-plot(MyNeurons[1:3])
+plot(Cell07PNs[1:3])
 ```
 
 
 ```{r, fig.width=8, fig.height=4}
-plot3d(MyNeurons[[1]], col='red')
+plot3d(Cell07PNs[[1]], col='red')
 # Zoom in a bit
 par3d(zoom=.7)
 ```
 
 
 ```{r, rgl=TRUE, fig.width=6}
-# 3d plot of neurons from olfactory glomeruli beginning DM
+# 3d plot of neurons from olfactory glomeruli beginning with a D
 # coloured by glomerulus
-rval=plot3d(MyNeurons, subset=grepl("^DM", Glomerulus), col=factor(Glomerulus),
+rval=plot3d(Cell07PNs, subset=grepl("^D", Glomerulus), col=factor(Glomerulus),
   lwd=2, WithNodes=FALSE)
 ```
 
