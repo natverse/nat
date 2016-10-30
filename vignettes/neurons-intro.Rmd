@@ -1,0 +1,146 @@
+---
+title: "Basic handling of neurons and neuronlists"
+author: "Gregory Jefferis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Basic handling of neurons and neuronlists}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Startup
+Install the package if required
+```{r install, eval=FALSE}
+install.packages('nat', dependencies = TRUE)
+```
+
+Load the package
+```{r, message=FALSE}
+library(nat)
+```
+
+```{r, include=FALSE}
+# set up for knitr / 3D snapshot figures
+rgl::setupKnitr()
+library(knitr)
+```
+
+## Load Data
+We're going to look at a data set of 300 olfactory projection neurons originally 
+published as Supplemental Information to accompany [Grosjean et al 2011](http://flybrain.mrc-lmb.cam.ac.uk/dokuwiki/doku.php?id=si:grosjean_and_silbering_2011):
+
+First we load the data.
+
+```{r, rgl=TRUE}
+load(url("http://flybrain.mrc-lmb.cam.ac.uk/si/grosjean11/MyNeuronsFCIR.rda"))
+```
+
+## Neurons and Neuronlists
+There are a number of basic built in types of data in R such as vectors and matrices, 
+but it is also very easy to define new data types with specialised features to 
+enable powerful and efficient analysis of particular kinds of data. These specialised
+data types belong to abstract *classes* and a specific instantiastion of a class is an *object*.
+
+We will look at two key classes that **nat** defines for handling 3D structures of neurons
+
+* `neuron`
+* `neuronlist`
+
+The `load` statement above resulted in a `neuronlist` object called `MyNeurons` 
+containing `r length(MyNeurons)` `neuron` objects. `neuronlist` objects are key 
+data structures in nat for convenient handling of collections of neurons.
+```{r}
+length(MyNeurons)
+class(MyNeurons)
+
+# we can select neurons by indexing 
+first5=MyNeurons[1:5]
+summary(first5)
+```
+
+Each neuron in the neuronlist has an associated name which can be used to select
+it.
+```{r}
+n=MyNeurons[['CT12T']]
+all.equal(n, MyNeurons[[2]])
+```
+### Neuron internals
+
+```{r}
+# overview of neuron object
+str(MyNeurons[[1]], max=1)
+
+```
+
+## Metadata
+The names of neurons are also used to index a `data.frame` object attached to the
+neuronlist with one row for each neuron.
+Then use the `head` function to give a summary of the attached metadata in this
+neuronlist and use the `with` function to carry out a calculation using column(s)
+of metadata.
+```{r}
+df=as.data.frame(MyNeurons)
+nrow(df)
+# rownames of data.frame are the same as names of MyNeurons list.
+all.equal(rownames(df), names(MyNeurons))
+head(MyNeurons)
+with(MyNeurons, table(Glomerulus))
+```
+
+You can use columns in the attached metadata in expressions that select or 
+operate on the neurons in the list.
+
+```{r}
+#  subset.neuronlist method (which you call using the subset function)
+dl1n=subset(MyNeurons, Glomerulus=="DL1")
+
+```
+
+
+## Plots
+We can plot a single neuron (the first) like so.
+
+```{r, fig.width=8, fig.height=4}
+plot(MyNeurons[[1]])
+```
+
+The purple node higlights the root or soma of the neuron, red nodes are branch
+points, green nodes are end points.
+
+```{r, fig.width=8, fig.height=4}
+plot(MyNeurons[[1]], col='red', WithText=T)
+```
+Multiple neurons can be plotted by indexing the neuronlist
+
+```{r, fig.width=8, fig.height=4}
+plot(MyNeurons[1:3])
+```
+
+
+```{r, fig.width=8, fig.height=4}
+plot3d(MyNeurons[[1]], col='red')
+# Zoom in a bit
+par3d(zoom=.7)
+```
+
+
+```{r, rgl=TRUE, fig.width=6}
+# 3d plot of neurons from olfactory glomeruli beginning DM
+# coloured by glomerulus
+rval=plot3d(MyNeurons, subset=grepl("^DM", Glomerulus), col=factor(Glomerulus),
+  lwd=2, WithNodes=FALSE)
+```
+
+```{r}
+# make a legend so that you know which colours match which glomerulus
+plot.new()
+with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(col)))
+```
+
+You can see more help with
+
+```r
+?plot3d.neuronlist
+?subset.neuronlist
+```
