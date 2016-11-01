@@ -10,7 +10,6 @@
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -181,8 +181,8 @@ elements in <code>X</code>.</dd>
       Examples
     </h2>
     <pre class="examples"><div class='input'><span class='co'>## nlapply example</span>
-<span class='no'>kcs.reduced</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>kcs20</span>,<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>,<span class='fu'>sample</span>(<span class='fu'>nrow</span>(<span class='no'>x</span>$<span class='no'>points</span>),<span class='fl'>50</span>)))</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=======                                                               |  10%  |                                                                              |==========                                                            |  15%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  25%  |                                                                              |=====================                                                 |  30%  |                                                                              |========================                                              |  35%  |                                                                              |============================                                          |  40%  |                                                                              |================================                                      |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================                                |  55%  |                                                                              |==========================================                            |  60%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  70%  |                                                                              |====================================================                  |  75%  |                                                                              |========================================================              |  80%  |                                                                              |============================================================          |  85%  |                                                                              |===============================================================       |  90%  |                                                                              |==================================================================    |  95%  |                                                                              |======================================================================| 100%
-#&gt; </div><div class='input'><span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
+<span class='no'>kcs.reduced</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>kcs20</span>,<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>,<span class='fu'>sample</span>(<span class='fu'>nrow</span>(<span class='no'>x</span>$<span class='no'>points</span>),<span class='fl'>50</span>)))
+<span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
 #&gt;   3 
 #&gt; </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
@@ -214,8 +214,7 @@ elements in <code>X</code>.</dd>
 <span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='no'>mirror</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"X"</span>,<span class='st'>"Y"</span>,<span class='st'>"Z"</span>),
  <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm">
-    <div id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -231,7 +230,6 @@ elements in <code>X</code>.</dd>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
-    </div>
   </div>
 </div>
 

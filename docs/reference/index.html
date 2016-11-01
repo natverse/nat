@@ -10,7 +10,6 @@
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
-
 <!-- Bootstrap -->
 
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -22,6 +21,7 @@
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
@@ -72,15 +72,17 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9 contents">
+  <div class="col-md-9">
     <div class="page-header">
       <h1>Function reference</h1>
       <h4>version&nbsp;1.8.6</h4>
     </div>
 
+    <div class="contents">
       <h2 id="section-package-help" class="hasAnchor"><a href="#section-package-help" class="anchor"></a>Package Help</h2>
       <p class="section-desc"><p>Provides an overview of key functions and classes</p></p>
 
+      
       <p><a href="nat-package.html">Analyse 3D biological image data especially neurons</a></p>
       <ul>
         <li><code><a href="nat-package.html">nat</a></code></li><li><code><a href="nat-package.html">nat-package</a></code></li>
@@ -88,54 +90,67 @@
           <h2 id="section-neurons-traced-" class="hasAnchor"><a href="#section-neurons-traced-" class="anchor"></a>Neurons (traced)</h2>
       <p class="section-desc"><p>Functions for working with traced neurons (fully connected tree structures)</p></p>
 
+      
       <p><a href="neuron-arithmetic.html">Arithmetic for neuron coordinates</a></p>
       <ul>
         <li><code><a href="neuron-arithmetic.html">*.neuron</a></code></li><li><code><a href="neuron-arithmetic.html">+.neuron</a></code></li><li><code><a href="neuron-arithmetic.html">-.neuron</a></code></li><li><code><a href="neuron-arithmetic.html">/.neuron</a></code></li>
       </ul>
+      
       <p><a href="neuron.html">neuron: class to represent traced neurons</a></p>
       <ul>
         <li><code><a href="neuron.html">as.neuron</a></code></li><li><code><a href="neuron.html">as.neuron.data.frame</a></code></li><li><code><a href="neuron.html">as.neuron.default</a></code></li><li><code><a href="neuron.html">as.neuron.ngraph</a></code></li><li><code><a href="neuron.html">is.neuron</a></code></li><li><code><a href="neuron.html">neuron</a></code></li>
       </ul>
+      
       <p><a href="normalise_swc.html">Normalise an SWC format block of neuron morphology data</a></p>
       <ul>
         <li><code><a href="normalise_swc.html">normalise_swc</a></code></li>
       </ul>
+      
       <p><a href="plot.neuron.html">Plot a 2D projection of a neuron</a></p>
       <ul>
         <li><code><a href="plot.neuron.html">plot.neuron</a></code></li>
       </ul>
+      
       <p><a href="potential_synapses.html">Calculate number of potential synapses between two neurons</a></p>
       <ul>
         <li><code><a href="potential_synapses.html">potential_synapses</a></code></li><li><code><a href="potential_synapses.html">potential_synapses.dotprops</a></code></li><li><code><a href="potential_synapses.html">potential_synapses.neuron</a></code></li><li><code><a href="potential_synapses.html">potential_synapses.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="prune_vertices.html">Prune selected vertices or edges from a neuron</a></p>
       <ul>
         <li><code><a href="prune_vertices.html">prune_edges</a></code></li><li><code><a href="prune_vertices.html">prune_vertices</a></code></li>
       </ul>
+      
       <p><a href="prune.html">prune an object by removing points near (or far) from a target object</a></p>
       <ul>
         <li><code><a href="prune.html">prune</a></code></li><li><code><a href="prune.html">prune.default</a></code></li><li><code><a href="prune.html">prune.dotprops</a></code></li><li><code><a href="prune.html">prune.neuron</a></code></li><li><code><a href="prune.html">prune.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="read.neuron.html">Read a single neuron from a file</a></p>
       <ul>
         <li><code><a href="read.neuron.html">read.neuron</a></code></li>
       </ul>
+      
       <p><a href="resample.html">Resample an object with a new spacing</a></p>
       <ul>
         <li><code><a href="resample.html">resample</a></code></li><li><code><a href="resample.html">resample.neuron</a></code></li>
       </ul>
+      
       <p><a href="scale.neuron.html">Scale and centre neuron 3D coordinates</a></p>
       <ul>
         <li><code><a href="scale.neuron.html">scale</a></code></li><li><code><a href="scale.neuron.html">scale.dotprops</a></code></li><li><code><a href="scale.neuron.html">scale.neuron</a></code></li>
       </ul>
+      
       <p><a href="smooth_neuron.html">Smooth the 3D coordinates of a neuron skeleton</a></p>
       <ul>
         <li><code><a href="smooth_neuron.html">smooth_neuron</a></code></li><li><code><a href="smooth_neuron.html">smooth_segment_gauss</a></code></li>
       </ul>
+      
       <p><a href="subset.neuron.html">Subset neuron by keeping only vertices that match given conditions</a></p>
       <ul>
         <li><code><a href="subset.neuron.html">subset.neuron</a></code></li>
       </ul>
+      
       <p><a href="write.neuron.html">Write out a neuron in any of the file formats we know about</a></p>
       <ul>
         <li><code><a href="write.neuron.html">write.neuron</a></code></li>
@@ -143,42 +158,52 @@
           <h2 id="section-neurons-as-graphs-" class="hasAnchor"><a href="#section-neurons-as-graphs-" class="anchor"></a>Neurons (as graphs)</h2>
       <p class="section-desc"><p>Functions for working with the graph structure of neurons</p></p>
 
+      
       <p><a href="graph.nodes.html">Return root, end, or branchpoints of an igraph object</a></p>
       <ul>
         <li><code><a href="graph.nodes.html">graph.nodes</a></code></li>
       </ul>
+      
       <p><a href="ngraph.html">ngraph: a graph to encode a neuron's connectivity</a></p>
       <ul>
         <li><code><a href="ngraph.html">as.ngraph</a></code></li><li><code><a href="ngraph.html">as.ngraph.data.frame</a></code></li><li><code><a href="ngraph.html">as.ngraph.neuron</a></code></li><li><code><a href="ngraph.html">ngraph</a></code></li>
       </ul>
+      
       <p><a href="prune_strahler.html">Prune a neuron by removing segments with a given Strahler order</a></p>
       <ul>
         <li><code><a href="prune_strahler.html">prune_strahler</a></code></li>
       </ul>
+      
       <p><a href="rootpoints.html">Return the root or branch points of a neuron or graph</a></p>
       <ul>
         <li><code><a href="rootpoints.html">branchpoints</a></code></li><li><code><a href="rootpoints.html">branchpoints.default</a></code></li><li><code><a href="rootpoints.html">branchpoints.igraph</a></code></li><li><code><a href="rootpoints.html">branchpoints.neuron</a></code></li><li><code><a href="rootpoints.html">endpoints</a></code></li><li><code><a href="rootpoints.html">endpoints.default</a></code></li><li><code><a href="rootpoints.html">endpoints.igraph</a></code></li><li><code><a href="rootpoints.html">endpoints.neuron</a></code></li><li><code><a href="rootpoints.html">rootpoints</a></code></li><li><code><a href="rootpoints.html">rootpoints.default</a></code></li><li><code><a href="rootpoints.html">rootpoints.igraph</a></code></li><li><code><a href="rootpoints.html">rootpoints.neuron</a></code></li>
       </ul>
+      
       <p><a href="seglengths.html">Calculate length of all segments in neuron</a></p>
       <ul>
         <li><code><a href="seglengths.html">seglengths</a></code></li>
       </ul>
+      
       <p><a href="seglist.html">Make/convert neuron connectivity information into a seglist object</a></p>
       <ul>
         <li><code><a href="seglist.html">as.seglist</a></code></li><li><code><a href="seglist.html">as.seglist.igraph</a></code></li><li><code><a href="seglist.html">as.seglist.neuron</a></code></li><li><code><a href="seglist.html">seglist</a></code></li>
       </ul>
+      
       <p><a href="seglist2swc.html">Recalculate Neurons's SWCData using SegList and point information</a></p>
       <ul>
         <li><code><a href="seglist2swc.html">seglist2swc</a></code></li>
       </ul>
+      
       <p><a href="segmentgraph.html">Return a simplified segment graph for a neuron</a></p>
       <ul>
         <li><code><a href="segmentgraph.html">segmentgraph</a></code></li>
       </ul>
+      
       <p><a href="spine.html">Compute the longest path (aka spine or backbone) of a neuron</a></p>
       <ul>
         <li><code><a href="spine.html">spine</a></code></li>
       </ul>
+      
       <p><a href="strahler_order.html">Find the Strahler order of each point in a neuron</a></p>
       <ul>
         <li><code><a href="strahler_order.html">strahler_order</a></code></li>
@@ -186,14 +211,17 @@
           <h2 id="section-skeletonised-neurons-dotprops-aka-vector-cloud-" class="hasAnchor"><a href="#section-skeletonised-neurons-dotprops-aka-vector-cloud-" class="anchor"></a>Skeletonised Neurons (dotprops aka vector cloud)</h2>
       <p class="section-desc"><p>Functions for working with skeletonised neurons consisting of unconnected vectors rather than a fully connected tree.</p></p>
 
+      
       <p><a href="dotprops-arithmetic.html">Arithmetic for dotprops objects</a></p>
       <ul>
         <li><code><a href="dotprops-arithmetic.html">*.dotprops</a></code></li><li><code><a href="dotprops-arithmetic.html">+.dotprops</a></code></li><li><code><a href="dotprops-arithmetic.html">-.dotprops</a></code></li><li><code><a href="dotprops-arithmetic.html">/.dotprops</a></code></li>
       </ul>
+      
       <p><a href="dotprops.html">dotprops: Neurons as point clouds with tangent vectors (but no connectivity)</a></p>
       <ul>
         <li><code><a href="dotprops.html">as.dotprops</a></code></li><li><code><a href="dotprops.html">dotprops</a></code></li><li><code><a href="dotprops.html">dotprops.character</a></code></li><li><code><a href="dotprops.html">dotprops.default</a></code></li><li><code><a href="dotprops.html">dotprops.dotprops</a></code></li><li><code><a href="dotprops.html">dotprops.im3d</a></code></li><li><code><a href="dotprops.html">dotprops.neuron</a></code></li><li><code><a href="dotprops.html">dotprops.neuronlist</a></code></li><li><code><a href="dotprops.html">is.dotprops</a></code></li>
       </ul>
+      
       <p><a href="subset.dotprops.html">Subset points in dotprops object that match given conditions</a></p>
       <ul>
         <li><code><a href="subset.dotprops.html">subset.dotprops</a></code></li>
@@ -201,60 +229,74 @@
           <h2 id="section-collections-of-neurons-neuronlists-" class="hasAnchor"><a href="#section-collections-of-neurons-neuronlists-" class="anchor"></a>Collections of Neurons (neuronlists)</h2>
       <p class="section-desc"><p>Functions for working with collections of neurons, which are packaged as neuronlist objects with an attached data.frame containing metadata.</p></p>
 
+      
       <p><a href="as.neuronlist.html">Make a list of neurons that can be used for coordinate plotting/analysis</a></p>
       <ul>
         <li><code><a href="as.neuronlist.html">as.neuronlist</a></code></li><li><code><a href="as.neuronlist.html">as.neuronlist.default</a></code></li>
       </ul>
+      
       <p><a href="c.neuronlist.html">Combine multiple neuronlists into a single list</a></p>
       <ul>
         <li><code><a href="c.neuronlist.html">c.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="get-set-neuronlist-data.frame.html">Get or set the attached data.frame of a neuronlist</a></p>
       <ul>
         <li><code><a href="get-set-neuronlist-data.frame.html">as.data.frame.neuronlist</a></code></li><li><code><a href="get-set-neuronlist-data.frame.html">data.frame&lt;-</a></code></li><li><code><a href="get-set-neuronlist-data.frame.html">data.frame&lt;-.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="is.neuronlist.html">Test objects of neuronlist class to store multiple neurons</a></p>
       <ul>
         <li><code><a href="is.neuronlist.html">is.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="neuronlist-arithmetic.html">Arithmetic for neuron coordinates applied to neuronlists</a></p>
       <ul>
         <li><code><a href="neuronlist-arithmetic.html">*.neuronlist</a></code></li><li><code><a href="neuronlist-arithmetic.html">+.neuronlist</a></code></li><li><code><a href="neuronlist-arithmetic.html">-.neuronlist</a></code></li><li><code><a href="neuronlist-arithmetic.html">/.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="neuronlist-dataframe-methods.html">Methods for working with the dataframe attached to a neuronlist</a></p>
       <ul>
         <li><code><a href="neuronlist-dataframe-methods.html">[.neuronlist</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">[&lt;-.neuronlist</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">droplevels</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">droplevels.neuronlist</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">head</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">head.neuronlist</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">neuronlist-dataframe-methods</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">tail</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">tail.neuronlist</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">with</a></code></li><li><code><a href="neuronlist-dataframe-methods.html">with.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="neuronlist.html">Create a neuronlist from zero or more neurons</a></p>
       <ul>
         <li><code><a href="neuronlist.html">neuronlist</a></code></li>
       </ul>
+      
       <p><a href="nlapply.html">lapply and mapply for neuronlists (with optional parallelisation)</a></p>
       <ul>
         <li><code><a href="nlapply.html">nlapply</a></code></li><li><code><a href="nlapply.html">nmapply</a></code></li>
       </ul>
+      
       <p><a href="plot.neuronlist.html">2D plots of the elements in a neuronlist, optionally using a subset 
 </a></p>
       <ul>
         <li><code><a href="plot.neuronlist.html">plot.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="plot3d.neuronlist.html">3D plots of the elements in a neuronlist, optionally using a subset 
 </a></p>
       <ul>
         <li><code><a href="plot3d.neuronlist.html">plot3d.character</a></code></li><li><code><a href="plot3d.neuronlist.html">plot3d.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="read.neurons.html">Read one or more neurons from file to a neuronlist in memory</a></p>
       <ul>
         <li><code><a href="read.neurons.html">read.neurons</a></code></li>
       </ul>
+      
       <p><a href="subset.neuronlist.html">Subset neuronlist returning either new neuronlist or names of chosen neurons</a></p>
       <ul>
         <li><code><a href="subset.neuronlist.html">subset.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="summary.neuron.html">Summary statistics for neurons (e.g. cable length, number of nodes)</a></p>
       <ul>
         <li><code><a href="summary.neuron.html">summary</a></code></li><li><code><a href="summary.neuron.html">summary.dotprops</a></code></li><li><code><a href="summary.neuron.html">summary.neuron</a></code></li><li><code><a href="summary.neuron.html">summary.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="write.neurons.html">Write neurons from a neuronlist object to individual files, or a zip archive</a></p>
       <ul>
         <li><code><a href="write.neurons.html">write.neurons</a></code></li>
@@ -262,26 +304,32 @@
           <h2 id="section-collections-of-neurons-with-remote-data-neuronlistfh-" class="hasAnchor"><a href="#section-collections-of-neurons-with-remote-data-neuronlistfh-" class="anchor"></a>Collections of Neurons with Remote Data (neuronlistfh)</h2>
       <p class="section-desc"><p>Functions for working with collections of neurons where the data will be dynamically loaded into memory from disk and/or downloaded from a remote site.</p></p>
 
+      
       <p><a href="as.neuronlist.neuronlistfh.html">convert neuronlistfh to a regular (in memory) neuronlist</a></p>
       <ul>
         <li><code><a href="as.neuronlist.neuronlistfh.html">as.neuronlist.neuronlistfh</a></code></li>
       </ul>
+      
       <p><a href="neuronlistfh.html">neuronlistfh - List of neurons loaded on demand from disk or remote website</a></p>
       <ul>
         <li><code><a href="neuronlistfh.html">as.neuronlistfh</a></code></li><li><code><a href="neuronlistfh.html">as.neuronlistfh.neuronlist</a></code></li><li><code><a href="neuronlistfh.html">is.neuronlistfh</a></code></li><li><code><a href="neuronlistfh.html">neuronlistfh</a></code></li>
       </ul>
+      
       <p><a href="read.neuronlistfh.html">Read a local, or remote, neuronlistfh object saved to a file.</a></p>
       <ul>
         <li><code><a href="read.neuronlistfh.html">read.neuronlistfh</a></code></li>
       </ul>
+      
       <p><a href="remotesync.html">Synchronise a remote object</a></p>
       <ul>
         <li><code><a href="remotesync.html">remotesync</a></code></li><li><code><a href="remotesync.html">remotesync.neuronlistfh</a></code></li>
       </ul>
+      
       <p><a href="sub-.neuronlistfh.html">Extract from neuronlistfh object or its attached data.frame</a></p>
       <ul>
         <li><code><a href="sub-.neuronlistfh.html">[.neuronlistfh</a></code></li>
       </ul>
+      
       <p><a href="write.neuronlistfh.html">Write out a neuronlistfh object to an RDS file</a></p>
       <ul>
         <li><code><a href="write.neuronlistfh.html">write.neuronlistfh</a></code></li>
@@ -289,30 +337,37 @@
           <h2 id="section-surfaces-and-landmarks-hxsurf-mesh-d-" class="hasAnchor"><a href="#section-surfaces-and-landmarks-hxsurf-mesh-d-" class="anchor"></a>Surfaces and Landmarks (hxsurf, mesh3d)</h2>
       <p class="section-desc"><p>Functions for working with surface data, either in a class hxsurf modeled on Amira&rsquo;s representation of surfaces or the rgl::mesh3d class.</p></p>
 
+      
       <p><a href="as.mesh3d.html">Convert an object to an rgl mesh3d</a></p>
       <ul>
         <li><code><a href="as.mesh3d.html">as.mesh3d</a></code></li><li><code><a href="as.mesh3d.html">as.mesh3d.hxsurf</a></code></li>
       </ul>
+      
       <p><a href="plot3d.hxsurf.html">Plot amira surface objects in 3D using rgl</a></p>
       <ul>
         <li><code><a href="plot3d.hxsurf.html">plot3d.hxsurf</a></code></li>
       </ul>
+      
       <p><a href="pointsinside.html">Find which points of an object are inside a surface</a></p>
       <ul>
         <li><code><a href="pointsinside.html">pointsinside</a></code></li><li><code><a href="pointsinside.html">pointsinside.default</a></code></li>
       </ul>
+      
       <p><a href="read.hxsurf.html">Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object</a></p>
       <ul>
         <li><code><a href="read.hxsurf.html">hxsurf</a></code></li><li><code><a href="read.hxsurf.html">read.hxsurf</a></code></li>
       </ul>
+      
       <p><a href="read.landmarks.html">Generic functions to read/write landmarks in any supported format</a></p>
       <ul>
         <li><code><a href="read.landmarks.html">read.landmarks</a></code></li><li><code><a href="read.landmarks.html">write.landmarks</a></code></li>
       </ul>
+      
       <p><a href="subset.hxsurf.html">Subset hxsurf object to specified regions</a></p>
       <ul>
         <li><code><a href="subset.hxsurf.html">subset.hxsurf</a></code></li>
       </ul>
+      
       <p><a href="write.hxsurf.html">Write Amira surface (aka HxSurface or HyperSurface) into .surf file.</a></p>
       <ul>
         <li><code><a href="write.hxsurf.html">write.hxsurf</a></code></li>
@@ -320,46 +375,57 @@
           <h2 id="section--d-plotting-of-objects" class="hasAnchor"><a href="#section--d-plotting-of-objects" class="anchor"></a>3D Plotting of objects</h2>
       <p class="section-desc"><p>Functions to help plot neurons and surfaces in 3D and to review and identify objects by interactive selection.</p></p>
 
+      
       <p><a href="find.neuron.html">Find neurons within a 3D selection box (usually drawn in rgl window)</a></p>
       <ul>
         <li><code><a href="find.neuron.html">find.neuron</a></code></li>
       </ul>
+      
       <p><a href="find.soma.html">Find neurons with soma inside 3D selection box (usually drawn in rgl window)</a></p>
       <ul>
         <li><code><a href="find.soma.html">find.soma</a></code></li>
       </ul>
+      
       <p><a href="nlscan.html">Scan through a set of neurons, individually plotting each one in 3D</a></p>
       <ul>
         <li><code><a href="nlscan.html">nlscan</a></code></li>
       </ul>
+      
       <p><a href="nopen3d.html">Open customised rgl window</a></p>
       <ul>
         <li><code><a href="nopen3d.html">nopen3d</a></code></li>
       </ul>
+      
       <p><a href="npop3d.html">Remove plotted neurons or other 3D objects</a></p>
       <ul>
         <li><code><a href="npop3d.html">npop3d</a></code></li>
       </ul>
+      
       <p><a href="pan3d.html">Some useful extensions / changes to rgl defaults</a></p>
       <ul>
         <li><code><a href="pan3d.html">pan3d</a></code></li>
       </ul>
+      
       <p><a href="plot3d.boundingbox.html">Plot a bounding box in 3D</a></p>
       <ul>
         <li><code><a href="plot3d.boundingbox.html">plot3d.boundingbox</a></code></li>
       </ul>
+      
       <p><a href="plot3d.dotprops.html">3D plots of dotprops objects using rgl package</a></p>
       <ul>
         <li><code><a href="plot3d.dotprops.html">plot3d.dotprops</a></code></li>
       </ul>
+      
       <p><a href="plot3d.hxsurf.html">Plot amira surface objects in 3D using rgl</a></p>
       <ul>
         <li><code><a href="plot3d.hxsurf.html">plot3d.hxsurf</a></code></li>
       </ul>
+      
       <p><a href="plot3d.neuron.html">Plot neurons in 3D using rgl library</a></p>
       <ul>
         <li><code><a href="plot3d.neuron.html">plot3d.neuron</a></code></li>
       </ul>
+      
       <p><a href="plot3d.html">plot3d methods for different nat objects</a></p>
       <ul>
         <li><code><a href="plot3d.html">plot3d</a></code></li>
@@ -367,30 +433,37 @@
           <h2 id="section-object-transformation" class="hasAnchor"><a href="#section-object-transformation" class="anchor"></a>Object transformation</h2>
       <p class="section-desc"><p>Generic strategies for transforming 3D objects/images a</p></p>
 
+      
       <p><a href="mirror.html">Mirror 3D object about a given axis, optionally using a warping registration</a></p>
       <ul>
         <li><code><a href="mirror.html">mirror</a></code></li><li><code><a href="mirror.html">mirror.character</a></code></li><li><code><a href="mirror.html">mirror.default</a></code></li><li><code><a href="mirror.html">mirror.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="reglist.html">A simple wrapper class for multiple transformations</a></p>
       <ul>
         <li><code><a href="reglist.html">c.reglist</a></code></li><li><code><a href="reglist.html">invert_reglist</a></code></li><li><code><a href="reglist.html">reglist</a></code></li>
       </ul>
+      
       <p><a href="simplify_reglist.html">Simplify a registration list</a></p>
       <ul>
         <li><code><a href="simplify_reglist.html">simplify_reglist</a></code></li>
       </ul>
+      
       <p><a href="xform.html">Transform the 3D location of objects such as neurons</a></p>
       <ul>
         <li><code><a href="xform.html">xform</a></code></li><li><code><a href="xform.html">xform.character</a></code></li><li><code><a href="xform.html">xform.data.frame</a></code></li><li><code><a href="xform.html">xform.default</a></code></li><li><code><a href="xform.html">xform.dotprops</a></code></li><li><code><a href="xform.html">xform.list</a></code></li><li><code><a href="xform.html">xform.neuron</a></code></li><li><code><a href="xform.html">xform.neuronlist</a></code></li><li><code><a href="xform.html">xform.shape3d</a></code></li>
       </ul>
+      
       <p><a href="xformimage.html">Transform image files using a registration or affine matrix</a></p>
       <ul>
         <li><code><a href="xformimage.html">xformimage</a></code></li><li><code><a href="xformimage.html">xformimage.character</a></code></li><li><code><a href="xformimage.html">xformimage.cmtkreg</a></code></li><li><code><a href="xformimage.html">xformimage.default</a></code></li><li><code><a href="xformimage.html">xformimage.reglist</a></code></li>
       </ul>
+      
       <p><a href="xformpoints.html">Transform 3D points using a registration, affine matrix or function</a></p>
       <ul>
         <li><code><a href="xformpoints.html">xformpoints</a></code></li><li><code><a href="xformpoints.html">xformpoints.character</a></code></li><li><code><a href="xformpoints.html">xformpoints.cmtkreg</a></code></li><li><code><a href="xformpoints.html">xformpoints.default</a></code></li><li><code><a href="xformpoints.html">xformpoints.reglist</a></code></li>
       </ul>
+      
       <p><a href="xyzmatrix.html">Get and assign coordinates for classes containing 3D vertex data</a></p>
       <ul>
         <li><code><a href="xyzmatrix.html">xyzmatrix</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.default</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.dotprops</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.hxsurf</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.igraph</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.mesh3d</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.neuron</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix.neuronlist</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix&lt;-</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix&lt;-.dotprops</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix&lt;-.hxsurf</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix&lt;-.igraph</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix&lt;-.neuron</a></code></li><li><code><a href="xyzmatrix.html">xyzmatrix&lt;-.shape3d</a></code></li>
@@ -398,94 +471,117 @@
           <h2 id="section-images-im-d-" class="hasAnchor"><a href="#section-images-im-d-" class="anchor"></a>Images (im3d)</h2>
       <p class="section-desc"><p>Functions for working with 3d image volumes</p></p>
 
+      
       <p><a href="as.im3d.html">Convert a suitable object to an im3d object.</a></p>
       <ul>
         <li><code><a href="as.im3d.html">as.im3d</a></code></li><li><code><a href="as.im3d.html">as.im3d.im3d</a></code></li><li><code><a href="as.im3d.html">as.im3d.matrix</a></code></li>
       </ul>
+      
       <p><a href="boundingbox.html">Get the bounding box of an im3d volume or other compatible object</a></p>
       <ul>
         <li><code><a href="boundingbox.html">boundingbox</a></code></li><li><code><a href="boundingbox.html">boundingbox.character</a></code></li><li><code><a href="boundingbox.html">boundingbox.default</a></code></li><li><code><a href="boundingbox.html">boundingbox.im3d</a></code></li><li><code><a href="boundingbox.html">boundingbox.list</a></code></li><li><code><a href="boundingbox.html">boundingbox.neuron</a></code></li><li><code><a href="boundingbox.html">boundingbox.shape3d</a></code></li><li><code><a href="boundingbox.html">boundingbox&lt;-</a></code></li>
       </ul>
+      
       <p><a href="clampmax.html">Return function that finds maximum of its inputs within a clamping range</a></p>
       <ul>
         <li><code><a href="clampmax.html">clampmax</a></code></li>
       </ul>
+      
       <p><a href="coord2ind.html">Find 1D indices into a 3D image given spatial coordinates</a></p>
       <ul>
         <li><code><a href="coord2ind.html">coord2ind</a></code></li><li><code><a href="coord2ind.html">coord2ind.default</a></code></li>
       </ul>
+      
       <p><a href="flip.html">Flip an array, matrix or vector about an axis</a></p>
       <ul>
         <li><code><a href="flip.html">flip</a></code></li><li><code><a href="flip.html">flip.array</a></code></li>
       </ul>
+      
       <p><a href="im3d-coords.html">Interconvert pixel and physical coordinates</a></p>
       <ul>
         <li><code><a href="im3d-coords.html">ijkpos</a></code></li><li><code><a href="im3d-coords.html">im3d-coords</a></code></li><li><code><a href="im3d-coords.html">xyzpos</a></code></li>
       </ul>
+      
       <p><a href="im3d-io.html">Read/Write calibrated 3D blocks of image data</a></p>
       <ul>
         <li><code><a href="im3d-io.html">im3d-io</a></code></li><li><code><a href="im3d-io.html">read.im3d</a></code></li><li><code><a href="im3d-io.html">write.im3d</a></code></li>
       </ul>
+      
       <p><a href="im3d.html">Construct an im3d object representing 3D image data, densities etc</a></p>
       <ul>
         <li><code><a href="im3d.html">im3d</a></code></li>
       </ul>
+      
       <p><a href="image.im3d.html">Method to plot spatially calibrated image arrays</a></p>
       <ul>
         <li><code><a href="image.im3d.html">image.im3d</a></code></li>
       </ul>
+      
       <p><a href="imexpand.grid.html">Convert locations of im3d voxel grid into XYZ coordinates</a></p>
       <ul>
         <li><code><a href="imexpand.grid.html">imexpand.grid</a></code></li>
       </ul>
+      
       <p><a href="imscalebar.html">Make a scalebar to accompany an image.im3d plot</a></p>
       <ul>
         <li><code><a href="imscalebar.html">imscalebar</a></code></li>
       </ul>
+      
       <p><a href="imslice.html">Slice out a 3D subarray (or 2d matrix) from a 3D image array</a></p>
       <ul>
         <li><code><a href="imslice.html">imslice</a></code></li>
       </ul>
+      
       <p><a href="ind2coord.html">Find XYZ coords corresponding to 1D indices into a 3D image</a></p>
       <ul>
         <li><code><a href="ind2coord.html">ind2coord</a></code></li><li><code><a href="ind2coord.html">ind2coord.array</a></code></li><li><code><a href="ind2coord.html">ind2coord.default</a></code></li><li><code><a href="ind2coord.html">ind2coord.im3d</a></code></li>
       </ul>
+      
       <p><a href="is.im3d.html">Test if an object is of class im3d</a></p>
       <ul>
         <li><code><a href="is.im3d.html">is.im3d</a></code></li>
       </ul>
+      
       <p><a href="mask.html">Mask an object, typically to produce a copy with some values zeroed out</a></p>
       <ul>
         <li><code><a href="mask.html">mask</a></code></li><li><code><a href="mask.html">mask.im3d</a></code></li>
       </ul>
+      
       <p><a href="materials.html">Extract or set the materials for an object</a></p>
       <ul>
         <li><code><a href="materials.html">materials</a></code></li><li><code><a href="materials.html">materials.character</a></code></li><li><code><a href="materials.html">materials.default</a></code></li><li><code><a href="materials.html">materials.hxsurf</a></code></li>
       </ul>
+      
       <p><a href="nrrd.voxdims.html">Return voxel dimensions (by default absolute voxel dimensions)</a></p>
       <ul>
         <li><code><a href="nrrd.voxdims.html">nrrd.voxdims</a></code></li>
       </ul>
+      
       <p><a href="origin.html">Return the space origin of a 3D image object</a></p>
       <ul>
         <li><code><a href="origin.html">origin</a></code></li>
       </ul>
+      
       <p><a href="projection.html">Make 2D (orthogonal) projection of 3D image data</a></p>
       <ul>
         <li><code><a href="projection.html">projection</a></code></li>
       </ul>
+      
       <p><a href="sub2ind.html">Find 1D index given n-dimensional indices</a></p>
       <ul>
         <li><code><a href="sub2ind.html">sub2ind</a></code></li>
       </ul>
+      
       <p><a href="threshold.html">Threshold an object, typically to produce a mask</a></p>
       <ul>
         <li><code><a href="threshold.html">threshold</a></code></li><li><code><a href="threshold.html">threshold.im3d</a></code></li>
       </ul>
+      
       <p><a href="unmask.html">Make im3d image array containing values at locations defined by a mask</a></p>
       <ul>
         <li><code><a href="unmask.html">unmask</a></code></li>
       </ul>
+      
       <p><a href="voxdims.html">Return voxel dimensions of an object</a></p>
       <ul>
         <li><code><a href="voxdims.html">voxdims</a></code></li><li><code><a href="voxdims.html">voxdims.character</a></code></li><li><code><a href="voxdims.html">voxdims.default</a></code></li><li><code><a href="voxdims.html">voxdims.im3d</a></code></li>
@@ -493,54 +589,67 @@
           <h2 id="section-cmtk-registration" class="hasAnchor"><a href="#section-cmtk-registration" class="anchor"></a>CMTK Registration</h2>
       <p class="section-desc"><p>Functions to interface to the CMTK image registration suite</p></p>
 
+      
       <p><a href="affmat2cmtkparams.html">Decompose homogeneous affine matrix to CMTK registration parameters</a></p>
       <ul>
         <li><code><a href="affmat2cmtkparams.html">affmat2cmtkparams</a></code></li>
       </ul>
+      
       <p><a href="cmtk.bindir.html">Return path to directory containing CMTK binaries</a></p>
       <ul>
         <li><code><a href="cmtk.bindir.html">cmtk</a></code></li><li><code><a href="cmtk.bindir.html">cmtk.bindir</a></code></li>
       </ul>
+      
       <p><a href="cmtk.call.html">Utility function to create and run calls to CMTK commandline tools</a></p>
       <ul>
         <li><code><a href="cmtk.call.html">cmtk.call</a></code></li><li><code><a href="cmtk.call.html">cmtk.system2</a></code></li>
       </ul>
+      
       <p><a href="cmtk.dof2mat.html">Convert CMTK registration to homogeneous affine matrix with dof2mat</a></p>
       <ul>
         <li><code><a href="cmtk.dof2mat.html">cmtk.dof2mat</a></code></li>
       </ul>
+      
       <p><a href="cmtk.extract_affine.html">Extract affine registration from CMTK registration file or in-memory list</a></p>
       <ul>
         <li><code><a href="cmtk.extract_affine.html">cmtk.extract_affine</a></code></li>
       </ul>
+      
       <p><a href="cmtk.mat2dof.html">Use CMTK mat2dof to convert homogeneous affine matrix into CMTK registration</a></p>
       <ul>
         <li><code><a href="cmtk.mat2dof.html">cmtk.mat2dof</a></code></li>
       </ul>
+      
       <p><a href="cmtk.reformatx.html">Reformat an image with a CMTK registration using the reformatx tool</a></p>
       <ul>
         <li><code><a href="cmtk.reformatx.html">cmtk.reformatx</a></code></li>
       </ul>
+      
       <p><a href="cmtk.statistics.html">Calculate image statistics for a nrrd or other CMTK compatible file</a></p>
       <ul>
         <li><code><a href="cmtk.statistics.html">cmtk.statistics</a></code></li>
       </ul>
+      
       <p><a href="cmtk.targetvolume.html">Defines a target volume for a CMTK reformatx operation</a></p>
       <ul>
         <li><code><a href="cmtk.targetvolume.html">cmtk.targetvolume</a></code></li><li><code><a href="cmtk.targetvolume.html">cmtk.targetvolume.default</a></code></li><li><code><a href="cmtk.targetvolume.html">cmtk.targetvolume.im3d</a></code></li><li><code><a href="cmtk.targetvolume.html">cmtk.targetvolume.list</a></code></li>
       </ul>
+      
       <p><a href="cmtk.version.html">Return cmtk version or test for presence of at least a specific version</a></p>
       <ul>
         <li><code><a href="cmtk.version.html">cmtk.version</a></code></li>
       </ul>
+      
       <p><a href="cmtkparams2affmat.html">Compose homogeneous affine matrix from CMTK registration parameters</a></p>
       <ul>
         <li><code><a href="cmtkparams2affmat.html">cmtkparams2affmat</a></code></li>
       </ul>
+      
       <p><a href="cmtkreg.html">Create and test cmtkreg objects that specify path to a CMTK registration</a></p>
       <ul>
         <li><code><a href="cmtkreg.html">as.cmtkreg</a></code></li><li><code><a href="cmtkreg.html">as.cmtkreg.default</a></code></li><li><code><a href="cmtkreg.html">as.cmtkreg.matrix</a></code></li><li><code><a href="cmtkreg.html">as.cmtkreg.reglist</a></code></li><li><code><a href="cmtkreg.html">cmtkreg</a></code></li><li><code><a href="cmtkreg.html">is.cmtkreg</a></code></li>
       </ul>
+      
       <p><a href="cmtkreglist.html">Make in-memory CMTK registration list from affine matrix or CMTK parameters</a></p>
       <ul>
         <li><code><a href="cmtkreglist.html">cmtkreglist</a></code></li>
@@ -548,14 +657,17 @@
           <h2 id="section-sample-data" class="hasAnchor"><a href="#section-sample-data" class="anchor"></a>Sample Data</h2>
       <p class="section-desc"><p>Sample data objects (neurons, surfaces)</p></p>
 
+      
       <p><a href="Cell07PNs.html">Cell07PNs: 40 Sample Projection Neurons from Jefferis, Potter et al 2007</a></p>
       <ul>
         <li><code><a href="Cell07PNs.html">Cell07PNs</a></code></li>
       </ul>
+      
       <p><a href="kcs20.html">List of 20 Kenyon Cells from Chiang et al 2011 converted to dotprops objects</a></p>
       <ul>
         <li><code><a href="kcs20.html">kcs20</a></code></li>
       </ul>
+      
       <p><a href="MBL.surf.html">Surface object (hxsurf) for the left mushroom body in FCWB template space</a></p>
       <ul>
         <li><code><a href="MBL.surf.html">MBL.surf</a></code></li>
@@ -563,18 +675,22 @@
           <h2 id="section-generic-functions" class="hasAnchor"><a href="#section-generic-functions" class="anchor"></a>Generic Functions</h2>
       <p class="section-desc"><p>Generic versions of base functions for which we provide specialised methods for nat objects.</p></p>
 
+      
       <p><a href="intersect.html">Find the intersection of two collections of objects</a></p>
       <ul>
         <li><code><a href="intersect.html">intersect</a></code></li><li><code><a href="intersect.html">intersect.default</a></code></li><li><code><a href="intersect.html">intersect.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="setdiff.html">Find the (asymmetric) difference between two collections of objects</a></p>
       <ul>
         <li><code><a href="setdiff.html">setdiff</a></code></li><li><code><a href="setdiff.html">setdiff.default</a></code></li><li><code><a href="setdiff.html">setdiff.neuronlist</a></code></li>
       </ul>
+      
       <p><a href="subset.html">Subset methods for different nat objects</a></p>
       <ul>
         <li><code><a href="subset.html">subset</a></code></li>
       </ul>
+      
       <p><a href="union.html">Find the union of two collections of objects</a></p>
       <ul>
         <li><code><a href="union.html">union</a></code></li><li><code><a href="union.html">union.default</a></code></li><li><code><a href="union.html">union.neuronlist</a></code></li>
@@ -582,18 +698,22 @@
           <h2 id="section-utility-functions" class="hasAnchor"><a href="#section-utility-functions" class="anchor"></a>Utility Functions</h2>
       <p class="section-desc"><p>Functions primarily intended for developer use</p></p>
 
+      
       <p><a href="all.equal.dotprops.html">all.equal method tailored to dotprops objects</a></p>
       <ul>
         <li><code><a href="all.equal.dotprops.html">all.equal.dotprops</a></code></li>
       </ul>
+      
       <p><a href="all.equal.im3d.html">Check equality on data and key attributes of im3d objects</a></p>
       <ul>
         <li><code><a href="all.equal.im3d.html">all.equal.im3d</a></code></li>
       </ul>
+      
       <p><a href="all.equal.neuron.html">Check equality on key fields of neuron object</a></p>
       <ul>
         <li><code><a href="all.equal.neuron.html">all.equal.neuron</a></code></li>
       </ul>
+      
       <p><a href="ndigest.html">Calculated normalised digest value for an object</a></p>
       <ul>
         <li><code><a href="ndigest.html">ndigest</a></code></li><li><code><a href="ndigest.html">ndigest.dotprops</a></code></li><li><code><a href="ndigest.html">ndigest.neuron</a></code></li><li><code><a href="ndigest.html">ndigest.neuronlistfh</a></code></li>
@@ -601,118 +721,139 @@
           <h2 id="section-file-formats" class="hasAnchor"><a href="#section-file-formats" class="anchor"></a>File formats</h2>
       <p class="section-desc"><p>Support for different formats. It is generally recommended to use more generic functions such as read.neuron(s) rather than these functions.</p></p>
 
+      
       <p><a href="amiramesh-io.html">Read AmiraMesh data in binary or ascii format</a></p>
       <ul>
         <li><code><a href="amiramesh-io.html">read.amiramesh</a></code></li><li><code><a href="amiramesh-io.html">read.amiramesh.header</a></code></li>
       </ul>
+      
       <p><a href="amiratype.html">Return the type of an amiramesh file on disk or a parsed header</a></p>
       <ul>
         <li><code><a href="amiratype.html">amiratype</a></code></li>
       </ul>
+      
       <p><a href="fileformats.html">Set or return list of registered file formats that we can read</a></p>
       <ul>
         <li><code><a href="fileformats.html">fileformats</a></code></li><li><code><a href="fileformats.html">getformatreader</a></code></li><li><code><a href="fileformats.html">getformatwriter</a></code></li><li><code><a href="fileformats.html">registerformat</a></code></li>
       </ul>
+      
       <p><a href="is.amiramesh.html">Check if file is amiramesh format</a></p>
       <ul>
         <li><code><a href="is.amiramesh.html">is.amiramesh</a></code></li>
       </ul>
+      
       <p><a href="is.fijitraces.html">Check whether a file is in Fiji's simple neurite tracer format</a></p>
       <ul>
         <li><code><a href="is.fijitraces.html">is.fijitraces</a></code></li>
       </ul>
+      
       <p><a href="is.neuroml.html">Check whether a file is in NeuroML format</a></p>
       <ul>
         <li><code><a href="is.neuroml.html">is.neuroml</a></code></li>
       </ul>
+      
       <p><a href="is.nrrd.html">Check if a file is a NRRD file</a></p>
       <ul>
         <li><code><a href="is.nrrd.html">is.nrrd</a></code></li>
       </ul>
+      
       <p><a href="is.swc.html">Test if a file is an SWC format neuron</a></p>
       <ul>
         <li><code><a href="is.swc.html">is.swc</a></code></li>
       </ul>
+      
       <p><a href="is.vaa3draw.html">Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D</a></p>
       <ul>
         <li><code><a href="is.vaa3draw.html">is.vaa3draw</a></code></li>
       </ul>
+      
       <p><a href="read.cmtk.html">Read CMTK TypedStream file to a list in memory</a></p>
       <ul>
         <li><code><a href="read.cmtk.html">read.cmtk</a></code></li>
       </ul>
+      
       <p><a href="read.cmtkreg.html">Read a CMTK format registration</a></p>
       <ul>
         <li><code><a href="read.cmtkreg.html">read.cmtkreg</a></code></li>
       </ul>
+      
       <p><a href="read.morphml.html">Return parsed XML or R list versions of a NeuroML file</a></p>
       <ul>
         <li><code><a href="read.morphml.html">read.morphml</a></code></li>
       </ul>
+      
       <p><a href="read.neuron.fiji.html">Read a neuron saved by Fiji's Simple Neurite Tracer Plugin</a></p>
       <ul>
         <li><code><a href="read.neuron.fiji.html">read.neuron.fiji</a></code></li>
       </ul>
+      
       <p><a href="read.neuron.neuroml.html">Read one or more neurons from a NeuroML v1 file</a></p>
       <ul>
         <li><code><a href="read.neuron.neuroml.html">read.neuron.neuroml</a></code></li>
       </ul>
+      
       <p><a href="read.neuron.swc.html">Read a neuron in swc file format</a></p>
       <ul>
         <li><code><a href="read.neuron.swc.html">read.neuron.swc</a></code></li><li><code><a href="read.neuron.swc.html">read.ngraph.swc</a></code></li>
       </ul>
+      
       <p><a href="read.nrrd.html">Read nrrd file into an array in memory</a></p>
       <ul>
         <li><code><a href="read.nrrd.html">read.nrrd</a></code></li><li><code><a href="read.nrrd.html">read.nrrd.header</a></code></li>
       </ul>
+      
       <p><a href="read.vaa3draw.html">Read Vaa3d format image data</a></p>
       <ul>
         <li><code><a href="read.vaa3draw.html">read.vaa3draw</a></code></li>
       </ul>
+      
       <p><a href="write.amiramesh.html">Write a 3D data object to an amiramesh format file</a></p>
       <ul>
         <li><code><a href="write.amiramesh.html">write.amiramesh</a></code></li>
       </ul>
+      
       <p><a href="write.cmtk.html">Write a suitable list to a CMTK TypedStream file on disk</a></p>
       <ul>
         <li><code><a href="write.cmtk.html">write.cmtk</a></code></li>
       </ul>
+      
       <p><a href="write.cmtkreg.html">Write out CMTK registration list to folder</a></p>
       <ul>
         <li><code><a href="write.cmtkreg.html">write.cmtkreg</a></code></li>
       </ul>
+      
       <p><a href="write.nrrd.html">Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.</a></p>
       <ul>
         <li><code><a href="write.nrrd.html">write.nrrd</a></code></li><li><code><a href="write.nrrd.html">write.nrrd.header</a></code></li><li><code><a href="write.nrrd.html">write.nrrd.header.for.file</a></code></li>
       </ul>
+      
       <p><a href="write.vtk.html">Write object to VTK file</a></p>
       <ul>
         <li><code><a href="write.vtk.html">write.vtk</a></code></li><li><code><a href="write.vtk.html">write.vtk.neuron</a></code></li>
       </ul>
     
+    </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm">
-    <div id="sidebar">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#section-package-help">Package Help</a></li>
-        <li><a href="#section-neurons-traced-">Neurons (traced)</a></li>
-        <li><a href="#section-neurons-as-graphs-">Neurons (as graphs)</a></li>
-        <li><a href="#section-skeletonised-neurons-dotprops-aka-vector-cloud-">Skeletonised Neurons (dotprops aka vector cloud)</a></li>
-        <li><a href="#section-collections-of-neurons-neuronlists-">Collections of Neurons (neuronlists)</a></li>
-        <li><a href="#section-collections-of-neurons-with-remote-data-neuronlistfh-">Collections of Neurons with Remote Data (neuronlistfh)</a></li>
-        <li><a href="#section-surfaces-and-landmarks-hxsurf-mesh-d-">Surfaces and Landmarks (hxsurf, mesh3d)</a></li>
-        <li><a href="#section--d-plotting-of-objects">3D Plotting of objects</a></li>
-        <li><a href="#section-object-transformation">Object transformation</a></li>
-        <li><a href="#section-images-im-d-">Images (im3d)</a></li>
-        <li><a href="#section-cmtk-registration">CMTK Registration</a></li>
-        <li><a href="#section-sample-data">Sample Data</a></li>
-        <li><a href="#section-generic-functions">Generic Functions</a></li>
-        <li><a href="#section-utility-functions">Utility Functions</a></li>
-        <li><a href="#section-file-formats">File formats</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#section-package-help">Package Help</a></li>
+      <li><a href="#section-neurons-traced-">Neurons (traced)</a></li>
+      <li><a href="#section-neurons-as-graphs-">Neurons (as graphs)</a></li>
+      <li><a href="#section-skeletonised-neurons-dotprops-aka-vector-cloud-">Skeletonised Neurons (dotprops aka vector cloud)</a></li>
+      <li><a href="#section-collections-of-neurons-neuronlists-">Collections of Neurons (neuronlists)</a></li>
+      <li><a href="#section-collections-of-neurons-with-remote-data-neuronlistfh-">Collections of Neurons with Remote Data (neuronlistfh)</a></li>
+      <li><a href="#section-surfaces-and-landmarks-hxsurf-mesh-d-">Surfaces and Landmarks (hxsurf, mesh3d)</a></li>
+      <li><a href="#section--d-plotting-of-objects">3D Plotting of objects</a></li>
+      <li><a href="#section-object-transformation">Object transformation</a></li>
+      <li><a href="#section-images-im-d-">Images (im3d)</a></li>
+      <li><a href="#section-cmtk-registration">CMTK Registration</a></li>
+      <li><a href="#section-sample-data">Sample Data</a></li>
+      <li><a href="#section-generic-functions">Generic Functions</a></li>
+      <li><a href="#section-utility-functions">Utility Functions</a></li>
+      <li><a href="#section-file-formats">File formats</a></li>
+    </ul>
   </div>
 </div>
 
