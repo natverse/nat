@@ -220,7 +220,7 @@ The `data` statement above loaded a `neuronlist` object called `Cell07PNs`
 containing `r length(Cell07PNs)` `neuron` objects. `neuronlist` objects are key 
 data structures in nat for convenient handling of collections of neurons.
 
-![Structure of neuronlist objects](fig/neuronlist.png){width=600}
+![Structure of neuronlist objects](fig/neuronlist-01.png)
 
 The diagram above presents the structure of a neuronlist, `x`, which contains
 5 neurons. The main structure is an R `list` object, which in this case contains
@@ -237,7 +237,7 @@ When subscripting any list in R, it is very important to understand the differen
 between using the single and double bracket operator. We can illustrate this
 difference as follows:
 
-![The difference between single and double bracket subscript operators](fig/neuronlist-subsets.png){width=600}
+![The difference between single and double bracket subscript operators](fig/neuronlist-subsets-01.png)
 
 The single bracket operator makes a new list containing a specified subset of
 elements in the original list, while the double bracket operator extracts the
