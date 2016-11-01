@@ -8,8 +8,18 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+## Preface
 This document provides additional details about installation that may help you
 solve certain difficulties, especially on Windows or Mac platforms.
+
+The source code for this vignette is available at 
+https://github.com/jefferis/nat/blob/master/vignettes/Installation.Rmd. 
+If you find something unclear or notice a typo, I would be very happy if you 
+would click on the Pencil Icon on that page or follow 
+[this link to edit](https://github.com/jefferis/nat/edit/master/vignettes/Installation.Rmd)
+and suggest an alternative wording. Don't be shy about doing this; I have to 
+review any change and even if your suggestion is not perfect it will still
+be a prompt for me to improve this document. Thank you!
 
 # Prerequisites
 **nat** is an R package and therefore runs on Mac/Linux/Windows. The only 
