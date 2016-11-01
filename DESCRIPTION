@@ -38,7 +38,8 @@ Suggests:
     httr,
     XML,
     knitr,
-    rmarkdown
+    rmarkdown,
+    MASS
 License: GPL-3
 LazyData: yes
 Collate:

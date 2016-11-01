@@ -7,3 +7,4 @@ travisbuildchildren.sh
 ^_pkgdown\.yml$
 ^docs$
 ^build-cmtk.sh$
+^vignettes/.*pdf$
