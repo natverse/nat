@@ -111,10 +111,7 @@
     <p><code>prune.dotprops</code>, <code>subset.neuron</code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## subset using indices ...</span>
 <span class='no'>dp</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>10</span>]]
 <span class='no'>dp1</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='fl'>1</span>:<span class='fl'>50</span>)
@@ -127,6 +124,9 @@
 <span class='no'>middle</span><span class='kw'>=</span><span class='no'>middle</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='fu'>between</span>(<span class='no'>points</span>[,<span class='st'>'Z'</span>], <span class='fl'>40</span>, <span class='fl'>60</span>))
 
 <span class='co'># plot results in 3D</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>front</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>middle</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>dp</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>)
 
 
 <span class='co'>## Not run: ------------------------------------</span>

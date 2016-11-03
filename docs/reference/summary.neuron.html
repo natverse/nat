@@ -134,10 +134,7 @@ length estimate can be made.</dd>
     <p><code><a href='seglengths.html'>seglengths</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># summary for a whole neuronlist</span>
 <span class='fu'>summary</span>(<span class='no'>Cell07PNs</span>)</div><div class='output co'>#&gt;        root nodes segments branchpoints endpoints cable.length
 #&gt; EBH11R    1   180       33           16        18     297.1763
@@ -179,26 +176,21 @@ length estimate can be made.</dd>
 #&gt; VA15R     1   147       17            8        10     213.8872
 #&gt; VA20R     1   160       21           10        12     215.0711
 #&gt; VB37L     1   162       14            6         9     218.7555
-#&gt; VB58L     1   154       17            8        10     231.9512
-#&gt; </div><div class='input'><span class='co'># including the attached data.frame with additional metadata</span>
+#&gt; VB58L     1   154       17            8        10     231.9512</div><div class='input'><span class='co'># including the attached data.frame with additional metadata</span>
 <span class='fu'><a href='neuronlist-dataframe-methods.html'>head</a></span>(<span class='fu'>summary</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>include.attached.dataframe</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>))</div><div class='output co'>#&gt;        root nodes segments branchpoints endpoints cable.length
 #&gt; EBH11R    1   180       33           16        18     297.1763
 #&gt; EBH20L    1   200       26           12        15     327.0929
 #&gt; EBH20R    1   199       25           12        14     347.6153
 #&gt; EBI12L    1   169       23           11        13     294.4680
 #&gt; EBI22R    1   160       27           13        15     303.0150
-#&gt; EBJ23L    1   156       28           13        16     292.3298
-#&gt; </div><div class='input'><span class='co'># for a single regular format neuron</span>
+#&gt; EBJ23L    1   156       28           13        16     292.3298</div><div class='input'><span class='co'># for a single regular format neuron</span>
 <span class='fu'>summary</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt;   root nodes segments branchpoints endpoints cable.length
-#&gt; 1    1   180       33           16        18     297.1763
-#&gt; </div><div class='input'><span class='co'># for a single dotprops format neuron</span>
+#&gt; 1    1   180       33           16        18     297.1763</div><div class='input'><span class='co'># for a single dotprops format neuron</span>
 <span class='fu'>summary</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt;   nodes cable.length
-#&gt; 1   284          284
-#&gt; </div><div class='input'><span class='co'># specify a different estimate for the cable length associated with a single</span>
+#&gt; 1   284          284</div><div class='input'><span class='co'># specify a different estimate for the cable length associated with a single</span>
 <span class='co'># point in the neuron</span>
 <span class='fu'>summary</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>veclength</span><span class='kw'>=</span><span class='fl'>1.2</span>)</div><div class='output co'>#&gt;   nodes cable.length
-#&gt; 1   284        340.8
-#&gt; </div></pre>
+#&gt; 1   284        340.8</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

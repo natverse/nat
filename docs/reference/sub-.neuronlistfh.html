@@ -121,17 +121,13 @@ for the [ get method, empty. See details and the help for
   <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># make a test neuronlistfh backed by a temporary folder on disk</span>
 <span class='no'>tf</span><span class='kw'>=</span><span class='fu'>tempfile</span>(<span class='st'>'kcs20fh'</span>)
 <span class='no'>kcs20fh</span><span class='kw'>&lt;-</span><span class='fu'><a href='neuronlistfh.html'>as.neuronlistfh</a></span>(<span class='no'>kcs20</span>, <span class='kw'>dbdir</span><span class='kw'>=</span><span class='no'>tf</span>)
 
 <span class='co'># get first neurons as an in memory neuronlist</span>
-<span class='fu'>class</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] &quot;neuronlist&quot; &quot;list&quot;      
-#&gt; </div><div class='input'>
+<span class='fu'>class</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] &quot;neuronlist&quot; &quot;list&quot;      </div><div class='input'>
 <span class='co'># extract attached data.frame</span>
 <span class='fu'>str</span>(<span class='no'>kcs20fh</span>[,])</div><div class='output co'>#&gt; &#39;data.frame&#39;:	20 obs. of  14 variables:
 #&gt;  $ gene_name: chr  &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot; &quot;GadMARCM-F000050_seg001&quot; &quot;GadMARCM-F000142_seg002&quot; ...
@@ -147,13 +143,11 @@ for the [ get method, empty. See details and the help for
 #&gt;  $ exemplar : Factor w/ 96 levels &quot;5HT1bMARCM-M000076_seg001&quot;,..: 60 78 76 79 41 45 59 82 6 63 ...
 #&gt;  $ cluster  : int  9 70 57 71 64 44 16 61 52 12 ...
 #&gt;  $ idx      : int  156 1519 1132 1535 1331 795 268 1265 898 190 ...
-#&gt;  $ type     : Factor w/ 3 levels &quot;ab&quot;,&quot;apbp&quot;,&quot;gamma&quot;: 3 3 1 2 1 1 1 2 2 1 ...
-#&gt; </div><div class='input'><span class='co'># or part of the data.frame</span>
+#&gt;  $ type     : Factor w/ 3 levels &quot;ab&quot;,&quot;apbp&quot;,&quot;gamma&quot;: 3 3 1 2 1 1 1 2 2 1 ...</div><div class='input'><span class='co'># or part of the data.frame</span>
 <span class='fu'>str</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; &#39;data.frame&#39;:	2 obs. of  3 variables:
 #&gt;  $ gene_name: chr  &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot;
 #&gt;  $ Name     : chr  &quot;fru-M-500112&quot; &quot;Gad1-F-900005&quot;
-#&gt;  $ idid     : num  1024 10616
-#&gt; </div><div class='input'>
+#&gt;  $ idid     : num  1024 10616</div><div class='input'>
 <span class='co'># data.frame assignment (this one changes nothing)</span>
 <span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='st'>'gene_name'</span>] <span class='kw'>&lt;-</span> <span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='st'>'gene_name'</span>]
 

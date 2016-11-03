@@ -101,24 +101,27 @@
     <p><code><a href='boundingbox.html'>boundingbox</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># find the bounding box of all the neurons in a list</span>
 <span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>)</div><div class='output co'>#&gt;          [,1]     [,2]     [,3]
 #&gt; [1,] 284.5940  24.1869  21.4379
 #&gt; [2,] 404.6951 122.9557 102.8015
 #&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;boundingbox&quot;
-#&gt; </div><div class='input'><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;          [,1]     [,2]    [,3]
+#&gt; [1] &quot;boundingbox&quot;</div><div class='input'><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;          [,1]     [,2]    [,3]
 #&gt; [1,] 285.0244  25.2430 21.4379
 #&gt; [2,] 390.7747 114.6351 98.3324
 #&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;boundingbox&quot;
-#&gt; </div><div class='input'>
+#&gt; [1] &quot;boundingbox&quot;</div><div class='input'><span class='co'># plot those neurons</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
+<span class='co'># ... with their bounding box</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>))
 
-</div></pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
+<span class='co'># plot bounding box (in matching colours) for each neuron</span>
+<span class='co'># NB makes use of nlapply/neuronlist in slightly unsusual context - </span>
+<span class='co'># plot3d.neuronlist can cope with lists containing anything with</span>
+<span class='co'># a valid plot3d method.</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='nlapply.html'>nlapply</a></span>(<span class='no'>kcs20</span>,<span class='no'>boundingbox</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

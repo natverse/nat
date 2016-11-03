@@ -127,19 +127,18 @@ being selected. This is only valid when <code>rval=&#39;neuron&#39;</code> or
   <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>pn.spine</span><span class='kw'>=</span><span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>pn.spine</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>)
 
 <span class='co'># just extract length</span>
-<span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'length'</span>)</div><div class='output co'>#&gt; [1] 186.0859
-#&gt; </div><div class='input'><span class='co'># same result since StartPoint is included in longest path</span>
-<span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'length'</span>, <span class='kw'>UseStartPoint</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 186.0859
-#&gt; </div><div class='input'>
+<span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'length'</span>)</div><div class='output co'>#&gt; [1] 186.0859</div><div class='input'><span class='co'># same result since StartPoint is included in longest path</span>
+<span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'length'</span>, <span class='kw'>UseStartPoint</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 186.0859</div><div class='input'>
 <span class='co'># extract everything but the spine</span>
-<span class='no'>antispine</span><span class='kw'>=</span><span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>invert</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div></pre>
+<span class='no'>antispine</span><span class='kw'>=</span><span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>invert</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>antispine</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

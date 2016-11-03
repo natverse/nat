@@ -159,18 +159,14 @@ only, empty. Numeric values are coerced to integer as if by
   <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## treat kcs20 as data.frame</span>
 <span class='no'>kcs20</span>[<span class='fl'>1</span>, ]</div><div class='output co'>#&gt;                                       gene_name         Name idid soma_side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002 fru-M-500112 1024         L
 #&gt;                         flipped   Driver Gender        X       Y        Z
 #&gt; FruMARCM-M001205_seg002   FALSE fru-Gal4      M 361.4849 95.0448 84.10259
 #&gt;                                        exemplar cluster idx  type
-#&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002       9 156 gamma
-#&gt; </div><div class='input'><span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, ]</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
+#&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002       9 156 gamma</div><div class='input'><span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>, ]</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L
 #&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R
@@ -181,8 +177,7 @@ only, empty. Numeric values are coerced to integer as if by
 #&gt;                                        exemplar cluster  idx  type
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002       9  156 gamma
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001      70 1519 gamma
-#&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001      57 1132    ab
-#&gt; </div><div class='input'><span class='no'>kcs20</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
+#&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001      57 1132    ab</div><div class='input'><span class='no'>kcs20</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L
 #&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R
@@ -202,10 +197,8 @@ only, empty. Numeric values are coerced to integer as if by
 #&gt; GadMARCM-F000071_seg001 GadMARCM-F000071_seg001 Gad1-F-300023 10541         R
 #&gt; FruMARCM-M000115_seg001 FruMARCM-M000115_seg001  fru-M-100014  2389         L
 #&gt; GadMARCM-F000442_seg002 GadMARCM-F000442_seg002 Gad1-F-700033  9569         R
-#&gt; FruMARCM-F001929_seg001 FruMARCM-F001929_seg001  fru-F-400181  4694         L
-#&gt; </div><div class='input'><span class='no'>kcs20</span>[, <span class='st'>'soma_side'</span>]</div><div class='output co'>#&gt;  [1] L L R L L R R R R R R R R L R R R L R L
-#&gt; Levels: L M R
-#&gt; </div><div class='input'><span class='co'># alternative to as.data.frame(kcs20)</span>
+#&gt; FruMARCM-F001929_seg001 FruMARCM-F001929_seg001  fru-F-400181  4694         L</div><div class='input'><span class='no'>kcs20</span>[, <span class='st'>'soma_side'</span>]</div><div class='output co'>#&gt;  [1] L L R L L R R R R R R R R L R R R L R L
+#&gt; Levels: L M R</div><div class='input'><span class='co'># alternative to as.data.frame(kcs20)</span>
 <span class='no'>kcs20</span>[, ]</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L
@@ -268,8 +261,7 @@ only, empty. Numeric values are coerced to integer as if by
 #&gt; GadMARCM-F000071_seg001 GadMARCM-F000071_seg001      69 1484 gamma
 #&gt; FruMARCM-M000115_seg001 FruMARCM-M000115_seg001      22  406 gamma
 #&gt; GadMARCM-F000442_seg002 GadMARCM-F000442_seg002      62 1277 gamma
-#&gt; FruMARCM-F001929_seg001 FruMARCM-F001929_seg001      36  610    ab
-#&gt; </div><div class='input'>
+#&gt; FruMARCM-F001929_seg001 FruMARCM-F001929_seg001      36  610    ab</div><div class='input'>
 <span class='co'>## can also set columns</span>
 <span class='no'>kcs13</span><span class='kw'>=</span><span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>]
 <span class='no'>kcs13</span>[,<span class='st'>'side'</span>]<span class='kw'>=</span><span class='fu'>as.character</span>(<span class='no'>kcs13</span>[,<span class='st'>'soma_side'</span>])
@@ -284,18 +276,15 @@ only, empty. Numeric values are coerced to integer as if by
 #&gt;                                        exemplar cluster  idx  type side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002       9  156 gamma    L
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001      70 1519 gamma    L
-#&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001      57 1132    ab    R
-#&gt; </div><div class='input'><span class='co'># or parts of columns</span>
+#&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001      57 1132    ab    R</div><div class='input'><span class='co'># or parts of columns</span>
 <span class='no'>kcs13</span>[<span class='fl'>1</span>,<span class='st'>'soma_side'</span>]<span class='kw'>=</span><span class='st'>'R'</span>
 <span class='no'>kcs13</span>[<span class='st'>'FruMARCM-M001205_seg002'</span>,<span class='st'>'soma_side'</span>]<span class='kw'>=</span><span class='st'>'L'</span>
 <span class='co'># remove a column</span>
 <span class='no'>kcs13</span>[,<span class='st'>'side'</span>]<span class='kw'>=</span><span class='kw'>NULL</span>
-<span class='fu'>all.equal</span>(<span class='no'>kcs13</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] TRUE
-#&gt; </div><div class='input'>
+<span class='fu'>all.equal</span>(<span class='no'>kcs13</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># can even replace the whole data.frame like this</span>
 <span class='no'>kcs13</span>[,]<span class='kw'>=</span><span class='no'>kcs13</span>[,]
-<span class='fu'>all.equal</span>(<span class='no'>kcs13</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] TRUE
-#&gt; </div><div class='input'>
+<span class='fu'>all.equal</span>(<span class='no'>kcs13</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'>## get row/column names of attached data.frame </span>
 <span class='co'># (unfortunately implementing ncol/nrow is challenging)</span>
 <span class='fu'>rownames</span>(<span class='no'>kcs20</span>)</div><div class='output co'>#&gt;  [1] &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot;
@@ -307,11 +296,9 @@ only, empty. Numeric values are coerced to integer as if by
 #&gt; [13] &quot;FruMARCM-F000706_seg001&quot; &quot;FruMARCM-M000842_seg002&quot;
 #&gt; [15] &quot;FruMARCM-F001494_seg002&quot; &quot;FruMARCM-F000188_seg001&quot;
 #&gt; [17] &quot;GadMARCM-F000071_seg001&quot; &quot;FruMARCM-M000115_seg001&quot;
-#&gt; [19] &quot;GadMARCM-F000442_seg002&quot; &quot;FruMARCM-F001929_seg001&quot;
-#&gt; </div><div class='input'><span class='fu'>colnames</span>(<span class='no'>kcs20</span>)</div><div class='output co'>#&gt;  [1] &quot;gene_name&quot; &quot;Name&quot;      &quot;idid&quot;      &quot;soma_side&quot; &quot;flipped&quot;   &quot;Driver&quot;   
+#&gt; [19] &quot;GadMARCM-F000442_seg002&quot; &quot;FruMARCM-F001929_seg001&quot;</div><div class='input'><span class='fu'>colnames</span>(<span class='no'>kcs20</span>)</div><div class='output co'>#&gt;  [1] &quot;gene_name&quot; &quot;Name&quot;      &quot;idid&quot;      &quot;soma_side&quot; &quot;flipped&quot;   &quot;Driver&quot;   
 #&gt;  [7] &quot;Gender&quot;    &quot;X&quot;         &quot;Y&quot;         &quot;Z&quot;         &quot;exemplar&quot;  &quot;cluster&quot;  
-#&gt; [13] &quot;idx&quot;       &quot;type&quot;     
-#&gt; </div></pre>
+#&gt; [13] &quot;idx&quot;       &quot;type&quot;     </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -124,10 +124,7 @@ examples)</dd>
     <p><code>data.frame</code>, <code><a href='neuronlist.html'>neuronlist</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='neuronlist-dataframe-methods.html'>head</a></span>(<span class='fu'>as.data.frame</span>(<span class='no'>kcs20</span>))</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L
@@ -148,8 +145,7 @@ examples)</dd>
 #&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001      57 1132    ab
 #&gt; GadMARCM-F000142_seg002 GadMARCM-F000142_seg002      71 1535  apbp
 #&gt; FruMARCM-F000270_seg001 FruMARCM-F000270_seg001      64 1331    ab
-#&gt; FruMARCM-F001115_seg002 FruMARCM-F001115_seg002      44  795    ab
-#&gt; </div><div class='input'>
+#&gt; FruMARCM-F001115_seg002 FruMARCM-F001115_seg002      44  795    ab</div><div class='input'>
 <span class='co'># add additional variables</span>
 <span class='fu'>str</span>(<span class='fu'>as.data.frame</span>(<span class='no'>kcs20</span>, <span class='kw'>i</span><span class='kw'>=</span><span class='fu'>seq</span>(<span class='no'>kcs20</span>), <span class='kw'>abc</span><span class='kw'>=</span><span class='no'>LETTERS</span>[<span class='fu'>seq</span>(<span class='no'>kcs20</span>)]))</div><div class='output co'>#&gt; &#39;data.frame&#39;:	20 obs. of  16 variables:
 #&gt;  $ gene_name: chr  &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot; &quot;GadMARCM-F000050_seg001&quot; &quot;GadMARCM-F000142_seg002&quot; ...
@@ -167,8 +163,7 @@ examples)</dd>
 #&gt;  $ idx      : int  156 1519 1132 1535 1331 795 268 1265 898 190 ...
 #&gt;  $ type     : Factor w/ 3 levels &quot;ab&quot;,&quot;apbp&quot;,&quot;gamma&quot;: 3 3 1 2 1 1 1 2 2 1 ...
 #&gt;  $ i        : int  1 2 3 4 5 6 7 8 9 10 ...
-#&gt;  $ abc      : Factor w/ 20 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
-#&gt; </div><div class='input'><span class='co'># stop character columns being turned into factors</span>
+#&gt;  $ abc      : Factor w/ 20 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...</div><div class='input'><span class='co'># stop character columns being turned into factors</span>
 <span class='no'>newdf</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='no'>kcs20</span>, <span class='kw'>i</span><span class='kw'>=</span><span class='fu'>seq</span>(<span class='no'>kcs20</span>), <span class='kw'>abc</span><span class='kw'>=</span><span class='no'>LETTERS</span>[<span class='fu'>seq</span>(<span class='no'>kcs20</span>)],
   <span class='kw'>stringsAsFactors</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
 <span class='fu'>str</span>(<span class='no'>newdf</span>)</div><div class='output co'>#&gt; &#39;data.frame&#39;:	20 obs. of  16 variables:
@@ -187,8 +182,7 @@ examples)</dd>
 #&gt;  $ idx      : int  156 1519 1132 1535 1331 795 268 1265 898 190 ...
 #&gt;  $ type     : Factor w/ 3 levels &quot;ab&quot;,&quot;apbp&quot;,&quot;gamma&quot;: 3 3 1 2 1 1 1 2 2 1 ...
 #&gt;  $ i        : int  1 2 3 4 5 6 7 8 9 10 ...
-#&gt;  $ abc      : chr  &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; ...
-#&gt; </div><div class='input'><span class='fu'>data.frame</span>(<span class='no'>kcs20</span>)<span class='kw'>=</span><span class='no'>newdf</span></div></pre>
+#&gt;  $ abc      : chr  &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; ...</div><div class='input'><span class='fu'>data.frame</span>(<span class='no'>kcs20</span>)<span class='kw'>=</span><span class='no'>newdf</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

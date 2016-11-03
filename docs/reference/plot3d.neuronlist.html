@@ -170,13 +170,20 @@ options(&#39;nat.default.neuronlist&#39;)</dd>
     <p><code><a href='nat-package.html'>nat-package</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;   5 
-#&gt; </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+#&gt;   7 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+<span class='fu'>clear3d</span>()
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='no'>type</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>==</span><span class='st'>"DA1"</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>==</span><span class='st'>"VA1d"</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+<span class='co'># Note use of default colour for non DA1 neurons</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>, <span class='kw'>colpal</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='kw'>DA1</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='st'>'grey'</span>))
+<span class='co'># a subset expression</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'>c</span>(<span class='st'>"DA1"</span>,<span class='st'>'VA1d'</span>),
+  <span class='kw'>col</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"red"</span>,<span class='st'>"green"</span>)[<span class='fu'>factor</span>(<span class='no'>Glomerulus</span>)])
+<span class='co'># the same but not specifying colours explicitly</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'>c</span>(<span class='st'>"DA1"</span>,<span class='st'>'VA1d'</span>),<span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>)
 
 <span class='co'>## Not run: ------------------------------------</span>
 <span class='co'># ## more complex colouring strategies for a larger neuron set</span>

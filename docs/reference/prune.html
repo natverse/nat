@@ -134,20 +134,24 @@ than the 3D object/points (default <code>FALSE</code>)</dd>
   <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## prune single neurons</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
 
 <span class='co'># prune neuron 2 down to points that are close to neuron 1</span>
 <span class='no'>neuron2_close</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>target</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>10</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>neuron2_close</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'cyan'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
 
 <span class='no'>neuron2_far</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>target</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>keep</span><span class='kw'>=</span><span class='st'>'far'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>neuron2_far</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'magenta'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
 
 
 <span class='co'>## Prune a neuron with a neuronlist</span>
-<span class='no'>pruned</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>11</span>]], <span class='no'>kcs20</span>[<span class='fu'><a href='setdiff.html'>setdiff</a></span>(<span class='fl'>1</span>:<span class='fl'>20</span>, <span class='fl'>11</span>)], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>8</span>)</div></pre>
+<span class='no'>pruned</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>11</span>]], <span class='no'>kcs20</span>[<span class='fu'><a href='setdiff.html'>setdiff</a></span>(<span class='fl'>1</span>:<span class='fl'>20</span>, <span class='fl'>11</span>)], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>8</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>pruned</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>11</span>]], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

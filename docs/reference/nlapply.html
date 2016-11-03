@@ -176,15 +176,11 @@ elements in <code>X</code>.</dd>
   <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## nlapply example</span>
 <span class='no'>kcs.reduced</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>kcs20</span>,<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>,<span class='fu'>sample</span>(<span class='fu'>nrow</span>(<span class='no'>x</span>$<span class='no'>points</span>),<span class='fl'>50</span>)))
 <span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;   3 
-#&gt; </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
+#&gt;   3 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
 <span class='fu'>rgl.close</span>()
 
@@ -212,7 +208,11 @@ elements in <code>X</code>.</dd>
 <span class='co'>## nmapply example</span>
 <span class='co'># flip first neuron in X, second in Y and 3rd in Z</span>
 <span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='no'>mirror</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"X"</span>,<span class='st'>"Y"</span>,<span class='st'>"Z"</span>),
- <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))</div></pre>
+ <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))
+<span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
+#&gt;   4 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>xyzflip</span>)
+<span class='fu'>rgl.close</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

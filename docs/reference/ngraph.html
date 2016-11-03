@@ -186,28 +186,19 @@ neuronal connectivity to generate graph.</dd>
   <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>g</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
-<span class='fu'>library</span>(<span class='no'>igraph</span>)</div><div class='output'><strong class='text-info'>
-Attaching package: ‘igraph’
-</strong></div><div class='output'><strong class='text-info'>The following object is masked from ‘package:nat’:
-
-    union
-</strong></div><div class='output'><strong class='text-info'>The following object is masked from ‘package:rgl’:
-
-    %&gt;%
-</strong></div><div class='output'><strong class='text-info'>The following objects are masked from ‘package:stats’:
-
-    decompose, spectrum
-</strong></div><div class='output'><strong class='text-info'>The following object is masked from ‘package:base’:
-
-    union
-</strong></div><div class='input'><span class='co'># check that vertex attributes of graph match X position</span>
-<span class='fu'>all.equal</span>(<span class='fu'>V</span>(<span class='no'>g</span>)$<span class='no'>X</span>, <span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]$<span class='no'>d</span>$<span class='no'>X</span>)</div><div class='output co'>#&gt; [1] TRUE
-#&gt; </div></pre>
+<span class='fu'>library</span>(<span class='no'>igraph</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: methods</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:nat’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    union</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:rgl’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    %&gt;%</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    union</span></div><div class='input'><span class='co'># check that vertex attributes of graph match X position</span>
+<span class='fu'>all.equal</span>(<span class='fu'>V</span>(<span class='no'>g</span>)$<span class='no'>X</span>, <span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]$<span class='no'>d</span>$<span class='no'>X</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

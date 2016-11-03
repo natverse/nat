@@ -142,12 +142,9 @@ the location of all cmtk binaries.</dd>
     <p><code>options</code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>message</span>(<span class='fu'>ifelse</span>(<span class='fu'>is.null</span>(<span class='no'>d</span><span class='kw'>&lt;-</span><span class='fu'>cmtk.bindir</span>()), <span class='st'>"CMTK not found!"</span>,
-               <span class='fu'>paste</span>(<span class='st'>"CMTK is at:"</span>,<span class='no'>d</span>)))</div><div class='output'><strong class='text-info'>CMTK is at: /usr/local/lib/cmtk/bin</strong></div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+               <span class='fu'>paste</span>(<span class='st'>"CMTK is at:"</span>,<span class='no'>d</span>)))</div><div class='output co'>#&gt; <span class='message'>CMTK is at: /usr/local/lib/cmtk/bin</span></div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
 <span class='co'># # set options('nat.cmtk.bindir') according to where cmtk was found</span>
 <span class='co'># op=options(nat.cmtk.bindir=NULL)</span>
 <span class='co'># cmtk.bindir(set=TRUE)</span>

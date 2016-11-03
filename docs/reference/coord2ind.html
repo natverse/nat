@@ -123,13 +123,9 @@
     <p><code><a href='ind2coord.html'>ind2coord</a></code>, <code><a href='sub2ind.html'>sub2ind</a></code>, <code><a href='im3d-coords.html'>ijkpos</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>coord2ind</span>(<span class='fu'>cbind</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>), <span class='kw'>imdims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1024</span>,<span class='fl'>512</span>,<span class='fl'>218</span>),
-  <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.622088</span>, <span class='fl'>0.622088</span>, <span class='fl'>0.622088</span>), <span class='kw'>origin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>))</div><div class='output co'>#&gt; [1] 2624515
-#&gt; </div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+  <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0.622088</span>, <span class='fl'>0.622088</span>, <span class='fl'>0.622088</span>), <span class='kw'>origin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>))</div><div class='output co'>#&gt; [1] 2624515</div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
 <span class='co'># ## repeat but using a templatebrain object to specify the coordinate system</span>
 <span class='co'># library(nat.flybrains)</span>
 <span class='co'># coord2ind(cbind(1,2,3), JFRC2)</span>

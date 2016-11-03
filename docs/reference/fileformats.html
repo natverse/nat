@@ -170,10 +170,7 @@ from file header to determine file&#39;s type.</dd>
     <p><code><a href='write.neuron.html'>write.neuron</a></code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># information about the currently registered file formats</span>
 <span class='fu'>fileformats</span>(<span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'info'</span>)</div><div class='output co'>#&gt;            format     class            ext  read write magic
 #&gt; 1  amiralandmarks landmarks .landmarkAscii  TRUE  TRUE  TRUE
@@ -200,8 +197,7 @@ from file header to determine file&#39;s type.</dd>
 #&gt; 22          swcng    ngraph           .swc  TRUE FALSE FALSE
 #&gt; 23       vaa3draw      im3d           .v3d  TRUE FALSE  TRUE
 #&gt; 24       vaa3draw      im3d        .v3draw  TRUE FALSE  TRUE
-#&gt; 25            vtk    neuron           .vtk FALSE  TRUE FALSE
-#&gt; </div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+#&gt; 25            vtk    neuron           .vtk FALSE  TRUE FALSE</div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
 <span class='co'># registerformat("swc",read=read.swc,write=read.swc,magic=is.swc,magiclen=10,</span>
 <span class='co'>#   class='neuron')</span>
 <span class='co'>## ---------------------------------------------</span>

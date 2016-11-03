@@ -153,20 +153,15 @@
     <p><code>xyzmatrix</code></p>
     
 
-    <h2 class="hasAnchor" id="examples">
-      <a class="anchor" href="#examples"></a>
-      Examples
-    </h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># see all available methods for different classes</span>
 <span class='fu'>methods</span>(<span class='st'>'xyzmatrix'</span>)</div><div class='output co'>#&gt; [1] xyzmatrix.default    xyzmatrix.dotprops   xyzmatrix.hxsurf    
 #&gt; [4] xyzmatrix.igraph     xyzmatrix.mesh3d     xyzmatrix.neuron    
 #&gt; [7] xyzmatrix.neuronlist
-#&gt; see &#39;?methods&#39; for accessing help and source code
-#&gt; </div><div class='input'><span class='co'># ... and for the assignment method</span>
+#&gt; see &#39;?methods&#39; for accessing help and source code</div><div class='input'><span class='co'># ... and for the assignment method</span>
 <span class='fu'>methods</span>(<span class='st'>'xyzmatrix&lt;-'</span>)</div><div class='output co'>#&gt; [1] xyzmatrix&lt;-.default  xyzmatrix&lt;-.dotprops xyzmatrix&lt;-.hxsurf  
 #&gt; [4] xyzmatrix&lt;-.igraph   xyzmatrix&lt;-.neuron   xyzmatrix&lt;-.shape3d 
-#&gt; see &#39;?methods&#39; for accessing help and source code
-#&gt; </div><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+#&gt; see &#39;?methods&#39; for accessing help and source code</div><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='fu'>xyzmatrix</span>(<span class='no'>n</span>)<span class='kw'>&lt;-</span><span class='fu'>xyzmatrix</span>(<span class='no'>n</span>)
 <span class='fu'>stopifnot</span>(<span class='fu'>isTRUE</span>(
   <span class='fu'>all.equal</span>(<span class='fu'>xyzmatrix</span>(<span class='no'>n</span>),<span class='fu'>xyzmatrix</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))
