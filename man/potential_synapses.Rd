@@ -22,7 +22,7 @@ potential_synapses(a, b, s, ...)
 
 \item{s}{the approach distance to consider a potential synapse}
 
-\item{...}{Additional arguments passed to methods}
+\item{...}{Additional arguments passed to methods (see details )}
 
 \item{sigma}{the smoothing parameter in the approximate method (see details)}
 
@@ -35,14 +35,31 @@ potential_synapses(a, b, s, ...)
 \description{
 This implements the method of Stepanyants and Chklovskii
 }
+\details{
+Note that \code{potential_synapses.neuronlist} uses 
+  \code{\link{nlapply}} to process its first argument (\code{a}). This 
+  enables progress bars, robustness to errors and simple parallel execution. 
+  See the \code{\link{nlapply}} examples for further details of these 
+  arguments in action.
+  
+  For this reason if you have two neuronlists of unequal sizes, it is 
+  recommended to put the larger one in argument \code{a}.
+}
 \examples{
 potential_synapses(Cell07PNs[1], Cell07PNs[1:3], s=2)
+\dontrun{
+# if you have many neurons to calculate you should get a progress bar 
+potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2)
+
+# you can also use parallel execution, here over 7 cores
+# doMC::registerDoMC(7)
+potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2, .parallel=TRUE)
+}
 }
 \references{
-Neurogeometry and potential synaptic connectivity.
-Stepanyants A, Chklovskii DB.
-Trends Neurosci. 2005 Jul;28(7):387-94.
-\url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
+Neurogeometry and potential synaptic connectivity. Stepanyants A,
+  Chklovskii DB. Trends Neurosci. 2005 Jul;28(7):387-94. 
+  \url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
 }
 \seealso{
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},

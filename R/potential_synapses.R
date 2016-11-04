@@ -7,22 +7,38 @@
 #' @param sigma the smoothing parameter in the approximate method (see details)
 #' @param method Whether to use the direct or approximate method (see details)
 #' @param bounds Optional bounding box to restrict comparison
-#' @param ... Additional arguments passed to methods
+#' @param ... Additional arguments passed to methods (see details )
+#' @details Note that \code{potential_synapses.neuronlist} uses 
+#'   \code{\link{nlapply}} to process its first argument (\code{a}). This 
+#'   enables progress bars, robustness to errors and simple parallel execution. 
+#'   See the \code{\link{nlapply}} examples for further details of these 
+#'   arguments in action.
+#'   
+#'   For this reason if you have two neuronlists of unequal sizes, it is 
+#'   recommended to put the larger one in argument \code{a}.
 #' @export
-#' @references
-#' Neurogeometry and potential synaptic connectivity.
-#' Stepanyants A, Chklovskii DB.
-#' Trends Neurosci. 2005 Jul;28(7):387-94.
-#' \url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
+#' @references Neurogeometry and potential synaptic connectivity. Stepanyants A,
+#'   Chklovskii DB. Trends Neurosci. 2005 Jul;28(7):387-94. 
+#'   \url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
 #' @examples
 #' potential_synapses(Cell07PNs[1], Cell07PNs[1:3], s=2)
+#' \dontrun{
+#' # if you have many neurons to calculate you should get a progress bar 
+#' potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2)
+#' 
+#' # you can also use parallel execution, here over 7 cores
+#' # doMC::registerDoMC(7)
+#' potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2, .parallel=TRUE)
+#' }
 potential_synapses<-function(a, b, s, ...) UseMethod('potential_synapses')
 
 #' @method potential_synapses neuronlist
 #' @export
 #' @rdname potential_synapses
 potential_synapses.neuronlist<-function(a, b, s, ...) {
-  sapply(a, potential_synapses, b, s, ...)
+  res=nlapply(a, potential_synapses, b, s, ...)
+  if(length(res)) simplify2array(res, higher = FALSE)
+  else res
 }
 
 #' @method potential_synapses neuron
