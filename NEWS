@@ -1,3 +1,11 @@
+nat 1.8.7
+=========
+* Teach xform and friends to transform soma positions (#206)
+* Copy attributes (including templatebrains) of neuronlists when subsetting (#310)
+* Fix error in read.amiramesh for RLE encoded files. (#317)
+  (reported by K. Hornik)
+* replace nat::trim with base::trimws (#313)
+
 nat 1.8.6
 =========
 * Add xform.data.frame method (#309)
