@@ -404,7 +404,7 @@ decode.rle<-function(d,uncompressedLength){
   while(bytesRead<uncompressedLength){
     x=d[filepos]
     filepos=filepos+1
-    if(x==0)
+    if(x==0L)
       stop(paste("byte at offset ",filepos," is 0!"))
     if(x>0x7f) {
       # cat("x=",x,"\n")
@@ -415,7 +415,7 @@ decode.rle<-function(d,uncompressedLength){
       # that's the x that we've read
     } else {
       # x>0
-      mybytes=rep.int(d[filepos],x)
+      mybytes=rep.int(d[filepos], as.integer(x))
       filepos=filepos+1
     }
     rval[(bytesRead+1):(bytesRead+length(mybytes))]=mybytes
