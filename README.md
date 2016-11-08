@@ -46,7 +46,7 @@ install.packages("nat")
 
 However, **nat** remains under quite active development, so we generally
 recommend installing the latest development version directly from github using
-the [devtools](http://CRAN.R-project.org/package=devtools) package.
+the [devtools](https://cran.r-project.org/package=devtools) package.
 
 ```r
 # install devtools if required
