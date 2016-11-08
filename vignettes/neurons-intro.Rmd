@@ -407,7 +407,7 @@ interactive analysis and exploration, it is much more helpful to have
 for [3D plots](http://jefferis.github.io/nat/reference/index.html#section--d-plotting-of-objects)
 based on the [rgl package](https://cran.r-project.org/package=rgl). It is 
 actually possible to embed fully interactive 3d figures in [rmarkdown](http://rmarkdown.rstudio.com/) reports
-like this one by setting the [webgl chunk option](https://cran.r-project.org/web/packages/rgl/vignettes/WebGL.html).
+like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
 
 ```{r, webgl=TRUE}
 clear3d()

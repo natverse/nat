@@ -98,8 +98,8 @@
 #'   be converted to the \code{\link[rgl]{mesh3d}} format, which provides a link
 #'   to the \code{\link[rgl]{rgl}} package and also to packages for 
 #'   morphometrics and sophisticated mesh manipulation such as 
-#'   \href{http://cran.r-project.org/package=Morpho}{Morpho} and 
-#'   \href{http://cran.r-project.org/package=Rvcg}{Rvcg}.
+#'   \href{https://cran.r-project.org/package=Morpho}{Morpho} and 
+#'   \href{https://cran.r-project.org/package=Rvcg}{Rvcg}.
 #'   
 #' @section rgl Package: \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}} 
 #'   package extensively for 3D visualisation. rgl's core function is to provide
