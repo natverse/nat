@@ -55,7 +55,7 @@ install.packages("nat", dependencies=TRUE)
 # Development version
 **nat** remains under quite active development, so we generally suggest using the
 development version directly from github. The recommended way to do this is to
-install Hadley Wickham's invaluable [devtools](http://CRAN.R-project.org/package=devtools)
+install Hadley Wickham's invaluable [devtools](https://CRAN.R-project.org/package=devtools)
 package (if you have not already done so) and then use that to install nat.
 
 ```r
