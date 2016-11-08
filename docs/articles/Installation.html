@@ -38,7 +38,7 @@
       <h1>Installation Details</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2016-11-02</h4>
+            <h4 class="date">2016-11-08</h4>
           </div>
 
     
@@ -52,8 +52,8 @@
 <div id="prerequisites" class="section level1">
 <h1 class="hasAnchor"><html><body><a href="#prerequisites" class="anchor"> </a></body></html>Prerequisites</h1>
 <p><strong>nat</strong> is an R package and therefore runs on Mac/Linux/Windows. The only pre-requisite for most functionality is a recent version of R (&gt;=3.1.0 recommended).</p>
-<ul><li><a href="http://www.r-project.org" class="uri">http://www.r-project.org</a></li>
-</ul><p>3D visualisation is provided by the rgl package based on OpenGL. On Mac OS X if you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11 window manager, installed. This is no longer a default install since Mac OS X 10.8, but the OS should offer to it install it for you if something tries to use it. Alternatively you can get it directly from <a href="https://xquartz.macosforge.org/landing/" class="uri">https://xquartz.macosforge.org/landing/</a>. This page is also linked from the <a href="http://cran.r-project.org/bin/macosx/">Download R for (Mac) OS X</a> page.</p>
+<ul><li><a href="https://www.r-project.org" class="uri">https://www.r-project.org</a></li>
+</ul><p>3D visualisation is provided by the rgl package based on OpenGL. On Mac OS X if you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11 window manager, installed. This is no longer a default install since Mac OS X 10.8, but the OS should offer to it install it for you if something tries to use it. Alternatively you can get it directly from <a href="https://xquartz.macosforge.org/landing/" class="uri">https://xquartz.macosforge.org/landing/</a>. This page is also linked from the <a href="https://cran.r-project.org/bin/macosx/">Download R for (Mac) OS X</a> page.</p>
 <p>If you want to apply non-rigid registrations calculated by the Computational Morphometry Toolkit (CMTK) you will need to install that separately &ndash; see section <em>External Dependencies</em> below.</p>
 </div>
 <div id="basic-installation" class="section level1">
@@ -73,7 +73,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 <p>The <strong>nat</strong> package includes extensive unit tests which are run along with R&rsquo;s (extremely fastidious) package check routines by the <a href="http://travis-ci.org/jefferis/nat">Travis</a> continuous integration server. The master branch is therefore considered very stable and may well contain fixes or enhancements over released versions. However, you can install any <a href="https://github.com/jefferis/nat/tags">release version</a> including the <a href="https://github.com/jefferis/nat/releases/latest">latest release</a> as follows:</p>
 <pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat@v1.8.6"</span>)</code></pre>
 <p>The same syntax can be used to install any arbitrary version that you want from github. See <code>?install_github</code> for details.</p>
-<p>Note: Windows users need <a href="http://www.murdoch-sutherland.com/Rtools/">Rtools</a> to install in this way, but devtools should offer to install this for you if you do not already have it.</p>
+<p>Note: Windows users need <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> to install in this way, but devtools should offer to install this for you if you do not already have it.</p>
 </div>
 <div id="external-dependencies" class="section level1">
 <h1 class="hasAnchor"><html><body><a href="#external-dependencies" class="anchor"> </a></body></html>External Dependencies</h1>

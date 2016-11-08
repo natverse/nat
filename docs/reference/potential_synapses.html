@@ -101,7 +101,7 @@
       <dt>s</dt>
       <dd>the approach distance to consider a potential synapse</dd>
       <dt>...</dt>
-      <dd>Additional arguments passed to methods</dd>
+      <dd>Additional arguments passed to methods (see details )</dd>
       <dt>sigma</dt>
       <dd>the smoothing parameter in the approximate method (see details)</dd>
       <dt>bounds</dt>
@@ -112,12 +112,21 @@
       <dd>how long to consider each distance between points.</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note that <code>potential_synapses.neuronlist</code> uses 
+  <code><a href='nlapply.html'>nlapply</a></code> to process its first argument (<code>a</code>). This 
+  enables progress bars, robustness to errors and simple parallel execution. 
+  See the <code><a href='nlapply.html'>nlapply</a></code> examples for further details of these 
+  arguments in action.</p>
+    <p>For this reason if you have two neuronlists of unequal sizes, it is 
+  recommended to put the larger one in argument <code>a</code>.</p>
+    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Neurogeometry and potential synaptic connectivity.
-Stepanyants A, Chklovskii DB.
-Trends Neurosci. 2005 Jul;28(7):387-94.
-<a href = 'http://dx.doi.org/10.1016/j.tins.2005.05.006'>http://dx.doi.org/10.1016/j.tins.2005.05.006</a></p>
+    <p>Neurogeometry and potential synaptic connectivity. Stepanyants A,
+  Chklovskii DB. Trends Neurosci. 2005 Jul;28(7):387-94. 
+  <a href = 'http://dx.doi.org/10.1016/j.tins.2005.05.006'>http://dx.doi.org/10.1016/j.tins.2005.05.006</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -131,13 +140,22 @@ Trends Neurosci. 2005 Jul;28(7):387-94.
     <pre class="examples"><div class='input'><span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt;        EBH11R
 #&gt; EBH11R    902
 #&gt; EBH20L    219
-#&gt; EBH20R    192</div></pre>
+#&gt; EBH20R    192</div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># # if you have many neurons to calculate you should get a progress bar </span>
+<span class='co'># potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2)</span>
+<span class='co'># </span>
+<span class='co'># # you can also use parallel execution, here over 7 cores</span>
+<span class='co'># # doMC::registerDoMC(7)</span>
+<span class='co'># potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2, .parallel=TRUE)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#references">References</a></li>
 
       <li><a href="#see-also">See also</a></li>
