@@ -430,7 +430,7 @@ rval=plot3d(Cell07PNs, subset=grepl("^D", Glomerulus), col=Glomerulus,
   lwd=2, WithNodes=FALSE)
 ```
 
-```{r plot3d-legend, fig.width=2, fig.height=2}
+```{r plot3d-legend, fig.width=3, fig.height=3}
 # make a legend so that you know which colours match which glomerulus
 plot.new()
 with(attr(rval,'df'), legend('center', legend = unique(Glomerulus), fill=unique(col)))
