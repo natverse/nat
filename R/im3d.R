@@ -1108,7 +1108,7 @@ imscalebar<-function(levels,col,nlevels=NULL,zlim=NULL,horizontal=TRUE,lab="Dens
 #' 
 #' @param d An \code{im3d} object
 #' @family im3d
-#' @return Nx3 matrix of image coordindates
+#' @return Nx3 matrix of image coordinates
 #' @seealso expand.grid
 #' @export
 #' @examples

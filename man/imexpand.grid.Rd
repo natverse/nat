@@ -10,7 +10,7 @@ imexpand.grid(d)
 \item{d}{An \code{im3d} object}
 }
 \value{
-Nx3 matrix of image coordindates
+Nx3 matrix of image coordinates
 }
 \description{
 Convert locations of im3d voxel grid into XYZ coordinates

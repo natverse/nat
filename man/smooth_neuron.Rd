@@ -16,7 +16,7 @@ smooth_segment_gauss(xyz, sigma, ...)
 
 \item{...}{Additional parameters passed to segment smoothing functions}
 
-\item{xyz}{A block of 3D coordindates defining an unbranched segment}
+\item{xyz}{A block of 3D coordinates defining an unbranched segment}
 
 \item{sigma}{The standard deviation of the Gaussian smoothing kernel (which
 has the same spatial units as the object being smoothed)}
