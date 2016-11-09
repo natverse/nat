@@ -7,7 +7,10 @@ if(!interactive())
   Sys.setenv(RGL_USE_NULL=TRUE)
 
 # Is internet accessible?
-internet.ok=isTRUE(try(url_ok('http://flybrain.mrc-lmb.cam.ac.uk/')))
+internet.ok = identical(
+  status_code(HEAD("http://flybrain.mrc-lmb.cam.ac.uk/", timeout(2))),
+  200L
+)
 
 if(Sys.getenv('NOT_CRAN') == "true" && internet.ok) {
   # note that we want to run all tests requiring internet access
