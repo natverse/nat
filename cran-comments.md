@@ -1,50 +1,39 @@
-# nat 1.8.4
-nat 1.8.4 fixes a breakage due to changes in behaviour for testthat >0.12 as 
-well as providing some new functionality.
+# nat 1.8.7
+nat 1.8.7 fixes a breakage due to changes in behaviour of rep.int in svn 
+changeset c71611 that was resulting in build errors of the current CRAN release
+(v1.8.4) under r-devel. There are numerous additional bug fixes and enhancements
+since v1.8.4, including two vignettes.
 
 ## Test environments
-* local OS X install, R 3.3.1
-* ubuntu 12.04 (on travis-ci), R 3.2.5
-* winbuilder (devel and release)
-
-http://win-builder.r-project.org/UwuUTD6g7r0B/
+* local OS X install, R 3.3.2-patched
+* ubuntu 12.04 (on travis-ci), R 3.3.1
+* winbuilder (devel)
 
 ## R CMD check results
 Running R CMD check --as-cran gave
 
-no ERRORs or WARNINGs and 1 NOTE:
+no ERRORs, WARNINGs or NOTEs:
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: ‘Greg Jefferis <jefferis@gmail.com>’
+Winbuilder also gave one note:
 
-Found the following (possibly) invalid URLs:
-  URL: http://dx.doi.org/10.1038/nature10428 (moved to /nature/journal/v478/n7368/full/nature10428.html)
-    From: README.md
-    Status: 401
-    Message: Unauthorized
-
-I have left this dx.doi.org URL in place since it will always redirect to the 
-current location of the article on the Nature website (which is not guaranteed).
-The Unauthorized message comes up because the article is paywalled (I do not see
-it at work).
-
-Winbuilder also came up with one note:
+https://win-builder.r-project.org/yji0dXWrOkVq
 
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Greg Jefferis <jefferis@gmail.com>'
 
 Possibly mis-spelled words in DESCRIPTION:
-  AmiraMesh (11:25)
-  LineSet (13:5)
-  NRRD (11:8)
-  NeuroAnatomy (3:8, 9:14)
-  SWC (12:64)
-  SkeletonGraph (13:17)
-  hxsurf (11:73)
-  nat (9:36)
-  skeletonisation (16:63)
+  AmiraMesh (13:25)
+  LineSet (15:5)
+  NRRD (13:8)
+  NeuroAnatomy (3:8, 11:14)
+  SWC (14:64)
+  SkeletonGraph (15:17)
+  hxsurf (13:73)
+  nat (11:36)
+  skeletonisation (18:63)
   
-but I believe that these are all false positives.
+but I believe that these are all false positives and there are no additions to 
+this list since the last CRAN release.
 
 ## Tests
 Note that some tests have been marked as donttest to reduce the standard test
