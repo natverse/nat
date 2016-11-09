@@ -29,7 +29,11 @@ A new neuron with smoothed 3d coordinates
 }
 \examples{
 ns=smooth_neuron(Cell07PNs[[1]], sigma=2)
+# plot in 2D zooming in on axon terminals 
+plot(Cell07PNs[[1]], col='grey', xlim=c(260,290), ylim=c(115,90))
+plot(ns, col='red', add=TRUE)
 \donttest{
+# 3D plot
 plot3d(Cell07PNs[[1]], col='grey')
 plot3d(ns, col='red')
 }
