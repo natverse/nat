@@ -36,6 +36,7 @@
                  class='landmarks', magiclen=14L)
 
   registerformat('fijilandmarks', ext=c('.points'), read=read.landmarks.fiji,
+                 write=write.landmarks.fiji,
                  magic=is.fijilandmarks, class='landmarks', magiclen=5L)
 
   registerformat('cmtklandmarks', ext=c('.landmarks'), read=read.landmarks.cmtk,

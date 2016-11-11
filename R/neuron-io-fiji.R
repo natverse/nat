@@ -136,6 +136,29 @@ read.landmarks.fiji<-function(f, ...){
   matrix(points, ncol=3, byrow = T, dimnames = list(pointnames, c("X", "Y", "Z")))
 }
 
+write.landmarks.fiji <- function(x, file, ...) {
+  header='<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE namedpointset [
+  <!ELEMENT namedpointset (pointworld*)>
+  <!ELEMENT pointworld EMPTY>
+  <!ATTLIST namedpointset version CDATA #REQUIRED>
+  <!ATTLIST pointworld set (true|false) #REQUIRED>
+  <!ATTLIST pointworld name CDATA #REQUIRED>
+  <!ATTLIST pointworld x CDATA #IMPLIED>
+  <!ATTLIST pointworld y CDATA #IMPLIED>
+  <!ATTLIST pointworld z CDATA #IMPLIED>
+  ]>
+  '
+  
+  point_start='<namedpointset version="1.0">'
+  point_end='</namedpointset>'
+  points=sprintf('<pointworld set="true" name="%s" x="%f" y="%f" z="%f"/>', rownames(x), x[,1], x[,2], x[,3])
+  cat(header, file=file, sep="\n", ...)
+  cat(point_start, file=file, sep="\n", append = TRUE)
+  cat(points, file=file, sep="\n", append = TRUE)
+  cat(point_end, file=file, sep="\n", append = TRUE)
+}
+
 # Test if a file is in the Fiji landmarks format
 is.fijilandmarks<-function(f, bytes=NULL){
   if(!is.null(bytes) && length(f)>1)
