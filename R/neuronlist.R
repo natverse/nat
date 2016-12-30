@@ -332,7 +332,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   
 #'   \item \code{.progress} set to \code{"text"} for a basic progress bar
 #'   
-#'   \item \code{.parallel} set to \code{TRUE} for parallelisation after
+#'   \item \code{.parallel} set to \code{TRUE} for parallelisation after 
 #'   registering a parallel backend (see below).
 #'   
 #'   \item \code{.paropts} Additional arguments for parallel computation. See 
@@ -362,8 +362,10 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   details.
 #' @param .progress Character vector specifying the type of progress bar (see 
 #'   \code{\link[plyr]{create_progress_bar}} for options.) The default value of 
-#'   \code{"auto"} shows a progress bar in interactive use when there are >=10
-#'   elements in \code{X}.
+#'   \code{"auto"} shows a progress bar in interactive use when there are >=10 
+#'   elements in \code{X}. The default value can be overridden for the current 
+#'   session by setting the value of \code{options(nat.progressbar)} (see
+#'   examples).
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -407,7 +409,17 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' plot3d(xyzflip)
 #' rgl.close()
 #' }
-nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, .progress='auto'){
+#' 
+#' \dontrun{
+#' ## Override default progress bar behaviour via options
+#' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' options(nat.progress='none')
+#' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' options(nat.progress=NULL)
+#' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' }
+nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, 
+                   .progress=getOption('nat.progress', default='auto')){
   
   if(.progress=='auto') {
     if(length(X)>=10 && interactive()) .progress="text"

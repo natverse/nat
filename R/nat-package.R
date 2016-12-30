@@ -133,6 +133,9 @@
 #'   \item{\code{nat.default.neuronlist}}{ A neuronlist to use with the 
 #'   \code{\link{plot3d.character}} method}
 #'   
+#'   \item{\code{nat.default.progress}}{ The default progress reporter to use 
+#'   with \code{\link{nlapply}}}
+#'   
 #'   }
 #'   
 #'   In addition there is one read-only option: \itemize{

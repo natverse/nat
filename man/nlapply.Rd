@@ -5,7 +5,8 @@
 \alias{nmapply}
 \title{lapply and mapply for neuronlists (with optional parallelisation)}
 \usage{
-nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA, .progress = "auto")
+nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA,
+  .progress = getOption("nat.progress", default = "auto"))
 
 nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
   subset = NULL, OmitFailures = NA)
@@ -28,8 +29,10 @@ details.}
 
 \item{.progress}{Character vector specifying the type of progress bar (see 
 \code{\link[plyr]{create_progress_bar}} for options.) The default value of 
-\code{"auto"} shows a progress bar in interactive use when there are >=10
-elements in \code{X}.}
+\code{"auto"} shows a progress bar in interactive use when there are >=10 
+elements in \code{X}. The default value can be overridden for the current 
+session by setting the value of \code{options(nat.progressbar)} (see
+examples).}
 
 \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 
@@ -72,7 +75,7 @@ When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
   
   \item \code{.progress} set to \code{"text"} for a basic progress bar
   
-  \item \code{.parallel} set to \code{TRUE} for parallelisation after
+  \item \code{.parallel} set to \code{TRUE} for parallelisation after 
   registering a parallel backend (see below).
   
   \item \code{.paropts} Additional arguments for parallel computation. See 
@@ -128,6 +131,15 @@ open3d()
 plot3d(kcs20[1:3])
 plot3d(xyzflip)
 rgl.close()
+}
+
+\dontrun{
+## Override default progress bar behaviour via options
+sl=nlapply(Cell07PNs, FUN = seglengths)
+options(nat.progress='none')
+sl=nlapply(Cell07PNs, FUN = seglengths)
+options(nat.progress=NULL)
+sl=nlapply(Cell07PNs, FUN = seglengths)
 }
 }
 \seealso{
