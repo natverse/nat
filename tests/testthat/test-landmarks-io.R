@@ -32,6 +32,21 @@ test_that("we can read Fiji landmarks", {
   
   expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2.points"), baseline,
                tolerance=1e-6)
+  tf=tempfile(fileext = '.points')
+  expect_equal(basename(write.landmarks(baseline, file = tf, format = 'fiji')),
+            basename(tf))
+  # make sure we can overwrite
+  expect_warning(write.landmarks(baseline, file = tf, format = 'fiji'),
+                'overwrite')
+  expect_equal(
+    basename(write.landmarks(baseline, file = tf, format = 'fiji', Force = T)), 
+    basename(tf)
+  )
+  
+  expect_equal(read.landmarks.fiji(tf), baseline,
+               tolerance=1e-6)
+  expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2.points"), baseline,
+               tolerance=1e-6)
   
   expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2_single.points"),
                baseline[1, , drop=FALSE], tolerance=1e-6)
