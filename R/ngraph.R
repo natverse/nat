@@ -451,21 +451,28 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #' Prune selected vertices or edges from a neuron
 #' 
 #' @description \code{prune_vertices} removes vertices from a neuron
-#' 
+#'   
 #' @details These are relatively low-level functions and you will probably want 
 #'   to use \code{\link{subset.neuron}} or \code{\link{prune.neuron}} and 
 #'   friends in many cases.
 #'   
 #'   Note that \code{prune_vertices} and \code{prune_edges} both use \bold{raw} 
-#'   vertex ids to specify the vertices/edges to be removed. If you want to use
-#'   the id in the PointNo field, then you must translate yourself (see
+#'   vertex ids to specify the vertices/edges to be removed. If you want to use 
+#'   the id in the PointNo field, then you must translate yourself (see 
 #'   examples).
 #'   
-#'   \code{prune_vertices} first converts its input to the \code{\link{ngraph}} 
-#'   representation of the neuron to remove points. The input \code{x} can 
-#'   therefore be in any form compatible with \code{\link{as.ngraph}}. There is 
+#'   Both \code{prune_vertices} and \code{prune_edges} first convert their input
+#'   \code{x} to the \code{\link{ngraph}} representation of the neuron befor 
+#'   removing points. The input \code{x} can therefore be in any form compatible
+#'   with \code{\link{as.ngraph}} including an existing \code{ngraph}. There is 
 #'   an additional requirement that the input must be compatible with 
 #'   \code{\link{xyzmatrix}} if \code{invert=TRUE}.
+#'   
+#'   Note that the \code{edges} argument of \code{prune_edges} must specify a 
+#'   path traversing a set of vertices in a valid order. However if the input is
+#'   a matrix or vector the direction of each individual edge in this path is
+#'   ignored. So if your neuron has edges 2->1 2->3 3->4 then an edge sequence
+#'   1:3 would successfully delete 2 edges. 
 #'   
 #' @param x A \code{\link{neuron}} to prune. This can be any object that can be 
 #'   converted by \code{\link{as.ngraph}} --- see details.
@@ -502,11 +509,11 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
 }
 
 #' @description \code{prune_edges} removes edges (and any unreferenced vertices)
-#' @param edges The edges to remove. Either an Nx2 matrix, each row specifying a
-#'   single edge defined by its \bold{raw} edge id, an integer vector defining a
-#'   \emph{path} of raw vertex ids or an \code{igraph.es} edge sequence --- see
-#'   the \code{P} and \code{path} arguments of \code{igraph::\link[igraph]{E}}
-#'   for details.
+#' @param edges The edges to remove. One of i) an Nx2 matrix, each row
+#'   specifying a single edge defined by its \bold{raw} edge id, ii) an integer
+#'   vector defining a \emph{path} of raw vertex ids or iii) an \code{igraph.es}
+#'   edge sequence --- see detaiuls and the \code{P} and \code{path} arguments
+#'   of \code{igraph::\link[igraph]{E}}.
 #' @export
 #' @rdname prune_vertices
 #' @examples 
@@ -522,11 +529,14 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
 prune_edges<-function(x, edges, invert=FALSE, ...) {
   g=as.ngraph(x)
   if(!inherits(edges, "igraph.es")){
+    if(!is.numeric(edges))
+      stop("I can't understand the edges you have given me!")
     if(is.matrix(edges)){
-      edges=igraph::E(g, P = as.vector(t(edges)))
-    } else if(is.numeric(edges)) {
-      edges=igraph::E(g, path = as.vector(t(edges)))
-    } else stop("I can't understand the edges you have given me!")
+      if(ncol(edges)!=2) stop("Edge matrix must have 2 columns!")
+    } else {
+      edges=cbind(edges[-length(edges)], edges[-1])
+    }
+    edges=igraph::E(g, P = as.vector(t(edges)), directed = FALSE)
   }
   
   if(invert) edges=setdiff(igraph::E(g), edges)

@@ -20,11 +20,11 @@ FALSE).}
 
 \item{...}{Additional arguments passed to \code{\link{as.neuron.ngraph}}}
 
-\item{edges}{The edges to remove. Either an Nx2 matrix, each row specifying a
-single edge defined by its \bold{raw} edge id, an integer vector defining a
-\emph{path} of raw vertex ids or an \code{igraph.es} edge sequence --- see
-the \code{P} and \code{path} arguments of \code{igraph::\link[igraph]{E}}
-for details.}
+\item{edges}{The edges to remove. One of i) an Nx2 matrix, each row
+specifying a single edge defined by its \bold{raw} edge id, ii) an integer
+vector defining a \emph{path} of raw vertex ids or iii) an \code{igraph.es}
+edge sequence --- see detaiuls and the \code{P} and \code{path} arguments
+of \code{igraph::\link[igraph]{E}}.}
 }
 \value{
 A pruned \code{neuron}
@@ -40,15 +40,22 @@ These are relatively low-level functions and you will probably want
   friends in many cases.
   
   Note that \code{prune_vertices} and \code{prune_edges} both use \bold{raw} 
-  vertex ids to specify the vertices/edges to be removed. If you want to use
-  the id in the PointNo field, then you must translate yourself (see
+  vertex ids to specify the vertices/edges to be removed. If you want to use 
+  the id in the PointNo field, then you must translate yourself (see 
   examples).
   
-  \code{prune_vertices} first converts its input to the \code{\link{ngraph}} 
-  representation of the neuron to remove points. The input \code{x} can 
-  therefore be in any form compatible with \code{\link{as.ngraph}}. There is 
+  Both \code{prune_vertices} and \code{prune_edges} first convert their input
+  \code{x} to the \code{\link{ngraph}} representation of the neuron befor 
+  removing points. The input \code{x} can therefore be in any form compatible
+  with \code{\link{as.ngraph}} including an existing \code{ngraph}. There is 
   an additional requirement that the input must be compatible with 
   \code{\link{xyzmatrix}} if \code{invert=TRUE}.
+  
+  Note that the \code{edges} argument of \code{prune_edges} must specify a 
+  path traversing a set of vertices in a valid order. However if the input is
+  a matrix or vector the direction of each individual edge in this path is
+  ignored. So if your neuron has edges 2->1 2->3 3->4 then an edge sequence
+  1:3 would successfully delete 2 edges.
 }
 \examples{
 n=prune_vertices(Cell07PNs[[1]], 1:25)

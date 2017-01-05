@@ -118,6 +118,13 @@ test_that("we can find the inverse of the spine", {
                match(antispine$d$PointNo, n$d$PointNo))
 })
 
+test_that("prune_edges (and therefore spine) can cope with paths with reversed edges", {
+  # see https://github.com/jefferis/nat/issues/320
+  baseline=prune_edges(Cell07PNs[[1]], cbind(1:3, 2:4), invert=TRUE)
+  expect_equal(prune_edges(Cell07PNs[[1]], cbind(c(2,3,3), c(1,2,4)), invert=TRUE),
+               baseline)
+})
+
 test_that("setting of graph attributes",{
   gatts=list(name='testneuron',nclass="PN")
   expect_is(testg <- as.ngraph(testd, graph.attributes = gatts, 
