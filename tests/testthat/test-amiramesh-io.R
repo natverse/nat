@@ -7,7 +7,9 @@ test_that("check basic reading of amiramesh header",{
 
 test_that("check basic reading of amiramesh file (neuron)",{
   am='testdata/neuron/EBT7R.am'
-  expect_is(read.amiramesh(am),'list')
+  expect_is(n1 <- read.amiramesh(am),'list')
+  am2='testdata/neuron/EBT7R_nans.am'
+  expect_equal(read.amiramesh(am2)[1], n1[1])
 })
 
 test_that("check reading amiramesh in zlib and rle formats",{

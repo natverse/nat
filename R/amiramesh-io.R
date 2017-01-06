@@ -140,7 +140,8 @@ read.amiramesh.ascii<-function(file, df, sections, Verbose=FALSE){
       if(Verbose) cat("Reading ",df$DataLength[i],"lines in file",file,"\n")
       
       if(df$RType[i]=="integer") whatval=integer(0) else whatval=numeric(0)
-      datachunk=scan(con,what=whatval,n=df$SimpleDataLength[i],quiet=!Verbose)
+      datachunk=scan(con,what=whatval,n=df$SimpleDataLength[i],quiet=!Verbose, 
+                     na.strings = c("ERR","NA","NaN"))
       # store data if required
       if(df$DataName[i]%in%sections){
         # convert to matrix if required
