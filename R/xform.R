@@ -174,8 +174,10 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
 #'   When \code{x}'s attached data.frame contains columns called x,y,z or X,Y,Z 
 #'   then these are assumed to be coordinates and also transformed when 
 #'   \code{TransformDFCoords=TRUE} (the default). This provides a mechanism for 
-#'   transforming the soma positions of \code{neuronlist} objects containing
-#'   \code{dotprops} objects.
+#'   transforming the soma positions of \code{neuronlist} objects containing 
+#'   \code{dotprops} objects (which do not otherwise store the soma position).
+#'   Note that if transformation fails, a warning will be issued and the points
+#'   will be replaced with \code{NA} values.
 #' @param subset For \code{xform.neuronlist} indices (character/logical/integer)
 #'   that specify a subset of the members of \code{x} to be transformed.
 #' @param VectoriseRegistrations When \code{FALSE}, the default, each element of
@@ -212,15 +214,15 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
         stop("Not yet implemented")
       } else {
         # let's assume that if we were able to transform the neuron, then we
-        # insist on being able to transform the soma
-        # but we just keep rows for neurons in our result neuronlist
+        # want to be able to transform the soma (but will warn on failure)
+        # However we just keep rows for neurons in our result neuronlist
         # given that choice we need to convert our subset expression into rownames
         # because numeric indices will get out of register
         if(!is.null(subset) && !is.character(subset))
           subset=rownames(df)[subset]
         df=df[names(tx),,drop=FALSE]
         
-        data.frame(tx) <- xform(df, reg, na.action = 'error', subset = subset)
+        data.frame(tx) <- xform(df, reg, na.action = 'warn', subset = subset)
       }
     }
   }

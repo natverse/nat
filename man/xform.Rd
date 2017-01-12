@@ -107,8 +107,10 @@ With \code{xform.neuronlist}, if you want to apply a different
   When \code{x}'s attached data.frame contains columns called x,y,z or X,Y,Z 
   then these are assumed to be coordinates and also transformed when 
   \code{TransformDFCoords=TRUE} (the default). This provides a mechanism for 
-  transforming the soma positions of \code{neuronlist} objects containing
-  \code{dotprops} objects.
+  transforming the soma positions of \code{neuronlist} objects containing 
+  \code{dotprops} objects (which do not otherwise store the soma position).
+  Note that if transformation fails, a warning will be issued and the points
+  will be replaced with \code{NA} values.
 }
 \section{Registrations}{
 
