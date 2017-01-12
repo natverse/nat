@@ -82,6 +82,16 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
   # construct edge list
   el=cbind(start=lpts[-length(lpts)], end=lpts[-1])
   el=el[!is.na(rowSums(el)),]
+  # sanity check - do all edges reference vertices
+  vertices_in_edges=na.omit(unique(lpts))
+  missing_vertices=setdiff(vertices_in_edges, coords$PointNo)
+  if(length(missing_vertices)) {
+    stop(
+      "Invalid amiramesh file - adjacency list mentions ",
+      length(missing_vertices),
+      " vertices that are undefined!"
+    )
+  }
   ng=ngraph(el, vertexlabels=coords$PointNo, xyz = coords[,c("X","Y","Z"), drop=FALSE], diam=coords[,"W"])
   as.neuron(ng, InputFileName=file, ...)
 }
