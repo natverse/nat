@@ -217,8 +217,10 @@ neuroanatomical data, especially representations of neurons.</p>
 <li><code>nat.default.neuronlist</code> A neuronlist to use with the 
   <code><a href='plot3d.neuronlist.html'>plot3d.character</a></code> method</p>
     <p></li>
-<li><code>nat.default.progress</code> The default progress reporter to use 
-  with <code><a href='nlapply.html'>nlapply</a></code></p>
+<li><code>nat.progress</code> The default progress reporter to use with 
+  <code><a href='nlapply.html'>nlapply</a></code>. See <code><a href='http://www.rdocumentation.org/packages/plyr/topics/create_progress_bar'>create_progress_bar</a></code> for 
+  possible values. When unset is equivalent to special value <code>&#39;auto&#39;</code>. 
+  To suppress altogether, use <code>nat.progress=&quot;none&quot;</code>.</p>
     <p></li>
 </ul></p>
     <p>In addition there is one read-only option: <ul>

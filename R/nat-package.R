@@ -136,7 +136,7 @@
 #'   \item{\code{nat.progress}}{ The default progress reporter to use with 
 #'   \code{\link{nlapply}}. See \code{\link[plyr]{create_progress_bar}} for 
 #'   possible values. When unset is equivalent to special value \code{'auto'}. 
-#'   To suppress altogether, use \code{nat.progress="none"}.
+#'   To suppress altogether, use \code{nat.progress="none"}.}
 #'   
 #'   }
 #'   
