@@ -141,31 +141,6 @@ neuroanatomical data, especially representations of neurons.
   packages or end users to extend the supported list of file types by 
   registering new read/write or identification functions.
 }
-
-\section{Package Options}{
- The following options can be set to specify default
-  behaviour.
-  
-  \itemize{
-  
-  \item{\code{nat.cmtk.bindir}}{ Location of CMTK binaries. See 
-  \code{\link{cmtk.bindir}}}
-  
-  \item{\code{nat.default.neuronlist}}{ A neuronlist to use with the 
-  \code{\link{plot3d.character}} method}
-  
-  \item{\code{nat.default.progress}}{ The default progress reporter to use 
-  with \code{\link{nlapply}}}
-  
-  }
-  
-  In addition there is one read-only option: \itemize{
-  
-  \item \code{nat.cmtk.version} which is used to store the current cmtk 
-  version when there are repeated calls to \code{\link{cmtk.version}}.
-  
-  }
-}
 \seealso{
 \code{\link{neuron}}, \code{\link{dotprops}}, 
   \code{\link{neuronlist}}, \code{\link{nlapply}}, \code{\link[nat]{plot3d}},
