@@ -180,8 +180,10 @@ as well.</dd>
     <p>When <code>x</code>&#39;s attached data.frame contains columns called x,y,z or X,Y,Z 
   then these are assumed to be coordinates and also transformed when 
   <code>TransformDFCoords=TRUE</code> (the default). This provides a mechanism for 
-  transforming the soma positions of <code>neuronlist</code> objects containing
-  <code>dotprops</code> objects.</p>
+  transforming the soma positions of <code>neuronlist</code> objects containing 
+  <code>dotprops</code> objects (which do not otherwise store the soma position).
+  Note that if transformation fails, a warning will be issued and the points
+  will be replaced with <code>NA</code> values.</p>
     
     <h2 class="hasAnchor" id="registrations"><a class="anchor" href="#registrations"></a>Registrations</h2>
 

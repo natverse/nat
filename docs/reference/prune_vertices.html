@@ -100,11 +100,11 @@ FALSE).</dd>
       <dt>...</dt>
       <dd>Additional arguments passed to <code><a href='neuron.html'>as.neuron.ngraph</a></code></dd>
       <dt>edges</dt>
-      <dd>The edges to remove. Either an Nx2 matrix, each row specifying a
-single edge defined by its <b>raw</b> edge id, an integer vector defining a
-<em>path</em> of raw vertex ids or an <code>igraph.es</code> edge sequence --- see
-the <code>P</code> and <code>path</code> arguments of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E'>E</a></code>
-for details.</dd>
+      <dd>The edges to remove. One of i) an Nx2 matrix, each row
+specifying a single edge defined by its <b>raw</b> edge id, ii) an integer
+vector defining a <em>path</em> of raw vertex ids or iii) an <code>igraph.es</code>
+edge sequence --- see detaiuls and the <code>P</code> and <code>path</code> arguments
+of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E'>E</a></code>.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -117,14 +117,20 @@ for details.</dd>
   to use <code><a href='subset.neuron.html'>subset.neuron</a></code> or <code><a href='prune.html'>prune.neuron</a></code> and 
   friends in many cases.</p>
     <p>Note that <code>prune_vertices</code> and <code>prune_edges</code> both use <b>raw</b> 
-  vertex ids to specify the vertices/edges to be removed. If you want to use
-  the id in the PointNo field, then you must translate yourself (see
+  vertex ids to specify the vertices/edges to be removed. If you want to use 
+  the id in the PointNo field, then you must translate yourself (see 
   examples).</p>
-    <p><code>prune_vertices</code> first converts its input to the <code><a href='ngraph.html'>ngraph</a></code> 
-  representation of the neuron to remove points. The input <code>x</code> can 
-  therefore be in any form compatible with <code><a href='ngraph.html'>as.ngraph</a></code>. There is 
+    <p>Both <code>prune_vertices</code> and <code>prune_edges</code> first convert their input
+  <code>x</code> to the <code><a href='ngraph.html'>ngraph</a></code> representation of the neuron befor 
+  removing points. The input <code>x</code> can therefore be in any form compatible
+  with <code><a href='ngraph.html'>as.ngraph</a></code> including an existing <code>ngraph</code>. There is 
   an additional requirement that the input must be compatible with 
   <code><a href='xyzmatrix.html'>xyzmatrix</a></code> if <code>invert=TRUE</code>.</p>
+    <p>Note that the <code>edges</code> argument of <code>prune_edges</code> must specify a 
+  path traversing a set of vertices in a valid order. However if the input is
+  a matrix or vector the direction of each individual edge in this path is
+  ignored. So if your neuron has edges 2-&gt;1 2-&gt;3 3-&gt;4 then an edge sequence
+  1:3 would successfully delete 2 edges.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
