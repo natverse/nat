@@ -189,6 +189,9 @@ test_that("can extract xyz coords from a neuronlist",{
   xyz12=rbind(xyzmatrix(kcs20[[1]]),xyzmatrix(kcs20[[2]]))
   expect_is(xyzmatrix(kcs20[1:2]),'matrix')
   expect_equal(xyzmatrix(kcs20[1:2]), xyz12)
+  kcs1_5=kcs20[1:5]
+  xyzmatrix(kcs1_5) <- xyzmatrix(kcs1_5)
+  expect_equal(kcs1_5, kcs20[1:5])
 })
 
 test_that("we can count number of vertices", {

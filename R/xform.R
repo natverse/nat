@@ -376,6 +376,21 @@ xyzmatrix.mesh3d<-function(x, ...){
   x
 }
 
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.neuronlist`<-function(x, value){
+  # find number of vertices for each neuron
+  nv=nvertices(x)
+  if (sum(nv) != nrow(value))
+    stop("Mismatch between original and replacement number of vertices!")
+  idxs=rep(seq_along(x), nv)
+  b=by(value, INDICES = idxs, FUN = data.matrix)
+  for(i in seq_along(x)) {
+    xyzmatrix(x[[i]]) <- b[[i]]
+  }
+  x
+}
+
 #' Find the number of vertices in an object (or each element of a neuronlist)
 #' @param x 
 #' @param ...
