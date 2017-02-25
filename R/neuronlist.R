@@ -709,6 +709,16 @@ plot.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, add=NULL,
 # see plot3d.neuronlist for details
 # @param nitems Number of items for which colours must be made
 makecols<-function(cols, colpal, nitems) {
+  if(is.character(cols)) {
+    # check if these look like colours or we just forgot to turn a factor-like
+    # column into a factor
+    coltry=try(col2rgb(cols), silent = TRUE)
+    if(inherits(coltry, 'try-error')) {
+      cols=factor(cols)
+      warning("col argument does not not look like an R colour! Converting to factor!",
+              "\nDo this yourself to avoid this warning in future.")
+    }
+  }
   if(!is.character(cols)){
     if(is.null(cols)) {
       if(is.function(colpal)) colpal=colpal(nitems)
