@@ -376,6 +376,37 @@ xyzmatrix.mesh3d<-function(x, ...){
   x
 }
 
+#' Find the number of vertices in an object (or each element of a neuronlist)
+#' @param x 
+#' @param ...
+#'   
+#' @return an integer number of vertices (or a vector of length equal to a
+#'   neuronlist)
+#' @export
+#' 
+#' @examples
+#' nvertices(Cell07PNs[[1]])
+#' nvertices(kcs20)
+nvertices <- function(x, ...) UseMethod('nvertices')
+
+#' @rdname nvertices
+#' @export
+nvertices.default <- function(x, ...) {
+  nrow(xyzmatrix(x))
+}
+
+#' @export
+nvertices.neuron <- function(x, ...) nrow(x$d)
+
+#' @export
+nvertices.dotprops <- function(x, ...) nrow(x$points)
+
+#' @rdname nvertices
+#' @export
+nvertices.neuronlist <- function(x, ...) {
+  sapply(x, nvertices)
+}
+
 #' Mirror 3D object about a given axis, optionally using a warping registration
 #' 
 #' @description mirroring with a warping registration can be used to account 

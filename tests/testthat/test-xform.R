@@ -191,6 +191,12 @@ test_that("can extract xyz coords from a neuronlist",{
   expect_equal(xyzmatrix(kcs20[1:2]), xyz12)
 })
 
+test_that("we can count number of vertices", {
+  expect_equal(nvertices(kcs20[[1]]), 284L)
+  expect_equal(nvertices(kcs20), sapply(kcs20, function(x) nrow(x$points)))
+  expect_equal(nvertices(Cell07PNs), sapply(Cell07PNs, function(x) nrow(x$d)))
+})
+
 test_that("we can extract/replace coords and xform shape3d objects",{
   m=as.mesh3d(MBL.surf)
   xyz=xyzmatrix(m)
