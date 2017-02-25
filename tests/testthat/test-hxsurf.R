@@ -100,6 +100,9 @@ test_that("we can convert hxsurf to rgl::mesh3d",{
   expect_is(tet.mesh3d<-as.mesh3d(tet.hxsurf), 'mesh3d')
   expect_equal(tet.mesh3d, tetrahedron3d(color='#FF0000'))
   
+  # round trip test
+  expect_equal(as.hxsurf(tet.mesh3d, region = 'Inside'), tet.hxsurf)
+  
   expect_equal(as.mesh3d(surf, Regions=c("LH_L","LH_R")),
                as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))  
 })

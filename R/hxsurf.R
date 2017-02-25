@@ -276,7 +276,7 @@ as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
 #' @param drop Whether to drop unused vertices (default TRUE)
 #' @export
 #' @rdname as.mesh3d
-#' @seealso \code{\link[rgl]{tmesh3d}}
+#' @seealso \code{\link[rgl]{tmesh3d}}, \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
 #' @family hxsurf
 as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   if(is.null(Regions)) {
@@ -291,6 +291,52 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   inds=t(data.matrix(do.call(rbind, x$Regions)))
   tmesh3d(vertices=verts, indices=inds, homogeneous = FALSE, material = material, ...)
 }
+
+
+#' Convert an object to a nat hxsurf object
+#' 
+#' @details \code{hxsurf} objects are based on the format of Amira's surface 
+#'   objects (see \code{\link{read.hxsurf}}). They have the ability to include 
+#'   multiple distinct regions. However, at the moment the only method that we 
+#'   provide converts \code{mesh3d} objects, which can only include one region.
+#' @param x A surface object
+#' @param ... Additional arguments passed to methods
+#'   
+#' @return A new surface object of class \code{hxsurf} (see 
+#'   \code{\link{read.hxsurf}}) for details.
+#' @export
+#' @family hxsurf
+#' @seealso \code{\link{as.mesh3d}}
+#' @examples
+#' tet=tetrahedron3d(col='red')
+#' teth=as.hxsurf(tet)
+#' \donttest{
+#' plot3d(teth)
+#' }
+as.hxsurf <- function(x, ...) UseMethod('as.hxsurf')
+
+#' @param region The default name for the surface region
+#' @param col The surface colour (default value of NULL implies the colour
+#'   specified in mesh3d object or \code{grey} when the \code{mesh3d} object has
+#'   no colour.)
+#' @export
+#' @rdname as.hxsurf
+as.hxsurf.mesh3d <- function(x, region="Interior", col=NULL, ...) {
+  if (is.null(x$it))
+    stop("This method only works for triangular mesh3d objects!")
+  h=list()
+  h$Vertices=data.frame(xyzmatrix(x))
+  colnames(h$Vertices)=c("X","Y","Z")
+  h$Vertices$PointNo=1:nrow(h$Vertices)
+  h$Regions[[region]]=data.frame(t(x$it))
+  colnames(h$Regions[[region]])=c("V1","V2","V3")
+  h$RegionList=names(h$Regions)
+  if(is.null(col)) col=x$material$col
+  h$RegionColourList <- if(!is.null(col)) col else 'grey'
+  class(h)=c("hxsurf","list")
+  h
+}
+
 
 #' Subset hxsurf object to specified regions
 #' 
