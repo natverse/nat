@@ -101,3 +101,38 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
            length(magic)==length(cmtk.magic) 
          && all(magic==cmtk.magic))
 }
+
+#' Plot the domain of a CMTK registration
+#' 
+#' @param x A cmtk registration (the path to the registration folder on disk) or
+#'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
+#' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
+#' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
+#'   \code{\link[rgl]{plot3d}}
+#' @examples 
+#' \donttest{
+#' plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'))
+#' 
+#' # or read registration into memory if you want to work with it
+#' reg=read.cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/')
+#' # nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) 
+#' # is considered bad style but read.cmtkreg returns a plain list 
+#' # so method dispatch will fail
+#' plot3d.cmtkreg(reg)
+#' }
+#' @importFrom rgl plot3d
+plot3d.cmtkreg <- function(x, ...) {
+  reg=NULL
+  if(is.list(x)) {
+    if(!is.null(x$registration)) reg=x$registration
+    if(is.null(x$spline_warp))
+       stop("This looks like an in memory CMTK registration but I can't find the spline_warp field")
+  } else if(is.character(x)) {
+    reg <- read.cmtkreg(x, ReturnRegistrationOnly = TRUE)
+  } else stop("Don't know what to do with this input!")
+  
+  coeffs=reg$spline_warp$coefficients
+  aidxs=seq.int(from=1, by=3L, length.out = nrow(coeffs))
+  actives=reg$spline_warp$active[aidxs]!=0
+  plot3d(coeffs[actives, ], xlab='X', ylab = "Y", zlab = "Z", ...)
+}
