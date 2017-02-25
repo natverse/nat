@@ -392,8 +392,9 @@ xyzmatrix.mesh3d<-function(x, ...){
 }
 
 #' Find the number of vertices in an object (or each element of a neuronlist)
-#' @param x 
-#' @param ...
+#' 
+#' @param x An object with 3d vertices (e.g. neuron, surface etc)
+#' @param ... Additional arguments passed to methods (currently ignored)
 #'   
 #' @return an integer number of vertices (or a vector of length equal to a
 #'   neuronlist)

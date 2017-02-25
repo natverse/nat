@@ -13,9 +13,9 @@ nvertices(x, ...)
 \method{nvertices}{neuronlist}(x, ...)
 }
 \arguments{
-\item{x}{}
+\item{x}{An object with 3d vertices (e.g. neuron, surface etc)}
 
-\item{...}{}
+\item{...}{Additional arguments passed to methods (currently ignored)}
 }
 \value{
 an integer number of vertices (or a vector of length equal to a
