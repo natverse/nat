@@ -76,6 +76,7 @@ reference:
       - read.landmarks
       - plot3d.hxsurf
       - subset.hxsurf
+      - as.hxsurf
       - as.mesh3d
       - pointsinside
   - title: 3D Plotting of objects
@@ -93,12 +94,14 @@ reference:
       - plot3d.dotprops
       - plot3d.hxsurf
       - plot3d.neuron
+      - plot3d.cmtkreg
   - title: Object transformation
     desc: Generic strategies for transforming 3D objects/images a
     contents:
     - xform
     - mirror
     - xyzmatrix
+    - nvertices
     - reglist
     - xformimage
     - xformpoints

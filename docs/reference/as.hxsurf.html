@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Arithmetic for neuron coordinates applied to neuronlists — *.neuronlist • nat</title>
+<title>Convert an object to a nat hxsurf object — as.hxsurf • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,50 +74,57 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Arithmetic for neuron coordinates applied to neuronlists</h1>
+    <h1>Convert an object to a nat hxsurf object</h1>
     </div>
 
     
-    <p>If x is one number or 3-vector, multiply coordinates by that
-If x is a 4-vector, multiply xyz and diameter
-TODO Figure out how to document arithemtic functions in one go</p>
+    <p>Convert an object to a nat hxsurf object</p>
     
 
-    <pre># S3 method for neuronlist
-*(x, y)
+    <pre><span class='fu'>as.hxsurf</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
-# S3 method for neuronlist
-+(x, y)
-
-# S3 method for neuronlist
--(x, y)
-
-# S3 method for neuronlist
-/(x, y)</pre>
+<span class='co'># S3 method for mesh3d</span>
+<span class='fu'>as.hxsurf</span>(<span class='no'>x</span>, <span class='kw'>region</span> <span class='kw'>=</span> <span class='st'>"Interior"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>a neuronlist</dd>
-      <dt>y</dt>
-      <dd>(a numeric vector to multiply coords in neuronlist members)</dd>
+      <dd>A surface object</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to methods</dd>
+      <dt>region</dt>
+      <dd>The default name for the surface region</dd>
+      <dt>col</dt>
+      <dd>The surface colour (default value of NULL implies the colour
+specified in mesh3d object or <code>grey</code> when the <code>mesh3d</code> object has
+no colour.)</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>modified neuronlist</p>
+    <p>A new surface object of class <code>hxsurf</code> (see 
+  <code><a href='read.hxsurf.html'>read.hxsurf</a></code>) for details.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p><code>hxsurf</code> objects are based on the format of Amira&#39;s surface 
+  objects (see <code><a href='read.hxsurf.html'>read.hxsurf</a></code>). They have the ability to include 
+  multiple distinct regions. However, at the moment the only method that we 
+  provide converts <code>mesh3d</code> objects, which can only include one region.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other neuronlist: <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
-  <code><a href='nlapply.html'>nlapply</a></code>, <code><a href='read.neurons.html'>read.neurons</a></code>,
-  <code><a href='write.neurons.html'>write.neurons</a></code></p>
+    <p><code><a href='as.mesh3d.html'>as.mesh3d</a></code></p>
+    <p>Other hxsurf: <code><a href='as.mesh3d.html'>as.mesh3d</a></code>,
+  <code><a href='materials.html'>materials</a></code>, <code><a href='plot3d.hxsurf.html'>plot3d.hxsurf</a></code>,
+  <code><a href='read.hxsurf.html'>read.hxsurf</a></code>, <code><a href='subset.hxsurf.html'>subset.hxsurf</a></code>,
+  <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mn2</span><span class='kw'>&lt;-</span><span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]*<span class='fl'>2</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=======                                                               |  10%  |                                                                              |==============                                                        |  20%  |                                                                              |=====================                                                 |  30%  |                                                                              |============================                                          |  40%  |                                                                              |===================================                                   |  50%  |                                                                              |==========================================                            |  60%  |                                                                              |=================================================                     |  70%  |                                                                              |========================================================              |  80%  |                                                                              |===============================================================       |  90%  |                                                                              |======================================================================| 100%</div></pre>
+    <pre class="examples"><div class='input'><span class='no'>tet</span><span class='kw'>=</span><span class='fu'>tetrahedron3d</span>(<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+<span class='no'>teth</span><span class='kw'>=</span><span class='fu'>as.hxsurf</span>(<span class='no'>tet</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>teth</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -125,6 +132,8 @@ TODO Figure out how to document arithemtic functions in one go</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
 
       <li><a href="#see-also">See also</a></li>
       

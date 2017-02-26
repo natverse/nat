@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Arithmetic for neuron coordinates applied to neuronlists — *.neuronlist • nat</title>
+<title>Plot the domain of a CMTK registration — plot3d.cmtkreg • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,58 +74,46 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Arithmetic for neuron coordinates applied to neuronlists</h1>
+    <h1>Plot the domain of a CMTK registration</h1>
     </div>
 
     
-    <p>If x is one number or 3-vector, multiply coordinates by that
-If x is a 4-vector, multiply xyz and diameter
-TODO Figure out how to document arithemtic functions in one go</p>
+    <p>Plot the domain of a CMTK registration</p>
     
 
-    <pre># S3 method for neuronlist
-*(x, y)
-
-# S3 method for neuronlist
-+(x, y)
-
-# S3 method for neuronlist
--(x, y)
-
-# S3 method for neuronlist
-/(x, y)</pre>
+    <pre><span class='co'># S3 method for cmtkreg</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>x</dt>
-      <dd>a neuronlist</dd>
-      <dt>y</dt>
-      <dd>(a numeric vector to multiply coords in neuronlist members)</dd>
+      <dd>A cmtk registration (the path to the registration folder on disk) or
+the resulting of reading one in with <code><a href='read.cmtkreg.html'>read.cmtkreg</a></code>.</dd>
+      <dt>...</dt>
+      <dd>Additional arguments passed to <code><a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code></dd>
     </dl>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>modified neuronlist</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other neuronlist: <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
-  <code><a href='nlapply.html'>nlapply</a></code>, <code><a href='read.neurons.html'>read.neurons</a></code>,
-  <code><a href='write.neurons.html'>write.neurons</a></code></p>
+    <p><code><a href='cmtkreg.html'>cmtkreg</a></code>, <code><a href='read.cmtkreg.html'>read.cmtkreg</a></code>,
+  <code><a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>mn2</span><span class='kw'>&lt;-</span><span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]*<span class='fl'>2</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=======                                                               |  10%  |                                                                              |==============                                                        |  20%  |                                                                              |=====================                                                 |  30%  |                                                                              |============================                                          |  40%  |                                                                              |===================================                                   |  50%  |                                                                              |==========================================                            |  60%  |                                                                              |=================================================                     |  70%  |                                                                              |========================================================              |  80%  |                                                                              |===============================================================       |  90%  |                                                                              |======================================================================| 100%</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='cmtkreg.html'>cmtkreg</a></span>(<span class='st'>'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getOption(&quot;nat.default.neuronlist&quot;, default = stop(&quot;Option \&quot;nat.default.neuronlist\&quot; is not set.\&quot;,\n                                  \&quot; See ?nat for details.&quot;)): Option &quot;nat.default.neuronlist&quot; is not set.&quot;,</span>
+#&gt; <span class='error'>                                  &quot; See ?nat for details.</span></div><div class='input'>
+<span class='co'># or read registration into memory if you want to work with it</span>
+<span class='no'>reg</span><span class='kw'>=</span><span class='fu'><a href='read.cmtkreg.html'>read.cmtkreg</a></span>(<span class='st'>'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file &#39;NA&#39;: No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(filename, &quot;rt&quot;): cannot open the connection</span></div><div class='input'><span class='co'># nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) </span>
+<span class='co'># is considered bad style but read.cmtkreg returns a plain list </span>
+<span class='co'># so method dispatch will fail</span>
+<span class='fu'>plot3d.cmtkreg</span>(<span class='no'>reg</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot3d.cmtkreg(reg): This looks like an in memory CMTK registration but I can&#39;t find the spline_warp field</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
