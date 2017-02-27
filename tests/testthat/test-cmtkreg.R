@@ -53,3 +53,9 @@ test_that("(is.)cmtkreg works ok for files", {
   expect_true(is.cmtkreg(reg3,filecheck='exists'))
   expect_true(is.cmtkreg(reg3,filecheck='magic'))
 })
+
+test_that("we can plot a CMTK registration",{
+  skip_on_cran()
+  plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'))
+  clear3d()
+})
