@@ -501,7 +501,6 @@ resample.neuron<-function(x, stepsize, ...) {
   # extract original vertex array before resampling
   cols=c("X","Y","Z")
   if(!is.null(x$d$W)) cols=c(cols, 'W')
-  if(!is.null(x$d$Label)) cols=c(cols, 'Label')
   d=x$d[, cols, drop=FALSE]
   if(any(is.na(d[,1:3])))
     stop("Unable to resample neurons with NA points")
@@ -524,6 +523,11 @@ resample.neuron<-function(x, stepsize, ...) {
     sl[[i]]=c(s[1], newids, s[length(s)])
   }
   rownames(d)=NULL
+  # let's deal with the label column which was dropped - assume that always the
+  # same within a segment
+  head_idxs=sapply(sl, "[", 1)
+  seglabels=x$d$Label[head_idxs]
+
   # in order to avoid re-ordering the segments when as.neuron.ngraph is called
   # we can renumber the raw indices in the seglist (and therefore the vertices)
   # in a strictly ascending sequence based on the seglist
@@ -531,6 +535,10 @@ resample.neuron<-function(x, stepsize, ...) {
   sl=lapply(sl, function(x) match(x, old_ids))
   # reorder vertex information to match this
   d=d[old_ids,]
+  new_ids=unlist(sl)
+  labels_by_seg=rep(seglabels, sapply(sl, length, USE.NAMES = F))
+  # but ther will be some duplicated ids (branch points) that we must remove
+  d$Label=labels_by_seg[!duplicated(new_ids)]
   swc=seglist2swc(sl, d)
   as.neuron(swc, origin=match(x$StartPoint, old_ids))
 }
