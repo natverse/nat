@@ -501,27 +501,34 @@ resample.neuron<-function(x, stepsize, ...) {
   # extract original vertex array before resampling
   cols=c("X","Y","Z")
   if(!is.null(x$d$W)) cols=c(cols, 'W')
-  d=x$d[, cols, drop=FALSE]
+  # if(!is.null(x$d$Label)) cols=c(cols, 'Label')
+  d=data.matrix(x$d[, cols, drop=FALSE])
+  # if(!is.null(d$Label)) d$Label=as.integer(d$Label)
   if(any(is.na(d[,1:3])))
     stop("Unable to resample neurons with NA points")
 
   # fetch all segments and process each segment in turn
   sl=as.seglist(x, all = T, flatten = T)
+  npoints=nrow(d)
+  dl=list(d)
   for (i in seq_along(sl)){
     s=sl[[i]]
     # interpolate this segment
     dold=d[s, , drop=FALSE]
     dnew=resample_segment(dold, stepsize=stepsize, ...)
     if(is.null(dnew)) next
+    dl[[length(dl)+1]]=dnew
     # if we've got here, we need to do something
     # add new points to the end of the swc block
     # and give them sequential point numbers
-    newids=seq.int(from = nrow(d)+1, length.out = nrow(dnew))
-    d=rbind(d, dnew)
+    newids=seq.int(from = npoints+1, length.out = nrow(dnew))
+    npoints=npoints+nrow(dnew)
     # replace internal ids in segment so that proximal point is connected to head
     # and distal point is connected to tail
     sl[[i]]=c(s[1], newids, s[length(s)])
   }
+  d=do.call(rbind, dl)
+  d=as.data.frame(d)
   rownames(d)=NULL
   # let's deal with the label column which was dropped - assume that always the
   # same within a segment
