@@ -559,7 +559,6 @@ resample_segment<-function(d, stepsize, ...) {
   if(nrow(d) < 2) return(NULL)
   
   dxyz=xyzmatrix(d)
-  if(!is.data.frame(d)) d=as.data.frame(d)
   # we should only resample if the segment is longer than the new stepsize
   l=seglength(dxyz)
   if(l<=stepsize) return(NULL)
@@ -580,17 +579,22 @@ resample_segment<-function(d, stepsize, ...) {
   
   # find 3D position of new internal points
   # using linear approximation on existing segments
-  # make an emty list for results
-  dnew=list()
-  for(n in names(d)) {
-    dnew[[n]] <- if(!all(is.finite(d[[n]]))) {
+  # make an emty object for results
+  # will have same type (matrix/data.frame as input)
+  dnew=matrix(nrow=nInternalPoints, ncol=ncol(d))
+  colnames(dnew)=colnames(d)
+  if(is.data.frame(d)){
+    dnew=as.data.frame(dnew)
+  }
+  for(n in seq.int(ncol(dnew))) {
+    dnew[,n] <- if(!all(is.finite(d[,n]))) {
       rep(NA, nInternalPoints)
     } else {
-      approx(cumlength, d[[n]], internalPoints, 
-             method = ifelse(is.double(d[[n]]), "linear", "constant"))$y
+      approx(cumlength, d[,n], internalPoints, 
+             method = ifelse(is.double(d[,n]), "linear", "constant"))$y
     }
   }
-  as.data.frame(dnew)
+  dnew
 }
 
 #' Smooth the 3D coordinates of a neuron skeleton
