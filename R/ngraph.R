@@ -401,10 +401,12 @@ strahler_order<-function(x){
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
   so_segs=integer(length(sts))
   svids=V(s)$vid
-  topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
+  topntail<-function(x) x[c(1L,length(x))]
+  segendmat=sapply(sts, topntail)
+  idxs=apply(segendmat, 1, match, svids)
   for(i in seq_along(sts)){
-    segends=topntail(sts[[i]])
-    so_segends=so_red_nodes[match(segends, svids)]
+    segends=segendmat[,i]
+    so_segends=so_red_nodes[idxs[i,]]
     so_orig_nodes[segends]=so_segends
     so_this_seg=min(so_segends)
     so_segs[i]=so_this_seg
