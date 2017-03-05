@@ -538,14 +538,21 @@ resample.neuron<-function(x, stepsize, ...) {
   # in order to avoid re-ordering the segments when as.neuron.ngraph is called
   # we can renumber the raw indices in the seglist (and therefore the vertices)
   # in a strictly ascending sequence based on the seglist
-  old_ids=unique(unlist(sl))
-  sl=lapply(sl, function(x) match(x, old_ids))
+  # it is *much* more efficient to compute this on a single vector rather than
+  # separately on each segment in the seglist. However this does involve some
+  # gymnastics 
+  usl=unlist(sl)
+  old_ids=unique(usl)
   # reorder vertex information to match this
   d=d[old_ids,]
-  new_ids=unlist(sl)
-  labels_by_seg=rep(seglabels, sapply(sl, length, USE.NAMES = F))
-  # but ther will be some duplicated ids (branch points) that we must remove
-  d$Label=labels_by_seg[!duplicated(new_ids)]
+
+  node_per_seg=sapply(sl, length)
+  df=data.frame(id=usl, seg=rep(seq_along(sl), node_per_seg))
+  df$newid=match(df$id, old_ids)
+  sl=split(df$newid, df$seg)
+  labels_by_seg=rep(seglabels, node_per_seg)
+  # but there will be some duplicated ids (branch points) that we must remove
+  d$Label=labels_by_seg[!duplicated(df$newid)]
   swc=seglist2swc(sl, d)
   as.neuron(swc, origin=match(x$StartPoint, old_ids))
 }
