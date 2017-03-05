@@ -193,21 +193,24 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, ...){
   d=normalise_swc(d, ...)
 
   if(any(is.na(d$Parent)) || RecalculateParents){
-    d$Parent=-1L
-    for(s in sl){
-      # first handle length 1 segments i.e. floating points
-      if(length(s)==1) {
-        d$Parent[s]=-1
-      } else if (length(s)>1){
-        # NB points in s are raw vertex ids corresponding to rows in the data
-        # block, but SWC Parent is expressed in PointNos
-        d$Parent[s[-1]]=d$PointNo[s[-length(s)]]
-      }
-    }
+    sldf=seglist2df(sl)
+    d$Parent[sldf$id[!sldf$head]]=d$PointNo[sldf$id[!sldf$tail]]
+    # length 1 segments should not have a parent
+    d$Parent[sldf$id[sldf$head & sldf$tail]]=-1L
   }
 
   if(is.neuron(x)){
     x$d=d
     x
   } else d
+}
+
+seglist2df <- function(sl){
+  usl=unlist(sl)
+  if(length(usl)<1) stop("I need at least one point!")
+  node_per_seg=sapply(sl, length)
+  df=data.frame(id=usl, seg=rep(seq_along(sl), node_per_seg))
+  df$head=!duplicated(df$seg)
+  df$tail=c(diff(df$seg)>0, TRUE)
+  df
 }
