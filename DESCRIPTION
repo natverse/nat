@@ -38,10 +38,12 @@ Suggests:
     XML,
     knitr,
     rmarkdown,
-    MASS
+    MASS,
+    alphashape3d
 License: GPL-3
 LazyData: yes
-Collate:
+Collate: 
+    'alphashape3d.R'
     'amiralandmarks-io.R'
     'amiramesh-io.R'
     'cmtk-reformat.R'
