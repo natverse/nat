@@ -39,4 +39,3 @@ plot3d(nlapply(kcs20,boundingbox))
 \seealso{
 \code{\link{boundingbox}}
 }
-

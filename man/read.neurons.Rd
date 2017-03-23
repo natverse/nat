@@ -97,4 +97,3 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
   \code{\link{nlapply}}, \code{\link{write.neurons}}
 }
-

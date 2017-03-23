@@ -2,10 +2,10 @@
 % Please edit documentation in R/dotprops.R
 \name{prune}
 \alias{prune}
-\alias{prune.default}
-\alias{prune.dotprops}
 \alias{prune.neuron}
+\alias{prune.dotprops}
 \alias{prune.neuronlist}
+\alias{prune.default}
 \title{prune an object by removing points near (or far) from a target object}
 \usage{
 prune(x, target, ...)
@@ -81,4 +81,3 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{rootpoints}}, \code{\link{spine}},
   \code{\link{subset.neuron}}
 }
-

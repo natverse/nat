@@ -110,7 +110,7 @@ default) then it will be set to \code{<infilestem.nhdr>}.}
   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
   fields.
 }
+
 \seealso{
 \code{\link{read.nrrd}, \link{.Platform}}
 }
-

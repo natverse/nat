@@ -26,4 +26,3 @@ A new dotprops object
 \description{
 Arithmetic for dotprops objects
 }
-

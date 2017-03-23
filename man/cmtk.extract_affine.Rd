@@ -25,4 +25,3 @@ Other cmtk-io: \code{\link{read.cmtkreg}},
   \code{\link{read.cmtk}}, \code{\link{write.cmtkreg}},
   \code{\link{write.cmtk}}
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/nat-package.R
 \docType{package}
 \name{nat-package}
-\alias{nat}
 \alias{nat-package}
+\alias{nat}
 \title{Analyse 3D biological image data especially neurons}
 \description{
 \bold{nat} provides tools to read, analyse, plot, transform and convert 
@@ -168,6 +168,7 @@ neuroanatomical data, especially representations of neurons.
   
   }
 }
+
 \seealso{
 \code{\link{neuron}}, \code{\link{dotprops}}, 
   \code{\link{neuronlist}}, \code{\link{nlapply}}, \code{\link[nat]{plot3d}},
@@ -176,4 +177,3 @@ neuroanatomical data, especially representations of neurons.
   \code{\link{fileformats}}, \code{\link{read.neurons}}, \code{\link{cmtk}}.
 }
 \keyword{package}
-

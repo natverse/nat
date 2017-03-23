@@ -25,10 +25,9 @@ NB Can handle off diagonal terms in space directions matrix, BUT
   
   Will produce a warning if no valid dimensions can be found.
 }
-\author{
-jefferis
-}
 \seealso{
 \code{\link{read.nrrd.header}}
 }
-
+\author{
+jefferis
+}

@@ -12,4 +12,3 @@ details.
 \code{\link{subset.neuron}}, \code{\link{subset.dotprops}},
   \code{\link{subset.hxsurf}}, \code{\link{subset.neuronlist}}
 }
-

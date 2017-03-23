@@ -39,4 +39,3 @@ It is vital that the root of the neuron is valid since this
   of \code{\link{ngraph}}) representation is used to calculate the Strahler 
   order.
 }
-

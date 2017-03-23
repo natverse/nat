@@ -2,9 +2,9 @@
 % Please edit documentation in R/potential_synapses.R
 \name{potential_synapses}
 \alias{potential_synapses}
-\alias{potential_synapses.dotprops}
-\alias{potential_synapses.neuron}
 \alias{potential_synapses.neuronlist}
+\alias{potential_synapses.neuron}
+\alias{potential_synapses.dotprops}
 \title{Calculate number of potential synapses between two neurons}
 \usage{
 potential_synapses(a, b, s, ...)
@@ -67,4 +67,3 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}, \code{\link{subset.neuron}}
 }
-

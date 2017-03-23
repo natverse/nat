@@ -51,4 +51,3 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlistfh}}, \code{\link{nlapply}},
   \code{\link{read.neurons}}, \code{\link{write.neurons}}
 }
-

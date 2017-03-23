@@ -49,4 +49,3 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{projection}}, \code{\link{threshold}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
-

@@ -74,4 +74,3 @@ Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
 \code{\link{write.neuron}}, \code{\link{read.neurons}},
   \code{\link{fileformats}}
 }
-

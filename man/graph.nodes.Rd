@@ -24,4 +24,3 @@ Return root, end, or branchpoints of an igraph object
 \details{
 Note that the graph must be directed in order to return a root point
 }
-

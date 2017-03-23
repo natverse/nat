@@ -45,4 +45,3 @@ str(sg)
 library(igraph)
 plot(sg, edge.arrow.size=.4, vertex.size=10)
 }
-

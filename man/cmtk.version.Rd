@@ -30,4 +30,3 @@ cmtk.version('3.2.2')
 \seealso{
 \code{\link{cmtk.bindir}, \link{cmtk.dof2mat}}
 }
-

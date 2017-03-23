@@ -52,4 +52,3 @@ find.neuron(Negate(vertical_lobe), db=kcs20)
 \seealso{
 \code{\link{select3d}, \link{find.soma}, \link{subset.neuronlist}}
 }
-

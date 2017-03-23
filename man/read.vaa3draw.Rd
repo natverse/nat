@@ -19,4 +19,3 @@ raw rather than 4 byte interegers.}
 \description{
 Read Vaa3d format image data
 }
-

@@ -17,4 +17,3 @@ prechecks (optionally taking place on a supplied raw vector of bytes) should
 weed out nearly all true negatives and identify many true positives without
 having to read/parse the file header.
 }
-

@@ -2,9 +2,9 @@
 % Please edit documentation in R/im3d.R
 \name{voxdims}
 \alias{voxdims}
+\alias{voxdims.im3d}
 \alias{voxdims.character}
 \alias{voxdims.default}
-\alias{voxdims.im3d}
 \title{Return voxel dimensions of an object}
 \usage{
 voxdims(x, ...)
@@ -46,4 +46,3 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{origin}}, \code{\link{projection}},
   \code{\link{threshold}}, \code{\link{unmask}}
 }
-

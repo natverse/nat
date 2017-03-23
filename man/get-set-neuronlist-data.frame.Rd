@@ -56,4 +56,3 @@ data.frame(kcs20)=newdf
 \seealso{
 \code{\link{data.frame}}, \code{\link{neuronlist}}
 }
-

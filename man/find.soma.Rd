@@ -36,4 +36,3 @@ Can work on \code{neuronlist}s containing \code{neuron} objects
 \seealso{
 \code{\link{select3d}, \link{subset.neuronlist}, \link{find.neuron}}
 }
-

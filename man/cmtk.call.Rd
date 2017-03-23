@@ -88,4 +88,3 @@ helptext=cmtk.system2(cmtk.call('mat2dof', help=TRUE, RETURN.TYPE="list"),
 \seealso{
 \code{\link{cmtk.bindir}}
 }
-

@@ -45,4 +45,3 @@ Other hxsurf: \code{\link{as.hxsurf}},
   \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
   \code{\link{write.hxsurf}}
 }
-

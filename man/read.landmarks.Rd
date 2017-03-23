@@ -63,6 +63,7 @@ Presently the supported formats are \itemize{
  Only the amiralandmarks format supports the use of
   paired landmarks
 }
+
 \examples{
 ## Listing of supported fileformats for landmarks
 fileformats(class = 'landmarks', rval = "info")
@@ -83,4 +84,3 @@ unlink(c(f,f2))
 \seealso{
 \code{\link{fileformats}}
 }
-

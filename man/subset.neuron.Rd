@@ -118,4 +118,3 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}
 }
-

@@ -52,4 +52,3 @@ all.equal(x, y, fieldsToExclude='NeuronName')
 \seealso{
 \code{\link[base]{all.equal}}
 }
-

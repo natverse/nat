@@ -2,9 +2,9 @@
 % Please edit documentation in R/ndigest.R
 \name{ndigest}
 \alias{ndigest}
+\alias{ndigest.neuronlistfh}
 \alias{ndigest.dotprops}
 \alias{ndigest.neuron}
-\alias{ndigest.neuronlistfh}
 \title{Calculated normalised digest value for an object}
 \usage{
 ndigest(x, ...)
@@ -76,4 +76,3 @@ stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))
 
 \code{\link{all.equal.neuron}}
 }
-

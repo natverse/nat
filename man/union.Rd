@@ -33,4 +33,3 @@ Note that union.default calls base::union to ensure consistent
 \seealso{
 \code{\link[base]{union}}
 }
-

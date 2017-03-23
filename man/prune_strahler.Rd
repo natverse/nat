@@ -35,4 +35,3 @@ plot(pruned12, lwd=3, col='red', add=TRUE)
   \code{\link{as.neuron.data.frame}}, which is used to generate the new
   neuron.
 }
-

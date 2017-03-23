@@ -52,4 +52,3 @@ coord2ind(cbind(1,2,3), JFRC2)
 \seealso{
 \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 }
-

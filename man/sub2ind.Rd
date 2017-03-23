@@ -14,4 +14,3 @@ sub2ind(dims, indices)
 \description{
 Emulates the MATLAB function \code{sub2ind}.
 }
-

@@ -35,4 +35,3 @@ image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)
 par(op)
 }
 }
-

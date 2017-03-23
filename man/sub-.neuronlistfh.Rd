@@ -60,4 +60,3 @@ Other neuronlistfh: \code{\link{neuronlistfh}},
   \code{\link{remotesync}},
   \code{\link{write.neuronlistfh}}
 }
-

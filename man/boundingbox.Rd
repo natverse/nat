@@ -2,12 +2,12 @@
 % Please edit documentation in R/im3d.R
 \name{boundingbox}
 \alias{boundingbox}
-\alias{boundingbox.character}
-\alias{boundingbox.default}
 \alias{boundingbox.im3d}
+\alias{boundingbox.character}
 \alias{boundingbox.list}
 \alias{boundingbox.neuron}
 \alias{boundingbox.shape3d}
+\alias{boundingbox.default}
 \alias{boundingbox<-}
 \title{Get the bounding box of an im3d volume or other compatible object}
 \usage{
@@ -105,4 +105,3 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{projection}}, \code{\link{threshold}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
-

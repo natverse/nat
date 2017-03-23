@@ -35,4 +35,3 @@ Note that \code{as.neuronlist} can cope with both \code{neurons} and
 \seealso{
 \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
 }
-

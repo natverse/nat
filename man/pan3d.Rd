@@ -26,10 +26,9 @@ is copied includes a note that "this doesn't play well with rescaling"
  pan3d(2)
 }
 }
-\author{
-Duncan Murdoch
-}
 \seealso{
 \code{\link{rgl.setMouseCallbacks}}
 }
-
+\author{
+Duncan Murdoch
+}

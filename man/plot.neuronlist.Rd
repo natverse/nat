@@ -67,4 +67,3 @@ plot(Cell07PNs, subset=Glomerulus\%in\%c("DA1", "DP1m"), col=Glomerulus,
 \seealso{
 \code{\link{nat-package}, \link{plot3d.neuronlist}}
 }
-

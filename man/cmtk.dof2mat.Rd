@@ -31,4 +31,3 @@ Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
   \code{\link{cmtk.mat2dof}},
   \code{\link{cmtkparams2affmat}}
 }
-

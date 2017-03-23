@@ -38,4 +38,3 @@ Note that \code{hxsurf} surface objects will be converted to
   for older versions of the \code{Rvcg} package). This behaviour is defined
   by the \code{Rvcg::vcgClost} function.
 }
-

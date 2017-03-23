@@ -44,4 +44,3 @@ all.equal(d, d2, tol=1e-6)
 \seealso{
 \code{\link{.Platform}, \link{read.amiramesh}, \link{write.nrrd}}
 }
-

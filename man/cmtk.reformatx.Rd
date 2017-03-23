@@ -78,4 +78,3 @@ system(cmtk.call('reformatx', help=TRUE))
 \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
   \link{RunCmdForNewerInput}}
 }
-

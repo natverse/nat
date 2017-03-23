@@ -28,4 +28,3 @@ Read one or more neurons from a NeuroML v1 file
 \seealso{
 \code{\link{read.morphml}}
 }
-

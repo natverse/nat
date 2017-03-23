@@ -13,6 +13,8 @@ mask(x, ...)
 \arguments{
 \item{x}{Object to be masked}
 
+\item{\dots}{Additional arguments passed to methods}
+
 \item{mask}{An im3d object, an array or a vector with dimensions compatible 
 with x.}
 
@@ -23,8 +25,6 @@ defining named \code{\link{materials}}.}
 values from \code{x} matching the mask.}
 
 \item{invert}{Whether to invert the voxel selection (default \code{FALSE})}
-
-\item{\dots}{Additional arguments passed to methods}
 }
 \value{
 an oject with attributes matching \code{x} and elements with value 
@@ -56,4 +56,3 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{projection}}, \code{\link{threshold}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
-

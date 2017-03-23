@@ -33,4 +33,3 @@ Check equality on data and key attributes of im3d objects
 \seealso{
 \code{\link{all.equal}}
 }
-

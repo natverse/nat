@@ -34,4 +34,3 @@ write.vtk(n, paste0(n$NeuronName, ".vtk"))
 write.neuron(n, paste0(n$NeuronName, ".vtk"))
 }
 }
-

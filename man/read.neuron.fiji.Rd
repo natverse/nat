@@ -27,4 +27,3 @@ This is an XML based format so parsing it depends on installation of
 \url{http://fiji.sc/Simple_Neurite_Tracer} 
   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 }
-

@@ -35,4 +35,3 @@ Note that the reference and floating fields have no impact on the
 \seealso{
 \code{\link{write.cmtkreg}, \link{affmat2cmtkparams}, \link{cmtkreg}}
 }
-

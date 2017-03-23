@@ -36,4 +36,3 @@ Note that setdiff.default calls base::setdiff to ensure consistent
 \seealso{
 \code{\link[base]{setdiff}}
 }
-

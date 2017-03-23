@@ -18,4 +18,3 @@ intersect(methods("plot3d"), ls(envir = as.environment('package:nat')))
   \code{\link{plot3d.hxsurf}}, \code{\link{plot3d.neuron}},
   \code{\link{plot3d.neuronlist}}
 }
-

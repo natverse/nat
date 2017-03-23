@@ -33,4 +33,3 @@ Note that intersect.default calls base::intersect to ensure
 \seealso{
 \code{\link[base]{intersect}}
 }
-

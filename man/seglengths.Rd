@@ -40,4 +40,3 @@ hist(unlist(seglengths(Cell07PNs[[1]], sumsegment = FALSE)),
 \seealso{
 \code{\link{as.seglist.neuron}}
 }
-

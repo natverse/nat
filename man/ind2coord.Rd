@@ -2,8 +2,8 @@
 % Please edit documentation in R/coordinates.R
 \name{ind2coord}
 \alias{ind2coord}
-\alias{ind2coord.array}
 \alias{ind2coord.default}
+\alias{ind2coord.array}
 \alias{ind2coord.im3d}
 \title{Find XYZ coords corresponding to 1D indices into a 3D image}
 \usage{
@@ -37,4 +37,3 @@ If you have an image-like object and you want to turn it into a
 \code{\link{coord2ind}}, \code{\link{sub2ind}}, 
   \code{\link{xyzpos}}, \code{\link{as.im3d.matrix}}
 }
-

@@ -2,8 +2,8 @@
 % Please edit documentation in R/im3d.R
 \name{materials}
 \alias{materials}
-\alias{materials.character}
 \alias{materials.default}
+\alias{materials.character}
 \alias{materials.hxsurf}
 \title{Extract or set the materials for an object}
 \usage{
@@ -48,4 +48,3 @@ Other hxsurf: \code{\link{as.hxsurf}},
   \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
   \code{\link{write.hxsurf}}
 }
-

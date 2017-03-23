@@ -43,7 +43,7 @@ These functions will accept SWC neurons with multiple trees and
   \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
   radius not a diameter specification
 }
+
 \seealso{
 \code{\link{is.swc}}
 }
-

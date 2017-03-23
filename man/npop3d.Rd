@@ -20,4 +20,3 @@ plotted by \code{plot3d.neuronlist} or any of its friends will be removed.
 \seealso{
 \code{\link[rgl]{pop3d}}, \code{\link{plot3d.neuronlist}}
 }
-

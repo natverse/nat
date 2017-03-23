@@ -14,4 +14,3 @@
 \description{
 convert neuronlistfh to a regular (in memory) neuronlist
 }
-

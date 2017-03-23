@@ -57,4 +57,3 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{origin}}, \code{\link{projection}},
   \code{\link{threshold}}, \code{\link{voxdims}}
 }
-

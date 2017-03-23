@@ -2,9 +2,9 @@
 % Please edit documentation in R/neuron-io.R
 \name{fileformats}
 \alias{fileformats}
+\alias{registerformat}
 \alias{getformatreader}
 \alias{getformatwriter}
-\alias{registerformat}
 \title{Set or return list of registered file formats that we can read}
 \usage{
 fileformats(format = NULL, ext = NULL, read = NULL, write = NULL,
@@ -95,6 +95,7 @@ if a \code{format} argument is passed to \code{fileformats} it will
   See \code{\link{write.neuron}} for code to make this discussion more 
   concrete.
 }
+
 \examples{
 # information about the currently registered file formats
 fileformats(rval='info')
@@ -110,4 +111,3 @@ unlink(swc)
 \seealso{
 \code{\link{write.neuron}}
 }
-

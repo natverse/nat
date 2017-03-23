@@ -27,4 +27,3 @@ Note that dimensions 1 and 2 for R matrices will be rows and
   image matrix where the X axis would typically be thought of as running from
   left to right on the page and the Y axis would run from top to bottom.
 }
-

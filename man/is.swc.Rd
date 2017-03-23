@@ -27,4 +27,3 @@ Note that this test is somewhat expensive compared with the other
 \seealso{
 \code{\link{read.neuron}}
 }
-

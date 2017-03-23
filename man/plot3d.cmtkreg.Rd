@@ -31,4 +31,3 @@ plot3d.cmtkreg(reg)
 \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
   \code{\link[rgl]{plot3d}}
 }
-

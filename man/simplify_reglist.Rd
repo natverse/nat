@@ -39,4 +39,3 @@ This function \itemize{
 \seealso{
 \code{\link{reglist}}, \code{\link{xform}}, \code{\link{cmtkreg}}
 }
-

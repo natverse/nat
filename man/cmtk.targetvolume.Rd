@@ -2,9 +2,9 @@
 % Please edit documentation in R/cmtk-reformat.R
 \name{cmtk.targetvolume}
 \alias{cmtk.targetvolume}
-\alias{cmtk.targetvolume.default}
 \alias{cmtk.targetvolume.im3d}
 \alias{cmtk.targetvolume.list}
+\alias{cmtk.targetvolume.default}
 \title{Defines a target volume for a CMTK reformatx operation}
 \usage{
 cmtk.targetvolume(target, ...)
@@ -46,4 +46,3 @@ library(nat.flybrains)
 cmtk.targetvolume(FCWB)
 }
 }
-

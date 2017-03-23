@@ -37,4 +37,3 @@ Note that row.names of the resultant data.frame will be set to NULL
 \seealso{
 \code{\link{as.neuron.data.frame}}, \code{\link{seglist2swc}}
 }
-

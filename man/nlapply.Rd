@@ -93,6 +93,7 @@ When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
   progress bar option and then abort and re-run with \code{.parallel=TRUE} if
   it looks likely to take a very long time.
 }
+
 \examples{
 ## nlapply example
 kcs.reduced=nlapply(kcs20,function(x) subset(x,sample(nrow(x$points),50)))
@@ -153,4 +154,3 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
   \code{\link{read.neurons}}, \code{\link{write.neurons}}
 }
-

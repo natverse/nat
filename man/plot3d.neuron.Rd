@@ -72,4 +72,3 @@ rgl.close()
 \code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}}, 
   \code{nat::\link[nat]{plot3d}}, \code{rgl::\link[rgl]{plot3d}}
 }
-

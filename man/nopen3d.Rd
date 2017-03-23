@@ -27,4 +27,3 @@ zooming. See help for \code{\link{pan3d}}.
 \seealso{
 \code{\link{open3d},\link{pan3d}}
 }
-

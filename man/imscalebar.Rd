@@ -44,4 +44,3 @@ imscalebar(rval)
 par(op)
 }
 }
-

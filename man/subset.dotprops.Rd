@@ -70,4 +70,3 @@ plot3d(kcs20, col='grey')
 \seealso{
 \code{prune.dotprops}, \code{subset.neuron}
 }
-

@@ -117,4 +117,3 @@ mirror('myimage.nrrd', output='myimage-flipped.nrrd', mirrorAxis="Y",
 
 \code{\link{nlapply}}
 }
-

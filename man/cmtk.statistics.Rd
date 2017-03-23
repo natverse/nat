@@ -84,4 +84,3 @@ cmtk.statistics('someneuron.nrrd', mask='neuropilregionmask.nrrd')
 cmtk.statistics('somelabelfield.nrrd', imagetype='label')
 }
 }
-

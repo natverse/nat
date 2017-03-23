@@ -65,9 +65,6 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
   subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 }
 }
-\author{
-jefferis
-}
 \seealso{
 \code{\link{write.neuron}}, \code{\link{read.neurons}},
   \code{\link{fileformats}}
@@ -78,4 +75,6 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
   \code{\link{nlapply}}, \code{\link{read.neurons}}
 }
-
+\author{
+jefferis
+}

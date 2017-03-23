@@ -50,4 +50,3 @@ Read the (text) header of a NRRD format file
 \seealso{
 \code{\link{write.nrrd}}, \code{\link{read.im3d}}
 }
-

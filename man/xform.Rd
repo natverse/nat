@@ -2,14 +2,14 @@
 % Please edit documentation in R/xform.R
 \name{xform}
 \alias{xform}
-\alias{xform.character}
-\alias{xform.data.frame}
 \alias{xform.default}
-\alias{xform.dotprops}
+\alias{xform.character}
 \alias{xform.list}
-\alias{xform.neuron}
-\alias{xform.neuronlist}
 \alias{xform.shape3d}
+\alias{xform.neuron}
+\alias{xform.data.frame}
+\alias{xform.dotprops}
+\alias{xform.neuronlist}
 \title{Transform the 3D location of objects such as neurons}
 \usage{
 xform(x, reg, ...)
@@ -144,6 +144,7 @@ With \code{xform.neuronlist}, if you want to apply a different
   order to swallow any arguments passed from higher level functions that are 
   not relevant to this particular transformation function.
 }
+
 \examples{
 \dontrun{
 kc1=kcs20[[1]]
@@ -171,4 +172,3 @@ nx=xform(Cell07PNs[1:3], reg=regs, VectoriseRegistrations=TRUE)
 \seealso{
 \code{\link{xformpoints}}
 }
-

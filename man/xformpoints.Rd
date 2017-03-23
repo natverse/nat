@@ -4,8 +4,8 @@
 \alias{xformpoints}
 \alias{xformpoints.character}
 \alias{xformpoints.cmtkreg}
-\alias{xformpoints.default}
 \alias{xformpoints.reglist}
+\alias{xformpoints.default}
 \title{Transform 3D points using a registration, affine matrix or function}
 \usage{
 xformpoints(reg, points, ...)
@@ -59,4 +59,3 @@ Note that the direction of CMTK registrations can be the source of
   like to transform into template space. Here one needs the \emph{inverse}
   transformation.
 }
-

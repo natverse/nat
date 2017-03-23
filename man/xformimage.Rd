@@ -4,8 +4,8 @@
 \alias{xformimage}
 \alias{xformimage.character}
 \alias{xformimage.cmtkreg}
-\alias{xformimage.default}
 \alias{xformimage.reglist}
+\alias{xformimage.default}
 \title{Transform image files using a registration or affine matrix}
 \usage{
 xformimage(reg, image, ...)
@@ -94,4 +94,3 @@ Note that the direction of CMTK registrations can be the source of
 \code{\link{cmtk.reformatx}}, \code{\link{xformpoints}},
   \code{\link{xform}}
 }
-

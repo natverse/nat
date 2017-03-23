@@ -13,14 +13,14 @@ threshold(x, ...)
 \arguments{
 \item{x}{Object to be thresholded}
 
+\item{\dots}{Additional arguments passed to methods}
+
 \item{threshold}{Either a numeric value that pixels must \strong{exceed} in 
 order to be included in the mask \emph{or} a \code{logical} vector defining
 foreground pixels.}
 
 \item{mode}{The storage mode of the resultant object (see 
 \code{\link{vector}}}
-
-\item{\dots}{Additional arguments passed to methods}
 }
 \value{
 an oject with attributes matching \code{x} and elements with value 
@@ -47,4 +47,3 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{origin}}, \code{\link{projection}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
-

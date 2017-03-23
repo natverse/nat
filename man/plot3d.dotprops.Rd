@@ -62,4 +62,3 @@ plot3d(kcs20[[2]],col='green',lwd=2)
 \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d}, 
   \link[rgl]{segments3d}}
 }
-

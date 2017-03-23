@@ -37,4 +37,3 @@ n3<-Cell07PNs[[1]]*c(2,2,4)
 \seealso{
 neuron
 }
-

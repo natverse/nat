@@ -39,4 +39,3 @@ stopifnot(isTRUE(all.equal(kc1.recalc, kc1)))
 # NB identical when recalculated on same setup from same data
 stopifnot(isTRUE(all.equal.default(kc1.recalc, dotprops(kc1))))
 }
-

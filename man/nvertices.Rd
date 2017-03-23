@@ -28,4 +28,3 @@ Find the number of vertices in an object (or each element of a neuronlist)
 nvertices(Cell07PNs[[1]])
 nvertices(kcs20)
 }
-

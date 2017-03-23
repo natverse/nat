@@ -40,4 +40,3 @@ If any columns are missing then they are set to default values by
 \seealso{
 \code{\link{as.neuron.data.frame}}, \code{\link{normalise_swc}}, \code{\link{neuron}}
 }
-

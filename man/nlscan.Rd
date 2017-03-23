@@ -84,4 +84,3 @@ plot3d(kcs20[gammas])
 \seealso{
 \code{\link{plot3d.character}}, \code{\link{plot3d.neuronlist}}
 }
-

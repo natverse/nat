@@ -53,4 +53,3 @@ Other amira: \code{\link{amiratype}},
   \code{\link{is.amiramesh}}, \code{\link{read.hxsurf}},
   \code{\link{write.hxsurf}}
 }
-

@@ -47,4 +47,3 @@ NeuroML files consist of an XML tree containing one more or more
 \seealso{
 \code{link[XML]{xmlParse}}, \code{\link{read.neuron.neuroml}}
 }
-

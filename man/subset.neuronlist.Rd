@@ -82,4 +82,3 @@ subset(dps, names(dps)[1:100],filterfun=function(x) {sum(s3d(xyzmatrix(x)))>0},
 \code{\link{neuronlist}, \link{find.neuron}, 
   \link{subset.data.frame}, \link{subset.neuron}, \link{subset.dotprops}}
 }
-

@@ -21,14 +21,14 @@ remotesync(x, remote = attr(x, "remote"), download.missing = TRUE,
 
 \item{delete.extra}{Whether to delete objects (default TRUE)}
 
+\item{\dots}{Additional arguments passed to methods}
+
 \item{indices}{Character vector naming neurons to update (default
 \code{indices=NULL} implies all neurons).}
 
 \item{update.object}{Whether to update the \code{neuronlistfh} object itself 
 on disk (default TRUE). Note that this assumes that the \code{neuronlistfh}
 object has not been renamed after it was downloaded.}
-
-\item{\dots}{Additional arguments passed to methods}
 }
 \value{
 The updated \code{neuronlistfh} object (invisibly)
@@ -52,4 +52,3 @@ Other neuronlistfh: \code{\link{[.neuronlistfh}},
   \code{\link{read.neuronlistfh}},
   \code{\link{write.neuronlistfh}}
 }
-
