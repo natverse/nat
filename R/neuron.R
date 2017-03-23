@@ -501,36 +501,58 @@ resample.neuron<-function(x, stepsize, ...) {
   # extract original vertex array before resampling
   cols=c("X","Y","Z")
   if(!is.null(x$d$W)) cols=c(cols, 'W')
-  if(!is.null(x$d$Label)) cols=c(cols, 'Label')
-  d=x$d[, cols, drop=FALSE]
+  # if(!is.null(x$d$Label)) cols=c(cols, 'Label')
+  d=data.matrix(x$d[, cols, drop=FALSE])
+  # if(!is.null(d$Label)) d$Label=as.integer(d$Label)
   if(any(is.na(d[,1:3])))
     stop("Unable to resample neurons with NA points")
 
   # fetch all segments and process each segment in turn
   sl=as.seglist(x, all = T, flatten = T)
+  npoints=nrow(d)
+  dl=list(d)
   for (i in seq_along(sl)){
     s=sl[[i]]
     # interpolate this segment
     dold=d[s, , drop=FALSE]
     dnew=resample_segment(dold, stepsize=stepsize, ...)
     if(is.null(dnew)) next
+    dl[[length(dl)+1]]=dnew
     # if we've got here, we need to do something
     # add new points to the end of the swc block
     # and give them sequential point numbers
-    newids=seq.int(from = nrow(d)+1, length.out = nrow(dnew))
-    d=rbind(d, dnew)
+    newids=seq.int(from = npoints+1, length.out = nrow(dnew))
+    npoints=npoints+nrow(dnew)
     # replace internal ids in segment so that proximal point is connected to head
     # and distal point is connected to tail
     sl[[i]]=c(s[1], newids, s[length(s)])
   }
+  d=do.call(rbind, dl)
+  d=as.data.frame(d)
   rownames(d)=NULL
+  # let's deal with the label column which was dropped - assume that always the
+  # same within a segment
+  head_idxs=sapply(sl, "[", 1)
+  seglabels=x$d$Label[head_idxs]
+
   # in order to avoid re-ordering the segments when as.neuron.ngraph is called
   # we can renumber the raw indices in the seglist (and therefore the vertices)
   # in a strictly ascending sequence based on the seglist
-  old_ids=unique(unlist(sl))
-  sl=lapply(sl, function(x) match(x, old_ids))
+  # it is *much* more efficient to compute this on a single vector rather than
+  # separately on each segment in the seglist. However this does involve some
+  # gymnastics 
+  usl=unlist(sl)
+  old_ids=unique(usl)
   # reorder vertex information to match this
   d=d[old_ids,]
+
+  node_per_seg=sapply(sl, length)
+  df=data.frame(id=usl, seg=rep(seq_along(sl), node_per_seg))
+  df$newid=match(df$id, old_ids)
+  sl=split(df$newid, df$seg)
+  labels_by_seg=rep(seglabels, node_per_seg)
+  # but there will be some duplicated ids (branch points) that we must remove
+  d$Label=labels_by_seg[!duplicated(df$newid)]
   swc=seglist2swc(sl, d)
   as.neuron(swc, origin=match(x$StartPoint, old_ids))
 }
@@ -544,7 +566,6 @@ resample_segment<-function(d, stepsize, ...) {
   if(nrow(d) < 2) return(NULL)
   
   dxyz=xyzmatrix(d)
-  if(!is.data.frame(d)) d=as.data.frame(d)
   # we should only resample if the segment is longer than the new stepsize
   l=seglength(dxyz)
   if(l<=stepsize) return(NULL)
@@ -565,17 +586,22 @@ resample_segment<-function(d, stepsize, ...) {
   
   # find 3D position of new internal points
   # using linear approximation on existing segments
-  # make an emty list for results
-  dnew=list()
-  for(n in names(d)) {
-    dnew[[n]] <- if(!all(is.finite(d[[n]]))) {
+  # make an emty object for results
+  # will have same type (matrix/data.frame as input)
+  dnew=matrix(nrow=nInternalPoints, ncol=ncol(d))
+  colnames(dnew)=colnames(d)
+  if(is.data.frame(d)){
+    dnew=as.data.frame(dnew)
+  }
+  for(n in seq.int(ncol(dnew))) {
+    dnew[,n] <- if(!all(is.finite(d[,n]))) {
       rep(NA, nInternalPoints)
     } else {
-      approx(cumlength, d[[n]], internalPoints, 
-             method = ifelse(is.double(d[[n]]), "linear", "constant"))$y
+      approx(cumlength, d[,n], internalPoints, 
+             method = ifelse(is.double(d[,n]), "linear", "constant"))$y
     }
   }
-  as.data.frame(dnew)
+  dnew
 }
 
 #' Smooth the 3D coordinates of a neuron skeleton

@@ -94,4 +94,14 @@ test_that("seglist2swc",{
   expect_equivalent(seglist2swc(n)$d, n$d)
   expect_equivalent(seglist2swc(as.seglist(n, all=F), n$d), n$d)
   expect_equivalent(seglist2swc(as.seglist(n, all=T), n$d), n$d)
+  
+  # edge case length 1 segment in first position
+  baseline=data.frame(PointNo=1:6, Label=2L, X=1, Y=1, Z=1, W=NA_real_,
+                      Parent=c(-1L,1L,2L,3L,2L,5L))
+  expect_equal(seglist2swc(list(1:2, 
+                                2:4, 
+                                c(2, 5:6)
+                                ), 
+                           d = xyzmatrix(matrix(1, ncol = 3, nrow = 6))),
+               baseline)
 })
