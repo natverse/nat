@@ -106,7 +106,7 @@ the resulting of reading one in with <code><a href='read.cmtkreg.html'>read.cmtk
 <span class='no'>reg</span><span class='kw'>=</span><span class='fu'><a href='read.cmtkreg.html'>read.cmtkreg</a></span>(<span class='st'>'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file &#39;NA&#39;: No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(filename, &quot;rt&quot;): cannot open the connection</span></div><div class='input'><span class='co'># nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) </span>
 <span class='co'># is considered bad style but read.cmtkreg returns a plain list </span>
 <span class='co'># so method dispatch will fail</span>
-<span class='fu'>plot3d.cmtkreg</span>(<span class='no'>reg</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot3d.cmtkreg(reg): This looks like an in memory CMTK registration but I can&#39;t find the spline_warp field</span></div><div class='input'>
+<span class='fu'>plot3d.cmtkreg</span>(<span class='no'>reg</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot3d.cmtkreg(reg): object &#39;reg&#39; not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
