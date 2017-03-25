@@ -107,9 +107,15 @@ test_that("we can convert hxsurf to rgl::mesh3d",{
                as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))  
 })
 
+test_that("we can convert ashape3d to rgl::mesh3d",{
+  skip_if_not_installed('alphashape3d')
+  kcs20.a=alphashape3d::ashape3d(xyzmatrix(kcs20), alpha = 10)
+  expect_is(as.mesh3d(kcs20.a), 'mesh3d')
+})
+
 test_that("we can save and re-read hxsurf object", {
-  on.exit(unlink(surffile))
   surffile <- tempfile()
+  on.exit(unlink(surffile))
   write.hxsurf(surf, surffile)
   newsurf <- read.hxsurf(surffile)
   expect_equal(newsurf, surf)
