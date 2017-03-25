@@ -1,3 +1,23 @@
+nat 1.8.8
+=========
+* add xyzmatrix<-.neuronlist so that we can replace the vertices of a set of 
+  objects in one go (#328)
+* add as.mesh3d.ashape3d thereby adding support for 3D alpha surfaces generated 
+  by the alphashape3d package (#337)
+* add as.hxsurf to convert surfaces (#332)
+* add nvertices as generic method to find the number of vertices in an object 
+  (#329)
+* add plot3d.cmtkreg to visualise domain of CMTK registration (#333)
+* speed up resample function (and seglist2swc) (#336)
+* add an option to override default progress bar behaviour for nlapply (and many
+  other functions that use it) (#322)
+* make plot3d more forgiving of colour specification (#331)
+* fix overwrite=T option for landmarks files (#319)
+* fix prune_edges for paths with opposing edge directions (#320)
+* make read.amiramesh cope with different NA values (#324)
+* fix crashing bug in read.neuron.hxlineset for malformed files (#325)
+* only warn if xform.neuronlist fails to transform soma positions (#326)
+
 nat 1.8.7
 =========
 This release includes some bug fixes and significantly improved online package
