@@ -264,19 +264,18 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
 }
 
 #' Convert an object to an rgl mesh3d
-#'
-#' Note that this provides a link to the Rvcg package 
-#' @export
+#' 
+#' Note that this provides a link to the Rvcg package
 #' @param x Object to convert to mesh3d
 #' @param ... Additional arguments for methods
-as.mesh3d<-function(x, ...) UseMethod("as.mesh3d")
-
-#' @param Regions Character vector or regions to select from \code{hxsurf} object
+#' @param Regions Character vector or regions to select from \code{hxsurf}
+#'   object
 #' @param material rgl materials such as \code{color}
 #' @param drop Whether to drop unused vertices (default TRUE)
 #' @export
 #' @rdname as.mesh3d
-#' @seealso \code{\link[rgl]{tmesh3d}}, \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
+#' @seealso \code{\link[rgl]{as.mesh3d}}, \code{\link[rgl]{tmesh3d}},
+#'   \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
 #' @family hxsurf
 as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   if(is.null(Regions)) {

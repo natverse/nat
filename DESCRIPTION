@@ -21,7 +21,7 @@ Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     package).
 Depends:
     R (>= 2.15.1),
-    rgl
+    rgl (>= 0.98.1)
 Imports:
     nabor,
     igraph (>= 0.7.1),

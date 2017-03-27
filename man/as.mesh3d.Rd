@@ -2,13 +2,10 @@
 % Please edit documentation in R/alphashape3d.R, R/hxsurf.R
 \name{as.mesh3d.ashape3d}
 \alias{as.mesh3d.ashape3d}
-\alias{as.mesh3d}
 \alias{as.mesh3d.hxsurf}
 \title{Convert an object to an rgl mesh3d}
 \usage{
 \method{as.mesh3d}{ashape3d}(x, ...)
-
-as.mesh3d(x, ...)
 
 \method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL,
   drop = TRUE, ...)
@@ -18,7 +15,8 @@ as.mesh3d(x, ...)
 
 \item{...}{Additional arguments for methods}
 
-\item{Regions}{Character vector or regions to select from \code{hxsurf} object}
+\item{Regions}{Character vector or regions to select from \code{hxsurf}
+object}
 
 \item{material}{rgl materials such as \code{color}}
 
@@ -57,7 +55,8 @@ plot3d(kcs20, col=type, lwd=2)
 \seealso{
 \code{\link[alphashape3d]{ashape3d}}, \code{\link[rgl]{mesh3d}}
 
-\code{\link[rgl]{tmesh3d}}, \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
+\code{\link[rgl]{as.mesh3d}}, \code{\link[rgl]{tmesh3d}},
+  \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
 
 Other hxsurf: \code{\link{as.hxsurf}},
   \code{\link{materials}}, \code{\link{plot3d.hxsurf}},
