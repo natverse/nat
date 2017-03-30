@@ -102,7 +102,7 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
 #' @rdname neuron
 is.neuron<-function(x,Strict=FALSE) {
   inherits(x,"neuron") ||
-    (!Strict && is.list(x) && !is.null(x$SegList))
+    (!Strict && is.list(x) && !is.null(x[["SegList"]]))
 }
 
 #' @description \code{as.neuron} will convert a suitable object to a neuron
