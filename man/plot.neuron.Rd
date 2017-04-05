@@ -5,9 +5,9 @@
 \title{Plot a 2D projection of a neuron}
 \usage{
 \method{plot}{neuron}(x, WithLine = TRUE, WithNodes = TRUE,
-  WithAllPoints = FALSE, WithText = FALSE, soma = FALSE,
-  PlotAxes = c("XY", "YZ", "XZ", "ZY"), axes = TRUE, asp = 1,
-  main = x$NeuronName, sub = NULL, xlim = NULL, ylim = NULL,
+  WithAllPoints = FALSE, WithText = FALSE, PlotSubTrees = TRUE,
+  soma = FALSE, PlotAxes = c("XY", "YZ", "XZ", "ZY"), axes = TRUE,
+  asp = 1, main = x$NeuronName, sub = NULL, xlim = NULL, ylim = NULL,
   AxisDirections = c(1, -1, 1), add = FALSE, col = NULL, PointAlpha = 1,
   tck = NA, lwd = par("lwd"), boundingbox = NULL, ...)
 }
@@ -22,6 +22,9 @@ points)}
 \item{WithAllPoints}{whether points should be drawn for all points in neuron.}
 
 \item{WithText}{whether to label plotted points with their id.}
+
+\item{PlotSubTrees}{Whether to plot all sub trees when the neuron is not 
+fully connected.}
 
 \item{soma}{Whether to plot a circle at neuron's origin representing the 
 soma. Either a logical value or a numeric indicating the radius (default 
