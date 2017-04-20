@@ -104,4 +104,11 @@ test_that("seglist2swc",{
                                 ), 
                            d = xyzmatrix(matrix(1, ncol = 3, nrow = 6))),
                baseline)
+  # edge case: linear graph with origin in centre
+  sl=list(2:1, 2:5)
+  # NB Parent is just linear order i.e. not consistent with origin as defined
+  # in seglist - but this should not matter since we will recalculate
+  d.input=normalise_swc(data.frame(Parent=c(-1, 1:4)))
+  d.baseline=normalise_swc(data.frame(Parent=c(2, -1, 2:4)))
+  expect_equal(seglist2swc(sl, d.input), d.baseline)
 })

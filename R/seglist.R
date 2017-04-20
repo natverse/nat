@@ -193,12 +193,12 @@ seglist2swc<-function(x, d, RecalculateParents=TRUE, ...){
   d=normalise_swc(d, ...)
 
   if(any(is.na(d$Parent)) || RecalculateParents){
+    # initialise all points with -1 => no parent for that point
+    d$Parent=-1L
     sldf=seglist2df(sl)
     d$Parent[sldf$id[!sldf$head]]=d$PointNo[sldf$id[!sldf$tail]]
     # length 1 segments should not have a parent
     d$Parent[sldf$id[sldf$head & sldf$tail]]=-1L
-    # any NAs left over? should have parent -1L
-    d$Parent[is.na(d$Parent)]=-1L
   }
 
   if(is.neuron(x)){
