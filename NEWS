@@ -1,3 +1,11 @@
+nat 1.8.9
+=========
+* fix reading of neurons when origin is not an endpoint (#342)
+  nb this bug was introduced in 1.8.8
+* fix edge case for is.neuron when applied to tibbles (#338)
+* add PlotSubTrees option for plot.neuron (#339)
+  thanks to Zhihao Zheng
+
 nat 1.8.8
 =========
 * add xyzmatrix<-.neuronlist so that we can replace the vertices of a set of 
