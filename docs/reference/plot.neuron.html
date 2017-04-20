@@ -83,9 +83,9 @@
 
     <pre><span class='co'># S3 method for neuron</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>PlotAxes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span>), <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>NeuronName</span>, <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotAxes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span>), <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>NeuronName</span>, <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>AxisDirections</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>PointAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'>par</span>(<span class='st'>"lwd"</span>), <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
@@ -102,6 +102,9 @@ points)</dd>
       <dd>whether points should be drawn for all points in neuron.</dd>
       <dt>WithText</dt>
       <dd>whether to label plotted points with their id.</dd>
+      <dt>PlotSubTrees</dt>
+      <dd>Whether to plot all sub trees when the neuron is not 
+fully connected.</dd>
       <dt>soma</dt>
       <dd>Whether to plot a circle at neuron&#39;s origin representing the 
 soma. Either a logical value or a numeric indicating the radius (default 
