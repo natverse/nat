@@ -215,6 +215,8 @@ pan3d <- function(button) {
 #'   points)
 #' @param WithAllPoints whether points should be drawn for all points in neuron.
 #' @param WithText whether to label plotted points with their id.
+#' @param PlotSubTrees Whether to plot all sub trees when the neuron is not 
+#'   fully connected.
 #' @param soma Whether to plot a circle at neuron's origin representing the 
 #'   soma. Either a logical value or a numeric indicating the radius (default 
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
@@ -258,12 +260,14 @@ pan3d <- function(button) {
 #' plot(Cell07PNs[[4]], WithNodes=FALSE, soma=1.25)
 #' @family neuron
 plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
-                        WithText=FALSE, soma=FALSE,
+                        WithText=FALSE, PlotSubTrees=TRUE, soma=FALSE,
                         PlotAxes=c("XY", "YZ", "XZ", "ZY"), axes=TRUE, asp=1,
                         main=x$NeuronName, sub=NULL, xlim=NULL, ylim=NULL,
                         AxisDirections=c(1,-1,1), add=FALSE, col=NULL,
                         PointAlpha=1, tck=NA, lwd=par("lwd"), 
                         boundingbox=NULL, ...) {
+  
+  if(PlotSubTrees && !is.null(x$SubTrees)) x$SegList=unlist(x$SubTrees,recursive=FALSE)
   
   # R uses the bottom-left as the origin, while we want the top-left
   PlotAxes <- match.arg(PlotAxes)
