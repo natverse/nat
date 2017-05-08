@@ -1,12 +1,8 @@
-# nat 1.8.7
-nat 1.8.7 fixes a breakage due to changes in behaviour of rep.int in svn 
-changeset c71611 that was resulting in build errors of the current CRAN release
-(v1.8.4) under r-devel. There are numerous additional bug fixes and enhancements
-since v1.8.4, including two vignettes.
-
+# nat 1.8.9
+* minor updates and bug fixes
 ## Test environments
-* local OS X install, R 3.3.2-patched
-* ubuntu 12.04 (on travis-ci), R 3.3.1
+* local OS X install, R 3.3.3
+* ubuntu 14.04 (on travis-ci), R 3.4.0
 * winbuilder (devel)
 
 ## R CMD check results
@@ -16,10 +12,10 @@ no ERRORs, WARNINGs or NOTEs:
 
 Winbuilder also gave one note:
 
-https://win-builder.r-project.org/yji0dXWrOkVq
+https://win-builder.r-project.org/3Ws3hYsNBos9/00check.log
 
 * checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Greg Jefferis <jefferis@gmail.com>'
+Maintainer: 'Gregory Jefferis <jefferis@gmail.com>'
 
 Possibly mis-spelled words in DESCRIPTION:
   AmiraMesh (13:25)
@@ -31,6 +27,7 @@ Possibly mis-spelled words in DESCRIPTION:
   hxsurf (13:73)
   nat (11:36)
   skeletonisation (18:63)
+
   
 but I believe that these are all false positives and there are no additions to 
 this list since the last CRAN release.
