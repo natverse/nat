@@ -2,7 +2,7 @@ reference:
   - title: Package Help
     desc: Provides an overview of key functions and classes
     contents:
-    - nat-package
+    - "`nat-package`"
   - title: Neurons (traced)
     desc: Functions for working with traced neurons (fully connected tree structures)
     contents:
@@ -13,7 +13,7 @@ reference:
     - subset.neuron
     - prune
     - prune_vertices
-    - '*.neuron'
+    - "`*.neuron`"
     - scale.neuron
     - resample
     - smooth_neuron
@@ -38,7 +38,7 @@ reference:
     contents:
     - dotprops
     - subset.dotprops
-    - '*.dotprops'
+    - "`*.dotprops`"
   - title: Collections of Neurons (neuronlists)
     desc: Functions for working with collections of neurons, which are packaged as 
       neuronlist objects with an attached data.frame containing metadata.
@@ -55,8 +55,8 @@ reference:
       - c.neuronlist
       - as.data.frame.neuronlist
       - is.neuronlist
-      - '*.neuronlist'
-      - neuronlist-dataframe-methods
+      - "`*.neuronlist`"
+      - "`neuronlist-dataframe-methods`"
   - title: Collections of Neurons with Remote Data (neuronlistfh)
     desc: Functions for working with collections of neurons where the data will be
       dynamically loaded into memory from disk and/or downloaded from a remote site.
@@ -66,7 +66,7 @@ reference:
       - write.neuronlistfh
       - remotesync
       - as.neuronlist.neuronlistfh
-      - '[.neuronlistfh'
+      - "`[.neuronlistfh`"
   - title: Surfaces and Landmarks (hxsurf, mesh3d)
     desc: Functions for working with surface data, either in a class hxsurf 
       modeled on Amira's representation of surfaces or the rgl::mesh3d class.
@@ -110,7 +110,7 @@ reference:
     desc: Functions for working with 3d image volumes 
     contents:
     - im3d
-    - im3d-io
+    - "`im3d-io`"
     - as.im3d
     - is.im3d
     - imslice
@@ -126,7 +126,7 @@ reference:
     - origin
     - voxdims
     - nrrd.voxdims
-    - im3d-coords
+    - "`im3d-coords`"
     - coord2ind
     - ind2coord
     - sub2ind
