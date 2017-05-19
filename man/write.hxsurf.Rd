@@ -25,7 +25,7 @@ Other amira: \code{\link{amiratype}},
   \code{\link{read.hxsurf}}
 
 Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{as.mesh3d.ashape3d}},
-  \code{\link{materials}}, \code{\link{plot3d.hxsurf}},
-  \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}}
+  \code{\link{as.mesh3d}}, \code{\link{materials}},
+  \code{\link{plot3d.hxsurf}}, \code{\link{read.hxsurf}},
+  \code{\link{subset.hxsurf}}
 }

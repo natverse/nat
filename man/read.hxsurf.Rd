@@ -73,7 +73,7 @@ Other amira: \code{\link{amiratype}},
   \code{\link{write.hxsurf}}
 
 Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{as.mesh3d.ashape3d}},
-  \code{\link{materials}}, \code{\link{plot3d.hxsurf}},
-  \code{\link{subset.hxsurf}}, \code{\link{write.hxsurf}}
+  \code{\link{as.mesh3d}}, \code{\link{materials}},
+  \code{\link{plot3d.hxsurf}}, \code{\link{subset.hxsurf}},
+  \code{\link{write.hxsurf}}
 }

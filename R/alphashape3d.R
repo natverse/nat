@@ -11,7 +11,7 @@
 #'   manipulated using \code{\link{rgl}} and \code{nat} packages.
 #' @export
 #' 
-#' @rdname as.mesh3d
+#' @name as.mesh3d
 #' @seealso \code{\link[alphashape3d]{ashape3d}}, \code{\link[rgl]{mesh3d}}
 #' @examples 
 #' \donttest{

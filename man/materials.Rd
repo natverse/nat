@@ -44,7 +44,7 @@ Presently only amiramesh images are supported since they have a
 }
 \seealso{
 Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{as.mesh3d.ashape3d}},
-  \code{\link{plot3d.hxsurf}}, \code{\link{read.hxsurf}},
-  \code{\link{subset.hxsurf}}, \code{\link{write.hxsurf}}
+  \code{\link{as.mesh3d}}, \code{\link{plot3d.hxsurf}},
+  \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
+  \code{\link{write.hxsurf}}
 }
