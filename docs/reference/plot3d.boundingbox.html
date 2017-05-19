@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,16 +83,21 @@
     <p>Plot a bounding box in 3D</p>
     
 
-    <pre><span class='co'># S3 method for boundingbox</span>
+    <pre class="usage"><span class='co'># S3 method for boundingbox</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>the <code><a href='boundingbox.html'>boundingbox</a></code> object to plot.</dd>
-      <dt>...</dt>
-      <dd>additional arguments to pass to <code><a href='http://www.rdocumentation.org/packages/rgl/topics/3dobjects'>segments3d</a></code>.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>the <code><a href='boundingbox.html'>boundingbox</a></code> object to plot.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to pass to <code><a href='http://www.rdocumentation.org/packages/rgl/topics/3dobjects'>segments3d</a></code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -106,12 +113,13 @@
 <span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>)</div><div class='output co'>#&gt;          [,1]     [,2]     [,3]
 #&gt; [1,] 284.5940  24.1869  21.4379
 #&gt; [2,] 404.6951 122.9557 102.8015
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;boundingbox&quot;</div><div class='input'><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;          [,1]     [,2]    [,3]
+#&gt; attr(,"class")
+#&gt; [1] "boundingbox"</div><div class='input'><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;          [,1]     [,2]    [,3]
 #&gt; [1,] 285.0244  25.2430 21.4379
 #&gt; [2,] 390.7747 114.6351 98.3324
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;boundingbox&quot;</div><div class='input'><span class='co'># plot those neurons</span>
+#&gt; attr(,"class")
+#&gt; [1] "boundingbox"</div><div class='input'>
+<span class='co'># plot those neurons</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
 <span class='co'># ... with their bounding box</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>kcs20</span>))
@@ -121,7 +129,9 @@
 <span class='co'># NB makes use of nlapply/neuronlist in slightly unsusual context - </span>
 <span class='co'># plot3d.neuronlist can cope with lists containing anything with</span>
 <span class='co'># a valid plot3d method.</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='nlapply.html'>nlapply</a></span>(<span class='no'>kcs20</span>,<span class='no'>boundingbox</span>))</div></pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='nlapply.html'>nlapply</a></span>(<span class='no'>kcs20</span>,<span class='no'>boundingbox</span>))</div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=======                                                               |  10%  |                                                                              |==========                                                            |  15%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  25%  |                                                                              |=====================                                                 |  30%  |                                                                              |========================                                              |  35%  |                                                                              |============================                                          |  40%  |                                                                              |================================                                      |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |======================================                                |  55%  |                                                                              |==========================================                            |  60%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  70%  |                                                                              |====================================================                  |  75%  |                                                                              |========================================================              |  80%  |                                                                              |============================================================          |  85%  |                                                                              |===============================================================       |  90%  |                                                                              |==================================================================    |  95%  |                                                                              |======================================================================| 100%</div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

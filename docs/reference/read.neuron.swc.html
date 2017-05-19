@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -79,39 +81,48 @@
 
     
     <p><code>read.neuron.swc</code> reads an SWC file on disk into a fully 
-  parsed <code><a href='neuron.html'>neuron</a></code> representation.</p>
+  parsed <code><a href='neuron.html'>neuron</a></code> representation.
 
-    <p><code>read.ngraph.swc</code> reads an SWC file on disk into the more 
+    <code>read.ngraph.swc</code> reads an SWC file on disk into the more 
   generic (and forgiving) <code><a href='ngraph.html'>ngraph</a></code> representation which provides
   a bridge to the <code><a href='http://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> library.</p>
     
 
-    <pre><span class='fu'>read.neuron.swc</span>(<span class='no'>f</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>read.neuron.swc</span>(<span class='no'>f</span>, <span class='no'>...</span>)
 
 <span class='fu'>read.ngraph.swc</span>(<span class='no'>f</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>path to file</dd>
-      <dt>...</dt>
-      <dd>Additional arguments. <code>read.neuron.swc</code> passes theseto 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>path to file</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments. <code>read.neuron.swc</code> passes theseto 
 <code><a href='neuron.html'>as.neuron</a></code> and then on to <code><a href='neuron.html'>neuron</a></code>. 
-<code>read.neuron.swc</code> passes them to <code><a href='ngraph.html'>ngraph</a></code>.</dd>
-      <dt>weights</dt>
-      <dd>Logical value indicating whether edge weights defined by the 
+<code>read.neuron.swc</code> passes them to <code><a href='ngraph.html'>ngraph</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>Logical value indicating whether edge weights defined by the 
 3D distance between points should be added to graph (default <code>FALSE</code>) 
-<em>or</em> a numeric vector of weights.</dd>
-      <dt>directed</dt>
-      <dd>Whether the resultant graph should be directed (default TRUE)</dd>
-    </dl>
+<em>or</em> a numeric vector of weights.</p></td>
+    </tr>
+    <tr>
+      <th>directed</th>
+      <td><p>Whether the resultant graph should be directed (default TRUE)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>These functions will accept SWC neurons with multiple trees and 
   arbitrary point index order. However only <code>read.ngraph.swc</code> will
-  accept SWC files with cycles.</p>
-    <p>These functions would normally be called from <code>read.neuron(s)</code> rather 
+  accept SWC files with cycles.
+    These functions would normally be called from <code>read.neuron(s)</code> rather 
   than used directly.</p>
     
     <h2 class="hasAnchor" id="swc-format"><a class="anchor" href="#swc-format"></a>SWC Format</h2>

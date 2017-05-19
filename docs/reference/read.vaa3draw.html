@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,20 +83,29 @@
     <p>Read Vaa3d format image data</p>
     
 
-    <pre><span class='fu'>read.vaa3draw</span>(<span class='no'>f</span>, <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read.vaa3draw</span>(<span class='no'>f</span>, <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>Path to image to read</dd>
-      <dt>ReadData</dt>
-      <dd>Whether to read in data or just parse header</dd>
-      <dt>Verbose</dt>
-      <dd>Whether to print status messages</dd>
-      <dt>ReadByteAsRaw</dt>
-      <dd>Can reduce memory footprint by reading 8 bit data as a 
-raw rather than 4 byte interegers.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>Path to image to read</p></td>
+    </tr>
+    <tr>
+      <th>ReadData</th>
+      <td><p>Whether to read in data or just parse header</p></td>
+    </tr>
+    <tr>
+      <th>Verbose</th>
+      <td><p>Whether to print status messages</p></td>
+    </tr>
+    <tr>
+      <th>ReadByteAsRaw</th>
+      <td><p>Can reduce memory footprint by reading 8 bit data as a 
+raw rather than 4 byte interegers.</p></td>
+    </tr>
+    </table>
     
 
   </div>

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,30 +83,43 @@
     <p>Mask an object, typically to produce a copy with some values zeroed out</p>
     
 
-    <pre><span class='fu'>mask</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mask</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for im3d</span>
 <span class='fu'>mask</span>(<span class='no'>x</span>, <span class='no'>mask</span>, <span class='kw'>levels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"im3d"</span>, <span class='st'>"values"</span>),
   <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>Object to be masked</dd>
-      <dt>&#8230;</dt>
-      <dd>Additional arguments passed to methods</dd>
-      <dt>mask</dt>
-      <dd>An im3d object, an array or a vector with dimensions compatible 
-with x.</dd>
-      <dt>levels</dt>
-      <dd>Optional numeric vector of pixel values or character vector 
-defining named <code><a href='materials.html'>materials</a></code>.</dd>
-      <dt>rval</dt>
-      <dd>Whether to return an im3d object based on <code>x</code> or just the 
-values from <code>x</code> matching the mask.</dd>
-      <dt>invert</dt>
-      <dd>Whether to invert the voxel selection (default <code>FALSE</code>)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Object to be masked</p></td>
+    </tr>
+    <tr>
+      <th>&#8230;</th>
+      <td><p>Additional arguments passed to methods</p></td>
+    </tr>
+    <tr>
+      <th>mask</th>
+      <td><p>An im3d object, an array or a vector with dimensions compatible 
+with x.</p></td>
+    </tr>
+    <tr>
+      <th>levels</th>
+      <td><p>Optional numeric vector of pixel values or character vector 
+defining named <code><a href='materials.html'>materials</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>rval</th>
+      <td><p>Whether to return an im3d object based on <code>x</code> or just the 
+values from <code>x</code> matching the mask.</p></td>
+    </tr>
+    <tr>
+      <th>invert</th>
+      <td><p>Whether to invert the voxel selection (default <code>FALSE</code>)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -112,7 +127,7 @@ values from <code>x</code> matching the mask.</dd>
   <code>as.vector(TRUE, mode=mode)</code> i.e. <code>TRUE, 1, 0x01</code> and 
   <code>as.vector(FALSE, mode=mode)</code> i.e. <code>FALSE, 0, 0x00</code> as 
   appropriate.</p>
-    <p>A copy of x with</p>
+<p>A copy of x with</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

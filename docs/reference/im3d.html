@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -83,32 +85,45 @@ spatial positions at which the voxels are located. There should always be a
 <code>BoundingBox</code> attribute which defines the physical extent of the volume 
 in the same manner as the Amira 3D visualisation and analysis software. This 
 corresponds to the <strong>node</strong> centers option in the 
-<a href = 'NRRD format'>http://teem.sourceforge.net/nrrd/format.html</a>.</p>
+<a href = 'http://teem.sourceforge.net/nrrd/format.html'>NRRD format</a>.</p>
     
 
-    <pre><span class='fu'>im3d</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>numeric</span>(<span class='fl'>0</span>), <span class='kw'>dims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>im3d</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>numeric</span>(<span class='fl'>0</span>), <span class='kw'>dims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>BoundingBox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>The object to turn into an im3d</dd>
-      <dt>dims</dt>
-      <dd>The dimensions of the image array either as an integer vector 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>The object to turn into an im3d</p></td>
+    </tr>
+    <tr>
+      <th>dims</th>
+      <td><p>The dimensions of the image array either as an integer vector 
 <em>or</em> as an im3d object, whose attributes will provide defaults for 
 <code>dims, origin, BoundingBox, bounds</code> arguments. The default 
 (<code>dims=NULL</code>) will result in <code>dims</code> being set to <code>x</code> if 
-<code>x</code> is an <code>im3d</code> object or <code>dim(x)</code> otherwise.</dd>
-      <dt>voxdims</dt>
-      <dd>The voxel dimensions</dd>
-      <dt>origin</dt>
-      <dd>the location (or centre) of the first voxel</dd>
-      <dt>BoundingBox, bounds</dt>
-      <dd>Physical extent of image. See the details section 
-of <code><a href='boundingbox.html'>boundingbox</a></code>&#39;s help for the distinction.</dd>
-      <dt>...</dt>
-      <dd>Additional attributes such as units or materials</dd>
-    </dl>
+<code>x</code> is an <code>im3d</code> object or <code>dim(x)</code> otherwise.</p></td>
+    </tr>
+    <tr>
+      <th>voxdims</th>
+      <td><p>The voxel dimensions</p></td>
+    </tr>
+    <tr>
+      <th>origin</th>
+      <td><p>the location (or centre) of the first voxel</p></td>
+    </tr>
+    <tr>
+      <th>BoundingBox, bounds</th>
+      <td><p>Physical extent of image. See the details section 
+of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distinction.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional attributes such as units or materials</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -116,7 +131,7 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>&#39;s help for the di
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>We follow Amira&#39;s convention of setting the bounding box equal to 
+    <p>We follow Amira's convention of setting the bounding box equal to 
   voxel dimension (rather than 0) for any dimension with only 1 voxel.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

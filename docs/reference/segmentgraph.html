@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,28 +83,41 @@
     <p>Return a simplified segment graph for a neuron</p>
     
 
-    <pre><span class='fu'>segmentgraph</span>(<span class='no'>x</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>segids</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude.isolated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>segmentgraph</span>(<span class='no'>x</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>segids</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>exclude.isolated</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>include.xyz</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>reverse.edges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>neuron</dd>
-      <dt>weights</dt>
-      <dd>Whether to include the original segment lengths as edge
-weights in the graph.</dd>
-      <dt>segids</dt>
-      <dd>Whether to include the integer segment ids as an edge attribute
-in the graph</dd>
-      <dt>exclude.isolated</dt>
-      <dd>Whether to eliminate isolated nodes</dd>
-      <dt>include.xyz</dt>
-      <dd>Whether to include 3D location as vertex attribute</dd>
-      <dt>reverse.edges</dt>
-      <dd>Whether to reverse the direction of each edge in the 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>neuron</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>Whether to include the original segment lengths as edge
+weights in the graph.</p></td>
+    </tr>
+    <tr>
+      <th>segids</th>
+      <td><p>Whether to include the integer segment ids as an edge attribute
+in the graph</p></td>
+    </tr>
+    <tr>
+      <th>exclude.isolated</th>
+      <td><p>Whether to eliminate isolated nodes</p></td>
+    </tr>
+    <tr>
+      <th>include.xyz</th>
+      <td><p>Whether to include 3D location as vertex attribute</p></td>
+    </tr>
+    <tr>
+      <th>reverse.edges</th>
+      <td><p>Whether to reverse the direction of each edge in the 
 output graph to point towards (rather than away from) the root (default 
-<code>FALSE</code>)</dd>
-    </dl>
+<code>FALSE</code>)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,7 +83,7 @@
     <p>prune an object by removing points near (or far) from a target object</p>
     
 
-    <pre><span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuron</span>
 <span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>...</span>)
@@ -97,23 +99,36 @@
   <span class='kw'>return.indices</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>The object to prune. (e.g. <code>dotprops</code> object, see details)</dd>
-      <dt>target</dt>
-      <dd>Another object with 3D points that will determine which points 
-in x are kept.</dd>
-      <dt>...</dt>
-      <dd>Additional arguments for methods (eventually passed to 
-<code>prune.default</code>)</dd>
-      <dt>maxdist</dt>
-      <dd>The threshold distance for keeping points</dd>
-      <dt>keep</dt>
-      <dd>Whether to keep points in x that are near or far from the target</dd>
-      <dt>return.indices</dt>
-      <dd>Whether to return the indices that pass the test rather
-than the 3D object/points (default <code>FALSE</code>)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>The object to prune. (e.g. <code>dotprops</code> object, see details)</p></td>
+    </tr>
+    <tr>
+      <th>target</th>
+      <td><p>Another object with 3D points that will determine which points 
+in x are kept.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments for methods (eventually passed to 
+<code>prune.default</code>)</p></td>
+    </tr>
+    <tr>
+      <th>maxdist</th>
+      <td><p>The threshold distance for keeping points</p></td>
+    </tr>
+    <tr>
+      <th>keep</th>
+      <td><p>Whether to keep points in x that are near or far from the target</p></td>
+    </tr>
+    <tr>
+      <th>return.indices</th>
+      <td><p>Whether to return the indices that pass the test rather
+than the 3D object/points (default <code>FALSE</code>)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -124,10 +139,10 @@ than the 3D object/points (default <code>FALSE</code>)</dd>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='prune_strahler.html'>prune_strahler</a></code>, <code><a href='spine.html'>spine</a></code>,
-  <code><a href='prune_vertices.html'>prune_vertices</a></code></p>
-    <p><code><a href='subset.neuron.html'>subset.neuron</a></code></p>
-    <p><code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
-    <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+  <code><a href='prune_vertices.html'>prune_vertices</a></code>
+    <code><a href='subset.neuron.html'>subset.neuron</a></code>
+    <code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
+<p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
   <code><a href='plot.neuron.html'>plot.neuron</a></code>,
   <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='resample.html'>resample</a></code>,
   <code><a href='rootpoints.html'>rootpoints</a></code>, <code><a href='spine.html'>spine</a></code>,
@@ -136,19 +151,23 @@ than the 3D object/points (default <code>FALSE</code>)</dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## prune single neurons</span>
+
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
 
 <span class='co'># prune neuron 2 down to points that are close to neuron 1</span>
 <span class='no'>neuron2_close</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>target</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>10</span>)
+
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>neuron2_close</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'cyan'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
 
 <span class='no'>neuron2_far</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>target</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>keep</span><span class='kw'>=</span><span class='st'>'far'</span>)
+
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>neuron2_far</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'magenta'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
 
 
 <span class='co'>## Prune a neuron with a neuronlist</span>
 <span class='no'>pruned</span><span class='kw'>=</span><span class='fu'>prune</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>11</span>]], <span class='no'>kcs20</span>[<span class='fu'><a href='setdiff.html'>setdiff</a></span>(<span class='fl'>1</span>:<span class='fl'>20</span>, <span class='fl'>11</span>)], <span class='kw'>maxdist</span><span class='kw'>=</span><span class='fl'>8</span>)
+
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>pruned</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>11</span>]], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)</div></pre>

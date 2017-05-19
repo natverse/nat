@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,7 +83,7 @@
     <p>This implements the method of Stepanyants and Chklovskii</p>
     
 
-    <pre><span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuronlist</span>
 <span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='no'>...</span>)
@@ -95,22 +97,37 @@
   <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>a, b</dt>
-      <dd>neurons or neuronlists</dd>
-      <dt>s</dt>
-      <dd>the approach distance to consider a potential synapse</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to methods (see details )</dd>
-      <dt>sigma</dt>
-      <dd>the smoothing parameter in the approximate method (see details)</dd>
-      <dt>bounds</dt>
-      <dd>Optional bounding box to restrict comparison</dd>
-      <dt>method</dt>
-      <dd>Whether to use the direct or approximate method (see details)</dd>
-      <dt>seglength</dt>
-      <dd>how long to consider each distance between points.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>a, b</th>
+      <td><p>neurons or neuronlists</p></td>
+    </tr>
+    <tr>
+      <th>s</th>
+      <td><p>the approach distance to consider a potential synapse</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to methods (see details )</p></td>
+    </tr>
+    <tr>
+      <th>sigma</th>
+      <td><p>the smoothing parameter in the approximate method (see details)</p></td>
+    </tr>
+    <tr>
+      <th>bounds</th>
+      <td><p>Optional bounding box to restrict comparison</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>Whether to use the direct or approximate method (see details)</p></td>
+    </tr>
+    <tr>
+      <th>seglength</th>
+      <td><p>how long to consider each distance between points.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -118,8 +135,8 @@
   <code><a href='nlapply.html'>nlapply</a></code> to process its first argument (<code>a</code>). This 
   enables progress bars, robustness to errors and simple parallel execution. 
   See the <code><a href='nlapply.html'>nlapply</a></code> examples for further details of these 
-  arguments in action.</p>
-    <p>For this reason if you have two neuronlists of unequal sizes, it is 
+  arguments in action.
+    For this reason if you have two neuronlists of unequal sizes, it is 
   recommended to put the larger one in argument <code>a</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -140,14 +157,14 @@
     <pre class="examples"><div class='input'><span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt;        EBH11R
 #&gt; EBH11R    902
 #&gt; EBH20L    219
-#&gt; EBH20R    192</div><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # if you have many neurons to calculate you should get a progress bar </span>
-<span class='co'># potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2)</span>
-<span class='co'># </span>
-<span class='co'># # you can also use parallel execution, here over 7 cores</span>
-<span class='co'># # doMC::registerDoMC(7)</span>
-<span class='co'># potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2, .parallel=TRUE)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+#&gt; EBH20R    192</div><div class='input'><span class='fu'>not_run</span>({
+  <span class='co'># if you have many neurons to calculate you should get a progress bar </span>
+  <span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)
+
+  <span class='co'># you can also use parallel execution, here over 7 cores</span>
+  <span class='co'># doMC::registerDoMC(7)</span>
+  <span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

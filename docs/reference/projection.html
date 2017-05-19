@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,34 +83,47 @@
     <p>Make 2D (orthogonal) projection of 3D image data</p>
     
 
-    <pre><span class='fu'>projection</span>(<span class='no'>a</span>, <span class='kw'>projdim</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>projfun</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"integrate"</span>, <span class='st'>"mean"</span>, <span class='st'>"sum"</span>),
+    <pre class="usage"><span class='fu'>projection</span>(<span class='no'>a</span>, <span class='kw'>projdim</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>projfun</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"integrate"</span>, <span class='st'>"mean"</span>, <span class='st'>"sum"</span>),
   <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>a</dt>
-      <dd>Array of image data (im3d format)</dd>
-      <dt>projdim</dt>
-      <dd>The image dimension down which to project</dd>
-      <dt>projfun</dt>
-      <dd>The function that collapses each vector of image data down to 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>a</th>
+      <td><p>Array of image data (im3d format)</p></td>
+    </tr>
+    <tr>
+      <th>projdim</th>
+      <td><p>The image dimension down which to project</p></td>
+    </tr>
+    <tr>
+      <th>projfun</th>
+      <td><p>The function that collapses each vector of image data down to 
 a single pixel. Can be a character vector naming a function or a function. 
-See details.</dd>
-      <dt>na.rm</dt>
-      <dd>Logical indicating whether to ignore <code>NA</code> values in the 
-image data when calculating function results. default: <code>TRUE</code></dd>
-      <dt>mask</dt>
-      <dd>A mask with the same extent as the image.</dd>
-      <dt>...</dt>
-      <dd>Additional arguments for projfun</dd>
-    </dl>
+See details.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Logical indicating whether to ignore <code>NA</code> values in the 
+image data when calculating function results. default: <code>TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>mask</th>
+      <td><p>A mask with the same extent as the image.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments for projfun</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>projfun</code> must have an argument <code>na.rm</code> like the
   S3 Summary <code>groupGeneric</code> functions such as <code>sum, min</code> 
-  etc.</p>
-    <p>Note also that the BoundingBox of a 2d projection is not well-defined for
+  etc.
+    Note also that the BoundingBox of a 2d projection is not well-defined for
   the axis along which the projection was made. Presently both the evaluation
   location and the BoundingBox extremes are set to 0 after a projection is
   made but FIXME this is not completely satisfactory. Perhaps defining this
@@ -117,7 +132,7 @@ image data when calculating function results. default: <code>TRUE</code></dd>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code>groupGeneric</code>, <code><a href='clampmax.html'>clampmax</a></code></p>
-    <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+<p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
   <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
   <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='im3d.html'>im3d</a></code>,
   <code><a href='imexpand.grid.html'>imexpand.grid</a></code>, <code><a href='imslice.html'>imslice</a></code>,
@@ -127,18 +142,18 @@ image data when calculating function results. default: <code>TRUE</code></dd>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))</span>
-<span class='co'># d=unmask(rnorm(sum(LHMask),mean=5,sd=5),LHMask)</span>
-<span class='co'># op=par(mfrow=c(1,2))</span>
-<span class='co'># rval=image(projection(d,projfun=max))</span>
-<span class='co'># image(projection(d,projfun=clampmax(0,10)),zlim=rval$zlim)</span>
-<span class='co'># par(op)</span>
-<span class='co'>## ---------------------------------------------</span>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># LHMask=read.im3d(system.file('tests/testthat/testdata/nrrd/LHMask.nrrd',package='nat'))</span>
-<span class='co'># image(projection(LHMask),asp=TRUE)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='no'>LHMask</span><span class='kw'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span>(<span class='fu'>system.file</span>(<span class='st'>'tests/testthat/testdata/nrrd/LHMask.nrrd'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'nat'</span>))
+  <span class='no'>d</span><span class='kw'>=</span><span class='fu'><a href='unmask.html'>unmask</a></span>(<span class='fu'>rnorm</span>(<span class='fu'>sum</span>(<span class='no'>LHMask</span>),<span class='kw'>mean</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>5</span>),<span class='no'>LHMask</span>)
+  <span class='no'>op</span><span class='kw'>=</span><span class='fu'>par</span>(<span class='kw'>mfrow</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>))
+  <span class='no'>rval</span><span class='kw'>=</span><span class='fu'>image</span>(<span class='fu'>projection</span>(<span class='no'>d</span>,<span class='kw'>projfun</span><span class='kw'>=</span><span class='no'>max</span>))
+  <span class='fu'>image</span>(<span class='fu'>projection</span>(<span class='no'>d</span>,<span class='kw'>projfun</span><span class='kw'>=</span><span class='fu'><a href='clampmax.html'>clampmax</a></span>(<span class='fl'>0</span>,<span class='fl'>10</span>)),<span class='kw'>zlim</span><span class='kw'>=</span><span class='no'>rval</span>$<span class='no'>zlim</span>)
+  <span class='fu'>par</span>(<span class='no'>op</span>)
+})
+<span class='fu'>not_run</span>({
+  <span class='no'>LHMask</span><span class='kw'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span>(<span class='fu'>system.file</span>(<span class='st'>'tests/testthat/testdata/nrrd/LHMask.nrrd'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'nat'</span>))
+  <span class='fu'>image</span>(<span class='fu'>projection</span>(<span class='no'>LHMask</span>),<span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

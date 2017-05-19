@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,51 +83,55 @@
     <p>Read a single neuron from a file</p>
     
 
-    <pre><span class='fu'>read.neuron</span>(<span class='no'>f</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"neuron"</span>, <span class='st'>"ngraph"</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>read.neuron</span>(<span class='no'>f</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"neuron"</span>, <span class='st'>"ngraph"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>Path to file. This can be a URL, in which case the file is 
-downloaded to a temporary location before reading.</dd>
-      <dt>format</dt>
-      <dd>The file format of the neuron. When <code>format=NULL</code>, the 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>Path to file. This can be a URL, in which case the file is 
+downloaded to a temporary location before reading.</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>The file format of the neuron. When <code>format=NULL</code>, the 
 default, <code>read.neuron</code> will infer the file format from the extension 
-or file header (aka magic) using the <code>fileformats</code> registry.</dd>
-      <dt>class</dt>
-      <dd>The class of the returned object - presently either 
-<code>&quot;neuron&quot;</code> or <code>&quot;ngraph&quot;</code></dd>
-      <dt>...</dt>
-      <dd>additional arguments passed to format-specific readers</dd>
-    </dl>
+or file header (aka magic) using the <code>fileformats</code> registry.</p></td>
+    </tr>
+    <tr>
+      <th>class</th>
+      <td><p>The class of the returned object - presently either 
+<code>"neuron"</code> or <code>"ngraph"</code></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments passed to format-specific readers</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function will handle <code>neuron</code> and <code>dotprops</code> objects 
   saved in R .rds or .rda format by default. Additional file formats can be 
-  registered using <code>fileformats</code>.</p>
-    <p>At the moment the following formats are supported using file readers 
-  already included with the nat package: <ul>
-<li> <b>swc</b> See <code><a href='read.neuron.swc.html'>read.neuron.swc</a></code>. SWC files can also 
+  registered using <code>fileformats</code>.
+    At the moment the following formats are supported using file readers 
+  already included with the nat package:</p><ul>
+<li><p><b>swc</b> See <code><a href='read.neuron.swc.html'>read.neuron.swc</a></code>. SWC files can also 
   return an <code><a href='ngraph.html'>ngraph</a></code> object containing the neuron structure in a 
   (permissive) general graph format that also contains the 3D positions for 
-  each vertex.</p>
-    <p></li>
-<li> <b>neuroml</b> See <code><a href='read.neuron.neuroml.html'>read.neuron.neuroml</a></code></p>
-    <p></li>
-<li> <b>fijitraces</b> See <code><a href='read.neuron.fiji.html'>read.neuron.fiji</a></code>. The file format
-  used by the <a href = 'Simple Neurite 
-  Tracer'>http://fiji.sc/Simple_Neurite_Tracer</a> plugin of Fiji/ImageJ.</p>
-    <p></li>
-<li> <b>hxlineset,hxskel</b> Two distinct fileformats used by Amira. 
+  each vertex.</p></li>
+<li><p><b>neuroml</b> See <code><a href='read.neuron.neuroml.html'>read.neuron.neuroml</a></code></p></li>
+<li><p><b>fijitraces</b> See <code><a href='read.neuron.fiji.html'>read.neuron.fiji</a></code>. The file format
+  used by the <a href = 'http://fiji.sc/Simple_Neurite_Tracer'>Simple Neurite 
+  Tracer</a> plugin of Fiji/ImageJ.</p></li>
+<li><p><b>hxlineset,hxskel</b> Two distinct fileformats used by Amira. 
   <code>hxlineset</code> is the generic one, <code>hxskel</code> is used by the 
-  hxskeletonize extension of Schmitt and Evers (see refs).</p>
-    <p></li>
-<li> <b>rda,rds</b> Native R cross-platform binary formats (see 
+  hxskeletonize extension of Schmitt and Evers (see refs).</p></li>
+<li><p><b>rda,rds</b> Native R cross-platform binary formats (see 
   <code>load, readRDS</code>). Note that RDS only contains a single 
-  unnamed neuron, whereas rda contains one or more named neurons.</p>
-    <p></li>
-</ul></p>
+  unnamed neuron, whereas rda contains one or more named neurons.</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -133,7 +139,7 @@ or file header (aka magic) using the <code>fileformats</code> registry.</dd>
   Obermayer, K. (2004). New methods for the computer-assisted 3-D 
   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
   1283--98. 
-  <a href = 'doi:10.1016/j.neuroimage.2004.06.047'>http://dx.doi.org/10.1016/j.neuroimage.2004.06.047</a></p>
+  <a href = 'http://dx.doi.org/10.1016/j.neuroimage.2004.06.047'>doi:10.1016/j.neuroimage.2004.06.047</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -142,16 +148,16 @@ or file header (aka magic) using the <code>fileformats</code> registry.</dd>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # note that we override the default NeuronName field</span>
-<span class='co'># n=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",package='nat'),</span>
-<span class='co'>#   NeuronName="EBT7R")</span>
-<span class='co'># # use a function to set the NeuronName field</span>
-<span class='co'># n3=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",package='nat'),</span>
-<span class='co'>#   NeuronName=function(x) sub("\\..*","",x))</span>
-<span class='co'># # show the currently registered file formats that we can read</span>
-<span class='co'># fileformats(class='neuron', read=TRUE)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='co'># note that we override the default NeuronName field</span>
+  <span class='no'>n</span><span class='kw'>=</span><span class='fu'>read.neuron</span>(<span class='fu'>system.file</span>(<span class='st'>"tests/testthat/testdata"</span>,<span class='st'>"neuron"</span>,<span class='st'>"EBT7R.CNG.swc"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'nat'</span>),
+    <span class='kw'>NeuronName</span><span class='kw'>=</span><span class='st'>"EBT7R"</span>)
+  <span class='co'># use a function to set the NeuronName field</span>
+  <span class='no'>n3</span><span class='kw'>=</span><span class='fu'>read.neuron</span>(<span class='fu'>system.file</span>(<span class='st'>"tests/testthat/testdata"</span>,<span class='st'>"neuron"</span>,<span class='st'>"EBT7R.CNG.swc"</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'nat'</span>),
+    <span class='kw'>NeuronName</span><span class='kw'>=</span><span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>sub</span>(<span class='st'>"\\..*"</span>,<span class='st'>""</span>,<span class='no'>x</span>))
+  <span class='co'># show the currently registered file formats that we can read</span>
+  <span class='fu'><a href='fileformats.html'>fileformats</a></span>(<span class='kw'>class</span><span class='kw'>=</span><span class='st'>'neuron'</span>, <span class='kw'>read</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

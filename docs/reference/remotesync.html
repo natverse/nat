@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,7 +83,7 @@
     <p>Synchronise a remote object</p>
     
 
-    <pre><span class='fu'>remotesync</span>(<span class='no'>x</span>, <span class='kw'>remote</span> <span class='kw'>=</span> <span class='fu'>attr</span>(<span class='no'>x</span>, <span class='st'>"remote"</span>), <span class='kw'>download.missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>remotesync</span>(<span class='no'>x</span>, <span class='kw'>remote</span> <span class='kw'>=</span> <span class='fu'>attr</span>(<span class='no'>x</span>, <span class='st'>"remote"</span>), <span class='kw'>download.missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>delete.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuronlistfh</span>
@@ -90,25 +92,40 @@
   <span class='kw'>update.object</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>Object to synchronise with a remote URL</dd>
-      <dt>remote</dt>
-      <dd>The remote URL to update from</dd>
-      <dt>download.missing</dt>
-      <dd>Whether to download missing objects (default TRUE)</dd>
-      <dt>delete.extra</dt>
-      <dd>Whether to delete objects (default TRUE)</dd>
-      <dt>&#8230;</dt>
-      <dd>Additional arguments passed to methods</dd>
-      <dt>indices</dt>
-      <dd>Character vector naming neurons to update (default
-<code>indices=NULL</code> implies all neurons).</dd>
-      <dt>update.object</dt>
-      <dd>Whether to update the <code>neuronlistfh</code> object itself 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Object to synchronise with a remote URL</p></td>
+    </tr>
+    <tr>
+      <th>remote</th>
+      <td><p>The remote URL to update from</p></td>
+    </tr>
+    <tr>
+      <th>download.missing</th>
+      <td><p>Whether to download missing objects (default TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>delete.extra</th>
+      <td><p>Whether to delete objects (default TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>&#8230;</th>
+      <td><p>Additional arguments passed to methods</p></td>
+    </tr>
+    <tr>
+      <th>indices</th>
+      <td><p>Character vector naming neurons to update (default
+<code>indices=NULL</code> implies all neurons).</p></td>
+    </tr>
+    <tr>
+      <th>update.object</th>
+      <td><p>Whether to update the <code>neuronlistfh</code> object itself 
 on disk (default TRUE). Note that this assumes that the <code>neuronlistfh</code>
-object has not been renamed after it was downloaded.</dd>
-    </dl>
+object has not been renamed after it was downloaded.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -116,21 +133,21 @@ object has not been renamed after it was downloaded.</dd>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other neuronlistfh: <code><a href='[.neuronlistfh.html'>[.neuronlistfh</a></code>,
+    <p>Other neuronlistfh: <code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a></code>,
   <code><a href='neuronlistfh.html'>neuronlistfh</a></code>,
   <code><a href='read.neuronlistfh.html'>read.neuronlistfh</a></code>,
   <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># kcs20=read.neuronlistfh('http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds')</span>
-<span class='co'># # update object from the web</span>
-<span class='co'># kcs20=remotesync(kcs20)</span>
-<span class='co'># # download all neurons with significant innervation of the vertical lobe</span>
-<span class='co'># mbvl_neurons=subset(kcs20, (MB_VL_R+MB_VL_L)&gt;200, rval='names')</span>
-<span class='co'># kcs20=remotesync(kcs20, indices=mbvl_neurons, download.missing=TRUE)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='no'>kcs20</span><span class='kw'>=</span><span class='fu'><a href='read.neuronlistfh.html'>read.neuronlistfh</a></span>(<span class='st'>'http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds'</span>)
+  <span class='co'># update object from the web</span>
+  <span class='no'>kcs20</span><span class='kw'>=</span><span class='fu'>remotesync</span>(<span class='no'>kcs20</span>)
+  <span class='co'># download all neurons with significant innervation of the vertical lobe</span>
+  <span class='no'>mbvl_neurons</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20</span>, (<span class='no'>MB_VL_R</span>+<span class='no'>MB_VL_L</span>)<span class='kw'>&gt;</span><span class='fl'>200</span>, <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'names'</span>)
+  <span class='no'>kcs20</span><span class='kw'>=</span><span class='fu'>remotesync</span>(<span class='no'>kcs20</span>, <span class='kw'>indices</span><span class='kw'>=</span><span class='no'>mbvl_neurons</span>, <span class='kw'>download.missing</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

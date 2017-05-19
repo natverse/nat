@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,32 +83,47 @@
     <p>Check equality on data and key attributes of im3d objects</p>
     
 
-    <pre><span class='co'># S3 method for im3d</span>
+    <pre class="usage"><span class='co'># S3 method for im3d</span>
 <span class='fu'>all.equal</span>(<span class='no'>target</span>, <span class='no'>current</span>, <span class='kw'>tolerance</span> <span class='kw'>=</span> <span class='fl'>1e-06</span>,
   <span class='kw'>attrsToCheck</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"BoundingBox"</span>), <span class='kw'>attrsToCheckIfPresent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"dim"</span>, <span class='st'>"names"</span>,
   <span class='st'>"dimnames"</span>, <span class='st'>"x"</span>, <span class='st'>"y"</span>, <span class='st'>"z"</span>), <span class='kw'>CheckSharedAttrsOnly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>target</dt>
-      <dd><span style="R">R</span> object.</dd>
-      <dt>current</dt>
-      <dd>other <span style="R">R</span> object, to be compared with <code>target</code>.</dd>
-      <dt>tolerance</dt>
-      <dd>numeric \(\ge\) 0.  Differences smaller than
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>target</th>
+      <td><p><span style="R">R</span> object.</p></td>
+    </tr>
+    <tr>
+      <th>current</th>
+      <td><p>other <span style="R">R</span> object, to be compared with <code>target</code>.</p></td>
+    </tr>
+    <tr>
+      <th>tolerance</th>
+      <td><p>numeric \(\ge\) 0.  Differences smaller than
     <code>tolerance</code> are not reported.  The default value is close to
-    <code>1.5e-8</code>.</dd>
-      <dt>attrsToCheck</dt>
-      <dd>Which attributes in im3d should always be checked</dd>
-      <dt>attrsToCheckIfPresent</dt>
-      <dd>Which attributes in im3d should be checked if
-present</dd>
-      <dt>CheckSharedAttrsOnly</dt>
-      <dd>Logical whether to check shared attributes only 
-(default: FALSE)</dd>
-      <dt>...</dt>
-      <dd>additional arguments passed to <code>all.equal</code></dd>
-    </dl>
+    <code>1.5e-8</code>.</p></td>
+    </tr>
+    <tr>
+      <th>attrsToCheck</th>
+      <td><p>Which attributes in im3d should always be checked</p></td>
+    </tr>
+    <tr>
+      <th>attrsToCheckIfPresent</th>
+      <td><p>Which attributes in im3d should be checked if
+present</p></td>
+    </tr>
+    <tr>
+      <th>CheckSharedAttrsOnly</th>
+      <td><p>Logical whether to check shared attributes only 
+(default: FALSE)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments passed to <code>all.equal</code></p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

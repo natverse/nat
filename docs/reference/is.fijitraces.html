@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check whether a file is in Fiji&#39;s simple neurite tracer format — is.fijitraces • nat</title>
+<title>Check whether a file is in Fiji's simple neurite tracer format — is.fijitraces • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -74,23 +76,28 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check whether a file is in Fiji&#39;s simple neurite tracer format</h1>
+    <h1>Check whether a file is in Fiji's simple neurite tracer format</h1>
     </div>
 
     
-    <p>This will check a file on disk to see if it is in Fiji&#39;s simple neurite
+    <p>This will check a file on disk to see if it is in Fiji's simple neurite
 tracer XML format.</p>
     
 
-    <pre><span class='fu'>is.fijitraces</span>(<span class='no'>f</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>is.fijitraces</span>(<span class='no'>f</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>path to a file on disk</dd>
-      <dt>bytes</dt>
-      <dd>optional raw vector of bytes used for prechecks</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>path to a file on disk</p></td>
+    </tr>
+    <tr>
+      <th>bytes</th>
+      <td><p>optional raw vector of bytes used for prechecks</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

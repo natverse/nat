@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -83,20 +85,29 @@
   writing out registrations.</p>
     
 
-    <pre><span class='fu'>write.cmtk</span>(<span class='no'>l</span>, <span class='no'>con</span>, <span class='kw'>gzip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>)</pre>
+    <pre class="usage"><span class='fu'>write.cmtk</span>(<span class='no'>l</span>, <span class='no'>con</span>, <span class='kw'>gzip</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>NA_character_</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>l</dt>
-      <dd>Appropriately formatted list</dd>
-      <dt>con</dt>
-      <dd>A character string specifying a path or a connection</dd>
-      <dt>gzip</dt>
-      <dd>Whether to gzip output file (default FALSE)</dd>
-      <dt>version</dt>
-      <dd>TYPEDSTREAM version number, defaults to <code>&quot;1.1&quot;</code> if not 
-specified in the version attribute of <code>l</code>.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>l</th>
+      <td><p>Appropriately formatted list</p></td>
+    </tr>
+    <tr>
+      <th>con</th>
+      <td><p>A character string specifying a path or a connection</p></td>
+    </tr>
+    <tr>
+      <th>gzip</th>
+      <td><p>Whether to gzip output file (default FALSE)</p></td>
+    </tr>
+    <tr>
+      <th>version</th>
+      <td><p>TYPEDSTREAM version number, defaults to <code>"1.1"</code> if not 
+specified in the version attribute of <code>l</code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

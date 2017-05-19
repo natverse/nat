@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,18 +83,25 @@
     <p>Read one or more neurons from a NeuroML v1 file</p>
     
 
-    <pre><span class='fu'>read.neuron.neuroml</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>AlwaysReturnNeuronList</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read.neuron.neuroml</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>AlwaysReturnNeuronList</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>Path to a NeuroML format XML file</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to read.morphml (and on to 
-<code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code>)</dd>
-      <dt>AlwaysReturnNeuronList</dt>
-      <dd>See <b>Value</b> section (default <code>FALSE</code>)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>Path to a NeuroML format XML file</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to read.morphml (and on to 
+<code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>AlwaysReturnNeuronList</th>
+      <td><p>See <b>Value</b> section (default <code>FALSE</code>)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

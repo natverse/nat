@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -86,20 +88,21 @@
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='read.hxsurf.html'>hxsurf</a></code></p>
-    <p>Other nat-data: <code><a href='Cell07PNs.html'>Cell07PNs</a></code>,
+<p>Other nat-data: <code><a href='Cell07PNs.html'>Cell07PNs</a></code>,
   <code><a href='kcs20.html'>kcs20</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
+    <pre class="examples"><div class='input'>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>MBL.surf</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>0.3</span>)
 
 
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># ## originally generated as follows</span>
-<span class='co'># library(nat.flybrains)</span>
-<span class='co'># MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = T)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+  <span class='co'>## originally generated as follows</span>
+  <span class='fu'>library</span>(<span class='no'>nat.flybrains</span>)
+  <span class='no'>MBL.surf</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>FCWBNP.surf</span>, <span class='st'>"MB.*_L"</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='no'>T</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

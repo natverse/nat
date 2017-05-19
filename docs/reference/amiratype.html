@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,16 +83,21 @@
     <p>Return the type of an amiramesh file on disk or a parsed header</p>
     
 
-    <pre><span class='fu'>amiratype</span>(<span class='no'>x</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>amiratype</span>(<span class='no'>x</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>Path to files on disk or a single pre-parsed parameter list</dd>
-      <dt>bytes</dt>
-      <dd>A raw vector containing at least 11 bytes from the start of the
-file.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Path to files on disk or a single pre-parsed parameter list</p></td>
+    </tr>
+    <tr>
+      <th>bytes</th>
+      <td><p>A raw vector containing at least 11 bytes from the start of the
+file.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -105,7 +112,7 @@ file.</dd>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other amira: <code><a href='is.amiramesh.html'>is.amiramesh</a></code>,
-  <code><a href='read.amiramesh.html'>read.amiramesh</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
+  <code><a href='amiramesh-io.html'>read.amiramesh</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
   <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p>
     
 

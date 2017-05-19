@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,24 +83,33 @@
     <p>Check if a file is a NRRD file</p>
     
 
-    <pre><span class='fu'>is.nrrd</span>(<span class='kw'>f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ReturnVersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>is.nrrd</span>(<span class='kw'>f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ReturnVersion</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>TrustSuffix</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>A character vector specifying the path or a raw vector with at least
-8 bytes.</dd>
-      <dt>bytes</dt>
-      <dd>optional raw vector of at least 8 bytes from the start of a
-single file (used in preference to reading file <code>f</code>).</dd>
-      <dt>ReturnVersion</dt>
-      <dd>Whether to return the version of the nrrd format in 
-which the file is encoded (1-5).</dd>
-      <dt>TrustSuffix</dt>
-      <dd>Whether to trust that a file ending in .nrrd or .nhdr is a
-NRRD</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>A character vector specifying the path or a raw vector with at least
+8 bytes.</p></td>
+    </tr>
+    <tr>
+      <th>bytes</th>
+      <td><p>optional raw vector of at least 8 bytes from the start of a
+single file (used in preference to reading file <code>f</code>).</p></td>
+    </tr>
+    <tr>
+      <th>ReturnVersion</th>
+      <td><p>Whether to return the version of the nrrd format in 
+which the file is encoded (1-5).</p></td>
+    </tr>
+    <tr>
+      <th>TrustSuffix</th>
+      <td><p>Whether to trust that a file ending in .nrrd or .nhdr is a
+NRRD</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

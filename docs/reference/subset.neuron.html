@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,22 +83,31 @@
     <p>Subset neuron by keeping only vertices that match given conditions</p>
     
 
-    <pre><span class='co'># S3 method for neuron</span>
+    <pre class="usage"><span class='co'># S3 method for neuron</span>
 <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>, <span class='no'>subset</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A neuron object</dd>
-      <dt>subset</dt>
-      <dd>A subset of points defined by indices, an expression, or a 
-function (see Details)</dd>
-      <dt>invert</dt>
-      <dd>Whether to invert the subset criteria - a convenience when 
-selecting by function or indices.</dd>
-      <dt>...</dt>
-      <dd>Additional parameters (passsed on to <code><a href='prune_vertices.html'>prune_vertices</a></code>)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A neuron object</p></td>
+    </tr>
+    <tr>
+      <th>subset</th>
+      <td><p>A subset of points defined by indices, an expression, or a 
+function (see Details)</p></td>
+    </tr>
+    <tr>
+      <th>invert</th>
+      <td><p>Whether to invert the subset criteria - a convenience when 
+selecting by function or indices.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters (passsed on to <code><a href='prune_vertices.html'>prune_vertices</a></code>)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -105,26 +116,23 @@ selecting by function or indices.</dd>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>subset</code> defines which vertices of the neuron to keep and is 
-  one of <ul>
-<li> logical or numeric indices, in which case these are simply used to 
+  one of</p><ul>
+<li><p>logical or numeric indices, in which case these are simply used to 
   index the vertices in the order of the data.frame <code>x$d</code>. Note that any
-  NA values are ignored.</p>
-    <p></li>
-<li> a function (which is called with the 3D points array and returns T/F 
-  vector)</p>
-    <p></li>
-<li> an expression evaluated in the context of the <code>x$d</code> data.frame 
+  NA values are ignored.</p></li>
+<li><p>a function (which is called with the 3D points array and returns T/F 
+  vector)</p></li>
+<li><p>an expression evaluated in the context of the <code>x$d</code> data.frame 
   containing the SWC specification of the points and connectivity of the 
   neuron. This can therefore refer e.g. to the X,Y,Z location of vertices in 
-  the neuron.</p>
-    <p></li>
-</ul></p>
+  the neuron.</p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='prune.html'>prune.neuron</a></code>, <code><a href='prune_vertices.html'>prune_vertices</a></code>, 
   <code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
-    <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+<p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
   <code><a href='plot.neuron.html'>plot.neuron</a></code>,
   <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
   <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
@@ -160,39 +168,39 @@ selecting by function or indices.</dd>
 <span class='no'>proximal_points</span><span class='kw'>=</span><span class='fu'><a href='setdiff.html'>setdiff</a></span>(<span class='kw'>igraph</span><span class='kw'>::</span><span class='fu'>V</span>(<span class='no'>ng</span>), <span class='no'>distal_points</span>)
 <span class='no'>proximal_tree</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='no'>proximal_points</span>)
 <span class='fu'>plot</span>(<span class='no'>proximal_tree</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><img src='subset.neuron-5.png' alt='' width='540' height='400' /><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># ## subset using interactively defined spatial regions</span>
-<span class='co'># plot3d(n)</span>
-<span class='co'># # nb you can save this select3d object using save or saveRDS functions</span>
-<span class='co'># # for future non-interactive use</span>
-<span class='co'># s3d=select3d()</span>
-<span class='co'># n4=subset(n, s3d(xyzmatrix(n)))</span>
-<span class='co'># # special case of previous version</span>
-<span class='co'># n5=subset(n, s3d)</span>
-<span class='co'># stopifnot(all.equal(n4,n5))</span>
-<span class='co'># # keep the points that were removed from n1</span>
-<span class='co'># n4.not=subset(n,Negate(s3d))</span>
-<span class='co'># # vertices with x position &gt; 100 and inside the selector function</span>
-<span class='co'># n6=subset(n,X&gt;100 &amp; s3d(X,Y,Z))</span>
-<span class='co'># </span>
-<span class='co'># ## subset each neuron object in a whole neuronlist</span>
-<span class='co'># n10=Cell07PNs[1:10]</span>
-<span class='co'># plot3d(n10, lwd=0.5, col='grey')</span>
-<span class='co'># n10.crop = nlapply(n10, subset, X&gt;250)</span>
-<span class='co'># plot3d(n10.crop, col='red')</span>
-<span class='co'># </span>
-<span class='co'># ## subset a neuron using a surface</span>
-<span class='co'># library(nat.flybrains)</span>
-<span class='co'># # extract left lateral horn surface and convert to mesh3d </span>
-<span class='co'># lh=as.mesh3d(subset(IS2NP.surf, "LH_L"))</span>
-<span class='co'># # subset neuron with this surface</span>
-<span class='co'># x=subset(Cell07PNs[[1]], function(x) pointsinside(x, lh))</span>
-<span class='co'># shade3d(lh, alpha=0.3)</span>
-<span class='co'># plot3d(x, lwd=3, col='blue')</span>
-<span class='co'># # Now find the parts of the neuron outside the surface</span>
-<span class='co'># y=subset(Cell07PNs[[1]], function(x) Negate(pointsinside)(x, lh))</span>
-<span class='co'># plot3d(y, col='red', lwd=2)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+  <span class='co'>## subset using interactively defined spatial regions</span>
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n</span>)
+  <span class='co'># nb you can save this select3d object using save or saveRDS functions</span>
+  <span class='co'># for future non-interactive use</span>
+  <span class='no'>s3d</span><span class='kw'>=</span><span class='fu'>select3d</span>()
+  <span class='no'>n4</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>n</span>)))
+  <span class='co'># special case of previous version</span>
+  <span class='no'>n5</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='no'>s3d</span>)
+  <span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>n4</span>,<span class='no'>n5</span>))
+  <span class='co'># keep the points that were removed from n1</span>
+  <span class='no'>n4.not</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>,<span class='fu'>Negate</span>(<span class='no'>s3d</span>))
+  <span class='co'># vertices with x position &gt; 100 and inside the selector function</span>
+  <span class='no'>n6</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>,<span class='no'>X</span><span class='kw'>&gt;</span><span class='fl'>100</span> <span class='kw'>&amp;</span> <span class='fu'>s3d</span>(<span class='no'>X</span>,<span class='no'>Y</span>,<span class='no'>Z</span>))
+
+  <span class='co'>## subset each neuron object in a whole neuronlist</span>
+  <span class='no'>n10</span><span class='kw'>=</span><span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n10</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
+  <span class='no'>n10.crop</span> <span class='kw'>=</span> <span class='fu'><a href='nlapply.html'>nlapply</a></span>(<span class='no'>n10</span>, <span class='no'>subset</span>, <span class='no'>X</span><span class='kw'>&gt;</span><span class='fl'>250</span>)
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n10.crop</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+
+  <span class='co'>## subset a neuron using a surface</span>
+  <span class='fu'>library</span>(<span class='no'>nat.flybrains</span>)
+  <span class='co'># extract left lateral horn surface and convert to mesh3d </span>
+  <span class='no'>lh</span><span class='kw'>=</span><span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>IS2NP.surf</span>, <span class='st'>"LH_L"</span>))
+  <span class='co'># subset neuron with this surface</span>
+  <span class='no'>x</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='pointsinside.html'>pointsinside</a></span>(<span class='no'>x</span>, <span class='no'>lh</span>))
+  <span class='fu'>shade3d</span>(<span class='no'>lh</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>0.3</span>)
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>)
+  <span class='co'># Now find the parts of the neuron outside the surface</span>
+  <span class='no'>y</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>Negate</span>(<span class='no'>pointsinside</span>)(<span class='no'>x</span>, <span class='no'>lh</span>))
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>y</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

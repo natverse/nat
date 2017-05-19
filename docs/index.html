@@ -9,7 +9,7 @@
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -55,14 +55,14 @@
   <div class="contents col-md-9">
     <div id="nat-neuroanatomy-toolbox" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#nat-neuroanatomy-toolbox" class="anchor"> </a>nat: NeuroAnatomy Toolbox</h1></div>
+<a href="#nat-neuroanatomy-toolbox" class="anchor"></a>nat: NeuroAnatomy Toolbox</h1></div>
 
 <p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of single neurons. See <a href="https://github.com/jefferis/nat.examples">nat.examples</a> and <a href="https://github.com/jefferis/frulhns">frulhns</a> for sample code.</p>
 <p><strong>nat</strong> is a cleaned up version of <a href="https://github.com/jefferis/AnalysisSuite">code</a> that has been used in a number of papers from our group including:</p>
 <p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428"><img src="http://www.nature.com/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" title="Food and Pheromone Integration" alt="Nature 2011"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a></p>
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
-<a href="#quick-start" class="anchor"> </a>Quick Start</h2>
+<a href="#quick-start" class="anchor"></a>Quick Start</h2>
 <p>For the impatient …</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install</span>
 <span class="kw">install.packages</span>(<span class="st">"nat"</span>)
@@ -79,7 +79,7 @@
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"> </a>Installation</h2>
+<a href="#installation" class="anchor"></a>Installation</h2>
 <p>A confirmed stable version of <strong>nat</strong> can be installed from CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"nat"</span>)</code></pre></div>
 <p>However, <strong>nat</strong> remains under quite active development, so we generally recommend installing the latest development version directly from github using the <a href="https://cran.r-project.org/package=devtools">devtools</a> package.</p>
@@ -90,7 +90,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 </div>
 <div id="help" class="section level2">
 <h2 class="hasAnchor">
-<a href="#help" class="anchor"> </a>Help</h2>
+<a href="#help" class="anchor"></a>Help</h2>
 <p>If you want some help using <strong>nat</strong>, then please use the following resources</p>
 <ul>
 <li>For installation issues, see the <a href="http://jefferis.github.io/nat/articles/Installation.html">Installation vignette</a>
@@ -106,7 +106,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 </div>
 <div id="problems" class="section level2">
 <h2 class="hasAnchor">
-<a href="#problems" class="anchor"> </a>Problems</h2>
+<a href="#problems" class="anchor"></a>Problems</h2>
 <p>If you think that you have found a bug</p>
 <ul>
 <li>Install the development version of nat using devtools (see above)</li>
@@ -138,7 +138,6 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 <li>Gregory Jefferis <br><small class="roles"> Author, maintainer </small> </li>
 <li>James Manton <br><small class="roles"> Author </small> </li>
 </ul>
-<html><body>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="http://dx.doi.org/10.5281/zenodo.10171"><img src="https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg" alt="DOI"></a></li>
@@ -148,7 +147,6 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 <li><a href="https://coveralls.io/r/jefferis/nat?branch=master"><img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"></a></li>
 <li><a href="http://jefferis.github.io/nat/reference/"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a></li>
 </ul>
-</body></html>
 </div>
 </div>
 

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,28 +83,41 @@
     <p>Find neurons within a 3D selection box (usually drawn in rgl window)</p>
     
 
-    <pre><span class='fu'>find.neuron</span>(<span class='kw'>sel3dfun</span> <span class='kw'>=</span> <span class='fu'>select3d</span>(), <span class='kw'>indices</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>db</span>),
+    <pre class="usage"><span class='fu'>find.neuron</span>(<span class='kw'>sel3dfun</span> <span class='kw'>=</span> <span class='fu'>select3d</span>(), <span class='kw'>indices</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>db</span>),
   <span class='kw'>db</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"nat.default.neuronlist"</span>), <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"names"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"neuronlist"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>sel3dfun</dt>
-      <dd>A <code>select3d</code> style function to indicate if points
-are within region</dd>
-      <dt>indices</dt>
-      <dd>Names of neurons to search (defaults to all neurons in list)</dd>
-      <dt>db</dt>
-      <dd><code>neuronlist</code> to search. Can also be a character vector naming 
-the neuronlist. Defaults to <code>options(&#39;nat.default.neuronlist&#39;)</code>.</dd>
-      <dt>threshold</dt>
-      <dd>More than this many points must be present in region</dd>
-      <dt>invert</dt>
-      <dd>Whether to return neurons outside the selection box (default 
-<code>FALSE</code>)</dd>
-      <dt>rval</dt>
-      <dd>What to return (character vector, default=&#39;names&#39;)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>sel3dfun</th>
+      <td><p>A <code>select3d</code> style function to indicate if points
+are within region</p></td>
+    </tr>
+    <tr>
+      <th>indices</th>
+      <td><p>Names of neurons to search (defaults to all neurons in list)</p></td>
+    </tr>
+    <tr>
+      <th>db</th>
+      <td><p><code>neuronlist</code> to search. Can also be a character vector naming 
+the neuronlist. Defaults to <code>options('nat.default.neuronlist')</code>.</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>More than this many points must be present in region</p></td>
+    </tr>
+    <tr>
+      <th>invert</th>
+      <td><p>Whether to return neurons outside the selection box (default 
+<code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>rval</th>
+      <td><p>What to return (character vector, default='names')</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -120,18 +135,18 @@ the neuronlist. Defaults to <code>options(&#39;nat.default.neuronlist&#39;)</cod
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># plot3d(kcs20)</span>
-<span class='co'># # draw a 3D selection e.g. around tip of vertical lobe when ready</span>
-<span class='co'># find.neuron(db=kcs20)</span>
-<span class='co'># # would return 9 neurons</span>
-<span class='co'># # make a standalone selection function</span>
-<span class='co'># vertical_lobe=select3d()</span>
-<span class='co'># find.neuron(vertical_lobe, db=kcs20)</span>
-<span class='co'># # use base::Negate function to invert the selection function </span>
-<span class='co'># # i.e. choose neurons that do not overlap the selection region</span>
-<span class='co'># find.neuron(Negate(vertical_lobe), db=kcs20)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
+  <span class='co'># draw a 3D selection e.g. around tip of vertical lobe when ready</span>
+  <span class='fu'>find.neuron</span>(<span class='kw'>db</span><span class='kw'>=</span><span class='no'>kcs20</span>)
+  <span class='co'># would return 9 neurons</span>
+  <span class='co'># make a standalone selection function</span>
+  <span class='no'>vertical_lobe</span><span class='kw'>=</span><span class='fu'>select3d</span>()
+  <span class='fu'>find.neuron</span>(<span class='no'>vertical_lobe</span>, <span class='kw'>db</span><span class='kw'>=</span><span class='no'>kcs20</span>)
+  <span class='co'># use base::Negate function to invert the selection function </span>
+  <span class='co'># i.e. choose neurons that do not overlap the selection region</span>
+  <span class='fu'>find.neuron</span>(<span class='fu'>Negate</span>(<span class='no'>vertical_lobe</span>), <span class='kw'>db</span><span class='kw'>=</span><span class='no'>kcs20</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

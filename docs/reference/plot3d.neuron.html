@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,42 +83,65 @@
     <p>Plot neurons in 3D using rgl library</p>
     
 
-    <pre><span class='co'># S3 method for neuron</span>
+    <pre class="usage"><span class='co'># S3 method for neuron</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>NeuronNames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A neuron to plot</dd>
-      <dt>WithLine</dt>
-      <dd>Whether to plot lines for all segments in neuron</dd>
-      <dt>NeuronNames</dt>
-      <dd>Logical indicating whether to label the neuron in the plot
-using the NeuronName field <strong>or</strong> a character vector of names.</dd>
-      <dt>WithNodes</dt>
-      <dd>Whether to plot dots for branch and end points</dd>
-      <dt>WithAllPoints</dt>
-      <dd>Whether to plot dots for all points in the neuron</dd>
-      <dt>WithText</dt>
-      <dd>Whether to label plotted points with their numeric id (see 
-details)</dd>
-      <dt>PlotSubTrees</dt>
-      <dd>Whether to plot all sub trees when the neuron is not 
-fully connected.</dd>
-      <dt>add</dt>
-      <dd>Whether to add the neuron to existing rgl plot rather than 
-clearing the scene (default TRUE)</dd>
-      <dt>col</dt>
-      <dd>Colour specification (see rgl materials)</dd>
-      <dt>soma</dt>
-      <dd>Whether to plot a sphere at neuron&#39;s origin representing the 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A neuron to plot</p></td>
+    </tr>
+    <tr>
+      <th>WithLine</th>
+      <td><p>Whether to plot lines for all segments in neuron</p></td>
+    </tr>
+    <tr>
+      <th>NeuronNames</th>
+      <td><p>Logical indicating whether to label the neuron in the plot
+using the NeuronName field <strong>or</strong> a character vector of names.</p></td>
+    </tr>
+    <tr>
+      <th>WithNodes</th>
+      <td><p>Whether to plot dots for branch and end points</p></td>
+    </tr>
+    <tr>
+      <th>WithAllPoints</th>
+      <td><p>Whether to plot dots for all points in the neuron</p></td>
+    </tr>
+    <tr>
+      <th>WithText</th>
+      <td><p>Whether to label plotted points with their numeric id (see 
+details)</p></td>
+    </tr>
+    <tr>
+      <th>PlotSubTrees</th>
+      <td><p>Whether to plot all sub trees when the neuron is not 
+fully connected.</p></td>
+    </tr>
+    <tr>
+      <th>add</th>
+      <td><p>Whether to add the neuron to existing rgl plot rather than 
+clearing the scene (default TRUE)</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>Colour specification (see rgl materials)</p></td>
+    </tr>
+    <tr>
+      <th>soma</th>
+      <td><p>Whether to plot a sphere at neuron's origin representing the 
 soma. Either a logical value or a numeric indicating the radius (default 
-<code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to rgl::lines3d</dd>
-    </dl>
+<code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to rgl::lines3d</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -139,8 +164,9 @@ soma. Either a logical value or a numeric indicating the radius (default
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># A new plot would have been opened if required</span>
 <span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;  21 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+#&gt;  14 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+
 <span class='co'># clear the current plot</span>
 <span class='fu'>clear3d</span>()
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>,<span class='kw'>add</span><span class='kw'>=</span><span class='fl'>FALSE</span>)

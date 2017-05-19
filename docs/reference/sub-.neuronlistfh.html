@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -83,22 +85,29 @@
   <em>or</em> its attached data.frame.</p>
     
 
-    <pre># S3 method for neuronlistfh
+    <pre class="usage"># S3 method for neuronlistfh
 [(x, i, j, drop)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A neuronlistfh object</dd>
-      <dt>i, j</dt>
-      <dd>elements to extract or replace. Numeric, logical  or character or,
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A neuronlistfh object</p></td>
+    </tr>
+    <tr>
+      <th>i, j</th>
+      <td><p>elements to extract or replace. Numeric, logical  or character or,
 for the [ get method, empty. See details and the help for 
-<code>[.data.frame</code>.</dd>
-      <dt>drop</dt>
-      <dd>logical.  If <code>TRUE</code> the result is coerced to the
+<code>[.data.frame</code>.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>logical.  If <code>TRUE</code> the result is coerced to the
     lowest possible dimension.  The default is to drop if only one
-    column is left, but <b>not</b> to drop if only one row is left.</dd>
-    </dl>
+    column is left, but <b>not</b> to drop if only one row is left.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -115,7 +124,7 @@ for the [ get method, empty. See details and the help for
 
     <p><code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist-dataframe-methods.html'>[.neuronlist</a></code>, 
   <code>[.data.frame</code>, <code>[&lt;-.data.frame</code>,</p>
-    <p>Other neuronlistfh: <code><a href='neuronlistfh.html'>neuronlistfh</a></code>,
+<p>Other neuronlistfh: <code><a href='neuronlistfh.html'>neuronlistfh</a></code>,
   <code><a href='read.neuronlistfh.html'>read.neuronlistfh</a></code>,
   <code><a href='remotesync.html'>remotesync</a></code>,
   <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
@@ -127,26 +136,26 @@ for the [ get method, empty. See details and the help for
 <span class='no'>kcs20fh</span><span class='kw'>&lt;-</span><span class='fu'><a href='neuronlistfh.html'>as.neuronlistfh</a></span>(<span class='no'>kcs20</span>, <span class='kw'>dbdir</span><span class='kw'>=</span><span class='no'>tf</span>)
 
 <span class='co'># get first neurons as an in memory neuronlist</span>
-<span class='fu'>class</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] &quot;neuronlist&quot; &quot;list&quot;      </div><div class='input'>
+<span class='fu'>class</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] "neuronlist" "list"      </div><div class='input'>
 <span class='co'># extract attached data.frame</span>
-<span class='fu'>str</span>(<span class='no'>kcs20fh</span>[,])</div><div class='output co'>#&gt; &#39;data.frame&#39;:	20 obs. of  14 variables:
-#&gt;  $ gene_name: chr  &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot; &quot;GadMARCM-F000050_seg001&quot; &quot;GadMARCM-F000142_seg002&quot; ...
-#&gt;  $ Name     : chr  &quot;fru-M-500112&quot; &quot;Gad1-F-900005&quot; &quot;Gad1-F-100010&quot; &quot;Gad1-F-300043&quot; ...
+<span class='fu'>str</span>(<span class='no'>kcs20fh</span>[,])</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  14 variables:
+#&gt;  $ gene_name: chr  "FruMARCM-M001205_seg002" "GadMARCM-F000122_seg001" "GadMARCM-F000050_seg001" "GadMARCM-F000142_seg002" ...
+#&gt;  $ Name     : chr  "fru-M-500112" "Gad1-F-900005" "Gad1-F-100010" "Gad1-F-300043" ...
 #&gt;  $ idid     : num  1024 10616 8399 10647 9758 ...
-#&gt;  $ soma_side: Factor w/ 3 levels &quot;L&quot;,&quot;M&quot;,&quot;R&quot;: 1 1 3 1 1 3 3 3 3 3 ...
+#&gt;  $ soma_side: Factor w/ 3 levels "L","M","R": 1 1 3 1 1 3 3 3 3 3 ...
 #&gt;  $ flipped  : logi  FALSE FALSE TRUE FALSE FALSE TRUE ...
-#&gt;  $ Driver   : chr  &quot;fru-Gal4&quot; &quot;Gad1-Gal4&quot; &quot;Gad1-Gal4&quot; &quot;Gad1-Gal4&quot; ...
-#&gt;  $ Gender   : chr  &quot;M&quot; &quot;F&quot; &quot;F&quot; &quot;F&quot; ...
+#&gt;  $ Driver   : chr  "fru-Gal4" "Gad1-Gal4" "Gad1-Gal4" "Gad1-Gal4" ...
+#&gt;  $ Gender   : chr  "M" "F" "F" "F" ...
 #&gt;  $ X        : num  361 368 383 350 388 ...
 #&gt;  $ Y        : num  95 105.9 61.7 78.2 114.8 ...
 #&gt;  $ Z        : num  84.1 94.7 97.3 96.7 87.8 ...
-#&gt;  $ exemplar : Factor w/ 96 levels &quot;5HT1bMARCM-M000076_seg001&quot;,..: 60 78 76 79 41 45 59 82 6 63 ...
+#&gt;  $ exemplar : Factor w/ 96 levels "5HT1bMARCM-M000076_seg001",..: 60 78 76 79 41 45 59 82 6 63 ...
 #&gt;  $ cluster  : int  9 70 57 71 64 44 16 61 52 12 ...
 #&gt;  $ idx      : int  156 1519 1132 1535 1331 795 268 1265 898 190 ...
-#&gt;  $ type     : Factor w/ 3 levels &quot;ab&quot;,&quot;apbp&quot;,&quot;gamma&quot;: 3 3 1 2 1 1 1 2 2 1 ...</div><div class='input'><span class='co'># or part of the data.frame</span>
-<span class='fu'>str</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; &#39;data.frame&#39;:	2 obs. of  3 variables:
-#&gt;  $ gene_name: chr  &quot;FruMARCM-M001205_seg002&quot; &quot;GadMARCM-F000122_seg001&quot;
-#&gt;  $ Name     : chr  &quot;fru-M-500112&quot; &quot;Gad1-F-900005&quot;
+#&gt;  $ type     : Factor w/ 3 levels "ab","apbp","gamma": 3 3 1 2 1 1 1 2 2 1 ...</div><div class='input'><span class='co'># or part of the data.frame</span>
+<span class='fu'>str</span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; 'data.frame':	2 obs. of  3 variables:
+#&gt;  $ gene_name: chr  "FruMARCM-M001205_seg002" "GadMARCM-F000122_seg001"
+#&gt;  $ Name     : chr  "fru-M-500112" "Gad1-F-900005"
 #&gt;  $ idid     : num  1024 10616</div><div class='input'>
 <span class='co'># data.frame assignment (this one changes nothing)</span>
 <span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='st'>'gene_name'</span>] <span class='kw'>&lt;-</span> <span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='st'>'gene_name'</span>]

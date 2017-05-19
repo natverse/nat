@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,20 +83,27 @@
     <p>Make in-memory CMTK registration list from affine matrix or CMTK parameters</p>
     
 
-    <pre><span class='fu'>cmtkreglist</span>(<span class='no'>x</span>, <span class='kw'>centre</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>reference</span> <span class='kw'>=</span> <span class='st'>"dummy"</span>,
+    <pre class="usage"><span class='fu'>cmtkreglist</span>(<span class='no'>x</span>, <span class='kw'>centre</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>reference</span> <span class='kw'>=</span> <span class='st'>"dummy"</span>,
   <span class='kw'>floating</span> <span class='kw'>=</span> <span class='st'>"dummy"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>5x3 matrix of CMTK registration parameters OR 4x4 homogeneous affine
-matrix</dd>
-      <dt>centre</dt>
-      <dd>Optional centre of rotation passed to <code>affmat2cmtkparams</code> 
-when decomposing 4x4 affine matrix</dd>
-      <dt>reference, floating</dt>
-      <dd>Path to refererence and floating images.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>5x3 matrix of CMTK registration parameters OR 4x4 homogeneous affine
+matrix</p></td>
+    </tr>
+    <tr>
+      <th>centre</th>
+      <td><p>Optional centre of rotation passed to <code>affmat2cmtkparams</code> 
+when decomposing 4x4 affine matrix</p></td>
+    </tr>
+    <tr>
+      <th>reference, floating</th>
+      <td><p>Path to refererence and floating images.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -106,7 +115,7 @@ when decomposing 4x4 affine matrix</dd>
     <p>Note that this uses the modern CMTK notation of floating_study 
   rather than model_study as used by IGSParamsToIGSRegistration (which 
   results in an implicit inversion by CMTK tools).</p>
-    <p>Note that the reference and floating fields have no impact on the 
+<p>Note that the reference and floating fields have no impact on the 
   transformation encoded in the resultant .list folder and can be overridden 
   on the command line of CMTK tools.</p>
     

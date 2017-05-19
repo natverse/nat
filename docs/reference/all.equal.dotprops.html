@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,22 +83,31 @@
     <p>all.equal method tailored to dotprops objects</p>
     
 
-    <pre><span class='co'># S3 method for dotprops</span>
+    <pre class="usage"><span class='co'># S3 method for dotprops</span>
 <span class='fu'>all.equal</span>(<span class='no'>target</span>, <span class='no'>current</span>, <span class='kw'>check.attributes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>absoluteVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>target, current</dt>
-      <dd>dotprops objects to compare</dd>
-      <dt>check.attributes</dt>
-      <dd>Whether to check attributes (false by default)</dd>
-      <dt>absoluteVectors</dt>
-      <dd>Whether to check only the absolute value of
-eigenvectors for equality (default TRUE, see details)</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to base <code>all.equal</code>.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>target, current</th>
+      <td><p>dotprops objects to compare</p></td>
+    </tr>
+    <tr>
+      <th>check.attributes</th>
+      <td><p>Whether to check attributes (false by default)</p></td>
+    </tr>
+    <tr>
+      <th>absoluteVectors</th>
+      <td><p>Whether to check only the absolute value of
+eigenvectors for equality (default TRUE, see details)</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to base <code>all.equal</code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -111,8 +122,8 @@ eigenvectors for equality (default TRUE, see details)</dd>
 <span class='no'>kc1</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='no'>kc1.recalc</span><span class='kw'>=</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kc1</span>)
 <span class='co'># not equal due to differences in attributes and vectors</span>
-<span class='fu'>all.equal.default</span>(<span class='no'>kc1.recalc</span>, <span class='no'>kc1</span>)</div><div class='output co'>#&gt; [1] &quot;Component “vect”: Mean relative difference: 0.5218482&quot;</div><div class='input'><span class='co'># still not equal because of tangent vector flipping</span>
-<span class='fu'>all.equal.default</span>(<span class='no'>kc1.recalc</span>, <span class='no'>kc1</span>, <span class='kw'>check.attributes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] &quot;Component “vect”: Mean relative difference: 0.5218482&quot;</div><div class='input'><span class='co'># equal using appropriate method</span>
+<span class='fu'>all.equal.default</span>(<span class='no'>kc1.recalc</span>, <span class='no'>kc1</span>)</div><div class='output co'>#&gt; [1] "Component “vect”: Mean relative difference: 0.5218482"</div><div class='input'><span class='co'># still not equal because of tangent vector flipping</span>
+<span class='fu'>all.equal.default</span>(<span class='no'>kc1.recalc</span>, <span class='no'>kc1</span>, <span class='kw'>check.attributes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "Component “vect”: Mean relative difference: 0.5218482"</div><div class='input'><span class='co'># equal using appropriate method</span>
 <span class='fu'>stopifnot</span>(<span class='fu'>isTRUE</span>(<span class='fu'>all.equal</span>(<span class='no'>kc1.recalc</span>, <span class='no'>kc1</span>)))
 <span class='co'># NB identical when recalculated on same setup from same data</span>
 <span class='fu'>stopifnot</span>(<span class='fu'>isTRUE</span>(<span class='fu'>all.equal.default</span>(<span class='no'>kc1.recalc</span>, <span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kc1</span>))))</div></pre>

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -85,20 +87,27 @@
   <code>read.neuron.neuroml</code>.</p>
     
 
-    <pre><span class='fu'>read.morphml</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>ReturnXML</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read.morphml</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>ReturnXML</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>Path to a file on disk or a remote URL (see 
-<code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code> for details).</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to <code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code></dd>
-      <dt>ReturnXML</dt>
-      <dd>Whether to return a parsed XML tree (when 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>Path to a file on disk or a remote URL (see 
+<code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code> for details).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to <code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code></p></td>
+    </tr>
+    <tr>
+      <th>ReturnXML</th>
+      <td><p>Whether to return a parsed XML tree (when 
 <code>ReturnXML=TRUE</code>) or a more extensively processed R list object when 
-<code>ReturnXML=FALSE</code>, the default.</dd>
-    </dl>
+<code>ReturnXML=FALSE</code>, the default.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -112,8 +121,8 @@
   <b>cells</b>. Each <b>cell</b> contains a tree of <b>segments</b> defining 
   the basic connectivity/position and an optional tree <b>cables</b> defining
   attributes on groups of <b>segments</b> (e.g. a name, whether they are 
-  axon/dendrite/soma etc).</p>
-    <p><code>read.morphml</code> will either provide the parsed XML tree which you can 
+  axon/dendrite/soma etc).
+    <code>read.morphml</code> will either provide the parsed XML tree which you can 
   query using XPath statements or a more heavily processed version which 
   provides as much information as possible from the segments and cables trees
   in two R data.frames. The latter option will inevitably drop some 

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,26 +83,37 @@
     <p>Find neurons with soma inside 3D selection box (usually drawn in rgl window)</p>
     
 
-    <pre><span class='fu'>find.soma</span>(<span class='kw'>sel3dfun</span> <span class='kw'>=</span> <span class='fu'>select3d</span>(), <span class='kw'>indices</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>db</span>),
+    <pre class="usage"><span class='fu'>find.soma</span>(<span class='kw'>sel3dfun</span> <span class='kw'>=</span> <span class='fu'>select3d</span>(), <span class='kw'>indices</span> <span class='kw'>=</span> <span class='fu'>names</span>(<span class='no'>db</span>),
   <span class='kw'>db</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"nat.default.neuronlist"</span>), <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"names"</span>, <span class='st'>"neuronlist"</span>, <span class='st'>"data.frame"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>sel3dfun</dt>
-      <dd>A <code>select3d</code> style function to indicate if points
-are within region</dd>
-      <dt>indices</dt>
-      <dd>Names of neurons to search (defaults to all neurons in list)</dd>
-      <dt>db</dt>
-      <dd><code>neuronlist</code> to search. Can also be a character vector naming 
-the neuronlist. Defaults to <code>options(&#39;nat.default.neuronlist&#39;)</code>.</dd>
-      <dt>invert</dt>
-      <dd>Whether to return neurons outside the selection box (default 
-<code>FALSE</code>)</dd>
-      <dt>rval</dt>
-      <dd>What to return (character vector, default=&#39;names&#39;)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>sel3dfun</th>
+      <td><p>A <code>select3d</code> style function to indicate if points
+are within region</p></td>
+    </tr>
+    <tr>
+      <th>indices</th>
+      <td><p>Names of neurons to search (defaults to all neurons in list)</p></td>
+    </tr>
+    <tr>
+      <th>db</th>
+      <td><p><code>neuronlist</code> to search. Can also be a character vector naming 
+the neuronlist. Defaults to <code>options('nat.default.neuronlist')</code>.</p></td>
+    </tr>
+    <tr>
+      <th>invert</th>
+      <td><p>Whether to return neurons outside the selection box (default 
+<code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>rval</th>
+      <td><p>What to return (character vector, default='names')</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read a neuron saved by Fiji&#39;s Simple Neurite Tracer Plugin — read.neuron.fiji • nat</title>
+<title>Read a neuron saved by Fiji's Simple Neurite Tracer Plugin — read.neuron.fiji • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -74,27 +76,36 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read a neuron saved by Fiji&#39;s Simple Neurite Tracer Plugin</h1>
+    <h1>Read a neuron saved by Fiji's Simple Neurite Tracer Plugin</h1>
     </div>
 
     
-    <p>Read a neuron saved by Fiji&#39;s Simple Neurite Tracer Plugin</p>
+    <p>Read a neuron saved by Fiji's Simple Neurite Tracer Plugin</p>
     
 
-    <pre><span class='fu'>read.neuron.fiji</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read.neuron.fiji</span>(<span class='no'>f</span>, <span class='no'>...</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>Path to a file</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to <code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code>.</dd>
-      <dt>simplify</dt>
-      <dd>Whether to return a single neuron as a <code>neuron</code> object 
-rather than a <code>neuronlist</code> of length 1.</dd>
-      <dt>Verbose</dt>
-      <dd>Whether to print status messages during parsing.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>Path to a file</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to <code><a href='http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse'>xmlParse</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>simplify</th>
+      <td><p>Whether to return a single neuron as a <code>neuron</code> object 
+rather than a <code>neuronlist</code> of length 1.</p></td>
+    </tr>
+    <tr>
+      <th>Verbose</th>
+      <td><p>Whether to print status messages during parsing.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -78,21 +80,21 @@
     </div>
 
     
-    <p>dotprops: Neurons as point clouds with tangent vectors (but no connectivity)</p>
+    <p>dotprops: Neurons as point clouds with tangent vectors (but no connectivity)
 
-    <p><code>dotprops</code> makes dotprops representation from raw 3D points
-  (extracting vertices from S3 objects that have them)</p>
+    <code>dotprops</code> makes dotprops representation from raw 3D points
+  (extracting vertices from S3 objects that have them)
 
-    <p><code>dotprops.dotprops</code> will default to the original vale of 
+    <code>dotprops.dotprops</code> will default to the original vale of 
   <code>k</code> and copy over all attributes that are not set by
-  <code>dotprops.default</code>.</p>
+  <code>dotprops.default</code>.
 
-    <p><code>dotprops.neuronlist</code> will run for every object in the 
+    <code>dotprops.neuronlist</code> will run for every object in the 
   neuronlist using <code><a href='nlapply.html'>nlapply</a></code>. <code>...</code> arguments will be passed to 
   <code>nlapply</code> in addition to the named argument <code>OmitFailures</code>.</p>
     
 
-    <pre><span class='fu'>is.dotprops</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>is.dotprops</span>(<span class='no'>x</span>)
 
 <span class='fu'>as.dotprops</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -117,30 +119,45 @@
 <span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>Object to be tested/converted</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to methods</dd>
-      <dt>k</dt>
-      <dd>Number of nearest neighbours to use for tangent vector calculation
-(set to k=20 when passed NULL)</dd>
-      <dt>OmitFailures</dt>
-      <dd>Whether to omit neurons for which <code>FUN</code> gives an 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Object to be tested/converted</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to methods</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>Number of nearest neighbours to use for tangent vector calculation
+(set to k=20 when passed NULL)</p></td>
+    </tr>
+    <tr>
+      <th>OmitFailures</th>
+      <td><p>Whether to omit neurons for which <code>FUN</code> gives an 
 error. The default value (<code>NA</code>) will result in nlapply stopping with 
 an error message the moment there is an eror. For other values, see 
-details.</dd>
-      <dt>Labels</dt>
-      <dd>Vector of labels for each point or <code>NULL</code> to accept 
+details.</p></td>
+    </tr>
+    <tr>
+      <th>Labels</th>
+      <td><p>Vector of labels for each point or <code>NULL</code> to accept 
 class-specific default behaviour for different S3 classes, <code>TRUE</code> 
 always to use labels when incoming object has them and <code>FALSE</code> never 
-to use labels.</dd>
-      <dt>resample</dt>
-      <dd>When finite, a new length to which all segmented edges will
-be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</dd>
-      <dt>na.rm</dt>
-      <dd>Whether to remove <code>NA</code> points (default FALSE)</dd>
-    </dl>
+to use labels.</p></td>
+    </tr>
+    <tr>
+      <th>resample</th>
+      <td><p>When finite, a new length to which all segmented edges will
+be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Whether to remove <code>NA</code> points (default FALSE)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -151,10 +168,10 @@ be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</dd>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>The dotprops format is essentially identical to that developed in:</p>
-    <p>Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). 
+<p>Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). 
 A mutual information approach to automate identification of neuronal clusters 
 in <em>Drosophila</em> brain images. Frontiers in Neuroinformatics 6 (00021).
-<a href = 'doi: 10.3389/fninf.2012.00021'>http://dx.doi.org/10.3389/fninf.2012.00021</a></p>
+<a href = 'http://dx.doi.org/10.3389/fninf.2012.00021'>doi: 10.3389/fninf.2012.00021</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

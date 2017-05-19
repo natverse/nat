@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -82,7 +84,7 @@
   calling than<code>xformimage</code> directly.</p>
     
 
-    <pre><span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
 <span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='no'>...</span>)
@@ -98,26 +100,37 @@
 <span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>reg</dt>
-      <dd>A registration defined by a matrix or a <code>cmtkreg</code> object, or
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>reg</th>
+      <td><p>A registration defined by a matrix or a <code>cmtkreg</code> object, or
 a character vector specifying a path to a CMTK registration on disk (see
 details). If <code>reg</code> is a character vector of length &gt;1 defining a
 sequence of registration files on disk they should proceed from sample to
-reference.</dd>
-      <dt>image</dt>
-      <dd>Nx3 matrix of image</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to methods (and then eventually to
-<code><a href='cmtk.reformatx.html'>cmtk.reformatx</a></code>)</dd>
-      <dt>transformtype</dt>
-      <dd>Which transformation to use when the CMTK file contains
-both warp (default) and affine (TODO)</dd>
-      <dt>direction</dt>
-      <dd>Whether to transform image from sample space to reference
+reference.</p></td>
+    </tr>
+    <tr>
+      <th>image</th>
+      <td><p>Nx3 matrix of image</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to methods (and then eventually to
+<code><a href='cmtk.reformatx.html'>cmtk.reformatx</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>transformtype</th>
+      <td><p>Which transformation to use when the CMTK file contains
+both warp (default) and affine (TODO)</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>Whether to transform image from sample space to reference
 space (called <strong>forward</strong> by CMTK) or from reference to sample space
-(called <strong>inverse</strong> by CMTK). Default (when <code>NULL</code> is forward).</dd>
-    </dl>
+(called <strong>inverse</strong> by CMTK). Default (when <code>NULL</code> is forward).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -132,14 +145,11 @@ space (called <strong>forward</strong> by CMTK) or from reference to sample spac
   mechanism for extending this behaviour for other registration formats.
   If a list of transformations is passed in, these transformations are passed
   to the cmtk reformatx tool in the order received. Note that there is
-  presently no support for <ul>
-<li> using the inverse of a registration</p>
-    <p></li>
-<li> specifying a mask</p>
-    <p></li>
-<li> passing additional arguments to reformatx</p>
-    <p></li>
-</ul></p>
+  presently no support for</p><ul>
+<li><p>using the inverse of a registration</p></li>
+<li><p>specifying a mask</p></li>
+<li><p>passing additional arguments to reformatx</p></li>
+</ul>
     <p>Note that the direction of CMTK registrations can be the source of
   much confusion. This is because CMTK defines the <em>forward</em> direction
   as the transform required to reformat an image in <em>sample</em> (floating)
@@ -148,18 +158,18 @@ space (called <strong>forward</strong> by CMTK) or from reference to sample spac
   positions in sample space, the transformation that is required is (somewhat
   counterintuitively) the one that maps template to sample. However in
   neuroanatomical work, one often has points in sample space that one would
-  like to transform into template space. Here one needs CMTK&#39;s <em>inverse</em>
+  like to transform into template space. Here one needs CMTK's <em>inverse</em>
   transformation.</p>
-    <p>A second source of confusion is that when there are multiple
-  transformations, CMTK&#39;s reformatx tool (wrapped by
+<p>A second source of confusion is that when there are multiple
+  transformations, CMTK's reformatx tool (wrapped by
   <code><a href='cmtk.reformatx.html'>cmtk.reformatx</a></code>) expects them to be listed:</p>
-    <p><code>ref_intermediate.list intermediate_sample.list</code></p>
-    <p>where <code>ref_intermediate.list</code> is the CMTK registration obtained with
+<p><code>ref_intermediate.list intermediate_sample.list</code></p>
+<p>where <code>ref_intermediate.list</code> is the CMTK registration obtained with
   ref as target/reference and intermediate as sample/floating image.</p>
-    <p>For consistency, all <code>xform.*</code> methods expect multiple registrations
+<p>For consistency, all <code>xform.*</code> methods expect multiple registrations
   to be listed from sample to reference and this order is then swapped when
   they are passed on to <code>cmtk.reformatx</code>.</p>
-    <p>whereas CMTK&#39;s streamxform tool (wrapped by <code><a href='xformpoints.html'>xformpoints</a></code>)
+<p>whereas CMTK's streamxform tool (wrapped by <code><a href='xformpoints.html'>xformpoints</a></code>)
   expects them in the opposite order.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

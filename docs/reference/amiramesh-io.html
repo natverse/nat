@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -79,38 +81,54 @@
 
     
     <p>Read AmiraMesh data in binary or ascii format</p>
-
-    <p>Read the header of an amiramesh file</p>
+<p>Read the header of an amiramesh file</p>
     
 
-    <pre><span class='fu'>read.amiramesh</span>(<span class='no'>file</span>, <span class='kw'>sections</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>read.amiramesh</span>(<span class='no'>file</span>, <span class='kw'>sections</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>header</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>endian</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='fu'>read.amiramesh.header</span>(<span class='no'>file</span>, <span class='kw'>Parse</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>file</dt>
-      <dd>Name of file (or connection) to read</dd>
-      <dt>sections</dt>
-      <dd>character vector containing names of sections</dd>
-      <dt>header</dt>
-      <dd>Whether to include the full unprocessesd text header as an 
-attribute of the returned list.</dd>
-      <dt>simplify</dt>
-      <dd>If there is only one datablock in file do not return wrapped 
-in a list (default TRUE).</dd>
-      <dt>endian</dt>
-      <dd>Whether multibyte data types should be treated as big or little
-endian. Default of NULL checks file or uses <code>.Platform$endian</code></dd>
-      <dt>ReadByteAsRaw</dt>
-      <dd>Logical specifying whether to read 8 bit data as an R 
-<code>raw</code> vector rather than <code>integer</code> vector (default: FALSE).</dd>
-      <dt>Verbose</dt>
-      <dd>Print status messages</dd>
-      <dt>Parse</dt>
-      <dd>Logical indicating whether to parse header (default: TRUE)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>file</th>
+      <td><p>Name of file (or connection) to read</p></td>
+    </tr>
+    <tr>
+      <th>sections</th>
+      <td><p>character vector containing names of sections</p></td>
+    </tr>
+    <tr>
+      <th>header</th>
+      <td><p>Whether to include the full unprocessesd text header as an 
+attribute of the returned list.</p></td>
+    </tr>
+    <tr>
+      <th>simplify</th>
+      <td><p>If there is only one datablock in file do not return wrapped 
+in a list (default TRUE).</p></td>
+    </tr>
+    <tr>
+      <th>endian</th>
+      <td><p>Whether multibyte data types should be treated as big or little
+endian. Default of NULL checks file or uses <code>.Platform$endian</code></p></td>
+    </tr>
+    <tr>
+      <th>ReadByteAsRaw</th>
+      <td><p>Logical specifying whether to read 8 bit data as an R 
+<code>raw</code> vector rather than <code>integer</code> vector (default: FALSE).</p></td>
+    </tr>
+    <tr>
+      <th>Verbose</th>
+      <td><p>Print status messages</p></td>
+    </tr>
+    <tr>
+      <th>Parse</th>
+      <td><p>Logical indicating whether to parse header (default: TRUE)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -119,14 +137,14 @@ endian. Default of NULL checks file or uses <code>.Platform$endian</code></dd>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>reading byte data as raw arrays requires 1/4 memory but complicates
-  arithmetic.</p>
-    <p><code>read.amiramesh.header</code> will open a connection if file is a 
+  arithmetic.
+    <code>read.amiramesh.header</code> will open a connection if file is a 
   character vector and close it when finished reading.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code>readBin, .Platform</code></p>
-    <p>Other amira: <code><a href='amiratype.html'>amiratype</a></code>,
+<p>Other amira: <code><a href='amiratype.html'>amiratype</a></code>,
   <code><a href='is.amiramesh.html'>is.amiramesh</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
   <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p>
     

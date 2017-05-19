@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,26 +83,35 @@
     <p>Threshold an object, typically to produce a mask</p>
     
 
-    <pre><span class='fu'>threshold</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>threshold</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for im3d</span>
 <span class='fu'>threshold</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"logical"</span>, <span class='st'>"integer"</span>,
   <span class='st'>"raw"</span>, <span class='st'>"numeric"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>Object to be thresholded</dd>
-      <dt>&#8230;</dt>
-      <dd>Additional arguments passed to methods</dd>
-      <dt>threshold</dt>
-      <dd>Either a numeric value that pixels must <strong>exceed</strong> in 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>Object to be thresholded</p></td>
+    </tr>
+    <tr>
+      <th>&#8230;</th>
+      <td><p>Additional arguments passed to methods</p></td>
+    </tr>
+    <tr>
+      <th>threshold</th>
+      <td><p>Either a numeric value that pixels must <strong>exceed</strong> in 
 order to be included in the mask <em>or</em> a <code>logical</code> vector defining
-foreground pixels.</dd>
-      <dt>mode</dt>
-      <dd>The storage mode of the resultant object (see 
-<code>vector</code></dd>
-    </dl>
+foreground pixels.</p></td>
+    </tr>
+    <tr>
+      <th>mode</th>
+      <td><p>The storage mode of the resultant object (see 
+<code>vector</code></p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -78,27 +80,36 @@
     </div>
 
     
-    <p><code>xyzpos</code> converts pixel coordinates to physical coordinates</p>
+    <p><code>xyzpos</code> converts pixel coordinates to physical coordinates
 
-    <p><code>ijkpos</code> converts physical coordinates to pixel coordinates</p>
+    <code>ijkpos</code> converts physical coordinates to pixel coordinates</p>
     
 
-    <pre><span class='fu'>xyzpos</span>(<span class='no'>d</span>, <span class='no'>ijk</span>)
+    <pre class="usage"><span class='fu'>xyzpos</span>(<span class='no'>d</span>, <span class='no'>ijk</span>)
 
 <span class='fu'>ijkpos</span>(<span class='no'>d</span>, <span class='no'>xyz</span>, <span class='kw'>roundToNearestPixel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>d</dt>
-      <dd>An <code>im3d</code> object defining a physical space</dd>
-      <dt>ijk</dt>
-      <dd>an Nx3 matrix of pixel coordinates (1-indexed)</dd>
-      <dt>xyz</dt>
-      <dd>Nx3 matrix of physical coordinates</dd>
-      <dt>roundToNearestPixel</dt>
-      <dd>Whether to round calculated pixel coordinates to
-nearest integer value (i.e. nearest pixel). default: <code>TRUE</code></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>d</th>
+      <td><p>An <code>im3d</code> object defining a physical space</p></td>
+    </tr>
+    <tr>
+      <th>ijk</th>
+      <td><p>an Nx3 matrix of pixel coordinates (1-indexed)</p></td>
+    </tr>
+    <tr>
+      <th>xyz</th>
+      <td><p>Nx3 matrix of physical coordinates</p></td>
+    </tr>
+    <tr>
+      <th>roundToNearestPixel</th>
+      <td><p>Whether to round calculated pixel coordinates to
+nearest integer value (i.e. nearest pixel). default: <code>TRUE</code></p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -107,7 +118,7 @@ nearest integer value (i.e. nearest pixel). default: <code>TRUE</code></dd>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='ind2coord.html'>ind2coord</a></code></p>
-    <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+<p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
   <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-io.html'>im3d-io</a></code>,
   <code><a href='im3d.html'>im3d</a></code>, <code><a href='imexpand.grid.html'>imexpand.grid</a></code>,
   <code><a href='imslice.html'>imslice</a></code>, <code><a href='is.im3d.html'>is.im3d</a></code>,

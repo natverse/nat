@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,23 +83,32 @@
     <p>Calculate length of all segments in neuron</p>
     
 
-    <pre><span class='fu'>seglengths</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>flatten</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>seglengths</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>flatten</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A neuron</dd>
-      <dt>all</dt>
-      <dd>Whether to calculate lengths for all segments when there are 
-multiple subtrees (default: <code>FALSE</code>)</dd>
-      <dt>flatten</dt>
-      <dd>Whether to flatten the lists of lists into a single list when 
-<code>all=TRUE</code></dd>
-      <dt>sumsegment</dt>
-      <dd>Whether to return the length of each segment (when 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A neuron</p></td>
+    </tr>
+    <tr>
+      <th>all</th>
+      <td><p>Whether to calculate lengths for all segments when there are 
+multiple subtrees (default: <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>flatten</th>
+      <td><p>Whether to flatten the lists of lists into a single list when 
+<code>all=TRUE</code></p></td>
+    </tr>
+    <tr>
+      <th>sumsegment</th>
+      <td><p>Whether to return the length of each segment (when 
 sumsegment=TRUE, the default) or a list of vectors of lengths of each
-individual edge in the segment.</dd>
-    </dl>
+individual edge in the segment.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -117,8 +128,8 @@ individual edge in the segment.</dd>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='summary.neuronlist.html'>summary</a></span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.6273  2.1630  4.5000  9.0050  9.8380 84.2000 </div><div class='input'><span class='fu'>hist</span>(<span class='fu'>unlist</span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)),
+    <pre class="examples"><div class='input'><span class='fu'><a href='summary.neuron.html'>summary</a></span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;  0.6273  2.1631  4.4999  9.0053  9.8379 84.1981 </div><div class='input'><span class='fu'>hist</span>(<span class='fu'>unlist</span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)),
   <span class='kw'>br</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'histogram of edge lengths'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'edge lengths /microns'</span>)</div><img src='seglengths-4.png' alt='' width='540' height='400' /></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

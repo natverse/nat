@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,17 +83,24 @@
     <p>Write out CMTK registration list to folder</p>
     
 
-    <pre><span class='fu'>write.cmtkreg</span>(<span class='no'>reglist</span>, <span class='no'>foldername</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='st'>"2.4"</span>)</pre>
+    <pre class="usage"><span class='fu'>write.cmtkreg</span>(<span class='no'>reglist</span>, <span class='no'>foldername</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='st'>"2.4"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>reglist</dt>
-      <dd>List specifying CMTK registration parameters</dd>
-      <dt>foldername</dt>
-      <dd>Path to registration folder (usually ending in .list)</dd>
-      <dt>version</dt>
-      <dd>CMTK version for registration (default 2.4)</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>reglist</th>
+      <td><p>List specifying CMTK registration parameters</p></td>
+    </tr>
+    <tr>
+      <th>foldername</th>
+      <td><p>Path to registration folder (usually ending in .list)</p></td>
+    </tr>
+    <tr>
+      <th>version</th>
+      <td><p>CMTK version for registration (default 2.4)</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -101,7 +110,7 @@
   use such a transformation as an initial affine with the registration
   command the switch --initial-inverse must be used specifying the folder
   name created by this function.</p>
-    <p>CMTK v2.4 fixed a long-standing bug in affine (de)composition to
+<p>CMTK v2.4 fixed a long-standing bug in affine (de)composition to
   CMTK params. This resulted in a non-backwards compatible change marked by
   writing the TYPEDSTREAM as version 2.4. The R code in this package
   implements both the new and old compose/decompose functions, using the new

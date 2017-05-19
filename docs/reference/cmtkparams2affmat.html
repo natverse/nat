@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,28 +83,43 @@
     <p>Compose homogeneous affine matrix from CMTK registration parameters</p>
     
 
-    <pre><span class='fu'>cmtkparams2affmat</span>(<span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tx</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>ty</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>rx</span> <span class='kw'>=</span> <span class='fl'>0</span>,
+    <pre class="usage"><span class='fu'>cmtkparams2affmat</span>(<span class='kw'>params</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>tx</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>ty</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>tz</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>rx</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>ry</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>rz</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sx</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sy</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sz</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>shx</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>shy</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>shz</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cx</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cy</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>cz</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>legacy</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>params</dt>
-      <dd>5x3 matrix of CMTK registration parameters or list of length 5.</dd>
-      <dt>tx, ty, tz</dt>
-      <dd>Translation along x, y and z axes (default 0)</dd>
-      <dt>rx, ry, rz</dt>
-      <dd>Rotation about x, y and z axes (in degrees, default 0)</dd>
-      <dt>sx, sy, sz</dt>
-      <dd>Scale for x, y and z axes (default 1)</dd>
-      <dt>shx, shy, shz</dt>
-      <dd>Shear for x,y,z axes (default 0)</dd>
-      <dt>cx, cy, cz</dt>
-      <dd>Centre for rotation</dd>
-      <dt>legacy</dt>
-      <dd>Whether to assume that parameters are in the format used by 
-CMTK &lt;=2.4.0 (default value NA implies FALSE, see details).</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>params</th>
+      <td><p>5x3 matrix of CMTK registration parameters or list of length 5.</p></td>
+    </tr>
+    <tr>
+      <th>tx, ty, tz</th>
+      <td><p>Translation along x, y and z axes (default 0)</p></td>
+    </tr>
+    <tr>
+      <th>rx, ry, rz</th>
+      <td><p>Rotation about x, y and z axes (in degrees, default 0)</p></td>
+    </tr>
+    <tr>
+      <th>sx, sy, sz</th>
+      <td><p>Scale for x, y and z axes (default 1)</p></td>
+    </tr>
+    <tr>
+      <th>shx, shy, shz</th>
+      <td><p>Shear for x,y,z axes (default 0)</p></td>
+    </tr>
+    <tr>
+      <th>cx, cy, cz</th>
+      <td><p>Centre for rotation</p></td>
+    </tr>
+    <tr>
+      <th>legacy</th>
+      <td><p>Whether to assume that parameters are in the format used by 
+CMTK &lt;=2.4.0 (default value NA implies FALSE, see details).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -113,7 +130,7 @@ CMTK &lt;=2.4.0 (default value NA implies FALSE, see details).</dd>
     <p>If the <code>legacy</code> parameter is not set explicitly, then it will 
   be set to <code>TRUE</code> if params has a version attribute &lt;2.4 or FALSE 
   otherwise.</p>
-    <p>translation and centre components are assumed to be in physical 
+<p>translation and centre components are assumed to be in physical 
   coordinates.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,17 +83,22 @@
     <p>Check if file is amiramesh format</p>
     
 
-    <pre><span class='fu'>is.amiramesh</span>(<span class='kw'>f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>is.amiramesh</span>(<span class='kw'>f</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>Path to one or more files to be tested <strong>or</strong> an array of raw 
-bytes, for one file only.</dd>
-      <dt>bytes</dt>
-      <dd>optional raw vector of at least 11 bytes from the start of a 
-single file (used in preference to reading file <code>f</code>).</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>Path to one or more files to be tested <strong>or</strong> an array of raw 
+bytes, for one file only.</p></td>
+    </tr>
+    <tr>
+      <th>bytes</th>
+      <td><p>optional raw vector of at least 11 bytes from the start of a 
+single file (used in preference to reading file <code>f</code>).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -100,12 +107,12 @@ single file (used in preference to reading file <code>f</code>).</dd>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Tries to be as fast as possible by reading only first 11 bytes and 
-  checking if they equal to &quot;# AmiraMesh&quot; or (deprecated) &quot;# HyperMesh&quot;.</p>
+  checking if they equal to "# AmiraMesh" or (deprecated) "# HyperMesh".</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other amira: <code><a href='amiratype.html'>amiratype</a></code>,
-  <code><a href='read.amiramesh.html'>read.amiramesh</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
+  <code><a href='amiramesh-io.html'>read.amiramesh</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
   <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p>
     
 

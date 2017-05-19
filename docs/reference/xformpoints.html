@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -82,7 +84,7 @@
   than<code>xformpoints</code> directly.</p>
     
 
-    <pre><span class='fu'>xformpoints</span>(<span class='no'>reg</span>, <span class='no'>points</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>xformpoints</span>(<span class='no'>reg</span>, <span class='no'>points</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
 <span class='fu'>xformpoints</span>(<span class='no'>reg</span>, <span class='no'>points</span>, <span class='no'>...</span>)
@@ -98,34 +100,47 @@
 <span class='fu'>xformpoints</span>(<span class='no'>reg</span>, <span class='no'>points</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>reg</dt>
-      <dd>A registration defined by a matrix, a function, a
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>reg</th>
+      <td><p>A registration defined by a matrix, a function, a
 <code><a href='cmtkreg.html'>cmtkreg</a></code> object, a <code><a href='reglist.html'>reglist</a></code> object containing a
 sequence of arbitrary registrations, or a character vector specifying
-path(s) to registrations on disk (see details).</dd>
-      <dt>points</dt>
-      <dd>Nx3 matrix of points</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to methods</dd>
-      <dt>transformtype</dt>
-      <dd>Which transformation to use when the CMTK file contains
-both warp (default) and affine</dd>
-      <dt>direction</dt>
-      <dd>Whether to transform points from sample space to reference
+path(s) to registrations on disk (see details).</p></td>
+    </tr>
+    <tr>
+      <th>points</th>
+      <td><p>Nx3 matrix of points</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to methods</p></td>
+    </tr>
+    <tr>
+      <th>transformtype</th>
+      <td><p>Which transformation to use when the CMTK file contains
+both warp (default) and affine</p></td>
+    </tr>
+    <tr>
+      <th>direction</th>
+      <td><p>Whether to transform points from sample space to reference
 space (called <strong>inverse</strong> by CMTK) or from reference to sample space
-(called <strong>forward</strong> by CMTK). Default (when <code>NULL</code> is inverse).</dd>
-      <dt>FallBackToAffine</dt>
-      <dd>Whether to use the affine transformation for points
-that fail to transform under a warping transformation.</dd>
-    </dl>
+(called <strong>forward</strong> by CMTK). Default (when <code>NULL</code> is inverse).</p></td>
+    </tr>
+    <tr>
+      <th>FallBackToAffine</th>
+      <td><p>Whether to use the affine transformation for points
+that fail to transform under a warping transformation.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>If a list of transformations is passed in, these transformations are
 performed in sequence order, such that <code>xformpoints(c(a,b,c), x) ==
 xformpoints(c, (xformpoints(b, xformpoints(a, x))))</code></p>
-    <p>Note that the direction of CMTK registrations can be the source of
+<p>Note that the direction of CMTK registrations can be the source of
   much confusion. This is because CMTK defines the <em>forward</em> direction
   as the transform required to reformat an image in <em>sample</em> (floating)
   space to an image in <em>template</em> space. Since this operation involves

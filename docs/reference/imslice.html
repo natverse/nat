@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,21 +83,30 @@
     <p>Slice out a 3D subarray (or 2d matrix) from a 3D image array</p>
     
 
-    <pre><span class='fu'>imslice</span>(<span class='no'>x</span>, <span class='no'>slice</span>, <span class='kw'>slicedim</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>imslice</span>(<span class='no'>x</span>, <span class='no'>slice</span>, <span class='kw'>slicedim</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>drop</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>An im3d objet</dd>
-      <dt>slice</dt>
-      <dd>Indices defining the slices to keep</dd>
-      <dt>slicedim</dt>
-      <dd>Character vector or integer defining axis from which slices 
-will be removed.</dd>
-      <dt>drop</dt>
-      <dd>Whether singleton dimensions will be dropped (default: TRUE) 
-conveting 3D array to 2d matrix.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>An im3d objet</p></td>
+    </tr>
+    <tr>
+      <th>slice</th>
+      <td><p>Indices defining the slices to keep</p></td>
+    </tr>
+    <tr>
+      <th>slicedim</th>
+      <td><p>Character vector or integer defining axis from which slices 
+will be removed.</p></td>
+    </tr>
+    <tr>
+      <th>drop</th>
+      <td><p>Whether singleton dimensions will be dropped (default: TRUE) 
+conveting 3D array to 2d matrix.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

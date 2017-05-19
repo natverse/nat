@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,34 +83,43 @@
     <p>Make a list of neurons that can be used for coordinate plotting/analysis</p>
     
 
-    <pre><span class='fu'>as.neuronlist</span>(<span class='no'>l</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as.neuronlist</span>(<span class='no'>l</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>as.neuronlist</span>(<span class='no'>l</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>AddClassToNeurons</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>l</dt>
-      <dd>An existing list or a single neuron to start a list</dd>
-      <dt>...</dt>
-      <dd>Additional arguments passed to methods</dd>
-      <dt>df</dt>
-      <dd>the data.frame to attach with additional metadata.</dd>
-      <dt>AddClassToNeurons</dt>
-      <dd>Whether to ensure neurons have class <code>neuron</code>
-(see details).</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>l</th>
+      <td><p>An existing list or a single neuron to start a list</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments passed to methods</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>the data.frame to attach with additional metadata.</p></td>
+    </tr>
+    <tr>
+      <th>AddClassToNeurons</th>
+      <td><p>Whether to ensure neurons have class <code>neuron</code>
+(see details).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>neuronlist with attr(&#39;df&#39;)</p>
+    <p>neuronlist with attr('df')</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>as.neuronlist</code> can cope with both <code>neurons</code> and
   <code>dotprops</code> objects but <code>AddClassToNeurons</code> will only apply to 
-  things that look like neurons but don&#39;t have a class of <code>neuron</code>.</p>
-    <p>See <code><a href='neuronlist.html'>neuronlist</a></code> details for more information.</p>
+  things that look like neurons but don't have a class of <code>neuron</code>.
+    See <code><a href='neuronlist.html'>neuronlist</a></code> details for more information.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

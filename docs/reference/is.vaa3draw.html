@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Check if a file is in the raw image format used by Hanchuan Peng&#39;s Vaa3D — is.vaa3draw • nat</title>
+<title>Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D — is.vaa3draw • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -74,7 +76,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Check if a file is in the raw image format used by Hanchuan Peng&#39;s Vaa3D</h1>
+    <h1>Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D</h1>
     </div>
 
     
@@ -82,17 +84,22 @@
   https://svn.janelia.org/penglab/projects/vaa3d/trunk/imagej_io/v3draw_io_imagej/raw_reader.java</p>
     
 
-    <pre><span class='fu'>is.vaa3draw</span>(<span class='no'>f</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>is.vaa3draw</span>(<span class='no'>f</span>, <span class='kw'>bytes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>f</dt>
-      <dd>A character vector specifying the path or a raw vector (see
-<code>bytes</code>).</dd>
-      <dt>bytes</dt>
-      <dd>optional raw vector of at least 24 bytes from the start of a 
-single file (used in preference to reading file <code>f</code>).</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>f</th>
+      <td><p>A character vector specifying the path or a raw vector (see
+<code>bytes</code>).</p></td>
+    </tr>
+    <tr>
+      <th>bytes</th>
+      <td><p>optional raw vector of at least 24 bytes from the start of a 
+single file (used in preference to reading file <code>f</code>).</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

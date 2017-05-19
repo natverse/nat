@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,17 +83,24 @@
     <p>Convert CMTK registration to homogeneous affine matrix with dof2mat</p>
     
 
-    <pre><span class='fu'>cmtk.dof2mat</span>(<span class='no'>reg</span>, <span class='kw'>Transpose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>cmtk.dof2mat</span>(<span class='no'>reg</span>, <span class='kw'>Transpose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>version</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>reg</dt>
-      <dd>Path to input registration file or 5x3 matrix of CMTK parameters.</dd>
-      <dt>Transpose</dt>
-      <dd>ouput matrix so that form on disk matches R&#39;s convention.</dd>
-      <dt>version</dt>
-      <dd>Whether to return CMTK version string</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>reg</th>
+      <td><p>Path to input registration file or 5x3 matrix of CMTK parameters.</p></td>
+    </tr>
+    <tr>
+      <th>Transpose</th>
+      <td><p>ouput matrix so that form on disk matches R's convention.</p></td>
+    </tr>
+    <tr>
+      <th>version</th>
+      <td><p>Whether to return CMTK version string</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -101,12 +110,12 @@
 
     <p>Transpose is true by default since this results in the orientation
   of cmtk output files matching the orientation in R. Do not change this
-  unless you&#39;re sure you know what you&#39;re doing!</p>
+  unless you're sure you know what you're doing!</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other cmtk-commandline: <code><a href='cmtk.mat2dof.html'>cmtk.mat2dof</a></code></p>
-    <p>Other cmtk-geometry: <code><a href='affmat2cmtkparams.html'>affmat2cmtkparams</a></code>,
+<p>Other cmtk-geometry: <code><a href='affmat2cmtkparams.html'>affmat2cmtkparams</a></code>,
   <code><a href='cmtk.mat2dof.html'>cmtk.mat2dof</a></code>,
   <code><a href='cmtkparams2affmat.html'>cmtkparams2affmat</a></code></p>
     

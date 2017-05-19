@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,27 +83,38 @@
     <p>Normalise an SWC format block of neuron morphology data</p>
     
 
-    <pre><span class='fu'>normalise_swc</span>(<span class='no'>x</span>, <span class='kw'>requiredColumns</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PointNo"</span>, <span class='st'>"Label"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span>, <span class='st'>"W"</span>,
+    <pre class="usage"><span class='fu'>normalise_swc</span>(<span class='no'>x</span>, <span class='kw'>requiredColumns</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PointNo"</span>, <span class='st'>"Label"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span>, <span class='st'>"W"</span>,
   <span class='st'>"Parent"</span>), <span class='kw'>ifMissing</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"usedefaults"</span>, <span class='st'>"warning"</span>, <span class='st'>"stop"</span>),
   <span class='kw'>includeExtraCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>defaultValue</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>PointNo</span> <span class='kw'>=</span> <span class='fu'>seq.int</span>(<span class='fu'>nrow</span>(<span class='no'>x</span>)),
   <span class='kw'>Label</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>W</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Parent</span> <span class='kw'>=</span>
   <span class='fl'>NA_integer_</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A data.frame containing neuron morphology data</dd>
-      <dt>requiredColumns</dt>
-      <dd>Character vector naming columns we should have</dd>
-      <dt>ifMissing</dt>
-      <dd>What to do if <code>x</code> is missing a required column</dd>
-      <dt>includeExtraCols</dt>
-      <dd>Whether to include any extra columns include in 
-codex</dd>
-      <dt>defaultValue</dt>
-      <dd>A list containing default values to use for any missing 
-columns</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A data.frame containing neuron morphology data</p></td>
+    </tr>
+    <tr>
+      <th>requiredColumns</th>
+      <td><p>Character vector naming columns we should have</p></td>
+    </tr>
+    <tr>
+      <th>ifMissing</th>
+      <td><p>What to do if <code>x</code> is missing a required column</p></td>
+    </tr>
+    <tr>
+      <th>includeExtraCols</th>
+      <td><p>Whether to include any extra columns include in 
+codex</p></td>
+    </tr>
+    <tr>
+      <th>defaultValue</th>
+      <td><p>A list containing default values to use for any missing 
+columns</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 

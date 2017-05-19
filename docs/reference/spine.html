@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,38 +83,47 @@
     <p>Compute the longest path (aka spine or backbone) of a neuron</p>
     
 
-    <pre><span class='fu'>spine</span>(<span class='no'>n</span>, <span class='kw'>UseStartPoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>SpatialWeights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+    <pre class="usage"><span class='fu'>spine</span>(<span class='no'>n</span>, <span class='kw'>UseStartPoint</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>SpatialWeights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"neuron"</span>, <span class='st'>"length"</span>, <span class='st'>"ids"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>n</dt>
-      <dd>the neuron to consider.</dd>
-      <dt>UseStartPoint</dt>
-      <dd>Whether to use the StartPoint of the neuron (often the 
-soma) as the starting point of the returned spine.</dd>
-      <dt>SpatialWeights</dt>
-      <dd>logical indicating whether spatial distances (default) 
-should be used to weight segments instead of weighting each edge equally.</dd>
-      <dt>invert</dt>
-      <dd>When <code>invert=TRUE</code> the spine is pruned away instead of 
-being selected. This is only valid when <code>rval=&#39;neuron&#39;</code> or
-<code>rval=&#39;ids&#39;</code>.</dd>
-      <dt>rval</dt>
-      <dd>Character vector indicating the return type, one of 
-<code>&#39;neuron&#39;</code>, <code>&#39;length&#39;</code> or <code>&#39;ids&#39;</code>. See <b>Value</b> section.</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>n</th>
+      <td><p>the neuron to consider.</p></td>
+    </tr>
+    <tr>
+      <th>UseStartPoint</th>
+      <td><p>Whether to use the StartPoint of the neuron (often the 
+soma) as the starting point of the returned spine.</p></td>
+    </tr>
+    <tr>
+      <th>SpatialWeights</th>
+      <td><p>logical indicating whether spatial distances (default) 
+should be used to weight segments instead of weighting each edge equally.</p></td>
+    </tr>
+    <tr>
+      <th>invert</th>
+      <td><p>When <code>invert=TRUE</code> the spine is pruned away instead of 
+being selected. This is only valid when <code>rval='neuron'</code> or
+<code>rval='ids'</code>.</p></td>
+    </tr>
+    <tr>
+      <th>rval</th>
+      <td><p>Character vector indicating the return type, one of 
+<code>'neuron'</code>, <code>'length'</code> or <code>'ids'</code>. See <b>Value</b> section.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Either <ul>
-<li> a neuron object corresponding to the longest path <em>or</em></p>
-    <p></li>
-<li> the length of the longest path (when <code>rval=&quot;length&quot;</code>) <em>or</em></p>
-    <p></li>
-<li> an integer vector of raw point indices (when <code>rval=&quot;ids&quot;</code>).</p>
-    <p></li>
-</ul></p>
+    <p>Either</p><ul>
+<li><p>a neuron object corresponding to the longest path <em>or</em></p></li>
+<li><p>the length of the longest path (when <code>rval="length"</code>) <em>or</em></p></li>
+<li><p>an integer vector of raw point indices (when <code>rval="ids"</code>).</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -120,7 +131,7 @@ being selected. This is only valid when <code>rval=&#39;neuron&#39;</code> or
   <code><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>shortest.paths</a></code>, <code><a href='prune_strahler.html'>prune_strahler</a></code> for 
   removing lower order branches from a neuron, <code><a href='prune.html'>prune</a></code> for 
   removing parts of a neuron by spatial criteria.</p>
-    <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
+<p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
   <code><a href='plot.neuron.html'>plot.neuron</a></code>,
   <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
   <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
@@ -129,6 +140,7 @@ being selected. This is only valid when <code>rval=&#39;neuron&#39;</code> or
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>pn.spine</span><span class='kw'>=</span><span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>pn.spine</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>)
 
@@ -137,6 +149,7 @@ being selected. This is only valid when <code>rval=&#39;neuron&#39;</code> or
 <span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'length'</span>, <span class='kw'>UseStartPoint</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] 186.0859</div><div class='input'>
 <span class='co'># extract everything but the spine</span>
 <span class='no'>antispine</span><span class='kw'>=</span><span class='fu'>spine</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>invert</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>antispine</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)</div></pre>
   </div>

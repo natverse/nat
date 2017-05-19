@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,37 +83,56 @@
     <p>Read one or more neurons from file to a neuronlist in memory</p>
     
 
-    <pre><span class='fu'>read.neurons</span>(<span class='no'>paths</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>neuronnames</span> <span class='kw'>=</span> <span class='no'>basename</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>read.neurons</span>(<span class='no'>paths</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>neuronnames</span> <span class='kw'>=</span> <span class='no'>basename</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>nl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>SortOnUpdate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>paths</dt>
-      <dd>Paths to neuron input files <em>or</em> a directory containing 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>paths</th>
+      <td><p>Paths to neuron input files <em>or</em> a directory containing 
 neurons <em>or</em> a <code><a href='neuronlistfh.html'>neuronlistfh</a></code> object, <em>or</em> a zip 
-archive containing multiple neurons.</dd>
-      <dt>pattern</dt>
-      <dd>If paths is a directory, <code><a href='http://www.rdocumentation.org/packages/base/topics/regex'>regex</a></code> that file 
-names must match.</dd>
-      <dt>neuronnames</dt>
-      <dd>Character vector or function that specifies neuron names. 
-See details.</dd>
-      <dt>format</dt>
-      <dd>File format for neuron (see <code><a href='read.neuron.html'>read.neuron</a></code>)</dd>
-      <dt>nl</dt>
-      <dd>An existing neuronlist to be updated (see details)</dd>
-      <dt>df</dt>
-      <dd>Optional data frame containing information about each neuron</dd>
-      <dt>OmitFailures</dt>
-      <dd>Omit failures (when TRUE) or leave an NA value in the 
-list</dd>
-      <dt>SortOnUpdate</dt>
-      <dd>When <code>nl!=NULL</code> the resultant neuronlist will be 
+archive containing multiple neurons.</p></td>
+    </tr>
+    <tr>
+      <th>pattern</th>
+      <td><p>If paths is a directory, <code><a href='http://www.rdocumentation.org/packages/base/topics/regex'>regex</a></code> that file 
+names must match.</p></td>
+    </tr>
+    <tr>
+      <th>neuronnames</th>
+      <td><p>Character vector or function that specifies neuron names. 
+See details.</p></td>
+    </tr>
+    <tr>
+      <th>format</th>
+      <td><p>File format for neuron (see <code><a href='read.neuron.html'>read.neuron</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>nl</th>
+      <td><p>An existing neuronlist to be updated (see details)</p></td>
+    </tr>
+    <tr>
+      <th>df</th>
+      <td><p>Optional data frame containing information about each neuron</p></td>
+    </tr>
+    <tr>
+      <th>OmitFailures</th>
+      <td><p>Omit failures (when TRUE) or leave an NA value in the 
+list</p></td>
+    </tr>
+    <tr>
+      <th>SortOnUpdate</th>
+      <td><p>When <code>nl!=NULL</code> the resultant neuronlist will be 
 sorted so that neurons are ordered according to the value of the 
-<code>paths</code> argument.</dd>
-      <dt>...</dt>
-      <dd>Additional arguements to passed to read.neuron methods</dd>
-    </dl>
+<code>paths</code> argument.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguements to passed to read.neuron methods</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -120,17 +141,17 @@ sorted so that neurons are ordered according to the value of the
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function will cope with the same set of file formats offered by
-  <code>read.neuron</code>.</p>
-    <p>If the <code>paths</code> argument specifies a (single) directory then all files 
+  <code>read.neuron</code>.
+    If the <code>paths</code> argument specifies a (single) directory then all files 
   in that directory will be read unless an optional regex pattern is also 
   specified. Similarly, if <code>paths</code> specifies a zip archive, all neurons 
-  within the archive will be loaded.</p>
-    <p><code>neuronnames</code> must specify a unique set of names that will be used as 
+  within the archive will be loaded.
+    <code>neuronnames</code> must specify a unique set of names that will be used as 
   the names of the neurons in the resultant neuronlist. If <code>neuronnames</code>
   is a a function then this will be applied to the path to each neuron. The 
   default value is the function <code>basename</code> which results in each neuron 
-  being named for the input file from which it was read.</p>
-    <p>The optional dataframe (<code>df</code>) detailing each neuron should have 
+  being named for the input file from which it was read.
+    The optional dataframe (<code>df</code>) detailing each neuron should have 
   <code>rownames</code> that match the names of each neuron. It would also make 
   sense if the same key was present in a column of the data frame. If the 
   dataframe contains more rows than neurons, the superfluous rows are dropped
@@ -143,7 +164,7 @@ sorted so that neurons are ordered according to the value of the
 
     <p><code><a href='read.neuron.html'>read.neuron</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code>,
   <code><a href='fileformats.html'>fileformats</a></code></p>
-    <p>Other neuronlist: <code><a href='*.neuronlist.html'>*.neuronlist</a></code>,
+<p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
   <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
   <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
   <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
@@ -151,28 +172,28 @@ sorted so that neurons are ordered according to the value of the
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># ## Read C. elegans neurons from OpenWorm github repository</span>
-<span class='co'># vds=paste0("VD", 1:13)</span>
-<span class='co'># vdurls=paste0("https://raw.githubusercontent.com/openworm/CElegansNeuroML/",</span>
-<span class='co'>#   "103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/",vds,</span>
-<span class='co'>#   ".morph.xml")</span>
-<span class='co'># vdnl=read.neurons(vdurls, neuronnames=vds)</span>
-<span class='co'># plot3d(vdnl)</span>
-<span class='co'># </span>
-<span class='co'># ## The same, but this time add some metadata to neuronlist</span>
-<span class='co'># # fetch table of worm neurons from wormbase</span>
-<span class='co'># library(rvest)</span>
-<span class='co'># nlurl="http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"</span>
-<span class='co'># wormneurons = html_table(html(nlurl), fill=TRUE)[[4]]</span>
-<span class='co'># vddf=subset(wormneurons, Neuron%in%vds)</span>
-<span class='co'># rownames(vddf)=vddf$Neuron</span>
-<span class='co'># # attach metadata to neuronlist</span>
-<span class='co'># vdnl=read.neurons(vdurls, neuronnames=vds, df=vddf)</span>
-<span class='co'># # use metadata to plot a subset of neurons</span>
-<span class='co'># clear3d()</span>
-<span class='co'># plot3d(vdnl, grepl("P[1-6].app", Lineage))</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+  <span class='co'>## Read C. elegans neurons from OpenWorm github repository</span>
+  <span class='no'>vds</span><span class='kw'>=</span><span class='fu'>paste0</span>(<span class='st'>"VD"</span>, <span class='fl'>1</span>:<span class='fl'>13</span>)
+  <span class='no'>vdurls</span><span class='kw'>=</span><span class='fu'>paste0</span>(<span class='st'>"https://raw.githubusercontent.com/openworm/CElegansNeuroML/"</span>,
+    <span class='st'>"103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/"</span>,<span class='no'>vds</span>,
+    <span class='st'>".morph.xml"</span>)
+  <span class='no'>vdnl</span><span class='kw'>=</span><span class='fu'>read.neurons</span>(<span class='no'>vdurls</span>, <span class='kw'>neuronnames</span><span class='kw'>=</span><span class='no'>vds</span>)
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>vdnl</span>)
+
+  <span class='co'>## The same, but this time add some metadata to neuronlist</span>
+  <span class='co'># fetch table of worm neurons from wormbase</span>
+  <span class='fu'>library</span>(<span class='no'>rvest</span>)
+  <span class='no'>nlurl</span><span class='kw'>=</span><span class='st'>"http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"</span>
+  <span class='no'>wormneurons</span> <span class='kw'>=</span> <span class='fu'>html_table</span>(<span class='fu'>html</span>(<span class='no'>nlurl</span>), <span class='kw'>fill</span><span class='kw'>=</span><span class='fl'>TRUE</span>)<span class='kw'>[[</span><span class='fl'>4</span>]]
+  <span class='no'>vddf</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>wormneurons</span>, <span class='no'>Neuron</span><span class='kw'>%in%</span><span class='no'>vds</span>)
+  <span class='fu'>rownames</span>(<span class='no'>vddf</span>)<span class='kw'>=</span><span class='no'>vddf</span>$<span class='no'>Neuron</span>
+  <span class='co'># attach metadata to neuronlist</span>
+  <span class='no'>vdnl</span><span class='kw'>=</span><span class='fu'>read.neurons</span>(<span class='no'>vdurls</span>, <span class='kw'>neuronnames</span><span class='kw'>=</span><span class='no'>vds</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='no'>vddf</span>)
+  <span class='co'># use metadata to plot a subset of neurons</span>
+  <span class='fu'>clear3d</span>()
+  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>vdnl</span>, <span class='fu'>grepl</span>(<span class='st'>"P[1-6].app"</span>, <span class='no'>Lineage</span>))
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

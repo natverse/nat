@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -81,33 +83,34 @@
     <p>Simplify a registration list</p>
     
 
-    <pre><span class='fu'>simplify_reglist</span>(<span class='no'>reg</span>, <span class='kw'>as.cmtk</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>simplify_reglist</span>(<span class='no'>reg</span>, <span class='kw'>as.cmtk</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>reg</dt>
-      <dd>A registration list (<code><a href='reglist.html'>reglist</a></code>) containing one or more
-transformations.</dd>
-      <dt>as.cmtk</dt>
-      <dd>Whether to convert to a vector of CMTK format registrations 
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>reg</th>
+      <td><p>A registration list (<code><a href='reglist.html'>reglist</a></code>) containing one or more
+transformations.</p></td>
+    </tr>
+    <tr>
+      <th>as.cmtk</th>
+      <td><p>Whether to convert to a vector of CMTK format registrations 
 (see <code><a href='cmtkreg.html'>cmtkreg</a></code>). The default value of <code>as.cmtk=NULL</code> 
 converts all registrations to CMTK if any one registration is in CMTK 
 format (thus enabling them to be applied by CMTK tools in a single call).
-See details.</dd>
-    </dl>
+See details.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function <ul>
-<li> inverts any affine matrices with attribute <code>&quot;swap&quot;</code></p>
-    <p></li>
-<li> collapses multiple affine matrices into a single affine</p>
-    <p></li>
-<li> optionally converts all registrations to CMTK on disk registrations 
-  when possible.</p>
-    <p></li>
-</ul></p>
-    <p>Note that if any of the registrations are in CMTK format, the default 
+    <p>This function</p><ul>
+<li><p>inverts any affine matrices with attribute <code>"swap"</code></p></li>
+<li><p>collapses multiple affine matrices into a single affine</p></li>
+<li><p>optionally converts all registrations to CMTK on disk registrations 
+  when possible.</p></li>
+</ul><p>Note that if any of the registrations are in CMTK format, the default 
   behaviour is to try to convert all of the other registrations into CMTK 
   format to enable them to be passed to CMTK in a single command. If 
   <code>as.cmtk=TRUE</code> then there will be an error if this is not possible.</p>

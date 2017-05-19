@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -78,20 +80,19 @@
     </div>
 
     
-    <p>Get the bounding box of an im3d volume or other compatible object</p>
+    <p>Get the bounding box of an im3d volume or other compatible object
 
-    <p><code>boundingbox.list</code> is designed to be used on objects that
-  contain 3D point information and for which <code>xyzmatrix</code> is defined.</p>
+    <code>boundingbox.list</code> is designed to be used on objects that
+  contain 3D point information and for which <code>xyzmatrix</code> is defined.
 
-    <p><code>boundingbox.shape3d</code> is designed to be used on objects 
-  that contain 3D point information and inherit from <code>rgl</code>&#39;s 
+    <code>boundingbox.shape3d</code> is designed to be used on objects 
+  that contain 3D point information and inherit from <code>rgl</code>'s 
   <code>shape3d</code> class and for which <code>xyzmatrix</code> is defined. Presently
   this applies to <code>mesh3d</code> objects.</p>
-
-    <p>Set the bounding box of an im3d object</p>
+<p>Set the bounding box of an im3d object</p>
     
 
-    <pre><span class='fu'>boundingbox</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>boundingbox</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for im3d</span>
 <span class='fu'>boundingbox</span>(<span class='no'>x</span>, <span class='kw'>dims</span> <span class='kw'>=</span> <span class='fu'>dim</span>(<span class='no'>x</span>), <span class='no'>...</span>)
@@ -115,32 +116,45 @@
 <span class='fu'>boundingbox</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A vector or matrix specifying a bounding box, an <code>im3d</code> object,
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A vector or matrix specifying a bounding box, an <code>im3d</code> object,
 any object with base class list for which <code><a href='xyzmatrix.html'>xyzmatrix</a></code> can 
 extract 3D points (e.g. neurons, surfaces etc), or, for 
-<code>boundingbox.character</code>, a character vector specifying a file.</dd>
-      <dt>...</dt>
-      <dd>Additional arguments for methods</dd>
-      <dt>dims</dt>
-      <dd>The number of voxels in each dimension when x is a BoundingBox 
-matrix.</dd>
-      <dt>na.rm</dt>
-      <dd>Whether to ignore NA points (default <code>FALSE</code>)</dd>
-      <dt>input</dt>
-      <dd>Whether <code>x</code> defines the boundingbox or bounds of the image 
-(see details).</dd>
-      <dt>value</dt>
-      <dd>The object which will provide the new boundingbox information.
+<code>boundingbox.character</code>, a character vector specifying a file.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional arguments for methods</p></td>
+    </tr>
+    <tr>
+      <th>dims</th>
+      <td><p>The number of voxels in each dimension when x is a BoundingBox 
+matrix.</p></td>
+    </tr>
+    <tr>
+      <th>na.rm</th>
+      <td><p>Whether to ignore NA points (default <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>input</th>
+      <td><p>Whether <code>x</code> defines the boundingbox or bounds of the image 
+(see details).</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>The object which will provide the new boundingbox information.
 This can be be either an im3d object with a boundingbox or a vector or
-matrix defined according to <code>boundingbox.default</code>.</dd>
-    </dl>
+matrix defined according to <code>boundingbox.default</code>.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a <code>matrix</code> with 2 rows and 3 columns with 
-  <code>class=&#39;boundingbox&#39;</code> or <em>NULL</em> when missing.</p>
+  <code>class='boundingbox'</code> or <em>NULL</em> when missing.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -150,8 +164,8 @@ matrix defined according to <code>boundingbox.default</code>.</dd>
   <strong>and no physical extent.</strong></em> When written as a vector it should look 
   like: <code>c(x0,x1,y0,y1,z0,z1)</code>. When written as a matrix it should look 
   like: <code>rbind(c(x0,y0,z0),c(x1,y1,z1))</code> where x0,y0,z0 is the position 
-  of the origin.</p>
-    <p>Note that there are two competing definitions for the physical extent of an
+  of the origin.
+    Note that there are two competing definitions for the physical extent of an
   image that are discussed e.g. 
   <a href = 'http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a>. The definition that 
   makes most sense depends largely on whether you think of a pixel as a 
@@ -164,12 +178,12 @@ matrix defined according to <code>boundingbox.default</code>.</dd>
   cuboid including the sample points at the extreme corner of the grid. Amira
   takes this second view and this is the one we favour given our background 
   in microscopy. If you wish to convert a <code>bounds</code> type definition into 
-  an im3d BoundingBox, you should pass the argument <code>input=&#39;bounds&#39;</code>.</p>
+  an im3d BoundingBox, you should pass the argument <code>input='bounds'</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='plot3d.boundingbox.html'>plot3d.boundingbox</a></code></p>
-    <p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
+<p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
   <code><a href='im3d-coords.html'>im3d-coords</a></code>, <code><a href='im3d-io.html'>im3d-io</a></code>,
   <code><a href='im3d.html'>im3d</a></code>, <code><a href='imexpand.grid.html'>imexpand.grid</a></code>,
   <code><a href='imslice.html'>imslice</a></code>, <code><a href='is.im3d.html'>is.im3d</a></code>,
@@ -182,13 +196,13 @@ matrix defined according to <code>boundingbox.default</code>.</dd>
     <pre class="examples"><div class='input'><span class='fu'>boundingbox</span>(<span class='fu'>c</span>(<span class='kw'>x0</span><span class='kw'>=</span><span class='fl'>0</span>,<span class='kw'>x1</span><span class='kw'>=</span><span class='fl'>10</span>,<span class='kw'>y0</span><span class='kw'>=</span><span class='fl'>0</span>,<span class='kw'>y1</span><span class='kw'>=</span><span class='fl'>20</span>,<span class='kw'>z0</span><span class='kw'>=</span><span class='fl'>0</span>,<span class='kw'>z1</span><span class='kw'>=</span><span class='fl'>30</span>))</div><div class='output co'>#&gt;      [,1] [,2] [,3]
 #&gt; [1,]    0    0    0
 #&gt; [2,]   10   20   30
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;boundingbox&quot;</div><div class='input'><span class='co'># bounding box for a neuron</span>
+#&gt; attr(,"class")
+#&gt; [1] "boundingbox"</div><div class='input'><span class='co'># bounding box for a neuron</span>
 <span class='fu'>boundingbox</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt;          [,1]      [,2]      [,3]
 #&gt; [1,] 186.8660  90.36325  88.20393
 #&gt; [2,] 289.5364 132.70932 157.29700
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;boundingbox&quot;</div></pre>
+#&gt; attr(,"class")
+#&gt; [1] "boundingbox"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

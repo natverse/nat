@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -84,29 +86,32 @@
   to the root of which they are part.</p>
     
 
-    <pre><span class='fu'>strahler_order</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>strahler_order</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>x</dt>
-      <dd>A neuron</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A neuron</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing <ul>
-<li> points Vector of integer Strahler orders for each point in the neuron</p>
-    <p></li>
-<li> segments Vector of integer Strahler orders for each segment in the 
-  neuron </li>
-</ul></p>
+    <p>A list containing</p><ul>
+<li><p>points Vector of integer Strahler orders for each point in the neuron</p></li>
+<li><p>segments Vector of integer Strahler orders for each segment in the 
+  neuron</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>It is vital that the root of the neuron is valid since this 
   determines the flow direction for calculation of the Strahler order. At 
-  present the function is not defined for neurons with multiple subtrees.</p>
-    <p>Internally, this function uses <code><a href='segmentgraph.html'>segmentgraph</a></code> to find a reduced
+  present the function is not defined for neurons with multiple subtrees.
+    Internally, this function uses <code><a href='segmentgraph.html'>segmentgraph</a></code> to find a reduced
   segmentgraph for the neuron.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
