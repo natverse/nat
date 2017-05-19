@@ -124,8 +124,8 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
 plot3d.cmtkreg <- function(x, ...) {
   reg=NULL
   if(is.list(x)) {
-    if(!is.null(x$registration)) reg=x$registration
-    if(is.null(x$spline_warp))
+    if(!is.null(x$registration)) reg=x$registration else reg=x
+    if(is.null(reg$spline_warp))
        stop("This looks like an in memory CMTK registration but I can't find the spline_warp field")
   } else if(is.character(x)) {
     reg <- read.cmtkreg(x, ReturnRegistrationOnly = TRUE)
