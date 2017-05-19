@@ -60,7 +60,7 @@ if(!is.null(cmtk.bindir())){
     # verify bounding box of output
     bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
     expect_equal(boundingbox(imout), bb_out)
-    md5.1=tools::md5sum(file=out)
+    md5.1=tools::md5sum(files = out)
     
     ident.mat=cmtkparams2affmat()
     xformt=expression(xform("testdata/nrrd/JFRC2-444_mask.nrrd", 
@@ -70,7 +70,7 @@ if(!is.null(cmtk.bindir())){
                             out=td, Verbose=F))
     expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask_JFRC2-444_mask.nrrd")
     # check output files are identical
-    expect_equal(tools::md5sum(file=out), md5.1)
+    expect_equal(tools::md5sum(files = out), md5.1)
     
     # error tests
     expect_error(xform("testdata/nrrd/JFRC2-444_mask.nrrd", 
