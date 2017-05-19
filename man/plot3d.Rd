@@ -4,17 +4,17 @@
 \alias{plot3d}
 \title{plot3d methods for different nat objects}
 \description{
-These methods enable nat objects including neuronlists and dotprops objects
-to be plotted in 3D. See the help for each individual method for details along
-with the help for the generic in the rgl package.
+These methods enable nat objects including neuronlists and dotprops objects 
+to be plotted in 3D. See the help for each individual method for details
+along with the help for the generic in the rgl package.
 }
 \examples{
 ## up to date list of all plot3d nethods in this package
 intersect(methods("plot3d"), ls(envir = as.environment('package:nat')))
 }
 \seealso{
-\code{\link[rgl]{plot3d}}, \code{\link{plot3d.boundingbox}},
-  \code{\link{plot3d.character}}, \code{\link{plot3d.dotprops}},
-  \code{\link{plot3d.hxsurf}}, \code{\link{plot3d.neuron}},
-  \code{\link{plot3d.neuronlist}}
+\code{\link[rgl]{plot3d}}, \code{\link{plot3d.boundingbox}}, 
+  \code{\link{plot3d.character}}, \code{\link{plot3d.cmtkreg}},
+  \code{\link{plot3d.dotprops}}, \code{\link{plot3d.hxsurf}},
+  \code{\link{plot3d.neuron}}, \code{\link{plot3d.neuronlist}}
 }
