@@ -111,10 +111,12 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
 #'   \code{\link[rgl]{plot3d}}
 #' @examples 
 #' \donttest{
-#' plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'))
+#' testdatadir=system.file("tests/testthat/testdata/cmtk", package="nat")
+#' regpath=file.path(testdatadir,'FCWB_JFRC2_01_warp_level-01.list/')
+#' plot3d(cmtkreg(regpath))
 #' 
 #' # or read registration into memory if you want to work with it
-#' reg=read.cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/')
+#' reg=read.cmtkreg(regpath)
 #' # nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) 
 #' # is considered bad style but read.cmtkreg returns a plain list 
 #' # so method dispatch will fail
