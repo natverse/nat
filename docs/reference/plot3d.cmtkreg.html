@@ -108,14 +108,16 @@ the resulting of reading one in with <code><a href='read.cmtkreg.html'>read.cmtk
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='cmtkreg.html'>cmtkreg</a></span>(<span class='st'>'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'</span>))</div><div class='output co'>#&gt; <span class='error'>Error in getOption("nat.default.neuronlist", default = stop("Option \"nat.default.neuronlist\" is not set.\",\n                                  \" See ?nat for details.")): Option "nat.default.neuronlist" is not set.",</span>
-#&gt; <span class='error'>                                  " See ?nat for details.</span></div><div class='input'>
+<span class='no'>testdatadir</span><span class='kw'>=</span><span class='fu'>system.file</span>(<span class='st'>"tests/testthat/testdata/cmtk"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"nat"</span>)
+<span class='no'>regpath</span><span class='kw'>=</span><span class='fu'>file.path</span>(<span class='no'>testdatadir</span>,<span class='st'>'FCWB_JFRC2_01_warp_level-01.list/'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='cmtkreg.html'>cmtkreg</a></span>(<span class='no'>regpath</span>))
+
 <span class='co'># or read registration into memory if you want to work with it</span>
-<span class='no'>reg</span><span class='kw'>=</span><span class='fu'><a href='read.cmtkreg.html'>read.cmtkreg</a></span>(<span class='st'>'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: cannot open file 'NA': No such file or directory</span></div><div class='output co'>#&gt; <span class='error'>Error in file(filename, "rt"): cannot open the connection</span></div><div class='input'><span class='co'># nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) </span>
+<span class='no'>reg</span><span class='kw'>=</span><span class='fu'><a href='read.cmtkreg.html'>read.cmtkreg</a></span>(<span class='no'>regpath</span>)
+<span class='co'># nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) </span>
 <span class='co'># is considered bad style but read.cmtkreg returns a plain list </span>
 <span class='co'># so method dispatch will fail</span>
-<span class='fu'>plot3d.cmtkreg</span>(<span class='no'>reg</span>)</div><div class='output co'>#&gt; <span class='error'>Error in plot3d.cmtkreg(reg): object 'reg' not found</span></div><div class='input'>
-</div></pre>
+<span class='fu'>plot3d.cmtkreg</span>(<span class='no'>reg</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
