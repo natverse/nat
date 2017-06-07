@@ -116,7 +116,7 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 <li>When you run Cygwin’s setup.exe, you should also install all <em>fftw3</em> packages. (fftw3 is a CMTK dependency which provides fast Fourier transform functions)</li>
 <li>Download <code>CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to the cygwin folder (<code>C:\cygwin64</code>)</li>
 <li>Start a Cygwin terminal and issue the following command <code>tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to extract CMTK to the cygwin folder.</li>
-<li>Copy all the <code>C:\cygwin64\bin\cyg*.dll</code> files to <code>C:\Windows\System32\</code> and <code>C:\Windows\SysWOw64\</code> (this seems to be necessary when starting executables from a Windows shell - presumably there is a way to avoid this. You may need admin privileges to copy these files into a system folder.)</li>
+<li>Optionally add <code>C:\cygwin64\bin</code> to your windows path (since v1.8.10 nat should look after this - see ?cmtk.bindir).</li>
 <li>The nat function <code><a href="../reference/cmtk.bindir.html">cmtk.bindir()</a></code> should now correctly identify the CMTK binary directory. You can test that the executables are working by trying the following in R <code>library(nat);cmtk.dof2mat(version = TRUE)</code> which should then respond with “3.3.1” if you have installed the CMTK version we have just mentioned.</li>
 </ul>
 </div>

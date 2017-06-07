@@ -96,7 +96,9 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' @param firstdir Character vector specifying path containing CMTK binaries or 
 #'   NA (see details). This defaults to options('nat.cmtk.bindir').
 #' @param extradirs Where to look if CMTK is not in \code{firstdir} or the PATH
-#' @param set Whether to set options('nat.cmtk.bindir') with the found directory
+#' @param set Whether to set options('nat.cmtk.bindir') with the found 
+#'   directory. Also check/sets cygwin path on Windows (see Installation 
+#'   section).
 #' @param check Whether to (re)check that a path that has been set appropriately
 #'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or 
 #'   alternative directories. Will throw an error on failure.
@@ -112,6 +114,10 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended. 
 #'   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
 #'   can correctly interpret and convert registrations from earlier versions.
+#'   
+#'   On Windows, when \code{set=TRUE}, cmtk.bindir will also check that the
+#'   cygwin bin directory is in the PATH. If it is not, then it is added for the
+#'   current R session. This should solve issues with missing cygwin dlls.
 #' @examples
 #' message(ifelse(is.null(d<-cmtk.bindir()), "CMTK not found!",
 #'                paste("CMTK is at:",d)))
@@ -164,11 +170,25 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
     stop("Cannot find CMTK. Please install from ",
          "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
   
-  if(set)
+  if(set) {
     options(nat.cmtk.bindir=bindir)
+    .set_path_for_cygwin(bindir)
+  }
   bindir
 }
 
+# set windows path for cygwin to avoid missing dll errors
+.set_path_for_cygwin <- function(bindir) {
+  if(isTRUE(.Platform$OS.type=="windows") && grepl("cygwin", bindir, ignore.case = T)){
+    cygdir=sub('(.*ygwin64).*', "\\1", bindir)
+    cygbindir=file.path(cygdir, 'bin')
+    sp=Sys.getenv('PATH')
+    if(!grepl(cygbindir, sp, fixed = T)) {
+      sp=paste(sp, sep=";", cygbindir)
+      Sys.setenv(PATH=sp)
+    }
+  } 
+}
 
 
 #' Return cmtk version or test for presence of at least a specific version

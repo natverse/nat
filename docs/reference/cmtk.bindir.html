@@ -108,7 +108,9 @@ NA (see details). This defaults to options('nat.cmtk.bindir').</p></td>
     </tr>
     <tr>
       <th>set</th>
-      <td><p>Whether to set options('nat.cmtk.bindir') with the found directory</p></td>
+      <td><p>Whether to set options('nat.cmtk.bindir') with the found 
+directory. Also check/sets cygwin path on Windows (see Installation 
+section).</p></td>
     </tr>
     <tr>
       <th>check</th>
@@ -148,7 +150,10 @@ the location of all cmtk binaries.</p></td>
   bug in composition of affine transformations from CMTK parameters in the 
   CMTK versions &lt;2.4 series means that CMTK&gt;=3.0 is strongly recommended. 
   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
-  can correctly interpret and convert registrations from earlier versions.</p>
+  can correctly interpret and convert registrations from earlier versions.
+    On Windows, when <code>set=TRUE</code>, cmtk.bindir will also check that the
+  cygwin bin directory is in the PATH. If it is not, then it is added for the
+  current R session. This should solve issues with missing cygwin dlls.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

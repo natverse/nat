@@ -18,7 +18,9 @@ NA (see details). This defaults to options('nat.cmtk.bindir').}
 
 \item{extradirs}{Where to look if CMTK is not in \code{firstdir} or the PATH}
 
-\item{set}{Whether to set options('nat.cmtk.bindir') with the found directory}
+\item{set}{Whether to set options('nat.cmtk.bindir') with the found 
+directory. Also check/sets cygwin path on Windows (see Installation 
+section).}
 
 \item{check}{Whether to (re)check that a path that has been set appropriately
 in options(nat.cmtk.bindir='/some/path') or now found in the PATH or 
@@ -58,6 +60,10 @@ Queries options('nat.cmtk.bindir') if \code{firstdir} is not
   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended. 
   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
   can correctly interpret and convert registrations from earlier versions.
+  
+  On Windows, when \code{set=TRUE}, cmtk.bindir will also check that the
+  cygwin bin directory is in the PATH. If it is not, then it is added for the
+  current R session. This should solve issues with missing cygwin dlls.
 }
 
 \examples{
