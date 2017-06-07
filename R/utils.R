@@ -1,7 +1,8 @@
 # patch over an issue with trailing separators on Windows
-file.exists <- function(x) {
-  if (.Platform$OS == "windows" && grepl("[/\\]$", x)) {
-    x=dirname(x)
+file.exists <- function(...) {
+  x=unlist(pairlist(...), use.names = FALSE)
+  if (.Platform$OS == "windows") {
+    x=sub("[/\\]$","", x)
   }
   base::file.exists(x)
 }
