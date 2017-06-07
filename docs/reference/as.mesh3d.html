@@ -144,9 +144,12 @@ object</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>library</span>(<span class='no'>alphashape3d</span>)
-<span class='no'>kcs20.a</span><span class='kw'>=</span><span class='fu'>ashape3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>plot</span>(<span class='no'>kcs20.a</span>)</div><div class='output co'>#&gt; Device  30  : alpha =  10 </div><div class='input'>
+<span class='fu'>library</span>(<span class='no'>alphashape3d</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: geometry</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: magic</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: abind</span></div><div class='input'><span class='no'>kcs20.a</span><span class='kw'>=</span><span class='fu'>ashape3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>     PLEASE NOTE:  As of version 0.3-5, no degenerate (zero area) </span>
+#&gt; <span class='message'>     regions are returned with the "Qt" option since the R </span>
+#&gt; <span class='message'>     code removes them from the triangulation. </span>
+#&gt; <span class='message'>     See help("delaunayn").</span>
+#&gt; <span class='message'></span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>kcs20.a</span>)</div><div class='output co'>#&gt; Device  1  : alpha =  10 </div><div class='input'>
 <span class='co'># convert to mesh3d</span>
 <span class='no'>kcs20.mesh</span><span class='kw'>=</span><span class='fu'>as.mesh3d</span>(<span class='no'>kcs20.a</span>)
 <span class='fu'>clear3d</span>()

@@ -198,7 +198,7 @@ examples).</p></td>
     <pre class="examples"><div class='input'><span class='co'>## nlapply example</span>
 <span class='no'>kcs.reduced</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>kcs20</span>,<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>,<span class='fu'>sample</span>(<span class='fu'>nrow</span>(<span class='no'>x</span>$<span class='no'>points</span>),<span class='fl'>50</span>)))
 <span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;  33 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
+#&gt;   4 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
 <span class='fu'>rgl.close</span>()
 
@@ -229,7 +229,7 @@ examples).</p></td>
  <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))
 
 <span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;  34 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
+#&gt;   5 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>xyzflip</span>)
 <span class='fu'>rgl.close</span>()
 
