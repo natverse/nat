@@ -154,8 +154,7 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #'   Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A 
 #'   mutual information approach to automate identification of neuronal clusters
 #'   in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
-#'   \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 
-#'   10.3389/fninf.2012.00021}
+#'   \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
 dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   # store labels from SWC format data if this is a neuron
   x=xyzmatrix(x)
