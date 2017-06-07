@@ -140,6 +140,11 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
   } else if(isTRUE(file.info(output)$isdir)){
     output=file.path(output,paste(basestem(target),"_",basestem(floating),'.nrrd',sep=""))
   }
+  
+  # CMTK may need to have the output path munged to cygwin style 
+  # to keep NRRD IO happy
+  cmtk.output=.cygpath(output)
+  
   if(is.logical(OverWrite)) OverWrite=ifelse(OverWrite,"yes","no")
   else OverWrite=match.arg(OverWrite)
   
@@ -183,7 +188,7 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
   
   # contruct a cmtk call with all these arguments
   reformatxcall=cmtk.call(tool='reformatx', RETURN.TYPE='list',
-                          outfile=shQuote(output), floating=shQuote(floating),
+                          outfile=shQuote(cmtk.output), floating=shQuote(floating),
                           interpolation=interpolation, mask=mask,
                           verbose=Verbose, FINAL.ARGS=c(targetspec, regargs))
   # and then wrap it in an expression that actually runs the tool for later use
@@ -209,6 +214,18 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
     cat("cmd:\n",cmd,"\n")
   }
   return(output)
+}
+
+# Internal function to convert Windows paths to cygwin paths
+# Depends on cygwin cygpath tool
+# Seems to be required because nrrdIO gets confused by Windows paths on cygwin
+# but only for output files!
+.cygpath <- function(path, pathtype=c('unix','windows')) {
+  if(.Platform$OS.type!='windows') return(path)
+  pathtype=match.arg(pathtype)
+  if(length(path)>1) 
+    return(sapply(path, .cygpath, pathtype=pathtype, USE.NAMES = F))
+  system2('cygpath', args=c(paste0('--', pathtype), path), stdout = TRUE)
 }
 
 #' Calculate image statistics for a nrrd or other CMTK compatible file
