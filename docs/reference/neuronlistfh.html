@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -86,9 +105,8 @@
   present in memory but are instead dynamically loaded from disk as required.
   <code>neuronlistfh</code> objects also inherit from <code>neuronlist</code> and 
   therefore any appropriate methods e.g. <code>plot3d.neuronlist</code> can also be
-  used on <code>neuronlistfh</code> objects.
-
-    <code>neuronlistfh</code> constructs a neuronlistfh object from a 
+  used on <code>neuronlistfh</code> objects.</p>  
+<p><code>neuronlistfh</code> constructs a neuronlistfh object from a 
   <code>filehash</code>, <code>data.frame</code> and <code>keyfilemap</code>. End users will 
   <strong>not</strong> typically use this function to make a <code>neuronlistfh</code>. 
   They will usually read them using <code>read.neuronlistfh</code> and sometimes 
@@ -193,8 +211,8 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
   reads of the same file. The benefits in memory and startup time (&lt;1s vs 
   100s for our 16,000 neuron database) are vital for collections of 1000s of 
   neurons e.g. for dynamic report generation using knitr or for users with 
-  &lt;8Gb RAM or running 32 bit R.
-    neuronlistfh objects include:</p><ul>
+  &lt;8Gb RAM or running 32 bit R.</p>  
+<p>neuronlistfh objects include:</p><ul>
 <li><p>attr("keyfilemap") A named character vector that determines the 
   ordering of objects in the neuronlist and translates keys in R to filenames
   on disk. For objects created by <code>as.neuronlistfh</code> the filenames will 
@@ -216,22 +234,24 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
   occupy ~ 1<!-- % of a 16,000 object neuronlistfh object and reduce mean lookup  -->
   time from 0.5 ms to 1us. Having located the object, on my machine it can 
   take as little as 0.1ms to load from disk, so these savings are relevant.</p></li>
-</ul><p>Presently only backing objects which extend the <code>filehash</code> class are 
+</ul>
+    <p>Presently only backing objects which extend the <code>filehash</code> class are 
   supported (although in theory other backing objects could be added). These 
   include:</p><ul>
 <li><p>filehash RDS</p></li>
 <li><p>filehash RDS2 (experimental)</p></li>
-</ul><p>We have also implemented a simple remote access protocol (currently only 
+</ul>
+    <p>We have also implemented a simple remote access protocol (currently only 
   for the <code>RDS</code> format). This allows a neuronlistfh object to be read 
   from a url and downloaded to a local path. Subsequent attempts to access 
   neurons stored in this list will result in automated download of the 
-  requested neuron to the local cache.
-    An alternative backend, the experimental <code>RDS2</code> format is supported 
-  (available at <a href = 'https://github.com/jefferis/filehash'>https://github.com/jefferis/filehash</a>). This is likely 
+  requested neuron to the local cache.</p>  
+<p>An alternative backend, the experimental <code>RDS2</code> format is supported 
+  (available at <a href='https://github.com/jefferis/filehash'>https://github.com/jefferis/filehash</a>). This is likely 
   to be the most effective for large (5,000-500,000) collections of neurons, 
   especially when using network filesystems (nfs, afp) which are typically 
-  very slow at listing large directories.
-    Note that objects are stored in a filehash, which by definition does not 
+  very slow at listing large directories.</p>  
+<p>Note that objects are stored in a filehash, which by definition does not 
   have any ordering of its elements. However neuronlist objects (like lists) 
   do have an ordering. Therefore the names of a neuronlistfh object are not 
   necessarily the same as the result of calling <code>names()</code> on the 
@@ -246,32 +266,31 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
   <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
 <p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
   <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
+  <code>neuronlist-dataframe-methods</code>,
   <code><a href='neuronlist.html'>neuronlist</a></code>, <code><a href='nlapply.html'>nlapply</a></code>,
   <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='no'>kcnl</span><span class='kw'>=</span><span class='fu'><a href='read.neuronlistfh.html'>read.neuronlistfh</a></span>(<span class='st'>'http://jefferislab.org/si/nblast/flycircuit/kcs20.rds'</span>,
-  <span class='st'>'path/to/my/project/folder'</span>)
-  <span class='co'># this will automatically download the neurons from the web the first time</span>
-  <span class='co'># it is run</span>
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcnl</span>)
-})
-<span class='fu'>not_run</span>({
-  <span class='co'># create neuronlistfh object backed by filehash with one file per neuron</span>
-  <span class='co'># by convention we create a subfolder called data in which the objects live</span>
-  <span class='no'>kcs20fh</span><span class='kw'>=</span><span class='fu'>as.neuronlistfh</span>(<span class='no'>kcs20</span>, <span class='kw'>dbdir</span><span class='kw'>=</span><span class='st'>'/path/to/my/kcdb/data'</span>)
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20fh</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>))
-  <span class='co'># ... and, again by convention, save the neuronlisfh object next to filehash </span>
-  <span class='co'># backing database</span>
-  <span class='fu'><a href='write.neuronlistfh.html'>write.neuronlistfh</a></span>(<span class='no'>kcs20fh</span>, <span class='kw'>file</span><span class='kw'>=</span><span class='st'>'/path/to/my/kcdb/kcdb.rds'</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>kcnl</span><span class='kw'>=</span><span class='fu'><a href='read.neuronlistfh.html'>read.neuronlistfh</a></span>(<span class='st'>'http://jefferislab.org/si/nblast/flycircuit/kcs20.rds'</span>,
+<span class='st'>'path/to/my/project/folder'</span>)
+<span class='co'># this will automatically download the neurons from the web the first time</span>
+<span class='co'># it is run</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcnl</span>)
+<span class='co'># }</span><span class='co'># NOT RUN {</span>
+<span class='co'># create neuronlistfh object backed by filehash with one file per neuron</span>
+<span class='co'># by convention we create a subfolder called data in which the objects live</span>
+<span class='no'>kcs20fh</span><span class='kw'>=</span><span class='fu'>as.neuronlistfh</span>(<span class='no'>kcs20</span>, <span class='kw'>dbdir</span><span class='kw'>=</span><span class='st'>'/path/to/my/kcdb/data'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20fh</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>))
+<span class='co'># ... and, again by convention, save the neuronlisfh object next to filehash </span>
+<span class='co'># backing database</span>
+<span class='fu'><a href='write.neuronlistfh.html'>write.neuronlistfh</a></span>(<span class='no'>kcs20fh</span>, <span class='kw'>file</span><span class='kw'>=</span><span class='st'>'/path/to/my/kcdb/kcdb.rds'</span>)
 
-  <span class='co'># in a new session</span>
-  <span class='fu'><a href='read.neuronlistfh.html'>read.neuronlistfh</a></span>(<span class='st'>"/path/to/my/kcdb/kcdb.rds"</span>)
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20fh</span>, <span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>))
-})</div></pre>
+<span class='co'># in a new session</span>
+<span class='fu'><a href='read.neuronlistfh.html'>read.neuronlistfh</a></span>(<span class='st'>"/path/to/my/kcdb/kcdb.rds"</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20fh</span>, <span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>))
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

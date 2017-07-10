@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -85,7 +104,7 @@ spatial positions at which the voxels are located. There should always be a
 <code>BoundingBox</code> attribute which defines the physical extent of the volume 
 in the same manner as the Amira 3D visualisation and analysis software. This 
 corresponds to the <strong>node</strong> centers option in the 
-<a href = 'http://teem.sourceforge.net/nrrd/format.html'>NRRD format</a>.</p>
+<a href='http://teem.sourceforge.net/nrrd/format.html'>NRRD format</a>.</p>
     
 
     <pre class="usage"><span class='fu'>im3d</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>numeric</span>(<span class='fl'>0</span>), <span class='kw'>dims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,

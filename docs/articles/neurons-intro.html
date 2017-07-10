@@ -29,10 +29,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -57,7 +75,7 @@
       <h1>Introduction to neurons and neuronlists</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2017-06-07</h4>
+            <h4 class="date">2017-07-10</h4>
           </div>
 
     
@@ -3623,7 +3641,7 @@ centroids=<span class="kw">t</span>(<span class="kw">sapply</span>(lha, arbour_c
 lhstats=<span class="kw">cbind</span>(lhstats, centroids)</code></pre></div>
 <p>Finally we can take these data and see how well we can predict the identity of the neuron (i.e. its glomerulus) based on the statistics of the axon arbour in the lateral horn. We use the linear discriminant analysis (provided by the function <code>lda</code> in recommended package <code>MASS</code>). This also runs a leave one out cross-validation to get a more robust initial estimate of prediction error.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(MASS)
-lda.fit =<span class="st"> </span><span class="kw">lda</span>(Glomerulus ~<span class="st"> </span>cable.length+X+Y+Z+branchpoints, lhstats, <span class="dt">CV =</span> T)
+lda.fit =<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/MASS/topics/lda">lda</a></span>(Glomerulus ~<span class="st"> </span>cable.length+X+Y+Z+branchpoints, lhstats, <span class="dt">CV =</span> T)
 <span class="kw">table</span>(lda.fit$class, lhstats$Glomerulus)</code></pre></div>
 <pre><code>##       
 ##        DA1 DL3 DP1m VA1d
@@ -3643,7 +3661,8 @@ lda.fit =<span class="st"> </span><span class="kw">lda</span>(Glomerulus ~<span 
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#preface">Preface</a></li>
       <li><a href="#startup">Startup</a></li>

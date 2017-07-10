@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -131,14 +150,15 @@ eigenvectors for equality (default TRUE, see details)</p></td>
 
     <p><code>ndigest.neuronlistfh</code> only considers the <code>keyfilemap</code> and
   <code>df</code> (metadata data.frame) when computing the hash value. See
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code> for the significance of these two fields.
+  <code>neuronlistfh</code> for the significance of these two fields.
     <code>ndigest.dotprops</code> ignores any <code>mtime</code> or <code>file</code>
   attributes. It also converts tangent vectors to absolute values (when 
   <code>absoluteVectors=TRUE</code>) because the direction vectors are computed 
   using an eigenvector decomposition where the sign of the eigenvector is 
   essentially random and subject to small numerical instabilities. Therefore 
   it does not usually make sense to rely on the value of vect exactly.
-    <code>ndigest.neuron</code> ignores the following fields:</p><ul>
+    <code>ndigest.neuron</code> ignores the following fields:</p>  
+<p></p><ul>
 <li><p>InputFileName</p></li>
 <li><p>CreatedAt</p></li>
 <li><p>NodeName</p></li>

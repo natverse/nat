@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -120,7 +139,7 @@ defaults to the lowest two orders (<code>1:2</code>)</p></td>
     <pre class="examples"><div class='input'><span class='no'>x</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='no'>pruned12</span><span class='kw'>=</span><span class='fu'>prune_strahler</span>(<span class='no'>x</span>)
 <span class='no'>pruned1</span><span class='kw'>=</span><span class='fu'>prune_strahler</span>(<span class='no'>x</span>, <span class='fl'>1</span>)
-<span class='fu'>plot</span>(<span class='no'>x</span>)</div><div class='input'><span class='fu'>plot</span>(<span class='no'>pruned1</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'>plot</span>(<span class='no'>pruned12</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><img src='prune_strahler-4.png' alt='' width='540' height='400' /></pre>
+<span class='fu'>plot</span>(<span class='no'>x</span>)</div><div class='input'><span class='fu'>plot</span>(<span class='no'>pruned1</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'>plot</span>(<span class='no'>pruned12</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='prune_strahler-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

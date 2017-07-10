@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -135,15 +154,15 @@
   <code><a href='nlapply.html'>nlapply</a></code> to process its first argument (<code>a</code>). This 
   enables progress bars, robustness to errors and simple parallel execution. 
   See the <code><a href='nlapply.html'>nlapply</a></code> examples for further details of these 
-  arguments in action.
-    For this reason if you have two neuronlists of unequal sizes, it is 
+  arguments in action.</p>  
+<p>For this reason if you have two neuronlists of unequal sizes, it is 
   recommended to put the larger one in argument <code>a</code>.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Neurogeometry and potential synaptic connectivity. Stepanyants A,
   Chklovskii DB. Trends Neurosci. 2005 Jul;28(7):387-94. 
-  <a href = 'http://dx.doi.org/10.1016/j.tins.2005.05.006'>http://dx.doi.org/10.1016/j.tins.2005.05.006</a></p>
+  <a href='http://dx.doi.org/10.1016/j.tins.2005.05.006'>http://dx.doi.org/10.1016/j.tins.2005.05.006</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -157,14 +176,14 @@
     <pre class="examples"><div class='input'><span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt;        EBH11R
 #&gt; EBH11R    902
 #&gt; EBH20L    219
-#&gt; EBH20R    192</div><div class='input'><span class='fu'>not_run</span>({
-  <span class='co'># if you have many neurons to calculate you should get a progress bar </span>
-  <span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)
+#&gt; EBH20R    192</div><span class='co'># NOT RUN {</span>
+<span class='co'># if you have many neurons to calculate you should get a progress bar </span>
+<span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)
 
-  <span class='co'># you can also use parallel execution, here over 7 cores</span>
-  <span class='co'># doMC::registerDoMC(7)</span>
-  <span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-})</div></pre>
+<span class='co'># you can also use parallel execution, here over 7 cores</span>
+<span class='co'># doMC::registerDoMC(7)</span>
+<span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -83,7 +102,7 @@
     <p>versions of lapply and mapply that look after the class and 
   attached dataframe of neuronlist objects. <code>nlapply</code> can apply a 
   function to only a <code>subset</code> of elements in the input neuronlist. 
-  Internally <code>nlapply</code> uses <code>plyr::llply</code> thereby enabling progress
+  Internally <code>nlapply</code> uses <code><a href='http://www.rdocumentation.org/packages/plyr/topics/llply'>plyr::llply</a></code> thereby enabling progress
   bars and simple parallelisation (see plyr section and examples).</p>
     
 
@@ -165,7 +184,8 @@ examples).</p></td>
     
     <h2 class="hasAnchor" id="plyr"><a class="anchor" href="#plyr"></a>plyr</h2>
 
-    <p>The arguments of most interest from plyr are:</p><ul>
+    <p>The arguments of most interest from plyr are:</p>  
+<p></p><ul>
 <li><p><code>.inform</code> set to <code>TRUE</code> to give more informative error 
   messages that should indicate which neurons are failing for a given applied
   function.</p></li>
@@ -174,11 +194,12 @@ examples).</p></td>
   registering a parallel backend (see below).</p></li>
 <li><p><code>.paropts</code> Additional arguments for parallel computation. See 
   <code><a href='http://www.rdocumentation.org/packages/plyr/topics/llply'>llply</a></code> for details.</p></li>
-</ul><p>Before using parallel code within an R session you must register a suitable
+</ul>
+    <p>Before using parallel code within an R session you must register a suitable
   parallel backend. The simplest example is the multicore option provided by 
   the <code>doMC</code> package that is suitable for a spreading computational load
-  across multiple cores on a single machine. An example is provided below.
-    Note that the progess bar and parallel options cannot be used at the same 
+  across multiple cores on a single machine. An example is provided below.</p>  
+<p>Note that the progess bar and parallel options cannot be used at the same 
   time. You may want to start a potentially long-running job with the 
   progress bar option and then abort and re-run with <code>.parallel=TRUE</code> if
   it looks likely to take a very long time.</p>
@@ -189,8 +210,8 @@ examples).</p></td>
     <code>mapply</code></p>
 <p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
   <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
+  <code>neuronlist-dataframe-methods</code>,
+  <code>neuronlistfh</code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
   <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p>
     
 
@@ -200,48 +221,40 @@ examples).</p></td>
 <span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
 #&gt;   4 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
-<span class='fu'>rgl.close</span>()
-
-<span class='fu'>not_run</span>({
-  <span class='co'># example of using plyr's .inform argument for debugging error conditions</span>
-  <span class='no'>xx</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='no'>prune_strahler</span>)
-  <span class='co'># oh dear there was an error, let's get some details about the neuron</span>
-  <span class='co'># that caused the problem</span>
-  <span class='no'>xx</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='no'>prune_strahler</span>, <span class='kw'>.inform</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-})
-
-<span class='fu'>not_run</span>({
-  <span class='co'>## nlapply example with plyr</span>
-  <span class='co'>## dotprops.neuronlist uses nlapply under the hood</span>
-  <span class='co'>## the .progress and .parallel arguments are passed straight to </span>
-  <span class='fu'>system.time</span>(<span class='no'>d1</span><span class='kw'>&lt;-</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.progress</span><span class='kw'>=</span><span class='st'>'text'</span>))
-  <span class='co'>## plyr+parallel</span>
-  <span class='fu'>library</span>(<span class='no'>doMC</span>)
-  <span class='co'># can also specify cores e.g. registerDoMC(cores=4)</span>
-  <span class='fu'>registerDoMC</span>()
-  <span class='fu'>system.time</span>(<span class='no'>d2</span><span class='kw'>&lt;-</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>))
-  <span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>d1</span>,<span class='no'>d2</span>))
-})
-
+<span class='fu'>rgl.close</span>()</div><span class='co'># NOT RUN {</span>
+<span class='co'># example of using plyr's .inform argument for debugging error conditions</span>
+<span class='no'>xx</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='no'>prune_strahler</span>)
+<span class='co'># oh dear there was an error, let's get some details about the neuron</span>
+<span class='co'># that caused the problem</span>
+<span class='no'>xx</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='no'>prune_strahler</span>, <span class='kw'>.inform</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='co'># }</span><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'>## nlapply example with plyr</span>
+<span class='co'>## dotprops.neuronlist uses nlapply under the hood</span>
+<span class='co'>## the .progress and .parallel arguments are passed straight to </span>
+<span class='fu'>system.time</span>(<span class='no'>d1</span><span class='kw'>&lt;-</span><span class='fu'>dotprops</span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.progress</span><span class='kw'>=</span><span class='st'>'text'</span>))
+<span class='co'>## plyr+parallel</span>
+<span class='fu'>library</span>(<span class='no'>doMC</span>)
+<span class='co'># can also specify cores e.g. registerDoMC(cores=4)</span>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/doMC/topics/registerDoMC'>registerDoMC</a></span>()
+<span class='fu'>system.time</span>(<span class='no'>d2</span><span class='kw'>&lt;-</span><span class='fu'>dotprops</span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>))
+<span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>d1</span>,<span class='no'>d2</span>))
+<span class='co'># }</span><div class='input'>
 <span class='co'>## nmapply example</span>
 <span class='co'># flip first neuron in X, second in Y and 3rd in Z</span>
 <span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='no'>mirror</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"X"</span>,<span class='st'>"Y"</span>,<span class='st'>"Z"</span>),
- <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))
-
-<span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
+ <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))</div><div class='input'><span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
 #&gt;   5 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>xyzflip</span>)
-<span class='fu'>rgl.close</span>()
-
-
-<span class='fu'>not_run</span>({
-  <span class='co'>## Override default progress bar behaviour via options</span>
-  <span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
-  <span class='fu'>options</span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='st'>'none'</span>)
-  <span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
-  <span class='fu'>options</span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='kw'>NULL</span>)
-  <span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
-})</div></pre>
+<span class='fu'>rgl.close</span>()</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'>## Override default progress bar behaviour via options</span>
+<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
+<span class='fu'>options</span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='st'>'none'</span>)
+<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
+<span class='fu'>options</span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='kw'>NULL</span>)
+<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

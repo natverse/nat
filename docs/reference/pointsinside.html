@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -114,18 +133,18 @@ surface.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A vector of logical values or distances equal to the number of points
-  in x or the <code>mesh3d</code> object returned by <code>Rvcg::vcgClost</code>.</p>
+  in x or the <code>mesh3d</code> object returned by <code><a href='http://www.rdocumentation.org/packages/Rvcg/topics/vcgClost'>Rvcg::vcgClost</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that <code>hxsurf</code> surface objects will be converted to 
-  <code>mesh3d</code> before being passed to <code>Rvcg::vcgClost</code>, so if you are 
+  <code>mesh3d</code> before being passed to <code><a href='http://www.rdocumentation.org/packages/Rvcg/topics/vcgClost'>Rvcg::vcgClost</a></code>, so if you are 
   testing repeatedly against the same surface, it may make sense to 
-  pre-convert.
-    Note also that if the point is some distance (&gt; 2 twice the diagonal 
+  pre-convert.</p>  
+<p>Note also that if the point is some distance (&gt; 2 twice the diagonal 
   boundingbox of the mesh) then the distance will be returned as NA (or 1e12 
   for older versions of the <code>Rvcg</code> package). This behaviour is defined
-  by the <code>Rvcg::vcgClost</code> function.</p>
+  by the <code><a href='http://www.rdocumentation.org/packages/Rvcg/topics/vcgClost'>Rvcg::vcgClost</a></code> function.</p>
     
 
   </div>

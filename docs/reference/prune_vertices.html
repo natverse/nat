@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -128,18 +147,18 @@ of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E
 
     <p>These are relatively low-level functions and you will probably want 
   to use <code><a href='subset.neuron.html'>subset.neuron</a></code> or <code><a href='prune.html'>prune.neuron</a></code> and 
-  friends in many cases.
-    Note that <code>prune_vertices</code> and <code>prune_edges</code> both use <b>raw</b> 
+  friends in many cases.</p>  
+<p>Note that <code>prune_vertices</code> and <code>prune_edges</code> both use <b>raw</b> 
   vertex ids to specify the vertices/edges to be removed. If you want to use 
   the id in the PointNo field, then you must translate yourself (see 
-  examples).
-    Both <code>prune_vertices</code> and <code>prune_edges</code> first convert their input
+  examples).</p>  
+<p>Both <code>prune_vertices</code> and <code>prune_edges</code> first convert their input
   <code>x</code> to the <code><a href='ngraph.html'>ngraph</a></code> representation of the neuron befor 
   removing points. The input <code>x</code> can therefore be in any form compatible
   with <code><a href='ngraph.html'>as.ngraph</a></code> including an existing <code>ngraph</code>. There is 
   an additional requirement that the input must be compatible with 
-  <code><a href='xyzmatrix.html'>xyzmatrix</a></code> if <code>invert=TRUE</code>.
-    Note that the <code>edges</code> argument of <code>prune_edges</code> must specify a 
+  <code><a href='xyzmatrix.html'>xyzmatrix</a></code> if <code>invert=TRUE</code>.</p>  
+<p>Note that the <code>edges</code> argument of <code>prune_edges</code> must specify a 
   path traversing a set of vertices in a valid order. However if the input is
   a matrix or vector the direction of each individual edge in this path is
   ignored. So if your neuron has edges 2-&gt;1 2-&gt;3 3-&gt;4 then an edge sequence
@@ -155,7 +174,7 @@ of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E
     <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='fl'>1</span>:<span class='fl'>25</span>)
 <span class='co'># original neuron</span>
 <span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='input'><span class='co'># with pruned neuron superimposed</span>
-<span class='fu'>plot</span>(<span class='no'>n</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><img src='prune_vertices-3.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>n</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='prune_vertices-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'># use the PointNo field (= the original id from an SWC file)</span>
 <span class='no'>n2</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>n</span>, <span class='fu'>match</span>(<span class='fl'>26</span>:<span class='fl'>30</span>, <span class='no'>n</span>$<span class='no'>d</span>$<span class='no'>PointNo</span>))
 <span class='no'>y</span><span class='kw'>=</span><span class='fu'>prune_edges</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>edges</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>25</span>)

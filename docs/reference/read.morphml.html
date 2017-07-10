@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -121,8 +140,8 @@
   <b>cells</b>. Each <b>cell</b> contains a tree of <b>segments</b> defining 
   the basic connectivity/position and an optional tree <b>cables</b> defining
   attributes on groups of <b>segments</b> (e.g. a name, whether they are 
-  axon/dendrite/soma etc).
-    <code>read.morphml</code> will either provide the parsed XML tree which you can 
+  axon/dendrite/soma etc).</p>  
+<p><code>read.morphml</code> will either provide the parsed XML tree which you can 
   query using XPath statements or a more heavily processed version which 
   provides as much information as possible from the segments and cables trees
   in two R data.frames. The latter option will inevitably drop some 
@@ -130,7 +149,7 @@
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href = 'http://www.neuroml.org/specifications'>http://www.neuroml.org/specifications</a></p>
+    <p><a href='http://www.neuroml.org/specifications'>http://www.neuroml.org/specifications</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

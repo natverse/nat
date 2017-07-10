@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -82,7 +101,7 @@
     
     <p>Scale and centre neuron 3D coordinates</p>
 <p>note that <code>scale.dotprops</code> recalculates the tangent vectors
-  after scaling the 3D coords. See <code><a href='dotprops.html'>dotprops</a></code> for details.</p>
+  after scaling the 3D coords. See <code>dotprops</code> for details.</p>
     
 
     <pre class="usage"><span class='co'># S3 method for neuron</span>
@@ -116,7 +135,7 @@
 
     <p>If <code>scale=TRUE</code>, the neuron will be rescaled to unit sd in each
   axis. If <code>center=TRUE</code>, the neuron will be centred around the axis
-  means. See <code>base::scale.default</code> for additional details.</p>
+  means. See <code><a href='http://www.rdocumentation.org/packages/base/topics/scale'>base::scale.default</a></code> for additional details.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

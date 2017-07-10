@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -120,19 +139,21 @@ see details)</p></td>
   are different; if <code>udpate=FALSE</code>, the default, then no action will be 
   taken. After downloading a remote <code>neuronlistfh</code> object, a check is 
   made for the existence of the <code>data</code> directory that will be used to 
-  individual objects. If this does not exist it will be created.
-    Note also that there is a <em>strict convention</em> for the layout of the 
+  individual objects. If this does not exist it will be created.</p>  
+<p>Note also that there is a <em>strict convention</em> for the layout of the 
   files on disk. The neuronlistfh object will be saved in R's <code>RDS</code> 
   format and will be placed next to a folder called <code>data</code> which will 
   contain the data objects, also saved in RDS format. For example if 
   <code>myneurons.rds</code> is downloaded to 
   <code>localdir="\path\to\localdir"</code> the resultant file layout will be as
-  follows:</p><ul>
+  follows:</p>  
+<p></p><ul>
 <li><p><code>\path\to\localdir\myneurons.rds</code></p></li>
 <li><p><code>\path\to\localdir\data\2f88e16c4f21bfcb290b2a8288c05bd0</code></p></li>
 <li><p><code>\path\to\localdir\data\5b58e040ee35f3bcc6023fb7836c842e</code></p></li>
 <li><p><code>\path\to\localdir\data\... etc</code></p></li>
-</ul><p>Given this arrangment, the data directory should always be at a fixed 
+</ul>
+    <p>Given this arrangment, the data directory should always be at a fixed 
   location with respect to the saved neuronlistfh object and this is enforced
   on download and the default behaviour on read and write. However it does 
   remain possible (if not recommended) to site the neuronlistfh and filehash 
@@ -144,7 +165,7 @@ see details)</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p>Other neuronlistfh: <code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='remotesync.html'>remotesync</a></code>,
+  <code>neuronlistfh</code>, <code><a href='remotesync.html'>remotesync</a></code>,
   <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
     
 

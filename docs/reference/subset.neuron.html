@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -159,48 +178,48 @@ selecting by function or indices.</p></td>
 <span class='co'># now find the points downstream (distal) of that with respect to the root</span>
 <span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>)
 <span class='co'># use a depth first search </span>
-<span class='no'>distal_points</span><span class='kw'>=</span><span class='kw'>igraph</span><span class='kw'>::</span><span class='fu'>graph.dfs</span>(<span class='no'>ng</span>, <span class='kw'>root</span><span class='kw'>=</span><span class='no'>n</span>$<span class='no'>AxonLHEP</span>, <span class='kw'>unreachable</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
+<span class='no'>distal_points</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/dfs'>graph.dfs</a></span>(<span class='no'>ng</span>, <span class='kw'>root</span><span class='kw'>=</span><span class='no'>n</span>$<span class='no'>AxonLHEP</span>, <span class='kw'>unreachable</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
   <span class='kw'>neimode</span><span class='kw'>=</span><span class='st'>'out'</span>)$<span class='no'>order</span>
 <span class='no'>distal_tree</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='no'>distal_points</span>)
 <span class='fu'>plot</span>(<span class='no'>distal_tree</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='input'>
 <span class='co'># Find proximal tree as well</span>
 <span class='co'># nb this does not include the AxonLHEP itself as defined here</span>
-<span class='no'>proximal_points</span><span class='kw'>=</span><span class='fu'><a href='setdiff.html'>setdiff</a></span>(<span class='kw'>igraph</span><span class='kw'>::</span><span class='fu'>V</span>(<span class='no'>ng</span>), <span class='no'>distal_points</span>)
+<span class='no'>proximal_points</span><span class='kw'>=</span><span class='fu'><a href='setdiff.html'>setdiff</a></span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/V'>V</a></span>(<span class='no'>ng</span>), <span class='no'>distal_points</span>)
 <span class='no'>proximal_tree</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='no'>proximal_points</span>)
-<span class='fu'>plot</span>(<span class='no'>proximal_tree</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><img src='subset.neuron-5.png' alt='' width='540' height='400' /><div class='input'>
-<span class='fu'>not_run</span>({
-  <span class='co'>## subset using interactively defined spatial regions</span>
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n</span>)
-  <span class='co'># nb you can save this select3d object using save or saveRDS functions</span>
-  <span class='co'># for future non-interactive use</span>
-  <span class='no'>s3d</span><span class='kw'>=</span><span class='fu'>select3d</span>()
-  <span class='no'>n4</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>n</span>)))
-  <span class='co'># special case of previous version</span>
-  <span class='no'>n5</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='no'>s3d</span>)
-  <span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>n4</span>,<span class='no'>n5</span>))
-  <span class='co'># keep the points that were removed from n1</span>
-  <span class='no'>n4.not</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>,<span class='fu'>Negate</span>(<span class='no'>s3d</span>))
-  <span class='co'># vertices with x position &gt; 100 and inside the selector function</span>
-  <span class='no'>n6</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>,<span class='no'>X</span><span class='kw'>&gt;</span><span class='fl'>100</span> <span class='kw'>&amp;</span> <span class='fu'>s3d</span>(<span class='no'>X</span>,<span class='no'>Y</span>,<span class='no'>Z</span>))
+<span class='fu'>plot</span>(<span class='no'>proximal_tree</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='img'><img src='subset.neuron-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'>## subset using interactively defined spatial regions</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n</span>)
+<span class='co'># nb you can save this select3d object using save or saveRDS functions</span>
+<span class='co'># for future non-interactive use</span>
+<span class='no'>s3d</span><span class='kw'>=</span><span class='fu'>select3d</span>()
+<span class='no'>n4</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>n</span>)))
+<span class='co'># special case of previous version</span>
+<span class='no'>n5</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>, <span class='no'>s3d</span>)
+<span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>n4</span>,<span class='no'>n5</span>))
+<span class='co'># keep the points that were removed from n1</span>
+<span class='no'>n4.not</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>,<span class='fu'>Negate</span>(<span class='no'>s3d</span>))
+<span class='co'># vertices with x position &gt; 100 and inside the selector function</span>
+<span class='no'>n6</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>n</span>,<span class='no'>X</span><span class='kw'>&gt;</span><span class='fl'>100</span> <span class='kw'>&amp;</span> <span class='fu'>s3d</span>(<span class='no'>X</span>,<span class='no'>Y</span>,<span class='no'>Z</span>))
 
-  <span class='co'>## subset each neuron object in a whole neuronlist</span>
-  <span class='no'>n10</span><span class='kw'>=</span><span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n10</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
-  <span class='no'>n10.crop</span> <span class='kw'>=</span> <span class='fu'><a href='nlapply.html'>nlapply</a></span>(<span class='no'>n10</span>, <span class='no'>subset</span>, <span class='no'>X</span><span class='kw'>&gt;</span><span class='fl'>250</span>)
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n10.crop</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+<span class='co'>## subset each neuron object in a whole neuronlist</span>
+<span class='no'>n10</span><span class='kw'>=</span><span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n10</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>0.5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
+<span class='no'>n10.crop</span> <span class='kw'>=</span> <span class='fu'><a href='nlapply.html'>nlapply</a></span>(<span class='no'>n10</span>, <span class='no'>subset</span>, <span class='no'>X</span><span class='kw'>&gt;</span><span class='fl'>250</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n10.crop</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
 
-  <span class='co'>## subset a neuron using a surface</span>
-  <span class='fu'>library</span>(<span class='no'>nat.flybrains</span>)
-  <span class='co'># extract left lateral horn surface and convert to mesh3d </span>
-  <span class='no'>lh</span><span class='kw'>=</span><span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>IS2NP.surf</span>, <span class='st'>"LH_L"</span>))
-  <span class='co'># subset neuron with this surface</span>
-  <span class='no'>x</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='pointsinside.html'>pointsinside</a></span>(<span class='no'>x</span>, <span class='no'>lh</span>))
-  <span class='fu'>shade3d</span>(<span class='no'>lh</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>0.3</span>)
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>)
-  <span class='co'># Now find the parts of the neuron outside the surface</span>
-  <span class='no'>y</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>Negate</span>(<span class='no'>pointsinside</span>)(<span class='no'>x</span>, <span class='no'>lh</span>))
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>y</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
-})</div></pre>
+<span class='co'>## subset a neuron using a surface</span>
+<span class='fu'>library</span>(<span class='no'>nat.flybrains</span>)
+<span class='co'># extract left lateral horn surface and convert to mesh3d </span>
+<span class='no'>lh</span><span class='kw'>=</span><span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>IS2NP.surf</span>, <span class='st'>"LH_L"</span>))
+<span class='co'># subset neuron with this surface</span>
+<span class='no'>x</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='pointsinside.html'>pointsinside</a></span>(<span class='no'>x</span>, <span class='no'>lh</span>))
+<span class='fu'>shade3d</span>(<span class='no'>lh</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>0.3</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>)
+<span class='co'># Now find the parts of the neuron outside the surface</span>
+<span class='no'>y</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>Negate</span>(<span class='no'>pointsinside</span>)(<span class='no'>x</span>, <span class='no'>lh</span>))
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>y</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

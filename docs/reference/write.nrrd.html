@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -148,19 +167,20 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
     <h2 class="hasAnchor" id="detached-nrrds"><a class="anchor" href="#detached-nrrds"></a>Detached NRRDs</h2>
 
     <p>NRRD files can be written in <em>detached</em> format 
-  (see <a href = 'http://teem.sourceforge.net/nrrd/format.html#detached'>http://teem.sourceforge.net/nrrd/format.html#detached</a>) in which 
+  (see <a href='http://teem.sourceforge.net/nrrd/format.html#detached'>http://teem.sourceforge.net/nrrd/format.html#detached</a>) in which 
   a text <b>nhdr</b> file is used to described the contents of a separate 
   (usually binary) data file. This means that the nhdr file can be inspected 
   and edited with a text editor, while the datablock can be in a completely 
   raw format that can be opened even by programs that do not understand the 
   NRRD format. Furthermore detached NRRD header files can be written to 
-  accompany non-NRRD image data so that it can be opened by nrrd readers.
-    If <code>file</code> has extension <code>.nhdr</code> <em>or</em> <code>datafile</code> is 
+  accompany non-NRRD image data so that it can be opened by nrrd readers.</p>  
+<p>If <code>file</code> has extension <code>.nhdr</code> <em>or</em> <code>datafile</code> is 
   non-NULL, then <code>write.nrrd</code> will write a separate datafile. If 
   <code>datafile</code> is set, then it is interpeted as specifying a path relative
   to the <b>nhdr</b> file. If <code>datafile</code> is not specified then default 
   filenames will be chosen according to the encoding following the 
-  conventions of the teem library:</p><ul>
+  conventions of the teem library:</p>  
+<p></p><ul>
 <li><p>raw <code>'&lt;nhdrstem&gt;.raw'</code></p></li>
 <li><p>gzip <code>'&lt;nhdrstem&gt;.raw.gz'</code></p></li>
 <li><p>text <code>'&lt;nhdrstem&gt;.ascii'</code></p></li>
@@ -172,11 +192,11 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
   <code>datafile</code> can be specified either as <em>relative</em> or 
   <em>absolute</em> path. Relative paths are strongly recommended - the best 
   place is right next to the datafile. Relative paths are always specified 
-  with respect to the location of the <b>nhdr</b> file.
-    The <code>datafile</code> argument is not processed by <code>write.nrrd</code> so it is
+  with respect to the location of the <b>nhdr</b> file.</p>  
+<p>The <code>datafile</code> argument is not processed by <code>write.nrrd</code> so it is
   up to the caller to decide whether a relative or absolute path will be 
-  used.
-    For <code>write.nrrd.header.for.file</code> if <code>outfile</code> is not specified 
+  used.</p>  
+<p>For <code>write.nrrd.header.for.file</code> if <code>outfile</code> is not specified 
   then the nhdr file will be placed next to the original image stack and the 
   <code>datafile</code> field will therefore just be <code>basename(infile)</code>. If 
   outfile is specified explicitly, then <code>datafile</code> will be set to the 
@@ -193,7 +213,7 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
   and <code>endian</code> along with the dimensions of the input (<code>x</code>) will 
   override the corresponding NRRD header fields from any supplied 
   <code>header</code> argument. See 
-  <a href = 'http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a> for details of the NRRD 
+  <a href='http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a> for details of the NRRD 
   fields.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

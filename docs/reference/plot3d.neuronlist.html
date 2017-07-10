@@ -24,7 +24,8 @@ expression — plot3d.neuronlist • nat</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -52,10 +53,28 @@ expression — plot3d.neuronlist • nat</title>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -167,20 +186,20 @@ options('nat.default.neuronlist')</p></td>
   dataframe attribute of the neuronlist. If col evaluates to a factor and 
   colpal is a named vector then colours will be assigned by matching factor 
   levels against the named elements of colpal. If there is one unnamed level,
-  this will be used as catch-all default value (see examples).
-    If col evaluates to a factor and colpal is a function then it will be used 
-  to generate colours with the same number of levels as are used in col.
-    WithNodes is <code>FALSE</code> by default when using <code>plot3d.neuronlist</code> 
+  this will be used as catch-all default value (see examples).</p>  
+<p>If col evaluates to a factor and colpal is a function then it will be used 
+  to generate colours with the same number of levels as are used in col.</p>  
+<p>WithNodes is <code>FALSE</code> by default when using <code>plot3d.neuronlist</code> 
   but remains <code>TRUE</code> by default when plotting single neurons with 
   <code><a href='plot3d.neuron.html'>plot3d.neuron</a></code>. This is because the nodes quickly make plots 
-  with multiple neurons rather busy.
-    When <code>soma</code> is <code>TRUE</code> or a vector of numeric values (recycled as 
+  with multiple neurons rather busy.</p>  
+<p>When <code>soma</code> is <code>TRUE</code> or a vector of numeric values (recycled as 
   appropriate), the values are used to plot cell bodies. For neurons the 
   values are passed to <code>plot3d.neuron</code> for neurons. In contrast 
   <code>dotprops</code> objects still need special handling. There must be columns 
   called <code>X,Y,Z</code> in the data.frame attached to <code>x</code>, that are then 
-  used directly by code in <code>plot3d.neuronlist</code>.
-    Whenever plot3d.neuronlist is called, it will add an entry to an 
+  used directly by code in <code>plot3d.neuronlist</code>.</p>  
+<p>Whenever plot3d.neuronlist is called, it will add an entry to an 
   environment <code>.plotted3d</code> in <code>nat</code> that stores the ids of all the 
   plotted shapes (neurons, cell bodies) so that they can then be removed by a
   call to <code>npop3d</code>.</p>
@@ -195,9 +214,7 @@ options('nat.default.neuronlist')</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;   8 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
-
-<span class='fu'>clear3d</span>()
+#&gt;   8 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)</div><div class='input'><span class='fu'>clear3d</span>()
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='no'>type</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>==</span><span class='st'>"DA1"</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>==</span><span class='st'>"VA1d"</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
@@ -207,24 +224,22 @@ options('nat.default.neuronlist')</p></td>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'>c</span>(<span class='st'>"DA1"</span>,<span class='st'>'VA1d'</span>),
   <span class='kw'>col</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"red"</span>,<span class='st'>"green"</span>)[<span class='fu'>factor</span>(<span class='no'>Glomerulus</span>)])
 <span class='co'># the same but not specifying colours explicitly</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'>c</span>(<span class='st'>"DA1"</span>,<span class='st'>'VA1d'</span>),<span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>,<span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'>c</span>(<span class='st'>"DA1"</span>,<span class='st'>'VA1d'</span>),<span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>)</div><span class='co'># NOT RUN {</span>
+<span class='co'>## more complex colouring strategies for a larger neuron set</span>
+<span class='co'># see https://github.com/jefferis/frulhns for details</span>
+<span class='fu'>library</span>(<span class='no'>frulhns</span>)
+<span class='co'># notice the sexually dimorphic projection patterns for these neurons</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>jkn</span>,<span class='no'>cluster</span><span class='kw'>==</span><span class='st'>'aSP-f'</span> <span class='kw'>&amp;</span><span class='no'>shortGenotype</span><span class='kw'>==</span><span class='st'>'JK1029'</span>,
+  <span class='kw'>col</span><span class='kw'>=</span><span class='no'>sex</span>,<span class='kw'>colpal</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='kw'>male</span><span class='kw'>=</span><span class='st'>'green'</span>,<span class='kw'>female</span><span class='kw'>=</span><span class='st'>'magenta'</span>))
 
-<span class='fu'>not_run</span>({
-  <span class='co'>## more complex colouring strategies for a larger neuron set</span>
-  <span class='co'># see https://github.com/jefferis/frulhns for details</span>
-  <span class='fu'>library</span>(<span class='no'>frulhns</span>)
-  <span class='co'># notice the sexually dimorphic projection patterns for these neurons</span>
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>jkn</span>,<span class='no'>cluster</span><span class='kw'>==</span><span class='st'>'aSP-f'</span> <span class='kw'>&amp;</span><span class='no'>shortGenotype</span><span class='kw'>==</span><span class='st'>'JK1029'</span>,
-    <span class='kw'>col</span><span class='kw'>=</span><span class='no'>sex</span>,<span class='kw'>colpal</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='kw'>male</span><span class='kw'>=</span><span class='st'>'green'</span>,<span class='kw'>female</span><span class='kw'>=</span><span class='st'>'magenta'</span>))
-
-  <span class='co'>## colour neurons of a class by input resistance</span>
-  <span class='no'>jkn.aspg</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>jkn</span>, <span class='no'>cluster</span><span class='kw'>==</span><span class='st'>'aSP-g'</span>)
-  <span class='co'># NB this comes in as a factor</span>
-  <span class='no'>Ri</span><span class='kw'>=</span><span class='fu'><a href='neuronlist-dataframe-methods.html'>with</a></span>(<span class='no'>jkn.aspg</span>,<span class='fu'>as.numeric</span>(<span class='fu'>as.character</span>(<span class='no'>Ri..GOhm.</span>)))
-  <span class='co'># the matlab jet palette</span>
-  <span class='no'>jet.colors</span><span class='kw'>&lt;-</span><span class='fu'>colorRampPalette</span>(<span class='fu'>c</span>(<span class='st'>'navy'</span>,<span class='st'>'cyan'</span>,<span class='st'>'yellow'</span>,<span class='st'>'red'</span>))
-  <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>jkn.aspg</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='fu'>cut</span>(<span class='no'>Ri</span>,<span class='fl'>20</span>),<span class='kw'>colpal</span><span class='kw'>=</span><span class='no'>jet.colors</span>)
-})</div></pre>
+<span class='co'>## colour neurons of a class by input resistance</span>
+<span class='no'>jkn.aspg</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>jkn</span>, <span class='no'>cluster</span><span class='kw'>==</span><span class='st'>'aSP-g'</span>)
+<span class='co'># NB this comes in as a factor</span>
+<span class='no'>Ri</span><span class='kw'>=</span><span class='fu'><a href='neuronlist-dataframe-methods.html'>with</a></span>(<span class='no'>jkn.aspg</span>,<span class='fu'>as.numeric</span>(<span class='fu'>as.character</span>(<span class='no'>Ri..GOhm.</span>)))
+<span class='co'># the matlab jet palette</span>
+<span class='no'>jet.colors</span><span class='kw'>&lt;-</span><span class='fu'>colorRampPalette</span>(<span class='fu'>c</span>(<span class='st'>'navy'</span>,<span class='st'>'cyan'</span>,<span class='st'>'yellow'</span>,<span class='st'>'red'</span>))
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>jkn.aspg</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='fu'>cut</span>(<span class='no'>Ri</span>,<span class='fl'>20</span>),<span class='kw'>colpal</span><span class='kw'>=</span><span class='no'>jet.colors</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

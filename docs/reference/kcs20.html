@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -83,7 +102,7 @@
     <p>This R list (which has additional class <code>neuronlist</code>) contains 20 
 skeletonized <em>Drosophila</em> Kenyon cells as <code>dotprops</code> objects. 
 Original data is due to Chiang et al. 2011, who have generously shared their 
-raw data at <a href = 'http://flycircuit.tw'>http://flycircuit.tw</a>. Image registration and further 
+raw data at <a href='http://flycircuit.tw'>http://flycircuit.tw</a>. Image registration and further 
 processing was carried out by Greg Jefferis.</p>
     
 
@@ -101,7 +120,7 @@ processing was carried out by Greg Jefferis.</p>
 
     <p><code><a href='neuronlist-dataframe-methods.html'>head.neuronlist</a></code>, <code><a href='neuronlist-dataframe-methods.html'>with.neuronlist</a></code>, 
   <code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code>, <code><a href='plot3d.dotprops.html'>plot3d.dotprops</a></code>,
-  <code><a href='dotprops.html'>dotprops</a></code></p>
+  <code>dotprops</code></p>
 <p>Other nat-data: <code><a href='Cell07PNs.html'>Cell07PNs</a></code>,
   <code><a href='MBL.surf.html'>MBL.surf</a></code></p>
     
@@ -130,9 +149,8 @@ processing was carried out by Greg Jefferis.</p>
 #&gt; FruMARCM-F001115_seg002 FruMARCM-F001115_seg002      44  795    ab</div><div class='input'><span class='fu'>table</span>(<span class='fu'><a href='neuronlist-dataframe-methods.html'>with</a></span>(<span class='no'>kcs20</span>, <span class='no'>type</span>))</div><div class='output co'>#&gt; 
 #&gt;    ab  apbp gamma 
 #&gt;    10     3     7 </div><div class='input'><span class='fu'><a href='nopen3d.html'>nopen3d</a></span>()</div><div class='output co'>#&gt; glX 
-#&gt;   2 </div><div class='input'><span class='co'># see plot3d.neuronlist documentation for more details</span>
-
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='no'>type</span>)</div></pre>
+#&gt;   2 </div><div class='input'># see plot3d.neuronlist documentation for more details
+</div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='no'>type</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

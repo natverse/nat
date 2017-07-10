@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -130,7 +149,7 @@ individual edge in the segment.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='summary.neuron.html'>summary</a></span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;  0.6273  2.1631  4.4999  9.0053  9.8379 84.1981 </div><div class='input'><span class='fu'>hist</span>(<span class='fu'>unlist</span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)),
-  <span class='kw'>br</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'histogram of edge lengths'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'edge lengths /microns'</span>)</div><img src='seglengths-4.png' alt='' width='540' height='400' /></pre>
+  <span class='kw'>br</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'histogram of edge lengths'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'edge lengths /microns'</span>)</div><div class='img'><img src='seglengths-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

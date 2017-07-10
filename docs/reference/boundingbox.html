@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -164,10 +183,10 @@ matrix defined according to <code>boundingbox.default</code>.</p></td>
   <strong>and no physical extent.</strong></em> When written as a vector it should look 
   like: <code>c(x0,x1,y0,y1,z0,z1)</code>. When written as a matrix it should look 
   like: <code>rbind(c(x0,y0,z0),c(x1,y1,z1))</code> where x0,y0,z0 is the position 
-  of the origin.
-    Note that there are two competing definitions for the physical extent of an
+  of the origin.</p>  
+<p>Note that there are two competing definitions for the physical extent of an
   image that are discussed e.g. 
-  <a href = 'http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a>. The definition that 
+  <a href='http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a>. The definition that 
   makes most sense depends largely on whether you think of a pixel as a 
   little square with some defined area (and therefore a voxel as a cube with 
   some defined volume) <em>or</em> you take the view that you can only define 

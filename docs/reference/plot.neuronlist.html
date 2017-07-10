@@ -24,7 +24,8 @@ expression — plot.neuronlist • nat</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -52,10 +53,28 @@ expression — plot.neuronlist • nat</title>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -148,8 +167,8 @@ use only, when calling from another function.</p></td>
   dataframe attribute of the neuronlist. If col evaluates to a factor and 
   colpal is a named vector then colours will be assigned by matching factor 
   levels against the named elements of colpal. If there is one unnamed level,
-  this will be used as catch-all default value (see examples).
-    If col evaluates to a factor and colpal is a function then it will be used
+  this will be used as catch-all default value (see examples).</p>  
+<p>If col evaluates to a factor and colpal is a function then it will be used
   to generate colours with the same number of levels as are used in col.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -159,11 +178,11 @@ use only, when calling from another function.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># plot 4 cells</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])</div><img src='plot.neuronlist-2.png' alt='' width='540' height='400' /><div class='input'><span class='co'># modify some default plot arguments</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>140</span>,<span class='fl'>75</span>), <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'First 4 neurons'</span>)</div><img src='plot.neuronlist-4.png' alt='' width='540' height='400' /><div class='input'><span class='co'># plot one class of neurons in red and all the others in grey</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>, <span class='kw'>colpal</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='kw'>DA1</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='st'>'grey'</span>), <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><img src='plot.neuronlist-6.png' alt='' width='540' height='400' /><div class='input'><span class='co'># subset operation</span>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='img'><img src='plot.neuronlist-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># modify some default plot arguments</span>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>140</span>,<span class='fl'>75</span>), <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'First 4 neurons'</span>)</div><div class='img'><img src='plot.neuronlist-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># plot one class of neurons in red and all the others in grey</span>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>, <span class='kw'>colpal</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='kw'>DA1</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='st'>'grey'</span>), <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.neuronlist-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># subset operation</span>
 <span class='fu'>plot</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'>c</span>(<span class='st'>"DA1"</span>, <span class='st'>"DP1m"</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>,
-  <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>140</span>,<span class='fl'>75</span>), <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><img src='plot.neuronlist-8.png' alt='' width='540' height='400' /></pre>
+  <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>140</span>,<span class='fl'>75</span>), <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.neuronlist-4.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

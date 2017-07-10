@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -88,18 +107,20 @@ neuroanatomical data, especially representations of neurons.</p>
     <h2 class="hasAnchor" id="neuron-objects"><a class="anchor" href="#neuron-objects"></a>Neuron Objects</h2>
 
     <p>At present there are 2 main representations of 
-  neuronal data:</p><ul>
+  neuronal data:</p>  
+<p></p><ul>
 <li><p><code><a href='neuron.html'>neuron</a></code> objects contain one or more connected trees 
   that make up a neuron</p></li>
-<li><p><code><a href='dotprops.html'>dotprops</a></code> objects can contain one (or more) neurons 
+<li><p><code>dotprops</code> objects can contain one (or more) neurons 
   represented as points and tangent vectors in which the connectivity 
   information has been discarded</p></li>
-</ul><p>The <code>subset</code> function has both <code><a href='subset.neuron.html'>subset.neuron</a></code> and 
+</ul>
+    <p>The <code>subset</code> function has both <code><a href='subset.neuron.html'>subset.neuron</a></code> and 
   <code><a href='subset.dotprops.html'>subset.dotprops</a></code> methods, which can be used to keep (or 
   reject) specified vertices within a neuron e.g. by spatial constraints. 
   <code><a href='subset.neuron.html'>subset.neuron</a></code> will look after the tree structure of neurons 
-  in these circumstances.
-    <code>neuron</code> objects containing connected trees can be converted to 
+  in these circumstances.</p>  
+<p><code>neuron</code> objects containing connected trees can be converted to 
   <code><a href='ngraph.html'>ngraph</a></code> objects, a lightweight wrapper around the 
   <code>igraph</code> library's <code><a href='http://www.rdocumentation.org/packages/igraph/topics/make_graph'>graph</a></code> class that 
   preserves 3D coordinate information. This allows neurons to be manipulated 
@@ -116,16 +137,16 @@ neuroanatomical data, especially representations of neurons.</p>
   <code><a href='neuron.html'>neuron</a></code> or <code>dotprops</code> objects along with an attached 
   dataframe of metadata. The metadata can be accessed and manipulated using 
   the <code>myneuronlist[i,j]</code> notation (see 
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>).
-    Neurons can be read in to a neuronlist using <code><a href='read.neurons.html'>read.neurons</a></code> or 
+  <code>neuronlist-dataframe-methods</code>).</p>  
+<p>Neurons can be read in to a neuronlist using <code><a href='read.neurons.html'>read.neurons</a></code> or 
   written out using <code><a href='write.neurons.html'>write.neurons</a></code> with support for many of the 
-  most common formats including swc.
-    Metadata can be used to colour or subset the neurons during plotting (see 
+  most common formats including swc.</p>  
+<p>Metadata can be used to colour or subset the neurons during plotting (see 
   <code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code> and <code><a href='subset.neuronlist.html'>subset.neuronlist</a></code>). 
   Interactive 3D selection of neurons in a neuronlist is also possible using 
   <code><a href='find.neuron.html'>find.neuron</a></code> (which makes use of rgl's <code>select3d</code> 
-  function.
-    <code>neuronlist</code> objects also provide additional functionality to 
+  function.</p>  
+<p><code>neuronlist</code> objects also provide additional functionality to 
   streamline arithmetic (e.g. scaling all the points in all neurons see 
   <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>) and transformations (see <b>Transformations</b>
   section below and <code><a href='xform.html'>xform</a></code>). Arbitrary functions can be applied 
@@ -135,10 +156,10 @@ neuroanatomical data, especially representations of neurons.</p>
     
     <h2 class="hasAnchor" id="transformations"><a class="anchor" href="#transformations"></a>Transformations</h2>
 
-    <p><code><a href='neuron.html'>neuron</a></code> or <code><a href='dotprops.html'>dotprops</a></code> 
+    <p><code><a href='neuron.html'>neuron</a></code> or <code>dotprops</code> 
   objects can be transformed from e.g. sample to template brain space using 
   affine or non-rigid registrations, typically calculated with the open 
-  source CMTK package available at <a href = 'www.nitrc.org/projects/cmtk/'>www.nitrc.org/projects/cmtk/</a>, see 
+  source CMTK package available at <a href='www.nitrc.org/projects/cmtk/'>www.nitrc.org/projects/cmtk/</a>, see 
   ?<a href='cmtk.bindir.html'>cmtk</a> for installation details. The function <code><a href='xform.html'>xform</a></code> has
   methods to deal with a variety of types of interest.</p>
     
@@ -146,21 +167,22 @@ neuroanatomical data, especially representations of neurons.</p>
 
     <p>In addition to data types defined by unstructured 
   collections of 3D vertices such as <code><a href='neuron.html'>neuron</a></code>, 
-  <code><a href='dotprops.html'>dotprops</a></code> and <code><a href='read.hxsurf.html'>hxsurf</a></code> objects nat provides the 
+  <code>dotprops</code> and <code><a href='read.hxsurf.html'>hxsurf</a></code> objects nat provides the 
   <code><a href='im3d.html'>im3d</a></code> class to handle image/density data on a regular grid. 
   I/O is handled by <code><a href='im3d-io.html'>read.im3d</a></code> and <code><a href='im3d-io.html'>write.im3d</a></code>, 
   which are currently implemented for the amiramesh and nrrd file formats; 
-  there is also read only access to the <a href = 'www.vaa3d.org/'>vaa3d</a> raw 
-  format.
-    Spatial information can be queried with <code><a href='voxdims.html'>voxdims</a></code>, 
+  there is also read only access to the <a href='www.vaa3d.org/'>vaa3d</a> raw 
+  format.</p>  
+<p>Spatial information can be queried with <code><a href='voxdims.html'>voxdims</a></code>, 
   <code><a href='boundingbox.html'>boundingbox</a></code> and <code><a href='im3d-coords.html'>ijkpos</a></code>, <code><a href='im3d-coords.html'>xyzpos</a></code>
   methods. You can convert between voxel data and coordinate (vertex) -based 
-  representations using the following functions:</p><ul>
+  representations using the following functions:</p>  
+<p></p><ul>
 <li><p><code><a href='as.im3d.html'>as.im3d</a></code> The <code>as.im3d.matrix</code> method converts XYZ 
   coordinates to an <code>im3d</code> image volume</p></li>
 <li><p><code><a href='ind2coord.html'>ind2coord</a></code> Find XYZ coordinates of specified voxels of 
   an <code>im3d</code> image volume</p></li>
-<li><p><code><a href='dotprops.html'>dotprops</a></code> The <code>dotprops.im3d</code> method converts an 
+<li><p><code>dotprops</code> The <code>dotprops.im3d</code> method converts an 
   <code>im3d</code> object to a <code>dotprops</code> format neuron, i.e. a cloud of 
   unconnected segments.</p></li>
 </ul>
@@ -173,8 +195,8 @@ neuroanatomical data, especially representations of neurons.</p>
   be converted to the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>mesh3d</a></code> format, which provides a link
   to the <code><a href='http://www.rdocumentation.org/packages/rgl/topics/rgl-package'>rgl</a></code> package and also to packages for 
   morphometrics and sophisticated mesh manipulation such as 
-  <a href = 'https://cran.r-project.org/package=Morpho'>Morpho</a> and 
-  <a href = 'https://cran.r-project.org/package=Rvcg'>Rvcg</a>.</p>
+  <a href='https://cran.r-project.org/package=Morpho'>Morpho</a> and 
+  <a href='https://cran.r-project.org/package=Rvcg'>Rvcg</a>.</p>
     
     <h2 class="hasAnchor" id="rgl-package"><a class="anchor" href="#rgl-package"></a>rgl Package</h2>
 
@@ -203,7 +225,8 @@ neuroanatomical data, especially representations of neurons.</p>
     <h2 class="hasAnchor" id="package-options"><a class="anchor" href="#package-options"></a>Package Options</h2>
 
     <p>The following options can be set to specify default
-  behaviour.</p><ul>
+  behaviour.</p>  
+<p></p><ul>
 <li><p><code>nat.cmtk.bindir</code> Location of CMTK binaries. See 
   <code><a href='cmtk.bindir.html'>cmtk.bindir</a></code></p></li>
 <li><p><code>nat.default.neuronlist</code> A neuronlist to use with the 
@@ -212,14 +235,15 @@ neuroanatomical data, especially representations of neurons.</p>
   <code><a href='nlapply.html'>nlapply</a></code>. See <code><a href='http://www.rdocumentation.org/packages/plyr/topics/create_progress_bar'>create_progress_bar</a></code> for 
   possible values. When unset is equivalent to special value <code>'auto'</code>. 
   To suppress altogether, use <code>nat.progress="none"</code>.</p></li>
-</ul><p>In addition there is one read-only option:</p><ul>
+</ul>
+    <p>In addition there is one read-only option:</p><ul>
 <li><p><code>nat.cmtk.version</code> which is used to store the current cmtk 
   version when there are repeated calls to <code><a href='cmtk.version.html'>cmtk.version</a></code>.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='neuron.html'>neuron</a></code>, <code><a href='dotprops.html'>dotprops</a></code>, 
+    <p><code><a href='neuron.html'>neuron</a></code>, <code>dotprops</code>, 
   <code><a href='neuronlist.html'>neuronlist</a></code>, <code><a href='nlapply.html'>nlapply</a></code>, <code><a href='plot3d.html'>plot3d</a></code>,
   <code><a href='xform.html'>xform</a></code>, <code><a href='im3d.html'>im3d</a></code>, <code><a href='read.hxsurf.html'>read.hxsurf</a></code>,
   <code>rgl</code> which is used for visualisation,

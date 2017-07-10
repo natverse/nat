@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -125,10 +144,11 @@ dataframe attached to the neuronlist. See details.</p></td>
 <li><p>character vector of names</p></li>
 <li><p>logical vector</p></li>
 <li><p>vector of numeric indices</p></li>
-</ul><p>Any missing names are dropped with a warning. The <code>filterfun</code>
+</ul>
+    <p>Any missing names are dropped with a warning. The <code>filterfun</code>
   expression is wrapped in a try. Neurons returning an error will be dropped
-  with a warning.
-    You may also be interested in <code><a href='find.neuron.html'>find.neuron</a></code>, which enables 
+  with a warning.</p>  
+<p>You may also be interested in <code><a href='find.neuron.html'>find.neuron</a></code>, which enables 
   objects in a neuronlist to be subsetted by a 3D selection box. In addition 
   <code><a href='subset.neuron.html'>subset.neuron</a></code>, <code><a href='subset.dotprops.html'>subset.dotprops</a></code> methods exist: 
   these are used to remove points from neurons (rather than to remove neurons
@@ -165,20 +185,19 @@ dataframe attached to the neuronlist. See details.</p></td>
 #&gt; ChaMARCM-F000586_seg002 ChaMARCM-F000586_seg002      52  898 apbp</div><div class='input'><span class='co'># combine global variables with dataframe columns</span>
 <span class='no'>odds</span><span class='kw'>=</span><span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>TRUE</span>,<span class='fl'>FALSE</span>),<span class='fl'>10</span>)
 <span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span> <span class='kw'>&amp;</span> <span class='no'>odds</span>),
-            <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span> <span class='kw'>&amp;</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>TRUE</span>,<span class='fl'>FALSE</span>),<span class='fl'>10</span>))))
-<span class='fu'>not_run</span>({
-  <span class='co'># make a 3D selection function using interactive rgl::select3d() function</span>
-  <span class='no'>s3d</span><span class='kw'>=</span><span class='fu'>select3d</span>()
-  <span class='co'># Apply a 3D search function to the first 100 neurons in the neuronlist dataset</span>
-  <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dps</span>[<span class='fl'>1</span>:<span class='fl'>100</span>],<span class='kw'>filterfun</span><span class='kw'>=</span><span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'>sum</span>(<span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)))<span class='kw'>&gt;</span><span class='fl'>0</span>},
-    <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'names'</span>)
-  <span class='co'># combine a search by metadata, neuropil location and 3D location</span>
-  <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dps</span>, <span class='no'>Gender</span><span class='kw'>==</span><span class='st'>"M"</span> <span class='kw'>&amp;</span> <span class='no'>rAL</span><span class='kw'>&gt;</span><span class='fl'>1000</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>sum</span>(<span class='fu'>s3d</span>(<span class='no'>x</span>))<span class='kw'>&gt;</span><span class='fl'>0</span>, <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'name'</span>)
-  <span class='co'># The same but specifying indices directly, which can be considerably faster</span>
-  <span class='co'># when neuronlist is huge and memory is in short supply</span>
-  <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dps</span>, <span class='fu'>names</span>(<span class='no'>dps</span>)[<span class='fl'>1</span>:<span class='fl'>100</span>],<span class='kw'>filterfun</span><span class='kw'>=</span><span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'>sum</span>(<span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)))<span class='kw'>&gt;</span><span class='fl'>0</span>},
-    <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'names'</span>)
-})</div></pre>
+            <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>kcs20</span>,<span class='no'>type</span><span class='kw'>==</span><span class='st'>'gamma'</span> <span class='kw'>&amp;</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>TRUE</span>,<span class='fl'>FALSE</span>),<span class='fl'>10</span>))))</div><span class='co'># NOT RUN {</span>
+<span class='co'># make a 3D selection function using interactive rgl::select3d() function</span>
+<span class='no'>s3d</span><span class='kw'>=</span><span class='fu'>select3d</span>()
+<span class='co'># Apply a 3D search function to the first 100 neurons in the neuronlist dataset</span>
+<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dps</span>[<span class='fl'>1</span>:<span class='fl'>100</span>],<span class='kw'>filterfun</span><span class='kw'>=</span><span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'>sum</span>(<span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)))<span class='kw'>&gt;</span><span class='fl'>0</span>},
+  <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'names'</span>)
+<span class='co'># combine a search by metadata, neuropil location and 3D location</span>
+<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dps</span>, <span class='no'>Gender</span><span class='kw'>==</span><span class='st'>"M"</span> <span class='kw'>&amp;</span> <span class='no'>rAL</span><span class='kw'>&gt;</span><span class='fl'>1000</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>sum</span>(<span class='fu'>s3d</span>(<span class='no'>x</span>))<span class='kw'>&gt;</span><span class='fl'>0</span>, <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'name'</span>)
+<span class='co'># The same but specifying indices directly, which can be considerably faster</span>
+<span class='co'># when neuronlist is huge and memory is in short supply</span>
+<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dps</span>, <span class='fu'>names</span>(<span class='no'>dps</span>)[<span class='fl'>1</span>:<span class='fl'>100</span>],<span class='kw'>filterfun</span><span class='kw'>=</span><span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'>sum</span>(<span class='fu'>s3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)))<span class='kw'>&gt;</span><span class='fl'>0</span>},
+  <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'names'</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

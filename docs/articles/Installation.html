@@ -29,10 +29,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -57,7 +75,7 @@
       <h1>Installation Details</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2017-06-07</h4>
+            <h4 class="date">2017-07-10</h4>
           </div>
 
     
@@ -94,10 +112,10 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install devtools if required</span>
 if (!<span class="kw">require</span>(<span class="st">"devtools"</span>)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 <span class="co"># then install nat</span>
-devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
+devtools::<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
 <p>The <strong>nat</strong> package includes extensive unit tests which are run along with R’s (extremely fastidious) package check routines by the <a href="http://travis-ci.org/jefferis/nat">Travis</a> continuous integration server. The master branch is therefore considered very stable and may well contain fixes or enhancements over released versions. However, you can install any <a href="https://github.com/jefferis/nat/tags">release version</a> including the <a href="https://github.com/jefferis/nat/releases/latest">latest release</a> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat@v1.8.6"</span>)</code></pre></div>
-<p>The same syntax can be used to install any arbitrary version that you want from github. See <code>?install_github</code> for details.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat@v1.8.6"</span>)</code></pre></div>
+<p>The same syntax can be used to install any arbitrary version that you want from github. See <code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">?install_github</a></code> for details.</p>
 <p>Note: Windows users need <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> to install in this way, but devtools should offer to install this for you if you do not already have it.</p>
 </div>
 <div id="external-dependencies" class="section level1">
@@ -126,7 +144,8 @@ devtools::<span class="kw">install_github</span>(<span class="st">"jefferis/nat"
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#preface">Preface</a></li>
       <li><a href="#prerequisites">Prerequisites</a></li>

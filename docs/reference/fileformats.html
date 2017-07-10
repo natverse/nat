@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,28 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Installation.html">Installation Details</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -168,20 +187,20 @@ from file header to determine file's type.</p></td>
     <p>If <code>getformatwriter</code> is passed a 
   <code>file</code> argument, it will be processed based on the registered 
   fileformats information and the <code>ext</code> argument to give a final output 
-  path in the <code>$file</code> element of the returned <code>list</code>.
-    If <code>ext='.someext'</code> <code>getformatwriter</code> will use the specified 
-  extension to overwrite the default value returned by <code>fileformats</code>.
-    If <code>ext=NULL</code>, the default, and <code>file='somefilename.someext'</code>
+  path in the <code>$file</code> element of the returned <code>list</code>.</p>  
+<p>If <code>ext='.someext'</code> <code>getformatwriter</code> will use the specified 
+  extension to overwrite the default value returned by <code>fileformats</code>.</p>  
+<p>If <code>ext=NULL</code>, the default, and <code>file='somefilename.someext'</code>
   then <code>file</code> will be untouched and <code>ext</code> will be set to
-  <code>'someext'</code> (overriding the value returned by <code>fileformats</code>).
-    If <code>file='somefile_without_extension'</code> then the suppplied or 
-  calculated extension will be appended to <code>file</code>.
-    If <code>ext=NA</code> then the input <code>file</code> name will not be touched (even 
-  if it has no extension at all).
-    Note that if <code>ext=NULL</code> or <code>ext=NA</code>, then only the specified 
+  <code>'someext'</code> (overriding the value returned by <code>fileformats</code>).</p>  
+<p>If <code>file='somefile_without_extension'</code> then the suppplied or 
+  calculated extension will be appended to <code>file</code>.</p>  
+<p>If <code>ext=NA</code> then the input <code>file</code> name will not be touched (even 
+  if it has no extension at all).</p>  
+<p>Note that if <code>ext=NULL</code> or <code>ext=NA</code>, then only the specified 
   format or, failing that, the <code>file</code> extension will be used to query 
-  the fileformats database for a match.
-    See <code><a href='write.neuron.html'>write.neuron</a></code> for code to make this discussion more 
+  the fileformats database for a match.</p>  
+<p>See <code><a href='write.neuron.html'>write.neuron</a></code> for code to make this discussion more 
   concrete.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -216,11 +235,10 @@ from file header to determine file's type.</p></td>
 #&gt; 22          swcng    ngraph           .swc  TRUE FALSE FALSE
 #&gt; 23       vaa3draw      im3d           .v3d  TRUE FALSE  TRUE
 #&gt; 24       vaa3draw      im3d        .v3draw  TRUE FALSE  TRUE
-#&gt; 25            vtk    neuron           .vtk FALSE  TRUE FALSE</div><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'>registerformat</span>(<span class='st'>"swc"</span>,<span class='kw'>read</span><span class='kw'>=</span><span class='no'>read.swc</span>,<span class='kw'>write</span><span class='kw'>=</span><span class='no'>read.swc</span>,<span class='kw'>magic</span><span class='kw'>=</span><span class='no'>is.swc</span>,<span class='kw'>magiclen</span><span class='kw'>=</span><span class='fl'>10</span>,
-    <span class='kw'>class</span><span class='kw'>=</span><span class='st'>'neuron'</span>)
-})
-<span class='no'>swc</span><span class='kw'>=</span><span class='fu'>tempfile</span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>'.swc'</span>)
+#&gt; 25            vtk    neuron           .vtk FALSE  TRUE FALSE</div><span class='co'># NOT RUN {</span>
+<span class='fu'>registerformat</span>(<span class='st'>"swc"</span>,<span class='kw'>read</span><span class='kw'>=</span><span class='no'>read.swc</span>,<span class='kw'>write</span><span class='kw'>=</span><span class='no'>read.swc</span>,<span class='kw'>magic</span><span class='kw'>=</span><span class='no'>is.swc</span>,<span class='kw'>magiclen</span><span class='kw'>=</span><span class='fl'>10</span>,
+  <span class='kw'>class</span><span class='kw'>=</span><span class='st'>'neuron'</span>)
+<span class='co'># }</span><div class='input'><span class='no'>swc</span><span class='kw'>=</span><span class='fu'>tempfile</span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>'.swc'</span>)
 <span class='fu'><a href='write.neuron.html'>write.neuron</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>swc</span>)
 <span class='fu'>stopifnot</span>(<span class='fu'>isTRUE</span>(<span class='fu'>getformatreader</span>(<span class='no'>swc</span>)$<span class='no'>format</span><span class='kw'>==</span><span class='st'>'swc'</span>))
 <span class='fu'>unlink</span>(<span class='no'>swc</span>)</div></pre>
