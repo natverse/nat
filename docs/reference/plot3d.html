@@ -114,8 +114,16 @@ along with the help for the generic in the rgl package.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## up to date list of all plot3d nethods in this package</span>
-<span class='fu'><a href='intersect.html'>intersect</a></span>(<span class='fu'>methods</span>(<span class='st'>"plot3d"</span>), <span class='fu'>ls</span>(<span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'>as.environment</span>(<span class='st'>'package:nat'</span>)))</div><div class='output co'>#&gt; [1] "plot3d.boundingbox" "plot3d.character"   "plot3d.cmtkreg"    
+    <pre class="examples"><div class='input'><span class='co'># all known plot3d methods</span>
+<span class='fu'>methods</span>(<span class='st'>"plot3d"</span>)</div><div class='output co'>#&gt;  [1] plot3d.boundingbox    plot3d.character      plot3d.cmtkreg       
+#&gt;  [4] plot3d.default*       plot3d.deldir*        plot3d.dotprops      
+#&gt;  [7] plot3d.function*      plot3d.hxsurf         plot3d.mesh3d*       
+#&gt; [10] plot3d.neuron         plot3d.neuronlist     plot3d.rglbackground*
+#&gt; [13] plot3d.rglbboxdeco*   plot3d.rglobject*     plot3d.rglscene*     
+#&gt; [16] plot3d.rglsubscene*  
+#&gt; see '?methods' for accessing help and source code</div><div class='input'>
+<span class='co'># up to date list of all plot3d nethods in this package</span>
+<span class='fu'><a href='intersect.html'>intersect</a></span>(<span class='fu'>methods</span>(<span class='st'>"plot3d"</span>), <span class='fu'>ls</span>(<span class='fu'>asNamespace</span>(<span class='st'>"nat"</span>)))</div><div class='output co'>#&gt; [1] "plot3d.boundingbox" "plot3d.character"   "plot3d.cmtkreg"    
 #&gt; [4] "plot3d.dotprops"    "plot3d.hxsurf"      "plot3d.neuron"     
 #&gt; [7] "plot3d.neuronlist" </div></pre>
   </div>

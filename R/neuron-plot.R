@@ -130,8 +130,11 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
 #' 
 #' @name plot3d
 #' @examples 
-#' ## up to date list of all plot3d nethods in this package
-#' intersect(methods("plot3d"), ls(envir = as.environment('package:nat')))
+#' # all known plot3d methods
+#' methods("plot3d")
+#' 
+#' # up to date list of all plot3d nethods in this package
+#' intersect(methods("plot3d"), ls(asNamespace("nat")))
 #' @seealso \code{\link[rgl]{plot3d}}, \code{\link{plot3d.boundingbox}}, 
 #'   \code{\link{plot3d.character}}, \code{\link{plot3d.cmtkreg}},
 #'   \code{\link{plot3d.dotprops}}, \code{\link{plot3d.hxsurf}},
