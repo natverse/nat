@@ -375,7 +375,7 @@ subset.dotprops<-function(x, subset, invert=FALSE, ...){
   r <- eval(e, x, parent.frame())
   if (!is.logical(r) && !is.numeric(r)) {
     # a function that tells us whether a point is in or out
-    if(is.function(r)) r=subset(x$points)
+    if(is.function(r)) r=r(x$points)
     else stop("Cannot evaluate subset")
   }
   if(is.logical(r)) {

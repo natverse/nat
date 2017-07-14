@@ -52,6 +52,7 @@ test_that("subset.dotprops", {
                subset(x, 1:nvertices(x)>=20, invert=TRUE))
   expect_equal(subset(x, 1:20),
                subset(x, 21:nvertices(x), invert=TRUE))
+  expect_equal(subset(x, T), subset(x, function(x) rep(TRUE, nrow(x))))
 })
 
 test_that("pruning a dotprops object with itself results in no change", {
