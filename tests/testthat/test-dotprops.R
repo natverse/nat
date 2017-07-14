@@ -43,6 +43,17 @@ test_that("make a dotprops object from a neuron",{
   expect_is(x<-dotprops(Cell07PNs[[1]], resample=1), 'dotprops')
 })
 
+test_that("subset.dotprops", {
+  x=kcs20[[1]]
+  expect_equal(subset(x, T), x)
+  expect_equal(subset(x, F, invert=T), x)
+  expect_equal(subset(x, 1:nvertices(x)), x)
+  expect_equal(subset(x, 1:nvertices(x)<20),
+               subset(x, 1:nvertices(x)>=20, invert=TRUE))
+  expect_equal(subset(x, 1:20),
+               subset(x, 21:nvertices(x), invert=TRUE))
+})
+
 test_that("pruning a dotprops object with itself results in no change", {
   kc1=kcs20[[1]]
   expect_equal(prune(kc1, kc1, maxdist=0), kc1)

@@ -323,6 +323,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' @param x A dotprops object
 #' @param subset A subset of points defined by indices, an expression or a function (see Details)
 #' @param ... Additional parameters (currently ignored)
+#' @inheritParams subset.neuron
 #' @return subsetted dotprops object
 #' @method subset dotprops
 #' @export
@@ -350,14 +351,16 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' 
 #' ## subset using an selection function
 #' s3d=select3d()
-#' dp1=subset(dp,s3d(points))
+#' dp1=subset(dp, s3d(points))
 #' # special case of previous version
-#' dp2=subset(dp,s3d)
+#' dp2=subset(dp, s3d)
 #' # keep the points that were removed from dp2
-#' dp2.not=subset(dp,Negate(s3d))
-#' stopifnot(all.equal(dp1,dp2))
-#' dp2=subset(dp,alpha>0.5 & s3d(pointd))
-#' dp3=subset(dp,1:10)
+#' dp2.not=subset(dp, s3d, invert=TRUE)
+#' # (another way of doing the same thing)
+#' dp2.not=subset(dp, Negate(s3d))
+#' stopifnot(all.equal(dp1, dp2))
+#' dp2=subset(dp, alpha>0.5 & s3d(pointd))
+#' dp3=subset(dp, 1:10)
 #' 
 #' ## subset each dotprops object in a whole neuronlist
 #' plot3d(kcs20)
@@ -367,7 +370,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #' plot3d(kcs20.partial, col='red')
 #' plot3d(kcs20, col='grey')
 #' }
-subset.dotprops<-function(x, subset, ...){
+subset.dotprops<-function(x, subset, invert=FALSE, ...){
   e <- substitute(subset)
   r <- eval(e, x, parent.frame())
   if (!is.logical(r) && !is.numeric(r)) {
@@ -375,8 +378,14 @@ subset.dotprops<-function(x, subset, ...){
     if(is.function(r)) r=subset(x$points)
     else stop("Cannot evaluate subset")
   }
-  if(is.logical(r)) r <- r & !is.na(r)
-  else if(!is.numeric(r)) stop("Subset must evaluate to a logical or numeric index")
+  if(is.logical(r)) {
+    r <- r & !is.na(r)
+    if(invert) r <- !r
+  } else if(is.numeric(r)) {
+    if(invert) r <- setdiff(seq_len(nvertices(x)), r)
+  } else {
+    stop("Subset must evaluate to a logical or numeric index")
+  }
   
   x$points=x$points[r,,drop=F]
   x$alpha=x$alpha[r]

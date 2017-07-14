@@ -4,12 +4,15 @@
 \alias{subset.dotprops}
 \title{Subset points in dotprops object that match given conditions}
 \usage{
-\method{subset}{dotprops}(x, subset, ...)
+\method{subset}{dotprops}(x, subset, invert = FALSE, ...)
 }
 \arguments{
 \item{x}{A dotprops object}
 
 \item{subset}{A subset of points defined by indices, an expression or a function (see Details)}
+
+\item{invert}{Whether to invert the subset criteria - a convenience when 
+selecting by function or indices.}
 
 \item{...}{Additional parameters (currently ignored)}
 }
@@ -49,14 +52,16 @@ plot3d(dp, col='blue')
 
 ## subset using an selection function
 s3d=select3d()
-dp1=subset(dp,s3d(points))
+dp1=subset(dp, s3d(points))
 # special case of previous version
-dp2=subset(dp,s3d)
+dp2=subset(dp, s3d)
 # keep the points that were removed from dp2
-dp2.not=subset(dp,Negate(s3d))
-stopifnot(all.equal(dp1,dp2))
-dp2=subset(dp,alpha>0.5 & s3d(pointd))
-dp3=subset(dp,1:10)
+dp2.not=subset(dp, s3d, invert=TRUE)
+# (another way of doing the same thing)
+dp2.not=subset(dp, Negate(s3d))
+stopifnot(all.equal(dp1, dp2))
+dp2=subset(dp, alpha>0.5 & s3d(pointd))
+dp3=subset(dp, 1:10)
 
 ## subset each dotprops object in a whole neuronlist
 plot3d(kcs20)
