@@ -293,7 +293,13 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
       warning(length(missing_neurons),
               " rows in data.frame do not have a matching neuron.")
   } else {
-    stop("data.frame rownames do not match neuron names.")
+    if(isTRUE(length(nn)==nrow(value))) {
+      if(base::.row_names_info(value)>0) {
+        # Row names are not automatic but do not match
+        warning("Assuming new data.frame correctly ordered in spite of rownames mismatch!")
+      }
+      rownames(value) <- matching_rows <- nn
+    } else stop("data.frame rownames do not match neuron names.")
   }
   if(!isTRUE(all.equal(rownames(value), matching_rows))) {
     # we need to reorder the rows and/or subset the incoming data.frame

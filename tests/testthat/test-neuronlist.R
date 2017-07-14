@@ -247,7 +247,10 @@ test_that("as.data.frame.neuronlist behaves", {
   data.frame(kcs20nodf)<-df[rev(1:nrow(df)), ]
   expect_equal(as.data.frame(kcs20nodf), as.data.frame(kcs20))
   rownames(df)=letters[1:nrow(df)]
-  expect_error(data.frame(kcs20nodf)<-df, 'rownames do not match')
+  expect_warning(data.frame(kcs20nodf)<-df, 'rownames mismatch')
+  rownames(df)=NULL
+  data.frame(kcs20nodf)<-df
+  expect_equal(kcs20nodf[,], kcs20[,])
 })
 
 context("neuronlist: [")
