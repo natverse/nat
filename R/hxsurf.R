@@ -426,12 +426,27 @@ NULL
 #'   surface.
 #' @param ... additional arguments for methods, eventually passed to as.mesh3d.
 #' @export
+#' @examples
+#' # check if the vertices in these neurons are inside the mushroom body
+#' # surface object
+#' inout=pointsinside(kcs20, surf=MBL.surf)
+#' table(inout)
+#' 
+#' # be a bit more lenient and include points less than 5 microns from surface
+#' inout5=pointsinside(kcs20, surf=MBL.surf, rval='distance') > -5
+#' table(inout5)
+#' \donttest{
+#' # show which points are in or out
+#' points3d(xyzmatrix(kcs20), col=ifelse(inout5, 'red', 'black'))
+#' plot3d(MBL.surf, alpha=.3)
+#' }
 pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 
 #' @export
 #' @param rval what to return.
-#' @return A vector of logical values or distances equal to the number of points
-#'   in x or the \code{mesh3d} object returned by \code{Rvcg::vcgClost}.
+#' @return A vector of logical values or distances (positive inside, negative
+#'   outside) equal to the number of points in x or the \code{mesh3d} object
+#'   returned by \code{Rvcg::vcgClost}.
 #' @rdname pointsinside
 pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3d')) {
   if(!requireNamespace('Rvcg', quietly = TRUE))
@@ -442,6 +457,6 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3
     surf=as.mesh3d(surf, ...)
   }
   rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
-  switch(rval, logical=is.finite(rmesh$quality) & rmesh$quality>0 & rmesh$quality<1e12, 
+  switch(rval, logical=is.finite(rmesh$quality) & rmesh$quality>=0 & rmesh$quality<1e12, 
          distance=rmesh$quality, mesh3d=rmesh)
 }

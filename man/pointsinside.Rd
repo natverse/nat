@@ -21,8 +21,9 @@ surface.}
 \item{rval}{what to return.}
 }
 \value{
-A vector of logical values or distances equal to the number of points
-  in x or the \code{mesh3d} object returned by \code{Rvcg::vcgClost}.
+A vector of logical values or distances (positive inside, negative
+  outside) equal to the number of points in x or the \code{mesh3d} object
+  returned by \code{Rvcg::vcgClost}.
 }
 \description{
 Find which points of an object are inside a surface
@@ -37,4 +38,19 @@ Note that \code{hxsurf} surface objects will be converted to
   boundingbox of the mesh) then the distance will be returned as NA (or 1e12 
   for older versions of the \code{Rvcg} package). This behaviour is defined
   by the \code{Rvcg::vcgClost} function.
+}
+\examples{
+# check if the vertices in these neurons are inside the mushroom body
+# surface object
+inout=pointsinside(kcs20, surf=MBL.surf)
+table(inout)
+
+# be a bit more lenient and include points less than 5 microns from surface
+inout5=pointsinside(kcs20, surf=MBL.surf, rval='distance') > -5
+table(inout5)
+\donttest{
+# show which points are in or out
+points3d(xyzmatrix(kcs20), col=ifelse(inout5, 'red', 'black'))
+plot3d(MBL.surf, alpha=.3)
+}
 }
