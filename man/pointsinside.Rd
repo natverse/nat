@@ -13,8 +13,9 @@ pointsinside(x, surf, ...)
 \arguments{
 \item{x}{an object with 3D points.}
 
-\item{surf}{an \code{hxsurf} or \code{mesh3d} object defining the reference 
-surface.}
+\item{surf}{The reference surface - either a \code{mesh3d} object or any
+object that can be converted using \code{as.mesh3d} including
+\code{hxsurf} and \code{ashape3d} objects.}
 
 \item{...}{additional arguments for methods, eventually passed to as.mesh3d.}
 

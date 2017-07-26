@@ -422,8 +422,9 @@ NULL
 #'   for older versions of the \code{Rvcg} package). This behaviour is defined
 #'   by the \code{Rvcg::vcgClost} function.
 #' @param x an object with 3D points.
-#' @param surf an \code{hxsurf} or \code{mesh3d} object defining the reference 
-#'   surface.
+#' @param surf The reference surface - either a \code{mesh3d} object or any
+#'   object that can be converted using \code{as.mesh3d} including
+#'   \code{hxsurf} and \code{ashape3d} objects.
 #' @param ... additional arguments for methods, eventually passed to as.mesh3d.
 #' @export
 #' @examples
@@ -453,7 +454,7 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3
     stop("Please install suggested library Rvcg to use pointsinside")
   rval=match.arg(rval)
   pts=xyzmatrix(x)
-  if(inherits(surf,'hxsurf')) {
+  if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
   }
   rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
