@@ -6,13 +6,17 @@
 \alias{as.mesh3d.hxsurf}
 \title{Convert an object to an rgl mesh3d}
 \usage{
-\method{as.mesh3d}{ashape3d}(x, ...)
+\method{as.mesh3d}{ashape3d}(x, tri_to_keep = 2L, ...)
 
 \method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL,
   drop = TRUE, ...)
 }
 \arguments{
 \item{x}{Object to convert to mesh3d}
+
+\item{tri_to_keep}{Which alphashape triangles to keep (expert use only - see
+\code{triang} entry in \bold{Value} section of
+\code{\link[alphashape3d]{ashape3d}} docs for details.)}
 
 \item{...}{Additional arguments for methods}
 
@@ -24,7 +28,7 @@ object}
 \item{drop}{Whether to drop unused vertices (default TRUE)}
 }
 \value{
-a \code{\link[rgl]{mesh3d}} object which can be plotted and 
+a \code{\link[rgl]{mesh3d}} object which can be plotted and
   manipulated using \code{\link{rgl}} and \code{nat} packages.
 }
 \description{
@@ -38,7 +42,12 @@ Note that this provides a link to the Rvcg package
 An \href{https://en.wikipedia.org/wiki/Alpha_shape}{alpha shape} is 
   a generalisation of a convex hull enclosing a set of points. Unlike a 
   convex hull, the resultant surface can be partly concave allowing the 
-  surface to more closely follow the set of points. The parameter alpha
+  surface to more closely follow the set of points.
+
+  In this implementation, the parameter alpha is a scale factor with units of
+  length that defines a spatial domain. When alpha is larger the alpha shape
+  approaches the convex hull; when alpha is smaller the alpha shape has a
+  greater number of faces / vertices i.e. it follows the points more closely.
 }
 \examples{
 \donttest{
@@ -48,6 +57,12 @@ plot(kcs20.a)
 
 # convert to mesh3d
 kcs20.mesh=as.mesh3d(kcs20.a)
+
+# check that all points are inside mesh
+all(pointsinside(kcs20, kcs20.mesh))
+# and show that we can also use the alphashape directly
+all(pointsinside(kcs20, kcs20.a))
+
 clear3d()
 wire3d(kcs20.mesh)
 plot3d(kcs20, col=type, lwd=2)

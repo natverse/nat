@@ -111,7 +111,12 @@ test_that("we can convert ashape3d to rgl::mesh3d",{
   skip_if_not_installed('alphashape3d')
   kcs20.a=alphashape3d::ashape3d(xyzmatrix(kcs20), alpha = 10)
   expect_is(as.mesh3d(kcs20.a), 'mesh3d')
+  
+  skip_if_not_installed("Rvcg")
+  # also shows that we can use the alphashape directly in pointsinside
+  expect_true(all(pointsinside(kcs20, kcs20.a)))
 })
+
 
 test_that("we can save and re-read hxsurf object", {
   surffile <- tempfile()
@@ -133,15 +138,15 @@ test_that("we can xform hxsurf object using registration", {
 })
 }
 
-if(require('Rvcg')){
-  test_that('check if points are inside a surface',{
-    # the surface and neuron are registered against different templates
-    # so cheat by using an approximate offset
-    n=kcs20[[1]]+c(40,-30,20)
-    MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
-    expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
-    surf2=read.hxsurf(surf_file, RegionChoice="both")
-    MB_CA_L=subset(surf2, "MB_CA_L")
-    expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
-  })
-}
+
+test_that('check if points are inside a surface',{
+  skip_if_not_installed("Rvcg")
+  # the surface and neuron are registered against different templates
+  # so cheat by using an approximate offset
+  n=kcs20[[1]]+c(40,-30,20)
+  MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
+  expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
+  surf2=read.hxsurf(surf_file, RegionChoice="both")
+  MB_CA_L=subset(surf2, "MB_CA_L")
+  expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
+})
