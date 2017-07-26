@@ -117,8 +117,9 @@
     </tr>
     <tr>
       <th>surf</th>
-      <td><p>an <code>hxsurf</code> or <code>mesh3d</code> object defining the reference 
-surface.</p></td>
+      <td><p>The reference surface - either a <code>mesh3d</code> object or any
+object that can be converted using <code>as.mesh3d</code> including
+<code>hxsurf</code> and <code>ashape3d</code> objects.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -132,8 +133,9 @@ surface.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of logical values or distances equal to the number of points
-  in x or the <code>mesh3d</code> object returned by <code><a href='http://www.rdocumentation.org/packages/Rvcg/topics/vcgClost'>Rvcg::vcgClost</a></code>.</p>
+    <p>A vector of logical values or distances (positive inside, negative
+  outside) equal to the number of points in x or the <code>mesh3d</code> object
+  returned by <code><a href='http://www.rdocumentation.org/packages/Rvcg/topics/vcgClost'>Rvcg::vcgClost</a></code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -147,6 +149,20 @@ surface.</p></td>
   by the <code><a href='http://www.rdocumentation.org/packages/Rvcg/topics/vcgClost'>Rvcg::vcgClost</a></code> function.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># check if the vertices in these neurons are inside the mushroom body</span>
+<span class='co'># surface object</span>
+<span class='no'>inout</span><span class='kw'>=</span><span class='fu'>pointsinside</span>(<span class='no'>kcs20</span>, <span class='kw'>surf</span><span class='kw'>=</span><span class='no'>MBL.surf</span>)
+<span class='fu'>table</span>(<span class='no'>inout</span>)</div><div class='output co'>#&gt; inout
+#&gt; FALSE  TRUE 
+#&gt;  1869  6652 </div><div class='input'>
+<span class='co'># be a bit more lenient and include points less than 5 microns from surface</span>
+<span class='no'>inout5</span><span class='kw'>=</span><span class='fu'>pointsinside</span>(<span class='no'>kcs20</span>, <span class='kw'>surf</span><span class='kw'>=</span><span class='no'>MBL.surf</span>, <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'distance'</span>) <span class='kw'>&gt;</span> -<span class='fl'>5</span>
+<span class='fu'>table</span>(<span class='no'>inout5</span>)</div><div class='output co'>#&gt; inout5
+#&gt; FALSE  TRUE 
+#&gt;   236  8285 </div><div class='input'><span class='co'># show which points are in or out</span>
+<span class='fu'>points3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='fu'>ifelse</span>(<span class='no'>inout5</span>, <span class='st'>'red'</span>, <span class='st'>'black'</span>))
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>MBL.surf</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.3</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -156,7 +172,9 @@ surface.</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

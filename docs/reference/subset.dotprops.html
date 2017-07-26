@@ -103,7 +103,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>, <span class='no'>subset</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>, <span class='no'>subset</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -115,6 +115,11 @@
     <tr>
       <th>subset</th>
       <td><p>A subset of points defined by indices, an expression or a function (see Details)</p></td>
+    </tr>
+    <tr>
+      <th>invert</th>
+      <td><p>Whether to invert the subset criteria - a convenience when 
+selecting by function or indices.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -157,14 +162,16 @@
 </div><span class='co'># NOT RUN {</span>
 <span class='co'>## subset using an selection function</span>
 <span class='no'>s3d</span><span class='kw'>=</span><span class='fu'>select3d</span>()
-<span class='no'>dp1</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>,<span class='fu'>s3d</span>(<span class='no'>points</span>))
+<span class='no'>dp1</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='fu'>s3d</span>(<span class='no'>points</span>))
 <span class='co'># special case of previous version</span>
-<span class='no'>dp2</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>,<span class='no'>s3d</span>)
+<span class='no'>dp2</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='no'>s3d</span>)
 <span class='co'># keep the points that were removed from dp2</span>
-<span class='no'>dp2.not</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>,<span class='fu'>Negate</span>(<span class='no'>s3d</span>))
-<span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>dp1</span>,<span class='no'>dp2</span>))
-<span class='no'>dp2</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>,<span class='no'>alpha</span><span class='kw'>&gt;</span><span class='fl'>0.5</span> <span class='kw'>&amp;</span> <span class='fu'>s3d</span>(<span class='no'>pointd</span>))
-<span class='no'>dp3</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>,<span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='no'>dp2.not</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='no'>s3d</span>, <span class='kw'>invert</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='co'># (another way of doing the same thing)</span>
+<span class='no'>dp2.not</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='fu'>Negate</span>(<span class='no'>s3d</span>))
+<span class='fu'>stopifnot</span>(<span class='fu'>all.equal</span>(<span class='no'>dp1</span>, <span class='no'>dp2</span>))
+<span class='no'>dp2</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='no'>alpha</span><span class='kw'>&gt;</span><span class='fl'>0.5</span> <span class='kw'>&amp;</span> <span class='fu'>s3d</span>(<span class='no'>pointd</span>))
+<span class='no'>dp3</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dp</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
 
 <span class='co'>## subset each dotprops object in a whole neuronlist</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)

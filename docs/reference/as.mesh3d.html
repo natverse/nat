@@ -106,7 +106,7 @@
     
 
     <pre class="usage"><span class='co'># S3 method for ashape3d</span>
-<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>tri_to_keep</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for hxsurf</span>
 <span class='fu'>as.mesh3d</span>(<span class='no'>x</span>, <span class='kw'>Regions</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>material</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -118,6 +118,12 @@
     <tr>
       <th>x</th>
       <td><p>Object to convert to mesh3d</p></td>
+    </tr>
+    <tr>
+      <th>tri_to_keep</th>
+      <td><p>Which alphashape triangles to keep (expert use only - see
+<code>triang</code> entry in <b>Value</b> section of
+<code><a href='http://www.rdocumentation.org/packages/alphashape3d/topics/ashape3d'>ashape3d</a></code> docs for details.)</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -140,7 +146,7 @@ object</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>mesh3d</a></code> object which can be plotted and 
+    <p>a <code><a href='http://www.rdocumentation.org/packages/rgl/topics/mesh3d'>mesh3d</a></code> object which can be plotted and
   manipulated using <code>rgl</code> and <code>nat</code> packages.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -148,7 +154,11 @@ object</p></td>
     <p>An <a href='https://en.wikipedia.org/wiki/Alpha_shape'>alpha shape</a> is 
   a generalisation of a convex hull enclosing a set of points. Unlike a 
   convex hull, the resultant surface can be partly concave allowing the 
-  surface to more closely follow the set of points. The parameter alpha</p>
+  surface to more closely follow the set of points.</p>
+<p>In this implementation, the parameter alpha is a scale factor with units of
+  length that defines a spatial domain. When alpha is larger the alpha shape
+  approaches the convex hull; when alpha is smaller the alpha shape has a
+  greater number of faces / vertices i.e. it follows the points more closely.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -170,6 +180,10 @@ object</p></td>
 #&gt; <span class='message'></span></div><div class='input'><span class='fu'>plot</span>(<span class='no'>kcs20.a</span>)</div><div class='output co'>#&gt; Device  1  : alpha =  10 </div><div class='input'>
 <span class='co'># convert to mesh3d</span>
 <span class='no'>kcs20.mesh</span><span class='kw'>=</span><span class='fu'>as.mesh3d</span>(<span class='no'>kcs20.a</span>)
+
+<span class='co'># check that all points are inside mesh</span>
+<span class='fu'>all</span>(<span class='fu'><a href='pointsinside.html'>pointsinside</a></span>(<span class='no'>kcs20</span>, <span class='no'>kcs20.mesh</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='co'># and show that we can also use the alphashape directly</span>
+<span class='fu'>all</span>(<span class='fu'><a href='pointsinside.html'>pointsinside</a></span>(<span class='no'>kcs20</span>, <span class='no'>kcs20.a</span>))</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='fu'>clear3d</span>()
 <span class='fu'>wire3d</span>(<span class='no'>kcs20.mesh</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='no'>type</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)</div></pre>
