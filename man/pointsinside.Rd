@@ -24,21 +24,17 @@ object that can be converted using \code{as.mesh3d} including
 \value{
 A vector of logical values or distances (positive inside, negative
   outside) equal to the number of points in x or the \code{mesh3d} object
-  returned by \code{Rvcg::vcgClost}.
+  returned by \code{Rvcg::vcgClostKD}.
 }
 \description{
 Find which points of an object are inside a surface
 }
 \details{
 Note that \code{hxsurf} surface objects will be converted to 
-  \code{mesh3d} before being passed to \code{Rvcg::vcgClost}, so if you are 
+  \code{mesh3d} before being passed to \code{Rvcg::vcgClostKD}, so if you are 
   testing repeatedly against the same surface, it may make sense to 
   pre-convert.
   
-  Note also that if the point is some distance (> 2 twice the diagonal 
-  boundingbox of the mesh) then the distance will be returned as NA (or 1e12 
-  for older versions of the \code{Rvcg} package). This behaviour is defined
-  by the \code{Rvcg::vcgClost} function.
 }
 \examples{
 # check if the vertices in these neurons are inside the mushroom body

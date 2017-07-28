@@ -413,7 +413,7 @@ NULL
 #' Find which points of an object are inside a surface
 #' 
 #' @details Note that \code{hxsurf} surface objects will be converted to 
-#'   \code{mesh3d} before being passed to \code{Rvcg::vcgClost}, so if you are 
+#'   \code{mesh3d} before being passed to \code{Rvcg::vcgClostKD}, so if you are 
 #'   testing repeatedly against the same surface, it may make sense to 
 #'   pre-convert.
 #'   
@@ -447,7 +447,7 @@ pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 #' @param rval what to return.
 #' @return A vector of logical values or distances (positive inside, negative
 #'   outside) equal to the number of points in x or the \code{mesh3d} object
-#'   returned by \code{Rvcg::vcgClost}.
+#'   returned by \code{Rvcg::vcgClostKD}.
 #' @rdname pointsinside
 pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3d')) {
   if(!requireNamespace('Rvcg', quietly = TRUE))
@@ -457,7 +457,6 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3
   if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
   }
-  rmesh=Rvcg::vcgClost(pts, surf, sign = TRUE)
-  switch(rval, logical=is.finite(rmesh$quality) & rmesh$quality>=0 & rmesh$quality<1e12, 
-         distance=rmesh$quality, mesh3d=rmesh)
+  rmesh=Rvcg::vcgClostKD(pts, surf, sign = TRUE)
+  switch(rval, logical=rmesh$quality>=0, distance=rmesh$quality, mesh3d=rmesh)
 }
