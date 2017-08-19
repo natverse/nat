@@ -1,5 +1,5 @@
-nat 1.8.9.99
-============
+nat 1.8.10
+==========
 * pointsinside now works with alpha shape (ashape3d) objects directly (#350)
 * On windows add cygwin binary directory to path if not present 
   (fixes errors with missing cygwin DLLs)
@@ -12,6 +12,8 @@ nat 1.8.9.99
   which was giving problems with pointsinside (#349)
 * Fix pointsinside to return TRUE for vertices defining mesh (with distance=0)
   (#348)
+* Switch pointsinside to use Rvcg::vcgClostKD, thereby fixing some cases
+  where points were incorrectly reported to be inside a surface. (#352)
 
 nat 1.8.9
 =========

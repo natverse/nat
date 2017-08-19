@@ -155,13 +155,48 @@ output graph to point towards (rather than away from) the root (default
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>sg</span><span class='kw'>=</span><span class='fu'>segmentgraph</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
-<span class='fu'>str</span>(<span class='no'>sg</span>)</div><div class='output co'>#&gt; IGRAPH D-W- 34 33 -- 
-#&gt; + attr: label (v/n), vid (v/n), weight (e/n)
-#&gt; + edges:
-#&gt;  [1]  1-&gt; 2  2-&gt; 3  2-&gt; 4  4-&gt; 5  5-&gt; 6  5-&gt; 7  4-&gt; 8  8-&gt; 9  9-&gt;10  9-&gt;11
-#&gt; [11]  8-&gt;12 12-&gt;13 12-&gt;14 14-&gt;15 15-&gt;16 15-&gt;17 14-&gt;18 18-&gt;19 19-&gt;20 19-&gt;21
-#&gt; [21] 21-&gt;22 21-&gt;23 23-&gt;24 23-&gt;25 18-&gt;26 26-&gt;27 27-&gt;28 27-&gt;29 26-&gt;30 30-&gt;31
-#&gt; [31] 30-&gt;32 32-&gt;33 32-&gt;34</div><div class='input'><span class='fu'>library</span>(<span class='no'>igraph</span>)
+<span class='fu'>str</span>(<span class='no'>sg</span>)</div><div class='output co'>#&gt; List of 10
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic [1:1] 2
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic [1:2] 3 4
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic (0) 
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic [1:2] 5 8
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic [1:2] 6 7
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic (0) 
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic (0) 
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic [1:2] 9 12
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic [1:2] 10 11
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  $ :List of 1
+#&gt;   ..$ :Class 'igraph.vs'  atomic (0) 
+#&gt;   .. .. ..- attr(*, "env")=&lt;weakref&gt; 
+#&gt;   .. .. ..- attr(*, "graph")= chr "6c061171-7fb0-4405-89eb-1860a1baacaa"
+#&gt;  - attr(*, "class")= chr "igraph"</div><div class='input'><span class='fu'>library</span>(<span class='no'>igraph</span>)
 <span class='fu'>plot</span>(<span class='no'>sg</span>, <span class='kw'>edge.arrow.size</span><span class='kw'>=</span><span class='fl'>.4</span>, <span class='kw'>vertex.size</span><span class='kw'>=</span><span class='fl'>10</span>)</div><div class='img'><img src='segmentgraph-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
