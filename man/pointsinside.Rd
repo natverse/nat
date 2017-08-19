@@ -70,7 +70,7 @@ plot3d(MBL.surf, alpha=.3)
 
 # Let's try to make an alphashape for the mesh to clean it up
 library(alphashape3d)
-MBCAL.as=ashape3d(xyzmatrix(MBCAL.mesh), alpha = 10)
+MBCAL.as=ashape3d(xyzmatrix(MBCAL), alpha = 10)
 # Plotting the points, we can see that is much better behaved
 points3d(xyzmatrix(kcs20), 
   col=ifelse(pointsinside(kcs20, MBCAL.as), 'red', 'black'))
