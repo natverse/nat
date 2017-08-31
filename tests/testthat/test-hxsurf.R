@@ -147,6 +147,13 @@ test_that('check if points are inside a surface',{
   MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
   expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
   surf2=read.hxsurf(surf_file, RegionChoice="both")
-  MB_CA_L=subset(surf2, "MB_CA_L")
-  expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
+  MB_CA_L2=subset(surf2, "MB_CA_L")
+  expect_equal(sum(pointsinside(n, MB_CA_L2)), 55L)
+  
+  # Let's check that we can deal with data with nm scale -
+  # actually cheat a bit by scaling by 1e4 because the example Kenyon cell is
+  # not that big and problems start with Rvcg <=0.16 at distances >= 1e5
+  MB_CA_L.nm=MB_CA_L
+  MB_CA_L.nm$vb[1:3,]=MB_CA_L$vb[1:3,]*1e4
+  expect_equal(sum(pointsinside(n*1e4, MB_CA_L.nm)), 55L)
 })
