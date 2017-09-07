@@ -1,3 +1,5 @@
+update_igraph <- FALSE
+
 .onLoad <- function(libname, pkgname) {
   try(cmtk.bindir(set=TRUE,check=TRUE),silent=TRUE)
   
@@ -48,6 +50,16 @@
                  write=write.hxsurf, magic=is.amiratype("HxSurface"),
                  class='hxsurf', magiclen=14L)
   
+  # deal with slow vertex sequences in igraph
+  pvi <- packageVersion('igraph')
+  if (pvi < "1.0.0") {
+    # this is fast by default
+  } else if (pvi > "1.0.1") {
+    # we can turn off expensive vs.es return sequences
+    igraph::igraph_options(return.vs.es = FALSE)
+  } else {
+    update_igraph <- TRUE
+  }
   invisible()
 }
 
@@ -57,6 +69,11 @@
     packageStartupMessage("Some nat functions depend on a CMTK installation. ",
                           "See ?cmtk and README.md for details.")
   }
+  # igraph_options fails for v 1.0.0/1.0.1 so need to hack the function
+  if(update_igraph)
+    packageStartupMessage("nat: upgrading to igraph >1.0.1 is recommended to ",
+                          "increase the speed of graph operations on neurons.")
+  
   invisible()
 }
 
