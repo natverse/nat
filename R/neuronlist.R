@@ -150,13 +150,9 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   }
   # treat as neuronlist
   nl2=structure(NextMethod("["), class = class(x))
-  df = attr(x, 'df')
-  if (!is.null(df)) {
-    # we never want to drop because the result must be a data.frame
-    # even when it only has one column
-    df = df[i, , drop = FALSE]
-  }
-  attr(nl2, 'df') = df
+  # we never want to drop because the result must be a data.frame
+  # even when it only has one column
+  attr(nl2, 'df') = attr(x, 'df')[i, , drop = FALSE]
   copy_nl_attributes(nl2, x)
 }
 
