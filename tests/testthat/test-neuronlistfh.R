@@ -29,6 +29,11 @@ test_that("neuronlistfh behaves like a neuronlist",{
   
   # data.frames
   expect_equal(kcs20fh[1:5,], kcs20[1:5,])
+  
+  # extended attributes - nb a real regtemplate is a more complex object
+  attr(kcs5, 'regtemplate')="FCWB"
+  attr(kcs20fh, 'regtemplate')="FCWB"
+  expect_equal(kcs20fh[1:5], kcs5)
 })
 
 test_that("subset neuronlistfh without data.frame",{
