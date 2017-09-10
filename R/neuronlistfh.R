@@ -323,8 +323,9 @@ as.list.neuronlistfh<-function(x, ...) x
     return(NextMethod())
   }
   if(!is.character(i)) i=names(x)[i]
-  l=sapply(i,function(n) x[[n]], simplify = F, USE.NAMES = T)
-  as.neuronlist(l,df=attr(x,'df')[i,])
+  l=sapply(i, function(n) x[[n]], simplify = F, USE.NAMES = T)
+  new=as.neuronlist(l, df=attr(x, 'df')[i, , drop=FALSE])
+  copy_nl_attributes(new, x, ignoremore=c("keyfilemap", "db"))
 }
 
 # Called if some objects in the filehash object are not available locally
