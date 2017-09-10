@@ -150,21 +150,29 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   }
   # treat as neuronlist
   nl2=structure(NextMethod("["), class = class(x))
-  # now handle attributes
-  # first general attributes
-  atts=attributes(x)
-  atts_to_copy=atts[setdiff(names(atts),c("names","dim","dimnames","df"))]
-  atts_to_copy[['names']]=names(nl2)
-  attributes(nl2) <- atts_to_copy
-  # and then specialcase the metadata data.frame
-  df=attr(x,'df')
-  if(!is.null(df)){
-    # we never want to drop because the result must be a data.frame 
+  df = attr(x, 'df')
+  if (!is.null(df)) {
+    # we never want to drop because the result must be a data.frame
     # even when it only has one column
-    df=df[i, , drop=FALSE]
+    df = df[i, , drop = FALSE]
   }
-  attr(nl2,'df')=df
-  nl2
+  attr(nl2, 'df') = df
+  copy_nl_attributes(nl2, x)
+}
+
+# Private function to copy attributes of a neuronlist
+# note that this only deals with non-standard attributes
+# the caller is still responsible for insuring that new has the correct 
+# class, names, df etc
+copy_nl_attributes <- function(new, old, ignoremore=NULL) {
+  oldatts = attributes(old)
+  newatts = attributes(new)
+  ignored_atts=union(names(newatts), c("names", "dim", "dimnames", "df", "class"))
+  ignored_atts=union(ignored_atts, ignoremore)
+  atts_to_copy = oldatts[setdiff(names(oldatts), ignored_atts)]
+  attributes(new) <- c(attributes(new), atts_to_copy)
+  # and then specialcase the metadata data.frame
+  new
 }
 
 #' @export
