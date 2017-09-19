@@ -39,7 +39,8 @@ Suggests:
     knitr,
     rmarkdown,
     MASS,
-    alphashape3d
+    alphashape3d,
+    Morpho
 License: GPL-3
 LazyData: yes
 Collate: 

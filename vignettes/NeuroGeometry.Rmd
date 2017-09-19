@@ -1,0 +1,215 @@
+---
+title: "NeuroGeometry"
+author: "Gregory Jefferis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{NeuroGeometry}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+One of the key distinguishing features of nat is the ability to analyse 
+neuronal morphology and  connectivity  from a geometric perspective. 
+In other words nat provides functions to analyse the placement of neurons within
+the context of the brain and the organisation of local circuits.  
+This vignette will give a few examples it, but many more possible.
+If you see an analysis in a paper associated with the Jefferis lab but cannot 
+figure out how to use nat to achieve this, then feel free to contact the [nat–user  
+ Google group]() to ask for help.
+
+## Vertex information
+
+```{r setup}
+library(nat)
+```
+
+
+One of the key tools for geometric work in nat  is the XYZ matrix function, 
+which extracts 3-D coordinate information from any object containing vertices.
+
+```{r, message=FALSE, fig.width=6, fig.height=5}
+n=Cell07PNs[[1]]
+xyz=xyzmatrix(n)
+summary(xyz)
+plot(xyz[,c("X","Y")], type='p')
+```
+
+This also works for neuronlists, so we can extract all of the points in a 
+collection of neurons:
+
+```{r}
+xyz=xyzmatrix(Cell07PNs)
+```
+
+We could ask for all the points close to a specific X coordinate
+
+```{r}
+close_to_x250=abs(xyz[,'X']-250)<10
+table(close_to_x250)
+```
+
+We can also select points interactively by using the `rgl::select3d` function.
+
+## Worked example - plane cutting a tract
+
+As a worked example let's try to find the plane cutting a tract defined by the
+axons of some example neurons:
+
+```{r, fig.width=6, fig.height=5}
+plot(Cell07PNs, WithNodes=F)
+dist=10
+abline(v=250, col='red')
+abline(v=c(250-dist, 250+dist), col='red', lty='dotted')
+```
+
+We could ask for all the points close to a specific X coordinate
+
+```{r}
+close_to_x250=abs(xyz[,'X']-250)<10
+table(close_to_x250)
+```
+
+Let's find the centroid of those selected points:
+
+```{r, fig.width=6, fig.height=5}
+centroid=colMeans(xyz[close_to_x250,])
+centroid
+plot(Cell07PNs, WithNodes=F)
+points(matrix(centroid[1:2],ncol=2), pch=20)
+```
+
+### PCA to find tract vector
+
+Now let's do a principal components analysis on those points
+```{r, fig.width=6, fig.height=5}
+pc=prcomp(xyz[close_to_x250,])
+pc1=pc$rotation[,'PC1']
+plot(Cell07PNs, WithNodes=F)
+points(matrix(centroid[1:2],ncol=2), pch=20)
+res=rbind(centroid-pc1*10, centroid, centroid+pc1*10)
+lines(res[,1:2])
+```
+
+OK, perhaps it would be better if we only used the spine of the neurons
+
+```{r}
+# There is a problem with one neuron with a loop, hence OmitFailures
+spines=nlapply(Cell07PNs, spine, UseStartPoint=T, OmitFailures = T)
+xyz=xyzmatrix(spines)
+close_to_x250=abs(xyz[,'X']-250)<10
+table(close_to_x250)
+```
+
+```{r, fig.width=6, fig.height=5}
+pc=prcomp(xyz[close_to_x250,])
+pc1=pc$rotation[,'PC1']
+plot(spines, WithNodes=F)
+points(matrix(centroid[1:2],ncol=2), pch=20)
+res=rbind(centroid-pc1*10, centroid, centroid+pc1*10)
+# nb 1:2 => just the xy coords
+lines(res[,1:2])
+```
+
+
+### Tract vector for each neuron
+Alternatively, we could find the vector of the first PC for each neuron.
+Let's write a function to do that and then apply it to the spine of each neuron.
+
+```{r, fig.width=6, fig.height=5}
+# returns 6 vector
+# first 3 values are centroid
+# second three values first principal component
+tract_vector <- function(n, xval=250, thresh=10) {
+  p=xyzmatrix(n)
+  near=abs(p[,'X']-xval)<thresh
+  pc=prcomp(p[near,])
+  c(colMeans(p[near,]), pc$rotation[,'PC1'])
+}
+tvs=sapply(spines, tract_vector)
+mean_cent=rowMeans(tvs[1:3,])
+mean_vec=rowMeans(tvs[4:6,])
+
+# nb *10 to make the vector longer (10 µm) and more visible
+res2=rbind(mean_cent-mean_vec*10, mean_cent, mean_cent+mean_vec*10)
+plot(spines, col='grey', WithNodes=F)
+lines(res2[,1:2], lwd=3)
+```
+
+### Lines crossing a plane
+
+```{r, echo=F}
+rgl::setupKnitr()
+```
+
+We can look at the plane we have defined in a 3D context as follows:
+
+```{r, rgl=T}
+plc=plane_coefficients(mean_cent, mean_vec)
+plot3d(Cell07PNs[c(1,30)], col='grey', WithNodes = F)
+planes3d(plc[,1:3], d=plc[,'d'])
+```
+
+We can also make a small square plane centered on the chosen point
+```{r, rgl=T}
+library(rgl)
+clear3d()
+make_centered_plane <- function(point, normal, scale = 1) {
+  # find the two orthogonal vectors to this one
+  uv = Morpho::tangentPlane(mean_vec)
+  uv = sapply(uv, "*", scale, simplify = F)
+  qmesh3d(
+  cbind(
+  mean_cent + uv$z,
+  mean_cent + uv$y,
+  mean_cent - uv$z,
+  mean_cent - uv$y
+  ),
+  homogeneous = F,
+  indices = 1:4
+  )
+}
+plane=make_centered_plane(mean_cent, mean_vec, scale=15)
+plot3d(spines, col='grey')
+shade3d(plane, col='red')
+```
+
+Finally, we can find the positions at which each neuron intersects the plane.
+Note that when there are multiple intersections, we only choose the closest
+point to the centroid that we calculated when defining the plane.
+
+```{r}
+intersections=t(sapply(Cell07PNs, intersect_plane, plc, closestpoint=mean_cent))
+# center those intersection points
+intersections.cent=scale(intersections, center = T, scale = F)
+d=sqrt(rowSums(intersections.cent^2))
+mean(d)
+```
+
+Then we can plot those positions on the plane
+
+```{r, webgl=T}
+spheres3d(intersections, col='red', rad=.5)
+shade3d(plane, col='black')
+plot3d(spines, col='grey')
+```
+
+Finally we can construct a 2D coordinate system on the plane and project
+the intersection positions onto that.
+
+```{r, fig.width=5, fig.height=4}
+# find pair of orthogonal tangent vectors of plane
+uv = Morpho::tangentPlane(mean_vec)
+# centre our points on mean
+sp=scale(intersections, scale = F, center=T)
+DotProduct=function(a,b) sum(a*b)
+# find coordinates w.r.t. to our two basis vectors
+xy=data.frame(u=apply(sp, 1, DotProduct, uv[[1]]),
+           v=apply(sp, 1, DotProduct, uv[[2]]))
+# maintain consist x-y aspect ratio 
+plot(xy, pch=19, asp=1, main = "Position of Axon intersection in plane", 
+     xlab="u /µm", ylab="v /µm")
+```
+
