@@ -44,7 +44,7 @@ ip=intersect_plane(Cell07PNs[[1]], plc)
 plot(Cell07PNs[[1]], WithNodes=FALSE)
 points(ip[1], ip[2], pch=19, cex=2, col='red')
 
-\donttest{
+\dontrun{
 plot3d(Cell07PNs[[1]], col='grey', WithNodes=FALSE)
 spheres3d(matrix(ip, ncol=3), col='red', rad=2)
 planes3d(plc[,1:3], d=plc[,'d'])

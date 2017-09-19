@@ -22,6 +22,16 @@ Find the coefficients of the plane equation
 Both \code{p} and \code{n} can accept multiple points/vectors to 
   calculate many planes at once.
 }
+\examples{
+
+# Mushroom Body Entry Point - plane perpendicular to axon tract as 
+# projection neurons enter mushroom body calyx
+mbe=plane_coefficients(p=c(207, 102, 142), n=c(.6,-0.1,0.3))
+\dontrun{
+plot3d(Cell07PNs)
+planes3d(mbe[1:3], d=mbe[4])
+}
+}
 \seealso{
 Other geometry: \code{\link{intersect_plane}}
 }

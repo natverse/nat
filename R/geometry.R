@@ -8,6 +8,15 @@
 #'   0}
 #' @family geometry
 #' @export
+#' @examples 
+#' 
+#' # Mushroom Body Entry Point - plane perpendicular to axon tract as 
+#' # projection neurons enter mushroom body calyx
+#' mbe=plane_coefficients(p=c(207, 102, 142), n=c(.6,-0.1,0.3))
+#' \dontrun{
+#' plot3d(Cell07PNs)
+#' planes3d(mbe[1:3], d=mbe[4])
+#' }
 plane_coefficients<-function(p,n){
   # p is point, n is normal vector
   if(is.null(dim(p))) p=matrix(p,ncol=3)
@@ -42,7 +51,7 @@ plane_coefficients<-function(p,n){
 #' plot(Cell07PNs[[1]], WithNodes=FALSE)
 #' points(ip[1], ip[2], pch=19, cex=2, col='red')
 #' 
-#' \donttest{
+#' \dontrun{
 #' plot3d(Cell07PNs[[1]], col='grey', WithNodes=FALSE)
 #' spheres3d(matrix(ip, ncol=3), col='red', rad=2)
 #' planes3d(plc[,1:3], d=plc[,'d'])
