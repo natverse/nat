@@ -108,7 +108,8 @@ intersect_plane.neuron<-function(x, plane, closestpoint=NULL, ...){
   # set up the ends of the lines
   PointMatrix[2,,]=t(as.matrix(d[points[-1],c("X","Y","Z")]))
   # set up the starts of the lines
-  PointMatrix[1,,]=t(as.matrix(d[d$Parent[points[-1]],c("X","Y","Z")]))
+  start_indices=match(d$Parent[points[-1]], d$PointNo)
+  PointMatrix[1,,]=t(as.matrix(d[start_indices ,c("X","Y","Z")]))
   rval=intersect_plane(PointMatrix, plane)
   # return any non NA rows
   rval=rval[!is.na(rval[,1]),]
