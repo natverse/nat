@@ -15,10 +15,12 @@ One of the key distinguishing features of nat is the ability to analyse
 neuronal morphology and  connectivity  from a geometric perspective. 
 In other words nat provides functions to analyse the placement of neurons within
 the context of the brain and the organisation of local circuits.  
-This vignette will give a few examples it, but many more possible.
+This vignette will give a few examples, but this is only skimming the surface
+of what is possible.
+
 If you see an analysis in a paper associated with the Jefferis lab but cannot 
-figure out how to use nat to achieve this, then feel free to contact the [nat–user  
- Google group]() to ask for help.
+figure out how to use nat to achieve this, then feel free to contact the 
+[nat–user Google group](https://groups.google.com/d/forum/nat-user) to ask for help.
 
 ## Vertex information
 
@@ -26,8 +28,7 @@ figure out how to use nat to achieve this, then feel free to contact the [nat–
 library(nat)
 ```
 
-
-One of the key tools for geometric work in nat  is the XYZ matrix function, 
+One of the key tools for geometric work in nat is the `xyzmatrix` function, 
 which extracts 3-D coordinate information from any object containing vertices.
 
 ```{r, message=FALSE, fig.width=6, fig.height=5}
