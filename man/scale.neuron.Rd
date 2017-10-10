@@ -36,5 +36,5 @@ n1.scaledown=scale(Cell07PNs[[1]],scale=c(2,2,3))
 n1.scaleup=scale(Cell07PNs[[1]],scale=1/c(2,2,3))
 }
 \seealso{
-\code{\link{scale.default}}, \code{\link{*.neuron}}
+\code{\link{scale.default}}, \code{\link{Ops.neuron}}
 }
