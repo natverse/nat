@@ -312,19 +312,35 @@ as.neuron.default<-function(x, ...){
 #' stopifnot(all.equal(n1,n2))
 #' n3<-Cell07PNs[[1]]*c(2,2,4)
 Ops.neuron <- function(e1, e2=NULL) {
-  ok <- switch(.Generic, `-` =, `*` = , `/`=, `+`=, `^` = TRUE, FALSE)
+  ok <-
+    switch(
+      .Generic,
+      `-` = ,
+      `*` = ,
+      `/` = ,
+      `+` = ,
+      `^` = ,
+      '>' = ,
+      '<' = ,
+      '>=' = ,
+      '<=' = TRUE,
+      FALSE
+    )
   if (!ok) {
     stop(gettextf("%s not meaningful for neurons", sQuote(.Generic)))
   }
-  
-  nd=e1$d[,c("X","Y","Z","W")]
-  stopifnot(is.numeric(e2))
+  r=e1
+  e1=xyzmatrix(e1)
+  # I don't exactly know why it is necessary to change this directly, but if not
+  # NextMethod dispatches on original class of e1 even when I specify object=
+  .Class=class(e1)
   lx=length(e2)
-  if(lx==1) nd[,-4]=nd[,-4]*e2
-  else if(lx%in%c(3,4)) nd[,1:lx]=t(t(nd[,1:lx])*e2)
-  else stop("expects a numeric vector of length 1, 3 or 4")
-  e1$d[,colnames(nd)]=nd
-  e1
+  if(lx==3) e1=t(e1) else if(lx>1) 
+    stop("second operand must be a numeric vector of length 0, 1 or 3")
+  res <- NextMethod(generic=.Generic)
+  if(lx==3) res=t(res)
+  xyzmatrix(r)=res
+  r
 }
 
 #' Scale and centre neuron 3D coordinates
