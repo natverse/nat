@@ -14,39 +14,31 @@ as.dotprops<-function(x, ...){
 }
 
 #' Arithmetic for dotprops objects
-#' @param x A dotprops object
-#' @param y A scalar or 3-vector that will be applied to the dotprops object
+#' 
+#' @param e1 A dotprops object
+#' @param e2 A scalar or 3-vector that will be applied to the dotprops object
 #' @return A new dotprops object
 #' @export
-#' @method * dotprops
 #' @rdname dotprops-arithmetic
-`*.dotprops` <- function(x,y) {
-  ly=length(y)
-  if(!ly%in%c(1,3)) stop("expects a numeric vector of length 1 or 3")
-  xyzmatrix(x)<-t(t(xyzmatrix(x))*y)
-  x
+#' @seealso \code{\link{scale.dotprops}}, \code{\link{Ops.neuron}}
+Ops.dotprops <- function(e1, e2=NULL) {
+  r=e1
+  e1=xyzmatrix(e1)
+  # I don't exactly know why it is necessary to change this directly, but if not
+  # NextMethod dispatches on original class of e1 even when I specify object=
+  .Class=class(e1)
+  lx=length(e2)
+  if(lx==3) e1=t(e1) else if(lx>1) stop("expects a numeric vector of length 0, 1 or 3")
+  res <- NextMethod(generic=.Generic)
+  if(lx==3) res=t(res)
+  xyzmatrix(r)=res
+  r
 }
 
 #' @export
-#' @method + dotprops
-#' @rdname dotprops-arithmetic
-`+.dotprops` <- function(x,y) {
-  ly=length(y)
-  if(!ly%in%c(1,3)) stop("expects a numeric vector of length 1 or 3")
-  xyzmatrix(x)<-t(t(xyzmatrix(x))+y)
-  x
-}
-
-#' @method - dotprops
+Ops.mesh3d <- Ops.dotprops
 #' @export
-#' @rdname dotprops-arithmetic
-`-.dotprops` <- function(x,y) x+(-y)
-
-#' @method / dotprops
-#' @export
-#' @rdname dotprops-arithmetic
-`/.dotprops` <- function(x,y) x*(1/y)
-
+Ops.hxsurf <- Ops.dotprops
 
 #' @rdname scale.neuron
 #' @include neuron.R
