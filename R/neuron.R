@@ -330,15 +330,26 @@ Ops.neuron <- function(e1, e2=NULL) {
     stop(gettextf("%s not meaningful for neurons", sQuote(.Generic)))
   }
   r=e1
-  e1=xyzmatrix(e1)
+  lx=length(e2)
+  e1 <- if(lx==3) {
+    t(xyzmatrix(e1))
+  } else if(lx==4) {
+    t(cbind(xyzmatrix(e1), e1$d$W))
+  } else if(lx>1) {
+    stop("second operand must be a numeric vector of length 0, 1, 3 or 4")
+  } else {
+    e1=xyzmatrix(r)
+  }
   # I don't exactly know why it is necessary to change this directly, but if not
   # NextMethod dispatches on original class of e1 even when I specify object=
   .Class=class(e1)
-  lx=length(e2)
-  if(lx==3) e1=t(e1) else if(lx>1) 
-    stop("second operand must be a numeric vector of length 0, 1 or 3")
   res <- NextMethod(generic=.Generic)
-  if(lx==3) res=t(res)
+  if(lx==4) {
+    r$d$W=res[4,]
+    res=t(res[-4,])
+  } else if(lx==3){
+    res=t(res)
+  }
   xyzmatrix(r)=res
   r
 }
