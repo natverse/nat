@@ -32,7 +32,7 @@ Imports:
     plyr,
     yaml
 Suggests:
-    Rvcg,
+    Rvcg (>= 0.17),
     testthat,
     httr,
     XML,
