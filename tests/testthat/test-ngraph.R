@@ -72,7 +72,7 @@ test_that("equivalence of seglist and swc methods for as.ngraph.neuron",{
 })
 
 test_that("we can construct an empty ngraph",{
-  expect_is(ngraph(matrix(nrow=0,ncol=2),vertexlabels = 1, xyz=cbind(0,0,0,0)),
+  expect_is(ngraph(matrix(nrow=0,ncol=2),vertexnames = 1, xyz=cbind(0,0,0,0)),
             'ngraph')
 })
 

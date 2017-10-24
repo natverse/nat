@@ -178,7 +178,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #'   rather than the raw vertex ids.
 #' @param vertexData A dataframe with SWC fields especially X,Y,Z,W,PointNo,
 #'   Parent.
-#' @param origin Root vertex, matched against labels (aka PointNo) when 
+#' @param origin Root vertex, matched against names (aka PointNo) when 
 #'   available (see details)
 #' @param Verbose Whether to be verbose (default: FALSE)
 #' @return A list with elements: 

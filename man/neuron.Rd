@@ -58,7 +58,7 @@ definition based on object being a list with a SegList component.}
 \item{vertexData}{A dataframe with SWC fields especially X,Y,Z,W,PointNo,
 Parent.}
 
-\item{origin}{Root vertex, matched against labels (aka PointNo) when 
+\item{origin}{Root vertex, matched against names (aka PointNo) when 
 available (see details)}
 
 \item{Verbose}{Whether to be verbose (default: FALSE)}
