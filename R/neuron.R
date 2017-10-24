@@ -286,6 +286,13 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   do.call(neuron, n)
 }
 
+as.neuron.igraph <- function(x, ...) {
+  must_have=c("X","Y","Z","diam")
+  if(!all(must_have %in% igraph::vertex_attr_names(x)))
+    stop("Sorry this does not look like an ngraph! Missing XYZ/diam data!")
+  as.neuron.ngraph(x, ...)
+}
+
 #' @description \code{as.neuron.default} will add class "neuron" to a neuron-like
 #'   object.
 #' @rdname neuron

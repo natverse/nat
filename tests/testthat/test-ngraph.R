@@ -76,9 +76,17 @@ test_that("we can construct an empty ngraph",{
             'ngraph')
 })
 
-test_that("as.ngraph",{
-  expect_is(g<-as.ngraph(Cell07PNs[[1]]), 'ngraph')
+test_that("as.ngraph/as.neuron",{
+  n <- Cell07PNs[[1]]
+  expect_is(g<-as.ngraph(n), 'ngraph')
   expect_equal(g, as.ngraph(g))
+  
+  # as.neuron.igraph
+  class(g)='igraph'
+  expect_equal(n, as.neuron(g))
+  g2=igraph::delete_edges(g, 1:3)
+  expect_is(as.neuron(g2), 'neuron')
+
 })
 
 test_that("we can find the length of the spine of a neuron", {
