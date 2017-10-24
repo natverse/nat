@@ -65,6 +65,19 @@
 #' library(igraph)
 #' # check that vertex attributes of graph match X position
 #' all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
+#' 
+#' # Use 3D segment lengths as edge length of graph
+#' gw=as.ngraph(Cell07PNs[[1]], weights=TRUE)
+#' # find longest path across graph
+#' d=get.diameter(gw)
+#' # make a new neuron using the longest path
+#' gw_spine=as.neuron(induced.subgraph(gw, d))
+#' # make a new neuron containing all nodes except those in longest path
+#' gw_antispine=as.neuron(delete.vertices(gw, d))
+#' 
+#' # note use of bounding box of original neuron to set plot axes
+#' plot(gw_spine, col='red', boundingbox=n)
+#' plot(gw_antispine, col='blue', add=TRUE)
 ngraph<-function(el, vertexnames, xyz=NULL, diam=NULL, directed=TRUE,
                  weights=FALSE, vertex.attributes=NULL, graph.attributes=NULL){
   if(any(duplicated(vertexnames))) stop("Vertex names must be unique!")
