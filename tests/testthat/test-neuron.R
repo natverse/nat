@@ -26,7 +26,7 @@ test_that("as.neuron.ngraph works",{
   expect_equal(testn$SegList,cn$SegList)
   expect_equal(testd,cn$d)
   
-  # vertex labels with gaps
+  # vertex names with gaps
   g=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexnames=c(2:4,6,7,9))
   sl=seglist(c(1,3,2,4),c(4,5),c(4,6))
   expect_equal(as.seglist(g,origin=1),sl)

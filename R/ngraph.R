@@ -2,7 +2,8 @@
 #'
 #' @description the \code{ngraph} class contains a (completely general) graph
 #'   representation of a neuron's connectivity in an \code{igraph} object. It
-#'   may additionally contain vertex label or position data. See details.
+#'   may additionally contain vertex name or position data. See Connectivity
+#'   section.
 #'
 #'   \code{ngraph()} creates an ngraph from edge and vertex information.
 #' @section Connectivity: We make the following assumptions about neurons coming
@@ -23,7 +24,11 @@
 #'
 #'   The raw vertex ids in the graph will be in the order of vertexnames and can
 #'   therefore be used to index a block of vertex coordinates. The vertexnames
-#'   will be stored using the vertex attribute \code{name}
+#'   will be stored using the vertex attribute \code{name}. The underlying
+#'   igraph class allows nodes to be specified by their name. This provides a
+#'   convenient way to define nodes in an ngraph object by the numeric
+#'   identifier encoded by the PointNo field of the corresponding
+#'   \code{\link{neuron}}.
 #'
 #'   When the graph is directed (default) the edges will be from the root to the
 #'   other tips of the neuron.
@@ -33,8 +38,8 @@
 #'   information is stored as vertex attributes X, Y, and Z.
 #' @param el A two columm matrix (start, end) defining edges. \code{start} means
 #'   closer to the root (soma) of the neuron.
-#' @param vertexnames Integer labels for graph - the edge list is specified
-#'   using these labels.
+#' @param vertexnames Integer names for graph - the edge list is specified using
+#'   these names (see details).
 #' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
 #'   when 4th column is assumed to be diameter)
 #' @param diam Diameter of neuron at each vertex (optional)

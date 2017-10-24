@@ -192,9 +192,9 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(length(origin)){
-    vertex_labels=igraph::V(x)$name
-    if(!is.null(vertex_labels)){
-      origin=match(origin,vertex_labels)
+    vertex_names=igraph::V(x)$name
+    if(!is.null(vertex_names)){
+      origin=match(origin, vertex_names)
       if(is.na(origin)) stop("Invalid origin")
     }
   }
