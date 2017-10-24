@@ -22,7 +22,7 @@
 #'   
 #'   The raw vertex ids in the graph will be in the order of vertexlabels and 
 #'   can therefore be used to index a block of vertex coordinates. The 
-#'   vertexlabels will be stored using the vertex attribute \code{label}
+#'   vertexlabels will be stored using the vertex attribute \code{name}
 #'   
 #'   When the graph is directed (default) the edges will be from the root to the
 #'   other tips of the neuron.
@@ -74,7 +74,7 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
     weights=sqrt(rowSums(vecs*vecs))
   }
   g=igraph::graph(rawel, n=length(vertexlabels), directed=directed)
-  igraph::V(g)$label=vertexlabels
+  igraph::V(g)$name=vertexlabels
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
   if(!is.null(xyz)) {
@@ -86,12 +86,12 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
   }
   if(!is.null(diam)) igraph::V(g)$diam=diam
   for(n in names(vertex.attributes)){
-    g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
+    g=igraph::set.vertex.attribute(g, name=n,value=vertex.attributes[[n]])
   }
   for(n in names(graph.attributes)){
-    g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[n]])
+    g=igraph::set.graph.attribute(g, name=n,value=graph.attributes[[n]])
   }
-  class(g)=c("ngraph",class(g))
+  class(g)=c("ngraph", class(g))
   g
 }
 

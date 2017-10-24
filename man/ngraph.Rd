@@ -88,7 +88,7 @@ Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
   
   The raw vertex ids in the graph will be in the order of vertexlabels and 
   can therefore be used to index a block of vertex coordinates. The 
-  vertexlabels will be stored using the vertex attribute \code{label}
+  vertexlabels will be stored using the vertex attribute \code{name}
   
   When the graph is directed (default) the edges will be from the root to the
   other tips of the neuron.

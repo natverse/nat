@@ -4,7 +4,7 @@
 \alias{graph.nodes}
 \title{Return root, end, or branchpoints of an igraph object}
 \usage{
-graph.nodes(x, type = c("root", "end", "branch"), original.ids = "label",
+graph.nodes(x, type = c("root", "end", "branch"), original.ids = "name",
   exclude.isolated = TRUE)
 }
 \arguments{

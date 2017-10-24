@@ -192,7 +192,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(length(origin)){
-    vertex_labels=igraph::V(x)$label
+    vertex_labels=igraph::V(x)$name
     if(!is.null(vertex_labels)){
       origin=match(origin,vertex_labels)
       if(is.na(origin)) stop("Invalid origin")
@@ -242,7 +242,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # sort out the vertex information
   # TODO refactor this into a separate function e.g. normalise.swc since
   # we need to do something similar in as.neuron.dataframe and seglist2swc etc
-  d=data.frame(PointNo=get.vertex.attribute(x,'label'))
+  d=data.frame(PointNo=get.vertex.attribute(x,'name'))
   if(is.null(vertexData)){
     # get vertex information from graph object
     xyz=xyzmatrix(x)

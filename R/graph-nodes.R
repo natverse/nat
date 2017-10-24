@@ -8,7 +8,7 @@
 #' @param exclude.isolated Do not count isolated vertices as root points 
 #'   (default)
 #' @importFrom igraph V degree get.vertex.attribute
-graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
+graph.nodes<-function(x, type=c('root','end','branch'), original.ids='name',
                       exclude.isolated=TRUE){
   type=match.arg(type)
   if(type=='root' && !is.directed(x))
