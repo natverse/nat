@@ -47,7 +47,13 @@
 #' # identify 3d location of endpoints
 #' xyzmatrix(n)[endpoints(n),]
 #' 
-#' ## Neurons as graphs
+#' ## Other methods
+#' # plot
+#' plot(n)
+#' # all methods for neuron objects
+#' methods(class = 'neuron')
+#' 
+#' ## Neurons as graphs 
 #' # convert to graph and find longest paths by number of nodes
 #' ng=as.ngraph(n)
 #' hist(igraph::distances(ng))
@@ -55,11 +61,22 @@
 #' ngw=as.ngraph(n, weights=TRUE)
 #' hist(igraph::distances(ngw))
 #' 
-#' ## Other methods
-#' # plot
-#' plot(n)
-#' # all methods for neuron objects
-#' methods(class = 'neuron')
+#' # converting back and forth between neurons and graphs
+#' g=as.ngraph(Cell07PNs[[1]])
+#' gstem=igraph::induced.subgraph(g, 1:10)
+#' # this is fine
+#' plot(gstem)
+#' plot(as.neuron(gstem))
+#' 
+#' # but if you had an undirected graph 
+#' ug=igraph::as.undirected(gstem)
+#' # you get a warning because there is no explicit origin for the graph
+#' as.neuron(ug)
+#' 
+#' # If you need finer control of the conversion process 
+#' gstem2=as.ngraph(ug, root = 10)
+#' plot(gstem2)
+#' plot(as.neuron(gstem2))
 neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPoints,
                  SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL, ...,
                  MD5=TRUE){get
@@ -286,6 +303,10 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   do.call(neuron, n)
 }
 
+#' @description \code{as.neuron.igraph} will convert an \code{ngraph} compatible
+#'   \code{\link[igraph]{igraph}} object into a \code{neuron}.
+#' @export
+#' @rdname neuron
 as.neuron.igraph <- function(x, ...) {
   must_have=c("X","Y","Z","diam")
   if(!all(must_have %in% igraph::vertex_attr_names(x)))
