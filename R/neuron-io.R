@@ -656,7 +656,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
 }
 
 # write neuron to SWC file
-write.neuron.swc<-function(x, file, ...){
+write.neuron.swc<-function(x, file, normalise.ids=FALSE, ...){
   if(is.dotprops(x)) {
     return(write.dotprops.swc(x, file, ...))
   }
@@ -668,6 +668,23 @@ write.neuron.swc<-function(x, file, ...){
   
   # nb neurolucida seems to use diam, but swc uses radius
   df$Radius=df$Radius/2
+  
+  if(F) {
+    # this will set the new value to be the 1-indexed row in the array of the 
+    # corresponding PointNo value. Missing values are assumed to be root nodes
+    # signalled with a parent of -1
+    df$Parent=match(df$Parent, df$PointNo, nomatch = -1L)
+    # i.e. new ids are just integers 1:n
+    df$PointNo=seq_along(df$PointNo)
+  }
+  if(normalise.ids) {
+    g=as.ngraph(x)
+    r=igraph::dfs(g, root=x$StartPoint, neimode = 'all')
+    new_order=as.integer(r$order)
+    df$Parent=match(df$Parent, new_order, nomatch = -1L)
+    df=df[new_order,]
+    df$PointNo=seq_along(df$PointNo)
+  }
   writeLines(c("# SWC format file",
                "# based on specifications at http://research.mssm.edu/cnic/swc.html"),
              con=file)
