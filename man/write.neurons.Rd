@@ -12,7 +12,7 @@ write.neurons(nl, dir, format = NULL, subdir = NULL, INDICES = names(nl),
 
 \item{dir}{directory to write neurons, or path to zip archive (see Details).}
 
-\item{format}{Unique abbreviation of one of the registered file formats for 
+\item{format}{Unique abbreviation of one of the registered file formats for
 neurons including 'swc', 'hxlineset', 'hxskel'}
 
 \item{subdir}{String naming field in neuron that specifies a subdirectory OR 
@@ -44,6 +44,9 @@ See \code{\link{write.neuron}} for details of how to specify the
 \dontrun{
 # write some neurons in swc format
 write.neurons(Cell07PNs, dir="testwn", format='swc')
+# write some neurons in swc format for picky software
+write.neurons(Cell07PNs, dir="testwn", format='swc', normalise.ids=TRUE)
+
 # write some neurons in Amira hxlineset format
 write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
 
