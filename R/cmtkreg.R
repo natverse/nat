@@ -110,7 +110,7 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
 #'   \code{\link[rgl]{plot3d}}
 #' @examples 
-#' \donttest{
+#' \dontrun{
 #' testdatadir=system.file("tests/testthat/testdata/cmtk", package="nat")
 #' regpath=file.path(testdatadir,'FCWB_JFRC2_01_warp_level-01.list/')
 #' plot3d(cmtkreg(regpath))
@@ -120,7 +120,7 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
 #' # nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) 
 #' # is considered bad style but read.cmtkreg returns a plain list 
 #' # so method dispatch will fail
-#' plot3d.cmtkreg(reg)
+#' nat:::plot3d.cmtkreg(reg)
 #' }
 #' @importFrom rgl plot3d
 #' @export

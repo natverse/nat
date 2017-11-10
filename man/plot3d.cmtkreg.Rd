@@ -16,7 +16,7 @@ the resulting of reading one in with \code{\link{read.cmtkreg}}.}
 Plot the domain of a CMTK registration
 }
 \examples{
-\donttest{
+\dontrun{
 testdatadir=system.file("tests/testthat/testdata/cmtk", package="nat")
 regpath=file.path(testdatadir,'FCWB_JFRC2_01_warp_level-01.list/')
 plot3d(cmtkreg(regpath))
@@ -26,7 +26,7 @@ reg=read.cmtkreg(regpath)
 # nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) 
 # is considered bad style but read.cmtkreg returns a plain list 
 # so method dispatch will fail
-plot3d.cmtkreg(reg)
+nat:::plot3d.cmtkreg(reg)
 }
 }
 \seealso{
