@@ -1,3 +1,11 @@
+nat 1.8.11
+==========
+Fixes
+* pointsinside fails for points >1e5 from mesh (#354)
+* as.neuron should work for an igraph made from an ngraph (#356)
+  this is helpful if you e.g. delete nodes/edges from an ngraph object
+* breaking change with testthat v2 #355
+
 nat 1.8.10
 ==========
 * pointsinside now works with alpha shape (ashape3d) objects directly (#350)
