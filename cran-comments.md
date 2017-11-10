@@ -2,6 +2,8 @@
 
 * minor updates and fixes
 * includes fix for upcoming testthat v2 at request of Hadley Wickham
+* fixes error on Solaris test suite due to network connectivity issue
+  https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/nat-00check.html
 
 ## Test environments
 * local OS X install, R 3.4.2
