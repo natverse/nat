@@ -8,7 +8,12 @@ if(!interactive())
 
 # Is internet accessible?
 internet.ok = identical(
-  status_code(HEAD("http://flybrain.mrc-lmb.cam.ac.uk/", timeout(2))),
+  try(
+    status_code(
+      HEAD("http://flybrain.mrc-lmb.cam.ac.uk/", timeout(2))
+    ),
+    silent = TRUE
+  ),
   200L
 )
 
