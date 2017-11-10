@@ -1,0 +1,203 @@
+--- 
+title: "Working with Individual Neurons as Graph Structures" 
+author: "Gregory Jefferis" 
+date: "`r Sys.Date()`" 
+output: rmarkdown::html_vignette 
+vignette: >
+  %\VignetteIndexEntry{Neurons as Graphs} 
+  %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteEncoding{UTF-8} 
+---
+
+## Introduction
+
+Neurons can helpfully be treated as graphs (branching trees) in which nodes connected by edges
+define the morphology of the neuron. The **nat** package provides a number of
+built-in functions that allow you to analyse the branching structure of graphs
+
+http://jefferis.github.io/nat/reference/index.html#section-neurons-as-graphs-
+
+or use aspects of the branching structure to manipulate graphs. Examples of
+such functions include the `strahler_order` function which calculates the 
+Strahler branch order for each node or segment in the neuron or the `spine`
+function that extracts the longest path across the neuron.
+
+More sophisticated analysis and manipulations can be carried out by converting 
+`neuron` objects into `ngraph` objects.
+
+## Neurons as Graphs
+A neuron will typically be a graph in the form of a binary tree. We follow 
+the convention of the Matlab [trees toolbox](http://www.treestoolbox.org/) by 
+Hermann Cuntz and colleagues in treating the root (typically the soma) as the 
+origin of the graph and then having directed edges leaving the root.
+
+![neuron-as-graph](fig/neuron-graph.svg)
+
+Nodes will be:
+
+* root
+* branch point
+* end point
+* continutation points
+
+Each node will have a numeric identifier or label (an arbitrary integer stored the in the 
+neuron's `PointNo` field which may have come froma an external source) as well
+an index (an integer starting at 1 and increasing without gaps). Although these
+two identifiers may often be the same, code should never rely on this being the
+case. In the wild, one frequenlty encounters cases where e.g. the numeric labels
+
+* have gaps because a neuron was edited
+* are not in the same order as the vertices
+* have some other significance e.g. are globally unique across all neurons in a
+  database and therefore have large values (which may be challenging for R to
+  to represent give its maxint of 2^31 - 1=`r 2^31 - 1`)
+
+```{r, message=FALSE}
+library(nat)
+n=Cell07PNs[[1]]
+summary(n)
+```
+
+We can extract the points as follows:
+
+```{r}
+rootpoints(n)
+branchpoints(n)
+endpoints(n)
+```
+
+Segments are unbranched connected sequences of nodes that terminate in a branch
+point or end point.
+
+## Built-in neuron graph functions
+We will give a few examples of the use of the built-in functions that treat
+neurons as graphs.
+
+### Strahler Order
+The branching structure of a neuron is commonly summarised by calculating the
+[Strahler Order](https://en.wikipedia.org/wiki/Strahler_number).
+
+```{r, fig.width=6}
+n=Cell07PNs[[1]]
+so=strahler_order(n)
+orders=1:max(so$points)
+for (i in orders) {
+  plot(subset(n, so$points==i), col=i, add = i!=1, boundingbox = boundingbox(n))
+}
+```
+
+### Spine
+You can find the longest path across a neuron using the spine function.
+
+```{r, fig.width=6}
+n=Cell07PNs[[1]]
+sp=spine(n)
+plot(n, col='grey')
+plot(sp, add=T, col='blue')
+```
+
+`spine` has a variety of options that you can use to control the results.
+
+### Segment graph
+
+You can use the `segmentgraph` function to make a simplified represenation of
+the branching structure of the neuron. In this object (which has class `igraph`)
+each unbranched segment
+in the original neuron (which might have contained many vertices) is 
+collapsed to a single edge joining the branch points (which are retained).
+
+```{r, fig.width=5, fig.height=5}
+sg=segmentgraph(Cell07PNs[[1]])
+plot(sg)
+```
+
+## ngraph objects
+
+The **nat** package provides a bridge to a rich cross-platform graph library, 
+**igraph**. We provide a class [`ngraph`](http://jefferis.github.io/nat/reference/ngraph.html)
+that provides a thin wrapper for the `igraph` class. This looks after things 
+that we might need to know about a neuron (like the 3D coordinates of each node)
+while still giving access to all of the graph functions in the igraph package.
+
+```{r}
+g=as.ngraph(Cell07PNs[[1]])
+class(g)
+g
+```
+You can use functions such as 
+```{r}
+igraph::diameter(g)
+```
+to find the length of the longest path across the neuron. This is defined in 
+terms of the number of intervening nodes. You can also make a graph in which 
+the edge weights are the euclidean distance between the connected 3D nodes:
+
+```{r}
+gw=as.ngraph(Cell07PNs[[1]], weights=TRUE)
+igraph::diameter(gw)
+```
+This gives you the longest path length (geodesic) across the graph in units of
+µm in this case.
+
+Note that although you can do `library(ngraph)`, it adds a lot of functions to 
+the search path, some of which have name clashes, so I often just use the 
+package name (`igraph::`) prepended to the function that I want to call.
+
+### walking along ngraph objects
+You can use the graph representation of neurons e.g. to find the path between
+nodes.
+
+```{r}
+g=as.ngraph(Cell07PNs[[1]], weights=TRUE)
+eg=endpoints(g)
+
+p=igraph::shortest_paths(g, from=1, to=180)
+p$vpath[[1]]
+
+# fails
+p2=igraph::shortest_paths(g, from=180, to=1)
+p2$vpath[[1]]
+
+# mode all will find the path irrespective of direction of links, which are
+# directed from the soma
+p3=igraph::shortest_paths(g, from=180, to=1, mode = 'all')
+p3$vpath[[1]]
+all.equal(p$vpath[[1]], rev(p3$vpath[[1]]))
+
+# just the distances - by default uses mode=all
+igraph::distances(g, v=1, to=180)
+igraph::distances(g, v=180, to=1)
+```
+
+You can also ask for nodes upstream or downstream of a given starting node. For 
+example the neurons in the `Cell07PNs` set have a tag called `AxonLHEP` that
+defines the entry point of the axon into the lateral horn neuropil of the fly
+brain. Here we defined 
+
+```{r}
+n=Cell07PNs[[1]]
+g=as.ngraph(n)
+# find the nodes distal to this point
+# nb you must set unreachable=F if you only want to get downstream nodes
+igraph::dfs(g, neimode='out', unreachable = FALSE, root=n$AxonLHEP)
+# the proximal nodes back to the soma (including any branches)
+igraph::dfs(g, neimode='in', unreachable = FALSE, root=n$AxonLHEP)
+```
+
+Note that `dfs` (depth first search) provides a good way to visit all the nodes
+of the neuron 
+
+Let's use this to make a function that prunes neurons downstream of this axon
+entry point:
+
+```{r, fig.width=6}
+prune_from_lhep <- function(n, ...) {
+  g=as.ngraph(n)
+  downstream_indices=igraph::dfs(g, root = n$AxonLHEP, unreachable = FALSE)$order
+  prune_vertices(n, verticestoprune = downstream_indices, invert = TRUE)
+}
+pruned=nlapply(Cell07PNs[1:3], prune_from_lhep)
+plot(Cell07PNs[1:3], col='grey')
+plot(pruned, lwd=2, add = T)
+```
+
