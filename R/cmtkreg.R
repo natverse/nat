@@ -123,6 +123,7 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
 #' plot3d.cmtkreg(reg)
 #' }
 #' @importFrom rgl plot3d
+#' @export
 plot3d.cmtkreg <- function(x, ...) {
   reg=NULL
   if(is.list(x)) {
