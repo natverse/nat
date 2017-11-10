@@ -664,7 +664,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
 }
 
 # write neuron to SWC file
-write.neuron.swc<-function(x, file, normalise.ids=FALSE, ...){
+write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
   if(is.dotprops(x)) {
     return(write.dotprops.swc(x, file, ...))
   }
@@ -676,6 +676,14 @@ write.neuron.swc<-function(x, file, normalise.ids=FALSE, ...){
   
   # nb neurolucida seems to use diam, but swc uses radius
   df$Radius=df$Radius/2
+  
+  if(is.na(normalise.ids)) {
+    # figure out if any parents refer to nodes *after* the current one
+    # some swc readers do not like this
+    parent_idx=match(df$Parent, df$PointNo, nomatch = -1L)
+    premature_parents = parent_idx > seq_len(nrow(df))
+    normalise.ids=any(premature_parents)
+  }
   
   if(normalise.ids) {
     g=as.ngraph(x)
