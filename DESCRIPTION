@@ -1,7 +1,7 @@
 Package: nat
 Type: Package
 Title: NeuroAnatomy Toolbox for Analysis of 3D Image Data
-Version: 1.8.11
+Version: 1.8.11.9000
 Authors@R: c(
     person("Gregory", "Jefferis", , "jefferis@gmail.com", role = c("aut", "cre")),
     person("James", "Manton", role = c("aut"))
@@ -42,7 +42,7 @@ Suggests:
     alphashape3d
 License: GPL-3
 LazyData: yes
-Collate: 
+Collate:
     'alphashape3d.R'
     'amiralandmarks-io.R'
     'amiramesh-io.R'
