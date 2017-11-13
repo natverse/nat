@@ -131,9 +131,9 @@ dotprops.neuronlist<-function(x, ..., OmitFailures=NA) {
 #'   be resampled. See \code{\link{resample.neuron}}.
 #' @rdname dotprops
 dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
+  if(is.finite(resample)) x=resample(x, stepsize = resample)
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
-  if(is.finite(resample)) x=resample(x, stepsize = resample)
   dotprops(xyzmatrix(x), Labels=Labels, ...)
 }
 
@@ -159,9 +159,17 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   # store labels from SWC format data if this is a neuron
   x=xyzmatrix(x)
   if(is.null(k)) k=20
+
+  if(length(Labels) && length(Labels)!=nrow(x))
+  stop("Length of Labels does not match number of points!")
+
   if(na.rm){
     narows=rowSums(is.na(x))>0
-    if(any(narows)) x=x[!narows,]
+    if(any(narows)) {
+      x=x[!narows,]
+      # don't forget to remove labels for NA points as well
+      if(length(Labels)) Labels=Labels[!narows]
+    }
   }
   npoints=nrow(x)
   if(npoints<k) stop("Too few points to calculate properties")
@@ -186,7 +194,9 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
     vect[i,]=v1d1$vectors[,1]
   }
   rlist=list(points=x,alpha=alpha,vect=vect)
+  
   rlist$labels=Labels
+  
   attr(rlist,'k')=k
   return(as.dotprops(rlist))
 }
