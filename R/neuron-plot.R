@@ -161,6 +161,50 @@ nopen3d<- function(bgcol='white', FOV=0, ...){
   res
 }
 
+#' Set the 3D viewpoint of an RGL window using anatomical terms
+#'
+#' @param viewpoint Character vector specifying viewpoint
+#' @param FOV The Field of View (defaults to 0 => orthographic projection) (see
+#'   \code{\link[rgl]{par3d}} for details).
+#' @param extramat An optional extra transformation matrix to be applied after
+#'   the one implied by the viewpoint argument.
+#' @param ... additional arguments passed to \code{\link[rgl]{par3d}}
+#' @seealso \code{\link{nopen3d}}, \code{\link{view3d}}
+#' @export
+#' @importFrom rgl rotationMatrix scaleMatrix par3d
+#' @examples 
+#' \donttest{
+#' plot3d(kcs20, soma=TRUE)
+#' nview3d('frontal')
+#' nview3d('ant')
+#' nview3d()
+#' nview3d('posterior')
+#' nview3d('oblique_right')
+#' # a slightly oblique frontal view
+#' nview3d('frontal', extramat=rotationMatrix(pi/10, 1, 1, 0))
+#' }
+nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral", 
+                                "posterior", "left", "right", "oblique_right", "oblique_left"), 
+                    FOV=0, extramat = NULL, ...) {
+  viewpoint=match.arg(viewpoint)
+  um <- switch (viewpoint,
+    frontal = ,
+    anterior = scaleMatrix(1, -1, -1),
+    posterior = scaleMatrix(-1, -1, 1),
+    ventral = zapsmall(rotationMatrix(pi/2, 1, 0, 0)),
+    dorsal = zapsmall(rotationMatrix(-pi/2, 1, 0, 0)),
+    left = zapsmall(scaleMatrix(1, -1, -1) %*% rotationMatrix(pi/2, 0, 1 , 0)),
+    right = zapsmall(scaleMatrix(1, -1, -1) %*% rotationMatrix(-pi/2, 0, 1 , 0)),
+    oblique_right = scaleMatrix(1, -1, -1) %*% rotationMatrix(pi/8, 1, 1, 0),
+    oblique_left = scaleMatrix(1, -1, -1) %*% rotationMatrix(-pi/8, -1, -1, 0)
+  )
+  if(!is.null(extramat)) {
+    stopifnot(identical(dim(extramat), c(4L, 4L)))
+    um=um %*% extramat
+  }
+  par3d(userMatrix=um, FOV=FOV, ..., no.readonly = TRUE)
+}
+
 #' Some useful extensions / changes to rgl defaults
 #' 
 #' Set up pan call back for current rgl device
