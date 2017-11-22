@@ -50,7 +50,12 @@ summary.neuron<-function(object, ...) {
              segments=object$NumSegs,
              branchpoints=length(object$BranchPoints),
              endpoints=length(object$EndPoints),
-             cable.length=sum(seglengths(object)))
+             cable.length=total_cable(object))
+}
+
+total_cable <- function(x) {
+  diffs <- x$d[,c("X","Y","Z")]-x$d[match(x$d$Parent, x$d$PointNo),c("X","Y","Z")]
+  sum(sqrt(rowSums(diffs*diffs)), na.rm = T)
 }
 
 #' @description \code{summary.dotprops} computes statistics for individual
