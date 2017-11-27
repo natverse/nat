@@ -130,8 +130,8 @@
 #'   \item{\code{nat.cmtk.bindir}}{ Location of CMTK binaries. See 
 #'   \code{\link{cmtk.bindir}}}
 #'   
-#'   \item{\code{nat.default.neuronlist}}{ A neuronlist to use with the 
-#'   \code{\link{plot3d.character}} method}
+#'   \item{\code{nat.default.neuronlist}}{ A character string naming a
+#'   neuronlist to use with the \code{\link{plot3d.character}} method}
 #'   
 #'   \item{\code{nat.progress}}{ The default progress reporter to use with 
 #'   \code{\link{nlapply}}. See \code{\link[plyr]{create_progress_bar}} for 
