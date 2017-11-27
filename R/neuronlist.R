@@ -636,21 +636,22 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
 #'   been set and then use x as an identifier to find a neuron in that 
 #'   neuronlist.
 plot3d.character<-function(x, db=NULL, ...) {
-  if(is.null(db))
-    errmsg = paste0(
-      'in plot3d.character: Option "nat.default.neuronlist" is not set.\n\n',
-      'I am assuming that you want to plot neurons by passing a set of ',
-      'identifiers to plot3d without specifying a neuronlist to the `db` argument. ',
-      'If this is the case, see the Package Options ',
-      'section of ?nat for details of how to set a default source of neurons ',
-      'for plotting.\n\n',
-      'Otherwise you should check that argument `x` is what you intended.'
-    )
-  db=get(getOption('nat.default.neuronlist',
+  errmsg = paste0(
+    'in plot3d.character: Option "nat.default.neuronlist" is not set.\n\n',
+    'I am assuming that you want to plot neurons by passing a set of ',
+    'identifiers to plot3d without specifying a neuronlist to the `db` argument. ',
+    'If this is the case, see the Package Options ',
+    'section of ?nat for details of how to set a default source of neurons ',
+    'for plotting. Basically you should do something like\n\n',
+    '    options(nat.default.neuronlist="myfavneuronlist")\n\n',
+    'Otherwise you should check that argument `x` is what you intended.'
+  )
+  
+  if(is.null(db)) 
+    db=get(getOption('nat.default.neuronlist',
                      default=stop(errmsg, call.=FALSE)))
   if(!is.neuronlist(db)) 
-    stop("Please set options(nat.default.neuronlist='myfavneuronlist'). ',
-         'See ?nat for details.")
+    stop(errmsg)
   plot3d(db, pmatch(x, names(db)), ...)
 }
 
