@@ -1,8 +1,10 @@
-nat 1.8.11.900
+nat 1.8.12
 ==========
 * Speed up (2-3x) summary.neuron(list) by faster calculation of total cable
   length. Note that this may cause some changes in the reported cable length
   because all cable is now included (as it should always have been). (#361)
+* fix bug: dotprops do not get resampled labels bug (#360)
+* Add nview3d function to set anatomical viewpoints (#359)
 
 nat 1.8.11
 ==========
