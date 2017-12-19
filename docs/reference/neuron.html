@@ -110,6 +110,9 @@
     <code>as.neuron.ngraph</code> converts a graph (typically an 
   <code>ngraph</code> object) to a neuron
 
+    <code>as.neuron.igraph</code> will convert an <code>ngraph</code> compatible
+  <code><a href='http://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> object into a <code>neuron</code>.
+
     <code>as.neuron.default</code> will add class "neuron" to a neuron-like
   object.</p>
     
@@ -128,6 +131,9 @@
 <span class='co'># S3 method for ngraph</span>
 <span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='kw'>vertexData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for igraph</span>
+<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
@@ -366,15 +372,9 @@ subtree, not the whole neuron.</p>
 #&gt; 165 278.3287 113.75627 104.87700
 #&gt; 172 282.3069 111.93213 105.65492
 #&gt; 180 289.5364 111.96014 109.18281</div><div class='input'>
-<span class='co'>## Neurons as graphs</span>
-<span class='co'># convert to graph and find longest paths by number of nodes</span>
-<span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>)
-<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ng</span>))</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># ... or in distances  microns</span>
-<span class='no'>ngw</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ngw</span>))</div><div class='img'><img src='neuron-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
 <span class='co'>## Other methods</span>
 <span class='co'># plot</span>
-<span class='fu'>plot</span>(<span class='no'>n</span>)</div><div class='img'><img src='neuron-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
+<span class='fu'>plot</span>(<span class='no'>n</span>)</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
 <span class='fu'>methods</span>(<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'neuron'</span>)</div><div class='output co'>#&gt;  [1] -                  *                  /                  +                 
 #&gt;  [5] all.equal          as.neuron          as.ngraph          as.seglist        
 #&gt;  [9] boundingbox        branchpoints       dotprops           endpoints         
@@ -382,7 +382,64 @@ subtree, not the whole neuron.</p>
 #&gt; [17] potential_synapses prune              resample           rootpoints        
 #&gt; [21] scale              subset             summary            write.vtk         
 #&gt; [25] xform              xyzmatrix          xyzmatrix&lt;-       
-#&gt; see '?methods' for accessing help and source code</div></pre>
+#&gt; see '?methods' for accessing help and source code</div><div class='input'>
+<span class='co'>## Neurons as graphs </span>
+<span class='co'># convert to graph and find longest paths by number of nodes</span>
+<span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>)
+<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ng</span>))</div><div class='img'><img src='neuron-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># ... or in distances  microns</span>
+<span class='no'>ngw</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ngw</span>))</div><div class='img'><img src='neuron-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># converting back and forth between neurons and graphs</span>
+<span class='no'>g</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+<span class='no'>gstem</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/subgraph'>induced.subgraph</a></span>(<span class='no'>g</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='co'># this is fine</span>
+<span class='fu'>plot</span>(<span class='no'>gstem</span>)</div><div class='img'><img src='neuron-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem</span>))</div><div class='img'><img src='neuron-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='co'># but if you had an undirected graph </span>
+<span class='no'>ug</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/as.directed'>as.undirected</a></span>(<span class='no'>gstem</span>)
+<span class='co'># you get a warning because there is no explicit origin for the graph</span>
+<span class='fu'>as.neuron</span>(<span class='no'>ug</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: No valid origin found! Using first endpoint as origin</span></div><div class='output co'>#&gt; $NumPoints
+#&gt; [1] 10
+#&gt; 
+#&gt; $StartPoint
+#&gt; [1] 1
+#&gt; 
+#&gt; $BranchPoints
+#&gt; integer(0)
+#&gt; 
+#&gt; $EndPoints
+#&gt; [1]  1 10
+#&gt; 
+#&gt; $nTrees
+#&gt; [1] 1
+#&gt; 
+#&gt; $NumSegs
+#&gt; [1] 1
+#&gt; 
+#&gt; $SegList
+#&gt; [[1]]
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "seglist" "list"   
+#&gt; 
+#&gt; $d
+#&gt;    PointNo Label        X        Y         Z    W Parent
+#&gt; 1        1     2 186.8660 132.7093  88.20393 1.01     -1
+#&gt; 2        2     2 187.3355 131.1558  90.59680 1.27      1
+#&gt; 3        3     2 188.1165 130.2545  93.14326 1.14      2
+#&gt; 4        4     2 188.4680 129.4757  94.97399 1.27      3
+#&gt; 5        5     2 188.2875 128.7542  97.45621 1.27      4
+#&gt; 6        6     2 188.2733 127.9567  99.16801 1.27      5
+#&gt; 7        7     2 188.4558 127.5704 101.53992 1.27      6
+#&gt; 8        8     2 188.9997 127.5399 103.69540 1.27      7
+#&gt; 9        9     2 189.6382 126.6176 104.95399 1.27      8
+#&gt; 10      10     2 189.4185 126.1251 108.07660 1.27      9
+#&gt; 
+#&gt; attr(,"class")
+#&gt; [1] "neuron" "list"  </div><div class='input'>
+<span class='co'># If you need finer control of the conversion process </span>
+<span class='no'>gstem2</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>ug</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='fu'>plot</span>(<span class='no'>gstem2</span>)</div><div class='img'><img src='neuron-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem2</span>))</div><div class='img'><img src='neuron-7.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

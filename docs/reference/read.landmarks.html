@@ -194,16 +194,16 @@ extension will be appended if <code>f</code> does not have one.</p></td>
 <span class='no'>m</span><span class='kw'>=</span><span class='fu'>matrix</span>(<span class='fu'>rnorm</span>(<span class='fl'>6</span>), <span class='kw'>ncol</span><span class='kw'>=</span><span class='fl'>3</span>)
 <span class='fu'>rownames</span>(<span class='no'>m</span>)<span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"nose"</span>, <span class='st'>"ear"</span>)
 <span class='no'>f</span><span class='kw'>=</span><span class='fu'>write.landmarks</span>(<span class='no'>m</span>, <span class='kw'>file</span><span class='kw'>=</span><span class='st'>'knee'</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>'cmtk'</span>)
-<span class='fu'>read.landmarks</span>(<span class='no'>f</span>)</div><div class='output co'>#&gt;            [,1]      [,2]      [,3]
-#&gt; nose -0.5785249 -1.919233 -1.114761
-#&gt; ear  -0.1691090 -1.534266  1.597812
+<span class='fu'>read.landmarks</span>(<span class='no'>f</span>)</div><div class='output co'>#&gt;           [,1]       [,2]       [,3]
+#&gt; nose -1.117033 -0.4420909 -0.7190785
+#&gt; ear  -2.339310  0.1766739  1.7054692
 #&gt; attr(,"class")
 #&gt; [1] "landmarks" "matrix"   </div><div class='input'>
 <span class='co'># write in amira format which does not support named landmarks</span>
 <span class='no'>f2</span><span class='kw'>=</span><span class='fu'>write.landmarks</span>(<span class='no'>m</span>, <span class='kw'>file</span><span class='kw'>=</span><span class='st'>'knee'</span>, <span class='kw'>format</span><span class='kw'>=</span><span class='st'>'amira'</span>)
-<span class='fu'>read.landmarks</span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;            [,1]      [,2]      [,3]
-#&gt; [1,] -0.5785249 -1.919233 -1.114761
-#&gt; [2,] -0.1691090 -1.534266  1.597812
+<span class='fu'>read.landmarks</span>(<span class='no'>f2</span>)</div><div class='output co'>#&gt;           [,1]       [,2]       [,3]
+#&gt; [1,] -1.117033 -0.4420909 -0.7190785
+#&gt; [2,] -2.339310  0.1766739  1.7054692
 #&gt; attr(,"class")
 #&gt; [1] "landmarks" "matrix"   </div><div class='input'>
 <span class='co'># clean up</span>

@@ -75,7 +75,7 @@
       <h1>Installation Details</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2017-08-19</h4>
+            <h4 class="date">2017-12-19</h4>
           </div>
 
     
@@ -110,11 +110,11 @@
 <a href="#development-version" class="anchor"></a>Development version</h1>
 <p><strong>nat</strong> remains under quite active development, so we generally suggest using the development version directly from github. The recommended way to do this is to install Hadley Wickham’s invaluable <a href="https://CRAN.R-project.org/package=devtools">devtools</a> package (if you have not already done so) and then use that to install nat.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install devtools if required</span>
-if (!<span class="kw">require</span>(<span class="st">"devtools"</span>)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
+<span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"devtools"</span>)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 <span class="co"># then install nat</span>
-devtools::<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
 <p>The <strong>nat</strong> package includes extensive unit tests which are run along with R’s (extremely fastidious) package check routines by the <a href="http://travis-ci.org/jefferis/nat">Travis</a> continuous integration server. The master branch is therefore considered very stable and may well contain fixes or enhancements over released versions. However, you can install any <a href="https://github.com/jefferis/nat/tags">release version</a> including the <a href="https://github.com/jefferis/nat/releases/latest">latest release</a> as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat@v1.8.6"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat@v1.8.6"</span>)</code></pre></div>
 <p>The same syntax can be used to install any arbitrary version that you want from github. See <code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">?install_github</a></code> for details.</p>
 <p>Note: Windows users need <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> to install in this way, but devtools should offer to install this for you if you do not already have it.</p>
 </div>
