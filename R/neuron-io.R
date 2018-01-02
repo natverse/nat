@@ -569,25 +569,28 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 }
 
 #' Write out a neuron in any of the file formats we know about
-#' 
-#' If file is not specified the neuron's InputFileName field will be checked 
-#' (for a dotprops object it will be the \code{'file'} attribute). If this is 
-#' missing there will be an error. If dir is specified it will be combined with 
-#' basename(file). If file is specified but format is not, it will be inferred 
+#'
+#' If file is not specified the neuron's InputFileName field will be checked
+#' (for a dotprops object it will be the \code{'file'} attribute). If this is
+#' missing there will be an error. If dir is specified it will be combined with
+#' basename(file). If file is specified but format is not, it will be inferred
 #' from file's extension.
-#' 
+#'
 #' @details Note that if \code{file} does not have an extension then the default
-#'   extension for the specified \code{format} will be appended. This behaviour 
+#'   extension for the specified \code{format} will be appended. This behaviour
 #'   can be suppressed by setting \code{ext=NA}.
-#'   
+#'
+#'   If you find that some software rejects your SWC files, try setting
+#'   \code{normalise.ids=TRUE} (see examples).
+#'
 #' @param n A neuron
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
-#' @param format Unique abbreviation of one of the registered file formats for 
+#' @param format Unique abbreviation of one of the registered file formats for
 #'   neurons including 'swc', 'hxlineset', 'hxskel'
-#' @param ext Will replace the default extension for the filetype and should 
+#' @param ext Will replace the default extension for the filetype and should
 #'   include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}. The
-#'   special value of ext=NA will prevent the extension from being changed or 
+#'   special value of ext=NA will prevent the extension from being changed or
 #'   added e.g. if the desired file name does not have an extension.
 #' @param Force Whether to overwrite an existing file
 #' @param MakeDir Whether to create directory implied by \code{file} argument.
@@ -600,12 +603,17 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' # show the currently registered file formats that we can write
 #' fileformats(class='neuron', write=TRUE)
 #' \dontrun{
+#' # write out "myneuron.swc" in SWC format
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
-#' # writes out "myneuron.swc" in SWC format
+#' # write out "myneuron.swc" in SWC format, normalising the integer ids that
+#' # label every node (this is required by some SWC reders e.g. Fiji)
+#' write.neuron(Cell07PNs[[1]], file='myneuron.swc', normalise.ids=TRUE)
+#'
+#' # write out "myneuron.amiramesh" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
-#' # writes out "myneuron.amiramesh" in Amira hxlineset format
+#'
+#' # write out "myneuron.am" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
-#' # writes out "myneuron.am" in Amira hxlineset format
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
@@ -656,7 +664,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
 }
 
 # write neuron to SWC file
-write.neuron.swc<-function(x, file, ...){
+write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
   if(is.dotprops(x)) {
     return(write.dotprops.swc(x, file, ...))
   }
@@ -668,6 +676,23 @@ write.neuron.swc<-function(x, file, ...){
   
   # nb neurolucida seems to use diam, but swc uses radius
   df$Radius=df$Radius/2
+  
+  if(is.na(normalise.ids)) {
+    # figure out if any parents refer to nodes *after* the current one
+    # some swc readers do not like this
+    parent_idx=match(df$Parent, df$PointNo, nomatch = -1L)
+    premature_parents = parent_idx > seq_len(nrow(df))
+    normalise.ids=any(premature_parents)
+  }
+  
+  if(normalise.ids) {
+    g=as.ngraph(x)
+    r=igraph::dfs(g, root=x$StartPoint, neimode = 'all')
+    new_order=as.integer(r$order)
+    df$Parent=match(df$Parent, new_order, nomatch = -1L)
+    df=df[new_order,]
+    df$PointNo=seq_along(df$PointNo)
+  }
   writeLines(c("# SWC format file",
                "# based on specifications at http://research.mssm.edu/cnic/swc.html"),
              con=file)
@@ -713,6 +738,9 @@ write.dotprops.swc<-function(x, file, ...) {
 #' \dontrun{
 #' # write some neurons in swc format
 #' write.neurons(Cell07PNs, dir="testwn", format='swc')
+#' # write some neurons in swc format for picky software
+#' write.neurons(Cell07PNs, dir="testwn", format='swc', normalise.ids=TRUE)
+#' 
 #' # write some neurons in Amira hxlineset format
 #' write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
 #' 

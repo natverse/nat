@@ -14,12 +14,12 @@ write.neuron(n, file = NULL, dir = NULL, format = NULL, ext = NULL,
 
 \item{dir}{Path to directory (this will replace dirname(file) if specified)}
 
-\item{format}{Unique abbreviation of one of the registered file formats for 
+\item{format}{Unique abbreviation of one of the registered file formats for
 neurons including 'swc', 'hxlineset', 'hxskel'}
 
-\item{ext}{Will replace the default extension for the filetype and should 
+\item{ext}{Will replace the default extension for the filetype and should
 include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}. The
-special value of ext=NA will prevent the extension from being changed or 
+special value of ext=NA will prevent the extension from being changed or
 added e.g. if the desired file name does not have an extension.}
 
 \item{Force}{Whether to overwrite an existing file}
@@ -32,27 +32,35 @@ added e.g. if the desired file name does not have an extension.}
 return value
 }
 \description{
-If file is not specified the neuron's InputFileName field will be checked 
-(for a dotprops object it will be the \code{'file'} attribute). If this is 
-missing there will be an error. If dir is specified it will be combined with 
-basename(file). If file is specified but format is not, it will be inferred 
+If file is not specified the neuron's InputFileName field will be checked
+(for a dotprops object it will be the \code{'file'} attribute). If this is
+missing there will be an error. If dir is specified it will be combined with
+basename(file). If file is specified but format is not, it will be inferred
 from file's extension.
 }
 \details{
 Note that if \code{file} does not have an extension then the default
-  extension for the specified \code{format} will be appended. This behaviour 
+  extension for the specified \code{format} will be appended. This behaviour
   can be suppressed by setting \code{ext=NA}.
+
+  If you find that some software rejects your SWC files, try setting
+  \code{normalise.ids=TRUE} (see examples).
 }
 \examples{
 # show the currently registered file formats that we can write
 fileformats(class='neuron', write=TRUE)
 \dontrun{
+# write out "myneuron.swc" in SWC format
 write.neuron(Cell07PNs[[1]], file='myneuron.swc')
-# writes out "myneuron.swc" in SWC format
+# write out "myneuron.swc" in SWC format, normalising the integer ids that
+# label every node (this is required by some SWC reders e.g. Fiji)
+write.neuron(Cell07PNs[[1]], file='myneuron.swc', normalise.ids=TRUE)
+
+# write out "myneuron.amiramesh" in Amira hxlineset format
 write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
-# writes out "myneuron.amiramesh" in Amira hxlineset format
+
+# write out "myneuron.am" in Amira hxlineset format
 write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
-# writes out "myneuron.am" in Amira hxlineset format
 }
 }
 \seealso{
