@@ -122,6 +122,9 @@ test_that("operator equivalence for neuron arithmetic", {
   expect_equal(n*0.5, n/2)
   expect_equal(n+(-2), n-2)
   expect_equal(-n, n*-1)
+  expect_equal(n2 <- n*2, n*c(2,2,2,1))
+  n2$d$W=n2$d$W*2
+  expect_equal(n2, n*c(2,2,2,2))
 })
 
 context("neuron plotting")

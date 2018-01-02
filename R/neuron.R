@@ -326,11 +326,10 @@ as.neuron.default<-function(x, ...){
 
 #' Arithmetic for neuron coordinates
 #'
-#' If x is a 1-vector or a 3-vector, multiply xyz only
-#' If x is a 4-vector, multiply xyz and diameter by that
-#' TODO Figure out how to document arithemtic functions in one go
-#' @param n a neuron
-#' @param x (a numeric vector to multiply neuron coords in neuron)
+#' If x is a 1-vector or a 3-vector, operate on xyz only
+#' If x is a 4-vector, apply operation to xyz and diameter
+#' @param e1 a neuron
+#' @param e2 (a numeric vector to multiply neuron coords in neuron)
 #' @return modified neuron
 #' @export
 #' @rdname neuron-arithmetic
@@ -340,50 +339,48 @@ as.neuron.default<-function(x, ...){
 #' n2<-Cell07PNs[[1]]*c(2,2,2,1)
 #' stopifnot(all.equal(n1,n2))
 #' n3<-Cell07PNs[[1]]*c(2,2,4)
-#' @method * neuron
-`*.neuron` <- function(n,x) {
-  # TODO use xyzmatrix
-  
-  nd=n$d[,c("X","Y","Z","W")]
-  stopifnot(is.numeric(x))
-  lx=length(x)
-  if(lx==1) nd[,-4]=nd[,-4]*x
-  else if(lx%in%c(3,4)) nd[,1:lx]=t(t(nd[,1:lx])*x)
-  else stop("expects a numeric vector of length 1, 3 or 4")
-  n$d[,colnames(nd)]=nd
-  n
-}
-
-#' @method + neuron
-#' @rdname neuron-arithmetic
-#' @export
-`+.neuron` <- function(n,x) {
-  if(!is.numeric(x))
-    stop("expects a numeric vector")
-  nd=n$d[,c("X","Y","Z","W")]
-  lx=length(x)
-  if(lx==1) nd[,-4]=nd[,-4]+x
-  else if(lx%in%c(3,4)) nd[,1:lx]=t(t(nd[,1:lx])+x)
-  else stop("expects a numeric vector of length 1, 3 or 4")
-  n$d[,colnames(nd)]=nd
-  n
-}
-
-#' @method - neuron
-#' @rdname neuron-arithmetic
-#' @export
-`-.neuron` <- function(n,x) {
-  if(!missing(x))
-    n+(-x)
-  else {
-    n*-1
+Ops.neuron <- function(e1, e2=NULL) {
+  ok <-
+    switch(
+      .Generic,
+      `-` = ,
+      `*` = ,
+      `/` = ,
+      `+` = ,
+      `^` = ,
+      '>' = ,
+      '<' = ,
+      '>=' = ,
+      '<=' = TRUE,
+      FALSE
+    )
+  if (!ok) {
+    stop(gettextf("%s not meaningful for neurons", sQuote(.Generic)))
   }
+  r=e1
+  lx=length(e2)
+  e1 <- if(lx==3) {
+    t(xyzmatrix(e1))
+  } else if(lx==4) {
+    t(cbind(xyzmatrix(e1), e1$d$W))
+  } else if(lx>1) {
+    stop("second operand must be a numeric vector of length 0, 1, 3 or 4")
+  } else {
+    e1=xyzmatrix(r)
+  }
+  # I don't exactly know why it is necessary to change this directly, but if not
+  # NextMethod dispatches on original class of e1 even when I specify object=
+  .Class=class(e1)
+  res <- NextMethod(generic=.Generic)
+  if(lx==4) {
+    r$d$W=res[4,]
+    res=t(res[-4,])
+  } else if(lx==3){
+    res=t(res)
+  }
+  xyzmatrix(r)=res
+  r
 }
-
-#' @method / neuron
-#' @rdname neuron-arithmetic
-#' @export
-`/.neuron` <- function(n,x) n*(1/x)
 
 #' Scale and centre neuron 3D coordinates
 #' 
@@ -396,7 +393,7 @@ as.neuron.default<-function(x, ...){
 #' @return neuron with scaled coordinates
 #' @method scale neuron
 #' @export
-#' @seealso \code{\link{scale.default}}, \code{\link{*.neuron}}
+#' @seealso \code{\link{scale.default}}, \code{\link{Ops.neuron}}
 #' @aliases scale
 #' @examples
 #' n1.scaledown=scale(Cell07PNs[[1]],scale=c(2,2,3))
