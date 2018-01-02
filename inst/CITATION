@@ -1,11 +1,11 @@
 citHeader("To cite nat in publications, please use:")
 
 citEntry(entry = 'article',
-  Title = "{NeuroAnatomy Toolbox v1.5.2}",
+  Title = "{NeuroAnatomy Toolbox}",
 	Author = c(person("Jefferis, Gregory S X E"), person("Manton, James D")),
-	Doi = "10.5281/zenodo.10171",
+	Doi = "10.5281/zenodo.598047",
   Journal = "ZENODO",
-	Month = "May",
-	Year = "2014",
-	textVersion = "Gregory S X E Jefferis and James D Manton (2014). NeuroAnatomy Toolbox v1.5.2. ZENODO. 10.5281/zenodo.10171"
+#	Month = "May",
+  Year = "2017",
+	textVersion = "Gregory S X E Jefferis and James D Manton (2017). NeuroAnatomy Toolbox. ZENODO. DOI: 10.5281/zenodo.598047"
 )
