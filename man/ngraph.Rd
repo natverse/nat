@@ -108,13 +108,14 @@ Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
 }
 
 \examples{
-g=as.ngraph(Cell07PNs[[1]])
+n=Cell07PNs[[1]]
+g=as.ngraph(n)
 library(igraph)
 # check that vertex attributes of graph match X position
-all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
+all.equal(V(g)$X, n$d$X)
 
 # Use 3D segment lengths as edge length of graph
-gw=as.ngraph(Cell07PNs[[1]], weights=TRUE)
+gw=as.ngraph(n, weights=TRUE)
 # find longest path across graph
 d=get.diameter(gw)
 # make a new neuron using the longest path
