@@ -4,6 +4,12 @@ We are bumping a whole version point because of some fairly large planned
 changes under the hood that could result in some small changes in the behaviour 
 of nat.
 
+The use of operators e.g. adding or multiplying neurons by a constant is now
+provided by the Ops approach (see ?groupGeneric in main R help). This is a 
+fairly large change but should not have any user visible effects other than the
+fact that it is now possible to use the same functionality for hxsurf and mesh3d
+objects.
+
 New vignettes:
 * Working with Individual Neurons as Graph Structures
 * NeuroGeometry: Analysing 3D Morphology of Neurons
