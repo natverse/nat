@@ -1,3 +1,12 @@
+nat 1.9.0
+=========
+We are bumping a whole version point because of some fairly large planned 
+changes under the hood that could result in some small changes in the behaviour 
+of nat.
+
+New vignettes:
+* Working with Individual Neurons as Graph Structures
+
 nat 1.8.12
 ==========
 * Speed up (2-3x) summary.neuron(list) by faster calculation of total cable
