@@ -16,8 +16,8 @@ read.ngraph.swc(f, weights = FALSE, directed = TRUE, ...)
 \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
 \code{read.neuron.swc} passes them to \code{\link{ngraph}}.}
 
-\item{weights}{Logical value indicating whether edge weights defined by the 
-3D distance between points should be added to graph (default \code{FALSE}) 
+\item{weights}{Logical value indicating whether edge weights defined by the
+3D distance between points should be added to graph (default \code{FALSE})
 \emph{or} a numeric vector of weights.}
 
 \item{directed}{Whether the resultant graph should be directed (default TRUE)}

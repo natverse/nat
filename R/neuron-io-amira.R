@@ -92,7 +92,7 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
       " vertices that are undefined!"
     )
   }
-  ng=ngraph(el, vertexlabels=coords$PointNo, xyz = coords[,c("X","Y","Z"), drop=FALSE], diam=coords[,"W"])
+  ng=ngraph(el, vertexnames=coords$PointNo, xyz = coords[,c("X","Y","Z"), drop=FALSE], diam=coords[,"W"])
   as.neuron(ng, InputFileName=file, ...)
 }
 

@@ -7,7 +7,7 @@
 \alias{as.ngraph.neuron}
 \title{ngraph: a graph to encode a neuron's connectivity}
 \usage{
-ngraph(el, vertexlabels, xyz = NULL, diam = NULL, directed = TRUE,
+ngraph(el, vertexnames, xyz = NULL, diam = NULL, directed = TRUE,
   weights = FALSE, vertex.attributes = NULL, graph.attributes = NULL)
 
 as.ngraph(x, ...)
@@ -21,23 +21,23 @@ as.ngraph(x, ...)
 \item{el}{A two columm matrix (start, end) defining edges. \code{start} means
 closer to the root (soma) of the neuron.}
 
-\item{vertexlabels}{Integer labels for graph - the edge list is specified 
-using these labels.}
+\item{vertexnames}{Integer names for graph - the edge list is specified using
+these names (see details).}
 
-\item{xyz}{3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix 
+\item{xyz}{3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
 when 4th column is assumed to be diameter)}
 
 \item{diam}{Diameter of neuron at each vertex (optional)}
 
 \item{directed}{Whether the resultant graph should be directed (default TRUE)}
 
-\item{weights}{Logical value indicating whether edge weights defined by the 
-3D distance between points should be added to graph (default \code{FALSE}) 
+\item{weights}{Logical value indicating whether edge weights defined by the
+3D distance between points should be added to graph (default \code{FALSE})
 \emph{or} a numeric vector of weights.}
 
-\item{vertex.attributes, graph.attributes}{List of named attributes to be 
-added to the graph. The elements of \code{vertex.attributes} must be 
-vectors whose length is compatible with the number of elements in the 
+\item{vertex.attributes, graph.attributes}{List of named attributes to be
+added to the graph. The elements of \code{vertex.attributes} must be
+vectors whose length is compatible with the number of elements in the
 graph. See \code{\link[igraph]{set.vertex.attribute}} for details.}
 
 \item{x}{Object to convert (see method descriptions)}
@@ -49,14 +49,15 @@ neuronal connectivity to generate graph.}
 }
 \value{
 an \code{igraph} object with additional class \code{ngraph}, having a
-  vertex for each entry in vertexlabels, each vertex having a \code{label} 
+  vertex for each entry in vertexnames, each vertex having a \code{label}
   attribute. All vertices are included whether connected or not.
 }
 \description{
-the \code{ngraph} class contains a (completely general) graph 
-  representation of a neuron's connectivity in an \code{igraph} object. It 
-  may additionally contain vertex label or position data. See details.
-  
+the \code{ngraph} class contains a (completely general) graph
+  representation of a neuron's connectivity in an \code{igraph} object. It
+  may additionally contain vertex name or position data. See Connectivity
+  section.
+
   \code{ngraph()} creates an ngraph from edge and vertex information.
 
 \code{as.ngraph} converts an object to an ngraph
@@ -68,36 +69,41 @@ the \code{ngraph} class contains a (completely general) graph
 }
 \details{
 Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
-  original vertex labels (a.k.a. PointNo) as read in from the original file.
+  original vertex names (a.k.a. PointNo) as read in from the original file.
 }
 \section{Connectivity}{
  We make the following assumptions about neurons coming
   in
-  
+
   \itemize{
-  
-  \item They have an integer vertex label that need not start from 1 and that
-  may have gaps
-  
-  \item The edge list which defines connectivity specifies edges using pairs 
-  of vertex labels, _not_ raw vertex ids.
-  
+
+  \item They have an integer vertex name that need not start from 1 and that
+  may have gaps. This is analagous to the PointNo field of the core data
+  block of \code{\link{neuron}} objects.
+
+  \item The edge list that defines connectivity specifies those edges using
+  pairs of vertex names, _not_ raw vertex indices.
+
   }
-  
+
   We make no attempt to determine the root points at this stage.
-  
-  The raw vertex ids in the graph will be in the order of vertexlabels and 
-  can therefore be used to index a block of vertex coordinates. The 
-  vertexlabels will be stored using the vertex attribute \code{label}
-  
+
+  The raw vertex ids in the graph will be in the order of vertexnames and can
+  therefore be used to index a block of vertex coordinates. The vertexnames
+  will be stored using the vertex attribute \code{name}. The underlying
+  igraph class allows nodes to be specified by their name. This provides a
+  convenient way to define nodes in an ngraph object by the numeric
+  identifier encoded by the PointNo field of the corresponding
+  \code{\link{neuron}}.
+
   When the graph is directed (default) the edges will be from the root to the
   other tips of the neuron.
 }
 
 \section{Morphology}{
- The morphology of the neuron is encoded by the 
-  combination of connectivity information (i.e. the graph) and spatial data 
-  encoded as the 3D position and diameter of each vertex. Position 
+ The morphology of the neuron is encoded by the
+  combination of connectivity information (i.e. the graph) and spatial data
+  encoded as the 3D position and diameter of each vertex. Position
   information is stored as vertex attributes X, Y, and Z.
 }
 
@@ -106,6 +112,19 @@ g=as.ngraph(Cell07PNs[[1]])
 library(igraph)
 # check that vertex attributes of graph match X position
 all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
+
+# Use 3D segment lengths as edge length of graph
+gw=as.ngraph(Cell07PNs[[1]], weights=TRUE)
+# find longest path across graph
+d=get.diameter(gw)
+# make a new neuron using the longest path
+gw_spine=as.neuron(induced.subgraph(gw, d))
+# make a new neuron containing all nodes except those in longest path
+gw_antispine=as.neuron(delete.vertices(gw, d))
+
+# note use of bounding box of original neuron to set plot axes
+plot(gw_spine, col='red', boundingbox=n)
+plot(gw_antispine, col='blue', add=TRUE)
 }
 \seealso{
 \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},

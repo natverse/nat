@@ -76,15 +76,15 @@ test_that("convert graph to seglist",{
   sl<-seglist( c(1,2),c(2,4),c(4,3),c(4,5),c(2,6) )
   expect_equal(as.seglist(g,origin=1),sl)
   
-  # non-sequential numbering with vertex labels
+  # non-sequential numbering with vertex names
   # in this case we imagine that there are a set of vertices with PointNo
   # 2,3,4,6,7,9
-  g=ngraph(c(2,4,4,3,3,6,6,9,6,7),vertexlabels=c(2:4,6,7,9))
+  g=ngraph(c(2,4,4,3,3,6,6,9,6,7), vertexnames=c(2:4,6,7,9))
   sl=seglist(c(1,3,2,4),c(4,5),c(4,6))
   expect_equal(as.seglist(g,origin=1),sl)
   # same but with a different origin
   # NB origin is defined in terms of sequential raw vertex id so 
-  # origin=3 means that the origin is the vertex with label=4
+  # origin=3 means that the origin is the vertex with name=4
   sl2=seglist(c(3,1),c(3,2,4),c(4,5),c(4,6))
   expect_equal(as.seglist(g,origin=3),sl2)
 })

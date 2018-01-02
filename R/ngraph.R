@@ -1,52 +1,58 @@
 #' ngraph: a graph to encode a neuron's connectivity
-#' 
-#' @description the \code{ngraph} class contains a (completely general) graph 
-#'   representation of a neuron's connectivity in an \code{igraph} object. It 
-#'   may additionally contain vertex label or position data. See details.
-#'   
+#'
+#' @description the \code{ngraph} class contains a (completely general) graph
+#'   representation of a neuron's connectivity in an \code{igraph} object. It
+#'   may additionally contain vertex name or position data. See Connectivity
+#'   section.
+#'
 #'   \code{ngraph()} creates an ngraph from edge and vertex information.
 #' @section Connectivity: We make the following assumptions about neurons coming
 #'   in
-#'   
+#'
 #'   \itemize{
-#'   
-#'   \item They have an integer vertex label that need not start from 1 and that
-#'   may have gaps
-#'   
-#'   \item The edge list which defines connectivity specifies edges using pairs 
-#'   of vertex labels, _not_ raw vertex ids.
-#'   
+#'
+#'   \item They have an integer vertex name that need not start from 1 and that
+#'   may have gaps. This is analagous to the PointNo field of the core data
+#'   block of \code{\link{neuron}} objects.
+#'
+#'   \item The edge list that defines connectivity specifies those edges using
+#'   pairs of vertex names, _not_ raw vertex indices.
+#'
 #'   }
-#'   
+#'
 #'   We make no attempt to determine the root points at this stage.
-#'   
-#'   The raw vertex ids in the graph will be in the order of vertexlabels and 
-#'   can therefore be used to index a block of vertex coordinates. The 
-#'   vertexlabels will be stored using the vertex attribute \code{label}
-#'   
+#'
+#'   The raw vertex ids in the graph will be in the order of vertexnames and can
+#'   therefore be used to index a block of vertex coordinates. The vertexnames
+#'   will be stored using the vertex attribute \code{name}. The underlying
+#'   igraph class allows nodes to be specified by their name. This provides a
+#'   convenient way to define nodes in an ngraph object by the numeric
+#'   identifier encoded by the PointNo field of the corresponding
+#'   \code{\link{neuron}}.
+#'
 #'   When the graph is directed (default) the edges will be from the root to the
 #'   other tips of the neuron.
-#' @section Morphology: The morphology of the neuron is encoded by the 
-#'   combination of connectivity information (i.e. the graph) and spatial data 
-#'   encoded as the 3D position and diameter of each vertex. Position 
+#' @section Morphology: The morphology of the neuron is encoded by the
+#'   combination of connectivity information (i.e. the graph) and spatial data
+#'   encoded as the 3D position and diameter of each vertex. Position
 #'   information is stored as vertex attributes X, Y, and Z.
 #' @param el A two columm matrix (start, end) defining edges. \code{start} means
 #'   closer to the root (soma) of the neuron.
-#' @param vertexlabels Integer labels for graph - the edge list is specified 
-#'   using these labels.
-#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix 
+#' @param vertexnames Integer names for graph - the edge list is specified using
+#'   these names (see details).
+#' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
 #'   when 4th column is assumed to be diameter)
 #' @param diam Diameter of neuron at each vertex (optional)
-#' @param weights Logical value indicating whether edge weights defined by the 
-#'   3D distance between points should be added to graph (default \code{FALSE}) 
+#' @param weights Logical value indicating whether edge weights defined by the
+#'   3D distance between points should be added to graph (default \code{FALSE})
 #'   \emph{or} a numeric vector of weights.
 #' @param directed Whether the resultant graph should be directed (default TRUE)
-#' @param vertex.attributes,graph.attributes List of named attributes to be 
-#'   added to the graph. The elements of \code{vertex.attributes} must be 
-#'   vectors whose length is compatible with the number of elements in the 
+#' @param vertex.attributes,graph.attributes List of named attributes to be
+#'   added to the graph. The elements of \code{vertex.attributes} must be
+#'   vectors whose length is compatible with the number of elements in the
 #'   graph. See \code{\link[igraph]{set.vertex.attribute}} for details.
 #' @return an \code{igraph} object with additional class \code{ngraph}, having a
-#'   vertex for each entry in vertexlabels, each vertex having a \code{label} 
+#'   vertex for each entry in vertexnames, each vertex having a \code{label}
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
 #' @seealso \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
@@ -59,11 +65,24 @@
 #' library(igraph)
 #' # check that vertex attributes of graph match X position
 #' all.equal(V(g)$X, Cell07PNs[[1]]$d$X)
-ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
+#' 
+#' # Use 3D segment lengths as edge length of graph
+#' gw=as.ngraph(Cell07PNs[[1]], weights=TRUE)
+#' # find longest path across graph
+#' d=get.diameter(gw)
+#' # make a new neuron using the longest path
+#' gw_spine=as.neuron(induced.subgraph(gw, d))
+#' # make a new neuron containing all nodes except those in longest path
+#' gw_antispine=as.neuron(delete.vertices(gw, d))
+#' 
+#' # note use of bounding box of original neuron to set plot axes
+#' plot(gw_spine, col='red', boundingbox=n)
+#' plot(gw_antispine, col='blue', add=TRUE)
+ngraph<-function(el, vertexnames, xyz=NULL, diam=NULL, directed=TRUE,
                  weights=FALSE, vertex.attributes=NULL, graph.attributes=NULL){
-  if(any(duplicated(vertexlabels))) stop("Vertex labels must be unique!")
+  if(any(duplicated(vertexnames))) stop("Vertex names must be unique!")
   # now translate edges into raw vertex_ids
-  rawel=match(t(el), vertexlabels)
+  rawel=match(t(el), vertexnames)
   if(isTRUE(weights) && !is.null(xyz)){
     # rawel is no longer a matrix
     rawel.mat=matrix(rawel, nrow=2)
@@ -73,8 +92,8 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
     vecs=xyz[stops, , drop=FALSE] - xyz[starts, , drop=FALSE]
     weights=sqrt(rowSums(vecs*vecs))
   }
-  g=igraph::graph(rawel, n=length(vertexlabels), directed=directed)
-  igraph::V(g)$label=vertexlabels
+  g=igraph::graph(rawel, n=length(vertexnames), directed=directed)
+  igraph::V(g)$name=vertexnames
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
   if(!is.null(xyz)) {
@@ -86,12 +105,12 @@ ngraph<-function(el, vertexlabels, xyz=NULL, diam=NULL, directed=TRUE,
   }
   if(!is.null(diam)) igraph::V(g)$diam=diam
   for(n in names(vertex.attributes)){
-    g=igraph::set.vertex.attribute(g,name=n,value=vertex.attributes[[n]])
+    g=igraph::set.vertex.attribute(g, name=n,value=vertex.attributes[[n]])
   }
   for(n in names(graph.attributes)){
-    g=igraph::set.graph.attribute(g,name=n,value=graph.attributes[[n]])
+    g=igraph::set.graph.attribute(g, name=n,value=graph.attributes[[n]])
   }
-  class(g)=c("ngraph",class(g))
+  class(g)=c("ngraph", class(g))
   g
 }
 
@@ -123,7 +142,7 @@ as.ngraph.data.frame<-function(x, directed=TRUE, ...){
 #' @param method Whether to use the swc data (x$d) or the seglist to define 
 #'   neuronal connectivity to generate graph.
 #' @details Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
-#'   original vertex labels (a.k.a. PointNo) as read in from the original file.
+#'   original vertex names (a.k.a. PointNo) as read in from the original file.
 as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
   method=match.arg(method, several.ok=TRUE)
   if('swc'%in%method && !is.null(x$d$Parent) && !is.null(x$d$PointNo)){
