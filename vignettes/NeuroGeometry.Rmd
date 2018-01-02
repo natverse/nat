@@ -1,5 +1,5 @@
 ---
-title: "NeuroGeometry"
+title: "NeuroGeometry: Analysing 3D Morphology of Neurons"
 author: "Gregory Jefferis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
