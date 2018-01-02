@@ -1,14 +1,24 @@
 nat 1.9.0
 =========
-We are bumping a whole version point because of some fairly large planned 
-changes under the hood that could result in some small changes in the behaviour 
-of nat.
+We are bumping a whole version point because of some changes in the default
+behaviour of nat.
 
-The use of operators e.g. adding or multiplying neurons by a constant is now
-provided by the Ops approach (see ?groupGeneric in main R help). This is a 
-fairly large change but should not have any user visible effects other than the
-fact that it is now possible to use the same functionality for hxsurf and mesh3d
-objects.
+Significant changes:
+
+* The use of operators e.g. adding or multiplying neurons by a constant is now
+  provided by the Ops approach (see ?groupGeneric in main R help). This is a 
+  fairly large change under the hood, but should not have any user visible
+  effects other than the fact that it is now possible to use the same 
+  functionality for hxsurf and mesh3d objects.
+
+* write.swc normalises SWC files to maximise external compatibility.
+  The canonical SWC form gives each point a numbered identifier increasing from
+  1 to the number of points. However many SWC files in the wild do not respect
+  such an ordering. The new behaviour will result in cases where SWC files will
+  be written out with a different point ordering from earlier versions of nat;
+  nevertheless we prefer this behaviour since it is a source of confusion for
+  new users since many external programs cannot read SWC files where this is
+  not the case. The original behaviour can still be requested (#358).
 
 New vignettes:
 * Working with Individual Neurons as Graph Structures
