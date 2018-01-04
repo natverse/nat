@@ -2,20 +2,33 @@
 % Please edit documentation in R/dotprops.R
 \name{Ops.dotprops}
 \alias{Ops.dotprops}
-\title{Arithmetic for dotprops objects}
+\alias{Ops.mesh3d}
+\alias{Ops.hxsurf}
+\title{Arithmetic for nat dotprops and surface objects}
 \usage{
 \method{Ops}{dotprops}(e1, e2 = NULL)
+
+\method{Ops}{mesh3d}(e1, e2 = NULL)
+
+\method{Ops}{hxsurf}(e1, e2 = NULL)
 }
 \arguments{
-\item{e1}{A dotprops object}
+\item{e1}{A dotprops or surface (hxsurf, mesh3d) object}
 
 \item{e2}{A scalar or 3-vector that will be applied to the dotprops object}
 }
 \value{
-A new dotprops object
+A new dotprops / surface object
 }
 \description{
-Arithmetic for dotprops objects
+Arithmetic for nat dotprops and surface objects
+}
+\examples{
+kcs20.shift=kcs20+c(2,3,4)
+\donttest{
+plot3d(kcs20, col='grey')
+plot3d(kcs20.shift, col='red')
+}
 }
 \seealso{
 \code{\link{scale.dotprops}}, \code{\link{Ops.neuron}}

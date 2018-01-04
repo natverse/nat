@@ -13,14 +13,20 @@ as.dotprops<-function(x, ...){
   x
 }
 
-#' Arithmetic for dotprops objects
+#' Arithmetic for nat dotprops and surface objects
 #' 
-#' @param e1 A dotprops object
+#' @param e1 A dotprops or surface (hxsurf, mesh3d) object
 #' @param e2 A scalar or 3-vector that will be applied to the dotprops object
-#' @return A new dotprops object
+#' @return A new dotprops / surface object
 #' @export
 #' @rdname dotprops-arithmetic
 #' @seealso \code{\link{scale.dotprops}}, \code{\link{Ops.neuron}}
+#' @examples 
+#' kcs20.shift=kcs20+c(2,3,4)
+#' \donttest{
+#' plot3d(kcs20, col='grey')
+#' plot3d(kcs20.shift, col='red')
+#' }
 Ops.dotprops <- function(e1, e2=NULL) {
   r=e1
   e1=xyzmatrix(e1)
@@ -36,8 +42,11 @@ Ops.dotprops <- function(e1, e2=NULL) {
 }
 
 #' @export
+#' @rdname dotprops-arithmetic
 Ops.mesh3d <- Ops.dotprops
+
 #' @export
+#' @rdname dotprops-arithmetic
 Ops.hxsurf <- Ops.dotprops
 
 #' @rdname scale.neuron
