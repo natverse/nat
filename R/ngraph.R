@@ -77,7 +77,7 @@
 #' gw_antispine=as.neuron(delete.vertices(gw, d))
 #' 
 #' # note use of bounding box of original neuron to set plot axes
-#' plot(gw_spine, col='red', boundingbox=n)
+#' plot(gw_spine, col='red', boundingbox=boundingbox(n))
 #' plot(gw_antispine, col='blue', add=TRUE)
 ngraph<-function(el, vertexnames, xyz=NULL, diam=NULL, directed=TRUE,
                  weights=FALSE, vertex.attributes=NULL, graph.attributes=NULL){
