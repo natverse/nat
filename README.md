@@ -8,9 +8,9 @@
 
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
-single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
-
-**nat** ([and its ancestors](https://github.com/jefferis/AnalysisSuite)) have been used in a number of papers from our group including:
+single neurons. **nat** is the core package of a wider suite of neuroanatomy 
+tools introduced at http://jefferislab.github.io. **nat** ([and its ancestors](https://github.com/jefferis/AnalysisSuite))
+have been used in a number of papers from our group including:
 
 [![Cell 2007 Cover](http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif "Olfactory Projection Neuron Mapping")](http://dx.doi.org/10.1016/j.cell.2007.01.040)
 [![CB 2010 Cover](http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif "fruitless Circuit Mapping")](http://dx.doi.org/10.1016/j.cub.2010.07.045)
@@ -46,7 +46,8 @@ A confirmed stable version of **nat** can be installed from CRAN.
 install.packages("nat")
 ````
 
-However, **nat** remains under quite active development, so we generally
+However, **nat** remains under quite active development, so if you will be 
+using **nat** extensively, we generally
 recommend installing the latest development version directly from github using
 the [devtools](https://cran.r-project.org/package=devtools) package.
 
@@ -55,26 +56,42 @@ the [devtools](https://cran.r-project.org/package=devtools) package.
 if (!requireNamespace("devtools")) install.packages("devtools")
 # then install nat
 devtools::install_github("jefferis/nat")
+
 ```
+## Learn
+
+To get an idea of what **nat** can do:
+
+* Skim through the Articles listed at http://jefferis.github.io/nat/
+* Take a look at the [R Markdown](http://rmarkdown.rstudio.com/) reports used 
+  to generate the [figures for our NBLAST paper](http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/).
+
+When you're ready to learn more:
+
+* Read the [overview package documentation](http://jefferis.github.io/nat/reference/nat-package.html)
+  (`?nat` in R)
+* Read the [Introduction to neurons](http://jefferis.github.io/nat/articles/neurons-intro.html article)
+* Check out the thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/). 
+  * Most help pages include examples.
+* Try out sample code:
+  - [nat.examples](https://github.com/jefferis/nat.examples) has detailed 
+    examples for data sets from a range of model organisms and techniques
+  - [frulhns](https://github.com/jefferis/frulhns) analysis of sexually dimorphic circuits
+  - [NBLAST figures](https://github.com/jefferislab/NBLAST_figures/)
 
 ## Help
-If you want some help using **nat**, then please use the following resources
+If you want some help using **nat**:
 
 * For installation issues, see the [Installation vignette](http://jefferis.github.io/nat/articles/Installation.html)
-* Start with the [overview package documentation](http://jefferis.github.io/nat/reference/nat-package.html) (`?nat` in R)
-* Thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/)
-* [nat.examples](https://github.com/jefferis/nat.examples) sample code
-* [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
+* Contact [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
-## Problems
-If you think that you have found a bug
+If you think that you have found a bug:
 
-* Install the development version of nat using devtools (see above)
+* Install the development version of nat using devtools (see above) and see if 
+  that helps.
 * Check the [github issues](https://github.com/jefferis/nat/issues?q=is%3Aissue) and 
-  * [file a  bug report](https://github.com/jefferis/nat/issues/new) if this seems to be a new problem
-  * comment on an existing bug report 
-* Write to the [nat-user](https://groups.google.com/forum/#!forum/nat-user) list
-  for help.
+  - [file a  bug report](https://github.com/jefferis/nat/issues/new) if this seems to be a new problem
+  - comment on an existing bug report 
 
 Thanks for your interest in *nat*!
