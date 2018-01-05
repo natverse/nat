@@ -68,7 +68,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation Details</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
       <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
@@ -99,9 +105,10 @@
     </div>
 
     
-    <p>the <code>ngraph</code> class contains a (completely general) graph 
-  representation of a neuron's connectivity in an <code>igraph</code> object. It 
-  may additionally contain vertex label or position data. See details.</p>  
+    <p>the <code>ngraph</code> class contains a (completely general) graph
+  representation of a neuron's connectivity in an <code>igraph</code> object. It
+  may additionally contain vertex name or position data. See Connectivity
+  section.</p>
 <p><code>ngraph()</code> creates an ngraph from edge and vertex information.
 
     <code>as.ngraph</code> converts an object to an ngraph
@@ -112,7 +119,7 @@
     <code>as.ngraph.neuron</code> construct ngraph from a neuron</p>
     
 
-    <pre class="usage"><span class='fu'>ngraph</span>(<span class='no'>el</span>, <span class='no'>vertexlabels</span>, <span class='kw'>xyz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+    <pre class="usage"><span class='fu'>ngraph</span>(<span class='no'>el</span>, <span class='no'>vertexnames</span>, <span class='kw'>xyz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vertex.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>graph.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -133,13 +140,13 @@
 closer to the root (soma) of the neuron.</p></td>
     </tr>
     <tr>
-      <th>vertexlabels</th>
-      <td><p>Integer labels for graph - the edge list is specified 
-using these labels.</p></td>
+      <th>vertexnames</th>
+      <td><p>Integer names for graph - the edge list is specified using
+these names (see details).</p></td>
     </tr>
     <tr>
       <th>xyz</th>
-      <td><p>3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix 
+      <td><p>3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
 when 4th column is assumed to be diameter)</p></td>
     </tr>
     <tr>
@@ -152,15 +159,15 @@ when 4th column is assumed to be diameter)</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>Logical value indicating whether edge weights defined by the 
-3D distance between points should be added to graph (default <code>FALSE</code>) 
+      <td><p>Logical value indicating whether edge weights defined by the
+3D distance between points should be added to graph (default <code>FALSE</code>)
 <em>or</em> a numeric vector of weights.</p></td>
     </tr>
     <tr>
       <th>vertex.attributes, graph.attributes</th>
-      <td><p>List of named attributes to be 
-added to the graph. The elements of <code>vertex.attributes</code> must be 
-vectors whose length is compatible with the number of elements in the 
+      <td><p>List of named attributes to be
+added to the graph. The elements of <code>vertex.attributes</code> must be
+vectors whose length is compatible with the number of elements in the
 graph. See <code><a href='http://www.rdocumentation.org/packages/igraph/topics/set_vertex_attr'>set.vertex.attribute</a></code> for details.</p></td>
     </tr>
     <tr>
@@ -181,36 +188,41 @@ neuronal connectivity to generate graph.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an <code>igraph</code> object with additional class <code>ngraph</code>, having a
-  vertex for each entry in vertexlabels, each vertex having a <code>label</code> 
+  vertex for each entry in vertexnames, each vertex having a <code>label</code>
   attribute. All vertices are included whether connected or not.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that the <code>as.ngraph.neuron</code> method <em>always</em> keeps the
-  original vertex labels (a.k.a. PointNo) as read in from the original file.</p>
+  original vertex names (a.k.a. PointNo) as read in from the original file.</p>
     
     <h2 class="hasAnchor" id="connectivity"><a class="anchor" href="#connectivity"></a>Connectivity</h2>
 
     <p>We make the following assumptions about neurons coming
-  in</p>  
+  in</p>
 <p></p><ul>
-<li><p>They have an integer vertex label that need not start from 1 and that
-  may have gaps</p></li>
-<li><p>The edge list which defines connectivity specifies edges using pairs 
-  of vertex labels, _not_ raw vertex ids.</p></li>
+<li><p>They have an integer vertex name that need not start from 1 and that
+  may have gaps. This is analagous to the PointNo field of the core data
+  block of <code><a href='neuron.html'>neuron</a></code> objects.</p></li>
+<li><p>The edge list that defines connectivity specifies those edges using
+  pairs of vertex names, _not_ raw vertex indices.</p></li>
 </ul>
-    <p>We make no attempt to determine the root points at this stage.</p>  
-<p>The raw vertex ids in the graph will be in the order of vertexlabels and 
-  can therefore be used to index a block of vertex coordinates. The 
-  vertexlabels will be stored using the vertex attribute <code>label</code></p>  
+    <p>We make no attempt to determine the root points at this stage.</p>
+<p>The raw vertex ids in the graph will be in the order of vertexnames and can
+  therefore be used to index a block of vertex coordinates. The vertexnames
+  will be stored using the vertex attribute <code>name</code>. The underlying
+  igraph class allows nodes to be specified by their name. This provides a
+  convenient way to define nodes in an ngraph object by the numeric
+  identifier encoded by the PointNo field of the corresponding
+  <code><a href='neuron.html'>neuron</a></code>.</p>
 <p>When the graph is directed (default) the edges will be from the root to the
   other tips of the neuron.</p>
     
     <h2 class="hasAnchor" id="morphology"><a class="anchor" href="#morphology"></a>Morphology</h2>
 
-    <p>The morphology of the neuron is encoded by the 
-  combination of connectivity information (i.e. the graph) and spatial data 
-  encoded as the 3D position and diameter of each vertex. Position 
+    <p>The morphology of the neuron is encoded by the
+  combination of connectivity information (i.e. the graph) and spatial data
+  encoded as the 3D position and diameter of each vertex. Position
   information is stored as vertex attributes X, Y, and Z.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -226,7 +238,8 @@ neuronal connectivity to generate graph.</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>g</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+    <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+<span class='no'>g</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>n</span>)
 <span class='fu'>library</span>(<span class='no'>igraph</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:nat’:</span>
 #&gt; <span class='message'></span>
@@ -235,7 +248,18 @@ neuronal connectivity to generate graph.</p></td>
 #&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    union</span></div><div class='input'><span class='co'># check that vertex attributes of graph match X position</span>
-<span class='fu'>all.equal</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/V'>V</a></span>(<span class='no'>g</span>)$<span class='no'>X</span>, <span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]$<span class='no'>d</span>$<span class='no'>X</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
+<span class='fu'>all.equal</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/V'>V</a></span>(<span class='no'>g</span>)$<span class='no'>X</span>, <span class='no'>n</span>$<span class='no'>d</span>$<span class='no'>X</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># Use 3D segment lengths as edge length of graph</span>
+<span class='no'>gw</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>n</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='co'># find longest path across graph</span>
+<span class='no'>d</span><span class='kw'>=</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/diameter'>get.diameter</a></span>(<span class='no'>gw</span>)
+<span class='co'># make a new neuron using the longest path</span>
+<span class='no'>gw_spine</span><span class='kw'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/subgraph'>induced.subgraph</a></span>(<span class='no'>gw</span>, <span class='no'>d</span>))
+<span class='co'># make a new neuron containing all nodes except those in longest path</span>
+<span class='no'>gw_antispine</span><span class='kw'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/delete_vertices'>delete.vertices</a></span>(<span class='no'>gw</span>, <span class='no'>d</span>))
+
+<span class='co'># note use of bounding box of original neuron to set plot axes</span>
+<span class='fu'>plot</span>(<span class='no'>gw_spine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>boundingbox</span><span class='kw'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>n</span>))</div><div class='input'><span class='fu'>plot</span>(<span class='no'>gw_antispine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='ngraph-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

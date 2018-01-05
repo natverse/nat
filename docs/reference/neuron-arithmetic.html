@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Arithmetic for neuron coordinates — *.neuron • nat</title>
+<title>Arithmetic for neuron coordinates — Ops.neuron • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -68,7 +68,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation Details</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
       <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
@@ -99,32 +105,22 @@
     </div>
 
     
-    <p>If x is a 1-vector or a 3-vector, multiply xyz only
-If x is a 4-vector, multiply xyz and diameter by that
-TODO Figure out how to document arithemtic functions in one go</p>
+    <p>If x is a 1-vector or a 3-vector, operate on xyz only
+If x is a 4-vector, apply operation to xyz and diameter</p>
     
 
-    <pre class="usage"># S3 method for neuron
-*(n, x)
-
-# S3 method for neuron
-+(n, x)
-
-# S3 method for neuron
--(n, x)
-
-# S3 method for neuron
-/(n, x)</pre>
+    <pre class="usage"><span class='co'># S3 method for neuron</span>
+<span class='fu'>Ops</span>(<span class='no'>e1</span>, <span class='kw'>e2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>n</th>
+      <th>e1</th>
       <td><p>a neuron</p></td>
     </tr>
     <tr>
-      <th>x</th>
+      <th>e2</th>
       <td><p>(a numeric vector to multiply neuron coords in neuron)</p></td>
     </tr>
     </table>

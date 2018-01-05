@@ -68,7 +68,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation Details</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
       <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
@@ -200,7 +206,7 @@ Parent.</p></td>
     </tr>
     <tr>
       <th>origin</th>
-      <td><p>Root vertex, matched against labels (aka PointNo) when 
+      <td><p>Root vertex, matched against names (aka PointNo) when 
 available (see details)</p></td>
     </tr>
     <tr>
@@ -375,13 +381,13 @@ subtree, not the whole neuron.</p>
 <span class='co'>## Other methods</span>
 <span class='co'># plot</span>
 <span class='fu'>plot</span>(<span class='no'>n</span>)</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
-<span class='fu'>methods</span>(<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'neuron'</span>)</div><div class='output co'>#&gt;  [1] -                  *                  /                  +                 
-#&gt;  [5] all.equal          as.neuron          as.ngraph          as.seglist        
-#&gt;  [9] boundingbox        branchpoints       dotprops           endpoints         
-#&gt; [13] ndigest            nvertices          plot               plot3d            
-#&gt; [17] potential_synapses prune              resample           rootpoints        
-#&gt; [21] scale              subset             summary            write.vtk         
-#&gt; [25] xform              xyzmatrix          xyzmatrix&lt;-       
+<span class='fu'>methods</span>(<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'neuron'</span>)</div><div class='output co'>#&gt;  [1] all.equal          as.neuron          as.ngraph          as.seglist        
+#&gt;  [5] boundingbox        branchpoints       dotprops           endpoints         
+#&gt;  [9] intersect_plane    ndigest            nvertices          Ops               
+#&gt; [13] plot               plot3d             potential_synapses prune             
+#&gt; [17] resample           rootpoints         scale              subset            
+#&gt; [21] summary            write.vtk          xform              xyzmatrix         
+#&gt; [25] xyzmatrix&lt;-       
 #&gt; see '?methods' for accessing help and source code</div><div class='input'>
 <span class='co'>## Neurons as graphs </span>
 <span class='co'># convert to graph and find longest paths by number of nodes</span>

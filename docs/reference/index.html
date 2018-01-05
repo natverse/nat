@@ -68,7 +68,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation Details</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
       <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
@@ -97,7 +103,7 @@
     <div class="page-header">
       <h1>
         Reference
-        <small>version&nbsp;1.8.12</small>
+        <small>version&nbsp;1.8.9000</small>
       </h1>
     </div>
 
@@ -175,7 +181,7 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p></p>
+            <p><code><a href="neuron-arithmetic.html">Ops</a></code> </p>
           </td>
           <td><p>Arithmetic for neuron coordinates</p></td>
         </tr><tr>
@@ -299,9 +305,9 @@
         </tr><tr>
           <!--  -->
           <td>
-            <p></p>
+            <p><code><a href="dotprops-arithmetic.html">Ops</a></code> </p>
           </td>
-          <td><p>Arithmetic for dotprops objects</p></td>
+          <td><p>Arithmetic for nat dotprops and surface objects</p></td>
         </tr>
       </tbody><tbody>
         <tr>
@@ -586,8 +592,40 @@ expression</p></td>
       </tbody><tbody>
         <tr>
           <th colspan="2">
+            <h2 id="section--d-geometry" class="hasAnchor"><a href="#section--d-geometry" class="anchor"></a>3D Geometry</h2>
+            <p class="section-desc"><p>Functions for analysing 3D geometry of neurons and other objects</p></p>
+          </th>
+        </tr>
+        <tr>
+          <!--  -->
+          <td>
+            <p><code><a href="nvertices.html">nvertices</a></code> </p>
+          </td>
+          <td><p>Find the number of vertices in an object (or each element of a neuronlist)</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="xyzmatrix.html">xyzmatrix</a></code> <code><a href="xyzmatrix.html">xyzmatrix<-</a></code> </p>
+          </td>
+          <td><p>Get and assign coordinates for classes containing 3D vertex data</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="plane_coefficients.html">plane_coefficients</a></code> </p>
+          </td>
+          <td><p>Find the coefficients of the plane equation</p></td>
+        </tr><tr>
+          <!--  -->
+          <td>
+            <p><code><a href="intersect_plane.html">intersect_plane</a></code> </p>
+          </td>
+          <td><p>Find the points on a plane that are intersected by an object</p></td>
+        </tr>
+      </tbody><tbody>
+        <tr>
+          <th colspan="2">
             <h2 id="section-object-transformation" class="hasAnchor"><a href="#section-object-transformation" class="anchor"></a>Object transformation</h2>
-            <p class="section-desc"><p>Generic strategies for transforming 3D objects/images a</p></p>
+            <p class="section-desc"><p>Generic strategies for transforming 3D objects/images</p></p>
           </th>
         </tr>
         <tr>
@@ -602,18 +640,6 @@ expression</p></td>
             <p><code><a href="mirror.html">mirror</a></code> </p>
           </td>
           <td><p>Mirror 3D object about a given axis, optionally using a warping registration</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="xyzmatrix.html">xyzmatrix</a></code> <code><a href="xyzmatrix.html">xyzmatrix<-</a></code> </p>
-          </td>
-          <td><p>Get and assign coordinates for classes containing 3D vertex data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="nvertices.html">nvertices</a></code> </p>
-          </td>
-          <td><p>Find the number of vertices in an object (or each element of a neuronlist)</p></td>
         </tr><tr>
           <!--  -->
           <td>
@@ -1117,6 +1143,7 @@ expression</p></td>
       <li><a href="#section-collections-of-neurons-with-remote-data-neuronlistfh-">Collections of Neurons with Remote Data (neuronlistfh)</a></li>
       <li><a href="#section-surfaces-and-landmarks-hxsurf-mesh-d-">Surfaces and Landmarks (hxsurf, mesh3d)</a></li>
       <li><a href="#section--d-plotting-of-objects">3D Plotting of objects</a></li>
+      <li><a href="#section--d-geometry">3D Geometry</a></li>
       <li><a href="#section-object-transformation">Object transformation</a></li>
       <li><a href="#section-images-im-d-">Images (im3d)</a></li>
       <li><a href="#section-cmtk-registration">CMTK Registration</a></li>

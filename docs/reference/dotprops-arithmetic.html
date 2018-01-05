@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Arithmetic for dotprops objects — *.dotprops • nat</title>
+<title>Arithmetic for nat dotprops and surface objects — Ops.dotprops • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -68,7 +68,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation Details</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+    </li>
+    <li>
+      <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
       <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
@@ -95,43 +101,47 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Arithmetic for dotprops objects</h1>
+    <h1>Arithmetic for nat dotprops and surface objects</h1>
     </div>
 
     
-    <p>Arithmetic for dotprops objects</p>
+    <p>Arithmetic for nat dotprops and surface objects</p>
     
 
-    <pre class="usage"># S3 method for dotprops
-*(x, y)
+    <pre class="usage"><span class='co'># S3 method for dotprops</span>
+<span class='fu'>Ops</span>(<span class='no'>e1</span>, <span class='kw'>e2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-# S3 method for dotprops
-+(x, y)
+<span class='co'># S3 method for mesh3d</span>
+<span class='fu'>Ops</span>(<span class='no'>e1</span>, <span class='kw'>e2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-# S3 method for dotprops
--(x, y)
-
-# S3 method for dotprops
-/(x, y)</pre>
+<span class='co'># S3 method for hxsurf</span>
+<span class='fu'>Ops</span>(<span class='no'>e1</span>, <span class='kw'>e2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A dotprops object</p></td>
+      <th>e1</th>
+      <td><p>A dotprops or surface (hxsurf, mesh3d) object</p></td>
     </tr>
     <tr>
-      <th>y</th>
+      <th>e2</th>
       <td><p>A scalar or 3-vector that will be applied to the dotprops object</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A new dotprops object</p>
+    <p>A new dotprops / surface object</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='scale.neuron.html'>scale.dotprops</a></code>, <code><a href='neuron-arithmetic.html'>Ops.neuron</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>kcs20.shift</span><span class='kw'>=</span><span class='no'>kcs20</span>+<span class='fu'>c</span>(<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>4</span>)</div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20.shift</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -139,7 +149,11 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#see-also">See also</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

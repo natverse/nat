@@ -45,7 +45,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/Installation.html">Installation Details</a>
+      <a href="articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+    </li>
+    <li>
+      <a href="articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
       <a href="articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
@@ -75,9 +81,8 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#nat-neuroanatomy-toolbox" class="anchor"></a>nat: NeuroAnatomy Toolbox</h1></div>
 
-<p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of single neurons. See <a href="https://github.com/jefferis/nat.examples">nat.examples</a> and <a href="https://github.com/jefferis/frulhns">frulhns</a> for sample code.</p>
-<p><strong>nat</strong> is a cleaned up version of <a href="https://github.com/jefferis/AnalysisSuite">code</a> that has been used in a number of papers from our group including:</p>
-<p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428"><img src="http://www.nature.com/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" title="Food and Pheromone Integration" alt="Nature 2011"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a></p>
+<p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of single neurons. <strong>nat</strong> is the core package of a wider suite of neuroanatomy tools introduced at <a href="http://jefferislab.github.io" class="uri">http://jefferislab.github.io</a>. <strong>nat</strong> (and its <a href="https://github.com/jefferis/AnalysisSuite">ancestors</a>) have been used in a number of papers from our group including:</p>
+<p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428"><img src="https://media.nature.com/full/nature-assets/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" title="Food and Pheromone Integration" alt="Nature 2011"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a> <a href="http://dx.doi.org/10.1016/j.neuron.2016.06.012"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/P1Clustering_200_sq_crop-215x215.jpg" title="NBLAST" alt="Neuron 2016"></a></p>
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
 <a href="#quick-start" class="anchor"></a>Quick Start</h2>
@@ -100,41 +105,54 @@
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>A confirmed stable version of <strong>nat</strong> can be installed from CRAN.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"nat"</span>)</code></pre></div>
-<p>However, <strong>nat</strong> remains under quite active development, so we generally recommend installing the latest development version directly from github using the <a href="https://cran.r-project.org/package=devtools">devtools</a> package.</p>
+<p>However, <strong>nat</strong> remains under quite active development, so if you will be using <strong>nat</strong> extensively, we generally recommend installing the latest development version directly from github using the <a href="https://cran.r-project.org/package=devtools">devtools</a> package.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install devtools if required</span>
 <span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">"devtools"</span>)) <span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 <span class="co"># then install nat</span>
 devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
 </div>
+<div id="learn" class="section level2">
+<h2 class="hasAnchor">
+<a href="#learn" class="anchor"></a>Learn</h2>
+<p>To get an idea of what <strong>nat</strong> can do:</p>
+<ul>
+<li>Skim through the Articles listed at <a href="http://jefferis.github.io/nat/" class="uri">http://jefferis.github.io/nat/</a>
+</li>
+<li>Take a look at the <a href="http://rmarkdown.rstudio.com/">R Markdown</a> reports used to generate the <a href="http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/">figures for our NBLAST paper</a>.</li>
+</ul>
+<p>When you’re ready to learn more:</p>
+<ul>
+<li>Read the <a href="http://jefferis.github.io/nat/reference/nat-package.html">overview package documentation</a> (<code><a href="reference/nat-package.html">?nat</a></code> in R)</li>
+<li>Read the <a href="http://jefferis.github.io/nat/articles/neurons-intro.html%20article">Introduction to neurons</a>
+</li>
+<li>Check out the thematically organised <a href="http://jefferis.github.io/nat/reference/">function reference documentation</a>.</li>
+<li>Most help pages include examples.</li>
+<li>Try out sample code:</li>
+<li>
+<a href="https://github.com/jefferis/nat.examples">nat.examples</a> has detailed examples for data sets from a range of model organisms and techniques</li>
+<li>
+<a href="https://github.com/jefferis/frulhns">frulhns</a> analysis of sexually dimorphic circuits</li>
+<li><a href="https://github.com/jefferislab/NBLAST_figures/">NBLAST figures</a></li>
+</ul>
+</div>
 <div id="help" class="section level2">
 <h2 class="hasAnchor">
 <a href="#help" class="anchor"></a>Help</h2>
-<p>If you want some help using <strong>nat</strong>, then please use the following resources</p>
+<p>If you want some help using <strong>nat</strong>:</p>
 <ul>
 <li>For installation issues, see the <a href="http://jefferis.github.io/nat/articles/Installation.html">Installation vignette</a>
 </li>
-<li>Start with the <a href="http://jefferis.github.io/nat/reference/nat-package.html">overview package documentation</a> (<code><a href="reference/nat-package.html">?nat</a></code> in R)</li>
-<li>Thematically organised <a href="http://jefferis.github.io/nat/reference/">function reference documentation</a>
-</li>
-<li>
-<a href="https://github.com/jefferis/nat.examples">nat.examples</a> sample code</li>
-<li>
-<a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> Google group - we normally respond promptly and you will also be helping future users.</li>
+<li>Contact <a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> Google group - we normally respond promptly and you will also be helping future users.</li>
 </ul>
-</div>
-<div id="problems" class="section level2">
-<h2 class="hasAnchor">
-<a href="#problems" class="anchor"></a>Problems</h2>
-<p>If you think that you have found a bug</p>
+<p>If you think that you have found a bug:</p>
 <ul>
-<li>Install the development version of nat using devtools (see above)</li>
+<li>Install the development version of nat using devtools (see above) and see if that helps.</li>
 <li>Check the <a href="https://github.com/jefferis/nat/issues?q=is%3Aissue">github issues</a> and</li>
 <li>
 <a href="https://github.com/jefferis/nat/issues/new">file a bug report</a> if this seems to be a new problem</li>
 <li>comment on an existing bug report</li>
-<li>Write to the <a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> list for help.</li>
 </ul>
-<p>Thanks for your interest in <em>nat</em>!</p>
+<p>Thanks for your interest in <strong>nat</strong>!</p>
 </div>
 </div>
   </div>
