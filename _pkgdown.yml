@@ -13,7 +13,7 @@ reference:
     - subset.neuron
     - prune
     - prune_vertices
-    - "`*.neuron`"
+    - Ops.neuron
     - scale.neuron
     - resample
     - smooth_neuron
@@ -38,7 +38,7 @@ reference:
     contents:
     - dotprops
     - subset.dotprops
-    - "`*.dotprops`"
+    - Ops.dotprops
   - title: Collections of Neurons (neuronlists)
     desc: Functions for working with collections of neurons, which are packaged as 
       neuronlist objects with an attached data.frame containing metadata.
@@ -96,13 +96,18 @@ reference:
       - plot3d.hxsurf
       - plot3d.neuron
       - plot3d.cmtkreg
+  - title: 3D Geometry
+    desc: Functions for analysing 3D geometry of neurons and other objects
+    contents:
+    - nvertices
+    - xyzmatrix
+    - plane_coefficients
+    - intersect_plane
   - title: Object transformation
-    desc: Generic strategies for transforming 3D objects/images a
+    desc: Generic strategies for transforming 3D objects/images
     contents:
     - xform
     - mirror
-    - xyzmatrix
-    - nvertices
     - reglist
     - xformimage
     - xformpoints
