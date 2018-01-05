@@ -1,5 +1,5 @@
 ---
-title: "Installation Details"
+title: "Installation details"
 author: "Gregory Jefferis"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette

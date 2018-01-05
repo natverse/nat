@@ -1,5 +1,5 @@
 --- 
-title: "Working with Individual Neurons as Graph Structures" 
+title: "Working with individual neurons as graph structures" 
 author: "Gregory Jefferis" 
 date: "`r Sys.Date()`" 
 output: rmarkdown::html_vignette 
