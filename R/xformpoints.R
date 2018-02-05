@@ -170,7 +170,7 @@ xformpoints.reglist<-function(reg, points, ...){
   } else {
     # we have a specialised structure (most likely a cmtkreg object) that we
     # should be able to apply in one shot
-    xformpoints(reg, points)
+    xformpoints(reg, points, ...)
   }
 }
 
