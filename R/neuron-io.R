@@ -689,8 +689,8 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
     g=as.ngraph(x)
     r=igraph::dfs(g, root=x$StartPoint, neimode = 'all')
     new_order=as.integer(r$order)
-    df$Parent=match(df$Parent, new_order, nomatch = -1L)
     df=df[new_order,]
+    df$Parent=match(df$Parent, df$PointNo, nomatch = -1L)
     df$PointNo=seq_along(df$PointNo)
   }
   writeLines(c("# SWC format file",
