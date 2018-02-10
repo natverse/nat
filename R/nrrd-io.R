@@ -1,26 +1,27 @@
-#' Read nrrd file into an array in memory
-#' 
-#' @details \code{read.nrrd} reads data into a raw array. If you wish to 
+#' Read NRRD files/headers into memory
+#'
+#' @description \code{read.nrrd} reads data into a raw array. If you wish to
 #'   generate a \code{\link{im3d}} object that includes spatial calibration (but
 #'   is limited to representing 3D data) then you should use
 #'   \code{\link{read.im3d}}.
-#'   
-#'   ReadByteAsRaw=unsigned (the default) only reads unsigned byte data as a raw
-#'   array. This saves quite a bit of space and still allows data to be used for
-#'   logical indexing.
+#'
+#' @details \code{ReadByteAsRaw="unsigned"} (the default) only reads unsigned
+#'   byte data as a raw array. This saves quite a bit of space and still allows
+#'   data to be used for logical indexing.
 #' @param file Path to a nrrd (or a connection for \code{read.nrrd.header})
 #' @param origin Add a user specified origin (x,y,z) to the returned object
 #' @param ReadData When FALSE just return attributes (i.e. the nrrd header)
-#' @param AttachFullHeader Include the full nrrd header as an attribute of the 
+#' @param AttachFullHeader Include the full nrrd header as an attribute of the
 #'   returned object (default TRUE)
 #' @param ReadByteAsRaw Either a character vector or a logical vector specifying
-#'   when R should read 8 bit data as an R \code{raw} vector rather than 
+#'   when R should read 8 bit data as an R \code{raw} vector rather than
 #'   \code{integer} vector.
 #' @param Verbose Status messages while reading
-#' @return An \code{array} object, optionally with attributes from the nrrd 
+#' @return An \code{array} object, optionally with attributes from the nrrd
 #'   header.
 #' @export
 #' @seealso \code{\link{write.nrrd}}, \code{\link{read.im3d}}
+#' @family nrrd
 read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
                     Verbose=FALSE, ReadByteAsRaw=c("unsigned","all","none")){
   if(is.logical(ReadByteAsRaw))
@@ -94,7 +95,7 @@ read.nrrd<-function(file, origin=NULL, ReadData=TRUE, AttachFullHeader=TRUE,
   return(d)
 }
 
-#' Read the (text) header of a NRRD format file
+#' \code{read.nrrd.header} reads the (text) header of a NRRD format file
 #' 
 #' @return A list with elements for the key nrrd header fields
 #' @export
@@ -216,15 +217,23 @@ is.nrrd<-function(f=NULL, bytes=NULL, ReturnVersion=FALSE, TrustSuffix=FALSE){
   TRUE
 }
 
-nrrd.datafiles<-function(nhdr, full.names=TRUE){
-  if(!is.list(nhdr)){
+#' @description \code{nrrd.datafiles} returns the path to the separate data
+#'   files listed in a detached NRRD header file.
+#'
+#' @param full.names Whether to return the full paths to each data file (by
+#'   analogy with \code{\link{list.files}})
+#'
+#' @export
+#' @rdname read.nrrd
+nrrd.datafiles<-function(file, full.names=TRUE){
+  if(!is.list(file)){
     # we need to read in the nrrd header
-    if(length(nhdr)>1) 
-      return(sapply(nhdr, nrrd.datafiles, full.names=full.names, 
+    if(length(file)>1) 
+      return(sapply(file, nrrd.datafiles, full.names=full.names, 
                     simplify = FALSE))
-    if(!is.nrrd(nhdr)) stop("This is not a nrrd file")
-    h=read.nrrd.header(nhdr)
-  } else h=nhdr
+    if(!is.nrrd(file)) stop("This is not a nrrd file")
+    h=read.nrrd.header(file)
+  } else h=file
   if(is.null(h$datafile)){
     # straight nrrd without detached header
     dfs=attr(h,'path')
@@ -269,9 +278,8 @@ nrrd.datafiles<-function(nhdr, full.names=TRUE){
 #'   if there are any negative space directions
 #' @return numeric vector of voxel dimensions (\code{NA_real_} when missing) of
 #'   length equal to the image dimension.
-#' @author jefferis
-#' @seealso \code{\link{read.nrrd.header}}
 #' @export
+#' @family nrrd
 nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
   if(is.character(file))
     h=read.nrrd.header(file)
