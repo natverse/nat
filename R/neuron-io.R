@@ -581,7 +581,12 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #'   can be suppressed by setting \code{ext=NA}.
 #'
 #'   If you find that some software rejects your SWC files, try setting
-#'   \code{normalise.ids=TRUE} (see examples).
+#'   \code{normalise.ids=TRUE} (see examples). This will ensure that the vertex
+#'   ids are sequentially ascending integers (1:N). The default value of
+#'   \code{normalise.ids=NA} will normalise \code{PointNo} vertex ids only when
+#'   a vertex is connected (by the \code{Parent} field) to a vertex that had not
+#'   yet been defined. Many readers make the assumption that this is true. When
+#'   \code{normalise.ids=F} the vertex ids will not be touched.
 #'
 #' @param n A neuron
 #' @param file Path to output file
@@ -606,7 +611,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' # write out "myneuron.swc" in SWC format
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
 #' # write out "myneuron.swc" in SWC format, normalising the integer ids that
-#' # label every node (this is required by some SWC reders e.g. Fiji)
+#' # label every node (this is required by some SWC readers e.g. Fiji)
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc', normalise.ids=TRUE)
 #'
 #' # write out "myneuron.amiramesh" in Amira hxlineset format

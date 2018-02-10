@@ -879,6 +879,16 @@ test_that("we can write neuron to swc file",{
   expect_equal(f<-write.neuron(y, dir=td, format='swc', ext='_skel.swc'),
                file.path(td,'EBH11R_skel.swc'))
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+  
+  # construct a neuron with point ids in the wrong order
+  z=y
+  set.seed(42)
+  z$d$PointNo=as.integer(sample(nvertices(y))^2)
+  z$d$Parent[-1]=z$d$PointNo[z$d$Parent[-1]]
+  write.neuron(z, dir=td, file = file.path(td,'EBH11R-fixed.swc'), 
+               normalise.ids=T, Force=T)
+  expect_equivalent(tools::md5sum(file.path(td,'EBH11R-fixed.swc')), 
+               tools::md5sum(file.path(td,'EBH11R.swc')))
 })
 
 test_that("we can write dotprops objects to SWC format",{
