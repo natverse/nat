@@ -184,6 +184,7 @@ read.nrrd.header<-function(file, Verbose=FALSE){
 #' @param TrustSuffix Whether to trust that a file ending in .nrrd or .nhdr is a
 #'   NRRD
 #' @export
+#' @family nrrd
 is.nrrd<-function(f=NULL, bytes=NULL, ReturnVersion=FALSE, TrustSuffix=FALSE){
   if(is.raw(f)) {
     bytes=f
@@ -362,7 +363,8 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #' @param datafile Optional name of separate file into which data should be 
 #'   written (see details).
 #' @export
-#' @seealso \code{\link{read.nrrd}, \link{.Platform}}
+#' @seealso \code{\link{write.im3d}}, \code{\link{.Platform}}
+#' @family nrrd
 write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
                      dtype=c("float","byte", "short", "ushort", "int", "double"),
                      header=attr(x,'header'), endian=.Platform$endian,

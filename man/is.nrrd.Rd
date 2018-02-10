@@ -28,3 +28,6 @@ Note that multiple files can be checked when a character vector of
   length > 1 is provided, but only one file can be checked when a raw byte 
   array is provided.
 }
+\seealso{
+Other nrrd: \code{\link{write.nrrd}}
+}

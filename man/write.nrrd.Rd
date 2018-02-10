@@ -112,5 +112,7 @@ default) then it will be set to \code{<infilestem.nhdr>}.}
 }
 
 \seealso{
-\code{\link{read.nrrd}, \link{.Platform}}
+\code{\link{write.im3d}}, \code{\link{.Platform}}
+
+Other nrrd: \code{\link{is.nrrd}}
 }
