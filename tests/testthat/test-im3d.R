@@ -144,9 +144,9 @@ context("im3d boundingbox and friends")
 
 test_that("dim, voxdims and boundingbox work",{
   
-  expect_equal(boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30), dims=c(1,2,3), 
+  expect_equal(makeboundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30), dims=c(1,2,3), 
                            input='bounds'),
-               boundingbox(c(5, 5, 5, 15, 5, 25)))
+               makeboundingbox(c(5, 5, 5, 15, 5, 25)))
   
   expect_is(d<-read.im3d("testdata/nrrd/LHMask.nrrd"), 'im3d')
   expect_equal(dim(d),c(50,50,50))

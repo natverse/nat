@@ -4,12 +4,9 @@
 \alias{boundingbox}
 \alias{boundingbox.im3d}
 \alias{boundingbox.character}
-\alias{boundingbox.list}
-\alias{boundingbox.neuron}
-\alias{boundingbox.shape3d}
 \alias{boundingbox.default}
 \alias{boundingbox<-}
-\title{Get the bounding box of an im3d volume or other compatible object}
+\title{Get the bounding box of an image volume or object containing 3D vertices}
 \usage{
 boundingbox(x, ...)
 
@@ -17,85 +14,71 @@ boundingbox(x, ...)
 
 \method{boundingbox}{character}(x, ...)
 
-\method{boundingbox}{list}(x, na.rm = FALSE, ...)
-
-\method{boundingbox}{neuron}(x, na.rm = FALSE, ...)
-
-\method{boundingbox}{shape3d}(x, na.rm = FALSE, ...)
-
-\method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"),
-  ...)
+\method{boundingbox}{default}(x, na.rm = FALSE, ...)
 
 boundingbox(x) <- value
 }
 \arguments{
-\item{x}{A vector or matrix specifying a bounding box, an \code{im3d} object,
-any object with base class list for which \code{\link{xyzmatrix}} can 
-extract 3D points (e.g. neurons, surfaces etc), or, for 
-\code{boundingbox.character}, a character vector specifying a file.}
+\item{x}{an \code{im3d} object or any object for which
+\code{\link{xyzmatrix}} can extract 3D points (e.g. neurons, surfaces etc),
+or, for \code{boundingbox.character}, a character vector specifying a file.}
 
-\item{...}{Additional arguments for methods}
+\item{...}{Additional arguments passed to methods, and eventually to
+\code{\link{makeboundingbox}}}
 
 \item{dims}{The number of voxels in each dimension when x is a BoundingBox 
 matrix.}
 
 \item{na.rm}{Whether to ignore NA points (default \code{FALSE})}
 
-\item{input}{Whether \code{x} defines the boundingbox or bounds of the image 
-(see details).}
-
 \item{value}{The object which will provide the new boundingbox information.
 This can be be either an im3d object with a boundingbox or a vector or
 matrix defined according to \code{boundingbox.default}.}
 }
 \value{
-a \code{matrix} with 2 rows and 3 columns with 
+a \code{matrix} with 2 rows and 3 columns with
   \code{class='boundingbox'} or \emph{NULL} when missing.
 }
 \description{
-Get the bounding box of an im3d volume or other compatible object
-
-\code{boundingbox.list} is designed to be used on objects that
-  contain 3D point information and for which \code{xyzmatrix} is defined.
-
-\code{boundingbox.shape3d} is designed to be used on objects 
-  that contain 3D point information and inherit from \code{rgl}'s 
-  \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
-  this applies to \code{\link{mesh3d}} objects.
+Get the bounding box of an image volume or object containing 3D vertices
 
 Set the bounding box of an im3d object
 }
 \details{
 The bounding box is defined as the position of the voxels at the two
   opposite corners of the cuboid encompassing an image, \emph{when each voxel
-  is assumed to have a single position (sometimes thought of as its centre) 
-  \strong{and no physical extent.}} When written as a vector it should look 
-  like: \code{c(x0,x1,y0,y1,z0,z1)}. When written as a matrix it should look 
-  like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position 
+  is assumed to have a single position (sometimes thought of as its centre)
+  \strong{and no physical extent.}} When written as a vector it should look
+  like: \code{c(x0,x1,y0,y1,z0,z1)}. When written as a matrix it should look
+  like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position
   of the origin.
-  
+
   Note that there are two competing definitions for the physical extent of an
-  image that are discussed e.g. 
-  \url{http://teem.sourceforge.net/nrrd/format.html}. The definition that 
-  makes most sense depends largely on whether you think of a pixel as a 
-  little square with some defined area (and therefore a voxel as a cube with 
-  some defined volume) \emph{or} you take the view that you can only define 
-  with certainty the grid points at which image data was acquired. The first 
-  view implies a physical extent which we call the  \code{bounds=dim(x) * 
-  c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 * 
-  c(dx,dy,dz)} and assumes that the extent of the image is defined by a 
+  image that are discussed e.g.
+  \url{http://teem.sourceforge.net/nrrd/format.html}. The definition that
+  makes most sense depends largely on whether you think of a pixel as a
+  little square with some defined area (and therefore a voxel as a cube with
+  some defined volume) \emph{or} you take the view that you can only define
+  with certainty the grid points at which image data was acquired. The first
+  view implies a physical extent which we call the  \code{bounds=dim(x) *
+  c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 *
+  c(dx,dy,dz)} and assumes that the extent of the image is defined by a
   cuboid including the sample points at the extreme corner of the grid. Amira
-  takes this second view and this is the one we favour given our background 
-  in microscopy. If you wish to convert a \code{bounds} type definition into 
+  takes this second view and this is the one we favour given our background
+  in microscopy. If you wish to convert a \code{bounds} type definition into
   an im3d BoundingBox, you should pass the argument \code{input='bounds'}.
+
+\code{boundingbox} is designed to be used on objects that contain 3D
+  point information. Any object for which an \code{\link{xyzmatrix}} method
+  is defined will work including \code{\link{neuron}},
+  \code{\link{neuronlist}}, \code{rgl} \code{\link{mesh3d}} objects etc.
 }
 \examples{
-boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 # bounding box for a neuron
 boundingbox(Cell07PNs[[1]])
 }
 \seealso{
-\code{\link{plot3d.boundingbox}}
+\code{\link{makeboundingbox}}, \code{\link{plot3d.boundingbox}}
 
 Other im3d: \code{\link{as.im3d}},
   \code{\link{im3d-coords}}, \code{\link{im3d-io}},
