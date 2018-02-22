@@ -195,8 +195,8 @@ nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral",
     dorsal = zapsmall(rotationMatrix(-pi/2, 1, 0, 0)),
     left = zapsmall(scaleMatrix(1, -1, -1) %*% rotationMatrix(pi/2, 0, 1 , 0)),
     right = zapsmall(scaleMatrix(1, -1, -1) %*% rotationMatrix(-pi/2, 0, 1 , 0)),
-    oblique_right = scaleMatrix(1, -1, -1) %*% rotationMatrix(pi/8, 1, 1, 0),
-    oblique_left = scaleMatrix(1, -1, -1) %*% rotationMatrix(-pi/8, -1, -1, 0)
+    oblique_right = scaleMatrix(1, -1, -1) %*% rotationMatrix(pi/8, 1, -1, 0),
+    oblique_left = scaleMatrix(1, -1, -1) %*% rotationMatrix(pi/8, 1, 1, 0)
   )
   if(!is.null(extramat)) {
     stopifnot(identical(dim(extramat), c(4L, 4L)))
