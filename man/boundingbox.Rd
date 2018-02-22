@@ -68,10 +68,12 @@ The bounding box is defined as the position of the voxels at the two
   in microscopy. If you wish to convert a \code{bounds} type definition into
   an im3d BoundingBox, you should pass the argument \code{input='bounds'}.
 
-\code{boundingbox} is designed to be used on objects that contain 3D
-  point information. Any object for which an \code{\link{xyzmatrix}} method
-  is defined will work including \code{\link{neuron}},
-  \code{\link{neuronlist}}, \code{rgl} \code{\link{mesh3d}} objects etc.
+\code{boundingbox.default} is designed to be used on objects that
+  contain 3D point information. This includes any object for which an
+  \code{\link{xyzmatrix}} method is defined including \code{matrix} or
+  \code{data.frame} objects describing 3D points as well as specialised
+  classes such as \code{\link{neuron}}, \code{\link{neuronlist}}, \code{rgl}
+  \code{\link{mesh3d}} objects.
 }
 \examples{
 # bounding box for a neuron
