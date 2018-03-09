@@ -38,7 +38,7 @@ Nodes will be one of a:
 * root
 * branch point
 * end point
-* continutation point
+* continutaion point
 
 Each node will have a numeric identifier or label (an arbitrary integer stored the in the 
 neuron's `PointNo` field that may have come from an external source) as well
