@@ -159,14 +159,14 @@ library(rgl)
 clear3d()
 make_centered_plane <- function(point, normal, scale = 1) {
   # find the two orthogonal vectors to this one
-  uv = Morpho::tangentPlane(mean_vec)
+  uv = Morpho::tangentPlane(normal)
   uv = sapply(uv, "*", scale, simplify = F)
   qmesh3d(
   cbind(
-  mean_cent + uv$z,
-  mean_cent + uv$y,
-  mean_cent - uv$z,
-  mean_cent - uv$y
+  point + uv$z,
+  point + uv$y,
+  point - uv$z,
+  point - uv$y
   ),
   homogeneous = F,
   indices = 1:4
