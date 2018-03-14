@@ -109,7 +109,8 @@ took:
 * When you run Cygwin's setup.exe, you should also install all *fftw3* packages. 
   (fftw3 is a CMTK dependency which provides fast Fourier transform functions)
 * Download `CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to the cygwin folder (`C:\cygwin64`)
-* Start a Cygwin terminal and issue the following command 
+* Start a Cygwin terminal and go to the right directory with the command `cd \`.
+* On the Terminal, issue the following command 
   `tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz` to extract CMTK to the cygwin folder.
 * Optionally add `C:\cygwin64\bin` to your windows path (since v1.8.10 nat should 
   look after this - see ?cmtk.bindir).
