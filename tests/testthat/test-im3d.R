@@ -118,6 +118,21 @@ test_that("we can construct an im3d with additional attributes",{
   expect_equal(attr(x, 'units'), 'microns')
 })
 
+context("materials")
+
+test_that("we can read materials from an im3d or a file on disk",{
+  f='testdata/amira/LHMask.Labels.rle.am'
+  baseline = data.frame(
+    name = c("Exterior", "Inside"),
+    id = 1:2,
+    col = c("black", "#E02525"),
+    stringsAsFactors = F
+  )
+  rownames(baseline)=baseline$name
+  expect_equal(materials(f), baseline)
+  expect_equal(materials(read.im3d(f)), baseline)
+})
+
 context("converting points to volumes")
 
 test_that("we can construct an im3d from a set of points",{

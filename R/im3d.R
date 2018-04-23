@@ -253,9 +253,11 @@ read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
   # BoundingBox
   bb=attr(d,'Parameters')$BoundingBox
   origin <- if(length(bb)) bb[c(1,3,5)] else NULL
-  materials <-attr(d,'Parameters')$Materials
+  materials <-attr(d, "Materials")
   if(!is.null(materials)) {
-    materials=data.frame(name=names(materials), id=seq_along(materials),
+    materials=data.frame(name=rownames(materials), 
+                         id=seq_len(nrow(materials)),
+                         col=unclass(materials$col),
                          stringsAsFactors = FALSE)
   }
   im3d(d, dims=attr(d,'dataDef')$Dims[[1]], BoundingBox=bb, origin=origin,
