@@ -62,7 +62,7 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
     }
   }
   # always add a bounding box
-  attr(x,'BoundingBox')=boundingbox(BoundingBox)
+  attr(x,'BoundingBox')=makeboundingbox(BoundingBox)
   attr(x,'origin')=origin
   attr(x,"x")<-seq(BoundingBox[1],BoundingBox[2],len=dims[1])
   attr(x,"y")<-seq(BoundingBox[3],BoundingBox[4],len=dims[2])
@@ -146,7 +146,7 @@ as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
     
     if(is.null(BoundingBox))
       r=apply(x, 2, range)
-    else r=boundingbox(BoundingBox)
+    else r=makeboundingbox(BoundingBox)
     
     if(is.null(origin)) origin=r[1,]
     else r[1, ]=origin
@@ -322,47 +322,47 @@ voxdims.character<-function(x, ...) {
 voxdims.default<-function(x, dims, ...){
   if(length(x)){
     corrected_dims=pmax(dims-1,1)
-    vd=diff(boundingbox(x, dims, ...))/(corrected_dims)
+    vd=diff(makeboundingbox(x, dims, ...))/(corrected_dims)
     return(as.vector(vd))
   } else rep(NA_real_, 3)
 }
 
-#' Get the bounding box of an im3d volume or other compatible object
-#' 
+#' Get the bounding box of an image volume or object containing 3D vertices
+#'
 #' @details The bounding box is defined as the position of the voxels at the two
 #'   opposite corners of the cuboid encompassing an image, \emph{when each voxel
-#'   is assumed to have a single position (sometimes thought of as its centre) 
-#'   \strong{and no physical extent.}} When written as a vector it should look 
-#'   like: \code{c(x0,x1,y0,y1,z0,z1)}. When written as a matrix it should look 
-#'   like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position 
+#'   is assumed to have a single position (sometimes thought of as its centre)
+#'   \strong{and no physical extent.}} When written as a vector it should look
+#'   like: \code{c(x0,x1,y0,y1,z0,z1)}. When written as a matrix it should look
+#'   like: \code{rbind(c(x0,y0,z0),c(x1,y1,z1))} where x0,y0,z0 is the position
 #'   of the origin.
-#'   
+#'
 #'   Note that there are two competing definitions for the physical extent of an
-#'   image that are discussed e.g. 
-#'   \url{http://teem.sourceforge.net/nrrd/format.html}. The definition that 
-#'   makes most sense depends largely on whether you think of a pixel as a 
-#'   little square with some defined area (and therefore a voxel as a cube with 
-#'   some defined volume) \emph{or} you take the view that you can only define 
-#'   with certainty the grid points at which image data was acquired. The first 
-#'   view implies a physical extent which we call the  \code{bounds=dim(x) * 
-#'   c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 * 
-#'   c(dx,dy,dz)} and assumes that the extent of the image is defined by a 
+#'   image that are discussed e.g.
+#'   \url{http://teem.sourceforge.net/nrrd/format.html}. The definition that
+#'   makes most sense depends largely on whether you think of a pixel as a
+#'   little square with some defined area (and therefore a voxel as a cube with
+#'   some defined volume) \emph{or} you take the view that you can only define
+#'   with certainty the grid points at which image data was acquired. The first
+#'   view implies a physical extent which we call the  \code{bounds=dim(x) *
+#'   c(dx,dy,dz)}; the second is defined as \code{BoundingBox=dim(x)-1 *
+#'   c(dx,dy,dz)} and assumes that the extent of the image is defined by a
 #'   cuboid including the sample points at the extreme corner of the grid. Amira
-#'   takes this second view and this is the one we favour given our background 
-#'   in microscopy. If you wish to convert a \code{bounds} type definition into 
+#'   takes this second view and this is the one we favour given our background
+#'   in microscopy. If you wish to convert a \code{bounds} type definition into
 #'   an im3d BoundingBox, you should pass the argument \code{input='bounds'}.
-#' @param x A vector or matrix specifying a bounding box, an \code{im3d} object,
-#'   any object with base class list for which \code{\link{xyzmatrix}} can 
-#'   extract 3D points (e.g. neurons, surfaces etc), or, for 
-#'   \code{boundingbox.character}, a character vector specifying a file.
+#' @param x an \code{im3d} object or any object for which
+#'   \code{\link{xyzmatrix}} can extract 3D points (e.g. neurons, surfaces etc),
+#'   or, for \code{boundingbox.character}, a character vector specifying a file.
+#' @param ... Additional arguments passed to methods, and eventually to
+#'   \code{\link{makeboundingbox}}
 #' @inheritParams voxdims
-#' @return a \code{matrix} with 2 rows and 3 columns with 
+#' @return a \code{matrix} with 2 rows and 3 columns with
 #'   \code{class='boundingbox'} or \emph{NULL} when missing.
 #' @export
-#' @seealso \code{\link{plot3d.boundingbox}}
+#' @seealso \code{\link{makeboundingbox}}, \code{\link{plot3d.boundingbox}}
 #' @family im3d
 #' @examples
-#' boundingbox(c(x0=0,x1=10,y0=0,y1=20,z0=0,z1=30))
 #' # bounding box for a neuron
 #' boundingbox(Cell07PNs[[1]])
 boundingbox<-function(x, ...) UseMethod("boundingbox")
@@ -375,7 +375,7 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
   atts=attributes(x)
   if(!is.null(atts$BoundingBox)) atts$BoundingBox
   else if(!is.null(atts$bounds)) {
-    boundingbox(atts$bounds, dims, ...)
+    makeboundingbox(atts$bounds, dims, ...)
   } else if(isTRUE(all(c('x','y','z') %in% names(atts)))){
     # Use the locations of sample points. Note there is one special case we need
     # to consider, when dims=1 in any axis When this is the case the BoundingBox
@@ -383,7 +383,7 @@ boundingbox.im3d<-function(x, dims=dim(x), ...) {
     # calculationg using e.g. origin+voxdims.
     bb=sapply(c('x','y','z'),
                   function(d) {ll=atts[[d]];c(ll[1],ll[length(ll)])}, USE.NAMES=F)
-    boundingbox(bb, dims)
+    makeboundingbox(bb, dims)
   } else NULL
 }
 
@@ -410,38 +410,40 @@ boundingbox.character<-function(x, ...) {
   boundingbox(read.im3d(x, ReadData=FALSE))
 }
 
-#' @export
 #' @param na.rm Whether to ignore NA points (default \code{FALSE})
-#' @description \code{boundingbox.list} is designed to be used on objects that
-#'   contain 3D point information and for which \code{xyzmatrix} is defined.
+#' @details \code{boundingbox.default} is designed to be used on objects that
+#'   contain 3D point information. This includes any object for which an
+#'   \code{\link{xyzmatrix}} method is defined including \code{matrix} or
+#'   \code{data.frame} objects describing 3D points as well as specialised
+#'   classes such as \code{\link{neuron}}, \code{\link{neuronlist}}, \code{rgl}
+#'   \code{\link{mesh3d}} objects.
+#'
+#' @export
 #' @rdname boundingbox
-boundingbox.list<-function(x, na.rm=FALSE, ...) {
-  # we don't want to do this for data.frame objects
-  if(is.data.frame(x)) NextMethod()
+#' @export
+boundingbox.default<-function(x, na.rm=FALSE, ...) {
+  if(!length(x)) return(NULL)
   xyz=xyzmatrix(x)
-  bb=apply(xyz,2,range, na.rm=na.rm)
-  boundingbox(bb)
+  bb=apply(xyz, 2L, range, na.rm=na.rm)
+  makeboundingbox(bb, ...)
 }
 
-#' @rdname boundingbox
-#' @export
-boundingbox.neuron<-boundingbox.list
 
-#' @export
-#' @description \code{boundingbox.shape3d} is designed to be used on objects 
-#'   that contain 3D point information and inherit from \code{rgl}'s 
-#'   \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
-#'   this applies to \code{\link{mesh3d}} objects.
-#'   
-#' @rdname boundingbox
-boundingbox.shape3d<-boundingbox.list
-
-#' @method boundingbox default
-#' @export
-#' @param input Whether \code{x} defines the boundingbox or bounds of the image 
+#' Construct a 3D bounding box object
+#'
+#' \code{makeboundingbox} explicitly constructs a 3D bounding box from a set of
+#' 6 numbers defining the opposite corners of a cube. Most of the time as an end
+#' user you will want to compute/get the bounding box of objects/vertices using
+#' \code{\link{boundingbox}}.
+#'
+#' @param x A vector or matrix specifying a bounding box
+#' @param input Whether \code{x} defines the boundingbox or bounds of the image
 #'   (see details).
-#' @rdname boundingbox
-boundingbox.default<-function(x, dims, input=c("boundingbox",'bounds'), ...){
+#' @inheritParams voxdims
+#'
+#' @seealso \code{link{boundingbox}}
+#' @export
+makeboundingbox<-function(x, dims, input=c("boundingbox",'bounds')){
   input=match.arg(tolower(input),c("boundingbox",'bounds'))
   if(!length(x)) return(NULL)
   if(is.vector(x)) {
