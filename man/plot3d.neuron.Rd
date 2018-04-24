@@ -20,26 +20,27 @@ using the NeuronName field \strong{or} a character vector of names.}
 
 \item{WithAllPoints}{Whether to plot dots for all points in the neuron}
 
-\item{WithText}{Whether to label plotted points with their numeric id (see 
+\item{WithText}{Whether to label plotted points with their numeric id (see
 details)}
 
-\item{PlotSubTrees}{Whether to plot all sub trees when the neuron is not 
+\item{PlotSubTrees}{Whether to plot all sub trees when the neuron is not
 fully connected.}
 
-\item{add}{Whether to add the neuron to existing rgl plot rather than 
+\item{add}{Whether to add the neuron to existing rgl plot rather than
 clearing the scene (default TRUE)}
 
 \item{col}{Colour specification (see rgl materials)}
 
-\item{soma}{Whether to plot a sphere at neuron's origin representing the 
-soma. Either a logical value or a numeric indicating the radius (default 
+\item{soma}{Whether to plot a sphere at neuron's origin representing the
+soma. Either a logical value or a numeric indicating the radius (default
 \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
 
-\item{...}{Additional arguments passed to rgl::lines3d}
+\item{...}{Additional arguments passed to \code{\link[rgl]{lines3d}} (and
+\code{\link[rgl]{spheres3d}} if somata are being plotted).}
 }
 \value{
-list of rgl plotting ids (invisibly) separated into \code{lines}, 
-  \code{points}, \code{texts} according to plot element. See 
+list of rgl plotting ids (invisibly) separated into \code{lines},
+  \code{points}, \code{texts} according to plot element. See
   \code{rgl::\link[rgl]{plot3d}} for details.
 }
 \description{
@@ -49,6 +50,14 @@ Plot neurons in 3D using rgl library
 Note that when \code{WithText=TRUE}, the numeric identifiers plotted
   are \emph{raw indices} into the \code{x$d} array of the \code{neuron},
   \emph{not} the values of the \code{PointNo} column.
+
+  Note that \code{...} is passed to both \code{\link[rgl]{lines3d}} and
+  \code{\link[rgl]{spheres3d}} (if somata are being plotted). Not all
+  \code{...} elements are necessarily relevant to both of these drawing
+  calls. Furthermore plotting a large number of somata with transparency
+  (i.e. \code{alpha < 1} ) can quickly result in very slow rgl draw and
+  refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when using
+  \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
 }
 \examples{
 # A new plot would have been opened if required
@@ -69,6 +78,6 @@ rgl.close()
 }
 }
 \seealso{
-\code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}}, 
+\code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}},
   \code{nat::\link[nat]{plot3d}}, \code{rgl::\link[rgl]{plot3d}}
 }
