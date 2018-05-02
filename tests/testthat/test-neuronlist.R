@@ -174,6 +174,11 @@ test_that("plot neuronlist contents",{
   options(op)
 })
 
+test_that("plot neuronlist without names/data.frame",{
+  nn=nlapply(1:2, function(x) kcs20[[x]])
+  expect_silent(plot3d(nn))
+})
+
 test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
   f=function(...) {
     rhubarb='pink'

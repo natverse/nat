@@ -260,6 +260,7 @@ c.neuronlist<-function(..., recursive = FALSE){
 as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ...) {
   df=attr(x, 'df')
   if(is.null(df)) {
+    if(is.null(row.names)) row.names=seq_along(x)
     data.frame(row.names = row.names, ...)
   } else {
     data.frame(df, row.names = row.names, ...)
