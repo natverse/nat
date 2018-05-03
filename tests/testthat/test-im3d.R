@@ -98,6 +98,11 @@ test_that("we can set bounding box",{
   expect_equal(boundingbox(z4), boundingbox(d))
 })
 
+test_that("we can use bounds to set im3d bounding box",{
+  expect_equal(im3d(dims=c(2,3,2), bounds=c(0,2,0,3,0,1)),
+               im3d(dims=c(2,3,2), voxdims=c(1,1,0.5), origin=c(0.5,0.5,0.25)))
+})
+
 test_that("we can construct an im3d using an im3d to supply attributes",{
   d=rnorm(1000)
   x=im3d(d, dims=c(10, 10, 10), BoundingBox=c(20,200,100,200,200,300))

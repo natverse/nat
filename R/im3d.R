@@ -53,7 +53,7 @@ im3d<-function(x=numeric(0), dims=NULL, voxdims=NULL, origin=NULL,
   if(!is.null(BoundingBox)){
     voxdims=voxdims(BoundingBox,dims=dims)
   } else if(!is.null(bounds)) {
-    BoundingBox=boundingbox(bounds, dims=dims, input='bounds')
+    BoundingBox=makeboundingbox(bounds, dims=dims, input='bounds')
   } else if(!is.null(voxdims)) {
     corrected_dims=pmax(dims-1, 1)
     BoundingBox=rbind(c(0,0,0),corrected_dims*voxdims)
