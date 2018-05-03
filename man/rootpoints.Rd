@@ -62,7 +62,7 @@ Return the branchpoints of a neuron or graph
 }
 \seealso{
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.neuron}},
+  \code{\link{plot.dotprops}},
   \code{\link{potential_synapses}}, \code{\link{prune}},
   \code{\link{resample}}, \code{\link{spine}},
   \code{\link{subset.neuron}}

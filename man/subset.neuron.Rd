@@ -113,7 +113,7 @@ plot3d(y, col='red', lwd=2)
   \code{\link{subset.dotprops}}
 
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.neuron}},
+  \code{\link{plot.dotprops}},
   \code{\link{potential_synapses}}, \code{\link{prune}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}

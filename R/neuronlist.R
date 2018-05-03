@@ -694,7 +694,7 @@ plot3d.character<-function(x, db=NULL, ...) {
 #' plot(Cell07PNs, subset=Glomerulus%in%c("DA1", "DP1m"), col=Glomerulus,
 #'   ylim=c(140,75), WithNodes=FALSE)
 plot.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, add=NULL, 
-                          boundingbox=NULL, ..., SUBSTITUTE=TRUE){
+                          boundingbox=NULL, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -718,7 +718,14 @@ plot.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, add=NULL,
   if(is.null(boundingbox)) boundingbox=boundingbox(x, na.rm=T)
   rval=mapply(plot, x, col=cols, add=add, 
               MoreArgs = list(boundingbox=boundingbox, ...), SIMPLIFY = F)
-  
+  df=as.data.frame(x)
+  if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
+             all(c("X","Y","Z") %in% colnames(df))){
+    if(is.logical(soma)) soma=2
+    symbols(df[,c("X","Y")], circles = rep(soma, nrow(df)), inches = F,
+            add=T, bg=cols, fg=NA)
+  }
+
   df=as.data.frame(x)
   df$col=cols
   attr(rval,'df')=df

@@ -254,7 +254,8 @@ pan3d <- function(button) {
 #' Plot a 2D projection of a neuron
 #' 
 #' @export
-#' @details This functions sets the axis ranges based on the chosen
+#' @description \code{plot.neuron} plots a 2D projection of a neuron
+#' @details \code{plot.neuron} sets the axis ranges based on the chosen
 #'   \code{PlotAxes} and the range of the data in \code{x}. It is still possible
 #'   to use \code{PlotAxes} in combination with a \code{boundingbox}, for
 #'   example to set the range of a plot of a number of objects.

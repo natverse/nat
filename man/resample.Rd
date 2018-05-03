@@ -31,7 +31,7 @@ resample a neuron with a new spacing
 \code{\link{approx}}, \code{\link{seglengths}}
 
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.neuron}},
+  \code{\link{plot.dotprops}},
   \code{\link{potential_synapses}}, \code{\link{prune}},
   \code{\link{rootpoints}}, \code{\link{spine}},
   \code{\link{subset.neuron}}

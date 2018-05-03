@@ -324,6 +324,61 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
   invisible(rlist)
 }
 
+#' @rdname plot.neuron
+#' @description \code{plot.dotprops} plots a 2D projection of a
+#'   \code{\link{dotprops}} format object
+#' @details \code{plot.dotprops} is limited in that 1) it cannot plot somata
+#'   directly (this is handled by \code{\link{plot.neuronlist}}) and 2) it can
+#'   only plot a frontal (XY) view.
+#' @inheritParams plot.neuron
+#' @inheritParams plot3d.dotprops
+#' @export
+#' @examples
+#'
+#' plot(kcs20[[1]], col='red')
+#' # NB soma ignored
+#' plot(kcs20[[1]], col='red', soma=T)
+#' plot(kcs20[1], col='red', soma=T)
+plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black', 
+                        PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE,
+                        asp=1, add=FALSE, axes=TRUE, tck=NA,
+                        boundingbox=NULL, xlim=NULL, ylim=NULL, 
+                        soma=FALSE, ...){
+  if (!is.null(alpharange))
+    x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
+  
+  
+  if(!add) {
+    if(is.null(boundingbox))
+      boundingbox=boundingbox(x, na.rm=TRUE)
+    if(is.null(xlim)) xlim=boundingbox[,1]
+    if(is.null(ylim)) ylim=rev(boundingbox[,2])
+    plot.new()
+    plot.window(xlim, ylim, asp=asp)
+    if(axes) {
+      box()
+      axis(2, tck=tck)
+      axis(1, tck=tck)
+    }
+  }
+  if(PlotPoints){
+    points(x$points, col=col, pch=20, ...)
+  }
+    
+  if(PlotVectors){
+    if(length(col)>1 && length(col)==nrow(x$points)){
+      col=rep(col,rep.int(2,length(col)))
+    }
+    halfvect=x$vect/2*scalevecs
+    if(UseAlpha) halfvect=halfvect*x$alpha
+    starts=x$points-halfvect
+    stops=x$points+halfvect
+    # interleaved=matrix(t(cbind(starts[,1:2],stops[,1:2])),ncol=2,byrow=T)
+    segments(starts[,1], starts[,2], stops[,1], stops[,2], col=col, ...)
+  }
+  invisible()
+}
+
 #' Subset points in dotprops object that match given conditions
 #' 
 #' @details \code{subset} defines either logical or numeric indices, in which

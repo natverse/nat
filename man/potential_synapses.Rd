@@ -63,7 +63,7 @@ Neurogeometry and potential synaptic connectivity. Stepanyants A,
 }
 \seealso{
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.neuron}}, \code{\link{prune}},
+  \code{\link{plot.dotprops}}, \code{\link{prune}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}, \code{\link{subset.neuron}}
 }

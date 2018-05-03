@@ -6,7 +6,7 @@
 expression}
 \usage{
 \method{plot}{neuronlist}(x, subset = NULL, col = NULL, colpal = rainbow,
-  add = NULL, boundingbox = NULL, ..., SUBSTITUTE = TRUE)
+  add = NULL, boundingbox = NULL, soma = FALSE, ..., SUBSTITUTE = TRUE)
 }
 \arguments{
 \item{x}{a neuron list or, for \code{plot3d.character}, a character vector of
@@ -28,6 +28,10 @@ first neuron in the neuronlist and then adds the remaining neurons.}
 \item{boundingbox}{A 2 x 3 matrix (ideally of class 
 \code{\link{boundingbox}}) that enables the plot axis limits to be set 
 without worrying about axis selection or reversal (see details)}
+
+\item{soma}{Whether to plot a sphere at neuron's origin representing the
+soma. Either a logical value or a numeric indicating the radius (default
+\code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
 
 \item{...}{options passed on to plot (such as colours, line width etc)}
 

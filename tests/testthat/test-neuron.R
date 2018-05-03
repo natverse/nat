@@ -144,6 +144,11 @@ test_that("we can plot neurons in 3D", {
   expect_gt(plottedLines, 0)
 })
 
+test_that("we can plot dotprops in 2D", {
+  expect_null(plot(kcs20[[1]]))
+  expect_silent(plot(kcs20[1], soma=T))
+})
+
 test_that("we can plot dotprops in 3D", {
   plottedSegments <- plot3d(kcs20[[1]])$segments
   expect_gt(plottedSegments, 0)
