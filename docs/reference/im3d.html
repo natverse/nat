@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Construct an im3d object representing 3D image data, densities etc — im3d" />
+
+<meta property="og:description" content="im3d objects consist of a data array with attributes defining the 
+spatial positions at which the voxels are located. There should always be a 
+BoundingBox attribute which defines the physical extent of the volume 
+in the same manner as the Amira 3D visualisation and analysis software. This 
+corresponds to the node centers option in the 
+NRRD format." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +117,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Construct an im3d object representing 3D image data, densities etc</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/im3d.R'><code>R/im3d.R</code></a></small>
     </div>
 
     
@@ -116,7 +132,7 @@ corresponds to the <strong>node</strong> centers option in the
     <pre class="usage"><span class='fu'>im3d</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'>numeric</span>(<span class='fl'>0</span>), <span class='kw'>dims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>BoundingBox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -192,7 +208,7 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -200,3 +216,4 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 
   </body>
 </html>
+

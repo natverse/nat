@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot a 2D projection of a neuron — plot.neuron • nat</title>
+<title>Plot a 2D projection of a neuron — plot.dotprops • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,21 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Plot a 2D projection of a neuron — plot.dotprops" />
+
+<meta property="og:description" content="plot.dotprops plots a 2D projection of a
+  dotprops format object
+plot.neuron plots a 2D projection of a neuron" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +55,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,13 +114,22 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot a 2D projection of a neuron</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/dotprops.R'><code>R/dotprops.R</code></a>, <a href='https://github.com/jefferis/nat/blob/master/R/neuron-plot.R'><code>R/neuron-plot.R</code></a></small>
     </div>
 
     
-    <p>Plot a 2D projection of a neuron</p>
+    <p><code>plot.dotprops</code> plots a 2D projection of a
+  <code>dotprops</code> format object</p>
+<p><code>plot.neuron</code> plots a 2D projection of a neuron</p>
     
 
-    <pre class="usage"><span class='co'># S3 method for neuron</span>
+    <pre class="usage"><span class='co'># S3 method for dotprops</span>
+<span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for neuron</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotAxes</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span>), <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -116,12 +137,85 @@
   <span class='kw'>AxisDirections</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>PointAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'>par</span>(<span class='st'>"lwd"</span>), <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
       <td><p>a neuron to plot.</p></td>
+    </tr>
+    <tr>
+      <th>scalevecs</th>
+      <td><p>Factor by which to scale unit vectors (numeric, default: 
+1.0)</p></td>
+    </tr>
+    <tr>
+      <th>alpharange</th>
+      <td><p>Restrict plotting to points with <code>alpha</code> values in 
+this range to plot (default: null =&gt; all points). See 
+<code>dotprops</code> for definition of <code>alpha</code>.</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>the color in which to draw the lines between nodes.</p></td>
+    </tr>
+    <tr>
+      <th>PlotPoints</th>
+      <td><p>Whether to plot points and/or tangent vectors 
+(logical, default: tangent vectors only)</p></td>
+    </tr>
+    <tr>
+      <th>PlotVectors</th>
+      <td><p>Whether to plot points and/or tangent vectors 
+(logical, default: tangent vectors only)</p></td>
+    </tr>
+    <tr>
+      <th>UseAlpha</th>
+      <td><p>Whether to scale tangent vector length by the value of 
+<code>alpha</code></p></td>
+    </tr>
+    <tr>
+      <th>asp</th>
+      <td><p>the <code>y/x</code> aspect ratio, see <code>plot.window</code>.</p></td>
+    </tr>
+    <tr>
+      <th>add</th>
+      <td><p>Whether the plot should be superimposed on one already present 
+(default: <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>axes</th>
+      <td><p>whether axes should be drawn.</p></td>
+    </tr>
+    <tr>
+      <th>tck</th>
+      <td><p>length of tick mark as fraction of plotting region (negative 
+number is outside graph, positive number is inside, 0 suppresses ticks, 1 
+creates gridlines).</p></td>
+    </tr>
+    <tr>
+      <th>boundingbox</th>
+      <td><p>A 2 x 3 matrix (ideally of class 
+<code><a href='boundingbox.html'>boundingbox</a></code>) that enables the plot axis limits to be set 
+without worrying about axis selection or reversal (see details)</p></td>
+    </tr>
+    <tr>
+      <th>xlim</th>
+      <td><p>limits for the horizontal axis (see also boundingbox)</p></td>
+    </tr>
+    <tr>
+      <th>ylim</th>
+      <td><p>limits for the vertical axis (see also boundingbox)</p></td>
+    </tr>
+    <tr>
+      <th>soma</th>
+      <td><p>Whether to plot a circle at neuron's origin representing the 
+soma. Either a logical value or a numeric indicating the radius (default 
+<code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments passed to plot</p></td>
     </tr>
     <tr>
       <th>WithLine</th>
@@ -146,22 +240,8 @@ points)</p></td>
 fully connected.</p></td>
     </tr>
     <tr>
-      <th>soma</th>
-      <td><p>Whether to plot a circle at neuron's origin representing the 
-soma. Either a logical value or a numeric indicating the radius (default 
-<code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</p></td>
-    </tr>
-    <tr>
       <th>PlotAxes</th>
       <td><p>the axes for the plot.</p></td>
-    </tr>
-    <tr>
-      <th>axes</th>
-      <td><p>whether axes should be drawn.</p></td>
-    </tr>
-    <tr>
-      <th>asp</th>
-      <td><p>the <code>y/x</code> aspect ratio, see <code>plot.window</code>.</p></td>
     </tr>
     <tr>
       <th>main</th>
@@ -172,14 +252,6 @@ soma. Either a logical value or a numeric indicating the radius (default
       <td><p>sub title for the plot</p></td>
     </tr>
     <tr>
-      <th>xlim</th>
-      <td><p>limits for the horizontal axis (see also boundingbox)</p></td>
-    </tr>
-    <tr>
-      <th>ylim</th>
-      <td><p>limits for the vertical axis (see also boundingbox)</p></td>
-    </tr>
-    <tr>
       <th>AxisDirections</th>
       <td><p>the directions for the axes. By default, R uses the 
 bottom-left for the origin, whilst most graphics software uses the 
@@ -187,37 +259,12 @@ top-left. The default value of <code>c(1, -1, 1)</code> makes the produced plot
 consistent with the latter.</p></td>
     </tr>
     <tr>
-      <th>add</th>
-      <td><p>Whether the plot should be superimposed on one already present 
-(default: <code>FALSE</code>).</p></td>
-    </tr>
-    <tr>
-      <th>col</th>
-      <td><p>the color in which to draw the lines between nodes.</p></td>
-    </tr>
-    <tr>
       <th>PointAlpha</th>
       <td><p>the value of alpha to use in plotting the nodes.</p></td>
     </tr>
     <tr>
-      <th>tck</th>
-      <td><p>length of tick mark as fraction of plotting region (negative 
-number is outside graph, positive number is inside, 0 suppresses ticks, 1 
-creates gridlines).</p></td>
-    </tr>
-    <tr>
       <th>lwd</th>
       <td><p>line width relative to the default (default=1).</p></td>
-    </tr>
-    <tr>
-      <th>boundingbox</th>
-      <td><p>A 2 x 3 matrix (ideally of class 
-<code><a href='boundingbox.html'>boundingbox</a></code>) that enables the plot axis limits to be set 
-without worrying about axis selection or reversal (see details)</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional arguments passed to plot</p></td>
     </tr>
     </table>
     
@@ -227,7 +274,10 @@ without worrying about axis selection or reversal (see details)</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This functions sets the axis ranges based on the chosen
+    <p><code>plot.dotprops</code> is limited in that 1) it cannot plot somata
+  directly (this is handled by <code><a href='plot.neuronlist.html'>plot.neuronlist</a></code>) and 2) it can
+  only plot a frontal (XY) view.</p>
+<p><code>plot.neuron</code> sets the axis ranges based on the chosen
   <code>PlotAxes</code> and the range of the data in <code>x</code>. It is still possible
   to use <code>PlotAxes</code> in combination with a <code>boundingbox</code>, for
   example to set the range of a plot of a number of objects.</p>  
@@ -247,13 +297,15 @@ without worrying about axis selection or reversal (see details)</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Draw first example neuron</span>
+    <pre class="examples"><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)</div><div class='input'><span class='co'># NB soma ignored</span>
+<span class='fu'>plot</span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'>plot</span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Draw first example neuron</span>
 <span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='input'><span class='co'># Overlay second example neuron</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># Clear the current plot and draw the third neuron from a different view</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>3</span>]], <span class='kw'>PlotAxes</span><span class='kw'>=</span><span class='st'>"YZ"</span>)</div><div class='img'><img src='plot.neuron-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># Just plot the end points for the fourth example neuron</span>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Clear the current plot and draw the third neuron from a different view</span>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>3</span>]], <span class='kw'>PlotAxes</span><span class='kw'>=</span><span class='st'>"YZ"</span>)</div><div class='img'><img src='plot.neuron-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Just plot the end points for the fourth example neuron</span>
 <span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='input'><span class='co'># Plot with soma (of default radius)</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># Plot with soma of defined radius</span>
-<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>1.25</span>)</div><div class='img'><img src='plot.neuron-4.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Plot with soma of defined radius</span>
+<span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>1.25</span>)</div><div class='img'><img src='plot.neuron-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -278,7 +330,7 @@ without worrying about axis selection or reversal (see details)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -286,3 +338,4 @@ without worrying about axis selection or reversal (see details)</p></td>
 
   </body>
 </html>
+

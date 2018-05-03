@@ -18,13 +18,28 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Create a neuronlist from zero or more neurons — neuronlist" />
+
+<meta property="og:description" content="neuronlist objects consist of a list of neuron objects 
+  (usually of class neuron or dotprops) along 
+  with an optional attached dataframe containing information about the 
+  neurons. neuronlist objects can be indexed using their name or the 
+  number of the neuron like a regular list. Both the list itself and 
+  the attached data.frame must have the same unique (row)names. If the
+  [ operator is used to index the list, the attached dataframe will 
+  also be subsetted.  
+It is perfectly acceptable not to pass any parameters, generating an empty 
+  neuronlist" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +62,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +121,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a neuronlist from zero or more neurons</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuronlist.R'><code>R/neuronlist.R</code></a></small>
     </div>
 
     
@@ -119,7 +139,7 @@
 
     <pre class="usage"><span class='fu'>neuronlist</span>(<span class='no'>...</span>, <span class='kw'>DATAFRAME</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -190,7 +210,7 @@ containing information about each neuron.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -198,3 +218,4 @@ containing information about each neuron.</p></td>
 
   </body>
 </html>
+

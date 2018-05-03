@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Calculate length of all segments in neuron — seglengths" />
+
+<meta property="og:description" content="Calculate length of all segments in neuron" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculate length of all segments in neuron</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuron.R'><code>R/neuron.R</code></a></small>
     </div>
 
     
@@ -110,7 +121,7 @@
 
     <pre class="usage"><span class='fu'>seglengths</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>flatten</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -155,7 +166,7 @@ individual edge in the segment.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='summary.neuron.html'>summary</a></span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 #&gt;  0.6273  2.1631  4.4999  9.0053  9.8379 84.1981 </div><div class='input'><span class='fu'>hist</span>(<span class='fu'>unlist</span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)),
-  <span class='kw'>br</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'histogram of edge lengths'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'edge lengths /microns'</span>)</div><div class='img'><img src='seglengths-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+  <span class='kw'>br</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'histogram of edge lengths'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'edge lengths /microns'</span>)</div><div class='img'><img src='seglengths-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -180,7 +191,7 @@ individual edge in the segment.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -188,3 +199,4 @@ individual edge in the segment.</p></td>
 
   </body>
 </html>
+

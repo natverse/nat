@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Read nrrd file into an array in memory — read.nrrd • nat</title>
+<title>Read NRRD files/headers into memory — read.nrrd • nat</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Read NRRD files/headers into memory — read.nrrd" />
+
+<meta property="og:description" content="read.nrrd reads data into a raw array. If you wish to
+  generate a im3d object that includes spatial calibration (but
+  is limited to representing 3D data) then you should use
+  read.im3d.
+read.nrrd.header reads the (text) header of a NRRD format file
+nrrd.datafiles returns the path to the separate data
+  files listed in a detached NRRD header file." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +59,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -101,20 +117,28 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Read nrrd file into an array in memory</h1>
+    <h1>Read NRRD files/headers into memory</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/nrrd-io.R'><code>R/nrrd-io.R</code></a></small>
     </div>
 
     
-    <p>Read nrrd file into an array in memory</p>
-<p>Read the (text) header of a NRRD format file</p>
+    <p><code>read.nrrd</code> reads data into a raw array. If you wish to
+  generate a <code><a href='im3d.html'>im3d</a></code> object that includes spatial calibration (but
+  is limited to representing 3D data) then you should use
+  <code><a href='im3d-io.html'>read.im3d</a></code>.</p>
+<p><code>read.nrrd.header</code> reads the (text) header of a NRRD format file</p>
+<p><code>nrrd.datafiles</code> returns the path to the separate data
+  files listed in a detached NRRD header file.</p>
     
 
     <pre class="usage"><span class='fu'>read.nrrd</span>(<span class='no'>file</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>AttachFullHeader</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"unsigned"</span>, <span class='st'>"all"</span>, <span class='st'>"none"</span>))
 
-<span class='fu'>read.nrrd.header</span>(<span class='no'>file</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+<span class='fu'>read.nrrd.header</span>(<span class='no'>file</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>nrrd.datafiles</span>(<span class='no'>file</span>, <span class='kw'>full.names</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -131,7 +155,7 @@
     </tr>
     <tr>
       <th>AttachFullHeader</th>
-      <td><p>Include the full nrrd header as an attribute of the 
+      <td><p>Include the full nrrd header as an attribute of the
 returned object (default TRUE)</p></td>
     </tr>
     <tr>
@@ -141,30 +165,33 @@ returned object (default TRUE)</p></td>
     <tr>
       <th>ReadByteAsRaw</th>
       <td><p>Either a character vector or a logical vector specifying
-when R should read 8 bit data as an R <code>raw</code> vector rather than 
+when R should read 8 bit data as an R <code>raw</code> vector rather than
 <code>integer</code> vector.</p></td>
+    </tr>
+    <tr>
+      <th>full.names</th>
+      <td><p>Whether to return the full paths to each data file (by
+analogy with <code>list.files</code>)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An <code>array</code> object, optionally with attributes from the nrrd 
+    <p>An <code>array</code> object, optionally with attributes from the nrrd
   header.</p>
 <p>A list with elements for the key nrrd header fields</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>read.nrrd</code> reads data into a raw array. If you wish to 
-  generate a <code><a href='im3d.html'>im3d</a></code> object that includes spatial calibration (but
-  is limited to representing 3D data) then you should use
-  <code><a href='im3d-io.html'>read.im3d</a></code>.</p>  
-<p>ReadByteAsRaw=unsigned (the default) only reads unsigned byte data as a raw
-  array. This saves quite a bit of space and still allows data to be used for
-  logical indexing.</p>
+    <p><code>ReadByteAsRaw="unsigned"</code> (the default) only reads unsigned
+  byte data as a raw array. This saves quite a bit of space and still allows
+  data to be used for logical indexing.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='write.nrrd.html'>write.nrrd</a></code>, <code><a href='im3d-io.html'>read.im3d</a></code></p>
+<p>Other nrrd: <code><a href='is.nrrd.html'>is.nrrd</a></code>,
+  <code><a href='nrrd.voxdims.html'>nrrd.voxdims</a></code>, <code><a href='write.nrrd.html'>write.nrrd</a></code></p>
     
 
   </div>
@@ -189,7 +216,7 @@ when R should read 8 bit data as an R <code>raw</code> vector rather than
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -197,3 +224,4 @@ when R should read 8 bit data as an R <code>raw</code> vector rather than
 
   </body>
 </html>
+

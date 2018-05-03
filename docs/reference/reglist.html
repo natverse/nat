@@ -18,13 +18,35 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="A simple wrapper class for multiple transformations — reglist" />
+
+<meta property="og:description" content="A reglist is read as a set of transformations to be 
+  applied sequentially starting with the first element, then applying the 
+  second transformation to the result of the first and so on. Each individual
+  transformation is considered to map data from the sample (floating/moving) 
+  space to the reference (fixed/template) space.  
+Each transformation may have an attribute "swap" indicating that the
+  natural direction of the transformation should be swapped (i.e. inverted). 
+  This can be done trivially in the case of affine transformations, 
+  expensively for others such as CMTK registrations (see 
+  cmtkreg) and not at all for others. Note that the term 'swap'
+  is used to avoid a direct equivalence with inversion - many registration 
+  tools use the term inverse for directions that one might naively 
+  think of as as the natural direction of the transformation (see 
+  xformpoints.cmtkreg for discussion).
+invert_reglist inverts a reglist object
+c.reglist combines multiple reglists into a single
+  reglist." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +69,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +128,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>A simple wrapper class for multiple transformations</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/reglist.R'><code>R/reglist.R</code></a></small>
     </div>
 
     
@@ -118,11 +145,9 @@
   is used to avoid a direct equivalence with inversion - many registration 
   tools use the term <em>inverse</em> for directions that one might naively 
   think of as as the natural direction of the transformation (see 
-  <code><a href='xformpoints.html'>xformpoints.cmtkreg</a></code> for discussion).
-
-    <code>invert_reglist</code> inverts a reglist object
-
-    <code>c.reglist</code> combines multiple <code>reglist</code>s into a single
+  <code><a href='xformpoints.html'>xformpoints.cmtkreg</a></code> for discussion).</p>
+<p><code>invert_reglist</code> inverts a reglist object</p>
+<p><code>c.reglist</code> combines multiple <code>reglist</code>s into a single
   <code>reglist</code>.</p>
     
 
@@ -133,7 +158,7 @@
 <span class='co'># S3 method for reglist</span>
 <span class='fu'>c</span>(<span class='no'>...</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -170,8 +195,8 @@ direction of each transformation should be swapped (i.e. mapping reference
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='xform.html'>xform</a></code>
-    <code><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></code></p>
+    <p><code><a href='xform.html'>xform</a></code></p>
+<p><code><a href='http://www.rdocumentation.org/packages/base/topics/c'>c</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -215,7 +240,7 @@ direction of each transformation should be swapped (i.e. mapping reference
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -223,3 +248,4 @@ direction of each transformation should be swapped (i.e. mapping reference
 
   </body>
 </html>
+

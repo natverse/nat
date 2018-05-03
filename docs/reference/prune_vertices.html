@@ -18,13 +18,20 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Prune selected vertices or edges from a neuron — prune_vertices" />
+
+<meta property="og:description" content="prune_vertices removes vertices from a neuron
+prune_edges removes edges (and any unreferenced vertices)" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +54,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,19 +113,19 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Prune selected vertices or edges from a neuron</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/ngraph.R'><code>R/ngraph.R</code></a></small>
     </div>
 
     
-    <p><code>prune_vertices</code> removes vertices from a neuron
-
-    <code>prune_edges</code> removes edges (and any unreferenced vertices)</p>
+    <p><code>prune_vertices</code> removes vertices from a neuron</p>
+<p><code>prune_edges</code> removes edges (and any unreferenced vertices)</p>
     
 
     <pre class="usage"><span class='fu'>prune_vertices</span>(<span class='no'>x</span>, <span class='no'>verticestoprune</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>prune_edges</span>(<span class='no'>x</span>, <span class='no'>edges</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -180,7 +191,7 @@ of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E
     <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='fl'>1</span>:<span class='fl'>25</span>)
 <span class='co'># original neuron</span>
 <span class='fu'>plot</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='input'><span class='co'># with pruned neuron superimposed</span>
-<span class='fu'>plot</span>(<span class='no'>n</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='prune_vertices-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>n</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='prune_vertices-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># use the PointNo field (= the original id from an SWC file)</span>
 <span class='no'>n2</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>n</span>, <span class='fu'>match</span>(<span class='fl'>26</span>:<span class='fl'>30</span>, <span class='no'>n</span>$<span class='no'>d</span>$<span class='no'>PointNo</span>))
 <span class='no'>y</span><span class='kw'>=</span><span class='fu'>prune_edges</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>edges</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>25</span>)
@@ -216,7 +227,7 @@ of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -224,3 +235,4 @@ of <code>igraph::<a href='http://www.rdocumentation.org/packages/igraph/topics/E
 
   </body>
 </html>
+

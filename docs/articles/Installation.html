@@ -8,8 +8,11 @@
 <title>Installation details • nat</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Installation details">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
@@ -24,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -81,8 +88,11 @@
       <h1>Installation details</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2018-01-05</h4>
-          </div>
+            <h4 class="date">2018-05-03</h4>
+      
+      <small>Source: <a href="https://github.com/jefferis/nat/blob/master/vignettes/Installation.Rmd"><code>vignettes/Installation.Rmd</code></a></small>
+
+    </div>
 
     
     
@@ -139,7 +149,8 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 </li>
 <li>When you run Cygwin’s setup.exe, you should also install all <em>fftw3</em> packages. (fftw3 is a CMTK dependency which provides fast Fourier transform functions)</li>
 <li>Download <code>CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to the cygwin folder (<code>C:\cygwin64</code>)</li>
-<li>Start a Cygwin terminal and issue the following command <code>tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to extract CMTK to the cygwin folder.</li>
+<li>Start a Cygwin terminal and go to the root directory with the command <code>cd /</code> (this is the same place as <code>C:\cygwin64</code> in the Windows file system).</li>
+<li>On the Terminal, issue the following command <code>tar -xvf CMTK-3.3.1-CYGWIN-x86_64.tar.gz</code> to extract CMTK to the cygwin folder.</li>
 <li>Optionally add <code>C:\cygwin64\bin</code> to your windows path (since v1.8.10 nat should look after this - see ?cmtk.bindir).</li>
 <li>The nat function <code><a href="../reference/cmtk.bindir.html">cmtk.bindir()</a></code> should now correctly identify the CMTK binary directory. You can test that the executables are working by trying the following in R <code>library(nat);cmtk.dof2mat(version = TRUE)</code> which should then respond with “3.3.1” if you have installed the CMTK version we have just mentioned.</li>
 </ul>
@@ -174,7 +185,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>

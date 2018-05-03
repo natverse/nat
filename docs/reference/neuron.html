@@ -18,13 +18,28 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="neuron: class to represent traced neurons — neuron" />
+
+<meta property="og:description" content="neuron makes a neuron object from appropriate variables.
+is.neuron will check if an object looks like a neuron.
+as.neuron will convert a suitable object to a neuron
+as.neuron.data.frame expects a block of SWC format data
+as.neuron.ngraph converts a graph (typically an 
+  ngraph object) to a neuron
+as.neuron.igraph will convert an ngraph compatible
+  igraph object into a neuron.
+as.neuron.default will add class "neuron" to a neuron-like
+  object." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +62,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,24 +121,19 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>neuron: class to represent traced neurons</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuron.R'><code>R/neuron.R</code></a></small>
     </div>
 
     
-    <p><code>neuron</code> makes a neuron object from appropriate variables.
-
-    <code>is.neuron</code> will check if an object looks like a neuron.
-
-    <code>as.neuron</code> will convert a suitable object to a neuron
-
-    <code>as.neuron.data.frame</code> expects a block of SWC format data
-
-    <code>as.neuron.ngraph</code> converts a graph (typically an 
-  <code>ngraph</code> object) to a neuron
-
-    <code>as.neuron.igraph</code> will convert an <code>ngraph</code> compatible
-  <code><a href='http://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> object into a <code>neuron</code>.
-
-    <code>as.neuron.default</code> will add class "neuron" to a neuron-like
+    <p><code>neuron</code> makes a neuron object from appropriate variables.</p>
+<p><code>is.neuron</code> will check if an object looks like a neuron.</p>
+<p><code>as.neuron</code> will convert a suitable object to a neuron</p>
+<p><code>as.neuron.data.frame</code> expects a block of SWC format data</p>
+<p><code>as.neuron.ngraph</code> converts a graph (typically an 
+  <code>ngraph</code> object) to a neuron</p>
+<p><code>as.neuron.igraph</code> will convert an <code>ngraph</code> compatible
+  <code><a href='http://www.rdocumentation.org/packages/igraph/topics/aaa-igraph-package'>igraph</a></code> object into a <code>neuron</code>.</p>
+<p><code>as.neuron.default</code> will add class "neuron" to a neuron-like
   object.</p>
     
 
@@ -144,7 +158,7 @@
 <span class='co'># S3 method for default</span>
 <span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -249,10 +263,10 @@ subtree, not the whole neuron.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='neuronlist.html'>neuronlist</a></code>
-    <code>graph.dfs, <a href='seglist.html'>as.seglist</a></code></p>
+    <p><code><a href='neuronlist.html'>neuronlist</a></code></p>
+<p><code>graph.dfs, <a href='seglist.html'>as.seglist</a></code></p>
 <p>Other neuron: <code><a href='ngraph.html'>ngraph</a></code>,
-  <code><a href='plot.neuron.html'>plot.neuron</a></code>,
+  <code><a href='plot.neuron.html'>plot.dotprops</a></code>,
   <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
   <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
   <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
@@ -380,26 +394,25 @@ subtree, not the whole neuron.</p>
 #&gt; 180 289.5364 111.96014 109.18281</div><div class='input'>
 <span class='co'>## Other methods</span>
 <span class='co'># plot</span>
-<span class='fu'>plot</span>(<span class='no'>n</span>)</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
+<span class='fu'>plot</span>(<span class='no'>n</span>)</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
 <span class='fu'>methods</span>(<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'neuron'</span>)</div><div class='output co'>#&gt;  [1] all.equal          as.neuron          as.ngraph          as.seglist        
-#&gt;  [5] boundingbox        branchpoints       dotprops           endpoints         
-#&gt;  [9] intersect_plane    ndigest            nvertices          Ops               
-#&gt; [13] plot               plot3d             potential_synapses prune             
-#&gt; [17] resample           rootpoints         scale              subset            
-#&gt; [21] summary            write.vtk          xform              xyzmatrix         
-#&gt; [25] xyzmatrix&lt;-       
+#&gt;  [5] branchpoints       dotprops           endpoints          intersect_plane   
+#&gt;  [9] ndigest            nvertices          Ops                plot              
+#&gt; [13] plot3d             potential_synapses prune              resample          
+#&gt; [17] rootpoints         scale              subset             summary           
+#&gt; [21] write.vtk          xform              xyzmatrix          xyzmatrix&lt;-       
 #&gt; see '?methods' for accessing help and source code</div><div class='input'>
 <span class='co'>## Neurons as graphs </span>
 <span class='co'># convert to graph and find longest paths by number of nodes</span>
 <span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>)
-<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ng</span>))</div><div class='img'><img src='neuron-2.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='co'># ... or in distances  microns</span>
+<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ng</span>))</div><div class='img'><img src='neuron-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># ... or in distances  microns</span>
 <span class='no'>ngw</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ngw</span>))</div><div class='img'><img src='neuron-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>hist</span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/distances'>distances</a></span>(<span class='no'>ngw</span>))</div><div class='img'><img src='neuron-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># converting back and forth between neurons and graphs</span>
 <span class='no'>g</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='no'>gstem</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/subgraph'>induced.subgraph</a></span>(<span class='no'>g</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
 <span class='co'># this is fine</span>
-<span class='fu'>plot</span>(<span class='no'>gstem</span>)</div><div class='img'><img src='neuron-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem</span>))</div><div class='img'><img src='neuron-5.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>gstem</span>)</div><div class='img'><img src='neuron-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem</span>))</div><div class='img'><img src='neuron-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># but if you had an undirected graph </span>
 <span class='no'>ug</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/as.directed'>as.undirected</a></span>(<span class='no'>gstem</span>)
 <span class='co'># you get a warning because there is no explicit origin for the graph</span>
@@ -445,7 +458,7 @@ subtree, not the whole neuron.</p>
 #&gt; [1] "neuron" "list"  </div><div class='input'>
 <span class='co'># If you need finer control of the conversion process </span>
 <span class='no'>gstem2</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>ug</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'>plot</span>(<span class='no'>gstem2</span>)</div><div class='img'><img src='neuron-6.png' alt='' width='700' height='432.632880098887' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem2</span>))</div><div class='img'><img src='neuron-7.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>gstem2</span>)</div><div class='img'><img src='neuron-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot</span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem2</span>))</div><div class='img'><img src='neuron-7.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -470,7 +483,7 @@ subtree, not the whole neuron.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -478,3 +491,4 @@ subtree, not the whole neuron.</p>
 
   </body>
 </html>
+

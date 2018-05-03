@@ -18,13 +18,24 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Set or return list of registered file formats that we can read — fileformats" />
+
+<meta property="og:description" content="fileformats returns format names, a format definition 
+  list or a table of information about the formats that match the given 
+  filter conditions.
+registerformat registers a format in the io registry
+getformatreader gets the function to read a file
+getformatwriter gets the function to write a file" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +58,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,18 +117,16 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Set or return list of registered file formats that we can read</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuron-io.R'><code>R/neuron-io.R</code></a></small>
     </div>
 
     
     <p><code>fileformats</code> returns format names, a format definition 
   list or a table of information about the formats that match the given 
-  filter conditions.
-
-    <code>registerformat</code> registers a format in the io registry
-
-    <code>getformatreader</code> gets the function to read a file
-
-    <code>getformatwriter</code> gets the function to write a file</p>
+  filter conditions.</p>
+<p><code>registerformat</code> registers a format in the io registry</p>
+<p><code>getformatreader</code> gets the function to read a file</p>
+<p><code>getformatwriter</code> gets the function to write a file</p>
     
 
     <pre class="usage"><span class='fu'>fileformats</span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>read</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>write</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -126,7 +139,7 @@
 
 <span class='fu'>getformatwriter</span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -182,8 +195,8 @@ from file header to determine file's type.</p></td>
 
     <p>if a <code>format</code> argument is passed to <code>fileformats</code> it will
   be matched wigth partial string matching and iif a unique match exists that
-  will be returned.
-    <code>getformatreader</code> starts by reading a set number of bytes from 
+  will be returned.</p>
+<p><code>getformatreader</code> starts by reading a set number of bytes from 
   the start off the current file and then checks using file extension and 
   magic functions to see if it can identify the file. Presently formats are 
   in a queue in alphabetical order, dispatching on the first match.</p>
@@ -274,7 +287,7 @@ from file header to determine file's type.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -282,3 +295,4 @@ from file header to determine file's type.</p></td>
 
   </body>
 </html>
+

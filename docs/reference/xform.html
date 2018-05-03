@@ -18,13 +18,27 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Transform the 3D location of objects such as neurons — xform" />
+
+<meta property="og:description" content="xform is designed to operate on a variety of data types, especially 
+objects encapsulating neurons. xform depends on two specialised 
+downstream functions xformpoints and xformimage. 
+These are user visible any contain some useful documentation, but should only
+be required for expert use; in almost all circumstances, you should use only 
+xform.
+xform.character is designed to work with files on disk.
+  Presently it is restricted to images, although other datatypes may be
+  supported in future." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +61,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +120,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transform the 3D location of objects such as neurons</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/xform.R'><code>R/xform.R</code></a></small>
     </div>
 
     
@@ -110,9 +129,8 @@ objects encapsulating neurons. <code>xform</code> depends on two specialised
 downstream functions <code><a href='xformpoints.html'>xformpoints</a></code> and <code><a href='xformimage.html'>xformimage</a></code>. 
 These are user visible any contain some useful documentation, but should only
 be required for expert use; in almost all circumstances, you should use only 
-<code>xform</code>.
-
-    <code>xform.character</code> is designed to work with files on disk.
+<code>xform</code>.</p>
+<p><code>xform.character</code> is designed to work with files on disk.
   Presently it is restricted to images, although other datatypes may be
   supported in future.</p>
     
@@ -148,7 +166,7 @@ be required for expert use; in almost all circumstances, you should use only
 <span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='kw'>VectoriseRegistrations</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>TransformDFCoords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -307,7 +325,7 @@ as well.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -315,3 +333,4 @@ as well.</p></td>
 
   </body>
 </html>
+

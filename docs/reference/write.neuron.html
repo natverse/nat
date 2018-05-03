@@ -18,13 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Write out a neuron in any of the file formats we know about — write.neuron" />
+
+<meta property="og:description" content="If file is not specified the neuron's InputFileName field will be checked
+(for a dotprops object it will be the 'file' attribute). If this is
+missing there will be an error. If dir is specified it will be combined with
+basename(file). If file is specified but format is not, it will be inferred
+from file's extension." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +116,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Write out a neuron in any of the file formats we know about</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuron-io.R'><code>R/neuron-io.R</code></a></small>
     </div>
 
     
@@ -115,7 +130,7 @@ from file's extension.</p>
     <pre class="usage"><span class='fu'>write.neuron</span>(<span class='no'>n</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>Force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>MakeDir</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -166,7 +181,12 @@ added e.g. if the desired file name does not have an extension.</p></td>
   extension for the specified <code>format</code> will be appended. This behaviour
   can be suppressed by setting <code>ext=NA</code>.</p>
 <p>If you find that some software rejects your SWC files, try setting
-  <code>normalise.ids=TRUE</code> (see examples).</p>
+  <code>normalise.ids=TRUE</code> (see examples). This will ensure that the vertex
+  ids are sequentially ascending integers (1:N). The default value of
+  <code>normalise.ids=NA</code> will normalise <code>PointNo</code> vertex ids only when
+  a vertex is connected (by the <code>Parent</code> field) to a vertex that had not
+  yet been defined. Many readers make the assumption that this is true. When
+  <code>normalise.ids=F</code> the vertex ids will not be touched.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -180,7 +200,7 @@ added e.g. if the desired file name does not have an extension.</p></td>
 <span class='co'># write out "myneuron.swc" in SWC format</span>
 <span class='fu'>write.neuron</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>file</span><span class='kw'>=</span><span class='st'>'myneuron.swc'</span>)
 <span class='co'># write out "myneuron.swc" in SWC format, normalising the integer ids that</span>
-<span class='co'># label every node (this is required by some SWC reders e.g. Fiji)</span>
+<span class='co'># label every node (this is required by some SWC readers e.g. Fiji)</span>
 <span class='fu'>write.neuron</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>file</span><span class='kw'>=</span><span class='st'>'myneuron.swc'</span>, <span class='kw'>normalise.ids</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 
 <span class='co'># write out "myneuron.amiramesh" in Amira hxlineset format</span>
@@ -213,7 +233,7 @@ added e.g. if the desired file name does not have an extension.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -221,3 +241,4 @@ added e.g. if the desired file name does not have an extension.</p></td>
 
   </body>
 </html>
+

@@ -18,13 +18,27 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Write data and metadata to NRRD file or create a detached NRRD (nhdr) file. — write.nrrd" />
+
+<meta property="og:description" content="write.nrrd writes an array, vector or im3d object to a 
+  NRRD file. When x is an im3d object, appropriate spatial 
+  calibration fields are added to the header.
+write.nrrd.header writes a nrrd header file.
+write.nrrd.header.for.file makes a detached NRRD
+  (nhdr) file that points at another image file on disk, making it
+  NRRD compatible. This can be a convenient way to make NRRD inputs for other
+  tools e.g. CMTK and also allows the same data block to pointed to by
+  different nhdr files with different spatial calibration." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +61,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,16 +120,15 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/nrrd-io.R'><code>R/nrrd-io.R</code></a></small>
     </div>
 
     
     <p><code>write.nrrd</code> writes an array, vector or im3d object to a 
   NRRD file. When <code>x</code> is an <code>im3d</code> object, appropriate spatial 
-  calibration fields are added to the header.
-
-    <code>write.nrrd.header</code> writes a nrrd header file.
-
-    <code>write.nrrd.header.for.file</code> makes a detached NRRD
+  calibration fields are added to the header.</p>
+<p><code>write.nrrd.header</code> writes a nrrd header file.</p>
+<p><code>write.nrrd.header.for.file</code> makes a detached NRRD
   (<b>nhdr</b>) file that points at another image file on disk, making it
   NRRD compatible. This can be a convenient way to make NRRD inputs for other
   tools e.g. CMTK and also allows the same data block to pointed to by
@@ -126,7 +143,7 @@
 
 <span class='fu'>write.nrrd.header.for.file</span>(<span class='no'>infile</span>, <span class='kw'>outfile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -224,7 +241,9 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='read.nrrd.html'>read.nrrd</a>, .Platform</code></p>
+    <p><code><a href='im3d-io.html'>write.im3d</a></code>, <code>.Platform</code></p>
+<p>Other nrrd: <code><a href='is.nrrd.html'>is.nrrd</a></code>,
+  <code><a href='nrrd.voxdims.html'>nrrd.voxdims</a></code>, <code><a href='read.nrrd.html'>read.nrrd</a></code></p>
     
 
   </div>
@@ -251,7 +270,7 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -259,3 +278,4 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
 
   </body>
 </html>
+

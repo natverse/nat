@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Convert a suitable object to an im3d object. — as.im3d" />
+
+<meta property="og:description" content="Convert a suitable object to an im3d object." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Convert a suitable object to an im3d object.</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/im3d.R'><code>R/im3d.R</code></a></small>
     </div>
 
     
@@ -116,7 +127,7 @@
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>as.im3d</span>(<span class='no'>x</span>, <span class='no'>voxdims</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BoundingBox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -150,8 +161,8 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
   into a 3D volume representation. <code><a href='ind2coord.html'>ind2coord</a></code> can be used to do 
   the reverse: convert a set of 3D coords to an <code>im3d</code> volume.</p>  
 <p>Other than that, this is a largely a placeholder function with the 
-  expectation that other packages may wish to provide suitable methods.
-    <code>as.im3d.matrix</code> can accept any object that can be converted to
+  expectation that other packages may wish to provide suitable methods.</p>
+<p><code>as.im3d.matrix</code> can accept any object that can be converted to
   an im3d object in the <code>voxdims</code> argument This will completely specify 
   the dims, voxdims, origin etc. Any value passed to those parameters will be
   ignored. This can be useful for producing a new im3d to match a target 
@@ -160,8 +171,8 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='im3d.html'>im3d</a></code>, <code><a href='ind2coord.html'>ind2coord</a></code>
-    <code><a href='im3d.html'>im3d</a></code>, <code>as.im3d</code></p>
+    <p><code><a href='im3d.html'>im3d</a></code>, <code><a href='ind2coord.html'>ind2coord</a></code></p>
+<p><code><a href='im3d.html'>im3d</a></code>, <code>as.im3d</code></p>
 <p>Other im3d: <code><a href='boundingbox.html'>boundingbox</a></code>,
   <code><a href='im3d-coords.html'>im3d-coords</a></code>, <code><a href='im3d-io.html'>im3d-io</a></code>,
   <code><a href='im3d.html'>im3d</a></code>, <code><a href='imexpand.grid.html'>imexpand.grid</a></code>,
@@ -209,7 +220,7 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -217,3 +228,4 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 
   </body>
 </html>
+

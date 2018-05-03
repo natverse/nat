@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="prune an object by removing points near (or far) from a target object — prune" />
+
+<meta property="og:description" content="prune an object by removing points near (or far) from a target object" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>prune an object by removing points near (or far) from a target object</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/dotprops.R'><code>R/dotprops.R</code></a></small>
     </div>
 
     
@@ -123,7 +134,7 @@
 <span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>maxdist</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"near"</span>, <span class='st'>"far"</span>),
   <span class='kw'>return.indices</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -164,11 +175,11 @@ than the 3D object/points (default <code>FALSE</code>)</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <p><code><a href='prune_strahler.html'>prune_strahler</a></code>, <code><a href='spine.html'>spine</a></code>,
-  <code><a href='prune_vertices.html'>prune_vertices</a></code>
-    <code><a href='subset.neuron.html'>subset.neuron</a></code>
-    <code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
+  <code><a href='prune_vertices.html'>prune_vertices</a></code></p>
+<p><code><a href='subset.neuron.html'>subset.neuron</a></code></p>
+<p><code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
 <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
-  <code><a href='plot.neuron.html'>plot.neuron</a></code>,
+  <code><a href='plot.neuron.html'>plot.dotprops</a></code>,
   <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='resample.html'>resample</a></code>,
   <code><a href='rootpoints.html'>rootpoints</a></code>, <code><a href='spine.html'>spine</a></code>,
   <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
@@ -205,7 +216,7 @@ than the 3D object/points (default <code>FALSE</code>)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -213,3 +224,4 @@ than the 3D object/points (default <code>FALSE</code>)</p></td>
 
   </body>
 </html>
+

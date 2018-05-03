@@ -18,13 +18,35 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="neuronlistfh - List of neurons loaded on demand from disk or remote website — neuronlistfh" />
+
+<meta property="og:description" content="neuronlistfh objects consist of a list of neuron objects 
+  along with an optional attached dataframe containing information about the 
+  neurons. In contrast to neuronlist objects the neurons are not 
+  present in memory but are instead dynamically loaded from disk as required.
+  neuronlistfh objects also inherit from neuronlist and 
+  therefore any appropriate methods e.g. plot3d.neuronlist can also be
+  used on neuronlistfh objects.  
+neuronlistfh constructs a neuronlistfh object from a 
+  filehash, data.frame and keyfilemap. End users will 
+  not typically use this function to make a neuronlistfh. 
+  They will usually read them using read.neuronlistfh and sometimes 
+  create them by using as.neuronlistfh on a neuronlist object.
+is.neuronlistfh test if an object is a neuronlistfh
+as.neuronlistfh generic function to convert an object to 
+  neuronlistfh
+as.neuronlistfh.neuronlist converts a regular neuronlist 
+  to one backed by a filehash object with an on disk representation" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +69,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +128,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>neuronlistfh - List of neurons loaded on demand from disk or remote website</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuronlistfh.R'><code>R/neuronlistfh.R</code></a></small>
     </div>
 
     
@@ -116,14 +143,11 @@
   <code>filehash</code>, <code>data.frame</code> and <code>keyfilemap</code>. End users will 
   <strong>not</strong> typically use this function to make a <code>neuronlistfh</code>. 
   They will usually read them using <code>read.neuronlistfh</code> and sometimes 
-  create them by using <code>as.neuronlistfh</code> on a <code>neuronlist</code> object.
-
-    <code>is.neuronlistfh</code> test if an object is a neuronlistfh
-
-    <code>as.neuronlistfh</code> generic function to convert an object to 
-  neuronlistfh
-
-    <code>as.neuronlistfh.neuronlist</code> converts a regular neuronlist 
+  create them by using <code>as.neuronlistfh</code> on a <code>neuronlist</code> object.</p>
+<p><code>is.neuronlistfh</code> test if an object is a neuronlistfh</p>
+<p><code>as.neuronlistfh</code> generic function to convert an object to 
+  neuronlistfh</p>
+<p><code>as.neuronlistfh.neuronlist</code> converts a regular neuronlist 
   to one backed by a filehash object with an on disk representation</p>
     
 
@@ -138,7 +162,7 @@
   <span class='kw'>dbClass</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"RDS"</span>, <span class='st'>"RDS2"</span>), <span class='kw'>remote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>WriteObjects</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"yes"</span>, <span class='st'>"no"</span>,
   <span class='st'>"missing"</span>), <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -321,7 +345,7 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -329,3 +353,4 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
 
   </body>
 </html>
+

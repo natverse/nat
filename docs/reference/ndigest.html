@@ -18,13 +18,23 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Calculated normalised digest value for an object — ndigest" />
+
+<meta property="og:description" content="The normalised digest should exclude any fields or 
+  attributes irrelevant to the core contents of the object (e.g. timestamps, 
+  absolute location of the input files on disk etc). In theory then, this
+  value should be constant for the same data regardless of the particular
+  machine on which the digest is being computed." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +57,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +116,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Calculated normalised digest value for an object</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/ndigest.R'><code>R/ndigest.R</code></a></small>
     </div>
 
     
@@ -124,7 +139,7 @@
 <span class='fu'>ndigest</span>(<span class='no'>x</span>, <span class='kw'>fieldsToExclude</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"InputFileName"</span>, <span class='st'>"CreatedAt"</span>,
   <span class='st'>"NodeName"</span>, <span class='st'>"InputFileStat"</span>, <span class='st'>"InputFileMD5"</span>), <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -156,14 +171,14 @@ eigenvectors for equality (default TRUE, see details)</p></td>
 
     <p><code>ndigest.neuronlistfh</code> only considers the <code>keyfilemap</code> and
   <code>df</code> (metadata data.frame) when computing the hash value. See
-  <code>neuronlistfh</code> for the significance of these two fields.
-    <code>ndigest.dotprops</code> ignores any <code>mtime</code> or <code>file</code>
+  <code>neuronlistfh</code> for the significance of these two fields.</p>
+<p><code>ndigest.dotprops</code> ignores any <code>mtime</code> or <code>file</code>
   attributes. It also converts tangent vectors to absolute values (when 
   <code>absoluteVectors=TRUE</code>) because the direction vectors are computed 
   using an eigenvector decomposition where the sign of the eigenvector is 
   essentially random and subject to small numerical instabilities. Therefore 
-  it does not usually make sense to rely on the value of vect exactly.
-    <code>ndigest.neuron</code> ignores the following fields:</p>  
+  it does not usually make sense to rely on the value of vect exactly.</p>
+<p><code>ndigest.neuron</code> ignores the following fields:</p>  
 <p></p><ul>
 <li><p>InputFileName</p></li>
 <li><p>CreatedAt</p></li>
@@ -174,9 +189,9 @@ eigenvectors for equality (default TRUE, see details)</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>digest</code>
-    <code><a href='all.equal.dotprops.html'>all.equal.dotprops</a></code>
-    <code><a href='all.equal.neuron.html'>all.equal.neuron</a></code></p>
+    <p><code>digest</code></p>
+<p><code><a href='all.equal.dotprops.html'>all.equal.dotprops</a></code></p>
+<p><code><a href='all.equal.neuron.html'>all.equal.neuron</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -205,7 +220,7 @@ eigenvectors for equality (default TRUE, see details)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -213,3 +228,4 @@ eigenvectors for equality (default TRUE, see details)</p></td>
 
   </body>
 </html>
+

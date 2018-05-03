@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Plot neurons in 3D using rgl library — plot3d.neuron" />
+
+<meta property="og:description" content="Plot neurons in 3D using rgl library" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +112,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot neurons in 3D using rgl library</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuron-plot.R'><code>R/neuron-plot.R</code></a></small>
     </div>
 
     
@@ -113,7 +124,7 @@
   <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -139,17 +150,17 @@ using the NeuronName field <strong>or</strong> a character vector of names.</p><
     </tr>
     <tr>
       <th>WithText</th>
-      <td><p>Whether to label plotted points with their numeric id (see 
+      <td><p>Whether to label plotted points with their numeric id (see
 details)</p></td>
     </tr>
     <tr>
       <th>PlotSubTrees</th>
-      <td><p>Whether to plot all sub trees when the neuron is not 
+      <td><p>Whether to plot all sub trees when the neuron is not
 fully connected.</p></td>
     </tr>
     <tr>
       <th>add</th>
-      <td><p>Whether to add the neuron to existing rgl plot rather than 
+      <td><p>Whether to add the neuron to existing rgl plot rather than
 clearing the scene (default TRUE)</p></td>
     </tr>
     <tr>
@@ -158,20 +169,21 @@ clearing the scene (default TRUE)</p></td>
     </tr>
     <tr>
       <th>soma</th>
-      <td><p>Whether to plot a sphere at neuron's origin representing the 
-soma. Either a logical value or a numeric indicating the radius (default 
+      <td><p>Whether to plot a sphere at neuron's origin representing the
+soma. Either a logical value or a numeric indicating the radius (default
 <code>FALSE</code>). When <code>soma=TRUE</code> the radius is hard coded to 2.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to rgl::lines3d</p></td>
+      <td><p>Additional arguments passed to <code><a href='http://www.rdocumentation.org/packages/rgl/topics/3dobjects'>lines3d</a></code> (and
+<code><a href='http://www.rdocumentation.org/packages/rgl/topics/spheres'>spheres3d</a></code> if somata are being plotted).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>list of rgl plotting ids (invisibly) separated into <code>lines</code>, 
-  <code>points</code>, <code>texts</code> according to plot element. See 
+    <p>list of rgl plotting ids (invisibly) separated into <code>lines</code>,
+  <code>points</code>, <code>texts</code> according to plot element. See
   <code>rgl::<a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code> for details.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -179,10 +191,17 @@ soma. Either a logical value or a numeric indicating the radius (default
     <p>Note that when <code>WithText=TRUE</code>, the numeric identifiers plotted
   are <em>raw indices</em> into the <code>x$d</code> array of the <code>neuron</code>,
   <em>not</em> the values of the <code>PointNo</code> column.</p>
+<p>Note that <code>...</code> is passed to both <code><a href='http://www.rdocumentation.org/packages/rgl/topics/3dobjects'>lines3d</a></code> and
+  <code><a href='http://www.rdocumentation.org/packages/rgl/topics/spheres'>spheres3d</a></code> (if somata are being plotted). Not all
+  <code>...</code> elements are necessarily relevant to both of these drawing
+  calls. Furthermore plotting a large number of somata with transparency
+  (i.e. <code>alpha &lt; 1</code> ) can quickly result in very slow rgl draw and
+  refresh speeds; you will likely want to set <code>skipRedraw=FALSE</code> when using
+  <code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code> to plot a collection of neurons.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code>, <code><a href='plot3d.dotprops.html'>plot3d.dotprops</a></code>, 
+    <p><code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code>, <code><a href='plot3d.dotprops.html'>plot3d.dotprops</a></code>,
   <code>nat::<a href='plot3d.html'>plot3d</a></code>, <code>rgl::<a href='http://www.rdocumentation.org/packages/rgl/topics/plot3d'>plot3d</a></code></p>
     
 
@@ -224,7 +243,7 @@ soma. Either a logical value or a numeric indicating the radius (default
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -232,3 +251,4 @@ soma. Either a logical value or a numeric indicating the radius (default
 
   </body>
 </html>
+

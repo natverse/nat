@@ -18,13 +18,27 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="ngraph: a graph to encode a neuron's connectivity — ngraph" />
+
+<meta property="og:description" content="the ngraph class contains a (completely general) graph
+  representation of a neuron's connectivity in an igraph object. It
+  may additionally contain vertex name or position data. See Connectivity
+  section.
+ngraph() creates an ngraph from edge and vertex information.
+as.ngraph converts an object to an ngraph
+as.ngraph.dataframe construct ngraph from a data.frame 
+  containing SWC format data
+as.ngraph.neuron construct ngraph from a neuron" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +61,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,6 +120,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>ngraph: a graph to encode a neuron's connectivity</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/ngraph.R'><code>R/ngraph.R</code></a></small>
     </div>
 
     
@@ -109,14 +128,11 @@
   representation of a neuron's connectivity in an <code>igraph</code> object. It
   may additionally contain vertex name or position data. See Connectivity
   section.</p>
-<p><code>ngraph()</code> creates an ngraph from edge and vertex information.
-
-    <code>as.ngraph</code> converts an object to an ngraph
-
-    <code>as.ngraph.dataframe</code> construct ngraph from a data.frame 
-  containing SWC format data
-
-    <code>as.ngraph.neuron</code> construct ngraph from a neuron</p>
+<p><code>ngraph()</code> creates an ngraph from edge and vertex information.</p>
+<p><code>as.ngraph</code> converts an object to an ngraph</p>
+<p><code>as.ngraph.dataframe</code> construct ngraph from a data.frame 
+  containing SWC format data</p>
+<p><code>as.ngraph.neuron</code> construct ngraph from a neuron</p>
     
 
     <pre class="usage"><span class='fu'>ngraph</span>(<span class='no'>el</span>, <span class='no'>vertexnames</span>, <span class='kw'>xyz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -131,7 +147,7 @@
 <span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"swc"</span>, <span class='st'>"seglist"</span>),
   <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -141,8 +157,8 @@ closer to the root (soma) of the neuron.</p></td>
     </tr>
     <tr>
       <th>vertexnames</th>
-      <td><p>Integer names for graph - the edge list is specified using
-these names (see details).</p></td>
+      <td><p>Integer names for graph nodes - the edge list is specified
+using these names (see details).</p></td>
     </tr>
     <tr>
       <th>xyz</th>
@@ -231,7 +247,7 @@ neuronal connectivity to generate graph.</p></td>
   <code><a href='subset.neuron.html'>subset.neuron</a></code> for example of graph-based manipulation of a
   neuron.</p>
 <p>Other neuron: <code><a href='neuron.html'>neuron</a></code>,
-  <code><a href='plot.neuron.html'>plot.neuron</a></code>,
+  <code><a href='plot.neuron.html'>plot.dotprops</a></code>,
   <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
   <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
   <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
@@ -240,7 +256,7 @@ neuronal connectivity to generate graph.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
 <span class='no'>g</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>n</span>)
-<span class='fu'>library</span>(<span class='no'>igraph</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'>library</span>(<span class='no'>igraph</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: package ‘igraph’ was built under R version 3.4.4</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:nat’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    knn, union</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
@@ -261,7 +277,7 @@ neuronal connectivity to generate graph.</p></td>
 <span class='no'>gw_antispine</span><span class='kw'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/igraph/topics/delete_vertices'>delete.vertices</a></span>(<span class='no'>gw</span>, <span class='no'>d</span>))
 
 <span class='co'># note use of bounding box of original neuron to set plot axes</span>
-<span class='fu'>plot</span>(<span class='no'>gw_spine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>boundingbox</span><span class='kw'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>n</span>))</div><div class='input'><span class='fu'>plot</span>(<span class='no'>gw_antispine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='ngraph-1.png' alt='' width='700' height='432.632880098887' /></div></pre>
+<span class='fu'>plot</span>(<span class='no'>gw_spine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>boundingbox</span><span class='kw'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>n</span>))</div><div class='input'><span class='fu'>plot</span>(<span class='no'>gw_antispine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='ngraph-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -290,7 +306,7 @@ neuronal connectivity to generate graph.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -298,3 +314,4 @@ neuronal connectivity to generate graph.</p></td>
 
   </body>
 </html>
+

@@ -18,13 +18,30 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+<meta property="og:title" content="Methods for working with the dataframe attached to a neuronlist — neuronlist-dataframe-methods" />
+
+<meta property="og:description" content="[.neuronlist and [&lt;-.neuronlist behave like the 
+  corresponding base methods ([.data.frame, [&lt;-.data.frame) 
+  allowing extraction or replacement of parts of the data.frame attached to
+  the neuronlist.
+droplevels Remove redundant factor levels in dataframe 
+  attached to neuronlist
+with Evaluate expression in the context of dataframe
+  attached to a neuronlist
+head Return the first part of data.frame attached to
+  neuronlist
+tail Return the last part of data.frame attached to 
+  neuronlist" />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +64,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">nat</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">nat</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.8.12.9000</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -102,24 +123,21 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Methods for working with the dataframe attached to a neuronlist</h1>
+    <small>Source: <a href='https://github.com/jefferis/nat/blob/master/R/neuronlist.R'><code>R/neuronlist.R</code></a></small>
     </div>
 
     
     <p><code>[.neuronlist</code> and <code>[&lt;-.neuronlist</code> behave like the 
   corresponding base methods (<code>[.data.frame</code>, <code>[&lt;-.data.frame</code>) 
   allowing extraction or replacement of parts of the data.frame attached to
-  the neuronlist.
-
-    <code>droplevels</code> Remove redundant factor levels in dataframe 
-  attached to neuronlist
-
-    <code>with</code> Evaluate expression in the context of dataframe
-  attached to a neuronlist
-
-    <code>head</code> Return the first part of data.frame attached to
-  neuronlist
-
-    <code>tail</code> Return the last part of data.frame attached to 
+  the neuronlist.</p>
+<p><code>droplevels</code> Remove redundant factor levels in dataframe 
+  attached to neuronlist</p>
+<p><code>with</code> Evaluate expression in the context of dataframe
+  attached to a neuronlist</p>
+<p><code>head</code> Return the first part of data.frame attached to
+  neuronlist</p>
+<p><code>tail</code> Return the last part of data.frame attached to 
   neuronlist</p>
     
 
@@ -141,7 +159,7 @@ head(x, ...)
 # S3 method for neuronlist
 tail(x, ...)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -192,11 +210,11 @@ only, empty. Numeric values are coerced to integer as if by
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>[.data.frame</code>, @seealso <code>[&lt;-.data.frame</code>
-    <code>droplevels</code>
-    <code>with</code>
-    <code>head</code>
-    <code>tail</code></p>
+    <p><code>[.data.frame</code>, @seealso <code>[&lt;-.data.frame</code></p>
+<p><code>droplevels</code></p>
+<p><code>with</code></p>
+<p><code>head</code></p>
+<p><code>tail</code></p>
 <p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
   <code><a href='is.neuronlist.html'>is.neuronlist</a></code>, <code>neuronlistfh</code>,
   <code><a href='neuronlist.html'>neuronlist</a></code>, <code><a href='nlapply.html'>nlapply</a></code>,
@@ -365,7 +383,7 @@ only, empty. Numeric values are coerced to integer as if by
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
@@ -373,3 +391,4 @@ only, empty. Numeric values are coerced to integer as if by
 
   </body>
 </html>
+
