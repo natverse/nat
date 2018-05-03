@@ -337,8 +337,8 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
 #'
 #' plot(kcs20[[1]], col='red')
 #' # NB soma ignored
-#' plot(kcs20[[1]], col='red', soma=T)
-#' plot(kcs20[1], col='red', soma=T)
+#' plot(kcs20[[1]], col='red', soma=TRUE)
+#' plot(kcs20[1], col='red', soma=TRUE)
 plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black', 
                         PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE,
                         asp=1, add=FALSE, axes=TRUE, tck=NA,

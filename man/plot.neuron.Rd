@@ -119,8 +119,8 @@ list of plotted points (invisibly)
 
 plot(kcs20[[1]], col='red')
 # NB soma ignored
-plot(kcs20[[1]], col='red', soma=T)
-plot(kcs20[1], col='red', soma=T)
+plot(kcs20[[1]], col='red', soma=TRUE)
+plot(kcs20[1], col='red', soma=TRUE)
 # Draw first example neuron
 plot(Cell07PNs[[1]])
 # Overlay second example neuron
