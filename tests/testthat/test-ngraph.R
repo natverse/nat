@@ -76,6 +76,12 @@ test_that("we can construct an empty ngraph",{
             'ngraph')
 })
 
+
+test_that("we can construct an empty ngraph",{
+  expect_error(ngraph(el = matrix(1:2, ncol=2), vertexnames = 1L),
+               "do not reference valid")
+})
+
 test_that("as.ngraph/as.neuron",{
   n <- Cell07PNs[[1]]
   expect_is(g<-as.ngraph(n), 'ngraph')

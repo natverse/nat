@@ -21,8 +21,8 @@ as.ngraph(x, ...)
 \item{el}{A two columm matrix (start, end) defining edges. \code{start} means
 closer to the root (soma) of the neuron.}
 
-\item{vertexnames}{Integer names for graph - the edge list is specified using
-these names (see details).}
+\item{vertexnames}{Integer names for graph nodes - the edge list is specified
+using these names (see details).}
 
 \item{xyz}{3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
 when 4th column is assumed to be diameter)}

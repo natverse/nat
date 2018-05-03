@@ -38,8 +38,8 @@
 #'   information is stored as vertex attributes X, Y, and Z.
 #' @param el A two columm matrix (start, end) defining edges. \code{start} means
 #'   closer to the root (soma) of the neuron.
-#' @param vertexnames Integer names for graph - the edge list is specified using
-#'   these names (see details).
+#' @param vertexnames Integer names for graph nodes - the edge list is specified
+#'   using these names (see details).
 #' @param xyz 3D coordinates of vertices (optional, Nx3 matrix, or Nx4 matrix
 #'   when 4th column is assumed to be diameter)
 #' @param diam Diameter of neuron at each vertex (optional)
@@ -66,7 +66,7 @@
 #' library(igraph)
 #' # check that vertex attributes of graph match X position
 #' all.equal(V(g)$X, n$d$X)
-#' 
+#'
 #' # Use 3D segment lengths as edge length of graph
 #' gw=as.ngraph(n, weights=TRUE)
 #' # find longest path across graph
@@ -75,7 +75,7 @@
 #' gw_spine=as.neuron(induced.subgraph(gw, d))
 #' # make a new neuron containing all nodes except those in longest path
 #' gw_antispine=as.neuron(delete.vertices(gw, d))
-#' 
+#'
 #' # note use of bounding box of original neuron to set plot axes
 #' plot(gw_spine, col='red', boundingbox=boundingbox(n))
 #' plot(gw_antispine, col='blue', add=TRUE)
@@ -84,6 +84,10 @@ ngraph<-function(el, vertexnames, xyz=NULL, diam=NULL, directed=TRUE,
   if(any(duplicated(vertexnames))) stop("Vertex names must be unique!")
   # now translate edges into raw vertex_ids
   rawel=match(t(el), vertexnames)
+  
+  if(any(is.na(rawel))){
+    stop(sum(is.na(rawel)), "edges in el do not reference valid vertexnames!")
+  }
   if(isTRUE(weights) && !is.null(xyz)){
     # rawel is no longer a matrix
     rawel.mat=matrix(rawel, nrow=2)
