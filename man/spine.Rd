@@ -10,32 +10,38 @@ spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, invert = FALSE,
 \arguments{
 \item{n}{the neuron to consider.}
 
-\item{UseStartPoint}{Whether to use the StartPoint of the neuron (often the 
+\item{UseStartPoint}{Whether to use the StartPoint of the neuron (often the
 soma) as the starting point of the returned spine.}
 
-\item{SpatialWeights}{logical indicating whether spatial distances (default) 
+\item{SpatialWeights}{logical indicating whether spatial distances (default)
 should be used to weight segments instead of weighting each edge equally.}
 
-\item{invert}{When \code{invert=TRUE} the spine is pruned away instead of 
+\item{invert}{When \code{invert=TRUE} the spine is pruned away instead of
 being selected. This is only valid when \code{rval='neuron'} or
 \code{rval='ids'}.}
 
-\item{rval}{Character vector indicating the return type, one of 
+\item{rval}{Character vector indicating the return type, one of
 \code{'neuron'}, \code{'length'} or \code{'ids'}. See \bold{Value} section.}
 }
 \value{
 Either \itemize{
-  
+
   \item a neuron object corresponding to the longest path \emph{or}
-  
+
   \item the length of the longest path (when \code{rval="length"}) \emph{or}
-  
+
   \item an integer vector of raw point indices (when \code{rval="ids"}).
-  
+
   }
 }
 \description{
 Compute the longest path (aka spine or backbone) of a neuron
+}
+\details{
+Note that when \code{UseStartPoint=FALSE}, \code{spine} will find
+  the path between all end points (including the root if it is an end point).
+  Since the longest path must include an end point, this is equivalent to
+  searching the whole graph for the longest path, but considerably faster.
 }
 \examples{
 pn.spine=spine(Cell07PNs[[1]])
@@ -57,9 +63,9 @@ plot3d(antispine, lwd=4, col='red')
 
 }
 \seealso{
-\code{\link[igraph]{diameter}}, 
-  \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for 
-  removing lower order branches from a neuron, \code{\link{prune}} for 
+\code{\link[igraph]{diameter}},
+  \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for
+  removing lower order branches from a neuron, \code{\link{prune}} for
   removing parts of a neuron by spatial criteria.
 
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},

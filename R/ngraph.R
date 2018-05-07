@@ -202,29 +202,33 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 
 
 #' Compute the longest path (aka spine or backbone) of a neuron
-#' 
+#'
+#' @details Note that when \code{UseStartPoint=FALSE}, \code{spine} will find
+#'   the path between all end points (including the root if it is an end point).
+#'   Since the longest path must include an end point, this is equivalent to
+#'   searching the whole graph for the longest path, but considerably faster.
 #' @param n the neuron to consider.
-#' @param UseStartPoint Whether to use the StartPoint of the neuron (often the 
+#' @param UseStartPoint Whether to use the StartPoint of the neuron (often the
 #'   soma) as the starting point of the returned spine.
-#' @param SpatialWeights logical indicating whether spatial distances (default) 
+#' @param SpatialWeights logical indicating whether spatial distances (default)
 #'   should be used to weight segments instead of weighting each edge equally.
-#' @param rval Character vector indicating the return type, one of 
+#' @param rval Character vector indicating the return type, one of
 #'   \code{'neuron'}, \code{'length'} or \code{'ids'}. See \bold{Value} section.
-#' @param invert When \code{invert=TRUE} the spine is pruned away instead of 
+#' @param invert When \code{invert=TRUE} the spine is pruned away instead of
 #'   being selected. This is only valid when \code{rval='neuron'} or
 #'   \code{rval='ids'}.
 #' @return Either \itemize{
-#'   
+#'
 #'   \item a neuron object corresponding to the longest path \emph{or}
-#'   
+#'
 #'   \item the length of the longest path (when \code{rval="length"}) \emph{or}
-#'   
+#'
 #'   \item an integer vector of raw point indices (when \code{rval="ids"}).
-#'   
+#'
 #'   }
-#' @seealso \code{\link[igraph]{diameter}}, 
-#'   \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for 
-#'   removing lower order branches from a neuron, \code{\link{prune}} for 
+#' @seealso \code{\link[igraph]{diameter}},
+#'   \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for
+#'   removing lower order branches from a neuron, \code{\link{prune}} for
 #'   removing parts of a neuron by spatial criteria.
 #' @export
 #' @examples
@@ -237,15 +241,15 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' spine(Cell07PNs[[1]], rval='length')
 #' # same result since StartPoint is included in longest path
 #' spine(Cell07PNs[[1]], rval='length', UseStartPoint=TRUE)
-#' 
+#'
 #' # extract everything but the spine
 #' antispine=spine(Cell07PNs[[1]], invert=TRUE)
 #' \donttest{
 #' plot3d(Cell07PNs[[1]])
 #' plot3d(antispine, lwd=4, col='red')
 #' }
-#' 
-#' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter 
+#'
+#' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter
 #'   delete.vertices
 #' @family neuron
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
@@ -254,20 +258,26 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
   rval=match.arg(rval)
   if(invert && rval=="length") 
     stop("invert=TRUE is not implemented for rval='length'")
-  if(UseStartPoint) {
-    # Find longest shortest path from given start point to all end points
-    lps=shortest.paths(graph = ng, n$StartPoint, to = n$EndPoints, 
-                       mode = 'all')
-    if(rval=='length') return(max(lps))
-    to=n$EndPoints[which.max(lps)]
-    longestpath=get.shortest.paths(ng, from = n$StartPoint, to = to, mode = 'all')$vpath[[1]]
-  } else {
-    if(rval=='length') {
-      return(diameter(ng, directed=FALSE))
-    } else {
-      longestpath=get.diameter(ng, directed=FALSE)
-    }
+  
+  start <- if(UseStartPoint) n$StartPoint else n$EndPoints
+  # Find distances for longest shortest paths from given start point(s) to 
+  # all end points
+  lps=shortest.paths(graph = ng, start, to = n$EndPoints, mode = 'all')
+  if(rval=='length') return(max(lps))
+  ls=length(start)
+  le=length(n$EndPoints)
+  if(!UseStartPoint && length(start)>1 && length(n$EndPoints)>1) {
+    # we have a square distance matrix which is symmetric across
+    # the diagonal - for consistency with igraph::diameter etc
+    # consider only the lower diagonal
+    lps[lower.tri(lps)]=-Inf
   }
+  # index of start and end points of longest path
+  wmi=arrayInd(which.max(lps), dim(lps))
+  from=start[wmi[1]]
+  to=n$EndPoints[wmi[2]]
+  longestpath=get.shortest.paths(ng, from = from, to = to, mode = 'all')$vpath[[1]]
+  
   if(rval=='ids') {
     if(invert) {
       # find complement of the spine path
