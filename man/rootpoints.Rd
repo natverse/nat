@@ -13,7 +13,7 @@
 \alias{endpoints.neuron}
 \alias{endpoints.igraph}
 \alias{endpoints.default}
-\title{Return the root or branch points of a neuron or graph}
+\title{Return the root, branch, or end points of a neuron or graph}
 \usage{
 rootpoints(x, ...)
 
@@ -40,27 +40,45 @@ endpoints(x, ...)
 \method{endpoints}{default}(x, ...)
 }
 \arguments{
-\item{x}{Neuron or other object which might have roots}
+\item{x}{Neuron or other object (e.g. \code{igraph}) which might have roots}
 
-\item{...}{Further arguments passed to methods}
+\item{...}{Further arguments passed to methods (for \code{\link{ngraph}} or
+\code{igraph} objects eventually \code{\link{graph.nodes}})).}
 
 \item{subtrees}{Integer index of the fully connected subtree in 
 \code{x$SubTrees}. Only applicable when a \code{neuron} consists of 
 multiple unconnected subtrees.}
 }
 \value{
-Integer point number of root/branch point
+FIXME Raw indices (in range 1:N) of vertices when \code{x} is a
+  neuron, integer point identifier (aka PointNo) othwerise.
 }
 \description{
-A neuron may have multiple subtrees and therefore multiple roots
+\code{rootpoints} returns the root point(s) (one per tree, often
+  the soma).
 
-Return the branchpoints of a neuron or graph
+\code{branchpoints} returns the branch points.
+
+\code{endpoints} returns the end points (aka leaf nodes); the
+  root point will be returned if it also a leaf node.
 }
 \details{
-\code{branchpoints.neuron} returns a list if more than one subtree is
-  specified
+A neuron may have multiple subtrees and therefore multiple roots. At
+  present there is discrepancy between the \code{*.neuron} and
+  \code{*.igraph} methods. For \code{neuron}s we return the node indices, for
+  \code{igraph}/\code{ngraph} objects the node identifiers (aka
+  names/PointNo)
+
+\code{branchpoints.neuron} returns a list if more than one subtree
+  is specified
+}
+\examples{
+rootpoints(Cell07PNs[[1]])
+endpoints(Cell07PNs[[1]])
 }
 \seealso{
+\code{\link{graph.nodes}}, \code{\link{ngraph}}
+
 Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{plot.dotprops}},
   \code{\link{potential_synapses}}, \code{\link{prune}},

@@ -1,13 +1,28 @@
 #' Return root, end, or branchpoints of an igraph object
-#' 
-#' @details Note that the graph must be directed in order to return a root point
-#' @param x An igraph object
+#'
+#' @details This function underlies \code{\link{rootpoints.igraph}} methods and
+#'   friends. It is conceived of as slightly lower level and end users would
+#'   normally use the \code{rootpoints} methods.
+#'
+#'   \code{graph.nodes} should work for any \code{\link{igraph}} object
+#'   (including \code{\link{ngraph}} objects, which inherit from \code{igraph}).
+#'   However the graph must be directed in order to return a root point
+#' @param x An igraph (or \code{\link{ngraph}}) object
 #' @param type one of root, end (which includes root) or branch
-#' @param original.ids Use named attribute to return original vertex ids (when 
+#' @param original.ids Use named attribute to return original vertex ids (when
 #'   available). Set to FALSE when this is not desired.
-#' @param exclude.isolated Do not count isolated vertices as root points 
+#' @param exclude.isolated Do not count isolated vertices as root points
 #'   (default)
 #' @importFrom igraph V degree get.vertex.attribute
+#' @export
+#' @seealso \code{\link{rootpoints}}, \code{\link{ngraph}}
+#' @examples
+#' ng=as.ngraph(Cell07PNs[[1]])
+# resetof igraph::vertex_attr(ng, 'name') <-sample(500, nvertices(ng))
+#' # arbitrary vertex identifiers
+#' graph.nodes(ng, type = 'end')
+#' # raw vertex indices
+#' graph.nodes(ng,type = 'end', original.ids = FALSE)
 graph.nodes<-function(x, type=c('root','end','branch'), original.ids='name',
                       exclude.isolated=TRUE){
   type=match.arg(type)
@@ -33,13 +48,25 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='name',
     vertex_names
 }
 
-#' Return the root or branch points of a neuron or graph
+#' Return the root, branch, or end points of a neuron or graph
 #'
-#' A neuron may have multiple subtrees and therefore multiple roots
-#' @param x Neuron or other object which might have roots
-#' @param ... Further arguments passed to methods
-#' @return Integer point number of root/branch point
+#' @description \code{rootpoints} returns the root point(s) (one per tree, often
+#'   the soma).
+#' @details A neuron may have multiple subtrees and therefore multiple roots. At
+#'   present there is discrepancy between the \code{*.neuron} and
+#'   \code{*.igraph} methods. For \code{neuron}s we return the node indices, for
+#'   \code{igraph}/\code{ngraph} objects the node identifiers (aka
+#'   names/PointNo)
+#' @param x Neuron or other object (e.g. \code{igraph}) which might have roots
+#' @param ... Further arguments passed to methods (for \code{\link{ngraph}} or
+#'   \code{igraph} objects eventually \code{\link{graph.nodes}})).
+#' @return FIXME Raw indices (in range 1:N) of vertices when \code{x} is a
+#'   neuron, integer point identifier (aka PointNo) othwerise.
 #' @export
+#' @seealso \code{\link{graph.nodes}}, \code{\link{ngraph}}
+#' @examples
+#' rootpoints(Cell07PNs[[1]])
+#' endpoints(Cell07PNs[[1]])
 rootpoints<-function (x, ...)
   UseMethod("rootpoints")
 
@@ -66,7 +93,7 @@ rootpoints.neuron<-function(x, subtrees=1, ...){
 #' @export
 rootpoints.igraph<-function(x, ...) graph.nodes(x, type='root', ...)
 
-#' Return the branchpoints of a neuron or graph
+#' @description \code{branchpoints} returns the branch points.
 #' @export
 #' @rdname rootpoints
 #' @aliases branchpoints
@@ -79,8 +106,8 @@ branchpoints<-function (x, ...)
 branchpoints.default<-function(x, ...) branchpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
-#' @details \code{branchpoints.neuron} returns a list if more than one subtree is
-#'   specified
+#' @details \code{branchpoints.neuron} returns a list if more than one subtree
+#'   is specified
 #' @export
 #' @method branchpoints neuron
 branchpoints.neuron<-function(x, subtrees=1, ...){
@@ -96,6 +123,8 @@ branchpoints.neuron<-function(x, subtrees=1, ...){
 #' @export
 branchpoints.igraph<-function(x, ...) graph.nodes(x, type='branch', ...)
 
+#' @description \code{endpoints} returns the end points (aka leaf nodes); the
+#'   root point will be returned if it also a leaf node.
 #' @rdname rootpoints
 #' @export
 endpoints<-function (x, ...) UseMethod("endpoints")
