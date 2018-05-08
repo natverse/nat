@@ -264,8 +264,6 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
   # all end points
   lps=shortest.paths(graph = ng, start, to = n$EndPoints, mode = 'all')
   if(rval=='length') return(max(lps))
-  ls=length(start)
-  le=length(n$EndPoints)
   if(!UseStartPoint && length(start)>1 && length(n$EndPoints)>1) {
     # we have a square distance matrix which is symmetric across
     # the diagonal - for consistency with igraph::diameter etc
