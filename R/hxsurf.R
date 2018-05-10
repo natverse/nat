@@ -487,14 +487,50 @@ pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 #'   outside) equal to the number of points in x or the \code{mesh3d} object
 #'   returned by \code{Rvcg::vcgClostKD}.
 #' @rdname pointsinside
-pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 'mesh3d')) {
+pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 
+                                                    'mesh3d', 'consistent_logical')) {
   if(!requireNamespace('Rvcg', quietly = TRUE))
     stop("Please install suggested library Rvcg to use pointsinside")
   rval=match.arg(rval)
-  pts=xyzmatrix(x)
+  
+  if(rval=='logical') {
+    # use optimised contains_points approach
+    return(contains_points(surf, x, ...))
+  }
+  
   if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
   }
+
+  pts=xyzmatrix(x)
   rmesh=Rvcg::vcgClostKD(pts, surf, sign = TRUE)
-  switch(rval, logical=rmesh$quality>=0, distance=rmesh$quality, mesh3d=rmesh)
+  switch(rval,
+    consistent_logical = rmesh$quality >= 0,
+    distance = rmesh$quality,
+    mesh3d = rmesh
+  )
+}
+
+contains_points <- function(obj, points, ...) UseMethod("contains_points")
+
+contains_points.boundingbox <- function(obj, points,  ...) {
+  xyz=xyzmatrix(points)
+  xyz[,1] >= obj[1,1] & xyz[,2] >= obj[1,2] & xyz[,3] >= obj[1,3] &
+    xyz[,1] <= obj[2,1] & xyz[,2] <= obj[2,2] & xyz[,3] <= obj[2,3]
+}
+
+contains_points.mesh3d <- function(obj, points,  ...) {
+  xyz=xyzmatrix(points)
+  inbb=contains_points(boundingbox(obj), xyz, ...)
+  # nb must call the original logical method to avoid infinite recursion
+  iosurf=pointsinside(xyz[inbb,,drop=F], surf = obj, ..., rval='consistent_logical')
+  res=inbb
+  res[inbb]=iosurf
+  res
+}
+
+contains_points.hxsurf<-contains_points.mesh3d
+
+contains_points.ashape3d<-function(obj, points,  ...) {
+  alphashape3d::inashape3d(obj, points=xyzmatrix(points), ...)
 }
