@@ -411,30 +411,43 @@ subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...
 NULL
 
 #' Find which points of an object are inside a surface
-#' 
-#' @details Note that \code{hxsurf} surface objects will be converted to 
-#'   \code{mesh3d} before being passed to \code{Rvcg::vcgClostKD}, so if you are 
-#'   testing repeatedly against the same surface, it may make sense to 
+#'
+#' @details Note that \code{hxsurf} surface objects will be converted to
+#'   \code{mesh3d} before being passed to \code{Rvcg::vcgClostKD}, so if you are
+#'   testing repeatedly against the same surface, it may make sense to
 #'   pre-convert.
-#'   
-#'   \code{pointsinside} depends on the face normals for each face pointing out 
-#'   of the object (see example). The face normals are defined by the order of 
-#'   the three vertices making up a triangular face. You can flip the face 
-#'   normal for a face by permuting the vertices (i.e. 1,2,3 -> 1,3,2). If you 
+#'
+#'   \code{pointsinside} depends on the face normals for each face pointing out
+#'   of the object (see example). The face normals are defined by the order of
+#'   the three vertices making up a triangular face. You can flip the face
+#'   normal for a face by permuting the vertices (i.e. 1,2,3 -> 1,3,2). If you
 #'   find for a given surface that points are outside when you expect them to be
-#'   inside then the face normals are probably all the wrong way round. You can 
-#'   invert them yourself or use the \code{Morpho::invertFaces} function to fix 
+#'   inside then the face normals are probably all the wrong way round. You can
+#'   invert them yourself or use the \code{Morpho::invertFaces} function to fix
 #'   this.
-#'   
-#'   If you find that some points but not all points are not behaving as you 
-#'   would expect, then it may be that some faces are not coherently oriented. 
-#'   The \code{Rvcg::\link[Rvcg]{vcgClean}} function can sometimes be used to 
-#'   correct the orientation of the faces. Fixing more problematic cases may be 
-#'   possible by generating a new surface using 
+#'
+#'   The \code{rval} argument determines the return value. These options should
+#'   be fairly clear, but the difference between \code{logical} and
+#'   \code{consistent_logical} needs some explanation. The \code{logical} method
+#'   now does a pre-test to remove any points that are not in the 3D bounding
+#'   box (cuboid) enclosing the surf object. This often results in a significant
+#'   speed-up by rejecting distant points and has the additional benefit of
+#'   rejecting distant points that sometimes are erroneously declared inside the
+#'   mesh (see below). Regrettably it is not yet possible to extend this
+#'   approach when distances are being returned, which means there will be a
+#'   discrepancy between the results of \code{rval="logical"} and looking for
+#'   points with distance >=0. If you want to ensure consistency between these
+#'   approaches, use \code{rval="consistent_logical"}.
+#'
+#'   If you find that some points but not all points are not behaving as you
+#'   would expect, then it may be that some faces are not coherently oriented.
+#'   The \code{Rvcg::\link[Rvcg]{vcgClean}} function can sometimes be used to
+#'   correct the orientation of the faces. Fixing more problematic cases may be
+#'   possible by generating a new surface using
 #'   \code{alphashape3d::\link[alphashape3d]{ashape3d}} (see examples).
-#'   
+#'
 #' @param x an object with 3D points.
-#' @param surf The reference surface - either a \code{mesh3d} object or any 
+#' @param surf The reference surface - either a \code{mesh3d} object or any
 #'   object that can be converted using \code{as.mesh3d} including \code{hxsurf}
 #'   and \code{ashape3d} objects.
 #' @param ... additional arguments for methods, eventually passed to as.mesh3d.
@@ -444,7 +457,7 @@ NULL
 #' # surface object
 #' inout=pointsinside(kcs20, surf=subset(MBL.surf, "MB_CA_L"))
 #' table(inout)
-#' 
+#'
 #' # be a bit more lenient and include points less than 5 microns from surface
 #' MBCAL=subset(MBL.surf, "MB_CA_L")
 #' inout5=pointsinside(kcs20, surf=MBCAL, rval='distance') > -5
@@ -455,15 +468,15 @@ NULL
 #' # that are well outside the calyx
 #' points3d(xyzmatrix(kcs20), col=ifelse(inout5, 'red', 'black'))
 #' plot3d(MBL.surf, alpha=.3)
-#' 
+#'
 #' # Let's try to make an alphashape for the mesh to clean it up
 #' library(alphashape3d)
 #' MBCAL.as=ashape3d(xyzmatrix(MBCAL), alpha = 10)
 #' # Plotting the points, we can see that is much better behaved
-#' points3d(xyzmatrix(kcs20), 
+#' points3d(xyzmatrix(kcs20),
 #'   col=ifelse(pointsinside(kcs20, MBCAL.as), 'red', 'black'))
 #' }
-#' 
+#'
 #' \dontrun{
 #' # Show the face normals for a surface
 #' if(require('Morpho')) {
@@ -473,7 +486,7 @@ NULL
 #'   wire3d(MBCAL.mesh)
 #'   # show that the normals point out of the object
 #'   plotNormals(fn, long=5, col='red')
-#'   
+#'
 #'   # invert the faces of the mesh and show that normals point in
 #'   MBCAL.inv=invertFaces(MBCAL.mesh)
 #'   plotNormals(facenormals(MBCAL.inv), long=5, col='cyan')
