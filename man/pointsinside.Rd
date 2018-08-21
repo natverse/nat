@@ -69,6 +69,16 @@ Note that \code{hxsurf} surface objects will be converted to
 # surface object
 inout=pointsinside(kcs20, surf=subset(MBL.surf, "MB_CA_L"))
 table(inout)
+# you can also check if points are inside a bounding box
+mbcalbb=boundingbox(subset(MBL.surf, "MB_CA_L"))
+inout2=pointsinside(kcs20, mbcalbb)
+# compare those two
+table(inout, inout2)
+pts=xyzmatrix(kcs20)
+# nb that colour expressions maps combinations of two logicals onto 1:4
+plot(pts[,1:2], col=1+inout+inout2*2)
+# the colours are defined by
+palette()[1:4]
 
 # be a bit more lenient and include points less than 5 microns from surface
 MBCAL=subset(MBL.surf, "MB_CA_L")
