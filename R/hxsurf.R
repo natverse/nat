@@ -291,6 +291,27 @@ as.mesh3d.hxsurf<-function(x, Regions=NULL, material=NULL, drop=TRUE, ...){
   tmesh3d(vertices=verts, indices=inds, homogeneous = FALSE, material = material, ...)
 }
 
+#' @description \code{as.mesh3d.boundingbox} converts a nat
+#'   \code{\link{boundingbox}} object into an rgl compatible \code{mesh3d}
+#'   object.
+#' @rdname as.mesh3d
+#' @export
+#' @examples 
+#' bb=boundingbox(kcs20)
+#' mbb=as.mesh3d(bb)
+#' \donttest{
+#' plot3d(kcs20)
+#' # simple plot
+#' plot3d(bb)
+#' shade3d(mbb, col='red', alpha=0.3)
+#' 
+#' }
+as.mesh3d.boundingbox <- function(x, ...) {
+  centroid=colMeans(x)
+  size=diff(x)/2
+  mat=scaleMatrix(size[1], size[2], size[3])%*%translationMatrix(centroid[1], centroid[2], centroid[3])
+  cube3d(mat)
+}
 
 #' Convert an object to a nat hxsurf object
 #' 

@@ -104,7 +104,13 @@ test_that("we can convert hxsurf to rgl::mesh3d",{
   expect_equal(as.hxsurf(tet.mesh3d, region = 'Inside'), tet.hxsurf)
   
   expect_equal(as.mesh3d(surf, Regions=c("LH_L","LH_R")),
-               as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))  
+               as.mesh3d(subset(surf, c("LH_L","LH_R"), drop=TRUE)))
+})
+
+test_that("we can convert boundingbox to rgl::mesh3d",{
+  corners=rbind(rep(1,3), rep(-1,3))
+  bb=boundingbox(corners)
+  expect_equal(as.mesh3d(bb), rgl::cube3d())
 })
 
 test_that("we can convert ashape3d to rgl::mesh3d",{

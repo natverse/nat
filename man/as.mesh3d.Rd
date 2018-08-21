@@ -4,12 +4,15 @@
 \alias{as.mesh3d}
 \alias{as.mesh3d.ashape3d}
 \alias{as.mesh3d.hxsurf}
+\alias{as.mesh3d.boundingbox}
 \title{Convert an object to an rgl mesh3d}
 \usage{
 \method{as.mesh3d}{ashape3d}(x, tri_to_keep = 2L, ...)
 
 \method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL,
   drop = TRUE, ...)
+
+\method{as.mesh3d}{boundingbox}(x, ...)
 }
 \arguments{
 \item{x}{Object to convert to mesh3d}
@@ -37,6 +40,10 @@ a \code{\link[rgl]{mesh3d}} object which can be plotted and
   \code{mesh3d} surface
 
 Note that this provides a link to the Rvcg package
+
+\code{as.mesh3d.boundingbox} converts a nat
+  \code{\link{boundingbox}} object into an rgl compatible \code{mesh3d}
+  object.
 }
 \details{
 An \href{https://en.wikipedia.org/wiki/Alpha_shape}{alpha shape} is 
