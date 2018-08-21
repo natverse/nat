@@ -716,7 +716,7 @@ plot.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, add=NULL,
   
   # check bounding box for data
   if(is.null(boundingbox)) boundingbox=boundingbox(x, na.rm=T)
-  rval=mapply(plot, x, col=cols, add=add, 
+  rval=mapply(plot, x, col=cols, add=add, soma=soma,
               MoreArgs = list(boundingbox=boundingbox, ...), SIMPLIFY = F)
   df=as.data.frame(x)
   if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
