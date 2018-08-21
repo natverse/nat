@@ -521,6 +521,11 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance',
     return(contains_points(surf, x, ...))
   }
   
+  if(inherits(surf, "boundingbox")) {
+      stop("Only logical return values are currently possible ",
+           "with boundingbox objects!")
+  }
+  
   if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
   }
