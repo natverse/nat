@@ -74,6 +74,15 @@ clear3d()
 wire3d(kcs20.mesh)
 plot3d(kcs20, col=type, lwd=2)
 }
+bb=boundingbox(kcs20)
+mbb=as.mesh3d(bb)
+\donttest{
+plot3d(kcs20)
+# simple plot
+plot3d(bb)
+shade3d(mbb, col='red', alpha=0.3)
+
+}
 }
 \seealso{
 \code{\link[alphashape3d]{ashape3d}}, \code{\link[rgl]{mesh3d}}
