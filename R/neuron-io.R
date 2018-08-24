@@ -233,7 +233,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
   on.exit(options(ow), add = TRUE)
   for(n in names(paths)){
     f=unname(paths[n])
-    x=withCallingHandlers(try(read.neuron(f, format=format, ...)),
+    x=withCallingHandlers(try(read.neuron(f, format=format, ...), silent=TRUE),
                           warning = function(w) message("While reading file: ",f),
                           error=function(e) message("While reading file: ",f))
     if(inherits(x,'try-error')){
