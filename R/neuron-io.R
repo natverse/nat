@@ -167,8 +167,15 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
   if(length(paths) == 1 && grepl("\\.zip$", paths)) {
+    if(grepl("^http[s]{0,1}://", paths)) {
+      url=paths
+      # download remote url to local file in tempdir
+      paths=tempfile(pattern=basename(paths), fileext = '.zip')
+      on.exit(unlink(paths))
+      download.file(url, destfile = paths)
+    }
     neurons_dir <- file.path(tempfile(pattern = "user_neurons"))
-    on.exit(unlink(neurons_dir, recursive=TRUE))
+    on.exit(unlink(neurons_dir, recursive=TRUE), add = TRUE)
     unzip(paths, exdir=neurons_dir)
     paths=dir(neurons_dir, full.names = TRUE, recursive=TRUE)
   }
