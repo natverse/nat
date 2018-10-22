@@ -69,6 +69,6 @@ write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
 }
 }
 \seealso{
-\code{\link{write.neuron}}, \code{\link{fileformats}},
-  \code{\link{saveRDS}}
+\code{\link{write.neurons}}, \code{\link{read.neuron}},
+  \code{\link{fileformats}}, \code{\link{saveRDS}}
 }
