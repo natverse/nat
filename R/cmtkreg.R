@@ -1,15 +1,16 @@
 #' Create and test cmtkreg objects that specify path to a CMTK registration
-#' 
+#'
 #' @description \code{cmtkreg} creates an object of class \code{cmtkreg} that
 #'   describes one (or more) \href{www.nitrc.org/projects/cmtk/}{CMTK}
 #'   registrations. This is simply a character vector that also has class
 #'   cmtkreg.
-#' @param x Path to a cmtk registration (either plain character vector or 
+#' @param x Path to a cmtk registration (either plain character vector or
 #'   cmtkreg object)
-#' @param returnDir Whether to return the registration directory (default) or 
-#'   the actual file containing the registration
+#' @param returnDir Whether to return the registration directory or the actual
+#'   file containing the registration. When \code{returnDir=NA}, the default,
+#'   returns the input path \code{x} after validation.
 #' @export
-cmtkreg<-function(x, returnDir=TRUE){
+cmtkreg<-function(x, returnDir=NA){
   if(length(x)>1) return(as.cmtkreg(sapply(x,cmtkreg,returnDir=returnDir, USE.NAMES = FALSE)))
   
   x=path.expand(x)
@@ -23,9 +24,11 @@ cmtkreg<-function(x, returnDir=TRUE){
     reg=dir(x,pattern="^registration(\\.gz){0,1}",full.names=T)[1]
     if(is.na(reg)) 
       stop(paste("Unable to find registration file in",regdir))
+    if(is.na(returnDir)) returnDir=TRUE
   } else {
     reg=x
     regdir=dirname(x)
+    if(is.na(returnDir)) returnDir=FALSE
   }
   
   as.cmtkreg(ifelse(returnDir,regdir,reg))

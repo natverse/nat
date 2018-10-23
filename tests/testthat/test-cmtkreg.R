@@ -27,7 +27,7 @@ test_that("(is.)cmtkreg works ok for files", {
   expect_false(is.cmtkreg('testdata/cmtk', 'magic'))
   
   # refer to file not directory
-  expect_equal(cmtkreg("testdata/cmtk/dofv1.1wshears.list/registration"), creg2)
+  expect_equal(cmtkreg("testdata/cmtk/dofv1.1wshears.list/registration", returnDir = TRUE), creg2)
   
   reg3=tempfile(fileext='.list')
   on.exit(unlink(reg3,recursive=TRUE),add=TRUE)
