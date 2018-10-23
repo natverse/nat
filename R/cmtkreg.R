@@ -86,27 +86,34 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
   if(inherits(reg, 'try-error') || is.na(reg)) {
     return(FALSE)
   } else if(filecheck=='exists') return(TRUE)
-  
+  # we're checking magic - make sure it implies valid file type
+  !is.na(cmtkreg.filetype(reg))
+}
+
+cmtkreg.filetype <- function(x) {
   # charToRaw('! TYPEDSTREAM')
   cmtk.magic=as.raw(c(0x21, 0x20, 0x54, 0x59, 0x50, 0x45, 0x44, 0x53, 0x54, 
                       0x52, 0x45, 0x41, 0x4d))
   
   magic=try({
-    gzf<-gzfile(reg,'rb')
+    gzf<-gzfile(x,'rb')
     magic<-readBin(gzf,what=raw(),n=length(cmtk.magic))
     close(gzf)
     magic},
     silent = TRUE)
   
-  is_cmtk <- !inherits(magic, 'try-error') && 
+  is_cmtk <- isTRUE(!inherits(magic, 'try-error') && 
     length(magic) == length(cmtk.magic) &&
-    all(magic == cmtk.magic)
+    all(magic == cmtk.magic))
   
-  if(isTRUE(is_cmtk)) return(TRUE)
+  if(is_cmtk)
+    return("cmtk")
+  
   # otherwise check if this looks like a NRRD file encoding a deformation field
-  if(!is.nrrd(bytes=magic)) return(FALSE)
+  if(!is.nrrd(bytes=magic)) return(NA_character_)
   h <- read.nrrd.header(x)
-  isTRUE(h$dimension==4 && h$sizes[1]==3 && h$kinds[1]=="vector")
+  is_nrrd <- isTRUE(h$dimension==4 && h$sizes[1]==3 && h$kinds[1]=="vector")
+  ifelse(is_nrrd, 'nrrd', NA_character_)
 }
 
 #' Plot the domain of a CMTK registration
