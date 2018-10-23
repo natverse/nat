@@ -67,9 +67,10 @@ as.cmtkreg.default<-function(x, ...){
 }
 
 #' @description \code{is.cmtkreg} checks if an object is a cmtk registration
-#'   either by checking class (default), or inspecting file.
+#'   either by checking class (default), or inspecting file. Supports CMTK
+#'   parameter files as well as NRRD deformation fields.
 #' @param filecheck Whether to check object class only (default: 'none') or find
-#'   amd check if registration file \strong{exists} or check \strong{magic} 
+#'   amd check if registration file \strong{exists} or check \strong{magic}
 #'   value in first line of file.
 #' @rdname cmtkreg
 #' @export
@@ -96,10 +97,16 @@ is.cmtkreg<-function(x, filecheck=c('none','exists','magic')) {
     close(gzf)
     magic},
     silent = TRUE)
-
-  return(!inherits(magic,'try-error') && 
-           length(magic)==length(cmtk.magic) 
-         && all(magic==cmtk.magic))
+  
+  is_cmtk <- !inherits(magic, 'try-error') && 
+    length(magic) == length(cmtk.magic) &&
+    all(magic == cmtk.magic)
+  
+  if(isTRUE(is_cmtk)) return(TRUE)
+  # otherwise check if this looks like a NRRD file encoding a deformation field
+  if(!is.nrrd(bytes=magic)) return(FALSE)
+  h <- read.nrrd.header(x)
+  isTRUE(h$dimension==4 && h$sizes[1]==3 && h$kinds[1]=="vector")
 }
 
 #' Plot the domain of a CMTK registration

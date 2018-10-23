@@ -31,7 +31,7 @@ the actual file containing the registration}
 \item{...}{Additional arguments passed to methods. Currently ignored.}
 
 \item{filecheck}{Whether to check object class only (default: 'none') or find
-amd check if registration file \strong{exists} or check \strong{magic} 
+amd check if registration file \strong{exists} or check \strong{magic}
 value in first line of file.}
 }
 \description{
@@ -44,5 +44,6 @@ value in first line of file.}
   minimally just by adding an approriate class attribute.
 
 \code{is.cmtkreg} checks if an object is a cmtk registration
-  either by checking class (default), or inspecting file.
+  either by checking class (default), or inspecting file. Supports CMTK
+  parameter files as well as NRRD deformation fields.
 }
