@@ -57,7 +57,8 @@ reglist <- function(..., swap=NULL) {
 #' # NB solve will invert a homogeneous affine matrix
 #' all.equal(m, solve(mi))
 invert_reglist <- function(x) {
-  reglist(rev(x), swap=!swapped(x))
+  rx=rev(x)
+  reglist(rx, swap=!swapped(rx))
 }
 
 #' @export
