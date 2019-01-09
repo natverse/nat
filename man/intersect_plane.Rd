@@ -27,8 +27,6 @@ A Nx3 matrix of the X,Y,Z positions of the intersections (NA when
   there is no intersection)
 }
 \description{
-Find the points on a plane that are intersected by an object
-
 \code{intersect_plane.neuron} finds the place where a neuron intersection
 }
 \examples{
@@ -53,3 +51,4 @@ planes3d(plc[,1:3], d=plc[,'d'])
 \seealso{
 Other geometry: \code{\link{plane_coefficients}}
 }
+\concept{geometry}

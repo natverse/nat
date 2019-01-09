@@ -14,8 +14,8 @@ potential_synapses(a, b, s, ...)
 \method{potential_synapses}{neuron}(a, b, s, sigma = s, bounds,
   method = c("direct", "approx"), ...)
 
-\method{potential_synapses}{dotprops}(a, b, s, sigma = s, seglength = 1,
-  bounds = NULL, method = c("direct", "approx"), ...)
+\method{potential_synapses}{dotprops}(a, b, s, sigma = s,
+  seglength = 1, bounds = NULL, method = c("direct", "approx"), ...)
 }
 \arguments{
 \item{a, b}{neurons or neuronlists}
@@ -67,3 +67,4 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}, \code{\link{subset.neuron}}
 }
+\concept{neuron}

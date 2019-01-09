@@ -29,3 +29,4 @@ NB Can handle off diagonal terms in space directions matrix, BUT
 Other nrrd: \code{\link{is.nrrd}}, \code{\link{read.nrrd}},
   \code{\link{write.nrrd}}
 }
+\concept{nrrd}

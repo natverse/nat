@@ -32,3 +32,4 @@ Note that multiple files can be checked when a character vector of
 Other nrrd: \code{\link{nrrd.voxdims}},
   \code{\link{read.nrrd}}, \code{\link{write.nrrd}}
 }
+\concept{nrrd}

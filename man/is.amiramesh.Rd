@@ -28,3 +28,4 @@ Other amira: \code{\link{amiratype}},
   \code{\link{read.amiramesh}}, \code{\link{read.hxsurf}},
   \code{\link{write.hxsurf}}
 }
+\concept{amira}

@@ -81,3 +81,4 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{rootpoints}}, \code{\link{spine}},
   \code{\link{subset.neuron}}
 }
+\concept{neuron}

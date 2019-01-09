@@ -21,8 +21,6 @@
 neuron with scaled coordinates
 }
 \description{
-Scale and centre neuron 3D coordinates
-
 note that \code{scale.dotprops} recalculates the tangent vectors
   after scaling the 3D coords. See \code{\link{dotprops}} for details.
 }

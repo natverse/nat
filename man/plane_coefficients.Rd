@@ -35,3 +35,4 @@ planes3d(mbe[1:3], d=mbe[4])
 \seealso{
 Other geometry: \code{\link{intersect_plane}}
 }
+\concept{geometry}

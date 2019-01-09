@@ -2,7 +2,6 @@
 % Please edit documentation in R/neuronlistfh.R
 \name{neuronlistfh}
 \alias{neuronlistfh}
-\alias{neuronlistfh}
 \alias{is.neuronlistfh}
 \alias{as.neuronlistfh}
 \alias{as.neuronlistfh.neuronlist}
@@ -14,9 +13,9 @@ is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
 
-\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"), dbdir = NULL,
-  dbClass = c("RDS", "RDS2"), remote = NULL, WriteObjects = c("yes", "no",
-  "missing"), ...)
+\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"),
+  dbdir = NULL, dbClass = c("RDS", "RDS2"), remote = NULL,
+  WriteObjects = c("yes", "no", "missing"), ...)
 }
 \arguments{
 \item{db}{a \code{filehash} object that manages an on disk database of neuron
@@ -186,3 +185,5 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlist}}, \code{\link{nlapply}},
   \code{\link{read.neurons}}, \code{\link{write.neurons}}
 }
+\concept{neuronlist}
+\concept{neuronlistfh}

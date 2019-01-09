@@ -4,7 +4,8 @@
 \alias{read.vaa3draw}
 \title{Read Vaa3d format image data}
 \usage{
-read.vaa3draw(f, ReadData = TRUE, Verbose = FALSE, ReadByteAsRaw = FALSE)
+read.vaa3draw(f, ReadData = TRUE, Verbose = FALSE,
+  ReadByteAsRaw = FALSE)
 }
 \arguments{
 \item{f}{Path to image to read}

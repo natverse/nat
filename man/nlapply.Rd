@@ -8,8 +8,8 @@
 nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA,
   .progress = getOption("nat.progress", default = "auto"))
 
-nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE, USE.NAMES = TRUE,
-  subset = NULL, OmitFailures = NA)
+nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
+  USE.NAMES = TRUE, subset = NULL, OmitFailures = NA)
 }
 \arguments{
 \item{X}{A neuronlist}
@@ -154,3 +154,4 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
   \code{\link{read.neurons}}, \code{\link{write.neurons}}
 }
+\concept{neuronlist}

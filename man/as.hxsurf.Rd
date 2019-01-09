@@ -48,3 +48,4 @@ Other hxsurf: \code{\link{as.mesh3d}},
   \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
   \code{\link{write.hxsurf}}
 }
+\concept{hxsurf}

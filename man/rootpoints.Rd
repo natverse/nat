@@ -85,3 +85,4 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{spine}},
   \code{\link{subset.neuron}}
 }
+\concept{neuron}

@@ -52,9 +52,6 @@ list of values of \code{plot3d} with subsetted dataframe as attribute
   \code{'df'}
 }
 \description{
-3D plots of the elements in a neuronlist, optionally using a subset 
-expression
-
 \code{plot3d.character} is a convenience method intended for 
   exploratory work on the command line.
 }

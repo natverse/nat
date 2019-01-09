@@ -10,7 +10,8 @@ as.im3d(x, ...)
 
 \method{as.im3d}{im3d}(x, ...)
 
-\method{as.im3d}{matrix}(x, voxdims, origin = NULL, BoundingBox = NULL, ...)
+\method{as.im3d}{matrix}(x, voxdims, origin = NULL, BoundingBox = NULL,
+  ...)
 }
 \arguments{
 \item{x}{Object to turn into an im3d}
@@ -75,3 +76,4 @@ Other im3d: \code{\link{boundingbox}},
   \code{\link{projection}}, \code{\link{threshold}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
+\concept{im3d}

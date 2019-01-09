@@ -22,3 +22,4 @@ Other cmtk-io: \code{\link{cmtk.extract_affine}},
   \code{\link{read.cmtk}}, \code{\link{write.cmtkreg}},
   \code{\link{write.cmtk}}
 }
+\concept{cmtk-io}

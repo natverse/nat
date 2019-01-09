@@ -12,8 +12,8 @@ xformimage(reg, image, ...)
 
 \method{xformimage}{character}(reg, image, ...)
 
-\method{xformimage}{cmtkreg}(reg, image, transformtype = c("warp", "affine"),
-  direction = NULL, ...)
+\method{xformimage}{cmtkreg}(reg, image, transformtype = c("warp",
+  "affine"), direction = NULL, ...)
 
 \method{xformimage}{reglist}(reg, image, ...)
 

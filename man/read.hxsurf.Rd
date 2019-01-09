@@ -77,3 +77,5 @@ Other hxsurf: \code{\link{as.hxsurf}},
   \code{\link{plot3d.hxsurf}}, \code{\link{subset.hxsurf}},
   \code{\link{write.hxsurf}}
 }
+\concept{amira}
+\concept{hxsurf}

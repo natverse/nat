@@ -9,7 +9,7 @@
 \alias{is.cmtkreg}
 \title{Create and test cmtkreg objects that specify path to a CMTK registration}
 \usage{
-cmtkreg(x, returnDir = TRUE)
+cmtkreg(x, returnDir = NA)
 
 as.cmtkreg(x, ...)
 
@@ -22,11 +22,12 @@ as.cmtkreg(x, ...)
 is.cmtkreg(x, filecheck = c("none", "exists", "magic"))
 }
 \arguments{
-\item{x}{Path to a cmtk registration (either plain character vector or 
+\item{x}{Path to a cmtk registration (either plain character vector or
 cmtkreg object)}
 
-\item{returnDir}{Whether to return the registration directory (default) or 
-the actual file containing the registration}
+\item{returnDir}{Whether to return the registration directory or the actual
+file containing the registration. When \code{returnDir=NA}, the default,
+returns the input path \code{x} after validation.}
 
 \item{...}{Additional arguments passed to methods. Currently ignored.}
 

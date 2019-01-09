@@ -7,8 +7,8 @@
 \title{Write data and metadata to NRRD file or create a detached NRRD (nhdr) file.}
 \usage{
 write.nrrd(x, file, enc = c("gzip", "raw", "text"), dtype = c("float",
-  "byte", "short", "ushort", "int", "double"), header = attr(x, "header"),
-  endian = .Platform$endian, datafile = NULL)
+  "byte", "short", "ushort", "int", "double"), header = attr(x,
+  "header"), endian = .Platform$endian, datafile = NULL)
 
 write.nrrd.header(header, file)
 
@@ -117,3 +117,4 @@ default) then it will be set to \code{<infilestem.nhdr>}.}
 Other nrrd: \code{\link{is.nrrd}},
   \code{\link{nrrd.voxdims}}, \code{\link{read.nrrd}}
 }
+\concept{nrrd}

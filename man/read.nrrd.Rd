@@ -6,8 +6,9 @@
 \alias{nrrd.datafiles}
 \title{Read NRRD files/headers into memory}
 \usage{
-read.nrrd(file, origin = NULL, ReadData = TRUE, AttachFullHeader = TRUE,
-  Verbose = FALSE, ReadByteAsRaw = c("unsigned", "all", "none"))
+read.nrrd(file, origin = NULL, ReadData = TRUE,
+  AttachFullHeader = TRUE, Verbose = FALSE,
+  ReadByteAsRaw = c("unsigned", "all", "none"))
 
 read.nrrd.header(file, Verbose = FALSE)
 
@@ -44,8 +45,6 @@ A list with elements for the key nrrd header fields
   is limited to representing 3D data) then you should use
   \code{\link{read.im3d}}.
 
-\code{read.nrrd.header} reads the (text) header of a NRRD format file
-
 \code{nrrd.datafiles} returns the path to the separate data
   files listed in a detached NRRD header file.
 }
@@ -60,3 +59,4 @@ A list with elements for the key nrrd header fields
 Other nrrd: \code{\link{is.nrrd}},
   \code{\link{nrrd.voxdims}}, \code{\link{write.nrrd}}
 }
+\concept{nrrd}

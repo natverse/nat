@@ -7,7 +7,8 @@
 \alias{summary.dotprops}
 \title{Summary statistics for neurons (e.g. cable length, number of nodes)}
 \usage{
-\method{summary}{neuronlist}(object, ..., include.attached.dataframe = FALSE)
+\method{summary}{neuronlist}(object, ...,
+  include.attached.dataframe = FALSE)
 
 \method{summary}{neuron}(object, ...)
 

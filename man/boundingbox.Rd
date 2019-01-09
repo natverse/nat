@@ -40,8 +40,6 @@ a \code{matrix} with 2 rows and 3 columns with
   \code{class='boundingbox'} or \emph{NULL} when missing.
 }
 \description{
-Get the bounding box of an image volume or object containing 3D vertices
-
 Set the bounding box of an im3d object
 }
 \details{
@@ -90,3 +88,4 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{projection}}, \code{\link{threshold}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
+\concept{im3d}

@@ -13,8 +13,8 @@ ndigest(x, ...)
 
 \method{ndigest}{dotprops}(x, absoluteVectors = TRUE, ...)
 
-\method{ndigest}{neuron}(x, fieldsToExclude = c("InputFileName", "CreatedAt",
-  "NodeName", "InputFileStat", "InputFileMD5"), ...)
+\method{ndigest}{neuron}(x, fieldsToExclude = c("InputFileName",
+  "CreatedAt", "NodeName", "InputFileStat", "InputFileMD5"), ...)
 }
 \arguments{
 \item{x}{Object for which a normalised digest will be computed.}
