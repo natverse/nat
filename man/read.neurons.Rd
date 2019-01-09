@@ -4,8 +4,9 @@
 \alias{read.neurons}
 \title{Read one or more neurons from file to a neuronlist in memory}
 \usage{
-read.neurons(paths, pattern = NULL, neuronnames = basename, format = NULL,
-  nl = NULL, df = NULL, OmitFailures = TRUE, SortOnUpdate = FALSE, ...)
+read.neurons(paths, pattern = NULL, neuronnames = NULL,
+  format = NULL, nl = NULL, df = NULL, OmitFailures = TRUE,
+  SortOnUpdate = FALSE, ...)
 }
 \arguments{
 \item{paths}{Paths to neuron input files \emph{or} a directory containing 
@@ -48,11 +49,13 @@ This function will cope with the same set of file formats offered by
   specified. Similarly, if \code{paths} specifies a zip archive, all neurons 
   within the archive will be loaded.
   
-  \code{neuronnames} must specify a unique set of names that will be used as 
+  \code{neuronnames} must specify a unique set of names that will be used as
   the names of the neurons in the resultant neuronlist. If \code{neuronnames}
-  is a a function then this will be applied to the path to each neuron. The 
-  default value is the function \code{basename} which results in each neuron 
-  being named for the input file from which it was read.
+  is a function then this will be applied to the path of each input file. The
+  default value of \code{basename=NULL} results in each neuron being named
+  for the input file from which it was read \emph{after trimming the file
+  extension}. This should match the \code{NeuronName} field of each
+  individual neuron.
   
   The optional dataframe (\code{df}) detailing each neuron should have 
   \code{rownames} that match the names of each neuron. It would also make 
@@ -77,7 +80,7 @@ plot3d(vdnl)
 # fetch table of worm neurons from wormbase
 library(rvest)
 nlurl="http://wormatlas.org/neurons/Individual\%20Neurons/Neuronframeset.html"
-wormneurons = html_table(html(nlurl), fill=TRUE)[[4]]
+wormneurons = html_table(read_html(nlurl), fill=TRUE)[[4]]
 vddf=subset(wormneurons, Neuron\%in\%vds)
 rownames(vddf)=vddf$Neuron
 # attach metadata to neuronlist

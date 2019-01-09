@@ -105,11 +105,13 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #'   specified. Similarly, if \code{paths} specifies a zip archive, all neurons 
 #'   within the archive will be loaded.
 #'   
-#'   \code{neuronnames} must specify a unique set of names that will be used as 
+#'   \code{neuronnames} must specify a unique set of names that will be used as
 #'   the names of the neurons in the resultant neuronlist. If \code{neuronnames}
-#'   is a a function then this will be applied to the path to each neuron. The 
-#'   default value is the function \code{basename} which results in each neuron 
-#'   being named for the input file from which it was read.
+#'   is a function then this will be applied to the path of each input file. The
+#'   default value of \code{basename=NULL} results in each neuron being named
+#'   for the input file from which it was read \emph{after trimming the file
+#'   extension}. This should match the \code{NeuronName} field of each
+#'   individual neuron.
 #'   
 #'   The optional dataframe (\code{df}) detailing each neuron should have 
 #'   \code{rownames} that match the names of each neuron. It would also make 
@@ -154,7 +156,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' # fetch table of worm neurons from wormbase
 #' library(rvest)
 #' nlurl="http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"
-#' wormneurons = html_table(html(nlurl), fill=TRUE)[[4]]
+#' wormneurons = html_table(read_html(nlurl), fill=TRUE)[[4]]
 #' vddf=subset(wormneurons, Neuron%in%vds)
 #' rownames(vddf)=vddf$Neuron
 #' # attach metadata to neuronlist
@@ -163,9 +165,11 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' clear3d()
 #' plot3d(vdnl, grepl("P[1-6].app", Lineage))
 #' }
-read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
+#' @importFrom tools file_path_sans_ext
+read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
                        nl=NULL, df=NULL, OmitFailures=TRUE, SortOnUpdate=FALSE,
                        ...){
+  if(is.null(neuronnames)) neuronnames=function(x, ...) file_path_sans_ext(basename(x))
   if(length(paths) == 1 && grepl("\\.zip$", paths)) {
     if(grepl("^http[s]{0,1}://", paths)) {
       url=paths
