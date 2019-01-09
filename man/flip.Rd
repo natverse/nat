@@ -12,10 +12,10 @@ flip(x, ...)
 \arguments{
 \item{x}{Object to flip}
 
-\item{...}{Aditional arguments for methods}
+\item{...}{Additional arguments for methods}
 
 \item{flipdim}{Character vector or 1-indexed integer indicating array 
-dimension alogn which flip will occur. Characters X, Y, Z map onto 
+dimension along which flip will occur. Characters X, Y, Z map onto 
 dimensions 1, 2, 3.}
 }
 \description{

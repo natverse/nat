@@ -756,7 +756,7 @@ test_that("we can write multiple neurons to a zip archive", {
   setwd(owd)
 })
 
-test_that("we can identify amira hxskel neurons",{
+test_that("we can identify Amira hxskel neurons",{
   # hxlineset neuron
   expect_false(is.hxskel('testdata/neuron/EBT7R.am'))
   # swc neuron
@@ -768,7 +768,7 @@ test_that("we can identify amira hxskel neurons",{
   expect_true(is.hxskel(p,bytes=readBin(p,what=raw(),n=80)))
 })
 
-test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
+test_that("reading identical neuron in 2 Amira formats and 3 encodings works",{
   expect_warning(l<-read.neuron("testdata/neuron/testneuron_lineset.am"),
                  regexp = 'Data section 3 .* specifies radius')
   expect_is(l,'neuron')
@@ -779,14 +779,14 @@ test_that("reading identical neuron in 2 amira formats and 3 encodings works",{
   expect_equal(l,read.neuron("testdata/neuron/testneuron_am3d.am.gz"),fieldsToExclude='NeuronName')
 })
 
-test_that("reading gzipped binary format amiramesh neurons works",{
+test_that("reading gzipped binary format AmiraMesh neurons works",{
   library(nat.utils)
   expect_true(is.gzip("testdata/neuron/testneuron_am3d_ascii.am.gz"))
   expect_true(is.gzip("testdata/neuron/testneuron_am3d.am.gz"))
   expect_false(is.gzip("testdata/neuron/testneuron_am3d.am"))
 })
 
-test_that("we can identify amira hxlineset neurons",{
+test_that("we can identify Amira hxlineset neurons",{
   # hxlineset neuron
   expect_true(is.hxlineset('testdata/neuron/EBT7R.am'))
   # swc neuron
@@ -914,7 +914,7 @@ test_that("we can write dotprops objects to SWC format",{
   expect_equivalent(vec1/veclength, kcs20[[1]]$vect[1,])
 })
 
-test_that("we can write neuron to amira hxskel file",{
+test_that("we can write neuron to Amira hxskel file",{
   y=Cell07PNs[[1]]
   td=tempfile()
   dir.create(td)
@@ -925,7 +925,7 @@ test_that("we can write neuron to amira hxskel file",{
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
 })
 
-test_that("we can write neuron to amira hxlineset file",{
+test_that("we can write neuron to Amira hxlineset file",{
   y=Cell07PNs[[1]]
   td=tempfile()
   dir.create(td)

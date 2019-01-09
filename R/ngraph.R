@@ -12,7 +12,7 @@
 #'   \itemize{
 #'
 #'   \item They have an integer vertex name that need not start from 1 and that
-#'   may have gaps. This is analagous to the PointNo field of the core data
+#'   may have gaps. This is analogous to the PointNo field of the core data
 #'   block of \code{\link{neuron}} objects.
 #'
 #'   \item The edge list that defines connectivity specifies those edges using
@@ -36,7 +36,7 @@
 #'   combination of connectivity information (i.e. the graph) and spatial data
 #'   encoded as the 3D position and diameter of each vertex. Position
 #'   information is stored as vertex attributes X, Y, and Z.
-#' @param el A two columm matrix (start, end) defining edges. \code{start} means
+#' @param el A two column matrix (start, end) defining edges. \code{start} means
 #'   closer to the root (soma) of the neuron.
 #' @param vertexnames Integer names for graph nodes - the edge list is specified
 #'   using these names (see details).
@@ -325,7 +325,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
   # just get head and tail of each segment
   simple_sts=lapply(sts,topntail)
   all_nodes=sort(unique(unlist(simple_sts)))
-  # make empty graph with approriate nodes
+  # make empty graph with appropriate nodes
   g=graph.empty(n=length(all_nodes))
   # store external pointnos
   igraph::V(g)$label=pointnos[all_nodes]
@@ -496,7 +496,7 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 #'   examples).
 #'   
 #'   Both \code{prune_vertices} and \code{prune_edges} first convert their input
-#'   \code{x} to the \code{\link{ngraph}} representation of the neuron befor 
+#'   \code{x} to the \code{\link{ngraph}} representation of the neuron before
 #'   removing points. The input \code{x} can therefore be in any form compatible
 #'   with \code{\link{as.ngraph}} including an existing \code{ngraph}. There is 
 #'   an additional requirement that the input must be compatible with 
@@ -546,7 +546,7 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
 #' @param edges The edges to remove. One of i) an Nx2 matrix, each row
 #'   specifying a single edge defined by its \bold{raw} edge id, ii) an integer
 #'   vector defining a \emph{path} of raw vertex ids or iii) an \code{igraph.es}
-#'   edge sequence --- see detaiuls and the \code{P} and \code{path} arguments
+#'   edge sequence --- see details and the \code{P} and \code{path} arguments
 #'   of \code{igraph::\link[igraph]{E}}.
 #' @export
 #' @rdname prune_vertices

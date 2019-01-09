@@ -308,7 +308,7 @@ Cell07PNs[, 'Glomerulus']
 ```
 
 This approach has some features that make for additional flexibility. For example
-you can acess the whole data.frame like so:
+you can access the whole data.frame like so:
 
 ```{r, eval=FALSE}
 summary(Cell07PNs[,])
@@ -377,7 +377,7 @@ We have already seen that we can plot a single neuron (the first) like so:
 plot(Cell07PNs[[1]])
 ```
 
-The purple node higlights the root or soma of the neuron, red nodes are branch
+The purple node highlights the root or soma of the neuron, red nodes are branch
 points, green nodes are end points. We can also label each node with its `PointNo` index.
 
 ```{r, fig.width=8, fig.height=4}

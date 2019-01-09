@@ -2,7 +2,7 @@
 % Please edit documentation in R/amiramesh-io.R
 \name{amiratype}
 \alias{amiratype}
-\title{Return the type of an amiramesh file on disk or a parsed header}
+\title{Return the type of an AmiraMesh file on disk or a parsed header}
 \usage{
 amiratype(x, bytes = NULL)
 }
@@ -16,10 +16,10 @@ file.}
 character vector (NA_character_ when file invalid)
 }
 \description{
-Return the type of an amiramesh file on disk or a parsed header
+Return the type of an AmiraMesh file on disk or a parsed header
 }
 \details{
-Note that when checking a file we first test if it is an amiramesh 
+Note that when checking a file we first test if it is an AmiraMesh 
   file (fast, especially when \code{bytes!=NULL}) before reading the header 
   and determining content type (slow).
 }

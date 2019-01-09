@@ -2,7 +2,7 @@
 % Please edit documentation in R/amiramesh-io.R
 \name{write.amiramesh}
 \alias{write.amiramesh}
-\title{Write a 3D data object to an amiramesh format file}
+\title{Write a 3D data object to an AmiraMesh format file}
 \usage{
 write.amiramesh(x, file, enc = c("binary", "raw", "text", "hxzip"),
   dtype = c("float", "byte", "short", "ushort", "int", "double"),
@@ -22,17 +22,17 @@ such)}
 \code{.Platform$endian}.}
 
 \item{WriteNrrdHeader}{Whether to write a separate detached nrrd header next 
-to the amiramesh file allowing it to be opened by a NRRD reader. See 
+to the AmiraMesh file allowing it to be opened by a NRRD reader. See 
 details.}
 }
 \description{
-Write a 3D data object to an amiramesh format file
+Write a 3D data object to an AmiraMesh format file
 }
 \details{
 Note that only \code{'raw'} or \code{'text'} format data can
   accommodate a detached NRRD format header since Amira's HxZip format is
   subtly different from NRRD's gzip encoding. There is a full description 
-  of the deteached NRRD format in the help for \code{\link{write.nrrd}}.
+  of the detached NRRD format in the help for \code{\link{write.nrrd}}.
 }
 \examples{
 d=array(rnorm(1000), c(10, 10, 10))

@@ -6,7 +6,7 @@
 #'   of cmtk output files matching the orientation in R. Do not change this
 #'   unless you're sure you know what you're doing!
 #' @param reg Path to input registration file or 5x3 matrix of CMTK parameters.
-#' @param Transpose ouput matrix so that form on disk matches R's convention.
+#' @param Transpose output matrix so that form on disk matches R's convention.
 #' @param version Whether to return CMTK version string
 #' @return 4x4 transformation matrix
 #' @family cmtk-commandline
@@ -108,16 +108,16 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #'   this cannot be found.
 #' @export
 #' @aliases cmtk
-#' @section Installation: It is recommended to install released CMTK versions 
-#'   available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A 
-#'   bug in composition of affine transformations from CMTK parameters in the 
-#'   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended. 
-#'   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
-#'   can correctly interpret and convert registrations from earlier versions.
+#' @section Installation: It is recommended to install released CMTK versions
+#'   available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A
+#'   bug in composition of affine transformations from CMTK parameters in the
+#'   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended.
+#'   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTK
+#'   v3 can correctly interpret and convert registrations from earlier versions.
 #'   
 #'   On Windows, when \code{set=TRUE}, cmtk.bindir will also check that the
 #'   cygwin bin directory is in the PATH. If it is not, then it is added for the
-#'   current R session. This should solve issues with missing cygwin dlls.
+#'   current R session. This should solve issues with missing cygwin DLLs.
 #' @examples
 #' message(ifelse(is.null(d<-cmtk.bindir()), "CMTK not found!",
 #'                paste("CMTK is at:",d)))
@@ -217,7 +217,7 @@ cmtk.version<-function(minimum=NULL){
   else cmtk_numeric_version
 }
 
-#' Utility function to create and run calls to CMTK commandline tools
+#' Utility function to create and run calls to CMTK command line tools
 #' 
 #' @description \code{cmtk.call} processes arguments into a form compatible with
 #'   CMTK command line tools.

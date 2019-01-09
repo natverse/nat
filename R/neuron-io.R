@@ -136,7 +136,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #'   sorted so that neurons are ordered according to the value of the 
 #'   \code{paths} argument.
 #' @param nl An existing neuronlist to be updated (see details)
-#' @param ... Additional arguements to passed to read.neuron methods
+#' @param ... Additional arguments to passed to \code{read.neuron} methods
 #' @return \code{\link{neuronlist}} object containing the neurons
 #' @export
 #' @seealso \code{\link{read.neuron}}, \code{\link{write.neurons}},
@@ -288,7 +288,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
 #'   list or a table of information about the formats that match the given 
 #'   filter conditions.
 #' @details if a \code{format} argument is passed to \code{fileformats} it will
-#'   be matched wigth partial string matching and iif a unique match exists that
+#'   be matched with partial string matching and iif a unique match exists that
 #'   will be returned.
 #' @inheritParams registerformat
 #' @param rval Character vector choosing what kind of return value 
@@ -299,7 +299,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
 #'   according to the value of rval.
 #'   
 #'   \item \code{getformatreader} returns a list. The reader can be accessed 
-#'   with \code{$read} and the format can be acessed by \code{$format}.
+#'   with \code{$read} and the format can be accessed by \code{$format}.
 #'   
 #'   \item \code{getformatwriter} returns a list. The writer can be accessed 
 #'   with \code{$write}.}
@@ -445,7 +445,7 @@ getformatreader<-function(file, class=NULL){
 #'   then \code{file} will be untouched and \code{ext} will be set to
 #'   \code{'someext'} (overriding the value returned by \code{fileformats}).
 #'   
-#'   If \code{file='somefile_without_extension'} then the suppplied or 
+#'   If \code{file='somefile_without_extension'} then the supplied or 
 #'   calculated extension will be appended to \code{file}.
 #'   
 #'   If \code{ext=NA} then the input \code{file} name will not be touched (even 
@@ -504,7 +504,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #'   \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
-#' @param ... Additional arguments. \code{read.neuron.swc} passes theseto 
+#' @param ... Additional arguments. \code{read.neuron.swc} passes these to 
 #'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
 #'   \code{read.neuron.swc} passes them to \code{\link{ngraph}}.
 #' @seealso \code{\link{is.swc}}
@@ -605,9 +605,9 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param format Unique abbreviation of one of the registered file formats for
 #'   neurons including 'swc', 'hxlineset', 'hxskel'
 #' @param ext Will replace the default extension for the filetype and should
-#'   include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}. The
-#'   special value of ext=NA will prevent the extension from being changed or
-#'   added e.g. if the desired file name does not have an extension.
+#'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
+#'   The special value of ext=NA will prevent the extension from being changed
+#'   or added e.g. if the desired file name does not have an extension.
 #' @param Force Whether to overwrite an existing file
 #' @param MakeDir Whether to create directory implied by \code{file} argument.
 #' @param ... Additional arguments passed to selected writer function

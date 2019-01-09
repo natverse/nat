@@ -31,7 +31,7 @@ read.cmtkreg <- function(filename, ReturnRegistrationOnly=FALSE, ...){
 #' @details This is the default format used by CMTK for registration, studylist,
 #'   landmarks and image files. Although this is largely a generic function, 
 #'   there is special handling of the coefficients and active members of the 
-#'   spline warp component of a CMTK nonrigid registrartion.
+#'   spline warp component of a CMTK nonrigid registration.
 #' @details Note that if an open connection is passed to read.cmtk the version 
 #'   number of the CMTK TypedStream will not be checked or recorded.
 #' @param con Path to (optionally gzipped) file or (open) connection.
@@ -194,7 +194,7 @@ write.cmtkreg<-function(reglist, foldername, version="2.4"){
 
 #' Write a suitable list to a CMTK TypedStream file on disk
 #' 
-#' @description This is probaly only of interest to developers. End users will 
+#' @description This is probably only of interest to developers. End users will 
 #'   probably wish to use more specific functions such as write.cmtkreg for
 #'   writing out registrations.
 #' @details NB a version specified on the command line overrides one encoded as 
@@ -259,7 +259,7 @@ write.cmtk.list<-function(x,con,tablevel=0){
 #'   matrix
 #' @param centre Optional centre of rotation passed to \code{affmat2cmtkparams} 
 #'   when decomposing 4x4 affine matrix
-#' @param reference,floating Path to refererence and floating images.
+#' @param reference,floating Path to reference and floating images.
 #' @return \code{list} of class \code{cmtkreg} containing registration
 #'   parameters suitable for \code{\link{write.cmtkreg}}
 #' @export
@@ -294,7 +294,7 @@ cmtkreglist<-function(x,centre=c(0,0,0),reference="dummy",floating="dummy"){
 #' @param r A registration list or path to file on disk
 #' @param outdir Optional path to output file
 #' @return When \code{outdir} is missing a list containing the registration
-#'   paramers. Otherwise \code{NULL} invisibly.
+#'   parameters Otherwise \code{NULL} invisibly.
 #' @family cmtk-io
 #' @seealso \code{\link{cmtkreglist}}
 #' @export

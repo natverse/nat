@@ -66,7 +66,7 @@ test_that("round trip test for im3d is successful",{
   h1=attr(d,'header')
   expect_equal(attr(d3,'header')[names(h1)], h1[names(h1)], tol=1e-6)
   
-  # amiramesh round trip
+  # AmiraMesh round trip
   tf4 <- tempfile(tmpdir = td, fileext='.am')
   expect_equal(write.im3d(d, tf4, enc = 'hxzip'), tf4)
   expect_equal(d2 <- read.im3d(tf4), d)

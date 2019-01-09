@@ -14,13 +14,15 @@ read.landmarks.amira<-function(file, CoordinatesOnly=TRUE, Verbose=FALSE){
   
   # get the number of landmark sets
   NumSetLine=grep("NumSets\\s+[0-9]{1,}",headerLines,value=TRUE)
-  if(length(NumSetLine)==0) stop(paste("Unable to establish number of amira landmarks sets in",file))
+  if(length(NumSetLine)==0) 
+    stop(paste("Unable to establish number of Amira landmarks sets in",file))
   nSets=as.numeric(sub(".*NumSets\\s+([0-9]{1,}).*","\\1",NumSetLine))
   
   # get the number of data sections
   nDataSections=nrow(dataDef)
   nSectionsPerSet=nDataSections/nSets
-  if(round(nSectionsPerSet)!=nSectionsPerSet) stop(paste("Unable to parse amira landmarks sets",file,":too many data sections!"))
+  if(round(nSectionsPerSet)!=nSectionsPerSet) 
+    stop(paste("Unable to parse Amira landmarks sets",file,":too many data sections!"))
   
   if(CoordinatesOnly){
     chosenSections=seq(from=1,by=nSectionsPerSet,length=nSets)
@@ -57,17 +59,18 @@ write.landmarks.amira<-function(x, file){
 #' Generic functions to read/write landmarks in any supported format
 #' 
 #' @details Presently the supported formats are \itemize{
-#'   
-#'   \item Amira
-#'   
-#'   \item CMTK
-#'   
-#'   \item Fiji (see \url{http://fiji.sc/Name_Landmarks_and_Register}) }
-#'   
-#'   See examples section for how to produce a listing of all currently 
+#'
+#'   \item Amira (format name \code{amiralandmarks})
+#'
+#'   \item CMTK (format name \code{cmtklandmarks})
+#'
+#'   \item Fiji (format name \code{fijilandmarks}) see
+#'   \url{http://fiji.sc/Name_Landmarks_and_Register} }
+#'
+#'   See examples section for how to produce a listing of all currently
 #'   available formats with \code{fileformats}.
-#' @section Paired landmarks: Only the amiralandmarks format supports the use of
-#'   paired landmarks
+#' @section Paired landmarks: Only the \code{amiralandmarks} format supports the use
+#'   of paired landmarks
 #' @param f Path to a file (can also be a URL)
 #' @param ... Additional arguments passed on to format specific functions
 #' @return for \code{read.landmarks} a matrix or list of additional class 

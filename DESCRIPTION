@@ -33,6 +33,7 @@ Imports:
     plyr,
     yaml
 Suggests:
+    spelling,
     Rvcg (>= 0.17),
     testthat,
     httr,
@@ -90,3 +91,4 @@ Collate:
 RoxygenNote: 6.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
+Language: en-GB

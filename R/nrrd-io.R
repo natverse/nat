@@ -316,7 +316,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   
 #'   If \code{file} has extension \code{.nhdr} \emph{or} \code{datafile} is 
 #'   non-NULL, then \code{write.nrrd} will write a separate datafile. If 
-#'   \code{datafile} is set, then it is interpeted as specifying a path relative
+#'   \code{datafile} is set, then it is interpreted as specifying a path relative
 #'   to the \bold{nhdr} file. If \code{datafile} is not specified then default 
 #'   filenames will be chosen according to the encoding following the 
 #'   conventions of the teem library:
@@ -348,7 +348,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   \code{outfile}, you \emph{must} set the current working directory (using 
 #'   \code{setwd}) to the location in which \code{outfile} will be written to 
 #'   ensure that the path to the datafile is correct. A future TODO would add 
-#'   the ability to convert an absolute datafile path to a relaive one (by
+#'   the ability to convert an absolute datafile path to a relative one (by
 #'   finding the common path between datafile and nhdr folders).
 #'   
 #' @section Header: For \code{write.nrrd}, arguments \code{enc}, \code{dtype}, 

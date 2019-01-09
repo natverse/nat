@@ -14,7 +14,7 @@ matrix}
 \item{centre}{Optional centre of rotation passed to \code{affmat2cmtkparams} 
 when decomposing 4x4 affine matrix}
 
-\item{reference, floating}{Path to refererence and floating images.}
+\item{reference, floating}{Path to reference and floating images.}
 }
 \value{
 \code{list} of class \code{cmtkreg} containing registration

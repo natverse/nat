@@ -21,7 +21,7 @@ as.neuronlist(l, ...)
 (see details).}
 }
 \value{
-neuronlist with attr('df')
+neuronlist with \code{attr('df')}
 }
 \description{
 Make a list of neurons that can be used for coordinate plotting/analysis

@@ -30,32 +30,33 @@
 #'   <8Gb RAM or running 32 bit R.
 #'   
 #'   neuronlistfh objects include: \itemize{
-#'   
-#'   \item{attr("keyfilemap")}{ A named character vector that determines the 
-#'   ordering of objects in the neuronlist and translates keys in R to filenames
-#'   on disk. For objects created by \code{as.neuronlistfh} the filenames will 
-#'   be the md5 hash of the object as calculated using \code{digest}. This 
-#'   design means that the same key can be used to refer to multiple distinct 
-#'   objects on disk. Objects are effecitvely versioned by their contents. So if
-#'   an updated neuronlistfh object is posted to a website and then fetched by a
-#'   user it will result in the automated download of any updated objects to 
-#'   which it refers.}
-#'   
-#'   \item{attr("db")}{ The backing database - typically of class 
+#'
+#'   \item{\code{attr("keyfilemap")}}{ A named character vector that determines
+#'   the ordering of objects in the neuronlist and translates keys in R to
+#'   filenames on disk. For objects created by \code{as.neuronlistfh} the
+#'   filenames will be the md5 hash of the object as calculated using
+#'   \code{digest}. This design means that the same key can be used to refer to
+#'   multiple distinct objects on disk. Objects are effectively versioned by
+#'   their contents. So if an updated neuronlistfh object is posted to a website
+#'   and then fetched by a user it will result in the automated download of any
+#'   updated objects to which it refers.}
+#'
+#'   \item{\code{attr("db")}}{ The backing database - typically of class
 #'   \code{filehashRDS}. This manages the loading of objects from disk.}
-#'   
-#'   \item{attr(x,"df")}{ The data.frame of metadata which can be used to select
-#'   and plot neurons. See \code{\link{neuronlist}} for examples.}
-#'   
-#'   \item{attr(x,"hashmap")}{ (Optional) a hashed environment which can be used
-#'   for rapid lookup using key names (rather than numeric/logical indices). 
-#'   There is a space potential to pay for this redundant lookup method, but it 
-#'   is normally worth while given that the dataframe object is typically 
-#'   considerably larger. To give some numbers, the additional environment might
-#'   occupy ~ 1% of a 16,000 object neuronlistfh object and reduce mean lookup 
-#'   time from 0.5 ms to 1us. Having located the object, on my machine it can 
-#'   take as little as 0.1ms to load from disk, so these savings are relevant.}
-#'   
+#'
+#'   \item{\code{attr(x,"df")}}{ The data.frame of metadata which can be used to
+#'   select and plot neurons. See \code{\link{neuronlist}} for examples.}
+#'
+#'   \item{code{attr(x,"hashmap")}}{ (Optional) a hashed environment which can
+#'   be used for rapid lookup using key names (rather than numeric/logical
+#'   indices). There is a space potential to pay for this redundant lookup
+#'   method, but it is normally worth while given that the dataframe object is
+#'   typically considerably larger. To give some numbers, the additional
+#'   environment might occupy ~ 1% of a 16,000 object neuronlistfh object and
+#'   reduce mean lookup time from 0.5 ms to 1us. Having located the object, on
+#'   my machine it can take as little as 0.1ms to load from disk, so these
+#'   savings are relevant.}
+#'
 #'   }
 #'   
 #'   Presently only backing objects which extend the \code{filehash} class are 
@@ -72,11 +73,11 @@
 #'   neurons stored in this list will result in automated download of the 
 #'   requested neuron to the local cache.
 #'   
-#'   An alternative backend, the experimental \code{RDS2} format is supported 
-#'   (available at \url{https://github.com/jefferis/filehash}). This is likely 
-#'   to be the most effective for large (5,000-500,000) collections of neurons, 
-#'   especially when using network filesystems (nfs, afp) which are typically 
-#'   very slow at listing large directories.
+#'   An alternative backend, the experimental \code{RDS2} format is supported
+#'   (available at \url{https://github.com/jefferis/filehash}). This is likely
+#'   to be the most effective for large (5,000-500,000) collections of neurons,
+#'   especially when using network filesystems (\code{NFS}, \code{AFP}) which
+#'   are typically very slow at listing large directories.
 #'   
 #'   Note that objects are stored in a filehash, which by definition does not 
 #'   have any ordering of its elements. However neuronlist objects (like lists) 
@@ -104,8 +105,8 @@
 #'   defines the order of objects in the neuronlist and will be used to reorder 
 #'   the dataframe if necessary.
 #' @param hashmap A logical indicating whether to add a hashed environment for 
-#'   rapid object lookup by name or an integer or an integer definining a 
-#'   threhsold number of objects when this will happen (see Implementation 
+#'   rapid object lookup by name or an integer or an integer defining a 
+#'   threshold number of objects when this will happen (see Implementation 
 #'   details).
 #' @importClassesFrom filehash filehash filehashRDS
 #' @importMethodsFrom filehash [[
@@ -383,7 +384,7 @@ fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5
 #'   
 #'   }
 #'   
-#'   Given this arrangment, the data directory should always be at a fixed 
+#'   Given this arrangement, the data directory should always be at a fixed 
 #'   location with respect to the saved neuronlistfh object and this is enforced
 #'   on download and the default behaviour on read and write. However it does 
 #'   remain possible (if not recommended) to site the neuronlistfh and filehash 
@@ -477,7 +478,7 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
 #' @param x The neuronlistfh object to write out
 #' @param file Path where the file will be written (see details)
 #' @param overwrite Whether to overwrite an existing file
-#' @param \dots Additional paramaters passed to \code{saveRDS}
+#' @param \dots Additional parameters passed to \code{saveRDS}
 #' @seealso \code{\link{saveRDS}}
 #' @family neuronlistfh
 #' @export

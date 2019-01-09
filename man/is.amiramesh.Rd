@@ -2,7 +2,7 @@
 % Please edit documentation in R/amiramesh-io.R
 \name{is.amiramesh}
 \alias{is.amiramesh}
-\title{Check if file is amiramesh format}
+\title{Check if file is AmiraMesh format}
 \usage{
 is.amiramesh(f = NULL, bytes = NULL)
 }
@@ -17,7 +17,7 @@ single file (used in preference to reading file \code{f}).}
 logical
 }
 \description{
-Check if file is amiramesh format
+Check if file is AmiraMesh format
 }
 \details{
 Tries to be as fast as possible by reading only first 11 bytes and 

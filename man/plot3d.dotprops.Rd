@@ -37,7 +37,7 @@ invisible list of results of rgl plotting commands
 3D plots of dotprops objects using rgl package
 }
 \details{
-Tangent vectors are plotted by \code{segments3d} and centered on the
+Tangent vectors are plotted by \code{segments3d} and centred on the
   relevant point. Points are plotted by \code{points3d}.
   
   \code{color} will be recycled by \code{points3d} and \code{segments3d}. 

@@ -23,7 +23,7 @@ if(Sys.getenv('NOT_CRAN') == "true" && internet.ok) {
   # Run all test files
   test_check("nat")
 } else {
-  # We're on CRAN or flybrain is inacessible, so don't run anything involving 
+  # We're on CRAN or flybrain is inaccessible, so don't run anything involving 
   # remote files
   Sys.setenv(NAT_INTERNET_TESTS="")
   test_check("nat", filter="^[^.]+")

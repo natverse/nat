@@ -7,7 +7,7 @@
 imslice(x, slice, slicedim = "z", drop = TRUE)
 }
 \arguments{
-\item{x}{An im3d objet}
+\item{x}{An im3d object}
 
 \item{slice}{Indices defining the slices to keep}
 
@@ -15,7 +15,7 @@ imslice(x, slice, slicedim = "z", drop = TRUE)
 will be removed.}
 
 \item{drop}{Whether singleton dimensions will be dropped (default: TRUE) 
-conveting 3D array to 2d matrix.}
+converting 3D array to 2d matrix.}
 }
 \description{
 Slice out a 3D subarray (or 2d matrix) from a 3D image array

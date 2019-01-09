@@ -21,7 +21,7 @@ image data when calculating function results. default: \code{TRUE}}
 
 \item{mask}{A mask with the same extent as the image.}
 
-\item{...}{Additional arguments for projfun}
+\item{...}{Additional arguments for \code{projfun}}
 }
 \description{
 Make 2D (orthogonal) projection of 3D image data
@@ -35,7 +35,7 @@ Note that \code{projfun} must have an argument \code{na.rm} like the
   the axis along which the projection was made. Presently both the evaluation
   location and the BoundingBox extremes are set to 0 after a projection is
   made but FIXME this is not completely satisfactory. Perhaps defining this
-  to be NA or the midpoint of the orginal axis would be better justified.
+  to be NA or the midpoint of the original axis would be better justified.
 }
 \examples{
 \dontrun{

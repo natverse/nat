@@ -2,8 +2,8 @@
 
 #' Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D
 #' 
-#' @description See http://www.vaa3d.org/ 
-#'   https://svn.janelia.org/penglab/projects/vaa3d/trunk/imagej_io/v3draw_io_imagej/raw_reader.java
+#' @description See \url{http://www.vaa3d.org/} and
+#'   \url{https://svn.janelia.org/penglab/projects/vaa3d/trunk/imagej_io/v3draw_io_imagej/raw_reader.java}
 #'   
 #' @details Note that multiple files can be checked when a character vector of 
 #'   length > 1 is provided, but only one file can be checked when a raw byte 
@@ -44,7 +44,7 @@ read.im3d.vaa3draw<-function(f, ReadData=TRUE, ..., chan=NA){
 #' @param ReadData Whether to read in data or just parse header
 #' @param Verbose Whether to print status messages
 #' @param ReadByteAsRaw Can reduce memory footprint by reading 8 bit data as a 
-#'   raw rather than 4 byte interegers.
+#'   raw rather than 4 byte integers.
 #' @export
 read.vaa3draw<-function(f, ReadData=TRUE, Verbose=FALSE, ReadByteAsRaw=FALSE){
   # datatype has 2 bytes, and sz has 4*4 bytes and endian flag has 1 byte.

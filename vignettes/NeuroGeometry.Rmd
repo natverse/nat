@@ -153,11 +153,11 @@ plot3d(Cell07PNs[c(1,30)], col='grey', WithNodes = F)
 planes3d(plc[,1:3], d=plc[,'d'])
 ```
 
-We can also make a small square plane centered on the chosen point
+We can also make a small square plane centred on the chosen point
 ```{r, rgl=T}
 library(rgl)
 clear3d()
-make_centered_plane <- function(point, normal, scale = 1) {
+make_centred_plane <- function(point, normal, scale = 1) {
   # find the two orthogonal vectors to this one
   uv = Morpho::tangentPlane(normal)
   uv = sapply(uv, "*", scale, simplify = F)
@@ -172,7 +172,7 @@ make_centered_plane <- function(point, normal, scale = 1) {
   indices = 1:4
   )
 }
-plane=make_centered_plane(mean_cent, mean_vec, scale=15)
+plane=make_centred_plane(mean_cent, mean_vec, scale=15)
 plot3d(spines, col='grey')
 shade3d(plane, col='red')
 ```

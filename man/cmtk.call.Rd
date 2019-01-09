@@ -3,7 +3,7 @@
 \name{cmtk.call}
 \alias{cmtk.call}
 \alias{cmtk.system2}
-\title{Utility function to create and run calls to CMTK commandline tools}
+\title{Utility function to create and run calls to CMTK command line tools}
 \usage{
 cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL,
   RETURN.TYPE = c("string", "list"))

@@ -219,7 +219,7 @@ nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral",
 #' Set up pan call back for current rgl device
 #' 
 #' Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892 Mouse
-#' button 2 is right and button 3 is middle (accessed by meta/alt key)
+#' button 2 is right and button 3 is middle (accessed by Meta/Alt key)
 #' 
 #' Note that sometimes (parts of) objects seem to disappear after panning and 
 #' zooming. The example in \code{\link{rgl.setMouseCallbacks}} from which this
@@ -264,7 +264,7 @@ pan3d <- function(button) {
 #'   the origin of the y axis is the top rather than the bottom of the plot.
 #'   This is achieved by reversing the y axis of the 2D plot when the second
 #'   data axis is the Y axis of the 3D data. Other settings can be achieved by
-#'   modfiying the AxisDirections argument.
+#'   modifying the AxisDirections argument.
 #'   
 #' @param x a neuron to plot.
 #' @param WithLine whether to plot lines for all segments in neuron.

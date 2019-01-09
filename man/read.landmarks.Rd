@@ -49,19 +49,20 @@ Generic functions to read/write landmarks in any supported format
 }
 \details{
 Presently the supported formats are \itemize{
-  
-  \item Amira
-  
-  \item CMTK
-  
-  \item Fiji (see \url{http://fiji.sc/Name_Landmarks_and_Register}) }
-  
-  See examples section for how to produce a listing of all currently 
+
+  \item Amira (format name \code{amiralandmarks})
+
+  \item CMTK (format name \code{cmtklandmarks})
+
+  \item Fiji (format name \code{fijilandmarks}) see
+  \url{http://fiji.sc/Name_Landmarks_and_Register} }
+
+  See examples section for how to produce a listing of all currently
   available formats with \code{fileformats}.
 }
 \section{Paired landmarks}{
- Only the amiralandmarks format supports the use of
-  paired landmarks
+ Only the \code{amiralandmarks} format supports the use
+  of paired landmarks
 }
 
 \examples{

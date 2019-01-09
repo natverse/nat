@@ -32,7 +32,7 @@ list}
 sorted so that neurons are ordered according to the value of the 
 \code{paths} argument.}
 
-\item{...}{Additional arguements to passed to read.neuron methods}
+\item{...}{Additional arguments to passed to \code{read.neuron} methods}
 }
 \value{
 \code{\link{neuronlist}} object containing the neurons

@@ -18,7 +18,7 @@ as.ngraph(x, ...)
   "seglist"), ...)
 }
 \arguments{
-\item{el}{A two columm matrix (start, end) defining edges. \code{start} means
+\item{el}{A two column matrix (start, end) defining edges. \code{start} means
 closer to the root (soma) of the neuron.}
 
 \item{vertexnames}{Integer names for graph nodes - the edge list is specified
@@ -78,7 +78,7 @@ Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
   \itemize{
 
   \item They have an integer vertex name that need not start from 1 and that
-  may have gaps. This is analagous to the PointNo field of the core data
+  may have gaps. This is analogous to the PointNo field of the core data
   block of \code{\link{neuron}} objects.
 
   \item The edge list that defines connectivity specifies those edges using

@@ -181,7 +181,7 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   
   nns=knn(x, k=k)
   # transpose points to 3xN because 
-  # R arithemtic of matric / vector operates column-wise
+  # R arithmetic of matric / vector operates column-wise
   pointst=t(x)
   for(i in 1:npoints){
     indNN=nns$nn.idx[i,]
@@ -262,7 +262,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 
 #' 3D plots of dotprops objects using rgl package
 #' 
-#' @details Tangent vectors are plotted by \code{segments3d} and centered on the
+#' @details Tangent vectors are plotted by \code{segments3d} and centred on the
 #'   relevant point. Points are plotted by \code{points3d}.
 #'   
 #'   \code{color} will be recycled by \code{points3d} and \code{segments3d}. 

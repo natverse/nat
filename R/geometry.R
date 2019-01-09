@@ -30,7 +30,7 @@ plane_coefficients<-function(p,n){
 #' Find the points on a plane that are intersected by an object
 #' 
 #' @param x A neuron, set of line segments or other data - see details.
-#' @param plane A plane, specified by the 4 coeffients of the plane equation 
+#' @param plane A plane, specified by the 4 coefficients of the plane equation 
 #'   (see \code{\link{plane_coefficients}})
 #' @param ... Additional arguments passed to methods
 #'   

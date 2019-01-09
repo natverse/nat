@@ -61,7 +61,7 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='name',
 #' @param ... Further arguments passed to methods (for \code{\link{ngraph}} or
 #'   \code{igraph} objects eventually \code{\link{graph.nodes}})).
 #' @return FIXME Raw indices (in range 1:N) of vertices when \code{x} is a
-#'   neuron, integer point identifier (aka PointNo) othwerise.
+#'   neuron, integer point identifier (aka PointNo) otherwise.
 #' @export
 #' @seealso \code{\link{graph.nodes}}, \code{\link{ngraph}}
 #' @examples

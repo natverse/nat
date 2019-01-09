@@ -35,7 +35,7 @@ cmtkreg<-function(x, returnDir=NA){
 }
 
 #' @description \code{as.cmtkreg} converts objects to class \code{cmtkreg},
-#'   minimally just by adding an approriate class attribute.
+#'   minimally just by adding an appropriate class attribute.
 #' @param ... Additional arguments passed to methods. Currently ignored.
 #' @rdname cmtkreg
 #' @export
@@ -73,7 +73,7 @@ as.cmtkreg.default<-function(x, ...){
 #'   either by checking class (default), or inspecting file. Supports CMTK
 #'   parameter files as well as NRRD deformation fields.
 #' @param filecheck Whether to check object class only (default: 'none') or find
-#'   amd check if registration file \strong{exists} or check \strong{magic}
+#'   and check if registration file \strong{exists} or check \strong{magic}
 #'   value in first line of file.
 #' @rdname cmtkreg
 #' @export

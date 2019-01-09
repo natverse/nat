@@ -52,17 +52,17 @@ be checked when determining if new output is required.}
 processing by \code{\link{cmtk.call}}.}
 }
 \value{
-the path to the ouput image (whether or not it was re-created afresh)
+the path to the output image (whether or not it was re-created afresh)
   or \code{NA_character_} if no output was possible.
 }
 \description{
 Reformat an image with a CMTK registration using the reformatx tool
 }
 \details{
-Note that if you are reformatting a mask then you will need to 
-  change the interpolation to "nn", since interpolating between e.g. mask 
-  levels 72 and 74 with 73 may have unintened consequences. Presently we have
-  no way of knowing whether an image should be treated as a mask, so the 
+Note that if you are reformatting a mask then you will need to
+  change the interpolation to "nn", since interpolating between e.g. mask
+  levels 72 and 74 with 73 may have unintended consequences. Presently we
+  have no way of knowing whether an image should be treated as a mask, so the
   \code{interpolation} must be handled manually.
 }
 \examples{

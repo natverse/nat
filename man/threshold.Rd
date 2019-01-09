@@ -23,16 +23,17 @@ foreground pixels.}
 \code{\link{vector}}}
 }
 \value{
-an oject with attributes matching \code{x} and elements with value 
-  \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and 
-  \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as 
+an object with attributes matching \code{x} and elements with value
+  \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and
+  \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as
   appropriate.
 }
 \description{
 Threshold an object, typically to produce a mask
 }
 \details{
-Note that \code{threshold.im3d} passes \dots arguments on to im3d
+Note that \code{threshold.im3d} passes \dots arguments on to
+  \code{im3d}
 }
 \examples{
 x=im3d(rnorm(1000),dims=c(10,10,10), BoundingBox=c(20,200,100,200,200,300))

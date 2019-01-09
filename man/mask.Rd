@@ -27,7 +27,7 @@ values from \code{x} matching the mask.}
 \item{invert}{Whether to invert the voxel selection (default \code{FALSE})}
 }
 \value{
-an oject with attributes matching \code{x} and elements with value 
+an object with attributes matching \code{x} and elements with value 
   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and 
   \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as 
   appropriate.
@@ -38,7 +38,7 @@ A copy of x with
 Mask an object, typically to produce a copy with some values zeroed out
 }
 \details{
-Note that \code{mask.im3d} passes \dots arguments on to im3d
+Note that \code{mask.im3d} passes \dots arguments on to \code{im3d}
 }
 \examples{
 x=im3d(array(rnorm(1000),dim=c(10,10,10)), BoundingBox=c(20,200,100,200,200,300))

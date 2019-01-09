@@ -13,7 +13,7 @@ write.neuronlistfh(x, file = attr(x, "file"), overwrite = FALSE, ...)
 
 \item{overwrite}{Whether to overwrite an existing file}
 
-\item{\dots}{Additional paramaters passed to \code{saveRDS}}
+\item{\dots}{Additional parameters passed to \code{saveRDS}}
 }
 \description{
 Write out a neuronlistfh object to an RDS file

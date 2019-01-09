@@ -468,7 +468,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' @param sumsegment Whether to return the length of each segment (when 
 #'   {sumsegment=TRUE}, the default) or a list of vectors of lengths of each
 #'   individual edge in the segment.
-#' @details A segment is an ubranched portion of neurite consisting of at least 
+#' @details A segment is an unbranched portion of neurite consisting of at least 
 #'   one vertex joined by edges.Only segments in x$SegList will be calculated 
 #'   unless \code{all=TRUE}. Segments containing only one point will have 0 
 #'   length.
@@ -725,7 +725,7 @@ smooth_segment_spline <- function(xyz, ...) {
 #'   function (see Details)
 #' @param invert Whether to invert the subset criteria - a convenience when 
 #'   selecting by function or indices.
-#' @param ... Additional parameters (passsed on to \code{\link{prune_vertices}})
+#' @param ... Additional parameters (passed on to \code{\link{prune_vertices}})
 #' @return subsetted neuron
 #' @export
 #' @seealso \code{\link{prune.neuron}}, \code{\link{prune_vertices}}, 

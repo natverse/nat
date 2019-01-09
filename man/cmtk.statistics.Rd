@@ -18,8 +18,8 @@ label field.}
 \item{masktype}{Whether mask should be treated as label field or binary mask 
 (default label)}
 
-\item{...}{Additional arguments for ctmk's statistics tool processed by 
-\code{\link{cmtk.call}}.}
+\item{...}{Additional arguments for CMTK's \code{statistics} tool processed
+by \code{\link{cmtk.call}}.}
 
 \item{Verbose}{Whether to show cmtk status messages and be verbose about file
 update checks. Sets command line \code{--verbose} option.}

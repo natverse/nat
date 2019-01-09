@@ -53,7 +53,7 @@ When reading a remote \code{neuronlistfh} object, it is downloaded
   
   }
   
-  Given this arrangment, the data directory should always be at a fixed 
+  Given this arrangement, the data directory should always be at a fixed 
   location with respect to the saved neuronlistfh object and this is enforced
   on download and the default behaviour on read and write. However it does 
   remain possible (if not recommended) to site the neuronlistfh and filehash 

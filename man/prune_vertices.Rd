@@ -23,7 +23,7 @@ FALSE).}
 \item{edges}{The edges to remove. One of i) an Nx2 matrix, each row
 specifying a single edge defined by its \bold{raw} edge id, ii) an integer
 vector defining a \emph{path} of raw vertex ids or iii) an \code{igraph.es}
-edge sequence --- see detaiuls and the \code{P} and \code{path} arguments
+edge sequence --- see details and the \code{P} and \code{path} arguments
 of \code{igraph::\link[igraph]{E}}.}
 }
 \value{
@@ -45,7 +45,7 @@ These are relatively low-level functions and you will probably want
   examples).
   
   Both \code{prune_vertices} and \code{prune_edges} first convert their input
-  \code{x} to the \code{\link{ngraph}} representation of the neuron befor 
+  \code{x} to the \code{\link{ngraph}} representation of the neuron before
   removing points. The input \code{x} can therefore be in any form compatible
   with \code{\link{as.ngraph}} including an existing \code{ngraph}. There is 
   an additional requirement that the input must be compatible with 

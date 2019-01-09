@@ -15,7 +15,7 @@ read.vaa3draw(f, ReadData = TRUE, Verbose = FALSE,
 \item{Verbose}{Whether to print status messages}
 
 \item{ReadByteAsRaw}{Can reduce memory footprint by reading 8 bit data as a 
-raw rather than 4 byte interegers.}
+raw rather than 4 byte integers.}
 }
 \description{
 Read Vaa3d format image data

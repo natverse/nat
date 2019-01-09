@@ -1,4 +1,4 @@
-context("hxsurf (amira) surfaces")
+context("hxsurf (Amira) surfaces")
 
 surf_file="testdata/amira/JFRC2_neuropils_almblh_ascii.surf"
 surf=read.hxsurf(surf_file, RegionChoice = 'Inner')

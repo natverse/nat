@@ -53,11 +53,11 @@ neuroanatomical data, especially representations of neurons.
   written out using \code{\link{write.neurons}} with support for many of the 
   most common formats including swc.
   
-  Metadata can be used to colour or subset the neurons during plotting (see 
-  \code{\link{plot3d.neuronlist}} and \code{\link{subset.neuronlist}}). 
-  Interactive 3D selection of neurons in a neuronlist is also possible using 
-  \code{\link{find.neuron}} (which makes use of rgl's \code{\link{select3d}} 
-  function.
+  Metadata can be used to colour or subset the neurons during plotting (see
+  \code{\link{plot3d.neuronlist}} and \code{\link{subset.neuronlist}}).
+  Interactive 3D selection of neurons in a neuronlist is also possible using
+  \code{\link{find.neuron}} (which makes use of \code{rgl}'s
+  \code{\link{select3d}} function.
   
   \code{neuronlist} objects also provide additional functionality to 
   streamline arithmetic (e.g. scaling all the points in all neurons see 
@@ -83,7 +83,7 @@ neuroanatomical data, especially representations of neurons.
   \code{\link{dotprops}} and \code{\link{hxsurf}} objects nat provides the 
   \code{\link{im3d}} class to handle image/density data on a regular grid. 
   I/O is handled by \code{\link{read.im3d}} and \code{\link{write.im3d}}, 
-  which are currently implemented for the amiramesh and nrrd file formats; 
+  which are currently implemented for the AmiraMesh and NRRD file formats; 
   there is also read only access to the \href{www.vaa3d.org/}{vaa3d} raw 
   format.
   
@@ -119,16 +119,16 @@ neuroanatomical data, especially representations of neurons.
 }
 
 \section{rgl Package}{
- \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}} 
-  package extensively for 3D visualisation. rgl's core function is to provide
-  interactive visualisation (usually in an X11 window depending on OpenGL - 
-  and therefore on a graphics card or OpenGL software emulator) but recently 
-  significant functionality for static snapshots and embedding results in 
-  reports such as web pages has been added. With this in mind, Duncan Murdoch
-  has added the \code{\link[rgl]{rgl.useNULL}} option. As of nat 1.8.0, 
-  \code{options(rgl.useNULL=TRUE)} will be set before nat is loaded in 
-  non-interactive R sessions. If you want to use nat in interactive 
-  environments where X11 is not available, you may want to set 
+ \bold{nat} uses the \bold{\code{\link[rgl]{rgl}}}
+  package extensively for 3D visualisation. \code{rgl}'s core function is to
+  provide interactive visualisation (usually in an X11 window depending on
+  OpenGL - and therefore on a graphics card or OpenGL software emulator) but
+  recently significant functionality for static snapshots and embedding
+  results in reports such as web pages has been added. With this in mind,
+  Duncan Murdoch has added the \code{\link[rgl]{rgl.useNULL}} option. As of
+  nat 1.8.0, \code{options(rgl.useNULL=TRUE)} will be set before nat is
+  loaded in non-interactive R sessions. If you want to use nat in interactive
+  environments where X11 is not available, you may want to set
   \code{options(rgl.useNULL=TRUE)} manually before loading nat.
 }
 

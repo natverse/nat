@@ -9,7 +9,7 @@ cmtk.dof2mat(reg, Transpose = TRUE, version = FALSE)
 \arguments{
 \item{reg}{Path to input registration file or 5x3 matrix of CMTK parameters.}
 
-\item{Transpose}{ouput matrix so that form on disk matches R's convention.}
+\item{Transpose}{output matrix so that form on disk matches R's convention.}
 
 \item{version}{Whether to return CMTK version string}
 }

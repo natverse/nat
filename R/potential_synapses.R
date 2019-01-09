@@ -190,7 +190,7 @@ DirectPotentialSynapses<-function(a,b,s=2,maxlineseglength=0.5,returnDistanceLis
   # less than double the max seg length + max accecptable distance
   
   # o-----x      x-----o
-  # eg in this arrangement we are measuring from o to o
+  # e.g. in this arrangement we are measuring from o to o
   
   segswithin<-function(seg,segs,d){
     upperRange=seg[1:3]+d

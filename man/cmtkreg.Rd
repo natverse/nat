@@ -32,7 +32,7 @@ returns the input path \code{x} after validation.}
 \item{...}{Additional arguments passed to methods. Currently ignored.}
 
 \item{filecheck}{Whether to check object class only (default: 'none') or find
-amd check if registration file \strong{exists} or check \strong{magic}
+and check if registration file \strong{exists} or check \strong{magic}
 value in first line of file.}
 }
 \description{
@@ -42,7 +42,7 @@ value in first line of file.}
   cmtkreg.
 
 \code{as.cmtkreg} converts objects to class \code{cmtkreg},
-  minimally just by adding an approriate class attribute.
+  minimally just by adding an appropriate class attribute.
 
 \code{is.cmtkreg} checks if an object is a cmtk registration
   either by checking class (default), or inspecting file. Supports CMTK

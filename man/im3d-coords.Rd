@@ -21,7 +21,7 @@ ijkpos(d, xyz, roundToNearestPixel = TRUE)
 nearest integer value (i.e. nearest pixel). default: \code{TRUE}}
 }
 \value{
-Nx3 matrix of physica l or pixel coordinates
+Nx3 matrix of physical or pixel coordinates
 }
 \description{
 \code{xyzpos} converts pixel coordinates to physical coordinates

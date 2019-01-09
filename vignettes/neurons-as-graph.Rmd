@@ -38,7 +38,7 @@ Nodes will be one of a:
 * root
 * branch point
 * end point
-* continutaion point
+* continuation point
 
 Each node will have a numeric identifier or label (an arbitrary integer stored the in the 
 neuron's `PointNo` field that may have come from an external source) as well
@@ -104,7 +104,7 @@ plot(sp, add=T, col='blue')
 
 ### Segment graph
 
-You can use the `segmentgraph` function to make a simplified represenation of
+You can use the `segmentgraph` function to make a simplified representation of
 the branching structure of the neuron. In this object (which has class `igraph`)
 each unbranched segment
 in the original neuron (which might have contained many vertices) is 

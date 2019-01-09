@@ -12,7 +12,7 @@ read.ngraph.swc(f, weights = FALSE, directed = TRUE, ...)
 \arguments{
 \item{f}{path to file}
 
-\item{...}{Additional arguments. \code{read.neuron.swc} passes theseto 
+\item{...}{Additional arguments. \code{read.neuron.swc} passes these to 
 \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
 \code{read.neuron.swc} passes them to \code{\link{ngraph}}.}
 

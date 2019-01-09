@@ -183,7 +183,7 @@ fast3dintegertable<-function (a, b, c, nlevelsa = max(a), nlevelsb = max(b),
 #'   
 #'   The core attributes of an im3d object are \code{BoundingBox, origin, x, y ,
 #'   z} where \code{x, y, z} are the locations of samples in the x, y and z
-#'   image axes (which are assumed to be orthogonsl).
+#'   image axes (which are assumed to be orthogonal).
 #' @param file Character vector describing a single file
 #' @param ReadData Whether to read the data itself or return metadata only. 
 #'   Default: TRUE
@@ -248,7 +248,7 @@ read.im3d.amiramesh<-function(file, ReadData=TRUE, ...){
   sections = if(ReadData) NULL else NA
   d<-read.amiramesh(file, sections=sections, ...)
   
-  # Amira does not store the "space origin" separately as is the case for nrrds
+  # Amira does not store the "space origin" separately as is the case for NRRDs
   # Have decided that we should always store the origin inferred from the
   # BoundingBox
   bb=attr(d,'Parameters')$BoundingBox
@@ -644,7 +644,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #' @param na.rm Logical indicating whether to ignore \code{NA} values in the 
 #'   image data when calculating function results. default: \code{TRUE}
 #' @param mask A mask with the same extent as the image.
-#' @param ... Additional arguments for projfun
+#' @param ... Additional arguments for \code{projfun}
 #' @details Note that \code{projfun} must have an argument \code{na.rm} like the
 #'   S3 Summary \code{\link{groupGeneric}} functions such as \code{sum, min} 
 #'   etc.
@@ -653,7 +653,7 @@ image.im3d<-function(x, xlim=NULL, ylim=NULL, zlim=NULL,
 #'   the axis along which the projection was made. Presently both the evaluation
 #'   location and the BoundingBox extremes are set to 0 after a projection is
 #'   made but FIXME this is not completely satisfactory. Perhaps defining this
-#'   to be NA or the midpoint of the orginal axis would be better justified.
+#'   to be NA or the midpoint of the original axis would be better justified.
 #' @seealso \code{\link{groupGeneric}}, \code{\link{clampmax}}
 #' @export
 #' @family im3d
@@ -724,7 +724,7 @@ projection<-function(a, projdim='z', projfun=c('integrate','mean','sum'),
 #' Flip an array, matrix or vector about an axis
 #' 
 #' @param x Object to flip
-#' @param ... Aditional arguments for methods
+#' @param ... Additional arguments for methods
 #' @export
 flip<-function(x, ...) UseMethod('flip')
 
@@ -732,7 +732,7 @@ flip<-function(x, ...) UseMethod('flip')
 #' @method flip array
 #' @rdname flip
 #' @param flipdim Character vector or 1-indexed integer indicating array 
-#'   dimension alogn which flip will occur. Characters X, Y, Z map onto 
+#'   dimension along which flip will occur. Characters X, Y, Z map onto 
 #'   dimensions 1, 2, 3.
 #'   
 #' @details Note that dimensions 1 and 2 for R matrices will be rows and 
@@ -778,12 +778,12 @@ flip.matrix=function(x, ...) flip.array(x, ...)
 
 #' Slice out a 3D subarray (or 2d matrix) from a 3D image array
 #' 
-#' @param x An im3d objet
+#' @param x An im3d object
 #' @param slice Indices defining the slices to keep
 #' @param slicedim Character vector or integer defining axis from which slices 
 #'   will be removed.
 #' @param drop Whether singleton dimensions will be dropped (default: TRUE) 
-#'   conveting 3D array to 2d matrix.
+#'   converting 3D array to 2d matrix.
 #' @details Note the sample locations stored in the x,y,z attributes will be 
 #'   updated appropriately. FIXME: Should we also update bounding box?
 #' @export
@@ -926,11 +926,11 @@ mask<-function(x, ...) UseMethod("mask")
 #' @param rval Whether to return an im3d object based on \code{x} or just the 
 #'   values from \code{x} matching the mask.
 #' @param invert Whether to invert the voxel selection (default \code{FALSE})
-#' @return an oject with attributes matching \code{x} and elements with value 
+#' @return an object with attributes matching \code{x} and elements with value 
 #'   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and 
 #'   \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as 
 #'   appropriate.
-#' @details Note that \code{mask.im3d} passes \dots arguments on to im3d
+#' @details Note that \code{mask.im3d} passes \dots arguments on to \code{im3d}
 #' @rdname mask
 #' @return A copy of x with
 #' @family im3d
@@ -990,11 +990,12 @@ threshold<-function(x, ...) UseMethod("threshold")
 #'   foreground pixels.
 #' @param mode The storage mode of the resultant object (see 
 #'   \code{\link{vector}}
-#' @return an oject with attributes matching \code{x} and elements with value 
-#'   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and 
-#'   \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as 
+#' @return an object with attributes matching \code{x} and elements with value
+#'   \code{as.vector(TRUE, mode=mode)} i.e. \code{TRUE, 1, 0x01} and
+#'   \code{as.vector(FALSE, mode=mode)} i.e. \code{FALSE, 0, 0x00} as
 #'   appropriate.
-#' @details Note that \code{threshold.im3d} passes \dots arguments on to im3d
+#' @details Note that \code{threshold.im3d} passes \dots arguments on to
+#'   \code{im3d}
 #' @rdname threshold
 #' @family im3d
 #' @export
@@ -1060,7 +1061,7 @@ clampmax<-function(xmin, xmax, replace.infinite=NA_real_) {
 #'   TRUE)
 #' @param lab The (single) axis label for the scale bar (default: 
 #'   \code{Density})
-#' @param mar The margins for ths plot
+#' @param mar The margins for this plot
 #' @param border Color for rectangle border (see \code{\link{rect}}'s 
 #'   \code{border} argument for details).
 #' @param \dots Additional arguments for \code{plot}
@@ -1169,7 +1170,7 @@ xyzpos<-function(d, ijk)
 #' @param xyz Nx3 matrix of physical coordinates
 #' @param roundToNearestPixel Whether to round calculated pixel coordinates to
 #'   nearest integer value (i.e. nearest pixel). default: \code{TRUE}
-#' @return Nx3 matrix of physica l or pixel coordinates
+#' @return Nx3 matrix of physical or pixel coordinates
 #' @rdname im3d-coords
 #' @aliases ijkpos
 #' @export
@@ -1216,8 +1217,8 @@ materials.default<-function(x, ...) {
 
 #' @description \code{materials.character} will read the materials from an im3d 
 #'   compatible image file on disk.
-#' @details Presently only amiramesh images are supported since they have a
-#'   standardised way of encoding labels, whereas nrrds would have to use
+#' @details Presently only AmiraMesh images are supported since they have a
+#'   standardised way of encoding labels, whereas NRRDs would have to use
 #'   key-value pairs according to some ad hoc convention.
 #' @export
 #' @rdname materials

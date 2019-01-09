@@ -26,7 +26,7 @@ modified neuronlist
 \description{
 If x is one number or 3-vector, multiply coordinates by that
 If x is a 4-vector, multiply xyz and diameter
-TODO Figure out how to document arithemtic functions in one go
+TODO Figure out how to document arithmetic functions in one go
 }
 \examples{
 mn2<-Cell07PNs[1:10]*2

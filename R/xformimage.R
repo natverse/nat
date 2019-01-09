@@ -11,7 +11,7 @@
 #' @param image Nx3 matrix of image
 #' @param ... Additional arguments passed to methods (and then eventually to
 #'   \code{\link{cmtk.reformatx}})
-#' @return Character vector with path to xformed image.
+#' @return Character vector with path to transformed image.
 #' @export
 xformimage<-function(reg, image, ...) {
   UseMethod('xformimage')
@@ -31,7 +31,7 @@ xformimage<-function(reg, image, ...) {
 #'
 #'   \item specifying a mask
 #'
-#'   \item passing additional arguments to reformatx
+#'   \item passing additional arguments to \code{reformatx}
 #'
 #'   }
 #'
@@ -66,8 +66,8 @@ xformimage.character<-function(reg, image, ...){
 #'   to be listed from sample to reference and this order is then swapped when
 #'   they are passed on to \code{cmtk.reformatx}.
 #'
-#'   whereas CMTK's streamxform tool (wrapped by \code{\link{xformpoints}})
-#'   expects them in the opposite order.
+#'   whereas CMTK's \code{streamxform} tool (wrapped by
+#'   \code{\link{xformpoints}}) expects them in the opposite order.
 #' @param transformtype Which transformation to use when the CMTK file contains
 #'   both warp (default) and affine (TODO)
 #' @param direction Whether to transform image from sample space to reference

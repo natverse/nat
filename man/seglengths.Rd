@@ -27,7 +27,7 @@ A \code{vector} of lengths for each segment or when
 Calculate length of all segments in neuron
 }
 \details{
-A segment is an ubranched portion of neurite consisting of at least 
+A segment is an unbranched portion of neurite consisting of at least 
   one vertex joined by edges.Only segments in x$SegList will be calculated 
   unless \code{all=TRUE}. Segments containing only one point will have 0 
   length.

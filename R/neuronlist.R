@@ -57,7 +57,7 @@ is.neuronlist<-function(x) {
 #'   See \code{\link{neuronlist}} details for more information.
 #' @param l An existing list or a single neuron to start a list
 #' @param ... Additional arguments passed to methods
-#' @return neuronlist with attr('df')
+#' @return neuronlist with \code{attr('df')}
 #' @export
 #' @seealso 
 #' \code{\link{is.neuronlist}},\code{\link{is.neuron}},\code{\link{is.dotprops}}
@@ -356,7 +356,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   the \code{doMC} package that is suitable for a spreading computational load
 #'   across multiple cores on a single machine. An example is provided below.
 #'   
-#'   Note that the progess bar and parallel options cannot be used at the same 
+#'   Note that the progress bar and parallel options cannot be used at the same 
 #'   time. You may want to start a potentially long-running job with the 
 #'   progress bar option and then abort and re-run with \code{.parallel=TRUE} if
 #'   it looks likely to take a very long time.
@@ -369,7 +369,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   subset are passed through unmodified.
 #' @param OmitFailures Whether to omit neurons for which \code{FUN} gives an 
 #'   error. The default value (\code{NA}) will result in nlapply stopping with 
-#'   an error message the moment there is an eror. For other values, see 
+#'   an error message the moment there is an error. For other values, see 
 #'   details.
 #' @param .progress Character vector specifying the type of progress bar (see 
 #'   \code{\link[plyr]{create_progress_bar}} for options.) The default value of 
@@ -782,7 +782,7 @@ makecols<-function(cols, colpal, nitems) {
 #'
 #' If x is one number or 3-vector, multiply coordinates by that
 #' If x is a 4-vector, multiply xyz and diameter
-#' TODO Figure out how to document arithemtic functions in one go
+#' TODO Figure out how to document arithmetic functions in one go
 #' @param x a neuronlist
 #' @param y (a numeric vector to multiply coords in neuronlist members)
 #' @return modified neuronlist

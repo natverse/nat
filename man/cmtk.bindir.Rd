@@ -55,16 +55,16 @@ Queries options('nat.cmtk.bindir') if \code{firstdir} is not
   out.
 }
 \section{Installation}{
- It is recommended to install released CMTK versions 
-  available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A 
-  bug in composition of affine transformations from CMTK parameters in the 
-  CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended. 
-  CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
-  can correctly interpret and convert registrations from earlier versions.
+ It is recommended to install released CMTK versions
+  available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A
+  bug in composition of affine transformations from CMTK parameters in the
+  CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended.
+  CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTK
+  v3 can correctly interpret and convert registrations from earlier versions.
   
   On Windows, when \code{set=TRUE}, cmtk.bindir will also check that the
   cygwin bin directory is in the PATH. If it is not, then it is added for the
-  current R session. This should solve issues with missing cygwin dlls.
+  current R session. This should solve issues with missing cygwin DLLs.
 }
 
 \examples{

@@ -1,6 +1,6 @@
 #' Defines a target volume for a CMTK reformatx operation
 #' 
-#' @details if the character vector specifies an amiramesh file, it will be 
+#' @details if the character vector specifies an AmiraMesh file, it will be 
 #'   converted to a bare \code{im3d} object and then to an appropriate 
 #'   '--target-grid' specification.
 #' @param target A character vector specifying an image file on disk, an
@@ -86,10 +86,10 @@ cmtk.targetvolume.default <- function(target, ...) {
 
 #' Reformat an image with a CMTK registration using the reformatx tool
 #' 
-#' @details Note that if you are reformatting a mask then you will need to 
-#'   change the interpolation to "nn", since interpolating between e.g. mask 
-#'   levels 72 and 74 with 73 may have unintened consequences. Presently we have
-#'   no way of knowing whether an image should be treated as a mask, so the 
+#' @details Note that if you are reformatting a mask then you will need to
+#'   change the interpolation to "nn", since interpolating between e.g. mask
+#'   levels 72 and 74 with 73 may have unintended consequences. Presently we
+#'   have no way of knowing whether an image should be treated as a mask, so the
 #'   \code{interpolation} must be handled manually.
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
@@ -118,7 +118,7 @@ cmtk.targetvolume.default <- function(target, ...) {
 #' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
 #'   \link{RunCmdForNewerInput}}
 #' @export
-#' @return the path to the ouput image (whether or not it was re-created afresh)
+#' @return the path to the output image (whether or not it was re-created afresh)
 #'   or \code{NA_character_} if no output was possible.
 #' @examples
 #' \dontrun{
@@ -240,8 +240,8 @@ cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,
 #'   label field.
 #' @param masktype Whether mask should be treated as label field or binary mask 
 #'   (default label)
-#' @param ... Additional arguments for ctmk's statistics tool processed by 
-#'   \code{\link{cmtk.call}}.
+#' @param ... Additional arguments for CMTK's \code{statistics} tool processed
+#'   by \code{\link{cmtk.call}}.
 #' @inheritParams cmtk.reformatx
 #' @return data.frame describing results with the following columns when image
 #'   \code{f} is of \code{imagetype='greyscale'} (optionally with a mask):

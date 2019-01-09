@@ -49,7 +49,7 @@ read.neuron.hxskel<-function(file, ...){
 is.hxskel<-is.amiratype('SkeletonGraph')
 
 # Read neuron in Amira's native lineset format
-# @param file Path to the amiramesh file
+# @param file Path to the AmiraMesh file
 # @param defaultDiameter If diameter information, missing use this default
 # @return A neuron object
 read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
@@ -87,7 +87,7 @@ read.neuron.hxlineset<-function(file, defaultDiameter=NA_real_, ...){
   missing_vertices=setdiff(vertices_in_edges, coords$PointNo)
   if(length(missing_vertices)) {
     stop(
-      "Invalid amiramesh file - adjacency list mentions ",
+      "Invalid AmiraMesh file - adjacency list mentions ",
       length(missing_vertices),
       " vertices that are undefined!"
     )
@@ -100,11 +100,11 @@ is.hxlineset<-is.amiratype('HxLineSet')
 
 # write out a neuron in the specialised skeletonize AM3D format 
 # (as opposed to the basic AmiraMesh format which is the native format
-# of amira for linesets)
+# of Amira for linesets)
 # WriteAllSubTrees will write out all the stored subtrees in a neuron 
 # which has multiple subtrees (which is often true of ill-formed 
 # skeletonize neurons).  It will also add a data field that can be used
-# to visualised different subtrees eg by colouring
+# to visualised different subtrees e.g. by colouring
 write.neuron.hxskel<-function(x, file, WriteAllSubTrees=TRUE, 
                               ScaleSubTreeNumsTo1=TRUE, sep=NULL){
   # if asked & nTrees is >1  (NB isTRUE handles NULL case correctly)
@@ -209,7 +209,7 @@ write.neuron.hxskel<-function(x, file, WriteAllSubTrees=TRUE,
 }
 
 # write out a neuron in the basic AmiraMesh format which is the native format
-# of amira for linesets (as opposed to the specialised skeletonize AM3D)
+# of Amira for linesets (as opposed to the specialised skeletonize AM3D)
 # WriteAllSubTrees will write out all the stored subtrees in a neuron 
 # which has multiple subtrees (which is often true of ill-formed 
 # skeletonize neurons)
@@ -272,7 +272,7 @@ write.neuron.hxlineset<-function(x, file=NULL, WriteAllSubTrees=TRUE,
   
   # Write the segment information
   cat("\n@",sectionNumbers['LineIdx']," #",nLinePoints," line segments\n",sep="",file=fc)
-  # nb have to -1 from each point because amira is 0 indexed
+  # nb have to -1 from each point because Amira is 0 indexed
   # AND add -1 to each segment as a terminator
   lapply(SegList,function(x) cat(x-1,"-1 \n",file=fc))
   if(WriteAllSubTrees) {

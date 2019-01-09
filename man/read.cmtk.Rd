@@ -21,7 +21,7 @@ landmarks.
 This is the default format used by CMTK for registration, studylist,
   landmarks and image files. Although this is largely a generic function, 
   there is special handling of the coefficients and active members of the 
-  spline warp component of a CMTK nonrigid registrartion.
+  spline warp component of a CMTK nonrigid registration.
 
 Note that if an open connection is passed to read.cmtk the version 
   number of the CMTK TypedStream will not be checked or recorded.

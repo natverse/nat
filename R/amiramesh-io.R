@@ -4,7 +4,7 @@
 #'   arithmetic.
 #' @param file Name of file (or connection) to read
 #' @param sections character vector containing names of sections
-#' @param header Whether to include the full unprocessesd text header as an 
+#' @param header Whether to include the full unprocessed text header as an 
 #'   attribute of the returned list.
 #' @param simplify If there is only one datablock in file do not return wrapped 
 #'   in a list (default TRUE).
@@ -157,7 +157,7 @@ read.amiramesh.ascii<-function(file, df, sections, Verbose=FALSE){
   return(l)
 }
 
-#' Read the header of an amiramesh file
+#' Read the header of an AmiraMesh file
 #' 
 #' @param Parse Logical indicating whether to parse header (default: TRUE)
 #' @export
@@ -271,7 +271,7 @@ read.amiramesh.header<-function(file, Parse=TRUE, Verbose=FALSE){
   DataDefDF$endian=endian
   
   # FIXME Note that this assumes exactly one blank line in between each data section
-  # I'm not sure if this is a required property of the amira file format
+  # I'm not sure if this is a required property of the Amira file format
   # Fixing this would of course require reading/skipping each data section
   nDataSections=nrow(DataDefDF)
   # NB 0 length data sections are not written
@@ -477,7 +477,7 @@ write.zlib<-function(uncompressed, con=raw()){
   writeBin(object=d,con=con)
 }
 
-#' Check if file is amiramesh format
+#' Check if file is AmiraMesh format
 #' 
 #' @details Tries to be as fast as possible by reading only first 11 bytes and 
 #'   checking if they equal to "# AmiraMesh" or (deprecated) "# HyperMesh".
@@ -495,9 +495,9 @@ is.amiramesh<-function(f=NULL, bytes=NULL) {
   generic_magic_check(tocheck, c("# HyperMesh", "# AmiraMesh"))
 }
 
-#' Return the type of an amiramesh file on disk or a parsed header
+#' Return the type of an AmiraMesh file on disk or a parsed header
 #' 
-#' @details Note that when checking a file we first test if it is an amiramesh 
+#' @details Note that when checking a file we first test if it is an AmiraMesh 
 #'   file (fast, especially when \code{bytes!=NULL}) before reading the header 
 #'   and determining content type (slow).
 #' @param x Path to files on disk or a single pre-parsed parameter list
@@ -548,7 +548,7 @@ amiratype<-function(x, bytes=NULL){
   NA_character_
 }
 
-# generic function to return a function tha identifies an amira type
+# generic function to return a function that identifies an Amira type
 is.amiratype<-function(type) {
   function(f, bytes=NULL){
     rval=amiratype(f, bytes=bytes)
@@ -556,19 +556,19 @@ is.amiratype<-function(type) {
   }
 }
 
-#' Write a 3D data object to an amiramesh format file
+#' Write a 3D data object to an AmiraMesh format file
 #' @inheritParams write.im3d
 #' @param enc Encoding of the data. NB "raw" and "binary" are synonyms.
 #' @param dtype Data type to write to disk
 #' @param endian Endianness of data block. Defaults to current value of 
 #'   \code{.Platform$endian}.
 #' @param WriteNrrdHeader Whether to write a separate detached nrrd header next 
-#'   to the amiramesh file allowing it to be opened by a NRRD reader. See 
+#'   to the AmiraMesh file allowing it to be opened by a NRRD reader. See 
 #'   details.
 #' @details Note that only \code{'raw'} or \code{'text'} format data can
 #'   accommodate a detached NRRD format header since Amira's HxZip format is
 #'   subtly different from NRRD's gzip encoding. There is a full description 
-#'   of the deteached NRRD format in the help for \code{\link{write.nrrd}}.
+#'   of the detached NRRD format in the help for \code{\link{write.nrrd}}.
 #' @export
 #' @seealso \code{\link{.Platform}, \link{read.amiramesh}, \link{write.nrrd}}
 #' @examples
@@ -590,7 +590,7 @@ write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
   cat("# Created by write.amiramesh\n\n",file=fc)	
   
   if(!is.list(x)) d=x else d=x$estimate
-  # Find data type and size for amira
+  # Find data type and size for Amira
   dtype=match.arg(dtype)	
   dtypesize<-c(4,1,2,2,4,8)[which(dtype==c("float","byte", "short","ushort", "int", "double"))]
   # Set the data mode which will be used in the as.vector call at the
@@ -625,7 +625,7 @@ write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
   cat("@1\n",file=fc)
   close(fc)
   
-  # Write a Nrrd header to accompany the amira file if desired
+  # Write a Nrrd header to accompany the Amira file if desired
   # see http://teem.sourceforge.net/nrrd/
   if(WriteNrrdHeader) {
     if(enc=="hxzip") stop("Nrrd cannot handle Amira's HxZip encoding (which is subtly different from gzip)")
@@ -637,7 +637,7 @@ write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
     cat("encoding:", ifelse(enc=="text","text","raw"),"\n",file=fc)
     cat("type: ",nrrdType,"\n",sep="",file=fc)
     cat("endian: ",endian,"\n",sep="",file=fc)
-    # Important - this sets the offset in the amiramesh file from which
+    # Important - this sets the offset in the AmiraMesh file from which
     # to start reading data
     cat("byte skip:",file.info(file)$size,"\n",file=fc)
     cat("dimension: ",length(lattice),"\n",sep="",file=fc)

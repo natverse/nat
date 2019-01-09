@@ -33,7 +33,7 @@ a character vector specifying the full cmtk reformatx '--target' or
   \code{nat.templatebrains::as.im3d.templatebrain}.
 }
 \details{
-if the character vector specifies an amiramesh file, it will be 
+if the character vector specifies an AmiraMesh file, it will be 
   converted to a bare \code{im3d} object and then to an appropriate 
   '--target-grid' specification.
 }

@@ -25,7 +25,7 @@ TRUE)}
 \item{lab}{The (single) axis label for the scale bar (default: 
 \code{Density})}
 
-\item{mar}{The margins for ths plot}
+\item{mar}{The margins for this plot}
 
 \item{border}{Color for rectangle border (see \code{\link{rect}}'s 
 \code{border} argument for details).}

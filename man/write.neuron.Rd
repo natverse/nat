@@ -18,9 +18,9 @@ write.neuron(n, file = NULL, dir = NULL, format = NULL, ext = NULL,
 neurons including 'swc', 'hxlineset', 'hxskel'}
 
 \item{ext}{Will replace the default extension for the filetype and should
-include the period eg \code{ext='.amiramesh'} or \code{ext='_reg.swc'}. The
-special value of ext=NA will prevent the extension from being changed or
-added e.g. if the desired file name does not have an extension.}
+include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
+The special value of ext=NA will prevent the extension from being changed
+or added e.g. if the desired file name does not have an extension.}
 
 \item{Force}{Whether to overwrite an existing file}
 

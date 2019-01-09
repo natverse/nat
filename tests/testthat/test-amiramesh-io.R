@@ -1,18 +1,18 @@
 context("amiramesh-io")
 
-test_that("check basic reading of amiramesh header",{
+test_that("check basic reading of AmiraMesh header",{
   am='testdata/neuron/EBT7R.am'
   expect_is(read.amiramesh.header(am),'list')
 })
 
-test_that("check basic reading of amiramesh file (neuron)",{
+test_that("check basic reading of AmiraMesh file (neuron)",{
   am='testdata/neuron/EBT7R.am'
   expect_is(n1 <- read.amiramesh(am),'list')
   am2='testdata/neuron/EBT7R_nans.am'
   expect_equal(read.amiramesh(am2)[1], n1[1])
 })
 
-test_that("check reading amiramesh in zlib and rle formats",{
+test_that("check reading AmiraMesh in zlib and rle formats",{
   rleam='testdata/amira/LHMask.Labels.rle.am'
   zipam='testdata/amira/LHMask.zip.am'
   expect_is(rle<-read.amiramesh(rleam), 'array')
@@ -35,7 +35,7 @@ test_that("read.zlib works in memory",{
   expect_equal(read.zlib(zlib_data),raw_data)
 })
 
-test_that("read.amiramesh can read an 8 bit amira file",{
+test_that("read.amiramesh can read an 8 bit Amira file",{
   amfile="testdata/amira/AL-a_M.am"
   x=read.amiramesh(amfile)
   # count non-zero elements

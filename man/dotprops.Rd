@@ -41,7 +41,7 @@ dotprops(x, ...)
 
 \item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an 
 error. The default value (\code{NA}) will result in nlapply stopping with 
-an error message the moment there is an eror. For other values, see 
+an error message the moment there is an error. For other values, see 
 details.}
 
 \item{Labels}{Vector of labels for each point e.g. identifying axon vs 

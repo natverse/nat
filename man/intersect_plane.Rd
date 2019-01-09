@@ -15,7 +15,7 @@ intersect_plane(x, plane, ...)
 \arguments{
 \item{x}{A neuron, set of line segments or other data - see details.}
 
-\item{plane}{A plane, specified by the 4 coeffients of the plane equation 
+\item{plane}{A plane, specified by the 4 coefficients of the plane equation 
 (see \code{\link{plane_coefficients}})}
 
 \item{...}{Additional arguments passed to methods}

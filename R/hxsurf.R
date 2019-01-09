@@ -212,11 +212,12 @@ write.hxsurf <- function(surf, filename) {
 #' Plot amira surface objects in 3D using rgl
 #' 
 #' @param x An hxsurf surface object
-#' @param materials Character vector or \code{\link[base]{regex}} naming materials to
-#'   plot (defaults to all materials in x). See \code{\link{subset.hxsurf}}.
-#' @param col Character vector specifying colors for the materials, or a 
-#'   function that will be called with the number of materials to plot. When 
-#'   \code{NULL} (default) will use meterial colours defined in Amira (if 
+#' @param materials Character vector or \code{\link[base]{regex}} naming
+#'   materials to plot (defaults to all materials in x). See
+#'   \code{\link{subset.hxsurf}}.
+#' @param col Character vector specifying colors for the materials, or a
+#'   function that will be called with the number of materials to plot. When
+#'   \code{NULL} (default) will use material colours defined in Amira (if
 #'   available), or \code{rainbow} otherwise.
 #' @param ... Additional arguments passed to
 #' @export
@@ -471,7 +472,8 @@ NULL
 #' @param surf The reference surface - either a \code{mesh3d} object or any
 #'   object that can be converted using \code{as.mesh3d} including \code{hxsurf}
 #'   and \code{ashape3d} objects.
-#' @param ... additional arguments for methods, eventually passed to as.mesh3d.
+#' @param ... additional arguments for methods, eventually passed to
+#'   \code{\link{as.mesh3d}}.
 #' @export
 #' @examples
 #' # check if the vertices in these neurons are inside the mushroom body calyx

@@ -15,7 +15,7 @@ function (see Details)}
 \item{invert}{Whether to invert the subset criteria - a convenience when 
 selecting by function or indices.}
 
-\item{...}{Additional parameters (passsed on to \code{\link{prune_vertices}})}
+\item{...}{Additional parameters (passed on to \code{\link{prune_vertices}})}
 }
 \value{
 subsetted neuron

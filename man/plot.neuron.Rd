@@ -114,7 +114,7 @@ list of plotted points (invisibly)
   the origin of the y axis is the top rather than the bottom of the plot.
   This is achieved by reversing the y axis of the 2D plot when the second
   data axis is the Y axis of the 3D data. Other settings can be achieved by
-  modfiying the AxisDirections argument.
+  modifying the AxisDirections argument.
 }
 \examples{
 

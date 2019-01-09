@@ -36,8 +36,8 @@ Note that the id column will be the 1-indexed order that the
   material appears in the \code{surf$Region} list for \code{hxsurf} objects
   and the 0-indexed mask values for an image.
 
-Presently only amiramesh images are supported since they have a
-  standardised way of encoding labels, whereas nrrds would have to use
+Presently only AmiraMesh images are supported since they have a
+  standardised way of encoding labels, whereas NRRDs would have to use
   key-value pairs according to some ad hoc convention.
 }
 \seealso{

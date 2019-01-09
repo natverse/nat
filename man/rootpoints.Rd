@@ -51,7 +51,7 @@ multiple unconnected subtrees.}
 }
 \value{
 FIXME Raw indices (in range 1:N) of vertices when \code{x} is a
-  neuron, integer point identifier (aka PointNo) othwerise.
+  neuron, integer point identifier (aka PointNo) otherwise.
 }
 \description{
 \code{rootpoints} returns the root point(s) (one per tree, often

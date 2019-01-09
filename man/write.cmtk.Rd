@@ -17,7 +17,7 @@ write.cmtk(l, con, gzip = FALSE, version = NA_character_)
 specified in the version attribute of \code{l}.}
 }
 \description{
-This is probaly only of interest to developers. End users will 
+This is probably only of interest to developers. End users will 
   probably wish to use more specific functions such as write.cmtkreg for
   writing out registrations.
 }

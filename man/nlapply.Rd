@@ -24,7 +24,7 @@ subset are passed through unmodified.}
 
 \item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an 
 error. The default value (\code{NA}) will result in nlapply stopping with 
-an error message the moment there is an eror. For other values, see 
+an error message the moment there is an error. For other values, see 
 details.}
 
 \item{.progress}{Character vector specifying the type of progress bar (see 
@@ -88,7 +88,7 @@ When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
   the \code{doMC} package that is suitable for a spreading computational load
   across multiple cores on a single machine. An example is provided below.
   
-  Note that the progess bar and parallel options cannot be used at the same 
+  Note that the progress bar and parallel options cannot be used at the same 
   time. You may want to start a potentially long-running job with the 
   progress bar option and then abort and re-run with \code{.parallel=TRUE} if
   it looks likely to take a very long time.

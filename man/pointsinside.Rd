@@ -17,7 +17,8 @@ pointsinside(x, surf, ...)
 object that can be converted using \code{as.mesh3d} including \code{hxsurf}
 and \code{ashape3d} objects.}
 
-\item{...}{additional arguments for methods, eventually passed to as.mesh3d.}
+\item{...}{additional arguments for methods, eventually passed to
+\code{\link{as.mesh3d}}.}
 
 \item{rval}{what to return.}
 }

@@ -39,7 +39,7 @@ space (called \strong{forward} by CMTK) or from reference to sample space
 (called \strong{inverse} by CMTK). Default (when \code{NULL} is forward).}
 }
 \value{
-Character vector with path to xformed image.
+Character vector with path to transformed image.
 }
 \description{
 You should almost always call \code{\link{xform}} rather
@@ -59,7 +59,7 @@ When passed a character vector, xformimage will check to see if it
 
   \item specifying a mask
 
-  \item passing additional arguments to reformatx
+  \item passing additional arguments to \code{reformatx}
 
   }
 
@@ -87,8 +87,8 @@ Note that the direction of CMTK registrations can be the source of
   to be listed from sample to reference and this order is then swapped when
   they are passed on to \code{cmtk.reformatx}.
 
-  whereas CMTK's streamxform tool (wrapped by \code{\link{xformpoints}})
-  expects them in the opposite order.
+  whereas CMTK's \code{streamxform} tool (wrapped by
+  \code{\link{xformpoints}}) expects them in the opposite order.
 }
 \seealso{
 \code{\link{cmtk.reformatx}}, \code{\link{xformpoints}},

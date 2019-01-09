@@ -46,7 +46,7 @@ Currently only nrrd and amira formats are implemented. Furthermore
   
   The core attributes of an im3d object are \code{BoundingBox, origin, x, y ,
   z} where \code{x, y, z} are the locations of samples in the x, y and z
-  image axes (which are assumed to be orthogonsl).
+  image axes (which are assumed to be orthogonal).
 }
 \examples{
 \dontrun{

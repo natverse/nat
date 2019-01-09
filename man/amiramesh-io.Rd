@@ -16,7 +16,7 @@ read.amiramesh.header(file, Parse = TRUE, Verbose = FALSE)
 
 \item{sections}{character vector containing names of sections}
 
-\item{header}{Whether to include the full unprocessesd text header as an 
+\item{header}{Whether to include the full unprocessed text header as an 
 attribute of the returned list.}
 
 \item{simplify}{If there is only one datablock in file do not return wrapped 
@@ -38,7 +38,7 @@ list of named data chunks
 \description{
 Read AmiraMesh data in binary or ascii format
 
-Read the header of an amiramesh file
+Read the header of an AmiraMesh file
 }
 \details{
 reading byte data as raw arrays requires 1/4 memory but complicates
