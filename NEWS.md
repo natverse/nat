@@ -1,15 +1,15 @@
-# nat 1.9.0 (in prep)
+# nat 1.9.0
 
 We are bumping a whole version point because of some changes in the default
-behaviour of nat.
+behaviour of nat. We do not expect to submit this first version in the 1.9.x
+series to CRAN without further testing, but it is our current recommended
+version for general use.
 
 Significant changes:
 
-* The use of operators e.g. adding or multiplying neurons by a constant is now
-  provided by the Ops approach (see ?groupGeneric in main R help). This is a 
-  fairly large change under the hood, but should not have any user visible
-  effects other than the fact that it is now possible to use the same 
-  functionality for hxsurf and mesh3d objects.
+* read.neurons will name neurons in the neuronlist that it returns by their
+  filename after removing the file extension. So the neuron read from file
+  "n1.swc" will now be named "n1" not "n1.swc". (#383)
 
 * write.swc normalises SWC files to maximise external compatibility.
   The canonical SWC form gives each point a numbered identifier increasing from
@@ -17,12 +17,46 @@ Significant changes:
   such an ordering. The new behaviour will result in cases where SWC files will
   be written out with a different point ordering from earlier versions of nat;
   nevertheless we prefer this behaviour since it is a source of confusion for
-  new users since many external programs cannot read SWC files where this is
-  not the case. The original behaviour can still be requested (#358).
+  new users since many external programs cannot read SWC files where this is not
+  the case. The original behaviour can still be requested (#358).
+
+* The use of operators e.g. adding or multiplying neurons by a constant is now
+  provided by the Ops approach (see ?groupGeneric in main R help). This is a
+  fairly large change under the hood, but should not have any user visible
+  effects other than the fact that it is now possible to use the same
+  functionality for hxsurf and mesh3d objects.
 
 New vignettes:
+
 * Working with Individual Neurons as Graph Structures
 * NeuroGeometry: Analysing 3D Morphology of Neurons
+
+Additional changes:
+
+* Support for CMTK deformation fields 
+* Always pass on ... for reglists in `xform()` and friends. This ensures that
+`nat.templatebrains::xform_brain` can fall back to an affine registration when a
+non-rigid registration fails (#365)
+* Fix thinko in re-ordering vertex ids for SWC files (#366)
+* Add `makeboundingbox()` for constructing a boundingbox explicitly rather than from
+  an object. This allows `boundingbox()` to work for matrices of 3D points (#222)
+* Export `nrrd.datafiles()` + nrrd doc fixes (#316)
+* Teach `materials()` to return col for amiramesh/im3d (#284)
+* Fix `nview3d()` "oblique_right"
+* Pass ... on to spheres3d to plot somata with alpha transparency (#370)
+* `as.data.frame.neuronlist()` makes autonames when none present (#371)
+* Check that `ngraph()` edgelist references valid vertices to avoid segfaults in 
+  igraph library (#363)
+* Fix bug in constructing `im3d()` with image bounds (#205)
+* Allow dotprops objects to be plotted in 2D (#112)
+* Speed up `spine()` by only considering endpoints (#372)
+* Export `graph.nodes()` and improve docs for root points (#373)
+* Speed up `pointsinside()` by checking if inside bounding box of surface mesh 
+  (progress on #353)
+* Teach `read.neurons()` to read remote zip file (#381)
+* Fix `invert_reglist()` for mix of swapped/unswapped regs
+* Fix bug in `write.im3d()`/`write.nrrd()` for raw detached nrrd (#384)
+* Export `is.im3d()`
 
 # nat 1.8.12
 
