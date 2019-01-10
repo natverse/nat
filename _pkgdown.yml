@@ -129,6 +129,7 @@ reference:
     - unmask
     - clampmax
     - boundingbox
+    - makeboundingbox
     - origin
     - voxdims
     - nrrd.voxdims
