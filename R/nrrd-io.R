@@ -456,7 +456,7 @@ write.nrrd<-function(x, file, enc=c("gzip","raw","text"),
   if(enc=='text'){
     write(as.vector(x,mode=dmode),ncolumns=1,file=file,append=fmode=='ab')
   } else {
-    fc=ifelse(enc=="gzip", gzfile, file)(file, open=fmode)
+    fc=ifelse(enc=="gzip", gzfile, base::file)(file, open=fmode)
     writeBin(as.vector(x, mode=dmode), fc, size=dtypesize, endian=endian)
     close(fc)
   }

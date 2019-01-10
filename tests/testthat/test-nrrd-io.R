@@ -61,6 +61,12 @@ test_that("read-write.nrrd works",{
   write.nrrd(d,file=tf2, dtype='byte')
   d3=read.nrrd(file=tf2)
   expect_equivalent(d, d3)
+
+  # ... and as raw detached nrrd
+  tf3=tempfile(tmpdir = td, fileext = '.nhdr')
+  write.nrrd(d,file=tf3, dtype='byte', enc='raw')
+  d4=read.nrrd(file=tf3)
+  expect_equivalent(d, d4)
   
   # compare headers
   h=attr(d,'header')
