@@ -1,3 +1,38 @@
+navbar:
+  type: default
+  left:
+  - icon: fa-home fa-lg
+    href: index.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: "Introduction to neurons and neuronlists"
+      href: articles/neurons-intro.html
+    - text: "Working with individual neurons as graph structures"
+      href: articles/neurons-as-graph.html
+    - text: "NeuroGeometry: Analysing 3D morphology of neurons"
+      href: articles/NeuroGeometry.html
+  - text: News
+    href: news/index.html
+  - text: Installation
+    href: articles/Installation.html
+  - text: Learn
+    href: index.html#learn
+  - text: Help
+    href: index.html#help
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/jefferis/nat
+
+articles:
+- title: All vignettes
+  desc: ~
+  contents:
+  - '`Installation`'
+  - '`neurons-intro`'
+  - '`neurons-as-graph`'
+  - '`NeuroGeometry`'
 reference:
   - title: Package Help
     desc: Provides an overview of key functions and classes
