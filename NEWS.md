@@ -1,5 +1,5 @@
-nat 1.9.0 (in prep)
-=========
+# nat 1.9.0 (in prep)
+
 We are bumping a whole version point because of some changes in the default
 behaviour of nat.
 
@@ -24,24 +24,24 @@ New vignettes:
 * Working with Individual Neurons as Graph Structures
 * NeuroGeometry: Analysing 3D Morphology of Neurons
 
-nat 1.8.12
-==========
+# nat 1.8.12
+
 * Speed up (2-3x) summary.neuron(list) by faster calculation of total cable
   length. Note that this may cause some changes in the reported cable length
   because all cable is now included (as it should always have been). (#361)
 * fix bug: dotprops do not get resampled labels bug (#360)
 * Add nview3d function to set anatomical viewpoints (#359)
 
-nat 1.8.11
-==========
+# nat 1.8.11
+
 Fixes
 * pointsinside fails for points >1e5 from mesh (#354)
 * as.neuron should work for an igraph made from an ngraph (#356)
   this is helpful if you e.g. delete nodes/edges from an ngraph object
 * breaking change with testthat v2 #355
 
-nat 1.8.10
-==========
+# nat 1.8.10
+
 * pointsinside now works with alpha shape (ashape3d) objects directly (#350)
 * On windows add cygwin binary directory to path if not present 
   (fixes errors with missing cygwin DLLs)
@@ -57,16 +57,16 @@ nat 1.8.10
 * Switch pointsinside to use Rvcg::vcgClostKD, thereby fixing some cases
   where points were incorrectly reported to be inside a surface. (#352)
 
-nat 1.8.9
-=========
+# nat 1.8.9
+
 * fix reading of neurons when origin is not an endpoint (#342)
   nb this bug was introduced in 1.8.8
 * fix edge case for is.neuron when applied to tibbles (#338)
 * add PlotSubTrees option for plot.neuron (#339)
   thanks to Zhihao Zheng
 
-nat 1.8.8
-=========
+# nat 1.8.8
+
 * add xyzmatrix<-.neuronlist so that we can replace the vertices of a set of 
   objects in one go (#328)
 * add as.mesh3d.ashape3d thereby adding support for 3D alpha surfaces generated 
@@ -85,8 +85,8 @@ nat 1.8.8
 * fix crashing bug in read.neuron.hxlineset for malformed files (#325)
 * only warn if xform.neuronlist fails to transform soma positions (#326)
 
-nat 1.8.7
-=========
+# nat 1.8.7
+
 This release includes some bug fixes and significantly improved online package
 documentation visible at http://jefferis.github.io/nat/ including two vignettes.
 
@@ -96,15 +96,15 @@ documentation visible at http://jefferis.github.io/nat/ including two vignettes.
   (reported by K. Hornik)
 * replace nat::trim with base::trimws (#313)
 
-nat 1.8.6
-=========
+# nat 1.8.6
+
 * Add xform.data.frame method (#309)
 * Add invert_reglist function (#308)
 * Fix bug in imslice storing position of new singleton dim (#306)
 * Fix namespace issues for smooth_neuron
 
-nat 1.8.5
-=========
+# nat 1.8.5
+
 The main feature of this release is improved support for nat+CMTK on Windows.
 
 * teach voxdims.character to get voxel dimensions straight from image file on 
@@ -115,8 +115,8 @@ The main feature of this release is improved support for nat+CMTK on Windows.
 * cmtk.reformatx needs to use system2 (#301)
 * Don't use shell features on Windows (#295)
 
-nat 1.8.4
-=========
+# nat 1.8.4
+
 * fix  build failures with testthat >=0.12 (#293)
 * ensure that nat still works with igraph <1.0 (#298)
 * fix read.hxsurf failure when a region is not listed in the Parameters section (#291)
@@ -125,8 +125,8 @@ nat 1.8.4
 * Don't lose swap attribute when >1 cmtk registrations in reglist (#296)
 * Documentation improvements for neurons and file formats
 
-nat 1.8.3
-=========
+# nat 1.8.3
+
 * nat now handles compound registrations via reglist objects (#286).
   These can contain homogeneous affine, CMTK registrations (in disk or in memory)
   and R functions (which can be used to wrap arbitrary registration types not 
@@ -151,17 +151,17 @@ nat 1.8.3
 * The idiom neuronlist[,] will never drop columns (since it is a useful shortcut
   for as.data.frame(neuronlist)) (#277)
 
-nat 1.8.2
-=========
+# nat 1.8.2
+
 * roll back rgl NULL mode changes from 1.8.0 in favour of less invasive approach
   of marking the majority of rgl based plotting examples as donttest (#274)
 
-nat 1.8.1
-=========
+# nat 1.8.1
+
 * fix non-canonical URLs to CRAN packages (thanks to Uwe Ligges)
 
-nat 1.8.0
-=========
+# nat 1.8.0
+
 This is tagged as a major release because of a change in behaviour that (by 
 default) suppresses interactive rgl windows when running in batch 
 (non-interactive) mode. See ?nat "rgl Package" section for details.
@@ -180,8 +180,8 @@ default) suppresses interactive rgl windows when running in batch
 * Fix bug in bounding box with input = "bounds" (#273)
 * Documentation improvements (especiall package overview - see ?nat)
 
-nat 1.7.2
-=========
+# nat 1.7.2
+
 * new function subset.neuron can keep/remove individual vertices from a neuron 
   based on internal variables such as position, width, vertex number etc while
   still producing a valid neuron with an appropriate graph structure (#261)
@@ -197,16 +197,16 @@ nat 1.7.2
 * fix bug: seglengths fails for neurons with multiple trees bug (#257)
 * fix bug: xformpoint.cmtkreg fails for in memory registration lists (#259)
 
-nat 1.7.1
-=========
+# nat 1.7.1
+
 * new functions strahler_order and prune_strahler to calculate the Strahler 
   order of points in a neuron and to remove lower order (terminal) branches.
 * fix is.cmtkreg for non-existent files (and better handling of status messages)
 * export segmentgraph function for end users
 * enable segmentgraph to return segment ids
 
-nat 1.7.0
-=========
+# nat 1.7.0
+
 * implement extraction/replacement of the data.frame attached to a neuronlist
   using the [ operator (#217)
 * fix xform of image data (#143, #199)
@@ -234,15 +234,15 @@ nat 1.7.0
 * document return values of cmtk.statistics in more detail (#252)
 * support for igraph 1.0 (#248)
 
-nat 1.6.6
-=========
+# nat 1.6.6
+
 * Fixes description capitalisation/quoting for CRAN
 * Adds ability to write dotprops neuron objects to SWC format (#233)
 * fixes bug in xyzmatrix.neuron for single point neurons (#234)
 * likewise for xyzmatrix.default for 1-row >3-col matrices
 
-nat 1.6.5
-=========
+# nat 1.6.5
+
 * add xyzmatrix get/set methods for class mesh3d along with xform.shape3d. This
   should enable rgl::mesh3d objects (used in a number of other packages) to be
   transformed using CMTK registrations.
@@ -253,7 +253,7 @@ nat 1.6.5
   the option to see our documentation as well as base docs.
 * subset.hxsurf drops unused vertices by default
 * add sample surface object of mushroom body
-* teach cmtk.statistics to handle imagetype == 'label' (#221)
+* teach cmtk.statistics to handle imagetype  'label' (#221)
 * plot.neuronlist sets axes based on boundingbox of all plotted neurons, not just
   the first neuron (#223)
 * plot.neuron(,AxisDirections) argument is re-implemented (#224)
@@ -276,16 +276,16 @@ nat 1.6.5
 * dev: improvements in test coverage (up to 84%) catching numerous small bugs in
   the process.
 
-nat 1.6.4
-=========
+# nat 1.6.4
+
 * Edits to package description for CRAN
 
-nat 1.6.3
-=========
+# nat 1.6.3
+
 * fix invalid url in README.md noticed by r-devel/BDR
 
-nat 1.6.2
-=========
+# nat 1.6.2
+
 * add as.im3d.matrix which allows conversion of a Nx3 matrix of coordinates into
   a volume representation
 * add ability to use a neuron's StartPoint in the spine function that finds the 
@@ -296,8 +296,8 @@ nat 1.6.2
 * dev: fix use of require in package code (a new note from r-devel)
 * dev: fix a cmtk-dependent test that was not guarded against cmtk's absence
 
-nat 1.6.1
-=========
+# nat 1.6.1
+
 * add ability to transform images (specified as path to a file)
 * register image file formats to use with read/write.im3d
 * register amira types including linesets, surfaces and landmarks
@@ -305,8 +305,8 @@ nat 1.6.1
 * add support for applying multiple registrations in xform.neuronlist, as well
   as vectorisation (where each registration is applied to a different object)
 
-nat 1.6.0
-=========
+# nat 1.6.0
+
 * Add support for reading NeuroML and Fiji Simple Neurite Tracer neurons
 * recognise SWC neurons by content (rather than just file extension)
 * can write a set of neurons to a zip archive (?write.neurons)
@@ -320,8 +320,8 @@ nat 1.6.0
 * fix is.nrrd for raw input
 * fix node colours in plot3d.neuron when WithAllPoints=TRUE
 
-nat 1.5.14
-==========
+# nat 1.5.14
+
 * add nlscan function to review a set of neurons, optionally selecting a subset
 * add find.soma function to select neurons whose cell bodies fall within an rgl
   seelection box (thanks to Ben Sutcliffe).
@@ -335,8 +335,8 @@ nat 1.5.14
 * simplify calculation of inertia in dotprops
 * minor doc fixes and clarifications
 
-nat 1.5.13
-==========
+# nat 1.5.13
+
 * mat2dof output gets descriptive rownames
 * ndigest.neuronlistfh only uses 2 key fields (keyfilemap and df)
 * fix bug in locating cmtk when only the cmtk wrapper script is in the path
@@ -346,8 +346,8 @@ nat 1.5.13
 * switch from RANN to nabor package for finding nearest neighbours
 * dev: update help to roxygen2 4.0.2
 
-nat 1.5.12
-==========
+# nat 1.5.12
+
 * fix bug in updating neuronlistfh objects from remote url
 * nlapply now has options for progress bars and parallelisation by using the 
   plyr package under the hood.
@@ -359,13 +359,13 @@ nat 1.5.12
 * warn if resmapling a neuron with multiple subtrees that only the main subtree
   will be kept.
 
-nat 1.5.11
-==========
+# nat 1.5.11
+
 * add cmtk.statistics function
 * fix infinite recursion in cmtk.targetvolume
 
-nat 1.5.10
-==========
+# nat 1.5.10
+
 * fix: write.neurons subdir argument can accept a column of the attached
   data.frame (unquoted)
 * fix: write.neuron(s) can add an extension to an output filename that does not
@@ -375,8 +375,8 @@ nat 1.5.10
   templatebrains (as contained in nat.flybrains package) to specify target 
   image for registration.
 
-nat 1.5.9
-=========
+# nat 1.5.9
+
 * fix transformation of points using compound CMTK registrations
   (this was broken for CMTK<3.2.2, so a workaround is required).
 * Add cmtk.version function.
@@ -385,8 +385,8 @@ nat 1.5.9
 
 * dev: fix test for winbuilder
 
-nat 1.5.8
-=========
+# nat 1.5.8
+
 * Add boundingbox.list method to find boundingbox for neurons, surfaces etc
 * nmapply and nlapply get OmitFailures arguments
 * nlapply also gets a subset argument
@@ -395,15 +395,15 @@ nat 1.5.8
 * fix subset.neuronlist handling of numeric indices
 * minor bug/doc fixes
 
-nat 1.5.7
-=========
+# nat 1.5.7
+
 * teach plot3d.neuronlist and friends to plot soma locations.
 * add npop3d function to remove last plotted neurons 
   (identical to flycircuit::pop3dfc, except that it works with any neurons
   plotted by plot3d.neuronlist, rather than only those plotted by plot3dfc)
 
-nat 1.5.6
-=========
+# nat 1.5.6
+
 * give mirror/xform.neuronlist subset arguments
 * add plot3d.boundingbox
 * give plot(3d).neuronlist a SUBSTITUTE argument that can be used to control
@@ -412,20 +412,20 @@ nat 1.5.6
   for details.
 * fix: write.neurons into subdirs when df=NULL
 
-nat 1.5.5
-==========
+# nat 1.5.5
+
 * fix bug in reading swc files with many decimal places specific to R 3.1.0
 * fix bug in header when writing swc files [ajdm]
 * read.im3d now adds file as an attribute to output
 * read.im3d can now add amiramesh files without the standard file extension
 * doc: minor improvements to read.im3d docs and examples
 
-nat 1.5.4
-==========
+# nat 1.5.4
+
 * remove internal is.gzip function and depend on nat.utils >=0.4.2
 
-nat 1.5.3
-==========
+# nat 1.5.3
+
 * new function pointsinside to determine if points (e.g. neuron) are inside a
   closedd surface
 * resample.neuron implemented (no support for interpolating widths or multiple
@@ -438,8 +438,8 @@ nat 1.5.3
 * suppress remote tests if flybrain unreachable
 * zenodo DOI for package
 
-nat 1.5.2
-==========
+# nat 1.5.2
+
 * add seglengths function for neurons
 * add segmentgraph function to produced a simplified graph representation of
   neurons with one edge per segment
@@ -451,8 +451,8 @@ nat 1.5.2
 * fix colouring of vectors by plot3d.dotprops
 * dev: switch to roxygygen2 v4
 
-nat 1.5.1
-==========
+# nat 1.5.1
+
 * add potential_synapses (from nat.as)
 * surfaces: add subset.hxsurf and as.mesh3d
 * Teach read.im3d to read Vaa3d raw format
@@ -465,8 +465,8 @@ nat 1.5.1
   differ (to avoid writing old registrations as if they were new or vice versa)
 * fix: prune.neuronlist method signature (and therefore dispatch)
 
-nat 1.4.10
-==========
+# nat 1.4.10
+
 * add function to prune objects by removing points close to or far from another
   object
 * add nmapply function for neuronlists
@@ -483,20 +483,20 @@ nat 1.4.10
 * fix: im3d axis labels
 * doc: numerous small documentation improvements
 
-nat 1.4.9
-=========
+# nat 1.4.9
+
 * add spine() function to find longest path (aka backbone) of a neuron
 * give ngraph (and therefore as.ngraph methods) a weights argument so that 
   resultant ngraph objects have edge weights defined by segment lengths.
 * add as.im3d generic and as.im3d.im3d method
 * fix bug in setting graph attributes in ngraph
 
-nat 1.4.8
-=========
+# nat 1.4.8
+
 * bugfix: ensure ind2coords.im3d is exported
 
-nat 1.4.7
-=========
+# nat 1.4.7
+
 * add ability to make a dotprops object directly from an image file on disk or
   an im3d object in memory.
 * port ind2coord, coord2ind and sub2ind functions from AnalysisSuite
@@ -507,14 +507,14 @@ nat 1.4.7
 * simplify axis handling in plot.neuron
 * dev: build nat.flybrains (as well as nat) after flycircuit build
 
-nat 1.4.6
-=========
+# nat 1.4.6
+
 * fix bug in handling vertexData argument in as.neuron.ngraph
 * fix test error on Solaris (thanks to Brian Ripley)
 * dev: fix remaining warnings in tests
 
-nat 1.4.5
-=========
+# nat 1.4.5
+
 * add plot.neuron for 2d plots (ajdm, from code in AnalysisSuite)
 * add nopen3d() which opens an rgl viewer that allows panning. See ?nopen3d for
   details of how to use this.
@@ -529,8 +529,8 @@ nat 1.4.5
 * tests: clear up temp files and suppress most warnings
 * dev: restart travis build of flycircuit package when nat is pushed to github
 
-nat 1.4.4
-=========
+# nat 1.4.4
+
 * fix handling of logical expressions including NAs by subset.neuronlist
 * add soma argument to plot3d.neuron
 * fix: boundingbox.im3d() returns NULL when bounding box is not defined
@@ -540,8 +540,8 @@ nat 1.4.4
 * fix: export ndigest.dotprops method
 * give image.im3d a useRaster option, which defaults to TRUE when possible.
 
-nat 1.4.3
-=========
+# nat 1.4.3
+
 * new ndigest (normalised digest) function to compute hash values. Methods for
   neuronlistfh and dotprops objects. Can be used e.g. to compute a hash value
   for a standard dps object to determine if a data.
@@ -550,20 +550,20 @@ nat 1.4.3
 * more flexible im3d constructor can use an existing im3d object to supply
   spatial attributes.
 
-nat 1.4.2
-=========
+# nat 1.4.2
+
 * fix bug in read.neuronlistfh resulting in error if a remote file was
   downloaded and then read back in (using cached copy) before any neurons were
   downloaded.
 
-nat 1.4.1
-=========
+# nat 1.4.1
+
 * fix bug in write.nrrd - was failing to write essential space dimensions field.
 * make gzip the default encoding for nrrd images - this is pretty much always
   what one wants.
 
-nat 1.4.0
-=========
+# nat 1.4.0
+
 * add cmtk.reformatx command for reformatting images using CMTK registrations
 * new function remotesync to synchronise a neuronlistfh object with its remote
   source.
@@ -574,18 +574,18 @@ nat 1.4.0
   for subsets of an existing group of neurons
 * fix hashmap functionality of neuronlistfh (speeds up access to single neurons)
 
-nat 1.3.2
-=========
+# nat 1.3.2
+
 * fix bug in find.neuron for neuronlistfh objects
 * fix bug in neuronlistfh constructor (wasn't adding hashmap) and 
   [[.neuronlistfh (was not searching properly for objects when using hashmap).
 
-nat 1.3.1
-=========
+# nat 1.3.1
+
 * add find.neuron for interactive selection of neurons in 3d.
 
-nat 1.3
-=======
+# nat 1.3
+
 * implementation of new im3d image manipulations functions including image.im3d,
   projection, unmask, imslice, imscalebar, imexpand.grid, flip, origin,
   boundingbox<-, xyzpos, ijkpos
@@ -593,8 +593,8 @@ nat 1.3
 * fix reading of gzipped nrrds on windows
 * dev: fix nocran tests
 
-nat 1.2
-=======
+# nat 1.2
+
 * Basic implementation of reading/writing NRRD format image data.
   See read.nrrd and write.nrrd for details.
 * Basic implementation of reading/writing Amira format image data.
@@ -611,8 +611,8 @@ nat 1.2
   CRAN (ajdm)
 * dev: travis continuous integration support (ajdm)
 
-nat 1.1
-=======
+# nat 1.1
+
 * Implemented reading and writing of groups of neurons from/to neuronlists.
   See read.neurons and write.neurons.
 * Implemented writing of single neurons in swc format, Amira's HxLineSet and 
@@ -623,26 +623,26 @@ nat 1.1
 * dev: speed and flexibility improvements in fileformats ioregistry.
   see ?fileformats for details of new functions.
 
-nat 1.0.1
-=========
+# nat 1.0.1
+
 * fix bug in cmtk.bindir() on Solaris (thanks to Brian Ripley)
 
-nat 1.0
-=======
+# nat 1.0
+
 * implement reading of amiramesh data
 * including amira SkeletonGraph format tracings
 * switch to filehashRDS format for repositories of remote neurons
 * retire stashR backend for neuronlistfh remote repositories (too slow)
 
-nat 0.9
-=======
+# nat 0.9
+
 * support for automatic download of neurons from stashR remote repositories on
   the web. ?neuronlistfh for details and an example. 
 * Relies on stashR package
 * dev: small doc fixes to make package CRAN compatible.
 
-nat 0.8
-=======
+# nat 0.8
+
 * important new feature: neuronlistfh objects backed by an on disk filehash
   allow single neurons to be loaded from disk on demand
 * this allows 1) fast startup suitable for knitr documents and 2) working with
@@ -652,8 +652,8 @@ nat 0.8
 * furthermore neuronlistfh objects can be subsetted/converted to give in memory
   neuronlist objects.
 
-nat 0.7
-=======
+# nat 0.7
+
 * implement read.neuron and read.neurons
 * so far only works for rda, rds and swc files
 * reading of additional file types will be implemented by registering functions =
@@ -661,8 +661,8 @@ nat 0.7
   nat::neuronformats.
 * developer: seglists in neurons now have class 'seglist'
 
-nat 0.6
-=======
+# nat 0.6
+
 * major new functionality - bidirectional interconversion of graph and regular
   neuron representation
 * see as.neuron.* methods and as.ngraph.* methods
@@ -670,15 +670,15 @@ nat 0.6
   different neuron file formats
 * depends on igraph package
 
-nat 0.5.2
-=========
+# nat 0.5.2
+
 * add subset.neuronlist
 * add methods for working with dataframe attached to neuronlist 
   (see e.g. ?with.neuronlist)
 * TODO harmonise plot3d.neuronlist subset expressions with subset.neuronlist
 
-nat 0.5.1
-=========
+# nat 0.5.1
+
 * Switch license to GPL-3
 * xform (transformation) of hxsurf objects
 * fix xform of neuronlist objects
@@ -692,23 +692,23 @@ nat 0.5.1
 * Remove call to .Internal(La_rs) by calling eigen directly
 * doc: some notes on CMTK installation
 
-nat 0.5
-=======
+# nat 0.5
+
 * fix broken handling of cmtk affine transformations
 * implement mirroring of neurons and other objects
 * teach xformpoints (and therefore xform) to handle "~/" in paths
 * bugfix in visibility of S3method xformpoints.character
 * (developer) Switch to roxygen2 v3.0 for documentation
 
-nat 0.4
-=======
+# nat 0.4
+
 * read.hxsurf and plot3d.hxsurf for reading/plotting Amira surfaces
 * better handling of location of cmtk command line tools see ?cmtk for details
 * add neuronlist and associated methods (including plot)
 * plot3d for neurons and dotprops
 
-nat 0.3
-=======
+# nat 0.3
+
 * basic and self-contained implementation of neuron class
 * basic and self-contained implementation of dotprops
 * new xform generic + methods for clean transformation of objects including
@@ -720,12 +720,12 @@ nat 0.3
   et al. 2011)
 * 1 use of .Internal and missing nlapply remain to be fixed.
 
-nat 0.2.1
-=========
+# nat 0.2.1
+
 * fix install error due to missing neuron(*).R files that contain docs only so far
 
-nat 0.2
-=======
+# nat 0.2
+
 * Fairly complete implementation of CMTK registration I/O and geometry
 * All functionality is self-contained (i.e. independent of nat.as/AnalysisSuite)
 * passes check()
