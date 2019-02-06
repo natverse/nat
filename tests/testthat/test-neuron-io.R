@@ -144,6 +144,11 @@ test_that("we can read in neurons as a neuronlist",{
                  regexp = 'While reading file.*Neurites\\.am')
 })
 
+test_that('we can deal with bad input to read.neurons', {
+  # by definition tempfile() doesn't exist
+  expect_warning(read.neurons(tempfile()), regexp = "No such file or directory")
+})
+
 test_that("we can read hxlineset format neurons",{
   
   ebt7=structure(list(NeuronName = "EBT7R", InputFileName = "testdata/neuron/EBT7R.am", 
