@@ -39,11 +39,11 @@ xform(x, reg, ...)
 \arguments{
 \item{x}{an object to transform}
 
-\item{reg}{A registration defined by a matrix, a function, a \code{cmtkreg} 
-object, or a character vector specifying a path to one or more 
+\item{reg}{A registration defined by a matrix, a function, a \code{cmtkreg}
+object, or a character vector specifying a path to one or more
 registrations on disk (see Registrations section).}
 
-\item{...}{additional arguments passed to methods and eventually to 
+\item{...}{additional arguments passed to methods and eventually to
 \code{\link{xformpoints}}}
 
 \item{na.action}{How to handle NAs. NB drop may not work for some classes.}
@@ -69,11 +69,11 @@ element of \code{x}.}
 as well.}
 }
 \description{
-\code{xform} is designed to operate on a variety of data types, especially 
-objects encapsulating neurons. \code{xform} depends on two specialised 
-downstream functions \code{\link{xformpoints}} and \code{\link{xformimage}}. 
+\code{xform} is designed to operate on a variety of data types, especially
+objects encapsulating neurons. \code{xform} depends on two specialised
+downstream functions \code{\link{xformpoints}} and \code{\link{xformimage}}.
 These are user visible any contain some useful documentation, but should only
-be required for expert use; in almost all circumstances, you should use only 
+be required for expert use; in almost all circumstances, you should use only
 \code{xform}.
 
 \code{xform.character} is designed to work with files on disk.
@@ -81,12 +81,12 @@ be required for expert use; in almost all circumstances, you should use only
   supported in future.
 }
 \details{
-Methods are provided for some specialised S3 classes. Further 
-  methods can of course be constructed for user-defined S3 classes. However 
-  this will probably not be necessary if the \code{xyzmatrix} and 
-  \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3 
+Methods are provided for some specialised S3 classes. Further
+  methods can of course be constructed for user-defined S3 classes. However
+  this will probably not be necessary if the \code{xyzmatrix} and
+  \code{`xyzmatrix<-`} generics are suitably overloaded \emph{and} the S3
   object inherits from \code{list}.
-  
+
   Note that given the behaviour of the \code{xyzmatrix} functions, the
   \code{xform.data.frame} method will transform the x,y,z or X,Y,Z columns of
   a data.frame if the data.frame has more than 3 columns, erroring out if no
@@ -115,38 +115,52 @@ With \code{xform.neuronlist}, if you want to apply a different
 }
 \section{Registrations}{
 
-  
-  When \code{reg} is a character vector, xform's specialised downstream 
-  functions will check to see if it defines a path to one (or more) 
+
+  When \code{reg} is a character vector, xform's specialised downstream
+  functions will check to see if it defines a path to one (or more)
   registrations on disk. These can be of two classes
-  
+
   \itemize{
-  
+
   \item CMTK registrations
-  
-  \item \code{\link{reglist}} objects saved in R's \code{RDS} format (see 
-  \code{\link{readRDS}}) which can contain any sequence of registrations 
+
+  \item \code{\link{reglist}} objects saved in R's \code{RDS} format (see
+  \code{\link{readRDS}}) which can contain any sequence of registrations
   supported by nat.
-  
+
   }
-  
+
   If the path does indeed point to a CMTK registration, this method will hand
   off to \code{xformpoints.cmtkreg} or \code{xformimages.cmtkreg}. In this
   case, the character vector may optionally have an attribute, 'swap', a
   logical vector of the same length indicating whether the transformation
   direction should be swapped. At the moment only CMTK registration files are
   supported.
-  
-  If \code{reg} is a character vector of length >=1 defining a sequence of 
+
+  If \code{reg} is a character vector of length >=1 defining a sequence of
   registration files on disk they should proceed from sample to reference.
-  
-  Where \code{reg} is a function, it should have a signature like 
-  \code{myfun(x,), ...} where the \code{...} \strong{must} be provided in 
-  order to swallow any arguments passed from higher level functions that are 
-  not relevant to this particular transformation function.
+
+  Where \code{reg} is a function, it should have a signature like
+  \code{myfun(x,), ...} where the \code{...} \strong{must} be provided in
+  order to swallow any arguments passed from higher level functions that are
+  not relevant to this particular transformation function. Note that
+  functions can be supplied that expect an Nx3 matrix of points OR a
+  \code{neuron} as input. In the latter case, the function can be used to
+  scale the neuron's diameter as well as the point locations. See examples.
 }
 
 \examples{
+## using an affine matrix
+scalemat=t(rgl::scaleMatrix(1,2,3))
+scaled=xform(Cell07PNs[1:3], scalemat)
+
+## using a function
+# doesn't scale radius
+tnm=xform(Cell07PNs[1:3], function(x, ...) x=x*1e3)
+head(tnm[[1]][['d']])
+# does scale radius
+tnm2=xform(Cell07PNs[1:3], function(x, ...) x=x*rep(1e3, 4))
+head(tnm2[[1]][['d']])
 \dontrun{
 kc1=kcs20[[1]]
 kc1.default=xform(kc1,function(x,...) x)
