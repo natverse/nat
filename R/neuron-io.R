@@ -242,7 +242,15 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
   # immediately so that we can tell which neuron generated them
   ow=options(warn=1)
   on.exit(options(ow), add = TRUE)
+  if(interactive())
+    pb <- progress::progress_bar$new(format = "  reading :current/:total [:bar]  eta: :eta",
+                                   clear = FALSE,
+                                   total = length(paths),
+                                   show_after=2)
+  
   for(n in names(paths)){
+    if(interactive())
+      pb$tick()
     f=unname(paths[n])
     x=withCallingHandlers(try(read.neuron(f, format=format, ...), silent=TRUE),
                           warning = function(w) message("While reading file: ",f),
