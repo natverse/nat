@@ -382,7 +382,12 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   a progress bar built using \code{\link{progress_bar}} from the progress
 #'   package, which can be highly customised. The alternative is to use the
 #'   progress bars distributed directly with the \code{plyr} package such as
-#'   \code{\link{progress_text}}. In either case the actual function
+#'   \code{\link{progress_text}}.
+#'
+#'   In either case the value of the \code{.progress} argument must be a
+#'   character vector which names a function. According to \code{plyr}'s
+#'   convention an external function called \code{progress_myprogressbar} will
+#'   be identified by setting the argument to \code{.progress="myprogressbar"}.
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -429,9 +434,15 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'
 #' \dontrun{
 #' ## Override default progress bar behaviour via options
+#' # sleep 50ms per neuron to ensure progress bar gets triggered
+#' sl=nlapply(Cell07PNs, FUN = function(x) {Sys.sleep(0.05);seglengths(x)})
+#' # the default progess bar for nat < 1.9.1
+#' options(nat.progress='traditional')
 #' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' # no progress bar ever
 #' options(nat.progress='none')
-#' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' sl=nlapply(Cell07PNs, FUN = function(x) {Sys.sleep(0.05);seglengths(x)})
+#' # back to normal
 #' options(nat.progress=NULL)
 #' sl=nlapply(Cell07PNs, FUN = seglengths)
 #' }
