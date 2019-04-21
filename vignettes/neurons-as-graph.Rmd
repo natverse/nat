@@ -143,7 +143,7 @@ igraph::diameter(gw)
 This gives you the longest path length (geodesic) across the graph in units of
 µm in this case.
 
-Note that although you can do `library(ngraph)`, it adds a lot of functions to 
+Note that although you can do `library(igraph)`, it adds a lot of functions to 
 the search path, some of which have name clashes, so I often just use the 
 package name (`igraph::`) prepended to the function that I want to call.
 
