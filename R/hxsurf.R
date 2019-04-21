@@ -162,6 +162,77 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   return(d)
 }
 
+read.hxsurf.bin <- function(filename) {
+  firstLine=readLines(filename,n=1)
+  if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+binary",firstLine,ignore.case=T,perl=T))){
+    stop(filename," does not appear to be an Amira HyperSurface binary file!")
+  }
+  con=file(filename, open='rb')
+  on.exit(close(con))
+  vertex_regex='^Vertices \\d+$'
+  
+  # read header
+  h <- character()
+  line <- readLines(con, n=1)
+  while(!isTRUE(grepl(vertex_regex, line))) {
+    h=c(h, line)
+    line <- readLines(con, n=1)
+  }
+  # read data blocks
+  data_regex='^\\s*(\\w+)\\s+(\\d+)$'
+  
+  parse_data_line <- function(line) {
+    tryCatch({
+      res=stringr::str_match(line, data_regex)
+      n=suppressWarnings(as.integer(res[,3]))
+      checkmate::assert_int(n)
+      label=checkmate::assert_character(res[,2])
+      names(n)=label
+      n
+    }, error=function(e) {NA_integer_})
+  }
+  data <- list(header=h)
+  curpatch=NA_integer_
+  while(TRUE) {
+    if(length(line)<1) break
+    if(is.finite(curpatch)) {
+      if(length(data[['PatchInfo']])<curpatch)
+        data[['PatchInfo']][[curpatch]]=line
+      else 
+        data[['PatchInfo']][[curpatch]]=c(data[['PatchInfo']][[curpatch]], line)
+    } else {
+      data[['header']]=c(data[["header"]], line)
+    }
+    # is this a closing bracket at the end of a section
+    firstchar=substr(trimws(line), 1, 1)
+    if(isTRUE(firstchar=='}') && is.finite(curpatch)) curpatch=curpatch+1
+    
+    n=parse_data_line(line)
+    if(is.na(n) || n==0) {
+      line <- readLines(con, 1)
+      next
+    }
+    label=names(n)
+    if(label=='Vertices') {
+      chunk=readBin(con, what='numeric', n=n*3, size=4, endian = 'big')
+      data[['Vertices']]=matrix(chunk, ncol=3, byrow = T)
+    } else if (label=='Triangles') {
+      npatches=length(data[['Patches']])
+      chunk=readBin(con, what='integer', n=n*3, size=4, endian = 'big')
+      data[['Patches']][[npatches+1]]=matrix(chunk, ncol=3, byrow = T)
+    } else if(label=='Patches') {
+      curpatch=1
+      if(is.null(data[['Patches']])) data[['Patches']]=list()
+      if(is.null(data[['PatchInfo']])) data[['PatchInfo']]=list()
+    } else {
+      stop("Error parsing binary hxsurf file!")
+    }
+    
+    line <- readLines(con, 1)
+  }
+  data
+}
+
 #' Write Amira surface (aka HxSurface or HyperSurface) into .surf file.
 #' 
 #' @param surf hxsurf object to write to file.
