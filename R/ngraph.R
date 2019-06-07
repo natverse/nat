@@ -617,6 +617,15 @@ EdgeListFromSegList<-function(SegList){
 #' ### Example requires the package nat.flybrains
 #' LH_arbour = prune_in_volume(x = Cell07PNs, brain = nat.flybrains::IS2NP.surf, neuropil = "LH_L", OmitFailures = TRUE)
 #' } 
+#' @inheritParams prune
+#' @return A pruned neuron/neuronlist object
+#' @examples
+#' \dontrun{ 
+#' ## Interactively shoose which bit of the neuron you wish to keep
+#' pruned.as.you.like.it = prune_online(Cell07PNs)
+#' }
+#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
+#'   \code{\link{prune.neuron}}
 #' @export
 #' @rdname prune_in_volume
 prune_in_volume <-function(x, brain, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
