@@ -582,6 +582,12 @@ resample.neuron<-function(x, stepsize, ...) {
   as.neuron(swc, origin=match(x$StartPoint, old_ids))
 }
 
+#' @export
+#' @rdname resample
+resample.neuronlist<-function(x, stepsize, ...){
+  nlapply(x, resample, stepsize=stepsize, ...)
+}
+
 # Interpolate ordered 3D points (optionally w diameter)
 # NB returns NULL if unchanged (when too short or <=2 points) 
 # and only returns _internal_ points, omitting the head and tail of a segment
