@@ -11,7 +11,7 @@ file.exists <- function(...) {
 nat_progress <- function (x, max = 100, message = NULL) {
   percent <- x / max * 100
   cat(sprintf('\r|%-50s| ~%d%% %s',
-              paste(rep('+', percent / 2), collapse = ''),
+              paste(rep('=', percent / 2), collapse = ''),
               floor(percent), message))
   if (x == max)
     cat('\n')
