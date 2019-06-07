@@ -3,11 +3,14 @@
 \name{resample}
 \alias{resample}
 \alias{resample.neuron}
+\alias{resample.neuronlist}
 \title{Resample an object with a new spacing}
 \usage{
 resample(x, ...)
 
 \method{resample}{neuron}(x, stepsize, ...)
+
+\method{resample}{neuronlist}(x, stepsize, ...)
 }
 \arguments{
 \item{x}{An object to resample}

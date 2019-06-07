@@ -16,14 +16,13 @@
 #' @examples
 #' \dontrun{ 
 #' # Calculate how much some neurons overlap with one another
-#' ## Example requires the package nat.flybrains
 #' Cell07PNs_overlap = overlap(output.neurons = Cell07PNs, input.neurons = Cell07PNs)
 #' 
 #' ## Plot the results
 #' heatmap(Cell07PNs_overlap)
 #' } 
 #' @return a matrix of overlap scores
-#' @seealso \code{\link{potential_synapses}}, \code{\link{resample}}
+#' @seealso \code{\link{potential_synapses}}, \code{\link{resample}}, \code{\link{sholl_analysis}}
 #' @export
 overlap <- function(output.neurons, input.neurons, delta =1, progress = TRUE){
   score.matrix = matrix(0,nrow = length(output.neurons),ncol = length(input.neurons))
@@ -52,12 +51,12 @@ overlap <- function(output.neurons, input.neurons, delta =1, progress = TRUE){
 #' @param ending.radius the radius of the last sphere. If NULL the distance to the furthest dendritic point from the start point is taken
 #' @param radius.step the change in radius between successive spheres. Defaults to one 100th of the radius of the ending sphere
 #' @return a data.frame of spheres radii and the number of dendritic intersections at each radius
+#' @examples 
 #' \dontrun{ 
-#' # Calculate how much some neurons overlap with one another
-#' ## Example requires the package nat.flybrains
 #' Cell07PNs_sholl = sholl_analysis(x = Cell07PNs, radius.step = 1, ending.radius = 100)
 #' head(Cell07PNs_sholl[[1]])
 #' } 
+#' @seealso \code{\link{potential_synapses}}, \code{\link{resample}}, \code{\link{overlap}}
 #' @export
 #' @rdname sholl_analysis
 sholl_analysis <- function(x, start = colMeans(xyzmatrix(x)), 
@@ -95,3 +94,5 @@ sholl_analysis.neuronlist <- function(x, start = colMeans(xyzmatrix(x)),
   nlapply(x, sholl_analysis.neuron, 
           start = start, starting.radius = starting.radius, ending.radius = ending.radius, radius.step = radius.step)
 }
+
+

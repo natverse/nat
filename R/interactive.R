@@ -3,7 +3,7 @@
 #' Prune a neuron interactively in an rgl window
 #'
 #' @description Remove points from a neuron, keeping the root node intact
-#' @param ... Additional methods passed to \code{prune_vertices}
+#' @param ... Additional methods passed to \code{rgl::plot3d}
 #' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
 #' @examples
@@ -24,7 +24,7 @@ prune_online.neuron <- function(x, ...){
     selected = select_points(xyzmatrix(x), plot3d = x)
     v = match(data.frame(t(selected)), data.frame(t(xyzmatrix(x))))
     neuron = prune_vertices(x,verticestoprune=v,invert=TRUE)
-    rgl::clear3d();rgl::plot3d(neuron, col ="black")
+    rgl::clear3d();rgl::plot3d(neuron, col ="black", ...)
     continue = readline("Finished with this neuron? yes/no ")
   }
   neuron
@@ -40,7 +40,7 @@ prune_online.neuronlist <- function(x, ...){
 #' @description Manually assign the dendrite and axon to neurons / a neuron
 #'
 #' @param x a neuron/neuronlist object
-#' @param soma whether or not to plot a soma, and at what radius
+#' @param ... Additional methods passed to \code{rgl::plot3d}
 #' @return The neuron/neuronlist object with axon/dendrite info assigned in SWC format to neuron$d
 #' #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
 #'   \code{\link{prune.neuron}}, \code{\link{prune_online}}
@@ -51,10 +51,10 @@ prune_online.neuronlist <- function(x, ...){
 #' } 
 #' @export
 #' @rdname manually_assign_axon_dendrite
-manually_assign_axon_dendrite <-function(x) UseMethod("manually_assign_axon_dendrite")
+manually_assign_axon_dendrite <-function(x, ...) UseMethod("manually_assign_axon_dendrite")
 #' @export
 #' @rdname manually_assign_axon_dendrite
-manually_assign_axon_dendrite.neuron <- function(x){
+manually_assign_axon_dendrite.neuron <- function(x, ...){
   happy = "no"
   x$d$Label = 0
   while(!happy%in%c("y","yes")){
@@ -64,20 +64,20 @@ manually_assign_axon_dendrite.neuron <- function(x){
     x$d$Label[x$d$X%in%dend$d$X&x$d$Y%in%dend$d$Y] = 3
     rgl::clear3d()
     message("Please choose axon for your neuron ")
-    axon = prune_online.neuron(x)
+    axon = prune_online.neuron(x, ...)
     x$d$Label[x$d$PointNo%in%axon$d$PointNo] = 2
     x$d$Label[rootpoints(x)] = 1
     rgl::clear3d()
-    rgl::plot3d(dend,col="blue")
-    rgl::plot3d(axon, col = "orange")
-    rgl::plot3d(x, col = "purple")
+    rgl::plot3d(dend,col="blue", ...)
+    rgl::plot3d(axon, col = "orange", ...)
+    rgl::plot3d(x, col = "purple", ...)
     happy = readline("Happy with this division? yes/no  ")
   }
   x
 }
 #' @export
 #' @rdname manually_assign_axon_dendrite
-manually_assign_axon_dendrite.neuronlist<-function(x){
+manually_assign_axon_dendrite.neuronlist<-function(x, ...){
   nlapply(x, manually_assign_axon_dendrite.neuron)
 }
 
@@ -129,7 +129,6 @@ correct_soma <- function(someneuronlist, brain = NULL){
   correctedsomas
 }
 
-
 #' Generate a 3D model from connector and/or tree node data
 #'
 #' @description Generate a mesh3d model based on points contained in a neuronlist or neuron object
@@ -140,8 +139,7 @@ correct_soma <- function(someneuronlist, brain = NULL){
 #' @param maxdistance for automated cluster identification. Maximum distance at which nodes can be part of a cluster
 #' @param groupsize an integer number of nearest neighbours to find using nabor::knn()
 #' @param selection whether or not to interactively select values for maxdistance and groupsize.
-#' @param alpha a single value or vector of values for α, fed to \code{alphashape3d::\link{ashape3d}}. Selection is subsequently interactive
-#' @param chosen.points a matrix of 3D points. Use this argument if you do not want to interactively select the 3D fed to \code{alphashape3d::\link{ashape3d}}
+#' @param alpha a single value or vector of values for α, fed to \code{alphashape3d::ashape3d}. Selection is subsequently interactive
 #' @examples
 #' \dontrun{ 
 #' # Make a model based off of fly olfactory projection neuron arbours
@@ -150,10 +148,10 @@ correct_soma <- function(someneuronlist, brain = NULL){
 #' @seealso \code{\link{prune_online}}
 #' @return A mesh3d object
 #' @export
-make_model <- function(someneuronlist, substrate = c("connectors","cable", "both"), maxdistance = 10, groupsize = 10, alpha = 30, auto.selection = TRUE, chosen.points = NULL){
+make_model <- function(someneuronlist, substrate = c("connectors","cable", "both"), maxdistance = 10, groupsize = 10, alpha = 30, auto.selection = TRUE){
   if (substrate=="connectors"){synapse.points<-xyzmatrix(do.call(rbind, lapply(someneuronlist, function(x) x$connectors)))
   }else if(substrate =="cable"){synapse.points<-xyzmatrix(someneuronlist)
-  }else if (substrate == "both"){synapse.points<-rbind(xyzmatrix(someneuronlist), xyzmatrix(catmaid::connectors(someneuronlist)))}
+  }else if (substrate == "both"){synapse.points<-rbind(xyzmatrix(someneuronlist), xyzmatrix(do.call(rbind, lapply(someneuronlist, function(x) x$connectors))))}
   rgl::open3d()
   if (auto.selection == TRUE){
     progress = "n"
@@ -177,7 +175,6 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
   }
   # Manual point deselection
   selected.points = unique(close.points)
-  if (!is.null(chosen.points)){ selected.points = chosen.points}
   progress = readline(prompt="Remove (r) or add (a) points? Or continue to alphashape generation (c)?  ")
   while (progress != "c"){
     if (progress == 'r'){
@@ -202,4 +199,46 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
     progress<-readline(prompt="Continue? y/n  ")
   }
   as.mesh3d(alphashape)
+}
+
+#' Select 3D points in space
+#'
+#' @description Select and deselect 3D points in space interactively. Black = selected, red = deselected
+#'
+#' @param points a mxn matrix
+#' @param plot3d an object to pass to the rgl::plot3d function, for context
+#' @examples
+#' \dontrun{ 
+#' # Make a model based off of fly olfactory projection neuron arbours
+#' chosen = select_points(xyzmatrix(Cell07PNs))
+#' } 
+#' @return A mxn matrix
+#' @export
+select_points <- function (points, plot3d = NULL){
+  if(!is.null(plot3d)){
+    plot3d(plot3d,col="grey") 
+  }
+  points = xyzmatrix(points)
+  selected.points = unique(points)
+  points3d(selected.points)
+  progress = readline(prompt="Add (a) or remove (r) points, or exit (e)?  ")
+  while (progress != "e"){
+    if (progress == "a"){
+      keeps = rgl::select3d()
+      keep.points <- keeps(unique(points))
+      keep.points = subset(unique(points), keep.points)
+      selected.points = rbind(selected.points, keep.points)
+      rgl::clear3d();rgl::plot3d(plot3d); rgl::points3d(selected.points); rgl::points3d(unique(points), col = 'red')
+    }
+    if (progress == "r"){
+      remove.points <- select3d()
+      removed.points <- remove.points(selected.points)
+      selected.points = subset(selected.points, !removed.points)
+    }
+    clear3d();plot3d(plot3d,col="grey")
+    if (length(selected.points) > 0) {points3d(selected.points)}
+    points3d(unique(points), col = 'red')
+    progress = readline(prompt="Add (a) or remove (r) neurons, or exit (e)?  ")
+  }
+  selected.points
 }
