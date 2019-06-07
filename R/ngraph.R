@@ -602,10 +602,13 @@ EdgeListFromSegList<-function(SegList){
 #'
 #' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
+#' @examples
 #' \dontrun{ 
 #' ## Interactively shoose which bit of the neuron you wish to keep
 #' pruned.as.you.like.it = prune_online(Cell07PNs)
 #' }
+#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
+#'   \code{\link{prune.neuron}}
 #' @export
 #' @rdname prune_online
 prune_online <-function(x, ...) UseMethod("prune_online")
@@ -626,4 +629,51 @@ prune_online.neuron <- function(x, ...){
 #' @rdname prune_online
 prune_online.neuronlist <- function(x, ...){
   nat::nlapply(x,prune_online.neuron)
+}
+
+#' Manually assign a dendrite and axon to a neuron
+#'
+#' @description Manually assign the dendrite and axon to neurons / a neuron
+#'
+#' @param x a neuron/neuronlist object
+#' @param soma whether or not to plot a soma, and at what radius
+#' @param ... additional arguments passed to methods
+#' @return The neuron/neuronlist object with axon/dendrite info assigned in SWC format to neuron$d
+#' #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
+#'   \code{\link{prune.neuron}}, \code{\link{prune_online}}
+#' @examples
+#' \dontrun{ 
+#' ## Interactively shoose which bit of the neuron you wish to keep
+#' split.as.you.like.it = manually_assign_axon_dendrite(Cell07PNs)
+#' } 
+#' @export
+#' @rdname manually_assign_axon_dendrite
+manually_assign_axon_dendrite <-function(x, ...) UseMethod("manually_assign_axon_dendrite")
+#' @export
+#' @rdname manually_assign_axon_dendrite
+manually_assign_axon_dendrite.neuron <- function(x, ...){
+  happy = "no"
+  x$d$Label = 0
+  while(!happy%in%c("y","yes")){
+    rgl::clear3d()
+    message("Please choose dendrites for your neuron ")
+    dend = prune_online.neuron(x)
+    x$d$Label[x$d$X%in%dend$d$X&x$d$Y%in%dend$d$Y] = 3
+    rgl::clear3d()
+    message("Please choose axon for your neuron ")
+    axon = prune_online.neuron(x)
+    x$d$Label[x$d$PointNo%in%axon$d$PointNo] = 2
+    x$d$Label[nat::rootpoints(x)] = 1
+    rgl::clear3d()
+    rgl::plot3d(dend,col="blue")
+    rgl::plot3d(axon, col = "orange")
+    rgl::plot3d(x, col = "purple")
+    happy = readline("Happy with this division? yes/no  ")
+  }
+  x
+}
+#' @export
+#' @rdname manually_assign_axon_dendrite
+manually_assign_axon_dendrite.neuronlist<-function(x, ...){
+  nat::nlapply(x, manually_assign_axon_dendrite.neuron, ...)
 }
