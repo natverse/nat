@@ -598,7 +598,8 @@ EdgeListFromSegList<-function(SegList){
 
 #' Prune neuron within a volume
 #'
-#' @details Prune neuron inside subvolume of a segmented brain object.
+#' @details Prune a neuron to be within, or to exclude arbour within, 
+#' a 3D object that can be coecred into the mesh3d data structure
 #'
 #' @param x a \code{neuron} object
 #' @param brain The \code{\link[nat]{hxsurf}} object containing the neuropil of
