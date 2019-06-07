@@ -595,3 +595,35 @@ EdgeListFromSegList<-function(SegList){
   starts=unlist(lapply(sl,function(x) x[-length(x)]))
   cbind(starts,ends)
 }
+
+#' Prune a neuron interactively in an rgl window
+#'
+#' @description Remove points from a neuron, keeping the root node intact
+#'
+#' @inheritParams prune
+#' @return A pruned neuron/neuronlist object
+#' \dontrun{ 
+#' ## Interactively shoose which bit of the neuron you wish to keep
+#' pruned.as.you.like.it = prune_online(Cell07PNs)
+#' }
+#' @export
+#' @rdname prune_online
+prune_online <-function(x, ...) UseMethod("prune_online")
+#' @export
+#' @rdname prune_online
+prune_online.neuron <- function(x, ...){
+  continue = "no"
+  while(!continue%in%c("y","yes")){
+    selected = select_points(xyzmatrix(x), plot3d = x)
+    v = match(data.frame(t(selected)), data.frame(t(xyzmatrix(x))))
+    neuron = prune_vertices(x,verticestoprune=v,invert=TRUE)
+    rgl::clear3d();rgl::plot3d(neuron, col ="black",...)
+    continue = readline("Finished with this neuron? yes/no ")
+  }
+  neuron
+}
+#' @export
+#' @rdname prune_online
+prune_online.neuronlist <- function(x, ...){
+  nat::nlapply(x,prune_online.neuron)
+}
