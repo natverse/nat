@@ -42,7 +42,9 @@ Suggests:
     rmarkdown,
     MASS,
     alphashape3d,
-    Morpho
+    Morpho,
+    RCurl,
+    stringr
 License: GPL-3
 LazyData: yes
 Collate:

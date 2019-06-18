@@ -1,6 +1,7 @@
 context("Fiji Simple Neurite Tracer input")
 
 test_that("read Simple Neurite Tracer files", {
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use neuroml files!')
   expect_is(st<-read.neuron("testdata/neuron/SinglePath.traces"), 'neuron')
   
   stbase=structure(list(NeuronName = "SinglePath", 
@@ -64,6 +65,7 @@ test_that("read Simple Neurite Tracer files", {
 })
 
 test_that("Cross check Simple Neurite Tracer SWC export", {
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use neuroml files!')
   expect_is(nl<-read.neuron("testdata/neuron/fitted.traces"), 'neuronlist')
   n=read.neuron("testdata/neuron/unfitted.swc")
   # Fiji writes width as 0 when undefined

@@ -875,8 +875,19 @@ test_that("we can write neuron to swc file",{
   dir.create(td)
   on.exit(unlink(td,recursive=TRUE))
   
-  expect_equal(write.neuron(y, dir=td, ext='.swc'),
+  expect_equal(f<-write.neuron(y, dir=td, ext='.swc'),
                file.path(td,'EBH11R.swc'))
+  
+  expect_equal(f<-write.neuron(y, dir=td, format = 'swc', Force = TRUE),
+               file.path(td,'EBH11R.swc'))
+  swc_data <- read.delim(f, stringsAsFactors = FALSE)
+  
+  url_pattern <- "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
+  swc_url <- stringr::str_extract(swc_data[[1]][1], url_pattern)
+  
+  #Check if the URL exists
+  expect_equal(TRUE,RCurl::url.exists(swc_url))
+  
   expect_equal(write.neuron(y, dir=td, format='swc', file='rhubarb'),
                file.path(td,'rhubarb.swc'))
   expect_equal(write.neuron(y, dir=td, format='swc', ext='.swcreally', file='rhubarb'),
@@ -884,6 +895,8 @@ test_that("we can write neuron to swc file",{
   expect_equal(f<-write.neuron(y, dir=td, format='swc', ext='_skel.swc'),
                file.path(td,'EBH11R_skel.swc'))
   expect_equal(read.neuron(f),y,fieldsToExclude='NeuronName')
+  
+  
   
   # construct a neuron with point ids in the wrong order
   z=y

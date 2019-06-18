@@ -30,6 +30,8 @@ test_that("we can read Fiji landmarks", {
                            "left_vlpr_tract_crossing"),
                          c("X", "Y", "Z")))
   
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use read.landmarks.fiji!')
+  
   expect_equal(read.landmarks.fiji("testdata/landmarks/JFRC2.points"), baseline,
                tolerance=1e-6)
   tf=tempfile(fileext = '.points')
@@ -62,6 +64,7 @@ test_that("we can identify Fiji landmarks", {
 test_that("generic landmarks I/O", {
   expect_is(read.landmarks("testdata/amira/landmarks.am"), "landmarks")
   f="testdata/landmarks/JFRC2.points"
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use JFRC2.points!')
   expect_is(l<-read.landmarks(f), "landmarks")
   if(nzchar(Sys.getenv("NAT_INTERNET_TESTS"))){
     u=paste0('https://raw.githubusercontent.com/jefferis/nat/master/tests/testthat/', f)
