@@ -8,7 +8,7 @@ graph.nodes(x, type = c("root", "end", "branch"),
   original.ids = "name", exclude.isolated = TRUE)
 }
 \arguments{
-\item{x}{An igraph (or \code{\link{ngraph}}) object}
+\item{x}{An \code{\link{ngraph}} or raw \code{\link{igraph}} object}
 
 \item{type}{one of root, end (which includes root) or branch}
 
