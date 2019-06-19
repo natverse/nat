@@ -501,7 +501,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #'   These functions would normally be called from \code{read.neuron(s)} rather 
 #'   than used directly.
 #' @section SWC Format: According to 
-#'   \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
+#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
 #' @param ... Additional arguments. \code{read.neuron.swc} passes these to 
@@ -710,7 +710,7 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
     df$PointNo=seq_along(df$PointNo)
   }
   writeLines(c("# SWC format file",
-               "# based on specifications at http://research.mssm.edu/cnic/swc.html"),
+               "# based on specifications at http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html"),
              con=file)
   cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)  
   cat("#", colnames(df), "\n", file=file, append=TRUE)
@@ -720,7 +720,7 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
 write.dotprops.swc<-function(x, file, ...) {
   df=dotprops2swc(x, ...)
   writeLines(c("# SWC dotprops format", "# Created by nat::write.dotprops.swc",
-               "# see http://research.mssm.edu/cnic/swc.html"),
+               "# see http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html"),
              con=file)
   cat("#", colnames(df), "\n", file=file, append=TRUE)
   write.table(df, file, col.names=F, row.names=F, append=TRUE)

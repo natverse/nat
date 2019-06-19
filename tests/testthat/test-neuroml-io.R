@@ -2,6 +2,7 @@ context("NeuroML input output")
 
 test_that("read neuroml files", {
   nml_level1_files=dir("testdata/neuroml/level1", pattern = '[xn]ml$', full.names = T)
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use neuroml files!')
   for (f in nml_level1_files) {
     # suppress warnings re cable segments
     suppressWarnings(
@@ -25,7 +26,7 @@ test_that("error on neuroml2 files", {
 
 test_that("parse neuroml files", {
   swcs=dir("testdata/neuroml/level1", pattern = 'swc$', full.names = T)
-  
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use neuroml files!')
   for (swc in swcs) {
     nml=paste0(tools::file_path_sans_ext(swc),".xml")
     # suppress warnings re cable segments
