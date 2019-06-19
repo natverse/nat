@@ -844,11 +844,11 @@ test_that("we can update an existing neuronlist",{
 context("neurons writing")
 
 test_that("neuron write without filename",{
-  orns=catmaid::read.neurons.catmaid("annotation:^ORN$", OmitFailures = T, .progress='text')
+  y=Cell07PNs[[1]]
   td=tempfile()
   on.exit(unlink(td,recursive=TRUE))
-  if ("InputFileName" %in% names(orns)){orns["InputFileName"] <- NULL}
-  expect_error(write.neuron(orns, dir=td, MakeDir = F),
+  if ("InputFileName" %in% names(y)){y["InputFileName"] <- NULL}
+  expect_error(write.neuron(y, dir=td, MakeDir = F),
                'No file specified and neuron does not have an InputFileName')
 })
 
