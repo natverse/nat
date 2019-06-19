@@ -869,6 +869,9 @@ test_that("we can write neuron/dotprops to rds file",{
   
 })
 
+url_ok<-function(x) identical(httr::status_code(httr::HEAD(x)), 200L)
+
+
 test_that("we can write neuron to swc file",{
   y=Cell07PNs[[1]]
   td=tempfile()
@@ -883,10 +886,14 @@ test_that("we can write neuron to swc file",{
   swc_data <- read.delim(f, stringsAsFactors = FALSE)
   
   url_pattern <- "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
-  swc_url <- stringr::str_extract(swc_data[[1]][1], url_pattern)
+  
+  m <- gregexpr(url_pattern, swc_data[[1]][1])
+  swc_url <- regmatches(swc_data[[1]][1], m)[[1]]
   
   #Check if the URL exists
-  expect_equal(TRUE,RCurl::url.exists(swc_url))
+  if(nzchar(Sys.getenv("NAT_INTERNET_TESTS"))) {
+    expect_true(url_ok(swc_url))}
+  
   
   expect_equal(write.neuron(y, dir=td, format='swc', file='rhubarb'),
                file.path(td,'rhubarb.swc'))
