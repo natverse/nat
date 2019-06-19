@@ -645,6 +645,10 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     }
   }
   if(is.null(file)){
+    #Check if the col name of InputFileName exists first..
+    if (!"InputFileName" %in% names(n)){
+      stop("No file specified and neuron does not have an InputFileName")
+    }
     # no file was specified - use the one embedded in neuron
     file=basename(n$InputFileName)
     if(is.null(file))
