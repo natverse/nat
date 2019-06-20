@@ -852,12 +852,25 @@ test_that("neuron write without filename",{
                'No file specified and neuron does not have an InputFileName')
 })
 
+test_that("neuron writing format",{
+  y=Cell07PNs[[1]]
+  td=tempfile()
+  dir.create(td)
+  on.exit(unlink(td,recursive=TRUE))
+  f <- write.neuron(y, dir=td, MakeDir = F)
+  expect_equal(paste0(y$NeuronName, '.swc'),basename(f))
+  
+  f <- write.neuron(y, dir=td, MakeDir = F, format="rds")
+  expect_equal(paste0(y$NeuronName, '.rds'),basename(f))
+  
+})
+
 test_that("we can write neuron/dotprops to rds file",{
   x=kcs20[[1]]
   td=tempfile()
   on.exit(unlink(td,recursive=TRUE))
   expect_error(f<-write.neuron(x, dir=td, MakeDir = F), 'does not exist')
-  expect_equal(f<-write.neuron(x, dir=td), 
+  expect_equal(f<-write.neuron(x, dir=td, format = 'rds'), 
                file.path(td,'FruMARCM-M001205_seg002_03.rds'))
   # can't overwrite get a warning and an NA back
   expect_warning(f2<-write.neuron(x, f))
@@ -870,7 +883,7 @@ test_that("we can write neuron/dotprops to rds file",{
                file.path(td,'FruMARCM-M001205_seg002_03.RDS'))
   
   y=Cell07PNs[[1]]
-  expect_error(write.neuron(y, dir=td),'Ambiguous file format')
+  #expect_error(write.neuron(y, dir=td),'Ambiguous file format') #replaced as default format is now 'swc'
   expect_equal(write.neuron(y, dir=td, format='rds', ext='.RDS'),
                file.path(td,'EBH11R.RDS'))
   expect_equal(write.neuron(y, dir=td, format='rds', ext='_skel.rds'),
