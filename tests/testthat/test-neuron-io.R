@@ -857,12 +857,14 @@ test_that("neuron writing format",{
   td=tempfile()
   dir.create(td)
   on.exit(unlink(td,recursive=TRUE))
-  f <- write.neuron(y, dir=td, MakeDir = F)
+  #Try writing with default format
+  expect_warning(f <- write.neuron(y, dir=td, MakeDir = F),'Defaulting format to swc')
   expect_equal(paste0(y$NeuronName, '.swc'),basename(f))
   
   f <- write.neuron(y, dir=td, MakeDir = F, format="rds")
   expect_equal(paste0(y$NeuronName, '.rds'),basename(f))
-  
+  #Try writing an incorrect format
+  expect_error(f <- write.neuron(y, dir=td, MakeDir = F, format = 'zzz'))
 })
 
 test_that("we can write neuron/dotprops to rds file",{

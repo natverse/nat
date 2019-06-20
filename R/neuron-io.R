@@ -603,7 +603,8 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel', the default format is 'swc'
+#'   neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
+#'   the filename and the ext parameter, then it defaults to 'swc'
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -631,7 +632,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' # write out "myneuron.am" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
 #' }
-write.neuron<-function(n, file=NULL, dir=NULL, format="swc", ext=NULL, 
+write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
@@ -654,7 +655,18 @@ write.neuron<-function(n, file=NULL, dir=NULL, format="swc", ext=NULL,
     if(!(length(ext) && is.na(ext)))
       file=tools::file_path_sans_ext(file)
   }
-  fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
+  
+  fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
+  if(inherits(fw, 'try-error')) {
+    if(is.null(format)){
+      format='swc'
+      fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
+      warning('Defaulting format to swc')
+    } else {
+      # rethrow the error
+      stop(fw)
+    }
+  }
   file=fw$file
   if(!is.null(dir)) file=file.path(dir,basename(file))
   

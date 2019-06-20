@@ -4,8 +4,8 @@
 \alias{write.neuron}
 \title{Write out a neuron in any of the file formats we know about}
 \usage{
-write.neuron(n, file = NULL, dir = NULL, format = "swc",
-  ext = NULL, Force = FALSE, MakeDir = TRUE, ...)
+write.neuron(n, file = NULL, dir = NULL, format = NULL, ext = NULL,
+  Force = FALSE, MakeDir = TRUE, ...)
 }
 \arguments{
 \item{n}{A neuron}
@@ -15,7 +15,8 @@ write.neuron(n, file = NULL, dir = NULL, format = "swc",
 \item{dir}{Path to directory (this will replace dirname(file) if specified)}
 
 \item{format}{Unique abbreviation of one of the registered file formats for
-neurons including 'swc', 'hxlineset', 'hxskel', the default format is 'swc'}
+neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
+the filename and the ext parameter, then it defaults to 'swc'}
 
 \item{ext}{Will replace the default extension for the filetype and should
 include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
