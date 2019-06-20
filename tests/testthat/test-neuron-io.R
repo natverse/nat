@@ -858,7 +858,7 @@ test_that("neuron writing format",{
   dir.create(td)
   on.exit(unlink(td,recursive=TRUE))
   #Try writing with default format
-  expect_warning(f <- write.neuron(y, dir=td, MakeDir = F),'Defaulting format to swc')
+  expect_warning(f <- write.neuron(y, dir=td, MakeDir = F),'write.neuron: using default format="swc"')
   expect_equal(paste0(y$NeuronName, '.swc'),basename(f))
   
   f <- write.neuron(y, dir=td, MakeDir = F, format="rds")
@@ -872,7 +872,7 @@ test_that("we can write neuron/dotprops to rds file",{
   td=tempfile()
   on.exit(unlink(td,recursive=TRUE))
   expect_error(f<-write.neuron(x, dir=td, MakeDir = F), 'does not exist')
-  expect_equal(f<-write.neuron(x, dir=td, format = 'rds'), 
+  expect_equal(f<-write.neuron(x, dir=td), 
                file.path(td,'FruMARCM-M001205_seg002_03.rds'))
   # can't overwrite get a warning and an NA back
   expect_warning(f2<-write.neuron(x, f))

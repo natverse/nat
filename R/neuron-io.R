@@ -661,7 +661,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     if(is.null(format)){
       format='swc'
       fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
-      warning('Defaulting format to swc')
+      warning('write.neuron: using default format="swc"')
     } else {
       # rethrow the error
       stop(fw)
