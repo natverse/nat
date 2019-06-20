@@ -847,7 +847,7 @@ test_that("neuron write without filename",{
   y=Cell07PNs[[1]]
   td=tempfile()
   on.exit(unlink(td,recursive=TRUE))
-  if ("InputFileName" %in% names(y)){y["InputFileName"] <- NULL}
+  if ("InputFileName" %in% names(y)){y$InputFileName <- NULL}
   expect_error(write.neuron(y, dir=td, MakeDir = F),
                'No file specified and neuron does not have an InputFileName')
 })
