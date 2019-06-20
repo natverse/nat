@@ -85,7 +85,7 @@ for (i in orders) {
   plot(subset(n, so$points==i), col=i, add = i!=1, boundingbox = boundingbox(n))
 }
 ```
-Note the use of multiple calls to `plot.neuron` using the `add=FALSE` argument 
+Note the use of multiple calls to `plot.neuron` using the `add=TRUE` argument 
 for all but the first plot. Note also the use of the `boundingbox` argument/function 
 in order to ensure that the plot is set up with appropriate axes for the whole
 neuron even if only part of it is plotted in the first call to `plot`. 
@@ -143,7 +143,7 @@ igraph::diameter(gw)
 This gives you the longest path length (geodesic) across the graph in units of
 µm in this case.
 
-Note that although you can do `library(ngraph)`, it adds a lot of functions to 
+Note that although you can do `library(igraph)`, it adds a lot of functions to 
 the search path, some of which have name clashes, so I often just use the 
 package name (`igraph::`) prepended to the function that I want to call.
 

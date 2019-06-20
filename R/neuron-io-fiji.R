@@ -128,6 +128,9 @@ is.fijitraces<-function(f, bytes=NULL){
 read.landmarks.fiji<-function(f, ...){
   if(!file.exists(f))
     stop("File: ", f, "does not exist!")
+  
+  if(!requireNamespace('XML', quietly = TRUE))
+    stop("Please install the XML package in order to use read.landmarks.fiji!")
 
   doc=try(XML::xmlParse(f, ...))
   if(inherits(doc, 'try-error'))

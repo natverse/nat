@@ -2,6 +2,7 @@ context("read neurons from remote url")
 
 test_that("we can read neuron from remote url", {
   
+  if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use read.morphml!')
   vds=paste0("https://raw.githubusercontent.com/openworm/CElegansNeuroML/",
     "103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/VD",1:2,
     ".morph.xml")
