@@ -10,6 +10,12 @@ test_that("we can identify nodes (root,branch,endpoints) from a graph",{
   expect_equal(rootpoints(g1),1)
   expect_equal(endpoints(g1),c(1,5,6))
   expect_equal(branchpoints(g1),3)
+  
+  # includes singleton point (id=2) and ids != indices 
+  g2=ngraph(matrix(c(3,4)), vertexnames = 2:4)
+  expect_equal(endpoints(g2, exclude.isolated=F), 2:4)
+  # indices 2:3, ids 3:4
+  expect_equal(endpoints(g2, exclude.isolated=T, original.ids=F), 2:3)
 })
 
 test_that("we can identify nodes (root,branch,endpoints) from SWC data",{

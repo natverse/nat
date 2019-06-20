@@ -12,15 +12,16 @@
 read.cmtkreg <- function(filename, ReturnRegistrationOnly=FALSE, ...){
   filename=cmtkreg(filename,returnDir=FALSE)
   r=read.cmtk(filename, ...)
-  if(!is.null(r$registration) && ReturnRegistrationOnly) {
+  rval <- if(!is.null(r$registration) && ReturnRegistrationOnly) {
     rval=r$registration
     attr.r=attributes(r)
     attr.rval=attributes(rval)
     extra_attributes=setdiff(names(attr.r),names(attr.rval))
     attributes(rval)[extra_attributes]<-attributes(r)[extra_attributes]
-    return(rval)
-  }
-  else return(r)
+    rval
+  } else r
+  class(rval)=union('cmtkreg', class(rval))
+  rval
 }
 
 #' Read CMTK TypedStream file to a list in memory
