@@ -603,7 +603,8 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel'
+#'   neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
+#'   the filename and the ext parameter, then it defaults to 'swc'
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -645,15 +646,27 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     }
   }
   if(is.null(file)){
-    # no file was specified - use the one embedded in neuron
-    file=basename(n$InputFileName)
-    if(is.null(file))
+    #Check if the InputFileName exists first..
+    if(isTRUE(nzchar(n$InputFileName)))
+      file=basename(n$InputFileName)
+    else
       stop("No file specified and neuron does not have an InputFileName")
     # trim off the suffix if ext!=NA
     if(!(length(ext) && is.na(ext)))
       file=tools::file_path_sans_ext(file)
   }
-  fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
+  
+  fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
+  if(inherits(fw, 'try-error')) {
+    if(is.null(format)){
+      format='swc'
+      fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
+      warning('write.neuron: using default format="swc"')
+    } else {
+      # rethrow the error
+      stop(fw)
+    }
+  }
   file=fw$file
   if(!is.null(dir)) file=file.path(dir,basename(file))
   
