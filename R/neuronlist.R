@@ -317,66 +317,77 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 }
 
 #' lapply and mapply for neuronlists (with optional parallelisation)
-#' 
-#' @description versions of lapply and mapply that look after the class and 
-#'   attached dataframe of neuronlist objects. \code{nlapply} can apply a 
-#'   function to only a \code{subset} of elements in the input neuronlist. 
+#'
+#' @description versions of lapply and mapply that look after the class and
+#'   attached dataframe of neuronlist objects. \code{nlapply} can apply a
+#'   function to only a \code{subset} of elements in the input neuronlist.
 #'   Internally \code{nlapply} uses \code{plyr::llply} thereby enabling progress
 #'   bars and simple parallelisation (see plyr section and examples).
-#'   
-#' @details When \code{OmitFailures} is not \code{NA}, \code{FUN} will be 
-#'   wrapped in a call to \code{try} to ensure that failure for any single 
-#'   neuron does not abort the nlapply/nmapply call. When 
+#'
+#' @details When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
+#'   wrapped in a call to \code{try} to ensure that failure for any single
+#'   neuron does not abort the nlapply/nmapply call. When
 #'   \code{OmitFailures=TRUE} the resultant neuronlist will be subsetted down to
-#'   return values for which \code{FUN} evaluated successfully. When 
-#'   \code{OmitFailures=FALSE}, "try-error" objects will be left in place. In 
-#'   either of the last 2 cases error messages will not be printed because the 
+#'   return values for which \code{FUN} evaluated successfully. When
+#'   \code{OmitFailures=FALSE}, "try-error" objects will be left in place. In
+#'   either of the last 2 cases error messages will not be printed because the
 #'   call is wrapped as \code{try(expr, silent=TRUE)}.
-#'   
+#'
 #' @section plyr: The arguments of most interest from plyr are:
-#'   
+#'
 #'   \itemize{
-#'   
-#'   \item \code{.inform} set to \code{TRUE} to give more informative error 
+#'
+#'   \item \code{.inform} set to \code{TRUE} to give more informative error
 #'   messages that should indicate which neurons are failing for a given applied
 #'   function.
-#'   
+#'
 #'   \item \code{.progress} set to \code{"text"} for a basic progress bar
-#'   
-#'   \item \code{.parallel} set to \code{TRUE} for parallelisation after 
+#'
+#'   \item \code{.parallel} set to \code{TRUE} for parallelisation after
 #'   registering a parallel backend (see below).
-#'   
-#'   \item \code{.paropts} Additional arguments for parallel computation. See 
+#'
+#'   \item \code{.paropts} Additional arguments for parallel computation. See
 #'   \code{\link[plyr]{llply}} for details.
-#'   
+#'
 #'   }
-#'   
+#'
 #'   Before using parallel code within an R session you must register a suitable
-#'   parallel backend. The simplest example is the multicore option provided by 
+#'   parallel backend. The simplest example is the multicore option provided by
 #'   the \code{doMC} package that is suitable for a spreading computational load
 #'   across multiple cores on a single machine. An example is provided below.
-#'   
-#'   Note that the progress bar and parallel options cannot be used at the same 
-#'   time. You may want to start a potentially long-running job with the 
+#'
+#'   Note that the progress bar and parallel options cannot be used at the same
+#'   time. You may want to start a potentially long-running job with the
 #'   progress bar option and then abort and re-run with \code{.parallel=TRUE} if
 #'   it looks likely to take a very long time.
-#'   
+#'
 #' @param X A neuronlist
 #' @param FUN Function to be applied to each element of X
 #' @param ... Additional arguments for FUN (see details)
 #' @param subset Character, numeric or logical vector specifying on which subset
 #'   of \code{X} the function \code{FUN} should be applied. Elements outside the
 #'   subset are passed through unmodified.
-#' @param OmitFailures Whether to omit neurons for which \code{FUN} gives an 
-#'   error. The default value (\code{NA}) will result in nlapply stopping with 
-#'   an error message the moment there is an error. For other values, see 
+#' @param OmitFailures Whether to omit neurons for which \code{FUN} gives an
+#'   error. The default value (\code{NA}) will result in nlapply stopping with
+#'   an error message the moment there is an error. For other values, see
 #'   details.
-#' @param .progress Character vector specifying the type of progress bar (see 
-#'   \code{\link[plyr]{create_progress_bar}} for options.) The default value of 
-#'   \code{"auto"} shows a progress bar in interactive use when there are >=10 
-#'   elements in \code{X}. The default value can be overridden for the current 
-#'   session by setting the value of \code{options(nat.progressbar)} (see
-#'   examples).
+#' @param .progress Character vector specifying the type of progress bar (see
+#'   Progress bar section for details) The default value of \code{"auto"} shows
+#'   a progress bar in interactive use after 2s. The default value can be
+#'   overridden for the current session by setting the value of
+#'   \code{options(nat.progressbar)} (see examples).
+#'
+#' @section Progress bar: There are currently two supported approaches to
+#'   defining progress bars. The default (when \code{progress="auto"}) now uses
+#'   a progress bar built using \code{\link{progress_bar}} from the progress
+#'   package, which can be highly customised. The alternative is to use the
+#'   progress bars distributed directly with the \code{plyr} package such as
+#'   \code{\link{progress_text}}.
+#'
+#'   In either case the value of the \code{.progress} argument must be a
+#'   character vector which names a function. According to \code{plyr}'s
+#'   convention an external function called \code{progress_myprogressbar} will
+#'   be identified by setting the argument to \code{.progress="myprogressbar"}.
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -388,7 +399,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' plot3d(kcs.reduced,col='red', lwd=2)
 #' plot3d(kcs20,col='grey')
 #' rgl.close()
-#' 
+#'
 #' \dontrun{
 #' # example of using plyr's .inform argument for debugging error conditions
 #' xx=nlapply(Cell07PNs, prune_strahler)
@@ -396,11 +407,11 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' # that caused the problem
 #' xx=nlapply(Cell07PNs, prune_strahler, .inform=TRUE)
 #' }
-#' 
+#'
 #' \dontrun{
 #' ## nlapply example with plyr
 #' ## dotprops.neuronlist uses nlapply under the hood
-#' ## the .progress and .parallel arguments are passed straight to 
+#' ## the .progress and .parallel arguments are passed straight to
 #' system.time(d1<-dotprops(kcs20,resample=1,k=5,.progress='text'))
 #' ## plyr+parallel
 #' library(doMC)
@@ -409,7 +420,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' system.time(d2<-dotprops(kcs20,resample=1,k=5,.parallel=TRUE))
 #' stopifnot(all.equal(d1,d2))
 #' }
-#' 
+#'
 #' ## nmapply example
 #' # flip first neuron in X, second in Y and 3rd in Z
 #' xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
@@ -420,22 +431,28 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' plot3d(xyzflip)
 #' rgl.close()
 #' }
-#' 
+#'
 #' \dontrun{
 #' ## Override default progress bar behaviour via options
+#' # sleep 50ms per neuron to ensure progress bar gets triggered
+#' sl=nlapply(Cell07PNs, FUN = function(x) {Sys.sleep(0.05);seglengths(x)})
+#' # the default progess bar for nat < 1.9.1
+#' options(nat.progress='traditional')
 #' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' # no progress bar ever
 #' options(nat.progress='none')
-#' sl=nlapply(Cell07PNs, FUN = seglengths)
+#' sl=nlapply(Cell07PNs, FUN = function(x) {Sys.sleep(0.05);seglengths(x)})
+#' # back to normal
 #' options(nat.progress=NULL)
 #' sl=nlapply(Cell07PNs, FUN = seglengths)
 #' }
 nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, 
                    .progress=getOption('nat.progress', default='auto')){
-  
   if(.progress=='auto') {
-    if(length(X)>=10 && interactive()) .progress="text"
-    else .progress="none"
-  }
+    .progress = ifelse(interactive(), "natprogress", "none")
+  } else if(.progress=='traditional') {
+    .progress = ifelse(length(X)>=10 && interactive(), "text", "none")
+  } 
   cl=if(is.neuronlist(X) && !is.neuronlistfh(X)) class(X) 
   else c("neuronlist", 'list')
   
@@ -450,7 +467,7 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
   
   if(isTRUE(OmitFailures))
     failures=sapply(rval, inherits, 'try-error')
-    
+  
   if(is.null(subset)){
     if(isTRUE(OmitFailures) && any(failures)) rval[!failures]
     else rval
@@ -463,6 +480,24 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
     }
     Y
   }
+}
+
+progress_natprogress <- function(...) {
+  pb <- NULL
+  list(
+    init = function(x, ...) {
+      pb <<- progress::progress_bar$new(total = x,
+                                        format = "  :current/:total [:bar]  eta: :eta",
+                                        show_after=2,
+                                        # clear=FALSE,
+                                        ...)
+    },
+    step = function() {
+      pb$tick()
+    },
+    term = function()
+      NULL
+  )
 }
 
 #' @inheritParams base::mapply

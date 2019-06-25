@@ -31,7 +31,8 @@ Imports:
     digest,
     nat.utils (>= 0.4.2),
     plyr,
-    yaml
+    yaml,
+    progress
 Suggests:
     spelling,
     Rvcg (>= 0.17),
