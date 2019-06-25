@@ -5,3 +5,4 @@ inst/doc
 *.Rout
 docs/figs/*.pdf
 tests/testthat/Rplots.pdf
+.httr-oauth
