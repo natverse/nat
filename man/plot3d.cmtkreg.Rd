@@ -19,11 +19,14 @@ Plot the domain of a CMTK registration
 \donttest{
 testdatadir=system.file("tests/testthat/testdata/cmtk", package="nat")
 regpath=file.path(testdatadir,'FCWB_JFRC2_01_warp_level-01.list/')
+# only run this if file is present (not always installed)
+if(file.exists(regpath)){
 plot3d(cmtkreg(regpath))
 
 # or read registration into memory if you want to work with it
 reg=read.cmtkreg(regpath)
 plot3d(reg)
+}
 }
 }
 \seealso{
