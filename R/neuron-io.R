@@ -851,9 +851,15 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
       thisdir=subdirs[nn]
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
-    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, Force=Force, ...)
+    file=files[nn]
+    if(!isTRUE(nzchar(file)) && is.neuron(n) && is.null(n$InputFileName)){
+      # the filename was not specified explicitly and we can't figure it out
+      # from field inside the neuron, so set to name of object in neuronlist
+      file=nn
+    }
     if(interactive())
       pb$tick()
+    written[nn]=write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, ...)
   }
   if(!is.null(zip_file)) {
     owd=setwd(dir)
