@@ -252,8 +252,7 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   
   # The tryCatch block below will leak a connection, so make a note of how many
   # we start with so we can remove the extra one once the block has finished
-  connBefore <- rownames(showConnections(all=T))
-  
+  connBefore <- getAllConnections()
   # we have a remote. let's try and use it to fetch these keys
   tryCatch({
     # DEBUG: The leak happens here
@@ -269,10 +268,10 @@ as.neuronlist.neuronlistfh<-function(l, ...){
     })
   }, finally = {
     # Deal with connection leak
-    connAfter <- rownames(showConnections(all=T))
+    connAfter <- getAllConnections()
     connNew <- setdiff(connAfter,connBefore)
     if(length(connNew) > 0)
-      close(getConnection(as.integer(connNew)))
+      close(getConnection(connNew))
   })
 }
 
