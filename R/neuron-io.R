@@ -833,6 +833,12 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     if(is.null(names(files))) names(files)=INDICES
   }
   written=structure(rep("",length(INDICES)), .Names = INDICES)
+  if(interactive())
+    pb <- progress::progress_bar$new(format = "  writing :current/:total [:bar]  eta: :eta",
+                                     clear = FALSE,
+                                     total = length(INDICES),
+                                     show_after=2)
+  
   for(nn in INDICES){
     n=nl[[nn]]
     thisdir=dir
@@ -846,6 +852,8 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
     written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, Force=Force, ...)
+    if(interactive())
+      pb$tick()
   }
   if(!is.null(zip_file)) {
     owd=setwd(dir)
