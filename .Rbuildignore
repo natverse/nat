@@ -9,3 +9,5 @@ travisbuildchildren.sh
 ^build-cmtk.sh$
 ^build_docs.r$
 ^vignettes/.*pdf$
+^\.httr-oauth$
+^spare$
