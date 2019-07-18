@@ -26,7 +26,7 @@ Imports:
     nabor,
     igraph (>= 0.7.1),
     methods,
-    filehash,
+    filehash (>= 2.3),
     digest,
     nat.utils (>= 0.4.2),
     plyr,
