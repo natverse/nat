@@ -30,6 +30,9 @@ If NULL (default), then the full object given as \code{brain} will be used for t
 \item{...}{Additional arguments for methods (eventually passed to prune.default)
 surface should be pruned.}
 }
+\value{
+A pruned neuron/neuronlist object
+}
 \description{
 Prune neuron within a volume
 }
@@ -42,18 +45,12 @@ Prune neuron inside subvolume of a segmented brain object.
 ### Example requires the package nat.flybrains
 LH_arbour = prune_in_volume(x = Cell07PNs, brain = nat.flybrains::IS2NP.surf, neuropil = "LH_L", OmitFailures = TRUE)
 } 
+\dontrun{ 
+## Interactively shoose which bit of the neuron you wish to keep
+pruned.as.you.like.it = prune_online(Cell07PNs)
+}
 }
 \seealso{
-\code{\link{prune_strahler}}, \code{\link{spine}},
-  \code{\link{prune_vertices}}
-
-\code{\link{subset.neuron}}
-
-\code{\link{subset.dotprops}}
-
-Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.dotprops}},
-  \code{\link{potential_synapses}}, \code{\link{resample}},
-  \code{\link{rootpoints}}, \code{\link{spine}},
-  \code{\link{subset.neuron}}
+\code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
+  \code{\link{prune.neuron}}
 }

@@ -615,7 +615,9 @@ EdgeListFromSegList<-function(SegList){
 #' \dontrun{ 
 #' ## Interactively shoose which bit of the neuron you wish to keep
 #' ### Example requires the package nat.flybrains
-#' LH_arbour = prune_in_volume(x = Cell07PNs, brain = nat.flybrains::IS2NP.surf, neuropil = "LH_L", OmitFailures = TRUE)
+#' LH_arbour = prune_in_volume(x = Cell07PNs, 
+#' brain = nat.flybrains::IS2NP.surf, 
+#' neuropil = "LH_L", OmitFailures = TRUE)
 #' } 
 #' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
