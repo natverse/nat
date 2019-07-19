@@ -595,3 +595,45 @@ EdgeListFromSegList<-function(SegList){
   starts=unlist(lapply(sl,function(x) x[-length(x)]))
   cbind(starts,ends)
 }
+
+#' Prune neuron within a volume
+#'
+#' @details Prune neuron inside subvolume of a segmented brain object.
+#'
+#' @param x a \code{neuron} object
+#' @param brain The \code{\link[nat]{hxsurf}} object containing the neuropil of
+#'   interest, e.g. \code{\link[nat.flybrains]{FCWBNP.surf}}. Can also be any other \code{\link[nat]{hxsurf}}
+#'   or \code{\link[rgl]{mesh3d}} object, or any object coercible into \code{\link[rgl]{mesh3d}}
+#'   by \code{\link[rgl]{as.mesh3d}}
+#' @param neuropil Character vector specifying the neuropil, which must be queryable from brain$RegionList. 
+#' If NULL (default), then the full object given as \code{brain} will be used for the pruning
+#' @param invert Logical when \code{TRUE} indicates that points inside the mesh are kept.
+#' @param ... Additional arguments for methods (eventually passed to prune.default)
+#'   surface should be pruned.
+#' @inherit prune seealso
+#' @examples
+#' \dontrun{ 
+#' ## Interactively shoose which bit of the neuron you wish to keep
+#' ### Example requires the package nat.flybrains
+#' LH_arbour = prune_in_volume(x = Cell07PNs, brain = nat.flybrains::IS2NP.surf, neuropil = "LH_L", OmitFailures = TRUE)
+#' } 
+#' @export
+#' @rdname prune_in_volume
+prune_in_volume <-function(x, brain, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
+#' @export
+#' @rdname prune_in_volume
+prune_in_volume.neuron <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
+  if(is.null(neuropil)){
+    mesh = rgl::as.mesh3d(brain)
+  }else{
+    mesh = rgl::as.mesh3d(subset(brain, neuropil))
+  }
+  v = which(pointsinside(xyzmatrix(x),surf = mesh)>0)
+  neuron = prune_vertices(x,verticestoprune=v,invert=invert, ...)
+  neuron
+}
+#' @export
+#' @rdname prune_in_volume
+prune_in_volume.neuronlist <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
+  nlapply(x,prune_in_volume.neuron, brain = brain, neuropil = neuropil, invert = invert, ...)
+}
