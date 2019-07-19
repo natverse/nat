@@ -31,13 +31,15 @@ sholl_analysis(x, start = colMeans(xyzmatrix(x)),
 }
 \value{
 a data.frame of spheres radii and the number of dendritic intersections at each radius
+}
+\description{
+Functions for Sholl analysis of neuronal skeletons
+}
+\examples{
 \dontrun{ 
 # Calculate how much some neurons overlap with one another
 ## Example requires the package nat.flybrains
 Cell07PNs_sholl = sholl_analysis(x = Cell07PNs, radius.step = 1, ending.radius = 100)
 head(Cell07PNs_sholl[[1]])
-}
-}
-\description{
-Functions for Sholl analysis of neuronal skeletons
+} 
 }
