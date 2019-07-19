@@ -37,7 +37,8 @@ A pruned neuron/neuronlist object
 Prune neuron within a volume
 }
 \details{
-Prune neuron inside subvolume of a segmented brain object.
+Prune a neuron to be within, or to exclude arbour within, 
+a 3D object that can be coecred into the mesh3d data structure
 }
 \examples{
 \dontrun{ 
