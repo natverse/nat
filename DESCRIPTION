@@ -62,6 +62,7 @@ Collate:
     'graph-nodes.R'
     'hxsurf.R'
     'im3d.R'
+    'morphometry.R'
     'nat-data.R'
     'nat-package.R'
     'ndigest.R'
