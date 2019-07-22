@@ -598,40 +598,44 @@ EdgeListFromSegList<-function(SegList){
 
 #' Prune neuron within a volume
 #'
-#' @details Prune a neuron to be within, or to exclude arbour within, 
-#' a 3D object that can be coecred into the mesh3d data structure
+#' @details Prune a neuron to be within, or to exclude arbour within, a 3D
+#'   object that can be coerced into the mesh3d data structure
 #'
 #' @param x a \code{neuron} object
 #' @param brain The \code{\link[nat]{hxsurf}} object containing the neuropil of
-#'   interest, e.g. \code{\link[nat.flybrains]{FCWBNP.surf}}. Can also be any other \code{\link[nat]{hxsurf}}
-#'   or \code{\link[rgl]{mesh3d}} object, or any object coercible into \code{\link[rgl]{mesh3d}}
-#'   by \code{\link[rgl]{as.mesh3d}}
-#' @param neuropil Character vector specifying the neuropil, which must be queryable from brain$RegionList. 
-#' If NULL (default), then the full object given as \code{brain} will be used for the pruning
-#' @param invert Logical when \code{TRUE} indicates that points inside the mesh are kept.
-#' @param ... Additional arguments for methods (eventually passed to prune.default)
-#'   surface should be pruned.
+#'   interest, e.g. \code{\link[nat.flybrains]{FCWBNP.surf}}. Can also be any
+#'   other \code{\link[nat]{hxsurf}} or \code{\link[rgl]{mesh3d}} object, or any
+#'   object coercible into \code{\link[rgl]{mesh3d}} by
+#'   \code{\link[rgl]{as.mesh3d}}
+#' @param neuropil Character vector specifying the neuropil, which must be
+#'   queryable from brain$RegionList. If NULL (default), then the full object
+#'   given as \code{brain} will be used for the pruning
+#' @param invert Logical when \code{TRUE} indicates that points inside the mesh
+#'   are kept.
+#' @param ... Additional arguments for methods (eventually passed to
+#'   prune.default) surface should be pruned.
 #' @inherit prune seealso
 #' @examples
-#' \dontrun{ 
-#' ## Interactively shoose which bit of the neuron you wish to keep
+#' \dontrun{
+#' ## Interactively choose which bit of the neuron you wish to keep
 #' ### Example requires the package nat.flybrains
-#' LH_arbour = prune_in_volume(x = Cell07PNs, 
-#' brain = nat.flybrains::IS2NP.surf, 
+#' LH_arbour = prune_in_volume(x = Cell07PNs,
+#' brain = nat.flybrains::IS2NP.surf,
 #' neuropil = "LH_L", OmitFailures = TRUE)
-#' } 
+#' }
 #' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
 #' @examples
-#' \dontrun{ 
-#' ## Interactively shoose which bit of the neuron you wish to keep
+#' \dontrun{
+#' ## Interactively choose which bit of the neuron you wish to keep
 #' pruned.as.you.like.it = prune_online(Cell07PNs)
 #' }
-#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
+#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
 #'   \code{\link{prune.neuron}}
 #' @export
 #' @rdname prune_in_volume
 prune_in_volume <-function(x, brain, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
+
 #' @export
 #' @rdname prune_in_volume
 prune_in_volume.neuron <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
@@ -644,6 +648,7 @@ prune_in_volume.neuron <- function(x, brain, neuropil = NULL, invert = TRUE, ...
   neuron = prune_vertices(x,verticestoprune=v,invert=invert, ...)
   neuron
 }
+
 #' @export
 #' @rdname prune_in_volume
 prune_in_volume.neuronlist <- function(x, brain, neuropil = NULL, invert = TRUE, ...){

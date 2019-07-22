@@ -11,31 +11,39 @@ make_model(someneuronlist, substrate = c("connectors", "cable", "both"),
 \arguments{
 \item{someneuronlist}{a neuronlist or neuron object}
 
-\item{substrate}{whether to make the model based off of connectors, neuron cable or both}
+\item{substrate}{whether to make the model based off of connectors, neuron
+cable or both}
 
-\item{maxdistance}{for automated cluster identification. Maximum distance at which nodes can be part of a cluster}
+\item{maxdistance}{for automated cluster identification. Maximum distance at
+which nodes can be part of a cluster}
 
-\item{groupsize}{an integer number of nearest neighbours to find using nabor::knn()}
+\item{groupsize}{an integer number of nearest neighbours to find using
+nabor::knn()}
 
-\item{alpha}{a single value or vector of values for α, fed to \code{\link{alphashape3d::ashape3d}}. Selection is subsequently interactive}
+\item{alpha}{a single value or vector of values for α, fed to \code{shape3d}.
+Selection is subsequently interactive}
 
-\item{auto.selection}{whether to try and remove points based on interactively chosen values for 'groupsize' and 'maxdistance'}
+\item{auto.selection}{whether to try and remove points based on interactively
+chosen values for \code{groupsize} and \code{maxdistance}}
 
-\item{chosen.points}{a matrix of 3D points. Use this argument if you do not want to interactively select the 3D fed to \code{\link{alphashape3d::ashape3d}}}
+\item{chosen.points}{a matrix of 3D points. Use this argument if you do not
+want to interactively select the 3D fed to \code{ashape3d}.}
 
-\item{selection}{whether or not to interactively select values for maxdistance and groupsize.}
+\item{selection}{whether or not to interactively select values for
+maxdistance and groupsize.}
 }
 \value{
 A mesh3d object
 }
 \description{
-Generate a mesh3d model based on points contained in a neuronlist or neuron object
+Generate a mesh3d model based on points contained in a
+  neuronlist or neuron object
 }
 \examples{
-\dontrun{ 
+\dontrun{
 # Make a model based off of fly olfactory projection neuron arbours
 PN_blob = make_model(Cell07PNs)
-} 
+}
 }
 \seealso{
 \code{\link{prune_online}}

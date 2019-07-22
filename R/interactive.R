@@ -132,25 +132,35 @@ correct_soma <- function(someneuronlist, brain = NULL){
 
 #' Generate a 3D model from connector and/or tree node data
 #'
-#' @description Generate a mesh3d model based on points contained in a neuronlist or neuron object
+#' @description Generate a mesh3d model based on points contained in a
+#'   neuronlist or neuron object
 #'
 #' @param someneuronlist a neuronlist or neuron object
-#' @param substrate whether to make the model based off of connectors, neuron cable or both
-#' @param auto.selection whether to try and remove points based on interactively chosen values for 'groupsize' and 'maxdistance'
-#' @param maxdistance for automated cluster identification. Maximum distance at which nodes can be part of a cluster
-#' @param groupsize an integer number of nearest neighbours to find using nabor::knn()
-#' @param selection whether or not to interactively select values for maxdistance and groupsize.
-#' @param alpha a single value or vector of values for α, fed to \code{shape3d}. Selection is subsequently interactive
-#' @param chosen.points a matrix of 3D points. Use this argument if you do not want to interactively select the 3D fed to \code{ashape3d}.
+#' @param substrate whether to make the model based off of connectors, neuron
+#'   cable or both
+#' @param auto.selection whether to try and remove points based on interactively
+#'   chosen values for \code{groupsize} and \code{maxdistance}
+#' @param maxdistance for automated cluster identification. Maximum distance at
+#'   which nodes can be part of a cluster
+#' @param groupsize an integer number of nearest neighbours to find using
+#'   nabor::knn()
+#' @param selection whether or not to interactively select values for
+#'   maxdistance and groupsize.
+#' @param alpha a single value or vector of values for α, fed to \code{shape3d}.
+#'   Selection is subsequently interactive
+#' @param chosen.points a matrix of 3D points. Use this argument if you do not
+#'   want to interactively select the 3D fed to \code{ashape3d}.
 #' @examples
-#' \dontrun{ 
+#' \dontrun{
 #' # Make a model based off of fly olfactory projection neuron arbours
 #' PN_blob = make_model(Cell07PNs)
-#' } 
+#' }
 #' @seealso \code{\link{prune_online}}
 #' @return A mesh3d object
 #' @export
-make_model <- function(someneuronlist, substrate = c("connectors","cable", "both"), maxdistance = 10, groupsize = 10, alpha = 30, auto.selection = TRUE, chosen.points = NULL){
+make_model <- function(someneuronlist, substrate = c("connectors","cable", "both"), 
+                       maxdistance = 10, groupsize = 10, alpha = 30, 
+                       auto.selection = TRUE, chosen.points = NULL){
   if (substrate=="connectors"){synapse.points<-xyzmatrix(do.call(rbind, lapply(someneuronlist, function(x) x$connectors)))
   }else if(substrate =="cable"){synapse.points<-xyzmatrix(someneuronlist) 
   }else if (substrate == "both"){synapse.points<-rbind(xyzmatrix(someneuronlist), do.call(rbind, lapply(someneuronlist, function(x) xyzmatrix(x$connectors))))}
@@ -206,7 +216,7 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
 
 #' Interactively select 3D points in space
 #'
-#' @description Plot a set of 3D points in space and select a subet of them interactively, using an rgl window
+#' @description Plot a set of 3D points in space and select a subset of them interactively, using an rgl window
 #'
 #' @param points a matrix of 3D points to plot
 #' @param plot3d additional object that can be plotted using \code{rgl::plot3d}, to plot alongside points (e.g. for context)

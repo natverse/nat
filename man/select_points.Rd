@@ -15,7 +15,7 @@ select_points(points, plot3d = NULL)
 A matrix describing selected 3D points
 }
 \description{
-Plot a set of 3D points in space and select a subet of them interactively, using an rgl window
+Plot a set of 3D points in space and select a subset of them interactively, using an rgl window
 }
 \examples{
 \dontrun{ 

@@ -10,7 +10,7 @@ manually_assign_axon_dendrite(x, soma = FALSE)
 
 \method{manually_assign_axon_dendrite}{neuron}(x, soma = FALSE)
 
-\method{manually_assign_axon_dendrite}{neuronlist}(x)
+\method{manually_assign_axon_dendrite}{neuronlist}(x, soma = FALSE)
 }
 \arguments{
 \item{x}{a neuron/neuronlist object}
