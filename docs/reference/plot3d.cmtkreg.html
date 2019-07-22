@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -164,18 +164,16 @@ the resulting of reading one in with <code><a href='read.cmtkreg.html'>read.cmtk
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>testdatadir</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"tests/testthat/testdata/cmtk"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"nat"</span>)
+    <pre class="examples"><div class='input'><span class='no'>testdatadir</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"tests/testthat/testdata/cmtk"</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>"nat"</span>)
 <span class='no'>regpath</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/file.path'>file.path</a></span>(<span class='no'>testdatadir</span>,<span class='st'>'FCWB_JFRC2_01_warp_level-01.list/'</span>)
+<span class='co'># only run this if file is present (not always installed)</span>
+<span class='kw'>if</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files'>file.exists</a></span>(<span class='no'>regpath</span>)){
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='fu'><a href='cmtkreg.html'>cmtkreg</a></span>(<span class='no'>regpath</span>))
 
 <span class='co'># or read registration into memory if you want to work with it</span>
 <span class='no'>reg</span><span class='kw'>=</span><span class='fu'><a href='read.cmtkreg.html'>read.cmtkreg</a></span>(<span class='no'>regpath</span>)
-<span class='co'># nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) </span>
-<span class='co'># is considered bad style but read.cmtkreg returns a plain list </span>
-<span class='co'># so method dispatch will fail</span>
-<span class='kw pkg'>nat</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/nat/topics/plot3d.cmtkreg'>plot3d.cmtkreg</a></span>(<span class='no'>reg</span>)
-<span class='co'># }</span></pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>reg</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

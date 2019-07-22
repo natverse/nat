@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -148,7 +148,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>An igraph (or <code><a href='ngraph.html'>ngraph</a></code>) object</p></td>
+      <td><p>An <code><a href='ngraph.html'>ngraph</a></code> or raw <code>igraph</code> object</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -161,7 +161,7 @@ available). Set to FALSE when this is not desired.</p></td>
     </tr>
     <tr>
       <th>exclude.isolated</th>
-      <td><p>Do not count isolated vertices as root points
+      <td><p>Do not count isolated vertices as root/end points
 (default)</p></td>
     </tr>
     </table>
@@ -182,8 +182,10 @@ available). Set to FALSE when this is not desired.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
-<span class='co'># arbitrary vertex identifiers</span>
-<span class='fu'>graph.nodes</span>(<span class='no'>ng</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'end'</span>)</div><div class='output co'>#&gt;  [1]   1  42  59  62  80  85  96 100 102 112 117 121 134 148 154 165 172 180</div><div class='input'><span class='co'># raw vertex indices</span>
+<span class='co'># set some arbitrary vertex identifiers</span>
+<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/igraph/topics/vertex_attr'>vertex_attr</a></span>(<span class='no'>ng</span>, <span class='st'>'name'</span>) <span class='kw'>&lt;-</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fl'>500</span>, <span class='fu'><a href='nvertices.html'>nvertices</a></span>(<span class='no'>ng</span>))
+<span class='co'># return those identifiers</span>
+<span class='fu'>graph.nodes</span>(<span class='no'>ng</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'end'</span>)</div><div class='output co'>#&gt;  [1]  63 266 264 364 258  12 241  97 288 361 309 171 456  85 322 256  49 434</div><div class='input'><span class='co'># ... or raw vertex indices</span>
 <span class='fu'>graph.nodes</span>(<span class='no'>ng</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'end'</span>, <span class='kw'>original.ids</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;  [1]   1  42  59  62  80  85  96 100 102 112 117 121 134 148 154 165 172 180</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
