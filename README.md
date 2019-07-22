@@ -2,7 +2,7 @@
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
 [![Release Version](https://img.shields.io/github/release/jefferis/nat.svg)](https://github.com/jefferis/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
-[![Build Status](https://img.shields.io/travis/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat) 
+[![Build Status](https://img.shields.io/travis/jefferis/nat/master.svg)](https://travis-ci.org/jefferis/nat) 
 [![Coverage Status](https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master)](https://coveralls.io/r/jefferis/nat?branch=master)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/nat/reference/)
 

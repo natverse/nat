@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -245,7 +245,7 @@ sorted so that neurons are ordered according to the value of the
 <span class='co'># fetch table of worm neurons from wormbase</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>rvest</span>)
 <span class='no'>nlurl</span><span class='kw'>=</span><span class='st'>"http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"</span>
-<span class='no'>wormneurons</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/rvest/topics/html_table'>html_table</a></span>(<span class='fu'>read_html</span>(<span class='no'>nlurl</span>), <span class='kw'>fill</span><span class='kw'>=</span><span class='fl'>TRUE</span>)<span class='kw'>[[</span><span class='fl'>4</span>]]
+<span class='no'>wormneurons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span>(<span class='fu'>read_html</span>(<span class='no'>nlurl</span>), <span class='kw'>fill</span><span class='kw'>=</span><span class='fl'>TRUE</span>)<span class='kw'>[[</span><span class='fl'>4</span>]]
 <span class='no'>vddf</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>wormneurons</span>, <span class='no'>Neuron</span><span class='kw'>%in%</span><span class='no'>vds</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/colnames'>rownames</a></span>(<span class='no'>vddf</span>)<span class='kw'>=</span><span class='no'>vddf</span>$<span class='no'>Neuron</span>
 <span class='co'># attach metadata to neuronlist</span>

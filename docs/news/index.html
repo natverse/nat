@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
       </span>
     </div>
 
@@ -130,6 +130,14 @@
       <small>Source: <a href='https://github.com/jefferis/nat/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="nat-1-9-1" class="section level1">
+<h1 class="page-header">
+<a href="#nat-1-9-1" class="anchor"></a>nat 1.9.1<small> Unreleased </small>
+</h1>
+<ul>
+<li>Fix very slow loading of neurons in <code><a href="../reference/neuronlistfh.html">neuronlistfh()</a></code> objects. Apparently due to a change in behaviour in R 3.6.0 (<a href='https://github.com/jefferis/nat/issues/402'>#402</a>). Thanks to Shanice Bailey and Lisa Marin for the bug report.</li>
+</ul>
+</div>
     <div id="nat-1-9-0" class="section level1">
 <h1 class="page-header">
 <a href="#nat-1-9-0" class="anchor"></a>nat 1.9.0<small> Unreleased </small>
@@ -419,7 +427,7 @@
 <li>plot.neuronlist sets axes based on boundingbox of all plotted neurons, not just the first neuron (<a href='https://github.com/jefferis/nat/issues/223'>#223</a>)</li>
 <li>plot.neuron(,AxisDirections) argument is re-implemented (<a href='https://github.com/jefferis/nat/issues/224'>#224</a>)</li>
 <li>don’t warn when read.neuronlistfh changes the directory location on disk (<a href='https://github.com/jefferis/nat/issues/157'>#157</a>)</li>
-<li>remove superimposed plots in mirror example (hope this will fix build on macosx snowleopard)</li>
+<li>remove superimposed plots in mirror example (hope this will fix build on MacOS X Snow Leopard)</li>
 <li>teach read.neurons to OmitFailures when reading in a neuronlistfh object.</li>
 <li>fix handling of default colours in plot.neuronlist and plot3d.neuronlist (<a href='https://github.com/jefferis/nat/issues/230'>#230</a>)</li>
 <li>fix plot3d.neuronlist returns one element per neuron</li>
@@ -499,7 +507,7 @@
 </h1>
 <ul>
 <li>add nlscan function to review a set of neurons, optionally selecting a subset</li>
-<li>add find.soma function to select neurons whose cell bodies fall within an rgl seelection box (thanks to Ben Sutcliffe).</li>
+<li>add find.soma function to select neurons whose cell bodies fall within an rgl selection box (thanks to Ben Sutcliffe).</li>
 <li>add setdiff, intersect and union generics with implementations for neuronlist objects (note this is done in more or less identical fashion to generics defined in the dplyr package).</li>
 <li>give write.neurons a format argument to make it more obvious that this is an option rather than pointing people to the write.neuron docs (suggestion from Ben Sutcliffe)</li>
 <li>teach as.neuronlist to handle inputs with empty (rather than NULL names)</li>
@@ -531,7 +539,7 @@
 <li>c.neuronlist can now join lists with attached data.frames with different columns (missing values are filled with NAs). This also applies when some neuronlists have no attached data.frame at all.</li>
 <li>read.neurons can read neuronlist files from disk</li>
 <li>cmtk.statistics now has a Verbose argument</li>
-<li>warn if resmapling a neuron with multiple subtrees that only the main subtree will be kept.</li>
+<li>warn if resampling a neuron with multiple subtrees that only the main subtree will be kept.</li>
 </ul>
 </div>
     <div id="nat-1-5-11" class="section level1">
@@ -596,7 +604,7 @@
 <ul>
 <li>give mirror/xform.neuronlist subset arguments</li>
 <li>add plot3d.boundingbox</li>
-<li>give plot(3d).neuronlist a SUBSTITUTE argument that can be used to control non-stadard evaluation. This is useful for people who wish to incoroporate these funcitons inside other user-defined functions. See ?subset.neuronlist for details.</li>
+<li>give plot(3d).neuronlist a SUBSTITUTE argument that can be used to control non-standard evaluation. This is useful for people who wish to incorporate these functions inside other user-defined functions. See ?subset.neuronlist for details.</li>
 <li>fix: write.neurons into subdirs when df=NULL</li>
 </ul>
 </div>
@@ -625,7 +633,7 @@
 <a href="#nat-1-5-3" class="anchor"></a>nat 1.5.3<small> Unreleased </small>
 </h1>
 <ul>
-<li>new function pointsinside to determine if points (e.g. neuron) are inside a closedd surface</li>
+<li>new function pointsinside to determine if points (e.g. neuron) are inside a closed surface</li>
 <li>resample.neuron implemented (no support for interpolating widths or multiple subtrees)</li>
 <li>dotprops.neuron can resample to a consistent segment length</li>
 <li>consistent return values for as.seglist and seglengths when all subtrees are returned</li>
@@ -647,7 +655,7 @@
 <li>always drop unused vertices in as.mesh3d.hxsurf</li>
 <li>fix bug in write.neurons when subdir not specified</li>
 <li>fix colouring of vectors by plot3d.dotprops</li>
-<li>dev: switch to roxygygen2 v4</li>
+<li>dev: switch to roxygen2 v4</li>
 </ul>
 </div>
     <div id="nat-1-5-1" class="section level1">
@@ -677,7 +685,7 @@
 <li>add xyzmatrix method for neuronlists</li>
 <li>add materials function with methods for im3d and hxsurf objects</li>
 <li>enh: read.im3d can read materials from amiramesh files</li>
-<li>enh: download neurnonlistfh objects to session temp directory if no localdir is specified</li>
+<li>enh: download neuronlistfh objects to session temp directory if no localdir is specified</li>
 <li>fix: find CMTK in its new default location on macosx</li>
 <li>fix: plot3d should skip redrawing if par3d() skipRedraw is set</li>
 <li>fix: failure to export ngraph constructor function</li>
@@ -904,7 +912,7 @@
 <ul>
 <li>implement read.neuron and read.neurons</li>
 <li>so far only works for rda, rds and swc files</li>
-<li>reading of additional file types will be implemented by registering functions = to test, read and write for the format using a package regsistry controlled by nat::neuronformats.</li>
+<li>reading of additional file types will be implemented by registering functions = to test, read and write for the format using a package registry controlled by nat::neuronformats.</li>
 <li>developer: seglists in neurons now have class ‘seglist’</li>
 </ul>
 </div>
@@ -941,7 +949,7 @@
 <li>teach mirror function to accept numeric axis specification</li>
 <li>Fix bug in checking extra directories in cmtk.bindir</li>
 <li>Add dotprops.neuronlist and include all dotprops methods in documentation</li>
-<li>Fix longstanding bug in parsing cmtk warping registrations (only relevant for reading these into R lists - no effect on transformations).</li>
+<li>Fix long-standing bug in parsing cmtk warping registrations (only relevant for reading these into R lists - no effect on transformations).</li>
 <li>fix bug in class of cmtkreg objects</li>
 <li>Remove call to .Internal(La_rs) by calling eigen directly</li>
 <li>doc: some notes on CMTK installation</li>
@@ -979,7 +987,7 @@
 <li>basic and self-contained implementation of dotprops</li>
 <li>new xform generic + methods for clean transformation of objects including neurons and dotprops objects</li>
 <li>this includes improved interaction between dotprops and xform so that xform can use the previously value of k when recalculating a dotprops object post transformation</li>
-<li>sample data (40 PNs from Jefferis, Potter et al. ’07 and 20 KCs from Chiang et al. 2011)</li>
+<li>sample data (40 PNs from Jefferis, Potter et al. ’07 and 20 KCs from Chiang et al. 2011)</li>
 <li>1 use of .Internal and missing nlapply remain to be fixed.</li>
 </ul>
 </div>
@@ -1008,6 +1016,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#nat-1-9-1">1.9.1</a></li>
         <li><a href="#nat-1-9-0">1.9.0</a></li>
         <li><a href="#nat-1-8-12">1.8.12</a></li>
         <li><a href="#nat-1-8-11">1.8.11</a></li>
