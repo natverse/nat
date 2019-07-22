@@ -1,3 +1,9 @@
+# nat 1.9.1
+
+* Fix very slow loading of neurons in `neuronlistfh()` objects. 
+  Apparently due to a change in behaviour in R 3.6.0 (#402).
+  Thanks to Shanice Bailey and Lisa Marin for the bug report.
+
 # nat 1.9.0
 
 We are bumping a whole version point because of some changes in the default
