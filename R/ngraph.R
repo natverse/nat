@@ -602,14 +602,13 @@ EdgeListFromSegList<-function(SegList){
 #'   object that can be coerced into the mesh3d data structure
 #'
 #' @param x a \code{neuron} object
-#' @param brain The \code{\link[nat]{hxsurf}} object containing the neuropil of
-#'   interest, e.g. \code{\link[nat.flybrains]{FCWBNP.surf}}. Can also be any
-#'   other \code{\link[nat]{hxsurf}} or \code{\link[rgl]{mesh3d}} object, or any
-#'   object coercible into \code{\link[rgl]{mesh3d}} by
-#'   \code{\link[rgl]{as.mesh3d}}
-#' @param neuropil Character vector specifying the neuropil, which must be
-#'   queryable from brain$RegionList. If NULL (default), then the full object
-#'   given as \code{brain} will be used for the pruning
+#' @param surf An \code{\link{hxsurf}} or \code{\link[rgl]{mesh3d}} object, or
+#'   any object coercible into \code{\link[rgl]{mesh3d}} by
+#'   \code{\link{as.mesh3d}}.
+#' @param neuropil Character vector specifying a subset of the \code{surf}
+#'   object. This is only relevant when \code{surf} is of class
+#'   \code{\link{hxsurf}}. If NULL (default), then the full object given as
+#'   \code{surf} will be used for the pruning.
 #' @param invert Logical when \code{TRUE} indicates that points inside the mesh
 #'   are kept.
 #' @param ... Additional arguments for methods (eventually passed to
@@ -619,9 +618,8 @@ EdgeListFromSegList<-function(SegList){
 #' \dontrun{
 #' ## Interactively choose which bit of the neuron you wish to keep
 #' ### Example requires the package nat.flybrains
-#' LH_arbour = prune_in_volume(x = Cell07PNs,
-#' brain = nat.flybrains::IS2NP.surf,
-#' neuropil = "LH_L", OmitFailures = TRUE)
+#' LH_arbour = prune_in_volume(x = Cell07PNs, surf = nat.flybrains::IS2NP.surf,
+#'   neuropil = "LH_L", OmitFailures = TRUE)
 #' }
 #' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
@@ -634,15 +632,16 @@ EdgeListFromSegList<-function(SegList){
 #'   \code{\link{prune.neuron}}
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume <-function(x, brain, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
+prune_in_volume <-function(x, surf, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
 
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume.neuron <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
+prune_in_volume.neuron <- function(x, surf, neuropil = NULL, invert = TRUE, ...){
   if(is.null(neuropil)){
-    mesh = rgl::as.mesh3d(brain)
-  }else{
-    mesh = rgl::as.mesh3d(subset(brain, neuropil))
+    mesh = as.mesh3d(surf)
+  } else {
+    stopifnot(inherits(surf, "hxsurf"))
+    mesh = as.mesh3d(subset(surf, neuropil))
   }
   v = which(pointsinside(xyzmatrix(x),surf = mesh)>0)
   neuron = prune_vertices(x,verticestoprune=v,invert=invert, ...)
@@ -651,6 +650,6 @@ prune_in_volume.neuron <- function(x, brain, neuropil = NULL, invert = TRUE, ...
 
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume.neuronlist <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
-  nlapply(x,prune_in_volume.neuron, brain = brain, neuropil = neuropil, invert = invert, ...)
+prune_in_volume.neuronlist <- function(x, surf, neuropil = NULL, invert = TRUE, ...){
+  nlapply(x, prune_in_volume.neuron, surf = surf, neuropil = neuropil, invert = invert, ...)
 }
