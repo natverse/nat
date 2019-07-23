@@ -596,7 +596,7 @@ EdgeListFromSegList<-function(SegList){
   cbind(starts,ends)
 }
 
-#' Prune neuron within a volume
+#' Prune neuron(s) within a volume defined by a 3D mesh
 #'
 #' @details Prune a neuron to be within, or to exclude arbour within, a 3D
 #'   object that can be coerced into the mesh3d data structure
@@ -616,20 +616,14 @@ EdgeListFromSegList<-function(SegList){
 #' @inherit prune seealso
 #' @examples
 #' \dontrun{
-#' ## Interactively choose which bit of the neuron you wish to keep
 #' ### Example requires the package nat.flybrains
 #' LH_arbour = prune_in_volume(x = Cell07PNs, surf = nat.flybrains::IS2NP.surf,
 #'   neuropil = "LH_L", OmitFailures = TRUE)
 #' }
 #' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
-#' @examples
-#' \dontrun{
-#' ## Interactively choose which bit of the neuron you wish to keep
-#' pruned.as.you.like.it = prune_online(Cell07PNs)
-#' }
 #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
-#'   \code{\link{prune.neuron}}
+#'   \code{\link{prune.neuron}}, \code{\link{prune}}
 #' @export
 #' @rdname prune_in_volume
 prune_in_volume <-function(x, surf, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
