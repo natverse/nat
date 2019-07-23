@@ -643,8 +643,8 @@ prune_in_volume.neuron <- function(x, surf, neuropil = NULL, invert = TRUE, ...)
     stopifnot(inherits(surf, "hxsurf"))
     mesh = as.mesh3d(subset(surf, neuropil))
   }
-  v = which(pointsinside(xyzmatrix(x),surf = mesh)>0)
-  neuron = prune_vertices(x,verticestoprune=v,invert=invert, ...)
+  v = which(pointsinside(xyzmatrix(x), surf = mesh))
+  neuron = prune_vertices(x, verticestoprune=v, invert=invert, ...)
   neuron
 }
 
