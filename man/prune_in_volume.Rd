@@ -4,28 +4,27 @@
 \alias{prune_in_volume}
 \alias{prune_in_volume.neuron}
 \alias{prune_in_volume.neuronlist}
-\title{Prune neuron within a volume}
+\title{Prune neuron(s) within a volume defined by a 3D mesh}
 \usage{
-prune_in_volume(x, brain, neuropil = NULL, invert = TRUE, ...)
+prune_in_volume(x, surf, neuropil = NULL, invert = TRUE, ...)
 
-\method{prune_in_volume}{neuron}(x, brain, neuropil = NULL,
+\method{prune_in_volume}{neuron}(x, surf, neuropil = NULL,
   invert = TRUE, ...)
 
-\method{prune_in_volume}{neuronlist}(x, brain, neuropil = NULL,
+\method{prune_in_volume}{neuronlist}(x, surf, neuropil = NULL,
   invert = TRUE, ...)
 }
 \arguments{
 \item{x}{a \code{neuron} object}
 
-\item{brain}{The \code{\link[nat]{hxsurf}} object containing the neuropil of
-interest, e.g. \code{\link[nat.flybrains]{FCWBNP.surf}}. Can also be any
-other \code{\link[nat]{hxsurf}} or \code{\link[rgl]{mesh3d}} object, or any
-object coercible into \code{\link[rgl]{mesh3d}} by
-\code{\link[rgl]{as.mesh3d}}}
+\item{surf}{An \code{\link{hxsurf}} or \code{\link[rgl]{mesh3d}} object, or
+any object coercible into \code{\link[rgl]{mesh3d}} by
+\code{\link{as.mesh3d}}.}
 
-\item{neuropil}{Character vector specifying the neuropil, which must be
-queryable from brain$RegionList. If NULL (default), then the full object
-given as \code{brain} will be used for the pruning}
+\item{neuropil}{Character vector specifying a subset of the \code{surf}
+object. This is only relevant when \code{surf} is of class
+\code{\link{hxsurf}}. If NULL (default), then the full object given as
+\code{surf} will be used for the pruning.}
 
 \item{invert}{Logical when \code{TRUE} indicates that points inside the mesh
 are kept.}
@@ -37,7 +36,7 @@ prune.default) surface should be pruned.}
 A pruned neuron/neuronlist object
 }
 \description{
-Prune neuron within a volume
+Prune neuron(s) within a volume defined by a 3D mesh
 }
 \details{
 Prune a neuron to be within, or to exclude arbour within, a 3D
@@ -45,18 +44,12 @@ Prune a neuron to be within, or to exclude arbour within, a 3D
 }
 \examples{
 \dontrun{
-## Interactively choose which bit of the neuron you wish to keep
 ### Example requires the package nat.flybrains
-LH_arbour = prune_in_volume(x = Cell07PNs,
-brain = nat.flybrains::IS2NP.surf,
-neuropil = "LH_L", OmitFailures = TRUE)
-}
-\dontrun{
-## Interactively choose which bit of the neuron you wish to keep
-pruned.as.you.like.it = prune_online(Cell07PNs)
+LH_arbour = prune_in_volume(x = Cell07PNs, surf = nat.flybrains::IS2NP.surf,
+  neuropil = "LH_L", OmitFailures = TRUE)
 }
 }
 \seealso{
 \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
-  \code{\link{prune.neuron}}
+  \code{\link{prune.neuron}}, \code{\link{prune}}
 }
