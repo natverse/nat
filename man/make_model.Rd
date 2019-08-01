@@ -20,7 +20,7 @@ which nodes can be part of a cluster}
 \item{groupsize}{an integer number of nearest neighbours to find using
 nabor::knn()}
 
-\item{alpha}{a single value or vector of values for α, fed to \code{shape3d}.
+\item{alpha}{a single value or vector of values for alpha, fed to \code{shape3d}.
 Selection is subsequently interactive}
 
 \item{auto.selection}{whether to try and remove points based on interactively

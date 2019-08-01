@@ -146,7 +146,7 @@ correct_soma <- function(someneuronlist, brain = NULL){
 #'   nabor::knn()
 #' @param selection whether or not to interactively select values for
 #'   maxdistance and groupsize.
-#' @param alpha a single value or vector of values for α, fed to \code{shape3d}.
+#' @param alpha a single value or vector of values for alpha, fed to \code{shape3d}.
 #'   Selection is subsequently interactive
 #' @param chosen.points a matrix of 3D points. Use this argument if you do not
 #'   want to interactively select the 3D fed to \code{ashape3d}.
