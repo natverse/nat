@@ -10,3 +10,4 @@ travisbuildchildren.sh
 ^build_docs.r$
 ^vignettes/.*pdf$
 ^\.httr-oauth$
+^spare$

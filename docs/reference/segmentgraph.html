@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
       </span>
     </div>
 
@@ -86,18 +86,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
     <li>
       <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
 </li>
 <li>
   <a href="../articles/Installation.html">Installation</a>
@@ -108,11 +108,17 @@
 <li>
   <a href="../index.html#help">Help</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/jefferis/nat">
+  <a href="https://natverse.github.io">natverse</a>
+</li>
+<li>
+  <a href="https://github.com/natverse/nat">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -130,7 +136,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Return a simplified segment graph for a neuron</h1>
-    <small class="dont-index">Source: <a href='https://github.com/jefferis/nat/blob/master/R/ngraph.R'><code>R/ngraph.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/natverse/nat/blob/master/R/ngraph.R'><code>R/ngraph.R</code></a></small>
     <div class="hidden name"><code>segmentgraph.Rd</code></div>
     </div>
 
@@ -198,43 +204,43 @@ output graph to point towards (rather than away from) the root (default
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int 2
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int [1:2] 3 4
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int(0) 
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int [1:2] 5 8
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int [1:2] 6 7
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int(0) 
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int(0) 
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int [1:2] 9 12
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int [1:2] 10 11
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  $ :List of 1
 #&gt;   ..$ : 'igraph.vs' int(0) 
 #&gt;   .. ..- attr(*, "env")=&lt;weakref&gt; 
-#&gt;   .. ..- attr(*, "graph")= chr "90309481-e6a2-45d7-a916-d2341a57edf2"
+#&gt;   .. ..- attr(*, "graph")= chr "fe04c9f2-008a-4973-af27-58885d9fb46b"
 #&gt;  - attr(*, "class")= chr "igraph"</div><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>igraph</span>)
 <span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>sg</span>, <span class='kw'>edge.arrow.size</span><span class='kw'>=</span><span class='fl'>.4</span>, <span class='kw'>vertex.size</span><span class='kw'>=</span><span class='fl'>10</span>)</div><div class='img'><img src='segmentgraph-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
