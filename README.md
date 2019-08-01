@@ -1,11 +1,13 @@
 # nat: NeuroAnatomy Toolbox
+<!-- badges: start -->
+[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
 [![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
 [![Build Status](https://img.shields.io/travis/natverse/nat/master.svg)](https://travis-ci.org/natverse/nat) 
 [![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/nat/reference/)
-
+<!-- badges: end -->
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
 single neurons. **nat** is the core package of a wider suite of neuroanatomy 
