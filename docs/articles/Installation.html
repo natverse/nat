@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
       </span>
     </div>
 
@@ -53,18 +53,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
     <li>
       <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
 </li>
 <li>
   <a href="../articles/Installation.html">Installation</a>
@@ -75,10 +75,16 @@
 <li>
   <a href="../index.html#help">Help</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jefferis/nat">
+  <a href="https://natverse.github.io">natverse</a>
+</li>
+<li>
+  <a href="https://github.com/natverse/nat">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -98,9 +104,9 @@
       <h1>Installation details</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2019-07-22</h4>
+            <h4 class="date">2019-08-01</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/jefferis/nat/blob/master/vignettes/Installation.Rmd"><code>vignettes/Installation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/natverse/nat/blob/master/vignettes/Installation.Rmd"><code>vignettes/Installation.Rmd</code></a></small>
       <div class="hidden name"><code>Installation.Rmd</code></div>
 
     </div>
@@ -111,7 +117,7 @@
 <h2 class="hasAnchor">
 <a href="#preface" class="anchor"></a>Preface</h2>
 <p>This document provides additional details about installation that may help you solve certain difficulties, especially on Windows or Mac platforms.</p>
-<p>The source code for this vignette is available at <a href="https://github.com/jefferis/nat/blob/master/vignettes/Installation.Rmd" class="uri">https://github.com/jefferis/nat/blob/master/vignettes/Installation.Rmd</a>. If you find something unclear or notice a typo, I would be very happy if you would click on the Pencil Icon on that page or follow <a href="https://github.com/jefferis/nat/edit/master/vignettes/Installation.Rmd">this link to edit</a> and suggest an alternative wording. Don’t be shy about doing this; I have to review any change and even if your suggestion is not perfect it will still be a prompt for me to improve this document. Thank you!</p>
+<p>The source code for this vignette is available at <a href="https://github.com/natverse/nat/blob/master/vignettes/Installation.Rmd" class="uri">https://github.com/natverse/nat/blob/master/vignettes/Installation.Rmd</a>. If you find something unclear or notice a typo, I would be very happy if you would click on the Pencil Icon on that page or follow <a href="https://github.com/natverse/nat/edit/master/vignettes/Installation.Rmd">this link to edit</a> and suggest an alternative wording. Don’t be shy about doing this; I have to review any change and even if your suggestion is not perfect it will still be a prompt for me to improve this document. Thank you!</p>
 </div>
 <div id="prerequisites" class="section level1">
 <h1 class="hasAnchor">
@@ -138,22 +144,22 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install devtools if required</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># then install nat</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</a></code></pre></div>
-<p>The <strong>nat</strong> package includes extensive unit tests which are run along with R’s (extremely fastidious) package check routines by the <a href="http://travis-ci.org/jefferis/nat">Travis</a> continuous integration server. The master branch is therefore considered very stable and may well contain fixes or enhancements over released versions. However, you can install any <a href="https://github.com/jefferis/nat/tags">release version</a> including the <a href="https://github.com/jefferis/nat/releases/latest">latest release</a> as follows:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jefferis/nat@v1.8.6"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"natverse/nat"</span>)</a></code></pre></div>
+<p>The <strong>nat</strong> package includes extensive unit tests which are run along with R’s (extremely fastidious) package check routines by the <a href="http://travis-ci.org/natverse/nat">Travis</a> continuous integration server. The master branch is therefore considered very stable and may well contain fixes or enhancements over released versions. However, you can install any <a href="https://github.com/natverse/nat/tags">release version</a> including the <a href="https://github.com/natverse/nat/releases/latest">latest release</a> as follows:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"natverse/nat@v1.8.6"</span>)</a></code></pre></div>
 <p>The same syntax can be used to install any arbitrary version that you want from github. See <code><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">?install_github</a></code> for details.</p>
 <p>Note: Windows users need <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> to install in this way, but devtools should offer to install this for you if you do not already have it.</p>
 </div>
 <div id="external-dependencies" class="section level1">
 <h1 class="hasAnchor">
 <a href="#external-dependencies" class="anchor"></a>External Dependencies</h1>
-<p><strong>nat</strong> is self sufficient for core functionality, but the transformation of 3D data using Computational Morphometry Toolkit (CMTK) registrations depends on an external installation of that toolkit. CMTK binaries can be downloaded for Windows, Linux and Mac at <a href="http://www.nitrc.org/projects/cmtk/" class="uri">http://www.nitrc.org/projects/cmtk/</a>. Source code is available from the same site or an unofficial mirror repository at <a href="https://github.com/jefferis/cmtk" class="uri">https://github.com/jefferis/cmtk</a>. We have extensive experience of using CMTK under Linux (where we compile from source) and Mac (where we compile or use the MacOSX-10.6-x86_64.dmg binary installers). We have also used <a href="http://neuro.debian.net/pkgs/cmtk.html">neurodebian</a> to install as part of the Travis continuous integration setup (see the project’s <a href="https://github.com/jefferis/nat/blob/master/.travis.yml">.travis.yml</a> file).</p>
+<p><strong>nat</strong> is self sufficient for core functionality, but the transformation of 3D data using Computational Morphometry Toolkit (CMTK) registrations depends on an external installation of that toolkit. CMTK binaries can be downloaded for Windows, Linux and Mac at <a href="http://www.nitrc.org/projects/cmtk/" class="uri">http://www.nitrc.org/projects/cmtk/</a>. Source code is available from the same site or an unofficial mirror repository at <a href="https://github.com/jefferis/cmtk" class="uri">https://github.com/jefferis/cmtk</a>. We have extensive experience of using CMTK under Linux (where we compile from source) and Mac (where we compile or use the MacOSX-10.6-x86_64.dmg binary installers). We have also used <a href="http://neuro.debian.net/pkgs/cmtk.html">neurodebian</a> to install as part of the Travis continuous integration setup (see the project’s <a href="https://github.com/natverse/nat/blob/master/.travis.yml">.travis.yml</a> file).</p>
 <div id="cmtknat-on-windows" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cmtknat-on-windows" class="anchor"></a>CMTK+nat on Windows</h2>
 <p>We have much less experience using CMTK on Windows than on Mac/Linux platforms. Experiments in May 2016 suggest that the best option is to use the cygwin CMTK distribution (cygwin provides a linux like environment). Here are the steps we took:</p>
 <ul>
-<li>You must ensure that you have at least version <a href="https://github.com/jefferis/nat/releases/tag/v1.8.5">nat v1.8.5</a>. It is recommended that follow the steps for installing the development version of nat straight from github as described in section <strong>Development version</strong>
+<li>You must ensure that you have at least version <a href="https://github.com/natverse/nat/releases/tag/v1.8.5">nat v1.8.5</a>. It is recommended that follow the steps for installing the development version of nat straight from github as described in section <strong>Development version</strong>
 </li>
 <li>Install <a href="https://www.cygwin.com/">Cygwin</a> accepting the default path <code>C:\cygwin64</code>
 </li>

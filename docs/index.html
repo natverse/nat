@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
       </span>
     </div>
 
@@ -63,18 +63,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
     <li>
       <a href="articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="news/index.html">News</a>
 </li>
 <li>
   <a href="articles/Installation.html">Installation</a>
@@ -85,10 +85,16 @@
 <li>
   <a href="index.html#help">Help</a>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jefferis/nat">
+  <a href="https://natverse.github.io">natverse</a>
+</li>
+<li>
+  <a href="https://github.com/natverse/nat">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -107,6 +113,7 @@
 <div id="nat-neuroanatomy-toolbox" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#nat-neuroanatomy-toolbox" class="anchor"></a>nat: NeuroAnatomy Toolbox</h1></div>
+<!-- badges: start -->
 
 <p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of single neurons. <strong>nat</strong> is the core package of a wider suite of neuroanatomy tools introduced at <a href="http://jefferislab.github.io" class="uri">http://jefferislab.github.io</a>. <strong>nat</strong> (and its <a href="https://github.com/jefferis/AnalysisSuite">ancestors</a>) have been used in a number of papers from our group including:</p>
 <p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428"><img src="https://media.nature.com/full/nature-assets/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" title="Food and Pheromone Integration" alt="Nature 2011"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a> <a href="http://dx.doi.org/10.1016/j.neuron.2016.06.012"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/P1Clustering_200_sq_crop-215x215.jpg" title="NBLAST" alt="Neuron 2016"></a></p>
@@ -136,7 +143,7 @@
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install devtools if required</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># then install nat</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"natverse/nat"</span>)</a></code></pre></div>
 </div>
 <div id="learn" class="section level2">
 <h2 class="hasAnchor">
@@ -160,7 +167,7 @@
 <li>Try out sample code:
 <ul>
 <li>
-<a href="https://github.com/jefferis/nat.examples">nat.examples</a> has detailed examples for data sets from a range of model organisms and techniques</li>
+<a href="https://github.com/natverse/nat.examples">nat.examples</a> has detailed examples for data sets from a range of model organisms and techniques</li>
 <li>
 <a href="https://github.com/jefferis/frulhns">frulhns</a> analysis of sexually dimorphic circuits</li>
 <li><a href="https://github.com/jefferislab/NBLAST_figures/">NBLAST figures</a></li>
@@ -180,10 +187,10 @@
 <p>If you think that you have found a bug:</p>
 <ul>
 <li>Install the development version of nat using devtools (see above) and see if that helps.</li>
-<li>Check the <a href="https://github.com/jefferis/nat/issues?q=is%3Aissue">github issues</a> and
+<li>Check the <a href="https://github.com/natverse/nat/issues?q=is%3Aissue">github issues</a> and
 <ul>
 <li>
-<a href="https://github.com/jefferis/nat/issues/new">file a bug report</a> if this seems to be a new problem</li>
+<a href="https://github.com/natverse/nat/issues/new">file a bug report</a> if this seems to be a new problem</li>
 <li>comment on an existing bug report</li>
 </ul>
 </li>
@@ -199,9 +206,9 @@
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=nat">https://​cloud.r-project.org/​package=nat</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/jefferis/nat">https://​github.com/​jefferis/​nat</a>
+<li>Browse source code at <br><a href="https://github.com/natverse/nat">https://​github.com/​natverse/​nat</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/jefferis/nat/issues">https://​github.com/​jefferis/​nat/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/natverse/nat/issues">https://​github.com/​natverse/​nat/​issues</a>
 </li>
 </ul>
 </div>
@@ -228,11 +235,12 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://natverse.github.io"><img src="https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6" alt="natverse"></a></li>
 <li><a href="http://dx.doi.org/10.5281/zenodo.10171"><img src="https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg" alt="DOI"></a></li>
-<li><a href="https://github.com/jefferis/nat/releases/latest"><img src="https://img.shields.io/github/release/jefferis/nat.svg" alt="Release Version"></a></li>
+<li><a href="https://github.com/natverse/nat/releases/latest"><img src="https://img.shields.io/github/release/natverse/nat.svg" alt="Release Version"></a></li>
 <li><a href="https://cran.r-project.org/package=nat"><img src="http://www.r-pkg.org/badges/version/nat" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/jefferis/nat"><img src="https://img.shields.io/travis/jefferis/nat/master.svg" alt="Build Status"></a></li>
-<li><a href="https://coveralls.io/r/jefferis/nat?branch=master"><img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"></a></li>
+<li><a href="https://travis-ci.org/natverse/nat"><img src="https://img.shields.io/travis/natverse/nat/master.svg" alt="Build Status"></a></li>
+<li><a href="https://coveralls.io/r/natverse/nat?branch=master"><img src="https://coveralls.io/repos/natverse/nat/badge.svg?branch=master" alt="Coverage Status"></a></li>
 <li><a href="http://jefferis.github.io/nat/reference/"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a></li>
 </ul>
 </div>

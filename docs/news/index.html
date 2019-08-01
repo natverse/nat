@@ -60,7 +60,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
       </span>
     </div>
 
@@ -83,18 +83,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
     <li>
       <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
 </li>
 <li>
   <a href="../articles/Installation.html">Installation</a>
@@ -105,11 +105,17 @@
 <li>
   <a href="../index.html#help">Help</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/jefferis/nat">
+  <a href="https://natverse.github.io">natverse</a>
+</li>
+<li>
+  <a href="https://github.com/natverse/nat">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -127,7 +133,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/jefferis/nat/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+      <small>Source: <a href='https://github.com/natverse/nat/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="nat-1-9-1" class="section level1">
@@ -135,7 +141,7 @@
 <a href="#nat-1-9-1" class="anchor"></a>nat 1.9.1<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fix very slow loading of neurons in <code><a href="../reference/neuronlistfh.html">neuronlistfh()</a></code> objects. Apparently due to a change in behaviour in R 3.6.0 (<a href='https://github.com/jefferis/nat/issues/402'>#402</a>). Thanks to Shanice Bailey and Lisa Marin for the bug report.</li>
+<li>Fix very slow loading of neurons in <code><a href="../reference/neuronlistfh.html">neuronlistfh()</a></code> objects. Apparently due to a change in behaviour in R 3.6.0 (<a href='https://github.com/natverse/nat/issues/402'>#402</a>). Thanks to Shanice Bailey and Lisa Marin for the bug report.</li>
 </ul>
 </div>
     <div id="nat-1-9-0" class="section level1">
@@ -145,8 +151,8 @@
 <p>We are bumping a whole version point because of some changes in the default behaviour of nat. We do not expect to submit this first version in the 1.9.x series to CRAN without further testing, but it is our current recommended version for general use.</p>
 <p>Significant changes:</p>
 <ul>
-<li><p>read.neurons will name neurons in the neuronlist that it returns by their filename after removing the file extension. So the neuron read from file “n1.swc” will now be named “n1” not “n1.swc”. (<a href='https://github.com/jefferis/nat/issues/383'>#383</a>)</p></li>
-<li><p>write.swc normalises SWC files to maximise external compatibility. The canonical SWC form gives each point a numbered identifier increasing from 1 to the number of points. However many SWC files in the wild do not respect such an ordering. The new behaviour will result in cases where SWC files will be written out with a different point ordering from earlier versions of nat; nevertheless we prefer this behaviour since it is a source of confusion for new users since many external programs cannot read SWC files where this is not the case. The original behaviour can still be requested (<a href='https://github.com/jefferis/nat/issues/358'>#358</a>).</p></li>
+<li><p>read.neurons will name neurons in the neuronlist that it returns by their filename after removing the file extension. So the neuron read from file “n1.swc” will now be named “n1” not “n1.swc”. (<a href='https://github.com/natverse/nat/issues/383'>#383</a>)</p></li>
+<li><p>write.swc normalises SWC files to maximise external compatibility. The canonical SWC form gives each point a numbered identifier increasing from 1 to the number of points. However many SWC files in the wild do not respect such an ordering. The new behaviour will result in cases where SWC files will be written out with a different point ordering from earlier versions of nat; nevertheless we prefer this behaviour since it is a source of confusion for new users since many external programs cannot read SWC files where this is not the case. The original behaviour can still be requested (<a href='https://github.com/natverse/nat/issues/358'>#358</a>).</p></li>
 <li><p>The use of operators e.g. adding or multiplying neurons by a constant is now provided by the Ops approach (see ?groupGeneric in main R help). This is a fairly large change under the hood, but should not have any user visible effects other than the fact that it is now possible to use the same functionality for hxsurf and mesh3d objects.</p></li>
 </ul>
 <p>New vignettes:</p>
@@ -157,24 +163,24 @@
 <p>Additional changes:</p>
 <ul>
 <li>Support for CMTK deformation fields</li>
-<li>Always pass on … for reglists in <code><a href="../reference/xform.html">xform()</a></code> and friends. This ensures that <code><a href="https://www.rdocumentation.org/packages/nat.templatebrains/topics/xform_brain">nat.templatebrains::xform_brain</a></code> can fall back to an affine registration when a non-rigid registration fails (<a href='https://github.com/jefferis/nat/issues/365'>#365</a>)</li>
-<li>Fix thinko in re-ordering vertex ids for SWC files (<a href='https://github.com/jefferis/nat/issues/366'>#366</a>)</li>
-<li>Add <code><a href="../reference/makeboundingbox.html">makeboundingbox()</a></code> for constructing a boundingbox explicitly rather than from an object. This allows <code><a href="../reference/boundingbox.html">boundingbox()</a></code> to work for matrices of 3D points (<a href='https://github.com/jefferis/nat/issues/222'>#222</a>)</li>
-<li>Export <code><a href="../reference/read.nrrd.html">nrrd.datafiles()</a></code> + nrrd doc fixes (<a href='https://github.com/jefferis/nat/issues/316'>#316</a>)</li>
-<li>Teach <code><a href="../reference/materials.html">materials()</a></code> to return col for amiramesh/im3d (<a href='https://github.com/jefferis/nat/issues/284'>#284</a>)</li>
+<li>Always pass on … for reglists in <code><a href="../reference/xform.html">xform()</a></code> and friends. This ensures that <code><a href="https://www.rdocumentation.org/packages/nat.templatebrains/topics/xform_brain">nat.templatebrains::xform_brain</a></code> can fall back to an affine registration when a non-rigid registration fails (<a href='https://github.com/natverse/nat/issues/365'>#365</a>)</li>
+<li>Fix thinko in re-ordering vertex ids for SWC files (<a href='https://github.com/natverse/nat/issues/366'>#366</a>)</li>
+<li>Add <code><a href="../reference/makeboundingbox.html">makeboundingbox()</a></code> for constructing a boundingbox explicitly rather than from an object. This allows <code><a href="../reference/boundingbox.html">boundingbox()</a></code> to work for matrices of 3D points (<a href='https://github.com/natverse/nat/issues/222'>#222</a>)</li>
+<li>Export <code><a href="../reference/read.nrrd.html">nrrd.datafiles()</a></code> + nrrd doc fixes (<a href='https://github.com/natverse/nat/issues/316'>#316</a>)</li>
+<li>Teach <code><a href="../reference/materials.html">materials()</a></code> to return col for amiramesh/im3d (<a href='https://github.com/natverse/nat/issues/284'>#284</a>)</li>
 <li>Fix <code><a href="../reference/nview3d.html">nview3d()</a></code> “oblique_right”</li>
-<li>Pass … on to spheres3d to plot somata with alpha transparency (<a href='https://github.com/jefferis/nat/issues/370'>#370</a>)</li>
+<li>Pass … on to spheres3d to plot somata with alpha transparency (<a href='https://github.com/natverse/nat/issues/370'>#370</a>)</li>
 <li>
-<code><a href="../reference/get-set-neuronlist-data.frame.html">as.data.frame.neuronlist()</a></code> makes autonames when none present (<a href='https://github.com/jefferis/nat/issues/371'>#371</a>)</li>
-<li>Check that <code><a href="../reference/ngraph.html">ngraph()</a></code> edgelist references valid vertices to avoid segfaults in igraph library (<a href='https://github.com/jefferis/nat/issues/363'>#363</a>)</li>
-<li>Fix bug in constructing <code><a href="../reference/im3d.html">im3d()</a></code> with image bounds (<a href='https://github.com/jefferis/nat/issues/205'>#205</a>)</li>
-<li>Allow dotprops objects to be plotted in 2D (<a href='https://github.com/jefferis/nat/issues/112'>#112</a>)</li>
-<li>Speed up <code><a href="../reference/spine.html">spine()</a></code> by only considering endpoints (<a href='https://github.com/jefferis/nat/issues/372'>#372</a>)</li>
-<li>Export <code><a href="../reference/graph.nodes.html">graph.nodes()</a></code> and improve docs for root points (<a href='https://github.com/jefferis/nat/issues/373'>#373</a>)</li>
-<li>Speed up <code><a href="../reference/pointsinside.html">pointsinside()</a></code> by checking if inside bounding box of surface mesh (progress on <a href='https://github.com/jefferis/nat/issues/353'>#353</a>)</li>
-<li>Teach <code><a href="../reference/read.neurons.html">read.neurons()</a></code> to read remote zip file (<a href='https://github.com/jefferis/nat/issues/381'>#381</a>)</li>
+<code><a href="../reference/get-set-neuronlist-data.frame.html">as.data.frame.neuronlist()</a></code> makes autonames when none present (<a href='https://github.com/natverse/nat/issues/371'>#371</a>)</li>
+<li>Check that <code><a href="../reference/ngraph.html">ngraph()</a></code> edgelist references valid vertices to avoid segfaults in igraph library (<a href='https://github.com/natverse/nat/issues/363'>#363</a>)</li>
+<li>Fix bug in constructing <code><a href="../reference/im3d.html">im3d()</a></code> with image bounds (<a href='https://github.com/natverse/nat/issues/205'>#205</a>)</li>
+<li>Allow dotprops objects to be plotted in 2D (<a href='https://github.com/natverse/nat/issues/112'>#112</a>)</li>
+<li>Speed up <code><a href="../reference/spine.html">spine()</a></code> by only considering endpoints (<a href='https://github.com/natverse/nat/issues/372'>#372</a>)</li>
+<li>Export <code><a href="../reference/graph.nodes.html">graph.nodes()</a></code> and improve docs for root points (<a href='https://github.com/natverse/nat/issues/373'>#373</a>)</li>
+<li>Speed up <code><a href="../reference/pointsinside.html">pointsinside()</a></code> by checking if inside bounding box of surface mesh (progress on <a href='https://github.com/natverse/nat/issues/353'>#353</a>)</li>
+<li>Teach <code><a href="../reference/read.neurons.html">read.neurons()</a></code> to read remote zip file (<a href='https://github.com/natverse/nat/issues/381'>#381</a>)</li>
 <li>Fix <code><a href="../reference/reglist.html">invert_reglist()</a></code> for mix of swapped/unswapped regs</li>
-<li>Fix bug in <code><a href="../reference/im3d-io.html">write.im3d()</a></code>/<code><a href="../reference/write.nrrd.html">write.nrrd()</a></code> for raw detached nrrd (<a href='https://github.com/jefferis/nat/issues/384'>#384</a>)</li>
+<li>Fix bug in <code><a href="../reference/im3d-io.html">write.im3d()</a></code>/<code><a href="../reference/write.nrrd.html">write.nrrd()</a></code> for raw detached nrrd (<a href='https://github.com/natverse/nat/issues/384'>#384</a>)</li>
 <li>Export <code><a href="../reference/is.im3d.html">is.im3d()</a></code>
 </li>
 </ul>
@@ -184,9 +190,9 @@
 <a href="#nat-1-8-12" class="anchor"></a>nat 1.8.12<small> Unreleased </small>
 </h1>
 <ul>
-<li>Speed up (2-3x) summary.neuron(list) by faster calculation of total cable length. Note that this may cause some changes in the reported cable length because all cable is now included (as it should always have been). (<a href='https://github.com/jefferis/nat/issues/361'>#361</a>)</li>
-<li>fix bug: dotprops do not get resampled labels bug (<a href='https://github.com/jefferis/nat/issues/360'>#360</a>)</li>
-<li>Add nview3d function to set anatomical viewpoints (<a href='https://github.com/jefferis/nat/issues/359'>#359</a>)</li>
+<li>Speed up (2-3x) summary.neuron(list) by faster calculation of total cable length. Note that this may cause some changes in the reported cable length because all cable is now included (as it should always have been). (<a href='https://github.com/natverse/nat/issues/361'>#361</a>)</li>
+<li>fix bug: dotprops do not get resampled labels bug (<a href='https://github.com/natverse/nat/issues/360'>#360</a>)</li>
+<li>Add nview3d function to set anatomical viewpoints (<a href='https://github.com/natverse/nat/issues/359'>#359</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-11" class="section level1">
@@ -195,9 +201,9 @@
 </h1>
 <p>Fixes</p>
 <ul>
-<li>pointsinside fails for points &gt;1e5 from mesh (<a href='https://github.com/jefferis/nat/issues/354'>#354</a>)</li>
-<li>as.neuron should work for an igraph made from an ngraph (<a href='https://github.com/jefferis/nat/issues/356'>#356</a>) this is helpful if you e.g. delete nodes/edges from an ngraph object</li>
-<li>breaking change with testthat v2 <a href='https://github.com/jefferis/nat/issues/355'>#355</a></li>
+<li>pointsinside fails for points &gt;1e5 from mesh (<a href='https://github.com/natverse/nat/issues/354'>#354</a>)</li>
+<li>as.neuron should work for an igraph made from an ngraph (<a href='https://github.com/natverse/nat/issues/356'>#356</a>) this is helpful if you e.g. delete nodes/edges from an ngraph object</li>
+<li>breaking change with testthat v2 <a href='https://github.com/natverse/nat/issues/355'>#355</a></li>
 </ul>
 </div>
     <div id="nat-1-8-10" class="section level1">
@@ -205,13 +211,13 @@
 <a href="#nat-1-8-10" class="anchor"></a>nat 1.8.10<small> Unreleased </small>
 </h1>
 <ul>
-<li>pointsinside now works with alpha shape (ashape3d) objects directly (<a href='https://github.com/jefferis/nat/issues/350'>#350</a>)</li>
+<li>pointsinside now works with alpha shape (ashape3d) objects directly (<a href='https://github.com/natverse/nat/issues/350'>#350</a>)</li>
 <li>On windows add cygwin binary directory to path if not present (fixes errors with missing cygwin DLLs)</li>
 <li>workaround for some functions (eg those using CMTK registration folders) that were affected by file.exists(“/some/real/registration.list/”) returning FALSE on Windows</li>
 <li>Fix cmtk.reformatx under Cygwin - output NRRD file path (but not other paths) must be munged for reformatx - not sure why this isn’t handled internally.</li>
-<li>Fix as.mesh3d.ashape3d messing up the order of triangle vertices which was giving problems with pointsinside (<a href='https://github.com/jefferis/nat/issues/349'>#349</a>)</li>
-<li>Fix pointsinside to return TRUE for vertices defining mesh (with distance=0) (<a href='https://github.com/jefferis/nat/issues/348'>#348</a>)</li>
-<li>Switch pointsinside to use Rvcg::vcgClostKD, thereby fixing some cases where points were incorrectly reported to be inside a surface. (<a href='https://github.com/jefferis/nat/issues/352'>#352</a>)</li>
+<li>Fix as.mesh3d.ashape3d messing up the order of triangle vertices which was giving problems with pointsinside (<a href='https://github.com/natverse/nat/issues/349'>#349</a>)</li>
+<li>Fix pointsinside to return TRUE for vertices defining mesh (with distance=0) (<a href='https://github.com/natverse/nat/issues/348'>#348</a>)</li>
+<li>Switch pointsinside to use Rvcg::vcgClostKD, thereby fixing some cases where points were incorrectly reported to be inside a surface. (<a href='https://github.com/natverse/nat/issues/352'>#352</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-9" class="section level1">
@@ -219,9 +225,9 @@
 <a href="#nat-1-8-9" class="anchor"></a>nat 1.8.9<small> 2017-05-08 </small>
 </h1>
 <ul>
-<li>fix reading of neurons when origin is not an endpoint (<a href='https://github.com/jefferis/nat/issues/342'>#342</a>) nb this bug was introduced in 1.8.8</li>
-<li>fix edge case for is.neuron when applied to tibbles (<a href='https://github.com/jefferis/nat/issues/338'>#338</a>)</li>
-<li>add PlotSubTrees option for plot.neuron (<a href='https://github.com/jefferis/nat/issues/339'>#339</a>) thanks to Zhihao Zheng</li>
+<li>fix reading of neurons when origin is not an endpoint (<a href='https://github.com/natverse/nat/issues/342'>#342</a>) nb this bug was introduced in 1.8.8</li>
+<li>fix edge case for is.neuron when applied to tibbles (<a href='https://github.com/natverse/nat/issues/338'>#338</a>)</li>
+<li>add PlotSubTrees option for plot.neuron (<a href='https://github.com/natverse/nat/issues/339'>#339</a>) thanks to Zhihao Zheng</li>
 </ul>
 </div>
     <div id="nat-1-8-8" class="section level1">
@@ -229,19 +235,19 @@
 <a href="#nat-1-8-8" class="anchor"></a>nat 1.8.8<small> Unreleased </small>
 </h1>
 <ul>
-<li>add xyzmatrix&lt;-.neuronlist so that we can replace the vertices of a set of objects in one go (<a href='https://github.com/jefferis/nat/issues/328'>#328</a>)</li>
-<li>add as.mesh3d.ashape3d thereby adding support for 3D alpha surfaces generated by the alphashape3d package (<a href='https://github.com/jefferis/nat/issues/337'>#337</a>)</li>
-<li>add as.hxsurf to convert surfaces (<a href='https://github.com/jefferis/nat/issues/332'>#332</a>)</li>
-<li>add nvertices as generic method to find the number of vertices in an object (<a href='https://github.com/jefferis/nat/issues/329'>#329</a>)</li>
-<li>add plot3d.cmtkreg to visualise domain of CMTK registration (<a href='https://github.com/jefferis/nat/issues/333'>#333</a>)</li>
-<li>speed up resample function (and seglist2swc) (<a href='https://github.com/jefferis/nat/issues/336'>#336</a>)</li>
-<li>add an option to override default progress bar behaviour for nlapply (and many other functions that use it) (<a href='https://github.com/jefferis/nat/issues/322'>#322</a>)</li>
-<li>make plot3d more forgiving of colour specification (<a href='https://github.com/jefferis/nat/issues/331'>#331</a>)</li>
-<li>fix overwrite=T option for landmarks files (<a href='https://github.com/jefferis/nat/issues/319'>#319</a>)</li>
-<li>fix prune_edges for paths with opposing edge directions (<a href='https://github.com/jefferis/nat/issues/320'>#320</a>)</li>
-<li>make read.amiramesh cope with different NA values (<a href='https://github.com/jefferis/nat/issues/324'>#324</a>)</li>
-<li>fix crashing bug in read.neuron.hxlineset for malformed files (<a href='https://github.com/jefferis/nat/issues/325'>#325</a>)</li>
-<li>only warn if xform.neuronlist fails to transform soma positions (<a href='https://github.com/jefferis/nat/issues/326'>#326</a>)</li>
+<li>add xyzmatrix&lt;-.neuronlist so that we can replace the vertices of a set of objects in one go (<a href='https://github.com/natverse/nat/issues/328'>#328</a>)</li>
+<li>add as.mesh3d.ashape3d thereby adding support for 3D alpha surfaces generated by the alphashape3d package (<a href='https://github.com/natverse/nat/issues/337'>#337</a>)</li>
+<li>add as.hxsurf to convert surfaces (<a href='https://github.com/natverse/nat/issues/332'>#332</a>)</li>
+<li>add nvertices as generic method to find the number of vertices in an object (<a href='https://github.com/natverse/nat/issues/329'>#329</a>)</li>
+<li>add plot3d.cmtkreg to visualise domain of CMTK registration (<a href='https://github.com/natverse/nat/issues/333'>#333</a>)</li>
+<li>speed up resample function (and seglist2swc) (<a href='https://github.com/natverse/nat/issues/336'>#336</a>)</li>
+<li>add an option to override default progress bar behaviour for nlapply (and many other functions that use it) (<a href='https://github.com/natverse/nat/issues/322'>#322</a>)</li>
+<li>make plot3d more forgiving of colour specification (<a href='https://github.com/natverse/nat/issues/331'>#331</a>)</li>
+<li>fix overwrite=T option for landmarks files (<a href='https://github.com/natverse/nat/issues/319'>#319</a>)</li>
+<li>fix prune_edges for paths with opposing edge directions (<a href='https://github.com/natverse/nat/issues/320'>#320</a>)</li>
+<li>make read.amiramesh cope with different NA values (<a href='https://github.com/natverse/nat/issues/324'>#324</a>)</li>
+<li>fix crashing bug in read.neuron.hxlineset for malformed files (<a href='https://github.com/natverse/nat/issues/325'>#325</a>)</li>
+<li>only warn if xform.neuronlist fails to transform soma positions (<a href='https://github.com/natverse/nat/issues/326'>#326</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-7" class="section level1">
@@ -250,10 +256,10 @@
 </h1>
 <p>This release includes some bug fixes and significantly improved online package documentation visible at <a href="http://jefferis.github.io/nat/" class="uri">http://jefferis.github.io/nat/</a> including two vignettes.</p>
 <ul>
-<li>Teach xform and friends to transform soma positions (<a href='https://github.com/jefferis/nat/issues/206'>#206</a>)</li>
-<li>Copy attributes (including templatebrains) of neuronlists when subsetting (<a href='https://github.com/jefferis/nat/issues/310'>#310</a>)</li>
-<li>Fix error in read.amiramesh for RLE encoded files. (<a href='https://github.com/jefferis/nat/issues/317'>#317</a>) (reported by K. Hornik)</li>
-<li>replace nat::trim with base::trimws (<a href='https://github.com/jefferis/nat/issues/313'>#313</a>)</li>
+<li>Teach xform and friends to transform soma positions (<a href='https://github.com/natverse/nat/issues/206'>#206</a>)</li>
+<li>Copy attributes (including templatebrains) of neuronlists when subsetting (<a href='https://github.com/natverse/nat/issues/310'>#310</a>)</li>
+<li>Fix error in read.amiramesh for RLE encoded files. (<a href='https://github.com/natverse/nat/issues/317'>#317</a>) (reported by K. Hornik)</li>
+<li>replace nat::trim with base::trimws (<a href='https://github.com/natverse/nat/issues/313'>#313</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-6" class="section level1">
@@ -261,9 +267,9 @@
 <a href="#nat-1-8-6" class="anchor"></a>nat 1.8.6<small> Unreleased </small>
 </h1>
 <ul>
-<li>Add xform.data.frame method (<a href='https://github.com/jefferis/nat/issues/309'>#309</a>)</li>
-<li>Add invert_reglist function (<a href='https://github.com/jefferis/nat/issues/308'>#308</a>)</li>
-<li>Fix bug in imslice storing position of new singleton dim (<a href='https://github.com/jefferis/nat/issues/306'>#306</a>)</li>
+<li>Add xform.data.frame method (<a href='https://github.com/natverse/nat/issues/309'>#309</a>)</li>
+<li>Add invert_reglist function (<a href='https://github.com/natverse/nat/issues/308'>#308</a>)</li>
+<li>Fix bug in imslice storing position of new singleton dim (<a href='https://github.com/natverse/nat/issues/306'>#306</a>)</li>
 <li>Fix namespace issues for smooth_neuron</li>
 </ul>
 </div>
@@ -273,12 +279,12 @@
 </h1>
 <p>The main feature of this release is improved support for nat+CMTK on Windows.</p>
 <ul>
-<li>teach voxdims.character to get voxel dimensions straight from image file on disk enhancement (<a href='https://github.com/jefferis/nat/issues/303'>#303</a>)</li>
-<li>teach coord2ind to accept nat.templatebrains objects for imdims (<a href='https://github.com/jefferis/nat/issues/302'>#302</a>)</li>
-<li>add simple smooth_neuron function (<a href='https://github.com/jefferis/nat/issues/300'>#300</a>)</li>
-<li>fix bug reading amira surfaces when Color precedes Id (<a href='https://github.com/jefferis/nat/issues/305'>#305</a>)</li>
-<li>cmtk.reformatx needs to use system2 (<a href='https://github.com/jefferis/nat/issues/301'>#301</a>)</li>
-<li>Don’t use shell features on Windows (<a href='https://github.com/jefferis/nat/issues/295'>#295</a>)</li>
+<li>teach voxdims.character to get voxel dimensions straight from image file on disk enhancement (<a href='https://github.com/natverse/nat/issues/303'>#303</a>)</li>
+<li>teach coord2ind to accept nat.templatebrains objects for imdims (<a href='https://github.com/natverse/nat/issues/302'>#302</a>)</li>
+<li>add simple smooth_neuron function (<a href='https://github.com/natverse/nat/issues/300'>#300</a>)</li>
+<li>fix bug reading amira surfaces when Color precedes Id (<a href='https://github.com/natverse/nat/issues/305'>#305</a>)</li>
+<li>cmtk.reformatx needs to use system2 (<a href='https://github.com/natverse/nat/issues/301'>#301</a>)</li>
+<li>Don’t use shell features on Windows (<a href='https://github.com/natverse/nat/issues/295'>#295</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-4" class="section level1">
@@ -286,12 +292,12 @@
 <a href="#nat-1-8-4" class="anchor"></a>nat 1.8.4<small> 2016-07-18 </small>
 </h1>
 <ul>
-<li>fix build failures with testthat &gt;=0.12 (<a href='https://github.com/jefferis/nat/issues/293'>#293</a>)</li>
-<li>ensure that nat still works with igraph &lt;1.0 (<a href='https://github.com/jefferis/nat/issues/298'>#298</a>)</li>
-<li>fix read.hxsurf failure when a region is not listed in the Parameters section (<a href='https://github.com/jefferis/nat/issues/291'>#291</a>)</li>
-<li>Protect find.neuron from trying to filter with a neuronlist (<a href='https://github.com/jefferis/nat/issues/299'>#299</a>)</li>
-<li>Fix simplification of reglist containing one cmtkreg (<a href='https://github.com/jefferis/nat/issues/297'>#297</a>)</li>
-<li>Don’t lose swap attribute when &gt;1 cmtk registrations in reglist (<a href='https://github.com/jefferis/nat/issues/296'>#296</a>)</li>
+<li>fix build failures with testthat &gt;=0.12 (<a href='https://github.com/natverse/nat/issues/293'>#293</a>)</li>
+<li>ensure that nat still works with igraph &lt;1.0 (<a href='https://github.com/natverse/nat/issues/298'>#298</a>)</li>
+<li>fix read.hxsurf failure when a region is not listed in the Parameters section (<a href='https://github.com/natverse/nat/issues/291'>#291</a>)</li>
+<li>Protect find.neuron from trying to filter with a neuronlist (<a href='https://github.com/natverse/nat/issues/299'>#299</a>)</li>
+<li>Fix simplification of reglist containing one cmtkreg (<a href='https://github.com/natverse/nat/issues/297'>#297</a>)</li>
+<li>Don’t lose swap attribute when &gt;1 cmtk registrations in reglist (<a href='https://github.com/natverse/nat/issues/296'>#296</a>)</li>
 <li>Documentation improvements for neurons and file formats</li>
 </ul>
 </div>
@@ -300,18 +306,18 @@
 <a href="#nat-1-8-3" class="anchor"></a>nat 1.8.3<small> Unreleased </small>
 </h1>
 <ul>
-<li>nat now handles compound registrations via reglist objects (<a href='https://github.com/jefferis/nat/issues/286'>#286</a>). These can contain homogeneous affine, CMTK registrations (in disk or in memory) and R functions (which can be used to wrap arbitrary registration types not directly supported by nat). NB xformimage.reglist will currently only work for CMTK compatible registrations.</li>
-<li>add mask(.im3d) function to zero out parts of an image (<a href='https://github.com/jefferis/nat/issues/285'>#285</a>) Looks after im3d attributes and material name to integer pixel level mapping.</li>
-<li>add read.ngraph.swc which can be used to read even malformed SWC files (such as those containing cycles) (<a href='https://github.com/jefferis/nat/issues/282'>#282</a>). This is exposed by giving read.neuron an argument class, which can be set to ‘ngraph’ instead of ‘neuron’. Inspired by <a href="https://github.com/BigNeuron/BigNeuron-Wiki/wiki/BigNeuron-Imperial-College-London-Hackathon-Discussion-Notes" class="uri">https://github.com/BigNeuron/BigNeuron-Wiki/wiki/BigNeuron-Imperial-College-London-Hackathon-Discussion-Notes</a>
+<li>nat now handles compound registrations via reglist objects (<a href='https://github.com/natverse/nat/issues/286'>#286</a>). These can contain homogeneous affine, CMTK registrations (in disk or in memory) and R functions (which can be used to wrap arbitrary registration types not directly supported by nat). NB xformimage.reglist will currently only work for CMTK compatible registrations.</li>
+<li>add mask(.im3d) function to zero out parts of an image (<a href='https://github.com/natverse/nat/issues/285'>#285</a>) Looks after im3d attributes and material name to integer pixel level mapping.</li>
+<li>add read.ngraph.swc which can be used to read even malformed SWC files (such as those containing cycles) (<a href='https://github.com/natverse/nat/issues/282'>#282</a>). This is exposed by giving read.neuron an argument class, which can be set to ‘ngraph’ instead of ‘neuron’. Inspired by <a href="https://github.com/BigNeuron/BigNeuron-Wiki/wiki/BigNeuron-Imperial-College-London-Hackathon-Discussion-Notes" class="uri">https://github.com/BigNeuron/BigNeuron-Wiki/wiki/BigNeuron-Imperial-College-London-Hackathon-Discussion-Notes</a>
 </li>
-<li>add prune_edges to delete by specifying neuron edges rather than vertices (<a href='https://github.com/jefferis/nat/issues/280'>#280</a>)</li>
-<li>Give give spine an invert option (<a href='https://github.com/jefferis/nat/issues/279'>#279</a>) using prune_edges</li>
-<li>Teach spine to return point ids (<a href='https://github.com/jefferis/nat/issues/278'>#278</a>)</li>
-<li>fix bug in pointsinside for distant points (<a href='https://github.com/jefferis/nat/issues/290'>#290</a>)</li>
-<li>fix subsetting neuronlists with a single column data.frame drops column name (<a href='https://github.com/jefferis/nat/issues/276'>#276</a>)</li>
-<li>Fix invert option of subset/prune_vertices returns an error with igraph::dfs points (<a href='https://github.com/jefferis/nat/issues/288'>#288</a>)</li>
+<li>add prune_edges to delete by specifying neuron edges rather than vertices (<a href='https://github.com/natverse/nat/issues/280'>#280</a>)</li>
+<li>Give give spine an invert option (<a href='https://github.com/natverse/nat/issues/279'>#279</a>) using prune_edges</li>
+<li>Teach spine to return point ids (<a href='https://github.com/natverse/nat/issues/278'>#278</a>)</li>
+<li>fix bug in pointsinside for distant points (<a href='https://github.com/natverse/nat/issues/290'>#290</a>)</li>
+<li>fix subsetting neuronlists with a single column data.frame drops column name (<a href='https://github.com/natverse/nat/issues/276'>#276</a>)</li>
+<li>Fix invert option of subset/prune_vertices returns an error with igraph::dfs points (<a href='https://github.com/natverse/nat/issues/288'>#288</a>)</li>
 <li>Fix fileformats(, rval=‘info’) to return a well-formatted data.frame</li>
-<li>The idiom neuronlist[,] will never drop columns (since it is a useful shortcut for as.data.frame(neuronlist)) (<a href='https://github.com/jefferis/nat/issues/277'>#277</a>)</li>
+<li>The idiom neuronlist[,] will never drop columns (since it is a useful shortcut for as.data.frame(neuronlist)) (<a href='https://github.com/natverse/nat/issues/277'>#277</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-2" class="section level1">
@@ -319,7 +325,7 @@
 <a href="#nat-1-8-2" class="anchor"></a>nat 1.8.2<small> Unreleased </small>
 </h1>
 <ul>
-<li>roll back rgl NULL mode changes from 1.8.0 in favour of less invasive approach of marking the majority of rgl based plotting examples as donttest (<a href='https://github.com/jefferis/nat/issues/274'>#274</a>)</li>
+<li>roll back rgl NULL mode changes from 1.8.0 in favour of less invasive approach of marking the majority of rgl based plotting examples as donttest (<a href='https://github.com/natverse/nat/issues/274'>#274</a>)</li>
 </ul>
 </div>
     <div id="nat-1-8-1" class="section level1">
@@ -336,14 +342,14 @@
 </h1>
 <p>This is tagged as a major release because of a change in behaviour that (by default) suppresses interactive rgl windows when running in batch (non-interactive) mode. See ?nat “rgl Package” section for details.</p>
 <ul>
-<li>nat will only activate an rgl display in interactive mode, otherwise defaulting to rgl’s NULL mode display. This should help run nat in batch mode situations including knitr runs, the CRAN build server etc. (<a href='https://github.com/jefferis/nat/issues/272'>#272</a>)</li>
-<li>Add summary.neuron(list) functions to calculate tree statistics such as number of nodes and cable length for neurons/neuronlists (<a href='https://github.com/jefferis/nat/issues/269'>#269</a>)</li>
-<li>Automate progress bar in nlapply - this will always show in interactive mode when there are more than 10 neurons being processed. (<a href='https://github.com/jefferis/nat/issues/271'>#271</a>)</li>
-<li>Fix bug in c.neuronlist when combining more than 2 neuronlists (<a href='https://github.com/jefferis/nat/issues/270'>#270</a>)</li>
-<li>Fix bug in read.neuronlistfh on Windows (<a href='https://github.com/jefferis/nat/issues/268'>#268</a>)</li>
-<li>Fix bug when constructing an ngraph with a single node (<a href='https://github.com/jefferis/nat/issues/267'>#267</a>)</li>
-<li>Fix bug in <code>[&lt;-.neuronlist</code> when assigning a whole data.frame using (<a href='https://github.com/jefferis/nat/issues/256'>#256</a>)</li>
-<li>Fix bug in bounding box with input = “bounds” (<a href='https://github.com/jefferis/nat/issues/273'>#273</a>)</li>
+<li>nat will only activate an rgl display in interactive mode, otherwise defaulting to rgl’s NULL mode display. This should help run nat in batch mode situations including knitr runs, the CRAN build server etc. (<a href='https://github.com/natverse/nat/issues/272'>#272</a>)</li>
+<li>Add summary.neuron(list) functions to calculate tree statistics such as number of nodes and cable length for neurons/neuronlists (<a href='https://github.com/natverse/nat/issues/269'>#269</a>)</li>
+<li>Automate progress bar in nlapply - this will always show in interactive mode when there are more than 10 neurons being processed. (<a href='https://github.com/natverse/nat/issues/271'>#271</a>)</li>
+<li>Fix bug in c.neuronlist when combining more than 2 neuronlists (<a href='https://github.com/natverse/nat/issues/270'>#270</a>)</li>
+<li>Fix bug in read.neuronlistfh on Windows (<a href='https://github.com/natverse/nat/issues/268'>#268</a>)</li>
+<li>Fix bug when constructing an ngraph with a single node (<a href='https://github.com/natverse/nat/issues/267'>#267</a>)</li>
+<li>Fix bug in <code>[&lt;-.neuronlist</code> when assigning a whole data.frame using (<a href='https://github.com/natverse/nat/issues/256'>#256</a>)</li>
+<li>Fix bug in bounding box with input = “bounds” (<a href='https://github.com/natverse/nat/issues/273'>#273</a>)</li>
 <li>Documentation improvements (especiall package overview - see ?nat)</li>
 </ul>
 </div>
@@ -352,13 +358,13 @@
 <a href="#nat-1-7-2" class="anchor"></a>nat 1.7.2<small> Unreleased </small>
 </h1>
 <ul>
-<li>new function subset.neuron can keep/remove individual vertices from a neuron based on internal variables such as position, width, vertex number etc while still producing a valid neuron with an appropriate graph structure (<a href='https://github.com/jefferis/nat/issues/261'>#261</a>)</li>
+<li>new function subset.neuron can keep/remove individual vertices from a neuron based on internal variables such as position, width, vertex number etc while still producing a valid neuron with an appropriate graph structure (<a href='https://github.com/natverse/nat/issues/261'>#261</a>)</li>
 <li>this depends on a new low level function prune_vertices that can remove specified vertices</li>
 <li>this has also enabled the prune.neuron method to be defined for the first time enabling pruning by spatial proximity ()</li>
-<li>teach mirror to work with image data (<a href='https://github.com/jefferis/nat/issues/265'>#265</a>) and enable better handling of the mirrorAxisSize by allowing this to be supplied as a bounding box (<a href='https://github.com/jefferis/nat/issues/254'>#254</a>)</li>
-<li>teach as.im3d.matrix to use an im3d object to specify the desired space (<a href='https://github.com/jefferis/nat/issues/263'>#263</a>) This enables for example a set or tracings to be turned into volume data that exactly matches a specific template brain.</li>
-<li>fix bug: seglengths fails for neurons with multiple trees bug (<a href='https://github.com/jefferis/nat/issues/257'>#257</a>)</li>
-<li>fix bug: xformpoint.cmtkreg fails for in memory registration lists (<a href='https://github.com/jefferis/nat/issues/259'>#259</a>)</li>
+<li>teach mirror to work with image data (<a href='https://github.com/natverse/nat/issues/265'>#265</a>) and enable better handling of the mirrorAxisSize by allowing this to be supplied as a bounding box (<a href='https://github.com/natverse/nat/issues/254'>#254</a>)</li>
+<li>teach as.im3d.matrix to use an im3d object to specify the desired space (<a href='https://github.com/natverse/nat/issues/263'>#263</a>) This enables for example a set or tracings to be turned into volume data that exactly matches a specific template brain.</li>
+<li>fix bug: seglengths fails for neurons with multiple trees bug (<a href='https://github.com/natverse/nat/issues/257'>#257</a>)</li>
+<li>fix bug: xformpoint.cmtkreg fails for in memory registration lists (<a href='https://github.com/natverse/nat/issues/259'>#259</a>)</li>
 </ul>
 </div>
     <div id="nat-1-7-1" class="section level1">
@@ -377,28 +383,28 @@
 <a href="#nat-1-7-0" class="anchor"></a>nat 1.7.0<small> 2015-07-01 </small>
 </h1>
 <ul>
-<li>implement extraction/replacement of the data.frame attached to a neuronlist using the [ operator (<a href='https://github.com/jefferis/nat/issues/217'>#217</a>)</li>
-<li>fix xform of image data (<a href='https://github.com/jefferis/nat/issues/143'>#143</a>, <a href='https://github.com/jefferis/nat/issues/199'>#199</a>)</li>
-<li>implement handling of inverted (swapped i.e. reference to sample) registrations in xform(image) (<a href='https://github.com/jefferis/nat/issues/199'>#199</a>)</li>
+<li>implement extraction/replacement of the data.frame attached to a neuronlist using the [ operator (<a href='https://github.com/natverse/nat/issues/217'>#217</a>)</li>
+<li>fix xform of image data (<a href='https://github.com/natverse/nat/issues/143'>#143</a>, <a href='https://github.com/natverse/nat/issues/199'>#199</a>)</li>
+<li>implement handling of inverted (swapped i.e. reference to sample) registrations in xform(image) (<a href='https://github.com/natverse/nat/issues/199'>#199</a>)</li>
 <li>normalise handling of registration sequences and inversion in xform/image/points (all 3 expect reg to be in sample to ref order and for any individual registration to be marked with swap=T if it is ref-&gt;sample)</li>
-<li>read.nrrd no longer returns an im3d (use read.im3d) (<a href='https://github.com/jefferis/nat/issues/238'>#238</a>)</li>
-<li>teach write.nrrd to handle more diverse inputs (including <a href='https://github.com/jefferis/nat/issues/242'>#242</a>)</li>
-<li>add reading of detached nrrds (<a href='https://github.com/jefferis/nat/issues/236'>#236</a>, <a href='https://github.com/jefferis/nat/issues/237'>#237</a>)</li>
+<li>read.nrrd no longer returns an im3d (use read.im3d) (<a href='https://github.com/natverse/nat/issues/238'>#238</a>)</li>
+<li>teach write.nrrd to handle more diverse inputs (including <a href='https://github.com/natverse/nat/issues/242'>#242</a>)</li>
+<li>add reading of detached nrrds (<a href='https://github.com/natverse/nat/issues/236'>#236</a>, <a href='https://github.com/natverse/nat/issues/237'>#237</a>)</li>
 <li>add ability to write detached nrrds</li>
-<li>add ability to make a detached nrrd from a compatible amira file on disk (<a href='https://github.com/jefferis/nat/issues/243'>#243</a>)</li>
+<li>add ability to make a detached nrrd from a compatible amira file on disk (<a href='https://github.com/natverse/nat/issues/243'>#243</a>)</li>
 <li>new function is.im3d</li>
-<li>fix cmtk.targetvolume for templatebrain objects (<a href='https://github.com/jefferis/nat/issues/241'>#241</a>)</li>
-<li>fix cmtk.targetvolume for –target-grid specification (<a href='https://github.com/jefferis/nat/issues/240'>#240</a>)</li>
-<li>fix names for [.neuronlistfh with null df (<a href='https://github.com/jefferis/nat/issues/250'>#250</a>)</li>
+<li>fix cmtk.targetvolume for templatebrain objects (<a href='https://github.com/natverse/nat/issues/241'>#241</a>)</li>
+<li>fix cmtk.targetvolume for –target-grid specification (<a href='https://github.com/natverse/nat/issues/240'>#240</a>)</li>
+<li>fix names for [.neuronlistfh with null df (<a href='https://github.com/natverse/nat/issues/250'>#250</a>)</li>
 <li>plot.neuron can cope with some NA coordinates</li>
-<li>teach plot.neuron(list) to cope with NA points (<a href='https://github.com/jefferis/nat/issues/247'>#247</a>)</li>
-<li>boundingbox has an na.rm argument (<a href='https://github.com/jefferis/nat/issues/246'>#246</a>)</li>
-<li>teach droplevels.neuronlist to use extra arg (<a href='https://github.com/jefferis/nat/issues/249'>#249</a>)</li>
-<li>teach plot.neuron to plot soma (<a href='https://github.com/jefferis/nat/issues/245'>#245</a>)</li>
-<li>fix cmtk.call for numeric args (<a href='https://github.com/jefferis/nat/issues/235'>#235</a>)</li>
+<li>teach plot.neuron(list) to cope with NA points (<a href='https://github.com/natverse/nat/issues/247'>#247</a>)</li>
+<li>boundingbox has an na.rm argument (<a href='https://github.com/natverse/nat/issues/246'>#246</a>)</li>
+<li>teach droplevels.neuronlist to use extra arg (<a href='https://github.com/natverse/nat/issues/249'>#249</a>)</li>
+<li>teach plot.neuron to plot soma (<a href='https://github.com/natverse/nat/issues/245'>#245</a>)</li>
+<li>fix cmtk.call for numeric args (<a href='https://github.com/natverse/nat/issues/235'>#235</a>)</li>
 <li>set read.hxsurf RegionChoice=“both” by default</li>
-<li>document return values of cmtk.statistics in more detail (<a href='https://github.com/jefferis/nat/issues/252'>#252</a>)</li>
-<li>support for igraph 1.0 (<a href='https://github.com/jefferis/nat/issues/248'>#248</a>)</li>
+<li>document return values of cmtk.statistics in more detail (<a href='https://github.com/natverse/nat/issues/252'>#252</a>)</li>
+<li>support for igraph 1.0 (<a href='https://github.com/natverse/nat/issues/248'>#248</a>)</li>
 </ul>
 </div>
     <div id="nat-1-6-6" class="section level1">
@@ -407,8 +413,8 @@
 </h1>
 <ul>
 <li>Fixes description capitalisation/quoting for CRAN</li>
-<li>Adds ability to write dotprops neuron objects to SWC format (<a href='https://github.com/jefferis/nat/issues/233'>#233</a>)</li>
-<li>fixes bug in xyzmatrix.neuron for single point neurons (<a href='https://github.com/jefferis/nat/issues/234'>#234</a>)</li>
+<li>Adds ability to write dotprops neuron objects to SWC format (<a href='https://github.com/natverse/nat/issues/233'>#233</a>)</li>
+<li>fixes bug in xyzmatrix.neuron for single point neurons (<a href='https://github.com/natverse/nat/issues/234'>#234</a>)</li>
 <li>likewise for xyzmatrix.default for 1-row &gt;3-col matrices</li>
 </ul>
 </div>
@@ -423,16 +429,16 @@
 <li>add help topics for generics subset and plot3d so that e.g. ?subset will give the option to see our documentation as well as base docs.</li>
 <li>subset.hxsurf drops unused vertices by default</li>
 <li>add sample surface object of mushroom body</li>
-<li>teach cmtk.statistics to handle imagetype ‘label’ (<a href='https://github.com/jefferis/nat/issues/221'>#221</a>)</li>
-<li>plot.neuronlist sets axes based on boundingbox of all plotted neurons, not just the first neuron (<a href='https://github.com/jefferis/nat/issues/223'>#223</a>)</li>
-<li>plot.neuron(,AxisDirections) argument is re-implemented (<a href='https://github.com/jefferis/nat/issues/224'>#224</a>)</li>
-<li>don’t warn when read.neuronlistfh changes the directory location on disk (<a href='https://github.com/jefferis/nat/issues/157'>#157</a>)</li>
+<li>teach cmtk.statistics to handle imagetype ‘label’ (<a href='https://github.com/natverse/nat/issues/221'>#221</a>)</li>
+<li>plot.neuronlist sets axes based on boundingbox of all plotted neurons, not just the first neuron (<a href='https://github.com/natverse/nat/issues/223'>#223</a>)</li>
+<li>plot.neuron(,AxisDirections) argument is re-implemented (<a href='https://github.com/natverse/nat/issues/224'>#224</a>)</li>
+<li>don’t warn when read.neuronlistfh changes the directory location on disk (<a href='https://github.com/natverse/nat/issues/157'>#157</a>)</li>
 <li>remove superimposed plots in mirror example (hope this will fix build on MacOS X Snow Leopard)</li>
 <li>teach read.neurons to OmitFailures when reading in a neuronlistfh object.</li>
-<li>fix handling of default colours in plot.neuronlist and plot3d.neuronlist (<a href='https://github.com/jefferis/nat/issues/230'>#230</a>)</li>
+<li>fix handling of default colours in plot.neuronlist and plot3d.neuronlist (<a href='https://github.com/natverse/nat/issues/230'>#230</a>)</li>
 <li>fix plot3d.neuronlist returns one element per neuron</li>
-<li>fix bug in xformpoints.cmtkreg when some points could not be transformed - now give NAs as expected (<a href='https://github.com/jefferis/nat/issues/227'>#227</a>)</li>
-<li>fix bug when xform(na.action=‘drop’) dropped dimensions when only 1 valid point resulted (<a href='https://github.com/jefferis/nat/issues/228'>#228</a>)</li>
+<li>fix bug in xformpoints.cmtkreg when some points could not be transformed - now give NAs as expected (<a href='https://github.com/natverse/nat/issues/227'>#227</a>)</li>
+<li>fix bug when xform(na.action=‘drop’) dropped dimensions when only 1 valid point resulted (<a href='https://github.com/natverse/nat/issues/228'>#228</a>)</li>
 <li>teach xyz.matrix&lt;- to work for bare 3 column matrices (i.e. without colnames)</li>
 <li>fix bug in xformimage where input image was not being passed on when transforming with a matrix.</li>
 <li>read.hxsurf can accept RegionChoices=‘both’ (see ?read.hxsurf)</li>
