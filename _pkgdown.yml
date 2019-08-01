@@ -1,30 +1,52 @@
 navbar:
-  type: default
-  left:
-  - icon: fa-home fa-lg
-    href: index.html
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-    - text: "Introduction to neurons and neuronlists"
-      href: articles/neurons-intro.html
-    - text: "Working with individual neurons as graph structures"
-      href: articles/neurons-as-graph.html
-    - text: "NeuroGeometry: Analysing 3D morphology of neurons"
-      href: articles/NeuroGeometry.html
-  - text: News
-    href: news/index.html
-  - text: Installation
-    href: articles/Installation.html
-  - text: Learn
-    href: index.html#learn
-  - text: Help
-    href: index.html#help
+  structure:
+    left:
+    - home
+    - intro
+    - reference
+    - articles
+    - install
+    - learn
+    - help
+    - news
+    right: 
+    - natverse
+    - github
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+      - text: Introduction to neurons and neuronlists
+        href: articles/neurons-intro.html
+      - text: Working with individual neurons as graph structures
+        href: articles/neurons-as-graph.html
+      - text: 'NeuroGeometry: Analysing 3D morphology of neurons'
+        href: articles/NeuroGeometry.html
+    news:
+      text: Changelog
+      href: news/index.html
+    install:
+      text: Installation
+      href: articles/Installation.html
+    learn:
+      text: Learn
+      href: index.html#learn
+    help:
+      text: Help
+      href: index.html#help
   right:
-  - icon: fa-github fa-lg
-    href: https://github.com/natverse/nat
-
+    natverse:
+      text: natverse
+      href: https://natverse.github.io
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/natverse/nat
 articles:
 - title: All vignettes
   desc: ~
