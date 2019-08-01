@@ -1,9 +1,9 @@
 # nat: NeuroAnatomy Toolbox
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
-[![Release Version](https://img.shields.io/github/release/jefferis/nat.svg)](https://github.com/jefferis/nat/releases/latest) 
+[![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
-[![Build Status](https://img.shields.io/travis/jefferis/nat/master.svg)](https://travis-ci.org/jefferis/nat) 
-[![Coverage Status](https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master)](https://coveralls.io/r/jefferis/nat?branch=master)
+[![Build Status](https://img.shields.io/travis/natverse/nat/master.svg)](https://travis-ci.org/natverse/nat) 
+[![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/nat/reference/)
 
 
@@ -55,7 +55,7 @@ the [devtools](https://cran.r-project.org/package=devtools) package.
 # install devtools if required
 if (!requireNamespace("devtools")) install.packages("devtools")
 # then install nat
-devtools::install_github("jefferis/nat")
+devtools::install_github("natverse/nat")
 
 ```
 ## Learn
@@ -74,7 +74,7 @@ When you're ready to learn more:
 * Check out the thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/). 
   * Most help pages include examples.
 * Try out sample code:
-  - [nat.examples](https://github.com/jefferis/nat.examples) has detailed 
+  - [nat.examples](https://github.com/natverse/nat.examples) has detailed 
     examples for data sets from a range of model organisms and techniques
   - [frulhns](https://github.com/jefferis/frulhns) analysis of sexually dimorphic circuits
   - [NBLAST figures](https://github.com/jefferislab/NBLAST_figures/)
@@ -90,8 +90,8 @@ If you think that you have found a bug:
 
 * Install the development version of nat using devtools (see above) and see if 
   that helps.
-* Check the [github issues](https://github.com/jefferis/nat/issues?q=is%3Aissue) and 
-  - [file a  bug report](https://github.com/jefferis/nat/issues/new) if this seems to be a new problem
+* Check the [github issues](https://github.com/natverse/nat/issues?q=is%3Aissue) and 
+  - [file a  bug report](https://github.com/natverse/nat/issues/new) if this seems to be a new problem
   - comment on an existing bug report 
 
 Thanks for your interest in **nat**!

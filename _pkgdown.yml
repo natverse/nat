@@ -23,7 +23,7 @@ navbar:
     href: index.html#help
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/jefferis/nat
+    href: https://github.com/natverse/nat
 
 articles:
 - title: All vignettes
