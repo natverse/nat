@@ -15,7 +15,7 @@ Neurons can helpfully be treated as graphs (branching trees) in which nodes conn
 define the morphology of the neuron. The **nat** package provides a number of
 built-in functions that allow you to analyse the branching structure of graphs
 
-http://jefferis.github.io/nat/reference/index.html#section-neurons-as-graphs-
+https://natverse.github.io/nat/reference/index.html#section-neurons-as-graphs-
 
 or use aspects of the branching structure to manipulate graphs. Examples of
 such functions include the `strahler_order` function which calculates the 
@@ -118,7 +118,7 @@ plot(sg)
 ## ngraph objects
 
 The **nat** package provides a bridge to a rich cross-platform graph library, 
-**igraph**. We provide a class [`ngraph`](http://jefferis.github.io/nat/reference/ngraph.html)
+**igraph**. We provide a class [`ngraph`](https://natverse.github.io/nat/reference/ngraph.html)
 that provides a thin wrapper for the `igraph` class. This looks after things 
 that we might need to know about a neuron (like the 3D coordinates of each node)
 while still giving access to all of the graph functions in the igraph package.

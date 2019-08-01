@@ -132,7 +132,7 @@ Fixes
 # nat 1.8.7
 
 This release includes some bug fixes and significantly improved online package
-documentation visible at http://jefferis.github.io/nat/ including two vignettes.
+documentation visible at https://natverse.github.io/nat/ including two vignettes.
 
 * Teach xform and friends to transform soma positions (#206)
 * Copy attributes (including templatebrains) of neuronlists when subsetting (#310)

@@ -6,7 +6,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
 [![Build Status](https://img.shields.io/travis/natverse/nat/master.svg)](https://travis-ci.org/natverse/nat) 
 [![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/nat/reference/)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.github.io/nat/reference/)
 <!-- badges: end -->
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
@@ -64,16 +64,16 @@ devtools::install_github("natverse/nat")
 
 To get an idea of what **nat** can do:
 
-* Skim through the Articles listed at http://jefferis.github.io/nat/
+* Skim through the Articles listed at https://natverse.github.io/nat/
 * Take a look at the [R Markdown](http://rmarkdown.rstudio.com/) reports used 
   to generate the [figures for our NBLAST paper](http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/).
 
 When you're ready to learn more:
 
-* Read the [overview package documentation](http://jefferis.github.io/nat/reference/nat-package.html)
+* Read the [overview package documentation](https://natverse.github.io/nat/reference/nat-package.html)
   (`?nat` in R)
-* Read the [Introduction to neurons](http://jefferis.github.io/nat/articles/neurons-intro.html article)
-* Check out the thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/). 
+* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html article)
+* Check out the thematically organised [function reference documentation](https://natverse.github.io/nat/reference/). 
   * Most help pages include examples.
 * Try out sample code:
   - [nat.examples](https://github.com/natverse/nat.examples) has detailed 
@@ -84,7 +84,7 @@ When you're ready to learn more:
 ## Help
 If you want some help using **nat**:
 
-* For installation issues, see the [Installation vignette](http://jefferis.github.io/nat/articles/Installation.html)
+* For installation issues, see the [Installation vignette](https://natverse.github.io/nat/articles/Installation.html)
 * Contact [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
