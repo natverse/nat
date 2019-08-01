@@ -141,7 +141,7 @@
 <a href="#sample-data" class="anchor"></a>Sample Data</h3>
 <p>As an example we’re going to look at a data set of olfactory projection neurons originally published as Supplemental Information to accompany <a href="http://dx.doi.org/10.1016/j.cell.2007.01.040">Jefferis, Potter et al, Cell (2007)</a>. A subset of the original data are distributed as a sample data object with the <strong>nat</strong> package, which we can load like so.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"Cell07PNs"</span>)</a></code></pre></div>
-<p>For more information about these data see <a href="http://jefferis.github.io/nat/reference/Cell07PNs.html">Cell07PNs</a>.</p>
+<p>For more information about these data see <a href="https://natverse.github.io/nat/reference/Cell07PNs.html">Cell07PNs</a>.</p>
 <p>This <code>Cell07PNs</code> object has two classes <code>neuronlist</code> and the base class <code>list</code></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(Cell07PNs)</a></code></pre></div>
 <pre><code>## [1] "neuronlist" "list"</code></pre>
@@ -225,23 +225,17 @@
 <p><img src="neurons-intro_files/figure-html/unnamed-chunk-11-1.png" width="480"></p>
 <p>You can find out what methods are available for a particular class like so:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/methods">methods</a></span>(<span class="dt">class =</span> <span class="st">'neuron'</span>)</a></code></pre></div>
-<pre><code>##  [1] all.equal                     as.neuron                    
-##  [3] as.ngraph                     as.seglist                   
-##  [5] branchpoints                  dotprops                     
-##  [7] endpoints                     intersect_plane              
-##  [9] manually_assign_axon_dendrite ndigest                      
-## [11] nvertices                     Ops                          
-## [13] plot                          plot3d                       
-## [15] potential_synapses            prune_in_volume              
-## [17] prune_online                  prune                        
-## [19] resample                      rootpoints                   
-## [21] scale                         subset                       
-## [23] summary                       write.vtk                    
-## [25] xform                         xyzmatrix                    
-## [27] xyzmatrix&lt;-                  
+<pre><code>##  [1] all.equal          as.neuron          as.ngraph         
+##  [4] as.seglist         branchpoints       dotprops          
+##  [7] endpoints          intersect_plane    ndigest           
+## [10] nvertices          Ops                plot              
+## [13] plot3d             potential_synapses prune             
+## [16] resample           rootpoints         scale             
+## [19] subset             summary            write.vtk         
+## [22] xform              xyzmatrix          xyzmatrix&lt;-       
 ## see '?methods' for accessing help and source code</code></pre>
 <p>You can then find the help page for any method in the console with <code><a href="../reference/plot.neuron.html">?plot.neuron</a></code>. Note that if you write <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">?plot</a></code> you will get the documentation for the basic <code>plot</code> function supplied with R.</p>
-<p>It is also good idea to look at <a href="http://jefferis.github.io/nat/reference/index.html">nat’s function reference page</a> which groups available functions into categories that often reflect the class of object they can work on.</p>
+<p>It is also good idea to look at <a href="https://natverse.github.io/nat/reference/index.html">nat’s function reference page</a> which groups available functions into categories that often reflect the class of object they can work on.</p>
 <p>In R, operators such as <code>*</code> or <code>+</code> are actually special functions with two arguments, so one can add methods for these in the same way. In the following example we use this arithmetic to shift a neuron by a small amount:</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(n1, <span class="dt">col =</span> <span class="st">'black'</span>, <span class="dt">WithNodes =</span> F, <span class="dt">main=</span><span class="st">"Shifting neurons"</span>)</a>
 <a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co"># shift by 3 microns in x,y,z</span></a>
@@ -265,7 +259,7 @@
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="../reference/summary.neuron.html">summary</a></span>(n1.lh)</a></code></pre></div>
 <pre><code>##   root nodes segments branchpoints endpoints cable.length
 ## 1    1   111       27           13        15     156.7654</code></pre>
-<p>See <a href="http://jefferis.github.io/nat/reference/index.html">nat’s function reference page</a> for additional functions for working with neurons.</p>
+<p>See <a href="https://natverse.github.io/nat/reference/index.html">nat’s function reference page</a> for additional functions for working with neurons.</p>
 </div>
 </div>
 <div id="neuronlists" class="section level2">
@@ -396,23 +390,16 @@
 <a href="#working-on-all-the-neurons-in-a-neuronlist" class="anchor"></a>Working on all the neurons in a neuronlist</h3>
 <p>There are quite a few methods defined for the <code>neuronlist</code> class:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/methods">methods</a></span>(<span class="dt">class =</span> <span class="st">"neuronlist"</span>)</a></code></pre></div>
-<pre><code>##  [1] -                             [                            
-##  [3] [&lt;-                           *                            
-##  [5] /                             +                            
-##  [7] as.data.frame                 as.neuronlistfh              
-##  [9] c                             data.frame&lt;-                 
-## [11] dimnames                      dotprops                     
-## [13] droplevels                    head                         
-## [15] intersect                     manually_assign_axon_dendrite
-## [17] mirror                        nvertices                    
-## [19] plot                          plot3d                       
-## [21] potential_synapses            prune_in_volume              
-## [23] prune_online                  prune                        
-## [25] setdiff                       subset                       
-## [27] summary                       tail                         
-## [29] union                         with                         
-## [31] xform                         xyzmatrix                    
-## [33] xyzmatrix&lt;-                  
+<pre><code>##  [1] -                  [                  [&lt;-               
+##  [4] *                  /                  +                 
+##  [7] as.data.frame      as.neuronlistfh    c                 
+## [10] data.frame&lt;-       dimnames           dotprops          
+## [13] droplevels         head               intersect         
+## [16] mirror             nvertices          plot              
+## [19] plot3d             potential_synapses prune             
+## [22] setdiff            subset             summary           
+## [25] tail               union              with              
+## [28] xform              xyzmatrix          xyzmatrix&lt;-       
 ## see '?methods' for accessing help and source code</code></pre>
 <p>For example we can scale the position (and diameter) of all of the neurons in a neuronlist using the <code>*</code> operator:</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="co"># convert from microns to nm</span></a>
@@ -448,7 +435,7 @@
 <div id="d-plots" class="section level3">
 <h3 class="hasAnchor">
 <a href="#d-plots" class="anchor"></a>3D plots</h3>
-<p>So far we have only used 2D plots in this document, but especially for interactive analysis and exploration, it is much more helpful to have 3D plots that can be rotated, zoomed etc. <strong>nat</strong> provides numerous functions for <a href="http://jefferis.github.io/nat/reference/index.html#section--d-plotting-of-objects">3D plots</a> based on the <a href="https://cran.r-project.org/package=rgl">rgl package</a>. It is actually possible to embed fully interactive 3d figures in <a href="http://rmarkdown.rstudio.com/">rmarkdown</a> reports like this one by setting the <a href="https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html">webgl chunk option</a>.</p>
+<p>So far we have only used 2D plots in this document, but especially for interactive analysis and exploration, it is much more helpful to have 3D plots that can be rotated, zoomed etc. <strong>nat</strong> provides numerous functions for <a href="https://natverse.github.io/nat/reference/index.html#section--d-plotting-of-objects">3D plots</a> based on the <a href="https://cran.r-project.org/package=rgl">rgl package</a>. It is actually possible to embed fully interactive 3d figures in <a href="http://rmarkdown.rstudio.com/">rmarkdown</a> reports like this one by setting the <a href="https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html">webgl chunk option</a>.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">clear3d</span>()</a>
 <a class="sourceLine" id="cb56-2" data-line-number="2"><span class="kw"><a href="../reference/plot3d.html">plot3d</a></span>(Cell07PNs[[<span class="dv">1</span>]], <span class="dt">col=</span><span class="st">'red'</span>)</a>
 <a class="sourceLine" id="cb56-3" data-line-number="3"><span class="co"># set a grey background so it's easier to see extent of the webgl canvas</span></a>
@@ -4876,7 +4863,7 @@ You must enable Javascript to view this page properly.
 <div id="learning-more" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learning-more" class="anchor"></a>Learning More</h2>
-<p>We hope this tutorial will provide you with a good foundation for further use of the <strong>nat</strong> and related packages. Please visit the main <a href="http://jefferis.github.io/nat/index.html">nat README</a> for suggestions of resources to learn more and solve problems. You may also find that some time spent reading Hadley Wickham’s <a href="http://adv-r.had.co.nz/">Advanced R</a> is a worthwhile investment. I recommend the first 7 chapters (Introduction to OO field guide) as material that will be helpful for anyone who intends to carry out a significant project using R.</p>
+<p>We hope this tutorial will provide you with a good foundation for further use of the <strong>nat</strong> and related packages. Please visit the main <a href="https://natverse.github.io/nat/index.html">nat README</a> for suggestions of resources to learn more and solve problems. You may also find that some time spent reading Hadley Wickham’s <a href="http://adv-r.had.co.nz/">Advanced R</a> is a worthwhile investment. I recommend the first 7 chapters (Introduction to OO field guide) as material that will be helpful for anyone who intends to carry out a significant project using R.</p>
 </div>
   </div>
 
