@@ -26,7 +26,7 @@ cmtk.targetvolume.im3d<-function(target, ...) {
 #' @rdname cmtk.targetvolume
 #' @examples
 #' \dontrun{
-#' # see https://github.com/jefferislab/nat.flybrains
+#' # see https://github.com/natverse/nat.flybrains
 #' library(nat.flybrains)
 #' cmtk.targetvolume(FCWB)
 #' }

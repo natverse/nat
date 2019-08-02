@@ -11,7 +11,7 @@
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
 single neurons. **nat** is the core package of a wider suite of neuroanatomy 
-tools introduced at http://jefferislab.github.io. **nat** (and its [ancestors](https://github.com/jefferis/AnalysisSuite))
+tools introduced at http://natverse.github.io. **nat** (and its [ancestors](https://github.com/jefferis/AnalysisSuite))
 have been used in a number of papers from our group including:
 
 [![Cell 2007 Cover](http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif "Olfactory Projection Neuron Mapping")](http://dx.doi.org/10.1016/j.cell.2007.01.040)

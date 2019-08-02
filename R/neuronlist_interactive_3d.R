@@ -139,7 +139,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' 
 #' # plot surface model of brain first
 #' # nb depends on package only available on github
-#' devtools::install_github(username = "jefferislab/nat.flybrains")
+#' devtools::install_github(username = "natverse/nat.flybrains")
 #' library(nat.flybrains)
 #' plot3d(FCWB)
 #' # could select e.g. the gamma neurons with unbranched axons
