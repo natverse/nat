@@ -501,7 +501,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #'   These functions would normally be called from \code{read.neuron(s)} rather 
 #'   than used directly.
 #' @section SWC Format: According to 
-#'   \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
+#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
 #' @param ... Additional arguments. \code{read.neuron.swc} passes these to 
@@ -603,7 +603,8 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel'
+#'   neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
+#'   the filename and the ext parameter, then it defaults to 'swc'
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -645,15 +646,27 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     }
   }
   if(is.null(file)){
-    # no file was specified - use the one embedded in neuron
-    file=basename(n$InputFileName)
-    if(is.null(file))
+    #Check if the InputFileName exists first..
+    if(isTRUE(nzchar(n$InputFileName)))
+      file=basename(n$InputFileName)
+    else
       stop("No file specified and neuron does not have an InputFileName")
     # trim off the suffix if ext!=NA
     if(!(length(ext) && is.na(ext)))
       file=tools::file_path_sans_ext(file)
   }
-  fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
+  
+  fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
+  if(inherits(fw, 'try-error')) {
+    if(is.null(format)){
+      format='swc'
+      fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
+      warning('write.neuron: using default format="swc"')
+    } else {
+      # rethrow the error
+      stop(fw)
+    }
+  }
   file=fw$file
   if(!is.null(dir)) file=file.path(dir,basename(file))
   
@@ -710,7 +723,7 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
     df$PointNo=seq_along(df$PointNo)
   }
   writeLines(c("# SWC format file",
-               "# based on specifications at http://research.mssm.edu/cnic/swc.html"),
+               "# based on specifications at http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html"),
              con=file)
   cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)  
   cat("#", colnames(df), "\n", file=file, append=TRUE)
@@ -720,7 +733,7 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
 write.dotprops.swc<-function(x, file, ...) {
   df=dotprops2swc(x, ...)
   writeLines(c("# SWC dotprops format", "# Created by nat::write.dotprops.swc",
-               "# see http://research.mssm.edu/cnic/swc.html"),
+               "# see http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html"),
              con=file)
   cat("#", colnames(df), "\n", file=file, append=TRUE)
   write.table(df, file, col.names=F, row.names=F, append=TRUE)

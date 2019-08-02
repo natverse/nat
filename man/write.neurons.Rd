@@ -13,7 +13,8 @@ write.neurons(nl, dir, format = NULL, subdir = NULL,
 \item{dir}{directory to write neurons, or path to zip archive (see Details).}
 
 \item{format}{Unique abbreviation of one of the registered file formats for
-neurons including 'swc', 'hxlineset', 'hxskel'}
+neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
+the filename and the ext parameter, then it defaults to 'swc'}
 
 \item{subdir}{String naming field in neuron that specifies a subdirectory OR 
 expression to evaluate in the context of neuronlist's df attribute}

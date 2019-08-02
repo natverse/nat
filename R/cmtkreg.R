@@ -127,17 +127,17 @@ cmtkreg.filetype <- function(x) {
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
 #'   \code{\link[rgl]{plot3d}}
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' testdatadir=system.file("tests/testthat/testdata/cmtk", package="nat")
 #' regpath=file.path(testdatadir,'FCWB_JFRC2_01_warp_level-01.list/')
+#' # only run this if file is present (not always installed)
+#' if(file.exists(regpath)){
 #' plot3d(cmtkreg(regpath))
 #' 
 #' # or read registration into memory if you want to work with it
 #' reg=read.cmtkreg(regpath)
-#' # nb calling plot3d.cmtkreg directly (rather than using the generic plot3d) 
-#' # is considered bad style but read.cmtkreg returns a plain list 
-#' # so method dispatch will fail
-#' nat:::plot3d.cmtkreg(reg)
+#' plot3d(reg)
+#' }
 #' }
 #' @importFrom rgl plot3d
 #' @export

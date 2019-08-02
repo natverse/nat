@@ -8,14 +8,14 @@ graph.nodes(x, type = c("root", "end", "branch"),
   original.ids = "name", exclude.isolated = TRUE)
 }
 \arguments{
-\item{x}{An igraph (or \code{\link{ngraph}}) object}
+\item{x}{An \code{\link{ngraph}} or raw \code{\link{igraph}} object}
 
 \item{type}{one of root, end (which includes root) or branch}
 
 \item{original.ids}{Use named attribute to return original vertex ids (when
 available). Set to FALSE when this is not desired.}
 
-\item{exclude.isolated}{Do not count isolated vertices as root points
+\item{exclude.isolated}{Do not count isolated vertices as root/end points
 (default)}
 }
 \description{
@@ -32,9 +32,11 @@ This function underlies \code{\link{rootpoints.igraph}} methods and
 }
 \examples{
 ng=as.ngraph(Cell07PNs[[1]])
-# arbitrary vertex identifiers
+# set some arbitrary vertex identifiers
+igraph::vertex_attr(ng, 'name') <-sample(500, nvertices(ng))
+# return those identifiers
 graph.nodes(ng, type = 'end')
-# raw vertex indices
+# ... or raw vertex indices
 graph.nodes(ng,type = 'end', original.ids = FALSE)
 }
 \seealso{

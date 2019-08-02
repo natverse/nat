@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
       </span>
     </div>
 
@@ -53,18 +53,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="../articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
     <li>
       <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
 </li>
 <li>
   <a href="../articles/Installation.html">Installation</a>
@@ -75,10 +75,16 @@
 <li>
   <a href="../index.html#help">Help</a>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jefferis/nat">
+  <a href="https://natverse.github.io">natverse</a>
+</li>
+<li>
+  <a href="https://github.com/natverse/nat">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -98,9 +104,9 @@
       <h1>Working with individual neurons as graph structures</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2019-01-10</h4>
+            <h4 class="date">2019-08-01</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/jefferis/nat/blob/master/vignettes/neurons-as-graph.Rmd"><code>vignettes/neurons-as-graph.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/natverse/nat/blob/master/vignettes/neurons-as-graph.Rmd"><code>vignettes/neurons-as-graph.Rmd</code></a></small>
       <div class="hidden name"><code>neurons-as-graph.Rmd</code></div>
 
     </div>
@@ -111,7 +117,7 @@
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
 <p>Neurons can helpfully be treated as graphs (branching trees) in which nodes connected by edges define the morphology of the neuron. The <strong>nat</strong> package provides a number of built-in functions that allow you to analyse the branching structure of graphs</p>
-<p><a href="http://jefferis.github.io/nat/reference/index.html#section-neurons-as-graphs-" class="uri">http://jefferis.github.io/nat/reference/index.html#section-neurons-as-graphs-</a></p>
+<p><a href="https://natverse.github.io/nat/reference/index.html#section-neurons-as-graphs-" class="uri">https://natverse.github.io/nat/reference/index.html#section-neurons-as-graphs-</a></p>
 <p>or use aspects of the branching structure to manipulate graphs. Examples of such functions include the <code>strahler_order</code> function which calculates the Strahler branch order for each node or segment in the neuron or the <code>spine</code> function that extracts the longest path across the neuron.</p>
 <p>More sophisticated analysis and manipulations can be carried out by converting <code>neuron</code> objects into <code>ngraph</code> objects.</p>
 </div>
@@ -135,17 +141,17 @@
 <li>are not in the same order as the vertices</li>
 <li>have some other significance e.g. are globally unique across all neurons in a database and therefore have large values (which may be challenging for R to to represent give its maxint of 2^31 - 1=2.147483610^{9})</li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nat)
-n=Cell07PNs[[<span class="dv">1</span>]]
-<span class="kw"><a href="../reference/summary.neuron.html">summary</a></span>(n)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nat)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">n=Cell07PNs[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="../reference/summary.neuron.html">summary</a></span>(n)</a></code></pre></div>
 <pre><code>##   root nodes segments branchpoints endpoints cable.length
 ## 1    1   180       33           16        18     297.1763</code></pre>
 <p>We can extract the points as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rootpoints.html">rootpoints</a></span>(n)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/rootpoints.html">rootpoints</a></span>(n)</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rootpoints.html">branchpoints</a></span>(n)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/rootpoints.html">branchpoints</a></span>(n)</a></code></pre></div>
 <pre><code>##  [1]  34  48  51  75  78  95  98  99 108 109 115 119 135 143 160 169</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rootpoints.html">endpoints</a></span>(n)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/rootpoints.html">endpoints</a></span>(n)</a></code></pre></div>
 <pre><code>##  [1]   1  42  59  62  80  85  96 100 102 112 117 121 134 148 154 165 172
 ## [18] 180</code></pre>
 <p>Segments are unbranched connected sequences of nodes that terminate in a branch point or end point.</p>
@@ -158,22 +164,22 @@ n=Cell07PNs[[<span class="dv">1</span>]]
 <h3 class="hasAnchor">
 <a href="#strahler-order" class="anchor"></a>Strahler Order</h3>
 <p>The branching structure of a neuron is commonly summarised by calculating the <a href="https://en.wikipedia.org/wiki/Strahler_number">Strahler Order</a>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=Cell07PNs[[<span class="dv">1</span>]]
-so=<span class="kw"><a href="../reference/strahler_order.html">strahler_order</a></span>(n)
-orders=<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(so<span class="op">$</span>points)
-<span class="cf">for</span> (i <span class="cf">in</span> orders) {
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="../reference/subset.html">subset</a></span>(n, so<span class="op">$</span>points<span class="op">==</span>i), <span class="dt">col=</span>i, <span class="dt">add =</span> i<span class="op">!=</span><span class="dv">1</span>, <span class="dt">boundingbox =</span> <span class="kw"><a href="../reference/boundingbox.html">boundingbox</a></span>(n))
-}</code></pre></div>
-<p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-3-1.png" width="576"> Note the use of multiple calls to <code>plot.neuron</code> using the <code>add=FALSE</code> argument for all but the first plot. Note also the use of the <code>boundingbox</code> argument/function in order to ensure that the plot is set up with appropriate axes for the whole neuron even if only part of it is plotted in the first call to <code>plot</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">n=Cell07PNs[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">so=<span class="kw"><a href="../reference/strahler_order.html">strahler_order</a></span>(n)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">orders=<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Extremes">max</a></span>(so<span class="op">$</span>points)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="cf">for</span> (i <span class="cf">in</span> orders) {</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(<span class="kw"><a href="../reference/subset.html">subset</a></span>(n, so<span class="op">$</span>points<span class="op">==</span>i), <span class="dt">col=</span>i, <span class="dt">add =</span> i<span class="op">!=</span><span class="dv">1</span>, <span class="dt">boundingbox =</span> <span class="kw"><a href="../reference/boundingbox.html">boundingbox</a></span>(n))</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">}</a></code></pre></div>
+<p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-3-1.png" width="576"> Note the use of multiple calls to <code>plot.neuron</code> using the <code>add=TRUE</code> argument for all but the first plot. Note also the use of the <code>boundingbox</code> argument/function in order to ensure that the plot is set up with appropriate axes for the whole neuron even if only part of it is plotted in the first call to <code>plot</code>.</p>
 </div>
 <div id="spine" class="section level3">
 <h3 class="hasAnchor">
 <a href="#spine" class="anchor"></a>Spine</h3>
 <p>You can find the longest path across a neuron using the spine function.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=Cell07PNs[[<span class="dv">1</span>]]
-sp=<span class="kw"><a href="../reference/spine.html">spine</a></span>(n)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(n, <span class="dt">col=</span><span class="st">'grey'</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sp, <span class="dt">add=</span>T, <span class="dt">col=</span><span class="st">'blue'</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">n=Cell07PNs[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">sp=<span class="kw"><a href="../reference/spine.html">spine</a></span>(n)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(n, <span class="dt">col=</span><span class="st">'grey'</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sp, <span class="dt">add=</span>T, <span class="dt">col=</span><span class="st">'blue'</span>)</a></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p><code>spine</code> has a variety of options that you can use to control the results.</p>
 </div>
@@ -181,22 +187,22 @@ sp=<span class="kw"><a href="../reference/spine.html">spine</a></span>(n)
 <h3 class="hasAnchor">
 <a href="#segment-graph" class="anchor"></a>Segment graph</h3>
 <p>You can use the <code>segmentgraph</code> function to make a simplified representation of the branching structure of the neuron. In this object (which has class <code>igraph</code>) each unbranched segment in the original neuron (which might have contained many vertices) is collapsed to a single edge joining the branch points (which are retained).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sg=<span class="kw"><a href="../reference/segmentgraph.html">segmentgraph</a></span>(Cell07PNs[[<span class="dv">1</span>]])
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sg)</code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">sg=<span class="kw"><a href="../reference/segmentgraph.html">segmentgraph</a></span>(Cell07PNs[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(sg)</a></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
 </div>
 </div>
 <div id="ngraph-objects" class="section level2">
 <h2 class="hasAnchor">
 <a href="#ngraph-objects" class="anchor"></a>ngraph objects</h2>
-<p>The <strong>nat</strong> package provides a bridge to a rich cross-platform graph library, <strong>igraph</strong>. We provide a class <a href="http://jefferis.github.io/nat/reference/ngraph.html"><code>ngraph</code></a> that provides a thin wrapper for the <code>igraph</code> class. This looks after things that we might need to know about a neuron (like the 3D coordinates of each node) while still giving access to all of the graph functions in the igraph package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(Cell07PNs[[<span class="dv">1</span>]])
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(g)</code></pre></div>
+<p>The <strong>nat</strong> package provides a bridge to a rich cross-platform graph library, <strong>igraph</strong>. We provide a class <a href="https://natverse.github.io/nat/reference/ngraph.html"><code>ngraph</code></a> that provides a thin wrapper for the <code>igraph</code> class. This looks after things that we might need to know about a neuron (like the 3D coordinates of each node) while still giving access to all of the graph functions in the igraph package.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(Cell07PNs[[<span class="dv">1</span>]])</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(g)</a></code></pre></div>
 <pre><code>## [1] "ngraph" "igraph"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g</code></pre></div>
-<pre><code>## IGRAPH 5fdf829 DN-- 180 179 -- 
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">g</a></code></pre></div>
+<pre><code>## IGRAPH 9acccd7 DN-- 180 179 -- 
 ## + attr: name (v/n), X (v/n), Y (v/n), Z (v/n), diam (v/n)
-## + edges from 5fdf829 (vertex names):
+## + edges from 9acccd7 (vertex names):
 ##  [1]  1-&gt; 2  2-&gt; 3  3-&gt; 4  4-&gt; 5  5-&gt; 6  6-&gt; 7  7-&gt; 8  8-&gt; 9  9-&gt;10 10-&gt;11
 ## [11] 11-&gt;12 12-&gt;13 13-&gt;14 14-&gt;15 15-&gt;16 16-&gt;17 17-&gt;18 18-&gt;19 19-&gt;20 20-&gt;21
 ## [21] 21-&gt;22 22-&gt;23 23-&gt;24 24-&gt;25 25-&gt;26 26-&gt;27 27-&gt;28 28-&gt;29 29-&gt;30 30-&gt;31
@@ -207,63 +213,63 @@ sp=<span class="kw"><a href="../reference/spine.html">spine</a></span>(n)
 ## [71] 71-&gt;72 72-&gt;73 73-&gt;74 74-&gt;75 75-&gt;76 76-&gt;77 77-&gt;78 78-&gt;79 79-&gt;80 78-&gt;81
 ## + ... omitted several edges</code></pre>
 <p>You can use functions such as</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/diameter">diameter</a></span>(g)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/diameter">diameter</a></span>(g)</a></code></pre></div>
 <pre><code>## [1] 89</code></pre>
 <p>to find the length of the longest path across the neuron. This is defined in terms of the number of intervening nodes. You can also make a graph in which the edge weights are the euclidean distance between the connected 3D nodes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gw=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(Cell07PNs[[<span class="dv">1</span>]], <span class="dt">weights=</span><span class="ot">TRUE</span>)
-igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/diameter">diameter</a></span>(gw)</code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">gw=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(Cell07PNs[[<span class="dv">1</span>]], <span class="dt">weights=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/diameter">diameter</a></span>(gw)</a></code></pre></div>
 <pre><code>## [1] 186.0859</code></pre>
 <p>This gives you the longest path length (geodesic) across the graph in units of µm in this case.</p>
-<p>Note that although you can do <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(ngraph)</a></code>, it adds a lot of functions to the search path, some of which have name clashes, so I often just use the package name (<code>igraph::</code>) prepended to the function that I want to call.</p>
+<p>Note that although you can do <code><a href="https://www.rdocumentation.org/packages/base/topics/library">library(igraph)</a></code>, it adds a lot of functions to the search path, some of which have name clashes, so I often just use the package name (<code>igraph::</code>) prepended to the function that I want to call.</p>
 <div id="walking-along-ngraph-objects" class="section level3">
 <h3 class="hasAnchor">
 <a href="#walking-along-ngraph-objects" class="anchor"></a>walking along ngraph objects</h3>
 <p>You can use the graph representation of neurons e.g. to find the path between nodes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(Cell07PNs[[<span class="dv">1</span>]], <span class="dt">weights=</span><span class="ot">TRUE</span>)
-eg=<span class="kw"><a href="../reference/rootpoints.html">endpoints</a></span>(g)
-
-p=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">shortest_paths</a></span>(g, <span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">180</span>)
-p<span class="op">$</span>vpath[[<span class="dv">1</span>]]</code></pre></div>
-<pre><code>## + 90/180 vertices, named, from 6ef429c:
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(Cell07PNs[[<span class="dv">1</span>]], <span class="dt">weights=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">eg=<span class="kw"><a href="../reference/rootpoints.html">endpoints</a></span>(g)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">p=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">shortest_paths</a></span>(g, <span class="dt">from=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">180</span>)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">p<span class="op">$</span>vpath[[<span class="dv">1</span>]]</a></code></pre></div>
+<pre><code>## + 90/180 vertices, named, from 5fbc8ba:
 ##  [1] 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17 
 ## [18] 18  19  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34 
 ## [35] 43  44  45  46  47  48  63  64  65  66  67  68  69  70  71  72  73 
 ## [52] 74  75  86  87  88  89  90  91  92  93  94  95  97  98  103 104 105
 ## [69] 106 107 108 135 155 156 157 158 159 160 166 167 168 169 173 174 175
 ## [86] 176 177 178 179 180</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># fails</span>
-p2=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">shortest_paths</a></span>(g, <span class="dt">from=</span><span class="dv">180</span>, <span class="dt">to=</span><span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># fails</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">p2=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">shortest_paths</a></span>(g, <span class="dt">from=</span><span class="dv">180</span>, <span class="dt">to=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## Warning in igraph::shortest_paths(g, from = 180, to = 1): At
 ## structural_properties.c:4597 :Couldn't reach some vertices</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">p2<span class="op">$</span>vpath[[<span class="dv">1</span>]]</code></pre></div>
-<pre><code>## + 1/180 vertex, named, from 6ef429c:
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">p2<span class="op">$</span>vpath[[<span class="dv">1</span>]]</a></code></pre></div>
+<pre><code>## + 1/180 vertex, named, from 5fbc8ba:
 ## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># mode all will find the path irrespective of direction of links, which are</span>
-<span class="co"># directed from the soma</span>
-p3=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">shortest_paths</a></span>(g, <span class="dt">from=</span><span class="dv">180</span>, <span class="dt">to=</span><span class="dv">1</span>, <span class="dt">mode =</span> <span class="st">'all'</span>)
-p3<span class="op">$</span>vpath[[<span class="dv">1</span>]]</code></pre></div>
-<pre><code>## + 90/180 vertices, named, from 6ef429c:
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="co"># mode all will find the path irrespective of direction of links, which are</span></a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co"># directed from the soma</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3">p3=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">shortest_paths</a></span>(g, <span class="dt">from=</span><span class="dv">180</span>, <span class="dt">to=</span><span class="dv">1</span>, <span class="dt">mode =</span> <span class="st">'all'</span>)</a>
+<a class="sourceLine" id="cb26-4" data-line-number="4">p3<span class="op">$</span>vpath[[<span class="dv">1</span>]]</a></code></pre></div>
+<pre><code>## + 90/180 vertices, named, from 5fbc8ba:
 ##  [1] 180 179 178 177 176 175 174 173 169 168 167 166 160 159 158 157 156
 ## [18] 155 135 108 107 106 105 104 103 98  97  95  94  93  92  91  90  89 
 ## [35] 88  87  86  75  74  73  72  71  70  69  68  67  66  65  64  63  48 
 ## [52] 47  46  45  44  43  34  33  32  31  30  29  28  27  26  25  24  23 
 ## [69] 22  21  20  19  18  17  16  15  14  13  12  11  10  9   8   7   6  
 ## [86] 5   4   3   2   1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all.equal">all.equal</a></span>(p<span class="op">$</span>vpath[[<span class="dv">1</span>]], <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rev">rev</a></span>(p3<span class="op">$</span>vpath[[<span class="dv">1</span>]]))</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/all.equal">all.equal</a></span>(p<span class="op">$</span>vpath[[<span class="dv">1</span>]], <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/rev">rev</a></span>(p3<span class="op">$</span>vpath[[<span class="dv">1</span>]]))</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># just the distances - by default uses mode=all</span>
-igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">distances</a></span>(g, <span class="dt">v=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">180</span>)</code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># just the distances - by default uses mode=all</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">distances</a></span>(g, <span class="dt">v=</span><span class="dv">1</span>, <span class="dt">to=</span><span class="dv">180</span>)</a></code></pre></div>
 <pre><code>##        180
 ## 1 186.0859</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">distances</a></span>(g, <span class="dt">v=</span><span class="dv">180</span>, <span class="dt">to=</span><span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/distances">distances</a></span>(g, <span class="dt">v=</span><span class="dv">180</span>, <span class="dt">to=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>##            1
 ## 180 186.0859</code></pre>
 <p>You can also ask for nodes upstream or downstream of a given starting node. For example the neurons in the <code>Cell07PNs</code> set have a tag called <code>AxonLHEP</code> that defines the entry point of the axon into the lateral horn neuropil of the fly brain. Here we defined</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n=Cell07PNs[[<span class="dv">1</span>]]
-g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(n)
-<span class="co"># find the nodes distal to this point</span>
-<span class="co"># nb you must set unreachable=F if you only want to get downstream nodes</span>
-igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/dfs">dfs</a></span>(g, <span class="dt">neimode=</span><span class="st">'out'</span>, <span class="dt">unreachable =</span> <span class="ot">FALSE</span>, <span class="dt">root=</span>n<span class="op">$</span>AxonLHEP)</code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">n=Cell07PNs[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(n)</a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="co"># find the nodes distal to this point</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co"># nb you must set unreachable=F if you only want to get downstream nodes</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/dfs">dfs</a></span>(g, <span class="dt">neimode=</span><span class="st">'out'</span>, <span class="dt">unreachable =</span> <span class="ot">FALSE</span>, <span class="dt">root=</span>n<span class="op">$</span>AxonLHEP)</a></code></pre></div>
 <pre><code>## $root
 ## [1] 71
 ## 
@@ -271,7 +277,7 @@ igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumenta
 ## [1] "out"
 ## 
 ## $order
-## + 180/180 vertices, named, from 2866093:
+## + 180/180 vertices, named, from a5509f5:
 ##   [1] 72   73   74   75   76   77   78   79   80   81   82   83   84   85  
 ##  [15] 86   87   88   89   90   91   92   93   94   95   96   97   98   99  
 ##  [29] 100  101  102  103  104  105  106  107  108  109  110  111  112  113 
@@ -292,8 +298,8 @@ igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumenta
 ## 
 ## $dist
 ## NULL</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># the proximal nodes back to the soma (including any branches)</span>
-igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/dfs">dfs</a></span>(g, <span class="dt">neimode=</span><span class="st">'in'</span>, <span class="dt">unreachable =</span> <span class="ot">FALSE</span>, <span class="dt">root=</span>n<span class="op">$</span>AxonLHEP)</code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co"># the proximal nodes back to the soma (including any branches)</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/dfs">dfs</a></span>(g, <span class="dt">neimode=</span><span class="st">'in'</span>, <span class="dt">unreachable =</span> <span class="ot">FALSE</span>, <span class="dt">root=</span>n<span class="op">$</span>AxonLHEP)</a></code></pre></div>
 <pre><code>## $root
 ## [1] 71
 ## 
@@ -301,7 +307,7 @@ igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumenta
 ## [1] "in"
 ## 
 ## $order
-## + 180/180 vertices, named, from 2866093:
+## + 180/180 vertices, named, from a5509f5:
 ##   [1] 72   71   70   69   68   67   66   65   64   63   48   47   46   45  
 ##  [15] 44   43   34   33   32   31   30   29   28   27   26   25   24   23  
 ##  [29] 22   21   20   19   18   17   16   15   14   13   12   11   10   9   
@@ -324,14 +330,14 @@ igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumenta
 ## NULL</code></pre>
 <p>Note that <code>dfs</code> (depth first search) provides a good way to visit all the nodes of the neuron</p>
 <p>Let’s use this to make a function that prunes neurons downstream of this axon entry point:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">prune_from_lhep &lt;-<span class="st"> </span><span class="cf">function</span>(n, ...) {
-  g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(n)
-  downstream_indices=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/dfs">dfs</a></span>(g, <span class="dt">root =</span> n<span class="op">$</span>AxonLHEP, <span class="dt">unreachable =</span> <span class="ot">FALSE</span>)<span class="op">$</span>order
-  <span class="kw"><a href="../reference/prune_vertices.html">prune_vertices</a></span>(n, <span class="dt">verticestoprune =</span> downstream_indices, <span class="dt">invert =</span> <span class="ot">TRUE</span>)
-}
-pruned=<span class="kw"><a href="../reference/nlapply.html">nlapply</a></span>(Cell07PNs[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], prune_from_lhep)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Cell07PNs[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">col=</span><span class="st">'grey'</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pruned, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">add =</span> T)</code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">prune_from_lhep &lt;-<span class="st"> </span><span class="cf">function</span>(n, ...) {</a>
+<a class="sourceLine" id="cb38-2" data-line-number="2">  g=<span class="kw"><a href="../reference/ngraph.html">as.ngraph</a></span>(n)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3">  downstream_indices=igraph<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/igraph/topics/dfs">dfs</a></span>(g, <span class="dt">root =</span> n<span class="op">$</span>AxonLHEP, <span class="dt">unreachable =</span> <span class="ot">FALSE</span>)<span class="op">$</span>order</a>
+<a class="sourceLine" id="cb38-4" data-line-number="4">  <span class="kw"><a href="../reference/prune_vertices.html">prune_vertices</a></span>(n, <span class="dt">verticestoprune =</span> downstream_indices, <span class="dt">invert =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb38-5" data-line-number="5">}</a>
+<a class="sourceLine" id="cb38-6" data-line-number="6">pruned=<span class="kw"><a href="../reference/nlapply.html">nlapply</a></span>(Cell07PNs[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], prune_from_lhep)</a>
+<a class="sourceLine" id="cb38-7" data-line-number="7"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(Cell07PNs[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dt">col=</span><span class="st">'grey'</span>)</a>
+<a class="sourceLine" id="cb38-8" data-line-number="8"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(pruned, <span class="dt">lwd=</span><span class="dv">2</span>, <span class="dt">add =</span> T)</a></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 <p>The pruned neurons show up in red, green, and blue in the above plot.</p>
 </div>

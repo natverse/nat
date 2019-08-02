@@ -1,11 +1,14 @@
 # nat: NeuroAnatomy Toolbox
+<!-- badges: start -->
+[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
-[![Release Version](https://img.shields.io/github/release/jefferis/nat.svg)](https://github.com/jefferis/nat/releases/latest) 
+[![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
-[![Build Status](https://img.shields.io/travis/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat) 
-[![Coverage Status](https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master)](https://coveralls.io/r/jefferis/nat?branch=master)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/nat/reference/)
-
+[![Build Status](https://img.shields.io/travis/natverse/nat/master.svg)](https://travis-ci.org/natverse/nat) 
+[![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.github.io/nat/reference/)
+[![Downloads](http://cranlogs.r-pkg.org/badges/nat?color=brightgreen)](http://www.r-pkg.org/pkg/nat)
+<!-- badges: end -->
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
 single neurons. **nat** is the core package of a wider suite of neuroanatomy 
@@ -55,26 +58,26 @@ the [devtools](https://cran.r-project.org/package=devtools) package.
 # install devtools if required
 if (!requireNamespace("devtools")) install.packages("devtools")
 # then install nat
-devtools::install_github("jefferis/nat")
+devtools::install_github("natverse/nat")
 
 ```
 ## Learn
 
 To get an idea of what **nat** can do:
 
-* Skim through the Articles listed at http://jefferis.github.io/nat/
+* Skim through the Articles listed at https://natverse.github.io/nat/
 * Take a look at the [R Markdown](http://rmarkdown.rstudio.com/) reports used 
   to generate the [figures for our NBLAST paper](http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/).
 
 When you're ready to learn more:
 
-* Read the [overview package documentation](http://jefferis.github.io/nat/reference/nat-package.html)
+* Read the [overview package documentation](https://natverse.github.io/nat/reference/nat-package.html)
   (`?nat` in R)
-* Read the [Introduction to neurons](http://jefferis.github.io/nat/articles/neurons-intro.html article)
-* Check out the thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/). 
+* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html article)
+* Check out the thematically organised [function reference documentation](https://natverse.github.io/nat/reference/). 
   * Most help pages include examples.
 * Try out sample code:
-  - [nat.examples](https://github.com/jefferis/nat.examples) has detailed 
+  - [nat.examples](https://github.com/natverse/nat.examples) has detailed 
     examples for data sets from a range of model organisms and techniques
   - [frulhns](https://github.com/jefferis/frulhns) analysis of sexually dimorphic circuits
   - [NBLAST figures](https://github.com/jefferislab/NBLAST_figures/)
@@ -82,7 +85,7 @@ When you're ready to learn more:
 ## Help
 If you want some help using **nat**:
 
-* For installation issues, see the [Installation vignette](http://jefferis.github.io/nat/articles/Installation.html)
+* For installation issues, see the [Installation vignette](https://natverse.github.io/nat/articles/Installation.html)
 * Contact [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
@@ -90,8 +93,8 @@ If you think that you have found a bug:
 
 * Install the development version of nat using devtools (see above) and see if 
   that helps.
-* Check the [github issues](https://github.com/jefferis/nat/issues?q=is%3Aissue) and 
-  - [file a  bug report](https://github.com/jefferis/nat/issues/new) if this seems to be a new problem
+* Check the [github issues](https://github.com/natverse/nat/issues?q=is%3Aissue) and 
+  - [file a  bug report](https://github.com/natverse/nat/issues/new) if this seems to be a new problem
   - comment on an existing bug report 
 
 Thanks for your interest in **nat**!
