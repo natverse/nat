@@ -14,7 +14,7 @@
 #' @examples
 #' \dontrun{
 #' ## Interactively choose which bit of the neuron you wish to keep
-#' pruned.as.you.like.it = prune_online(Cell07PNs[1])
+#' pruned.as.you.like.it = prune_online(Cell07PNs[1:2])
 #' }
 #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
 #'   \code{\link{prune.neuron}}
@@ -25,12 +25,15 @@ prune_online <-function(x, ...) UseMethod("prune_online")
 #' @rdname prune_online
 prune_online.neuron <- function(x, ...){
   continue = "no"
+  ids=integer()
   while(!continue%in%c("y","yes")){
-    selected = select_points(xyzmatrix(x), plot3d = x)
+    selected = select_points(xyzmatrix(x), clear_plot_on_exit = TRUE)
     v = match(data.frame(t(selected)), data.frame(t(xyzmatrix(x))))
-    neuron = prune_vertices(x,verticestoprune=v,invert=TRUE)
-    rgl::clear3d();rgl::plot3d(neuron, col ="black")
+    neuron = prune_vertices(x, verticestoprune=v,invert=TRUE)
+    pop3d(id=unlist(ids))
+    ids=rgl::plot3d(neuron, col ="black")
     continue = readline("Finished with this neuron? yes/no ")
+    pop3d(id=unlist(ids))
   }
   neuron
 }

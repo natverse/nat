@@ -33,7 +33,7 @@ The neuron is plotted initially with all nodes selected (and shown
 \examples{
 \dontrun{
 ## Interactively choose which bit of the neuron you wish to keep
-pruned.as.you.like.it = prune_online(Cell07PNs[1])
+pruned.as.you.like.it = prune_online(Cell07PNs[1:2])
 }
 }
 \seealso{
