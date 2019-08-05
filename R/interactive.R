@@ -101,7 +101,7 @@ manually_assign_axon_dendrite.neuronlist<-function(x, soma = FALSE){
 #' @examples
 #' \dontrun{
 #' ## NB these neurons actually have their somata chopped off
-#' correctedsomas = correct_soma(Cell07PNs[1:3])
+#' correctedsomas = correct_root(Cell07PNs[1:3])
 #' plot3d(correctedsomas, soma=TRUE)
 #' }
 #' @return a matrix of 3D points

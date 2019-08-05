@@ -136,7 +136,7 @@ reference:
       - find.neuron
       - find.soma
       - select_points
-      - correct_soma
+      - correct_root
       - prune_online
       - make_model
       - manually_assign_axon_dendrite
