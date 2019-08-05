@@ -1,4 +1,4 @@
-# nat: NeuroAnatomy Toolbox
+# nat: NeuroAnatomy Toolbox <img src="man/figures/natverse_logo.svg" align="right" height="139" /><img src="man/figures/logo.svg" align="right" height="139" /> 
 <!-- badges: start -->
 [![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
