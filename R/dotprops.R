@@ -468,7 +468,7 @@ subset.dotprops<-function(x, subset, invert=FALSE, ...){
 #' @param ... Additional arguments for methods (eventually passed to 
 #'   \code{prune.default})
 #' @seealso \code{\link{prune_strahler}}, \code{\link{spine}},
-#'   \code{\link{prune_vertices}}
+#'   \code{\link{prune_vertices}}, \code{\link{subset.neuron}}
 #' @examples
 #' ## prune single neurons
 #' \donttest{

@@ -30,7 +30,7 @@ object. This is only relevant when \code{surf} is of class
 are kept.}
 
 \item{...}{Additional arguments for methods (eventually passed to
-prune.default) surface should be pruned.}
+\code{\link{prune_vertices}}) surface should be pruned.}
 }
 \value{
 A pruned neuron/neuronlist object

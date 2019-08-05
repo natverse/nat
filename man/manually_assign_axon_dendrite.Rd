@@ -13,9 +13,11 @@ manually_assign_axon_dendrite(x, soma = FALSE)
 \method{manually_assign_axon_dendrite}{neuronlist}(x, soma = FALSE)
 }
 \arguments{
-\item{x}{a neuron/neuronlist object}
+\item{x}{a neuron/\code{\link{neuronlist}} object}
 
-\item{soma}{whether or not to plot a soma, and at what radius}
+\item{soma}{Whether to plot a sphere at neuron's origin representing the
+soma. Either a logical value or a numeric indicating the radius (default
+\code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
 }
 \value{
 The neuron/neuronlist object with axon/dendrite info assigned in SWC format to neuron$d

@@ -39,19 +39,20 @@ prune_online.neuronlist <- function(x, ...){
 #'
 #' @description Manually assign the dendrite and axon to neurons / a neuron
 #'
-#' @param x a neuron/neuronlist object
-#' @param soma whether or not to plot a soma, and at what radius
-#' @return The neuron/neuronlist object with axon/dendrite info assigned in SWC format to neuron$d
-#' #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
-#'   \code{\link{prune.neuron}}, \code{\link{prune_online}}
+#' @param x a neuron/\code{\link{neuronlist}} object
+#' @inheritParams plot3d.neuron
+#' @return The neuron/neuronlist object with axon/dendrite info assigned in SWC
+#'   format to neuron$d
+#' @seealso \code{\link{subset.neuron}}, \code{\link{prune.neuron}}
 #' @examples
-#' \dontrun{ 
-#' ## Interactively shoose which bit of the neuron you wish to keep
-#' split.as.you.like.it = manually_assign_axon_dendrite(Cell07PNs)
-#' } 
+#' \dontrun{
+#' ## Interactively choose which bit of the neuron you wish to keep
+#' split.as.you.like.it = manually_assign_axon_dendrite(Cell07PNs[1:2])
+#' }
 #' @export
 #' @rdname manually_assign_axon_dendrite
 manually_assign_axon_dendrite <-function(x, soma = FALSE) UseMethod("manually_assign_axon_dendrite")
+
 #' @export
 #' @rdname manually_assign_axon_dendrite
 manually_assign_axon_dendrite.neuron <- function(x, soma = FALSE){
@@ -75,6 +76,7 @@ manually_assign_axon_dendrite.neuron <- function(x, soma = FALSE){
   }
   x
 }
+
 #' @export
 #' @rdname manually_assign_axon_dendrite
 manually_assign_axon_dendrite.neuronlist<-function(x, soma = FALSE){
@@ -216,15 +218,17 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
 
 #' Interactively select 3D points in space
 #'
-#' @description Plot a set of 3D points in space and select a subset of them interactively, using an rgl window
+#' @description Plot a set of 3D points in space and select a subset of them
+#'   interactively, using an rgl window
 #'
 #' @param points a matrix of 3D points to plot
-#' @param plot3d additional object that can be plotted using \code{rgl::plot3d}, to plot alongside points (e.g. for context)
+#' @param plot3d additional object that can be plotted using \code{rgl::plot3d},
+#'   to plot alongside points (e.g. for context)
 #' @examples
-#' \dontrun{ 
+#' \dontrun{
 #' # Make a model based off of fly olfactory projection neuron arbours
 #' selected_points = select_points(xyzmatrix(Cell07PNs))
-#' } 
+#' }
 #' @seealso \code{\link{prune_online}}
 #' @return A matrix describing selected 3D points
 #' @export

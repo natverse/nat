@@ -612,7 +612,7 @@ EdgeListFromSegList<-function(SegList){
 #' @param invert Logical when \code{TRUE} indicates that points inside the mesh
 #'   are kept.
 #' @param ... Additional arguments for methods (eventually passed to
-#'   prune.default) surface should be pruned.
+#'   \code{\link{prune_vertices}}) surface should be pruned.
 #' @inherit prune seealso
 #' @examples
 #' \dontrun{
@@ -626,11 +626,12 @@ EdgeListFromSegList<-function(SegList){
 #'   \code{\link{prune.neuron}}, \code{\link{prune}}
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume <-function(x, surf, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
+prune_in_volume <-function(x, surf, neuropil = NULL, invert = TRUE, ...) 
+  UseMethod("prune_in_volume")
 
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume.neuron <- function(x, surf, neuropil = NULL, invert = TRUE, ...){
+prune_in_volume.neuron <- function(x, surf, neuropil = NULL, invert = TRUE, ...) {
   if(is.null(neuropil)){
     mesh = as.mesh3d(surf)
   } else {
