@@ -21,7 +21,8 @@ using an rgl window
 }
 \examples{
 \dontrun{ 
-## Admittedly, these neurns have their somata chopped off! 
-correctedsoma = correct_soma(Cell07PNs)
+## NB these neurons actually have their somata chopped off
+correctedsomas = correct_soma(Cell07PNs[1:3])
+plot3d(correctedsomas, soma=TRUE)
 } 
 }

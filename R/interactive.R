@@ -88,23 +88,26 @@ manually_assign_axon_dendrite.neuronlist<-function(x, soma = FALSE){
   nlapply(x, manually_assign_axon_dendrite.neuron, soma = soma)
 }
 
-#' Interactively re-root neurons to their soma
+#' Interactively re-root neurons (usually to their soma)
 #'
-#' @description Cycle through and manually re-root neurons to their soma 
-#' using an rgl window
+#' @description Cycle through and manually re-root neurons using an rgl window.
+#'   This will typically be used for manual identification of the soma of a
+#'   neuron.
 #'
 #' @param someneuronlist a neuron/neuronlist object
-#' @param brain for context, plot some other objects (e.g. a brain from the nat.templatebrains package such as FCWB,
-#' or any object that may be plotted using plot3d)
+#' @param brain for context, plot some other objects (e.g. a brain from the
+#'   nat.templatebrains package such as FCWB, or any object that may be plotted
+#'   using plot3d)
 #' @examples
-#' \dontrun{ 
-#' ## Admittedly, these neurns have their somata chopped off! 
-#' correctedsoma = correct_soma(Cell07PNs)
-#' } 
+#' \dontrun{
+#' ## NB these neurons actually have their somata chopped off
+#' correctedsomas = correct_soma(Cell07PNs[1:3])
+#' plot3d(correctedsomas, soma=TRUE)
+#' }
 #' @return a matrix of 3D points
 #' @export
-correct_soma <- function(someneuronlist, brain = NULL){
-  correctedsomas = neuronlist()
+correct_root <- function(someneuronlist, brain = NULL){
+  correctedsomas = someneuronlist
   nopen3d()
   for (n in 1:length(someneuronlist)){
     message("neuron ", n, " of ", length(someneuronlist))
@@ -112,27 +115,26 @@ correct_soma <- function(someneuronlist, brain = NULL){
     print(names(someneuronlist[n]))
     if(!is.null(brain)){rgl::plot3d(brain)}
     rgl::plot3d(w, soma = T)
-    eps.xyz=w$d[endpoints(w),]
+    eps.df=w$d[endpoints(w),]
     progress =F
-    while(progress == F){
+    while(!isTRUE(progress)){
       cat ("Rotate brain and then hit [enter] to continue")
       line <- readline()
       message("Select new root from highlighted endpoints")
-      selected.point <- select3d()
-      selected.point <- selected.point(xyzmatrix(eps.xyz))
-      selected.point <- eps.xyz$PointNo[selected.point]
-      if (length(selected.point)>1|length(selected.point)==0){
-        message("Multiple end points selected, try again")
-      }else{
-        corrected = as.neuron(as.ngraph(w), origin = selected.point)
+      selection <- select3d()
+      selected.point <- selection(xyzmatrix(eps.df))
+      selected.pointno <- eps.df$PointNo[selected.point]
+      if (length(selected.pointno)!=1){
+        message("You must select exactly one end point. Try again!")
+      } else{
+        corrected = as.neuron(as.ngraph(w), origin = selected.pointno)
         rgl::plot3d(corrected, soma = T, col = "blue")
-        progress = readline(prompt="Good enough? T/F  ")
+        progress = tolower(readline(prompt="Good enough? [y/n] "))=="y"
       }
     }
     rgl::clear3d()
-    correctedsomas = c(correctedsomas, as.neuronlist(corrected))
+    correctedsomas[[n]]=corrected
   }
-  correctedsomas[,] = someneuronlist[,]
   correctedsomas
 }
 
