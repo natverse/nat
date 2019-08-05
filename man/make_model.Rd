@@ -4,33 +4,33 @@
 \alias{make_model}
 \title{Generate a 3D model from connector and/or tree node data}
 \usage{
-make_model(someneuronlist, substrate = c("connectors", "cable", "both"),
+make_model(someneuronlist, substrate = c("cable", "connectors", "both"),
   maxdistance = 10, groupsize = 10, alpha = 30,
   auto.selection = TRUE, chosen.points = NULL)
 }
 \arguments{
 \item{someneuronlist}{a neuronlist or neuron object}
 
-\item{substrate}{whether to make the model based off of connectors, neuron
-cable or both}
+\item{substrate}{whether to make the model based on the 3D location of
+connectors, neuron cable or both}
 
 \item{maxdistance}{for automated cluster identification. Maximum distance at
 which nodes can be part of a cluster}
 
 \item{groupsize}{an integer number of nearest neighbours to find using
-nabor::knn()}
+\code{nabor::\link{knn}}}
 
-\item{alpha}{a single value or vector of values for alpha, fed to \code{shape3d}.
-Selection is subsequently interactive}
+\item{alpha}{a single value or vector of values for alpha, fed to
+\code{alphashape3d::ashape3d}. Selection is subsequently interactive}
 
 \item{auto.selection}{whether to try and remove points based on interactively
 chosen values for \code{groupsize} and \code{maxdistance}}
 
 \item{chosen.points}{a matrix of 3D points. Use this argument if you do not
-want to interactively select the 3D fed to \code{ashape3d}.}
+want to interactively select the 3D fed to \code{alphashape3d::ashape3d}.}
 
 \item{selection}{whether or not to interactively select values for
-maxdistance and groupsize.}
+\code{maxdistance} and \code{groupsize}.}
 }
 \value{
 A mesh3d object

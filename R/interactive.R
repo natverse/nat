@@ -148,20 +148,20 @@ correct_root <- function(someneuronlist, brain = NULL){
 #'   neuronlist or neuron object
 #'
 #' @param someneuronlist a neuronlist or neuron object
-#' @param substrate whether to make the model based off of connectors, neuron
-#'   cable or both
+#' @param substrate whether to make the model based on the 3D location of
+#'   connectors, neuron cable or both
 #' @param auto.selection whether to try and remove points based on interactively
 #'   chosen values for \code{groupsize} and \code{maxdistance}
 #' @param maxdistance for automated cluster identification. Maximum distance at
 #'   which nodes can be part of a cluster
 #' @param groupsize an integer number of nearest neighbours to find using
-#'   nabor::knn()
+#'   \code{nabor::\link{knn}}
 #' @param selection whether or not to interactively select values for
-#'   maxdistance and groupsize.
-#' @param alpha a single value or vector of values for alpha, fed to \code{shape3d}.
-#'   Selection is subsequently interactive
+#'   \code{maxdistance} and \code{groupsize}.
+#' @param alpha a single value or vector of values for alpha, fed to
+#'   \code{alphashape3d::ashape3d}. Selection is subsequently interactive
 #' @param chosen.points a matrix of 3D points. Use this argument if you do not
-#'   want to interactively select the 3D fed to \code{ashape3d}.
+#'   want to interactively select the 3D fed to \code{alphashape3d::ashape3d}.
 #' @examples
 #' \dontrun{
 #' # Make a model based off of fly olfactory projection neuron arbours
@@ -170,12 +170,16 @@ correct_root <- function(someneuronlist, brain = NULL){
 #' @seealso \code{\link{prune_online}}
 #' @return A mesh3d object
 #' @export
-make_model <- function(someneuronlist, substrate = c("connectors","cable", "both"), 
+make_model <- function(someneuronlist, substrate = c("cable", "connectors", "both"), 
                        maxdistance = 10, groupsize = 10, alpha = 30, 
                        auto.selection = TRUE, chosen.points = NULL){
+  if(!requireNamespace("alphashape3d", quietly = TRUE))
+    stop("Please install the suggested alphashape3d package in order to use make_model!")
+  
+  substrate <- match.arg(substrate)
   if (substrate=="connectors"){synapse.points<-xyzmatrix(do.call(rbind, lapply(someneuronlist, function(x) x$connectors)))
-  }else if(substrate =="cable"){synapse.points<-xyzmatrix(someneuronlist) 
-  }else if (substrate == "both"){synapse.points<-rbind(xyzmatrix(someneuronlist), do.call(rbind, lapply(someneuronlist, function(x) xyzmatrix(x$connectors))))}
+  } else if(substrate =="cable"){synapse.points<-xyzmatrix(someneuronlist) 
+  } else if (substrate == "both"){synapse.points<-rbind(xyzmatrix(someneuronlist), do.call(rbind, lapply(someneuronlist, function(x) xyzmatrix(x$connectors))))}
   rgl::open3d()
   if (auto.selection == TRUE){
     progress = "n"
