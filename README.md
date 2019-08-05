@@ -23,7 +23,7 @@ have been used in a number of papers from our group including:
 
 
 ## Quick Start
-<img align="right" width="300px" src="https://raw.githubusercontent.com/natverse/nat/master/inst/images/hex-nat_logo.png">
+<img align="right" width="300px" src="https://raw.githubusercontent.com/natverse/nat/master/inst/images/hex-nat_logo.svg">
 
 
 For the impatient ...
@@ -102,5 +102,5 @@ If you think that you have found a bug:
 Thanks for your interest in **nat**!
 
 <p align="center">
-<img width="300px" src="https://raw.githubusercontent.com/natverse/nat/master/inst/images/hex-natverse_logo.png"/>
+<img width="300px" src="https://raw.githubusercontent.com/natverse/nat/master/inst/images/hex-natverse_logo.svg"/>
 </p> 
