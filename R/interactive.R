@@ -260,7 +260,7 @@ select_points <- function (points, plot3d = NULL) {
       rgl::points3d(selected.points)
     }
     rgl::points3d(unique(points), col = "red")
-    progress = readline(prompt = "Add (a) or remove (r) neurons, or exit (e)?  ")
+    progress = readline(prompt = "Add (a) or remove (r) points, or exit (e)?  ")
   }
   return(selected.points)
 }
