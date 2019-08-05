@@ -228,45 +228,41 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
 #' @description Plot a set of 3D points in space and select a subset of them
 #'   interactively, using an rgl window
 #'
-#' @param points a matrix of 3D points to plot
+#' @param points a matrix of 3D points to plot (or an object for which
+#'   \code{\link{xyzmatrix}} can extract 3D points).
 #' @param plot3d additional object that can be plotted using \code{rgl::plot3d},
 #'   to plot alongside points (e.g. for context)
 #' @examples
 #' \dontrun{
-#' # Make a model based off of fly olfactory projection neuron arbours
-#' selected_points = select_points(xyzmatrix(Cell07PNs))
+#' # Select points from 3 olfactory projection neurons
+#' selected_points = select_points(Cell07PNs[1:3])
 #' }
 #' @seealso \code{\link{prune_online}}
 #' @return A matrix describing selected 3D points
 #' @export
-select_points <- function (points, plot3d = NULL) {
-  rgl::plot3d(plot3d, col = "grey")
-  points = xyzmatrix(points)
-  selected.points = unique(points)
-  rgl::points3d(selected.points)
-  progress = readline(prompt = "Add (a) or remove (r) points, or exit (e)?  ")
+select_points <- function (points) {
+  selected.points <- points <- xyzmatrix(points)
+  ids=rgl::points3d(selected.points)
+  progress = readline(prompt = "Selected points in black. Add (a) or remove (r) points, or continue (c)?  ")
   while (progress != "e") {
     if (progress == "a") {
       keeps = rgl::select3d()
-      keep.points <- keeps(unique(points))
-      keep.points = subset(unique(points), keep.points)
+      keep.points <- keeps(points)
+      keep.points = subset(points, keep.points)
       selected.points = rbind(selected.points, keep.points)
-      rgl::clear3d()
-      rgl::plot3d(plot3d)
-      rgl::points3d(selected.points)
-      rgl::points3d(unique(points), col = "red")
     }
     if (progress == "r") {
       remove.points <- select3d()
       removed.points <- remove.points(selected.points)
       selected.points = subset(selected.points, !removed.points)
     }
-    rgl::clear3d()
-    rgl::plot3d(plot3d, col = "grey")
+    pop3d(id=ids)
+    
+    ids=integer()
     if (length(selected.points) > 0) {
-      rgl::points3d(selected.points)
+      ids=rgl::points3d(selected.points)
     }
-    rgl::points3d(unique(points), col = "red")
+    ids=union(ids, rgl::points3d(points, col = "red"))
     progress = readline(prompt = "Add (a) or remove (r) points, or exit (e)?  ")
   }
   return(selected.points)

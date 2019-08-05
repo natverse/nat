@@ -4,24 +4,27 @@
 \alias{select_points}
 \title{Interactively select 3D points in space}
 \usage{
-select_points(points, plot3d = NULL)
+select_points(points)
 }
 \arguments{
-\item{points}{a matrix of 3D points to plot}
+\item{points}{a matrix of 3D points to plot (or an object for which
+\code{\link{xyzmatrix}} can extract 3D points).}
 
-\item{plot3d}{additional object that can be plotted using \code{rgl::plot3d}, to plot alongside points (e.g. for context)}
+\item{plot3d}{additional object that can be plotted using \code{rgl::plot3d},
+to plot alongside points (e.g. for context)}
 }
 \value{
 A matrix describing selected 3D points
 }
 \description{
-Plot a set of 3D points in space and select a subset of them interactively, using an rgl window
+Plot a set of 3D points in space and select a subset of them
+  interactively, using an rgl window
 }
 \examples{
-\dontrun{ 
-# Make a model based off of fly olfactory projection neuron arbours
-selected_points = select_points(xyzmatrix(Cell07PNs))
-} 
+\dontrun{
+# Select points from 3 olfactory projection neurons
+selected_points = select_points(Cell07PNs[1:3])
+}
 }
 \seealso{
 \code{\link{prune_online}}
