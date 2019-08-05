@@ -230,8 +230,8 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
 #'
 #' @param points a matrix of 3D points to plot (or an object for which
 #'   \code{\link{xyzmatrix}} can extract 3D points).
-#' @param plot3d additional object that can be plotted using \code{rgl::plot3d},
-#'   to plot alongside points (e.g. for context)
+#' @param clear_plot_on_exit Whether to remove points from the rgl scene when
+#'   selection has been completed.
 #' @examples
 #' \dontrun{
 #' # Select points from 3 olfactory projection neurons
@@ -240,11 +240,11 @@ make_model <- function(someneuronlist, substrate = c("connectors","cable", "both
 #' @seealso \code{\link{prune_online}}
 #' @return A matrix describing selected 3D points
 #' @export
-select_points <- function (points) {
+select_points <- function (points, clear_plot_on_exit=FALSE) {
   selected.points <- points <- xyzmatrix(points)
   ids=rgl::points3d(selected.points)
   progress = readline(prompt = "Selected points in black. Add (a) or remove (r) points, or continue (c)?  ")
-  while (progress != "e") {
+  while (progress != "c") {
     if (progress == "a") {
       keeps = rgl::select3d()
       keep.points <- keeps(points)
@@ -263,8 +263,10 @@ select_points <- function (points) {
       ids=rgl::points3d(selected.points)
     }
     ids=union(ids, rgl::points3d(points, col = "red"))
-    progress = readline(prompt = "Add (a) or remove (r) points, or exit (e)?  ")
+    progress = readline(prompt = "Add (a) or remove (r) points, or continue (c)?  ")
   }
+  if(clear_plot_on_exit)
+    pop3d(id=ids)
   return(selected.points)
 }
 

@@ -4,14 +4,14 @@
 \alias{select_points}
 \title{Interactively select 3D points in space}
 \usage{
-select_points(points)
+select_points(points, clear_plot_on_exit = FALSE)
 }
 \arguments{
 \item{points}{a matrix of 3D points to plot (or an object for which
 \code{\link{xyzmatrix}} can extract 3D points).}
 
-\item{plot3d}{additional object that can be plotted using \code{rgl::plot3d},
-to plot alongside points (e.g. for context)}
+\item{clear_plot_on_exit}{Whether to remove points from the rgl scene when
+selection has been completed.}
 }
 \value{
 A matrix describing selected 3D points
