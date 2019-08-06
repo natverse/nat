@@ -12,7 +12,8 @@ nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA,
 progress_natprogress(...)
 
 nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
-  USE.NAMES = TRUE, subset = NULL, OmitFailures = NA)
+  USE.NAMES = TRUE, subset = NULL, OmitFailures = NA,
+  .progress = getOption("nat.progress", default = "auto"))
 }
 \arguments{
 \item{X}{A neuronlist}
@@ -101,11 +102,11 @@ When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
 
 \section{Progress bar}{
  There are currently two supported approaches to
-  defining progress bars. The default (when \code{progress="auto"}) now uses
-  a progress bar built using \code{\link{progress_bar}} from the progress
-  package, which can be highly customised. The alternative is to use the
-  progress bars distributed directly with the \code{plyr} package such as
-  \code{\link{progress_text}}.
+  defining progress bars for \code{nlapply}. The default (when
+  \code{progress="auto"}) now uses a progress bar built using
+  \code{\link{progress_bar}} from the progress package, which can be highly
+  customised. The alternative is to use the progress bars distributed
+  directly with the \code{plyr} package such as \code{\link{progress_text}}.
 
   In either case the value of the \code{.progress} argument must be a
   character vector which names a function. According to \code{plyr}'s
@@ -115,6 +116,12 @@ When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
   when \code{.progress="auto"}; this function will probably not be used
   directly by end users; however it must be exported for \code{nlapply} with
   progress to work properly in other functions.
+
+  For \code{nmapply} only the default \code{nat_progress} bar can be shown
+  for architectural reasons. It will be shown in interactive mode when
+  \code{.progress='auto'} (the default). The progress bar can be suppressed
+  by setting \code{.progress='none'}. Any other value will result in a
+  progress bar being shown in both interactive and batch modes.
 }
 
 \examples{
@@ -149,7 +156,12 @@ stopifnot(all.equal(d1,d2))
 ## nmapply example
 # flip first neuron in X, second in Y and 3rd in Z
 xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
- mirrorAxisSize=c(400,20,30))
+  mirrorAxisSize=c(400,20,30))
+
+# this artificial example will show a progress bar in interactive use
+xyzflip=nmapply(function(...) {Sys.sleep(.2);mirror(...)}, kcs20,
+  mirrorAxis= sample(LETTERS[24:26], size = 20, replace = TRUE),
+  mirrorAxisSize=runif(20, min=40, max=200))
 \donttest{
 open3d()
 plot3d(kcs20[1:3])
