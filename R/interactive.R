@@ -1,4 +1,4 @@
-## Functions for interactively working with neurons
+### Functions for interactively working with neurons ###
 
 #' Prune a neuron interactively in an rgl window
 #'
@@ -98,23 +98,22 @@ correct_root <- function(someneuronlist, brain = NULL){
 #' Generate a 3D model from connector and/or tree node data
 #'
 #' @description Generate a mesh3d model based on points contained in a
-#'   neuronlist or neuron object
+#'   neuronlist or neuron object, or another object that conists of 3D points.
 #'
-#' @param someneuronlist a neuronlist or neuron object
+#' @param x a neuronlist or neuron object, or another object that conists of 3D points
 #' @param substrate whether to make the model based on the 3D location of
-#'   connectors, neuron cable or both
-#' @param auto.selection whether to try and remove points based on interactively
-#'   chosen values for \code{groupsize} and \code{maxdistance}
-#' @param maxdistance for automated cluster identification. Maximum distance at
-#'   which nodes can be part of a cluster
-#' @param groupsize an integer number of nearest neighbours to find using
-#'   \code{nabor::\link{knn}}
-#' @param selection whether or not to interactively select values for
-#'   \code{maxdistance} and \code{groupsize}.
+#'   connectors, neuron cable or both. Connectors are pre-synapse locations, 
+#'   e.g. the pre-synapses of a \code{catmaidneuron} from the R package \code{catmaid})
 #' @param alpha a single value or vector of values for alpha, fed to
-#'   \code{alphashape3d::ashape3d}. Selection is subsequently interactive
-#' @param chosen.points a matrix of 3D points. Use this argument if you do not
-#'   want to interactively select the 3D fed to \code{alphashape3d::ashape3d}.
+#'   \code{alphashape3d::ashape3d}. Selection is subsequently interactive.
+#' @param auto.selection logical, whether or not to try and remove points based on interactively
+#'   chossign simple values for clustering.
+#' @details Interactive function that allows a users to select points in 3D space from neuronlist/neuron objects,
+#' or another object that is coercible in 3D points using \code{\link{xyzmatrix}}. Points can first be automatically chosen, by
+#' selecting an integer number of nearest neighbours to find for each point using \code{nabor::\link{knn}}, and then a 
+#' maximum distance at which nodes can be part of a cluster. Next, \code{\link{select_points}} is used to manually pick desired 3D
+#' points. Lastly, \code{alphashape3d::ashape3d} is used to create an alphashape around these points. The user can trial different values for
+#' alpha until they get their desired result.
 #' @examples
 #' \dontrun{
 #' # Make a model based off of fly olfactory projection neuron arbours
@@ -123,64 +122,85 @@ correct_root <- function(someneuronlist, brain = NULL){
 #' @seealso \code{\link{prune_online}}
 #' @return A mesh3d object
 #' @export
-make_model <- function(someneuronlist, substrate = c("cable", "connectors", "both"), 
-                       maxdistance = 10, groupsize = 10, alpha = 30, 
-                       auto.selection = TRUE, chosen.points = NULL){
+make_model <- function(x, 
+                       substrate = c("cable", "connectors", "both"), 
+                       alpha = 30, 
+                       auto.selection = TRUE){
+  # need alphashape3d
   if(!requireNamespace("alphashape3d", quietly = TRUE))
     stop("Please install the suggested alphashape3d package in order to use make_model!")
   
+  # get starting points
   substrate <- match.arg(substrate)
-  if (substrate=="connectors"){synapse.points<-xyzmatrix(do.call(rbind, lapply(someneuronlist, function(x) x$connectors)))
-  } else if(substrate =="cable"){synapse.points<-xyzmatrix(someneuronlist) 
-  } else if (substrate == "both"){synapse.points<-rbind(xyzmatrix(someneuronlist), do.call(rbind, lapply(someneuronlist, function(x) xyzmatrix(x$connectors))))}
-  rgl::open3d()
+  if (is.neuron(x)|is.neuronlist(x)) {
+    if (substrate=="connectors"){substrate.points <- xyzmatrix(do.call(rbind, lapply(x, function(x) x$connectors)))
+    } else if(substrate =="cable"){substrate.points <- xyzmatrix(x) 
+    } else if (substrate == "both"){substrate.points <- rbind(xyzmatrix(x), do.call(rbind, lapply(x, function(x) xyzmatrix(x$connectors))))}
+  }else{
+    substrate.points  <-  xyzmatrix(x)
+  }
+  
+  # automatic point selection
   if (auto.selection == TRUE){
     progress = "n"
     while (progress == "n"){
-      groupsize <- as.numeric (readline(prompt="Select a value for the cluster groupsize  "))
-      maxdistance <- as.numeric (readline(prompt="Select a value for maximum distance between points  "))
-      neighbours<-nabor::knn(synapse.points, synapse.points, k = groupsize)
+      groupsize <- as.numeric (readline(prompt="Each node must have this number of near neighbours (e.g. 10): "))
+      maxdistance <- as.numeric (readline(prompt="And all the neighbours must be this close in Euclidean space (e.g. 1):  "))
+      if(groupsize<1){
+        groupsize <- 1
+      }
+      if(maxdistance<0){
+        maxdistance <- 0
+      }
+      neighbours <- nabor::knn(substrate.points, substrate.points, k = groupsize)
       loose <- apply(neighbours$nn.dists, 1, function(x) {(any(as.numeric(x[1:ncol(neighbours$nn.dists)]) > maxdistance))})
-      keep<-c(neighbours$nn.idx[,1][!loose])
-      close.points<-synapse.points[keep,]
-      rgl::clear3d();rgl::points3d(close.points, cl = 'black'); rgl::points3d(synapse.points, col = 'red')
-      progress = readline(prompt="Continue? y/n  ")
+      keep <- c(neighbours$nn.idx[,1][!loose])
+      selected.points <- substrate.points[keep,]
+      message("Selected points in black, deselected in red")
+      ids <- rgl::points3d(selected.points, cl = 'black')
+      ids  <-  union(ids, rgl::points3d(substrate.points, col = 'red') )
+      progress  <-  readline(prompt="Continue to manual selection/deselection? y/n  ")
+      pop3d(id=ids)
     }
   }
-  else{
-    neighbours<-nabor::knn(synapse.points, synapse.points, k = groupsize)
-    loose <- apply(neighbours$nn.dists, 1, function(x) {(any(as.numeric(x[1:ncol(neighbours$nn.dists)]) > maxdistance))})
-    keep<- c(neighbours$nn.idx[,1][!loose])
-    close.points<-synapse.points[keep,]
-    rgl::clear3d();rgl::points3d(close.points, cl = 'black'); rgl::points3d(synapse.points, col = 'red')
-  }
-  # Manual point deselection
-  selected.points = unique(close.points)
-  if (!is.null(chosen.points)){ selected.points = chosen.points}
-  progress = readline(prompt="Remove (r) or add (a) points? Or continue to alphashape generation (c)?  ")
+  
+  # manual point selection
+  progress = "p"
   while (progress != "c"){
     if (progress == 'r'){
-      remove.points <- rgl::select3d()
-      removed.points <- remove.points(selected.points)
-      selected.points<-subset(selected.points, !removed.points)
-      rgl::clear3d(); rgl::points3d(selected.points); rgl::points3d(synapse.points, col = 'red')
+      removed.points <- picked.points(selected.points)
+      selected.points <- subset(selected.points, !removed.points)
     }
     if (progress == 'a'){
-      add.points <- rgl::select3d()
-      added.points<-subset(synapse.points, add.points(synapse.points))
-      selected.points<-rbind(selected.points, added.points)
-      rgl::clear3d(); rgl::points3d(selected.points); rgl::points3d(synapse.points, col = 'red')
+      added.points <- subset(substrate.points, picked.points(substrate.points))
+      selected.points <- rbind(selected.points, added.points)
     }
-    progress = readline(prompt="Remove (r), add (a) or save (s) points?  ")
-  }
+    ids <- rgl::points3d(selected.points, cl = 'black')
+    ids  <-  union(ids, rgl::points3d(substrate.points, col = 'red') )
+    progress  <-  readline(prompt="Selected points in black. Remove (r) or add (a) points? Or continue to alphashape generation (c)?  ")
+    if(progress != "c"){
+      picked.points <- rgl::select3d() 
+      pop3d(id=ids)
+    }
+  } 
+  
+  # make alphashape
+  ids <- rgl::points3d(selected.points, cl = 'black')
+  ids  <-  union(ids, rgl::points3d(substrate.points, col = 'red') )
   progress = "n"
   while (progress == "n"){
-    alpha <- as.numeric (readline(prompt="Select a nmeric value for alpha  "))
-    alphashape<-alphashape3d::ashape3d(unique(selected.points), alpha = alpha)
-    plot(alphashape)
-    progress<-readline(prompt="Continue? y/n  ")
+    message("alpha is ", alpha)
+    alphashape <- alphashape3d::ashape3d(unique(selected.points), alpha = alpha)
+    mesh3d <- as.mesh3d(alphashape)
+    ids=rgl::plot3d(mesh3d, alpha = 0.5, col = "orangered", add = TRUE)
+    progress <- readline(prompt="Continue? y/n  ")
+    if(progress == "n"){
+      alpha <- as.numeric (readline(prompt="Select a numeric value for alpha  "))
+    }
   }
-  as.mesh3d(alphashape)
+  
+  # return
+  mesh3d
 }
 
 #' Interactively select 3D points in space
