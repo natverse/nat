@@ -73,7 +73,7 @@ When you're ready to learn more:
 
 * Read the [overview package documentation](https://natverse.github.io/nat/reference/nat-package.html)
   (`?nat` in R)
-* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html article)
+* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html) article
 * Check out the thematically organised [function reference documentation](https://natverse.github.io/nat/reference/). 
   * Most help pages include examples.
 * Try out sample code:
