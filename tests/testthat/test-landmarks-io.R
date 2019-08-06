@@ -67,7 +67,7 @@ test_that("generic landmarks I/O", {
   if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use JFRC2.points!')
   expect_is(l<-read.landmarks(f), "landmarks")
   if(nzchar(Sys.getenv("NAT_INTERNET_TESTS"))){
-    u=paste0('https://raw.githubusercontent.com/jefferis/nat/master/tests/testthat/', f)
+    u=paste0('https://raw.githubusercontent.com/natverse/nat/master/tests/testthat/', f)
     expect_equal(read.landmarks(u), l)
   }
   

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
       </span>
     </div>
 
@@ -63,18 +63,18 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="articles/Installation.html">Installation details</a>
+    </li>
+    <li>
+      <a href="articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
     <li>
       <a href="articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="news/index.html">News</a>
 </li>
 <li>
   <a href="articles/Installation.html">Installation</a>
@@ -85,10 +85,16 @@
 <li>
   <a href="index.html#help">Help</a>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/jefferis/nat">
+  <a href="https://natverse.github.io">natverse</a>
+</li>
+<li>
+  <a href="https://github.com/natverse/nat">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -107,6 +113,7 @@
 <div id="nat-neuroanatomy-toolbox" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#nat-neuroanatomy-toolbox" class="anchor"></a>nat: NeuroAnatomy Toolbox</h1></div>
+<!-- badges: start -->
 
 <p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of single neurons. <strong>nat</strong> is the core package of a wider suite of neuroanatomy tools introduced at <a href="http://jefferislab.github.io" class="uri">http://jefferislab.github.io</a>. <strong>nat</strong> (and its <a href="https://github.com/jefferis/AnalysisSuite">ancestors</a>) have been used in a number of papers from our group including:</p>
 <p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428"><img src="https://media.nature.com/full/nature-assets/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" title="Food and Pheromone Integration" alt="Nature 2011"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a> <a href="http://dx.doi.org/10.1016/j.neuron.2016.06.012"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/P1Clustering_200_sq_crop-215x215.jpg" title="NBLAST" alt="Neuron 2016"></a></p>
@@ -114,52 +121,58 @@
 <h2 class="hasAnchor">
 <a href="#quick-start" class="anchor"></a>Quick Start</h2>
 <p>For the impatient …</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"nat"</span>)
-<span class="co"># use</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nat)
-
-<span class="co"># plot some test data (?kcs20 for details)</span>
-<span class="co"># Drosophila Kenyon cells processed from raw data at http://flycircuit.tw</span>
-<span class="kw"><a href="reference/neuronlist-dataframe-methods.html">head</a></span>(kcs20)
-<span class="kw">open3d</span>()
-<span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(kcs20, <span class="dt">col=</span>type)
-<span class="co"># get help</span>
-?nat</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"nat"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># use</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(nat)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># plot some test data (?kcs20 for details)</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Drosophila Kenyon cells processed from raw data at http://flycircuit.tw</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw"><a href="reference/neuronlist-dataframe-methods.html">head</a></span>(kcs20)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">open3d</span>()</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="kw"><a href="reference/plot3d.html">plot3d</a></span>(kcs20, <span class="dt">col=</span>type)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="co"># get help</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">?nat</a></code></pre></div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>A confirmed stable version of <strong>nat</strong> can be installed from CRAN.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"nat"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"nat"</span>)</a></code></pre></div>
 <p>However, <strong>nat</strong> remains under quite active development, so if you will be using <strong>nat</strong> extensively, we generally recommend installing the latest development version directly from github using the <a href="https://cran.r-project.org/package=devtools">devtools</a> package.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install devtools if required</span>
-<span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)
-<span class="co"># then install nat</span>
-devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"jefferis/nat"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># install devtools if required</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ns-load">requireNamespace</a></span>(<span class="st">"devtools"</span>)) <span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"devtools"</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># then install nat</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"natverse/nat"</span>)</a></code></pre></div>
 </div>
 <div id="learn" class="section level2">
 <h2 class="hasAnchor">
 <a href="#learn" class="anchor"></a>Learn</h2>
 <p>To get an idea of what <strong>nat</strong> can do:</p>
 <ul>
-<li>Skim through the Articles listed at <a href="http://jefferis.github.io/nat/" class="uri">http://jefferis.github.io/nat/</a>
+<li>Skim through the Articles listed at <a href="https://natverse.github.io/nat/" class="uri">https://natverse.github.io/nat/</a>
 </li>
 <li>Take a look at the <a href="http://rmarkdown.rstudio.com/">R Markdown</a> reports used to generate the <a href="http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/">figures for our NBLAST paper</a>.</li>
 </ul>
 <p>When you’re ready to learn more:</p>
 <ul>
-<li>Read the <a href="http://jefferis.github.io/nat/reference/nat-package.html">overview package documentation</a> (<code><a href="reference/nat-package.html">?nat</a></code> in R)</li>
-<li>Read the <a href="http://jefferis.github.io/nat/articles/neurons-intro.html%20article">Introduction to neurons</a>
+<li>Read the <a href="https://natverse.github.io/nat/reference/nat-package.html">overview package documentation</a> (<code><a href="reference/nat-package.html">?nat</a></code> in R)</li>
+<li>Read the <a href="https://natverse.github.io/nat/articles/neurons-intro.html%20article">Introduction to neurons</a>
 </li>
-<li>Check out the thematically organised <a href="http://jefferis.github.io/nat/reference/">function reference documentation</a>.</li>
+<li>Check out the thematically organised <a href="https://natverse.github.io/nat/reference/">function reference documentation</a>.
+<ul>
 <li>Most help pages include examples.</li>
-<li>Try out sample code:</li>
+</ul>
+</li>
+<li>Try out sample code:
+<ul>
 <li>
-<a href="https://github.com/jefferis/nat.examples">nat.examples</a> has detailed examples for data sets from a range of model organisms and techniques</li>
+<a href="https://github.com/natverse/nat.examples">nat.examples</a> has detailed examples for data sets from a range of model organisms and techniques</li>
 <li>
 <a href="https://github.com/jefferis/frulhns">frulhns</a> analysis of sexually dimorphic circuits</li>
 <li><a href="https://github.com/jefferislab/NBLAST_figures/">NBLAST figures</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="help" class="section level2">
@@ -167,17 +180,20 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <a href="#help" class="anchor"></a>Help</h2>
 <p>If you want some help using <strong>nat</strong>:</p>
 <ul>
-<li>For installation issues, see the <a href="http://jefferis.github.io/nat/articles/Installation.html">Installation vignette</a>
+<li>For installation issues, see the <a href="https://natverse.github.io/nat/articles/Installation.html">Installation vignette</a>
 </li>
 <li>Contact <a href="https://groups.google.com/forum/#!forum/nat-user">nat-user</a> Google group - we normally respond promptly and you will also be helping future users.</li>
 </ul>
 <p>If you think that you have found a bug:</p>
 <ul>
 <li>Install the development version of nat using devtools (see above) and see if that helps.</li>
-<li>Check the <a href="https://github.com/jefferis/nat/issues?q=is%3Aissue">github issues</a> and</li>
+<li>Check the <a href="https://github.com/natverse/nat/issues?q=is%3Aissue">github issues</a> and
+<ul>
 <li>
-<a href="https://github.com/jefferis/nat/issues/new">file a bug report</a> if this seems to be a new problem</li>
+<a href="https://github.com/natverse/nat/issues/new">file a bug report</a> if this seems to be a new problem</li>
 <li>comment on an existing bug report</li>
+</ul>
+</li>
 </ul>
 <p>Thanks for your interest in <strong>nat</strong>!</p>
 </div>
@@ -190,9 +206,9 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=nat">https://​cloud.r-project.org/​package=nat</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/jefferis/nat">https://​github.com/​jefferis/​nat</a>
+<li>Browse source code at <br><a href="https://github.com/natverse/nat">https://​github.com/​natverse/​nat</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/jefferis/nat/issues">https://​github.com/​jefferis/​nat/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/natverse/nat/issues">https://​github.com/​natverse/​nat/​issues</a>
 </li>
 </ul>
 </div>
@@ -219,12 +235,13 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
+<li><a href="https://natverse.github.io"><img src="https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6" alt="natverse"></a></li>
 <li><a href="http://dx.doi.org/10.5281/zenodo.10171"><img src="https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg" alt="DOI"></a></li>
-<li><a href="https://github.com/jefferis/nat/releases/latest"><img src="https://img.shields.io/github/release/jefferis/nat.svg" alt="Release Version"></a></li>
+<li><a href="https://github.com/natverse/nat/releases/latest"><img src="https://img.shields.io/github/release/natverse/nat.svg" alt="Release Version"></a></li>
 <li><a href="https://cran.r-project.org/package=nat"><img src="http://www.r-pkg.org/badges/version/nat" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://travis-ci.org/jefferis/nat"><img src="https://img.shields.io/travis/jefferis/nat.svg" alt="Build Status"></a></li>
-<li><a href="https://coveralls.io/r/jefferis/nat?branch=master"><img src="https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master" alt="Coverage Status"></a></li>
-<li><a href="http://jefferis.github.io/nat/reference/"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a></li>
+<li><a href="https://travis-ci.org/natverse/nat"><img src="https://img.shields.io/travis/natverse/nat/master.svg" alt="Build Status"></a></li>
+<li><a href="https://coveralls.io/r/natverse/nat?branch=master"><img src="https://coveralls.io/repos/natverse/nat/badge.svg?branch=master" alt="Coverage Status"></a></li>
+<li><a href="https://natverse.github.io/nat/reference/"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a></li>
 </ul>
 </div>
 </div>

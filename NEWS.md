@@ -1,3 +1,13 @@
+# nat (development version)
+
+* switch to https://github.com/natverse/nat
+
+# nat 1.9.1
+
+* Fix very slow loading of neurons in `neuronlistfh()` objects. 
+  Apparently due to a change in behaviour in R 3.6.0 (#402).
+  Thanks to Shanice Bailey and Lisa Marin for the bug report.
+
 # nat 1.9.0
 
 We are bumping a whole version point because of some changes in the default
@@ -122,7 +132,7 @@ Fixes
 # nat 1.8.7
 
 This release includes some bug fixes and significantly improved online package
-documentation visible at http://jefferis.github.io/nat/ including two vignettes.
+documentation visible at https://natverse.github.io/nat/ including two vignettes.
 
 * Teach xform and friends to transform soma positions (#206)
 * Copy attributes (including templatebrains) of neuronlists when subsetting (#310)
@@ -293,7 +303,7 @@ default) suppresses interactive rgl windows when running in batch
 * plot.neuron(,AxisDirections) argument is re-implemented (#224)
 * don't warn when read.neuronlistfh changes the directory location on disk (#157)
 * remove superimposed plots in mirror example (hope this will fix build on 
-  macosx snowleopard)
+  MacOS X Snow Leopard)
 * teach read.neurons to OmitFailures when reading in a neuronlistfh object.
 * fix handling of default colours in plot.neuronlist and plot3d.neuronlist (#230)
 * fix plot3d.neuronlist returns one element per neuron
@@ -358,7 +368,7 @@ default) suppresses interactive rgl windows when running in batch
 
 * add nlscan function to review a set of neurons, optionally selecting a subset
 * add find.soma function to select neurons whose cell bodies fall within an rgl
-  seelection box (thanks to Ben Sutcliffe).
+  selection box (thanks to Ben Sutcliffe).
 * add setdiff, intersect and union generics with implementations for neuronlist
   objects (note this is done in more or less identical fashion to generics
   defined in the dplyr package).
@@ -390,7 +400,7 @@ default) suppresses interactive rgl windows when running in batch
   neuronlists have no attached data.frame at all.
 * read.neurons can read neuronlist files from disk
 * cmtk.statistics now has a Verbose argument
-* warn if resmapling a neuron with multiple subtrees that only the main subtree
+* warn if resampling a neuron with multiple subtrees that only the main subtree
   will be kept.
 
 # nat 1.5.11
@@ -441,8 +451,8 @@ default) suppresses interactive rgl windows when running in batch
 * give mirror/xform.neuronlist subset arguments
 * add plot3d.boundingbox
 * give plot(3d).neuronlist a SUBSTITUTE argument that can be used to control
-  non-stadard evaluation. This is useful for people who wish to incoroporate
-  these funcitons inside other user-defined functions. See ?subset.neuronlist
+  non-standard evaluation. This is useful for people who wish to incorporate
+  these functions inside other user-defined functions. See ?subset.neuronlist
   for details.
 * fix: write.neurons into subdirs when df=NULL
 
@@ -461,7 +471,7 @@ default) suppresses interactive rgl windows when running in batch
 # nat 1.5.3
 
 * new function pointsinside to determine if points (e.g. neuron) are inside a
-  closedd surface
+  closed surface
 * resample.neuron implemented (no support for interpolating widths or multiple
   subtrees)
 * dotprops.neuron can resample to a consistent segment length
@@ -483,7 +493,7 @@ default) suppresses interactive rgl windows when running in batch
 * always drop unused vertices in as.mesh3d.hxsurf
 * fix bug in write.neurons when subdir not specified
 * fix colouring of vectors by plot3d.dotprops
-* dev: switch to roxygygen2 v4
+* dev: switch to roxygen2 v4
 
 # nat 1.5.1
 
@@ -507,7 +517,7 @@ default) suppresses interactive rgl windows when running in batch
 * add xyzmatrix method for neuronlists
 * add materials function with methods for im3d and hxsurf objects
 * enh: read.im3d can read materials from amiramesh files
-* enh: download neurnonlistfh objects to session temp directory if no localdir
+* enh: download neuronlistfh objects to session temp directory if no localdir
   is specified
 * fix: find CMTK in its new default location on macosx
 * fix: plot3d should skip redrawing if par3d() skipRedraw is set
@@ -691,7 +701,7 @@ default) suppresses interactive rgl windows when running in batch
 * implement read.neuron and read.neurons
 * so far only works for rda, rds and swc files
 * reading of additional file types will be implemented by registering functions =
-  to test, read and write for the format using a package regsistry controlled by
+  to test, read and write for the format using a package registry controlled by
   nat::neuronformats.
 * developer: seglists in neurons now have class 'seglist'
 
@@ -720,7 +730,7 @@ default) suppresses interactive rgl windows when running in batch
 * teach mirror function to accept numeric axis specification
 * Fix bug in checking extra directories in cmtk.bindir
 * Add dotprops.neuronlist and include all dotprops methods in documentation
-* Fix longstanding bug in parsing cmtk warping registrations (only relevant for
+* Fix long-standing bug in parsing cmtk warping registrations (only relevant for
   reading these into R lists - no effect on transformations).
 * fix bug in class of cmtkreg objects
 * Remove call to .Internal(La_rs) by calling eigen directly
