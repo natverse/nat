@@ -98,16 +98,16 @@ correct_root <- function(someneuronlist, brain = NULL){
 #' Generate a 3D model from connector and/or tree node data
 #'
 #' @description Generate a mesh3d model based on points contained in a
-#'   neuronlist or neuron object, or another object that conists of 3D points.
+#'   neuronlist or neuron object, or another object that consists of 3D points.
 #'
-#' @param x a neuronlist or neuron object, or another object that conists of 3D points
+#' @param x a neuronlist or neuron object, or another object that consists of 3D points
 #' @param substrate whether to make the model based on the 3D location of
 #'   connectors, neuron cable or both. Connectors are pre-synapse locations, 
 #'   e.g. the pre-synapses of a \code{catmaidneuron} from the R package \code{catmaid})
 #' @param alpha a single value or vector of values for alpha, fed to
 #'   \code{alphashape3d::ashape3d}. Selection is subsequently interactive.
 #' @param auto.selection logical, whether or not to try and remove points based on interactively
-#'   chossign simple values for clustering.
+#'   choosing simple values for clustering.
 #' @details Interactive function that allows a users to select points in 3D space from neuronlist/neuron objects,
 #' or another object that is coercible in 3D points using \code{\link{xyzmatrix}}. Points can first be automatically chosen, by
 #' selecting an integer number of nearest neighbours to find for each point using \code{nabor::\link{knn}}, and then a 
