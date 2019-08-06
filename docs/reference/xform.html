@@ -8,6 +8,13 @@
 
 <title>Transform the 3D location of objects such as neurons — xform • nat</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
@@ -41,6 +48,8 @@ xform.
 xform.character is designed to work with files on disk.
   Presently it is restricted to images, although other datatypes may be
   supported in future." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -228,9 +237,9 @@ that specify a subset of the members of <code>x</code> to be transformed.</p></t
     </tr>
     <tr>
       <th>OmitFailures</th>
-      <td><p>Whether to omit neurons for which <code>FUN</code> gives an 
-error. The default value (<code>NA</code>) will result in nlapply stopping with 
-an error message the moment there is an error. For other values, see 
+      <td><p>Whether to omit neurons for which <code>FUN</code> gives an
+error. The default value (<code>NA</code>) will result in nlapply stopping with
+an error message the moment there is an error. For other values, see
 details.</p></td>
     </tr>
     <tr>

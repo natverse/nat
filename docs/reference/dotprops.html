@@ -8,6 +8,13 @@
 
 <title>dotprops: Neurons as point clouds with tangent vectors (but no connectivity) — dotprops • nat</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
@@ -40,6 +47,8 @@ dotprops.dotprops will default to the original vale of
 dotprops.neuronlist will run for every object in the 
   neuronlist using nlapply. ... arguments will be passed to 
   nlapply in addition to the named argument OmitFailures." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -203,9 +212,9 @@ dotprops.neuronlist will run for every object in the
     </tr>
     <tr>
       <th>OmitFailures</th>
-      <td><p>Whether to omit neurons for which <code>FUN</code> gives an 
-error. The default value (<code>NA</code>) will result in nlapply stopping with 
-an error message the moment there is an error. For other values, see 
+      <td><p>Whether to omit neurons for which <code>FUN</code> gives an
+error. The default value (<code>NA</code>) will result in nlapply stopping with
+an error message the moment there is an error. For other values, see
 details.</p></td>
     </tr>
     <tr>
