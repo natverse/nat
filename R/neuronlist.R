@@ -318,7 +318,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 
 #' lapply and mapply for neuronlists (with optional parallelisation)
 #'
-#' @description versions of lapply and mapply that look after the class and
+#' @description Versions of lapply and mapply that look after the class and
 #'   attached dataframe of neuronlist objects. \code{nlapply} can apply a
 #'   function to only a \code{subset} of elements in the input neuronlist.
 #'   Internally \code{nlapply} uses \code{plyr::llply} thereby enabling progress
@@ -388,6 +388,10 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   character vector which names a function. According to \code{plyr}'s
 #'   convention an external function called \code{progress_myprogressbar} will
 #'   be identified by setting the argument to \code{.progress="myprogressbar"}.
+#'   By default the supplied \code{progress_natprogress} function will be used
+#'   when \code{.progress="auto"}; this function will probably not be used
+#'   directly by end users; however it must be exported for \code{nlapply} with
+#'   progress to work properly in other functions.
 #' @return A neuronlist
 #' @export
 #' @seealso \code{\link{lapply}}
@@ -482,6 +486,10 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
   }
 }
 
+#' @export
+#' @rdname nlapply
+#' @description \code{progress_natprogress} provides a progress bar compatible
+#'   with the \code{progress::\link{progress_bar}}.
 progress_natprogress <- function(...) {
   pb <- NULL
   list(
