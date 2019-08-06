@@ -21,8 +21,7 @@
 #' @export
 #' @rdname prune_online
 prune_online <-function(x, ...) UseMethod("prune_online")
-#' @export
-#' @rdname prune_online
+
 prune_online.neuron <- function(x, ...){
   continue = "no"
   ids=integer()
@@ -37,8 +36,7 @@ prune_online.neuron <- function(x, ...){
   }
   neuron
 }
-#' @export
-#' @rdname prune_online
+
 prune_online.neuronlist <- function(x, ...){
   nlapply(x,prune_online.neuron)
 }
