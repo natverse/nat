@@ -334,22 +334,28 @@ as.list.neuronlistfh<-function(x, ...) x
 # @param missing A list of missing objects
 # @param fh The neuronlistfh object that needs filling in
 # @param quiet Whether to show download progress for each neuron
-# @param progress Whether to show download progress for all requested neuron
-#   (default: TRUE when >=5 neurons to download)
-fillMissing <- function(missing, fh, quiet=progress, progress=length(missing)>=5) {
+# @param progress 
+fillMissing <- function(missing, fh, quiet=length(missing)>1, 
+                        progress=getOption('nat.progress', default='auto')) {
   objDir <- attr(fh, 'db')@dir
   if (!file.exists(objDir)) dir.create(objDir)
   
-  if(progress) {
-    tpb=txtProgressBar(min=0,max=length(missing),style=3)
+  if(progress=='auto') progress=ifelse(interactive(), 'text', 'none')
+  # convert to logical
+  progress=progress!='none'
+  
+  if(progress){
+    p <- progress_natprogress()
+    p$init(length(missing))
     message('Downloading ',length(missing),' missing neurons from ',
             attr(fh, 'remote'))
   }
+  
   for(i in seq_along(missing)){
     download.file(url=paste0(attr(fh, 'remote'), missing[i]),
                   destfile=file.path(objDir,missing[i]),
                   quiet=quiet, mode = 'wb')
-    if(progress) setTxtProgressBar(tpb,i)
+    if(progress) p$step()
   }
 }
 
