@@ -4,40 +4,36 @@
 \alias{make_model}
 \title{Generate a 3D model from connector and/or tree node data}
 \usage{
-make_model(someneuronlist, substrate = c("cable", "connectors", "both"),
-  maxdistance = 10, groupsize = 10, alpha = 30,
-  auto.selection = TRUE, chosen.points = NULL)
+make_model(x, substrate = c("cable", "connectors", "both"), alpha = 30,
+  auto.selection = TRUE)
 }
 \arguments{
-\item{someneuronlist}{a neuronlist or neuron object}
+\item{x}{a neuronlist or neuron object, or another object that conists of 3D points}
 
 \item{substrate}{whether to make the model based on the 3D location of
-connectors, neuron cable or both}
-
-\item{maxdistance}{for automated cluster identification. Maximum distance at
-which nodes can be part of a cluster}
-
-\item{groupsize}{an integer number of nearest neighbours to find using
-\code{nabor::\link{knn}}}
+connectors, neuron cable or both. Connectors are pre-synapse locations, 
+e.g. the pre-synapses of a \code{catmaidneuron} from the R package \code{catmaid})}
 
 \item{alpha}{a single value or vector of values for alpha, fed to
-\code{alphashape3d::ashape3d}. Selection is subsequently interactive}
+\code{alphashape3d::ashape3d}. Selection is subsequently interactive.}
 
-\item{auto.selection}{whether to try and remove points based on interactively
-chosen values for \code{groupsize} and \code{maxdistance}}
-
-\item{chosen.points}{a matrix of 3D points. Use this argument if you do not
-want to interactively select the 3D fed to \code{alphashape3d::ashape3d}.}
-
-\item{selection}{whether or not to interactively select values for
-\code{maxdistance} and \code{groupsize}.}
+\item{auto.selection}{logical, whether or not to try and remove points based on interactively
+chossign simple values for clustering.}
 }
 \value{
 A mesh3d object
 }
 \description{
 Generate a mesh3d model based on points contained in a
-  neuronlist or neuron object
+  neuronlist or neuron object, or another object that conists of 3D points.
+}
+\details{
+Interactive function that allows a users to select points in 3D space from neuronlist/neuron objects,
+or another object that is coercible in 3D points using \code{\link{xyzmatrix}}. Points can first be automatically chosen, by
+selecting an integer number of nearest neighbours to find for each point using \code{nabor::\link{knn}}, and then a 
+maximum distance at which nodes can be part of a cluster. Next, \code{\link{select_points}} is used to manually pick desired 3D
+points. Lastly, \code{alphashape3d::ashape3d} is used to create an alphashape around these points. The user can trial different values for
+alpha until they get their desired result.
 }
 \examples{
 \dontrun{
