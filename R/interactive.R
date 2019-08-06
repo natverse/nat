@@ -192,7 +192,7 @@ make_model <- function(x,
     message("alpha is ", alpha)
     alphashape <- alphashape3d::ashape3d(unique(selected.points), alpha = alpha)
     mesh3d <- as.mesh3d(alphashape)
-    ids=rgl::plot3d(mesh3d, alpha = 0.5, col = "orangered", add = TRUE)
+    ids=rgl::plot3d(mesh3d, alpha = 0.5, col = "purple", add = TRUE)
     progress <- readline(prompt="Continue? y/n  ")
     if(progress == "n"){
       alpha <- as.numeric (readline(prompt="Select a numeric value for alpha  "))
