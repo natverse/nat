@@ -1,3 +1,15 @@
+nat 1.8.13
+==========
+
+This release backports a few urgent fixes to the 1.8 branch
+
+* Fix very slow loading of neurons in `neuronlistfh()` objects. 
+  Apparently due to a change in behaviour in R 3.6.0 (#402).
+  Thanks to Shanice Bailey and Lisa Marin for the bug report.
+* Fix ndigest check error on CRAN (#411)
+
+It also updates URLs to point to nat's new home organisation on GitHub 
+(https://github.com/natverse/).
 nat 1.8.12
 ==========
 * Speed up (2-3x) summary.neuron(list) by faster calculation of total cable
