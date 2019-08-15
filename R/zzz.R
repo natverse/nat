@@ -85,3 +85,6 @@ update_igraph <- FALSE
 
 # Will store stack of plotted plotly objects, ready for popping
 .plotly3d <- new.env()
+.plotly3d$camera = list(up=list(x=0, y=0, z=1),
+              center=list(x=0, y=0, z=0),
+              eye=list(x=-0.1, y=-2.5, z=0.1))

@@ -585,7 +585,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, 
+plot3d.neuronlist<-function(x, subset=NULL, plotengine = c('rgl','plotly'), col=NULL, colpal=rainbow, 
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
                             WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
@@ -598,31 +598,69 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
     x <- subset.neuronlist(x, r)
   }
   
+  #Handle plotting engine
+  plotengine = match.arg(plotengine)
+  
   # Handle Colours
   col.sub <- if(SUBSTITUTE) substitute(col) else col
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
+  if (plotengine == 'plotly') {
+    clearplotlyscene()
+    .plotly3d$plotlyscenehandle = plotly::plot_ly()
+    plotlyreturnlist = list()
+    plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
+  }
+  
   # Speed up drawing when there are lots of neurons
   if(is.numeric(skipRedraw)) skipRedraw=ifelse(length(x)>skipRedraw,TRUE,FALSE)
   if(is.logical(skipRedraw)) {
-    if(par3d()$skipRedraw) skipRedraw=TRUE
-    op=par3d(skipRedraw=skipRedraw)
-    on.exit(par3d(op))
+    if (plotengine == 'rgl'){
+        if(par3d()$skipRedraw) skipRedraw=TRUE
+        op=par3d(skipRedraw=skipRedraw)
+        on.exit(par3d(op))
+    }
   }
   
-  rval=mapply(plot3d,x,col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
-              SIMPLIFY=FALSE)
+  rval=mapply(plot3d,x,plotengine = plotengine, col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
+                  SIMPLIFY=FALSE)
+  if(plotengine == 'plotly'){
+    plotlyreturnlist$plotlyscenehandle <- rval[[length(rval)]]$plotlyscenehandle
+  }
   df=as.data.frame(x)
   if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
                all(c("X","Y","Z") %in% colnames(df))){
     if(is.logical(soma)) soma=2
-    rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
+    if (plotengine == 'rgl'){
+        rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
+    } else{
+      plotdata=df[, c("X", "Y", "Z")]
+      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+                                            hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+                                            opacity = 1, marker=list(symbol = 'circle', sizemode = 'diameter',
+                                                                    color = cols),sizes = 2*soma)
+    }
   }
-  assign(".last.plot3d", rval, envir=.plotted3d)
+  if (plotengine == 'rgl'){
+    assign(".last.plot3d", rval, envir=.plotted3d)
+  }
+  
   df$col=cols
-  attr(rval,'df')=df
-  invisible(rval)
+  if (plotengine == 'rgl'){
+      attr(rval,'df')=df
+      invisible(rval)
+    } else{
+      
+      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                            plotly::layout(showlegend = FALSE, 
+                                                           scene=list(camera=.plotly3d$camera))
+      .plotly3d$plotlyscenehandle = plotlyreturnlist$plotlyscenehandle
+      print(plotlyreturnlist$plotlyscenehandle)
+      attr(plotlyreturnlist,'df')=df
+      invisible(plotlyreturnlist)
+  }
 }
 
 #' @rdname plot3d.neuronlist

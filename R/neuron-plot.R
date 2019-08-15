@@ -215,11 +215,8 @@ plot3d.neuron<-function(x, WithLine=TRUE, plotengine = c('rgl','plotly'), Neuron
   if (plotengine == 'rgl'){
     invisible(rglreturnlist)
   } else{
-    camera = list(up=list(x=0, y=0, z=1),
-                  center=list(x=0, y=0, z=0),
-                  eye=list(x=-0.1, y=-2.5, z=0.1))
     plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                          plotly::layout(showlegend = FALSE, scene=list(camera=camera))
+                                          plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
     assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
     #print(plotlyreturnlist$plotlyscenehandle)
     invisible(plotlyreturnlist)
