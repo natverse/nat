@@ -537,7 +537,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x, ...) {
+plot3d.boundingbox <- function(x,plotengine = c('rgl','plotly'), ...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -548,7 +548,34 @@ plot3d.boundingbox <- function(x, ...) {
   c(x[2, 1], x[2, 2], x[1, 3]),
   c(x[2, 1], x[2, 2], x[2, 3])
   ), ncol=3, byrow=TRUE)
-  segments3d(pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ], ...)
+  
+  #Handle plotting engine
+  plotengine = match.arg(plotengine)
+  
+  if (plotengine == 'rgl'){
+    segments3d(pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ], ...)
+  } else {
+    if (!exists("plotlyscenehandle", envir = .plotly3d)){
+        .plotly3d$plotlyscenehandle = plotly::plot_ly()}
+    
+    tempdata <- pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ]
+    tempseglist <- list()
+    for (tempidx in seq(1,nrow(tempdata)/2)) {
+      tempseglist[[tempidx]] <- c(1,2)+2*(tempidx-1)
+    }
+     
+    tempdata<-do.call(rbind,sapply(tempseglist,function(s) {rbind(tempdata[s,],NA)},simplify=FALSE))
+    
+    plotdata <- as.data.frame(tempdata)
+    names(plotdata) <- c('X','Y','Z')
+    .plotly3d$plotlyscenehandle <- .plotly3d$plotlyscenehandle %>% 
+                                    plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+                                    hoverinfo = "none", type = 'scatter3d', mode = 'lines',
+                                    opacity = 1, line=list(color = 'black', width = 4))
+    print(.plotly3d$plotlyscenehandle)
+    
+  }
+  
 }
 
 clearplotlyscene <- function(){
