@@ -82,3 +82,6 @@ update_igraph <- FALSE
 
 # Will store stack of plotted rgl objects, ready for popping
 .plotted3d <- new.env()
+
+# Will store stack of plotted plotly objects, ready for popping
+.plotly3d <- new.env()
