@@ -584,3 +584,11 @@ clearplotlyscene <- function(){
     rm("plotlyscenehandle", envir = .plotly3d)}
   
 }
+
+openplotlyscene <- function(){
+  if (!exists("plotlyscenehandle", envir = .plotly3d)){
+    .plotly3d$plotlyscenehandle = plotly::plot_ly()}
+  plotlyreturnlist = list()
+  plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
+  return(plotlyreturnlist)
+}

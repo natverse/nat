@@ -300,14 +300,30 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }
-plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black', 
+plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = c('rgl','plotly'), alpharange=NULL, color='black', 
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
+  
+  #Handle plotting engine
+  plotengine = match.arg(plotengine)
+  
   rlist=list()
+  if (plotengine == 'plotly') {
+    plotlyreturnlist <- openplotlyscene()
+    }
+  
   if(PlotPoints){
-    rlist$points=points3d(x$points, color=color, ...)
+    if (plotengine == 'rgl'){
+      rlist$points=points3d(x$points, color=color, ...)
+    } else {
+      plotdata <- as.data.frame(x$points)
+      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+                                            hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+                                            opacity = 1, marker=list(color = color, size = 3))
+    }
   }
     
   if(PlotVectors){
@@ -319,9 +335,37 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
     starts=x$points-halfvect
     stops=x$points+halfvect
     interleaved=matrix(t(cbind(starts,stops)),ncol=3,byrow=T)
-    rlist$segments=segments3d(interleaved, color=color, ...)
+    if (plotengine == 'rgl'){
+        rlist$segments=segments3d(interleaved, color=color, ...)
+    } else {
+      
+      tempdata <- interleaved
+      tempseglist <- list()
+      for (tempidx in seq(1,nrow(tempdata)/2)) {
+        tempseglist[[tempidx]] <- c(1,2)+2*(tempidx-1)
+      }
+      
+      tempdata<-do.call(rbind,sapply(tempseglist,function(s) {rbind(tempdata[s,],NA)},simplify=FALSE))
+      
+      plotdata <- as.data.frame(tempdata)
+      names(plotdata) <- c('X','Y','Z')
+      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+                                            hoverinfo = "none", type = 'scatter3d', mode = 'lines',
+                                            opacity = 1, line=list(color = color, width = 4))
+    }
   }
-  invisible(rlist)
+  if (plotengine == 'rgl'){
+    invisible(rlist)
+  } else {
+    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                          plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
+    print(plotlyreturnlist$plotlyscenehandle)
+    invisible(plotlyreturnlist)
+  }
+  
+ 
 }
 
 #' @rdname plot.neuron
