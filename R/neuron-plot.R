@@ -70,10 +70,7 @@ plot3d.neuron<-function(x, WithLine=TRUE, plotengine = c('rgl','plotly'), Neuron
   }
   
   if (plotengine == 'plotly') {
-    if (!exists("plotlyscenehandle", envir = .plotly3d)){
-      .plotly3d$plotlyscenehandle = plotly::plot_ly()}
-    plotlyreturnlist = list()
-    plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
+    plotlyreturnlist <- openplotlyscene()
   }
     
   # skip so that the scene is updated only once per neuron
