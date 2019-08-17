@@ -25,6 +25,16 @@ test_that("we can read hxsurf object", {
   clear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
   rgl.close()
+  
+  #For plotly.
+  openplotlyscene()
+  plot3d(surf,plotengine = 'plotly', col='red',opacity=0.2)
+  clearplotlyscene()
+  plot3d(surf,plotengine = 'plotly',opacity=0.2)
+  clearplotlyscene()
+  plot3d(surf,plotengine = 'plotly',col=rainbow,opacity=0.2)
+  clearplotlyscene()
+  
 })
 
 test_that("we fail for bad surface files", {

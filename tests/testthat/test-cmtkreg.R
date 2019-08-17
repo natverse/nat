@@ -58,4 +58,7 @@ test_that("we can plot a CMTK registration",{
   skip_on_cran()
   plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'))
   clear3d()
+  
+  plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'), plotengine = 'plotly')
+  clearplotlyscene()
 })
