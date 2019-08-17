@@ -123,6 +123,7 @@ cmtkreg.filetype <- function(x) {
 #' 
 #' @param x A cmtk registration (the path to the registration folder on disk) or
 #'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
+#' @param plotengine plotting backend to use either 'rgl' or 'plotly'.
 #' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
 #'   \code{\link[rgl]{plot3d}}

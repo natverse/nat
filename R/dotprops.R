@@ -274,6 +274,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' @param x A dotprops object
 #' @param scalevecs Factor by which to scale unit vectors (numeric, default: 
 #'   1.0)
+#' @param plotengine plotting backend to use either 'rgl' or 'plotly'.
 #' @param alpharange Restrict plotting to points with \code{alpha} values in 
 #'   this range to plot (default: null => all points). See 
 #'   \code{\link{dotprops}} for definition of \code{alpha}.

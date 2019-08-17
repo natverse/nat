@@ -510,6 +510,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' Plot a bounding box in 3D
 #' 
 #' @param x the \code{\link{boundingbox}} object to plot.
+#' @param plotengine plotting backend to use either 'rgl' or 'plotly'.
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
 #' @return A list of RGL object IDs.
 #'   

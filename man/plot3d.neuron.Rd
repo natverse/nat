@@ -2,16 +2,19 @@
 % Please edit documentation in R/neuron-plot.R
 \name{plot3d.neuron}
 \alias{plot3d.neuron}
-\title{Plot neurons in 3D using rgl library}
+\title{Plot neurons in 3D using rgl library or plotly module}
 \usage{
-\method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
-  WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
-  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...)
+\method{plot3d}{neuron}(x, WithLine = TRUE, plotengine = c("rgl",
+  "plotly"), NeuronNames = FALSE, WithNodes = TRUE,
+  WithAllPoints = FALSE, WithText = FALSE, PlotSubTrees = TRUE,
+  add = TRUE, col = NULL, soma = FALSE, ...)
 }
 \arguments{
 \item{x}{A neuron to plot}
 
 \item{WithLine}{Whether to plot lines for all segments in neuron}
+
+\item{plotengine}{Engine to plot with 'rgl' or 'plotly'}
 
 \item{NeuronNames}{Logical indicating whether to label the neuron in the plot
 using the NeuronName field \strong{or} a character vector of names.}
@@ -44,7 +47,7 @@ list of rgl plotting ids (invisibly) separated into \code{lines},
   \code{rgl::\link[rgl]{plot3d}} for details.
 }
 \description{
-Plot neurons in 3D using rgl library
+Plot neurons in 3D using rgl library or plotly module
 }
 \details{
 Note that when \code{WithText=TRUE}, the numeric identifiers plotted
