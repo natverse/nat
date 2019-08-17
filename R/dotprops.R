@@ -362,7 +362,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = c('rgl','plotly'), alph
     plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                           plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
     assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
-    print(plotlyreturnlist$plotlyscenehandle)
+    print(.plotly3d$plotlyscenehandle)
     invisible(plotlyreturnlist)
   }
   

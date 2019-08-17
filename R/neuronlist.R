@@ -657,7 +657,7 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = c('rgl','plotly'), col=
                                             plotly::layout(showlegend = FALSE, 
                                                            scene=list(camera=.plotly3d$camera))
       .plotly3d$plotlyscenehandle = plotlyreturnlist$plotlyscenehandle
-      print(plotlyreturnlist$plotlyscenehandle)
+      print(.plotly3d$plotlyscenehandle)
       attr(plotlyreturnlist,'df')=df
       invisible(plotlyreturnlist)
   }

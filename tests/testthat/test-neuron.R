@@ -145,6 +145,11 @@ test_that("we can plot neurons in 3D", {
   expect_gt(plottedLines, 0)
 })
 
+test_that("we can plot neurons in 3D for plotly", {
+  plottedLines <- plot3d(Cell07PNs[[1]], plotengine = 'plotly', soma=3, WithText=T, WithNodes = T, WithAllPoints=T)
+  expect_type(plottedLines, "list")
+})
+
 test_that("we can plot dotprops in 2D", {
   expect_null(plot(kcs20[[1]]))
   expect_silent(plot(kcs20[1], soma=T))
@@ -153,6 +158,11 @@ test_that("we can plot dotprops in 2D", {
 test_that("we can plot dotprops in 3D", {
   plottedSegments <- plot3d(kcs20[[1]])$segments
   expect_gt(plottedSegments, 0)
+})
+
+test_that("we can plot dotprops in 3D for plotly", {
+  plottedSegments <- plot3d(kcs20[[1]], plotengine = 'plotly')
+  expect_type(plottedSegments, "list")
 })
 
 context("neuron seglengths/resampling")
