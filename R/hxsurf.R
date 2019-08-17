@@ -238,10 +238,17 @@ write.hxsurf <- function(surf, filename) {
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
-plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
+plot3d.hxsurf<-function(x, plotengine = c('rgl','plotly'), opacity = 0.5, materials=NULL, col=NULL, ...){
+  #Handle plotting engine
+  plotengine = match.arg(plotengine)
+  
   # skip so that the scene is updated only once per hxsurf object
-  skip <- par3d(skipRedraw = TRUE)
-  on.exit(par3d(skip))
+  if (plotengine == 'rgl'){
+      skip <- par3d(skipRedraw = TRUE)
+      on.exit(par3d(skip))} 
+  if (plotengine == 'plotly') {
+    plotlyreturnlist <- openplotlyscene()
+  }
   
   materials=subset(x, subset = materials, rval='names')
   
@@ -258,10 +265,33 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   for(mat in materials){
     # get order triangle vertices
     tri=as.integer(t(x$Regions[[mat]]))
-    rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
-                             x[['Vertices']]$Z[tri],col=col[mat],...)
+    if (plotengine == 'rgl'){
+        rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
+                                 x[['Vertices']]$Z[tri],col=col[mat],...)
+    } else {
+      tmpx <- as.mesh3d.hxsurf(x,Regions = mat)
+      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                            plotly::add_trace(x = tmpx$vb[1,], 
+                                                              y = tmpx$vb[2,], 
+                                                              z = tmpx$vb[3,],
+                                                              i = tmpx$it[1,]-1, 
+                                                              j = tmpx$it[2,]-1, 
+                                                              k = tmpx$it[3,]-1,
+                                                              type = "mesh3d", opacity = opacity,
+                                                              facecolor = rep(col[mat],
+                                                                              length(tmpx$it[1,])))
+    }
+    
   }
-  invisible(rlist)
+  if (plotengine == 'rgl'){
+      invisible(rlist)
+  } else {
+    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
+    print(.plotly3d$plotlyscenehandle)
+    invisible(plotlyreturnlist)
+    }
 }
 
 #' Convert an object to an rgl mesh3d
