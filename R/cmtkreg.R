@@ -141,7 +141,13 @@ cmtkreg.filetype <- function(x) {
 #' }
 #' @importFrom rgl plot3d
 #' @export
-plot3d.cmtkreg <- function(x, ...) {
+plot3d.cmtkreg <- function(x, plotengine = c('rgl','plotly'), ...) {
+  #Handle plotting engine
+  plotengine = match.arg(plotengine)
+  if (plotengine == 'plotly') {
+    plotlyreturnlist <- openplotlyscene()
+  }
+  
   reg=NULL
   if(is.list(x)) {
     if(!is.null(x$registration)) reg=x$registration else reg=x
@@ -154,5 +160,20 @@ plot3d.cmtkreg <- function(x, ...) {
   coeffs=reg$spline_warp$coefficients
   aidxs=seq.int(from=1, by=3L, length.out = nrow(coeffs))
   actives=reg$spline_warp$active[aidxs]!=0
-  plot3d(coeffs[actives, ], xlab='X', ylab = "Y", zlab = "Z", ...)
+  if (plotengine == 'rgl'){
+    plot3d(coeffs[actives, ], xlab='X', ylab = "Y", zlab = "Z", ...)
+  } else{
+    plotdata <- as.data.frame(coeffs[actives, ])
+    names(plotdata) <- c('X','Y','Z')
+    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                          plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+                                          hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+                                          opacity = 1, marker=list(color = 'black', size = 3))
+    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
+                                          plotly::layout(showlegend = FALSE, 
+                                                         scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
+    print(.plotly3d$plotlyscenehandle)
+    invisible(plotlyreturnlist)
+  }
 }
