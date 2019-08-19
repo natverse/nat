@@ -6,7 +6,8 @@
 \title{3D plots of the elements in a neuronlist, optionally using a subset 
 expression}
 \usage{
-\method{plot3d}{neuronlist}(x, subset = NULL, col = NULL,
+\method{plot3d}{neuronlist}(x, subset = NULL,
+  plotengine = getOption("nat.plotengine"), col = NULL,
   colpal = rainbow, skipRedraw = ifelse(interactive(), 200L, TRUE),
   WithNodes = FALSE, soma = FALSE, ..., SUBSTITUTE = TRUE)
 
@@ -19,6 +20,8 @@ using \code{options(nat.default.neuronlist='mylist')}. See
 ?\code{\link{nat}} for details. \code{\link{nat-package}}.}
 
 \item{subset}{Expression evaluating to logical mask for neurons. See details.}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
 
 \item{col}{An expression specifying a colour evaluated in the context of the 
 dataframe attached to nl (after any subsetting). See details.}

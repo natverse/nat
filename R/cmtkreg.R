@@ -123,6 +123,7 @@ cmtkreg.filetype <- function(x) {
 #' 
 #' @param x A cmtk registration (the path to the registration folder on disk) or
 #'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
+#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
 #'   \code{\link[rgl]{plot3d}}
@@ -141,9 +142,8 @@ cmtkreg.filetype <- function(x) {
 #' }
 #' @importFrom rgl plot3d
 #' @export
-plot3d.cmtkreg <- function(x, ...) {
-  #Handle plotting engine
-  plotengine = getOption('nat.plotengine')
+plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
+  
   if (plotengine == 'plotly') {
     plotlyreturnlist <- openplotlyscene()
   }

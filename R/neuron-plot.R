@@ -3,6 +3,7 @@
 #' @export
 #' @method plot3d neuron
 #' @param x A neuron to plot
+#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param WithLine Whether to plot lines for all segments in neuron
 #' @param NeuronNames Logical indicating whether to label the neuron in the plot
 #'   using the NeuronName field \strong{or} a character vector of names.
@@ -53,11 +54,10 @@
 #' plot3d(Cell07PNs[5], col='red', soma=3)
 #' rgl.close()
 #' }
-plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, WithAllPoints=FALSE, 
+plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
+                        WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, WithAllPoints=FALSE, 
                         WithText=FALSE, PlotSubTrees=TRUE, add=TRUE, col=NULL, soma=FALSE, ...){
   
-  #Handle plotting engine
-  plotengine = getOption('nat.plotengine')
   
   if (!add){
       if (plotengine == 'rgl'){
@@ -508,6 +508,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' Plot a bounding box in 3D
 #' 
 #' @param x the \code{\link{boundingbox}} object to plot.
+#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
 #' @return A list of RGL object IDs.
 #'   
@@ -532,7 +533,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x, ...) {
+plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'), ...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -543,9 +544,6 @@ plot3d.boundingbox <- function(x, ...) {
   c(x[2, 1], x[2, 2], x[1, 3]),
   c(x[2, 1], x[2, 2], x[2, 3])
   ), ncol=3, byrow=TRUE)
-  
-  #Handle plotting engine
-  plotengine = getOption('nat.plotengine')
   
   if (plotengine == 'rgl'){
     segments3d(pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ], ...)

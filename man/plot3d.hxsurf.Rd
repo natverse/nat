@@ -4,11 +4,13 @@
 \alias{plot3d.hxsurf}
 \title{Plot amira surface objects in 3D using rgl}
 \usage{
-\method{plot3d}{hxsurf}(x, opacity = 0.5, materials = NULL,
-  col = NULL, ...)
+\method{plot3d}{hxsurf}(x, plotengine = getOption("nat.plotengine"),
+  opacity = 0.5, materials = NULL, col = NULL, ...)
 }
 \arguments{
 \item{x}{An hxsurf surface object}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
 
 \item{opacity}{opacity or alpha transparency to be used when the plotting backend is 'plotly'.}
 

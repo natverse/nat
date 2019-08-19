@@ -4,10 +4,13 @@
 \alias{plot3d.boundingbox}
 \title{Plot a bounding box in 3D}
 \usage{
-\method{plot3d}{boundingbox}(x, ...)
+\method{plot3d}{boundingbox}(x, plotengine = getOption("nat.plotengine"),
+  ...)
 }
 \arguments{
 \item{x}{the \code{\link{boundingbox}} object to plot.}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
 
 \item{...}{additional arguments to pass to \code{\link[rgl]{segments3d}}.}
 }

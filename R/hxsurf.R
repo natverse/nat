@@ -212,6 +212,7 @@ write.hxsurf <- function(surf, filename) {
 #' Plot amira surface objects in 3D using rgl
 #' 
 #' @param x An hxsurf surface object
+#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param materials Character vector or \code{\link[base]{regex}} naming
 #'   materials to plot (defaults to all materials in x). See
@@ -239,10 +240,9 @@ write.hxsurf <- function(surf, filename) {
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
-plot3d.hxsurf<-function(x, opacity = 0.5, materials=NULL, col=NULL, ...){
-  #Handle plotting engine
-  plotengine = getOption('nat.plotengine')
-  
+plot3d.hxsurf<-function(x, plotengine = getOption('nat.plotengine'),
+                        opacity = 0.5, materials=NULL, col=NULL, ...){
+   
   # skip so that the scene is updated only once per hxsurf object
   if (plotengine == 'rgl'){
       skip <- par3d(skipRedraw = TRUE)
