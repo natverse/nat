@@ -622,8 +622,8 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
     }
   }
   
-  rval=mapply(plot3d,x, col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
-                  SIMPLIFY=FALSE)
+  rval=mapply(plot3d,x, plotengine = plotengine, col=cols,soma=soma,..., 
+              MoreArgs = list(WithNodes=WithNodes),SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     plotlyreturnlist$plotlyscenehandle <- rval[[length(rval)]]$plotlyscenehandle
   }

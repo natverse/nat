@@ -147,7 +147,8 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' clear3d()
 #' plot3d(kcs20[gammas])
 #' }
-nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
+nlscan <- function(neurons, db=NULL, plotengine = getOption('nat.plotengine'),
+                   col='red', Verbose=T, Wait=T, sleep=0.1,
                    extrafun=NULL, selected_file=NULL, selected_col='green',
                    yaml=TRUE, ...) {
   if(is.neuronlist(neurons)) {
@@ -181,7 +182,8 @@ nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
     cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- plot3d(n, db=db, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
+    pl <- plot3d(n, db=db, plotengine = plotengine,
+                 col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
     # call user supplied function
     more_rgl_ids <- list()
     if(!is.null(extrafun))
