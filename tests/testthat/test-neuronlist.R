@@ -167,41 +167,49 @@ test_that("plot2d neuronlist contents",{
 context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
+  options(nat.plotengine='rgl')
   nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
   op=options(nat.default.neuronlist="Cell07PNs")
   expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
   plot3d(boundingbox(Cell07PNs[c("EBH11R", "EBH20L")]))
   
   #For plotly engine..
-  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T,plotengine = 'plotly'))
+  options(nat.plotengine='plotly')
+  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
   op=options(nat.default.neuronlist="Cell07PNs")
-  expect_equal(length(plot3d(c("EBH11R", "EBH20L"), plotengine = 'plotly')), nplotted1)
-  plot3d(boundingbox(Cell07PNs[c("EBH11R", "EBH20L")]),plotengine = 'plotly')
+  expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
+  plot3d(boundingbox(Cell07PNs[c("EBH11R", "EBH20L")]))
   
   
   options(op)
 })
 
 test_that("plot neuronlist without names/data.frame",{
+  options(nat.plotengine='rgl')
   nn=nlapply(1:2, function(x) kcs20[[x]])
   expect_silent(plot3d(nn))
-  expect_silent(plot3d(nn, plotengine = 'plotly'))
+  options(nat.plotengine='plotly')
+  expect_silent(plot3d(nn))
 })
 
 test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
-  f=function(plotengine,...) {
+  f=function(...) {
     rhubarb='pink'
-    plot3d("EBH20L", plotengine = plotengine, col=substitute(rhubarb), db=Cell07PNs, ...)
+    plot3d("EBH20L", col=substitute(rhubarb), db=Cell07PNs, ...)
   }
-  expect_error(f(plotengine = 'rgl'))
-  expect_is(f(plotengine = 'rgl', SUBSTITUTE = FALSE), 'list')
   
-  expect_error(f(plotengine = 'plotly'))
-  expect_is(f(plotengine = 'plotly', SUBSTITUTE = FALSE), 'list')
+  options(nat.plotengine='rgl')
+  expect_error(f())
+  expect_is(f(SUBSTITUTE = FALSE), 'list')
+  
+  options(nat.plotengine='plotly')
+  expect_error(f())
+  expect_is(f(SUBSTITUTE = FALSE), 'list')
   
 })
 
 test_that("basic interactive 3d functionality",{
+  options(nat.plotengine='rgl')
   open3d()
   expect_output(nlscan(names(Cell07PNs)[1:2], db=Cell07PNs, Wait=F), "2 / 2")
   

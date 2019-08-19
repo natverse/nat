@@ -61,6 +61,11 @@ update_igraph <- FALSE
     update_igraph <- TRUE
   }
   invisible()
+  
+  # Set the default plot engine
+  if (is.null(getOption('nat.plotengine'))){
+    options(nat.plotengine='rgl')
+  }
 }
 
 .onAttach <- function(libname, pkgname) {

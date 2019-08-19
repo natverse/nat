@@ -4,17 +4,14 @@
 \alias{plot3d.neuron}
 \title{Plot neurons in 3D using rgl library or plotly module}
 \usage{
-\method{plot3d}{neuron}(x, WithLine = TRUE, plotengine = c("rgl",
-  "plotly"), NeuronNames = FALSE, WithNodes = TRUE,
-  WithAllPoints = FALSE, WithText = FALSE, PlotSubTrees = TRUE,
-  add = TRUE, col = NULL, soma = FALSE, ...)
+\method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
+  WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
+  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...)
 }
 \arguments{
 \item{x}{A neuron to plot}
 
 \item{WithLine}{Whether to plot lines for all segments in neuron}
-
-\item{plotengine}{Engine to plot with 'rgl' or 'plotly'}
 
 \item{NeuronNames}{Logical indicating whether to label the neuron in the plot
 using the NeuronName field \strong{or} a character vector of names.}

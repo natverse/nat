@@ -133,6 +133,9 @@
 #'   \item{\code{nat.default.neuronlist}}{ A character string naming a
 #'   neuronlist to use with the \code{\link{plot3d.character}} method}
 #'   
+#'   \item{\code{nat.plotengine}}{ A character string naming a
+#'   plotengine to use either 'rgl' or 'plotly'}
+#'   
 #'   \item{\code{nat.progress}}{ The default progress reporter to use with 
 #'   \code{\link{nlapply}}. See \code{\link[plyr]{create_progress_bar}} for 
 #'   possible values. When unset is equivalent to special value \code{'auto'}. 

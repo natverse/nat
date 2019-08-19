@@ -585,7 +585,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x, subset=NULL, plotengine = c('rgl','plotly'), col=NULL, colpal=rainbow, 
+plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, 
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
                             WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
@@ -599,7 +599,7 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = c('rgl','plotly'), col=
   }
   
   #Handle plotting engine
-  plotengine = match.arg(plotengine)
+  plotengine = getOption('nat.plotengine')
   
   # Handle Colours
   col.sub <- if(SUBSTITUTE) substitute(col) else col
@@ -623,7 +623,7 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = c('rgl','plotly'), col=
     }
   }
   
-  rval=mapply(plot3d,x,plotengine = plotengine, col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
+  rval=mapply(plot3d,x, col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
                   SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     plotlyreturnlist$plotlyscenehandle <- rval[[length(rval)]]$plotlyscenehandle

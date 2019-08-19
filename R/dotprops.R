@@ -274,7 +274,6 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' @param x A dotprops object
 #' @param scalevecs Factor by which to scale unit vectors (numeric, default: 
 #'   1.0)
-#' @param plotengine plotting backend to use either 'rgl' or 'plotly'.
 #' @param alpharange Restrict plotting to points with \code{alpha} values in 
 #'   this range to plot (default: null => all points). See 
 #'   \code{\link{dotprops}} for definition of \code{alpha}.
@@ -301,14 +300,14 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }
-plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = c('rgl','plotly'), alpharange=NULL, color='black', 
+plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black', 
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
   
   #Handle plotting engine
-  plotengine = match.arg(plotengine)
+  plotengine = getOption('nat.plotengine')
   
   rlist=list()
   if (plotengine == 'plotly') {
