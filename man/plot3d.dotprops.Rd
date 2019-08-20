@@ -6,8 +6,8 @@
 \usage{
 \method{plot3d}{dotprops}(x, scalevecs = 1,
   plotengine = getOption("nat.plotengine"), alpharange = NULL,
-  color = "black", PlotPoints = FALSE, PlotVectors = TRUE,
-  UseAlpha = FALSE, ...)
+  color = "black", opacity = 1, PlotPoints = FALSE,
+  PlotVectors = TRUE, UseAlpha = FALSE, ...)
 }
 \arguments{
 \item{x}{A dotprops object}
@@ -23,6 +23,8 @@ this range to plot (default: null => all points). See
 
 \item{color}{Character or numeric vector specifying colours for 
 points/vectors. See details.}
+
+\item{opacity}{opacity or alpha transparency to be used when the plotting backend is 'plotly'.}
 
 \item{PlotPoints, PlotVectors}{Whether to plot points and/or tangent vectors 
 (logical, default: tangent vectors only)}

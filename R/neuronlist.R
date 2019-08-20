@@ -538,12 +538,14 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param colpal A vector of colours or a function that generates colours
+#' @param plotly_plotonce set this to TRUE to skip redraw of the plotly plot per iteration.
 #' @param skipRedraw When plotting more than this many (default 200) neurons 
 #'   skip redraw for individual neurons (this is much faster for large number of
 #'   neurons). Can also accept logical values TRUE (always skip) FALSE (never 
 #'   skip).
 #' @param WithNodes Whether to plot points for end/branch points. Default: 
 #'   \code{FALSE}.
+#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... options passed on to plot3d (such as colours, line width etc)
 #' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as 
 #'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
@@ -587,9 +589,9 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
 plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengine'), 
-                            col=NULL, colpal=rainbow, 
+                            col=NULL, colpal=rainbow, plotly_plotonce = TRUE,
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
-                            WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
+                            WithNodes=FALSE, soma=FALSE, opacity = 1, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -622,7 +624,8 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
     }
   }
   
-  rval=mapply(plot3d,x, plotengine = plotengine, col=cols,soma=soma,..., 
+  rval=mapply(plot3d,x, plotengine = plotengine, plotly_plotonce = plotly_plotonce,
+              col=cols,soma=soma,opacity = opacity,..., 
               MoreArgs = list(WithNodes=WithNodes),SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     plotlyreturnlist$plotlyscenehandle <- rval[[length(rval)]]$plotlyscenehandle
@@ -638,7 +641,8 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
       plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                             plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                             hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                            opacity = 1, marker=list(symbol = 'circle', sizemode = 'diameter',
+                                            opacity = opacity, marker=list(symbol = 'circle', 
+                                                                           sizemode = 'diameter',
                                                                     color = cols),sizes = 2*soma)
     }
   }

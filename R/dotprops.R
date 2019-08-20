@@ -280,6 +280,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #'   \code{\link{dotprops}} for definition of \code{alpha}.
 #' @param color Character or numeric vector specifying colours for 
 #'   points/vectors. See details.
+#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param PlotPoints,PlotVectors Whether to plot points and/or tangent vectors 
 #'   (logical, default: tangent vectors only)
 #' @param UseAlpha Whether to scale tangent vector length by the value of 
@@ -302,7 +303,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }
 plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengine'),
-                          alpharange=NULL, color='black', 
+                          alpharange=NULL, color='black', opacity = 1,
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
@@ -321,7 +322,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
       plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                             plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
                                             hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                            opacity = 1, marker=list(color = color, size = 3))
+                                            opacity = opacity, marker=list(color = color, size = 3))
     }
   }
     
@@ -351,7 +352,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
       plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                             plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
                                             hoverinfo = "none", type = 'scatter3d', mode = 'lines',
-                                            opacity = 1, line=list(color = color, width = 4))
+                                            opacity = opacity, line=list(color = color, width = 4))
     }
   }
   if (plotengine == 'rgl'){

@@ -8,8 +8,9 @@ expression}
 \usage{
 \method{plot3d}{neuronlist}(x, subset = NULL,
   plotengine = getOption("nat.plotengine"), col = NULL,
-  colpal = rainbow, skipRedraw = ifelse(interactive(), 200L, TRUE),
-  WithNodes = FALSE, soma = FALSE, ..., SUBSTITUTE = TRUE)
+  colpal = rainbow, plotly_plotonce = TRUE,
+  skipRedraw = ifelse(interactive(), 200L, TRUE), WithNodes = FALSE,
+  soma = FALSE, opacity = 1, ..., SUBSTITUTE = TRUE)
 
 \method{plot3d}{character}(x, db = NULL, ...)
 }
@@ -28,6 +29,8 @@ dataframe attached to nl (after any subsetting). See details.}
 
 \item{colpal}{A vector of colours or a function that generates colours}
 
+\item{plotly_plotonce}{set this to TRUE to skip redraw of the plotly plot per iteration.}
+
 \item{skipRedraw}{When plotting more than this many (default 200) neurons 
 skip redraw for individual neurons (this is much faster for large number of
 neurons). Can also accept logical values TRUE (always skip) FALSE (never 
@@ -39,6 +42,8 @@ skip).}
 \item{soma}{Whether to plot a sphere at neuron's origin representing the
 soma. Either a logical value or a numeric indicating the radius (default
 \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
+
+\item{opacity}{opacity or alpha transparency to be used when the plotting backend is 'plotly'.}
 
 \item{...}{options passed on to plot3d (such as colours, line width etc)}
 

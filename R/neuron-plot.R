@@ -4,6 +4,7 @@
 #' @method plot3d neuron
 #' @param x A neuron to plot
 #' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
+#' @param plotly_plotonce set this to TRUE to skip redraw of the plotly plot per iteration.
 #' @param WithLine Whether to plot lines for all segments in neuron
 #' @param NeuronNames Logical indicating whether to label the neuron in the plot
 #'   using the NeuronName field \strong{or} a character vector of names.
@@ -19,6 +20,7 @@
 #' @param soma Whether to plot a sphere at neuron's origin representing the
 #'   soma. Either a logical value or a numeric indicating the radius (default
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
+#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 #'   \code{\link[rgl]{spheres3d}} if somata are being plotted).
 #' @return list of rgl plotting ids (invisibly) separated into \code{lines},
@@ -54,9 +56,10 @@
 #' plot3d(Cell07PNs[5], col='red', soma=3)
 #' rgl.close()
 #' }
-plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
+plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'), plotly_plotonce = FALSE,
                         WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, WithAllPoints=FALSE, 
-                        WithText=FALSE, PlotSubTrees=TRUE, add=TRUE, col=NULL, soma=FALSE, ...){
+                        WithText=FALSE, PlotSubTrees=TRUE, add=TRUE, col=NULL, soma=FALSE,
+                        opacity = 1,...){
   
   
   if (!add){
@@ -111,7 +114,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
        plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                              plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
                                              hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                             opacity = 1, marker=list(color = NodeCols, size = 3))
+                                             opacity = opacity, marker=list(color = NodeCols, size = 3))
       }
       if(WithText){ 
         # text labels for nodes 
@@ -123,7 +126,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
         plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                               plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                               hoverinfo = "none", type = 'scatter3d', mode = 'text', 
-                                              opacity = 1, text = AllPoints, textfont = list(color = NodeCols))
+                                              opacity = opacity, text = AllPoints, textfont = list(color = NodeCols))
         }
       }
     } else {
@@ -135,7 +138,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
         plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                               plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                               hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                              opacity = 1, marker=list(color = NodeCols, size = 3))
+                                              opacity = opacity, marker=list(color = NodeCols, size = 3))
       }
       if(WithText) {
         # text labels for nodes
@@ -147,7 +150,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
           plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                                 plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                                 hoverinfo = "none", type = 'scatter3d', mode = 'text', 
-                                                opacity = 1, text = NodesOnly, textfont = list(color = NodeCols))
+                                                opacity = opacity, text = NodesOnly, textfont = list(color = NodeCols))
         }
       }
     }
@@ -167,7 +170,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
       plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                             plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
                                             hoverinfo = "none", type = 'scatter3d', mode = 'lines',
-                                            opacity = 1, line=list(color = col, size = 1))
+                                            opacity = opacity, line=list(color = col, size = 1))
     }
   }
   
@@ -182,7 +185,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
       plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                             plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                             hoverinfo = "none", type = 'scatter3d', mode = 'text', 
-                                            opacity = 1, text = NeuronNames, textfont = list(color = col))
+                                            opacity = opacity, text = NeuronNames, textfont = list(color = col))
       
     }
   }
@@ -202,7 +205,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
       plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                             plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                             hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                            opacity = 1, marker=list(symbol = 'circle', sizemode = 'diameter',
+                                            opacity = opacity, marker=list(symbol = 'circle', sizemode = 'diameter',
                                                                      color = col),sizes = 2*somarad)
     }
   }
@@ -213,7 +216,7 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'),
     plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                           plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
     assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
-    print(.plotly3d$plotlyscenehandle)
+    if (!plotly_plotonce){print(.plotly3d$plotlyscenehandle)}
     invisible(plotlyreturnlist)
   }
   
@@ -509,6 +512,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' 
 #' @param x the \code{\link{boundingbox}} object to plot.
 #' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
+#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
 #' @return A list of RGL object IDs.
 #'   
@@ -533,7 +537,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'), ...) {
+plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),opacity = 0.5, ...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -564,13 +568,17 @@ plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'), ...) 
     .plotly3d$plotlyscenehandle <- .plotly3d$plotlyscenehandle %>% 
                                     plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
                                     hoverinfo = "none", type = 'scatter3d', mode = 'lines',
-                                    opacity = 1, line=list(color = 'black', width = 4))
+                                    opacity = opacity, line=list(color = 'black', width = 4))
     print(.plotly3d$plotlyscenehandle)
     
   }
   
 }
 
+#' Clear the plotly scene
+#' 
+#' @export
+#' 
 clearplotlyscene <- function(){
   if (exists("plotlyscenehandle", envir = .plotly3d)){
     

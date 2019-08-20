@@ -124,6 +124,7 @@ cmtkreg.filetype <- function(x) {
 #' @param x A cmtk registration (the path to the registration folder on disk) or
 #'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
 #' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
+#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
 #'   \code{\link[rgl]{plot3d}}
@@ -142,7 +143,7 @@ cmtkreg.filetype <- function(x) {
 #' }
 #' @importFrom rgl plot3d
 #' @export
-plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
+plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'),opacity =1, ...) {
   
   if (plotengine == 'plotly') {
     plotlyreturnlist <- openplotlyscene()
@@ -168,7 +169,7 @@ plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
     plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                           plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
                                           hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                          opacity = 1, marker=list(color = 'black', size = 3))
+                                          opacity = opacity, marker=list(color = 'black', size = 3))
     plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
                                           plotly::layout(showlegend = FALSE, 
                                                          scene=list(camera=.plotly3d$camera))

@@ -5,13 +5,15 @@
 \title{Plot the domain of a CMTK registration}
 \usage{
 \method{plot3d}{cmtkreg}(x, plotengine = getOption("nat.plotengine"),
-  ...)
+  opacity = 1, ...)
 }
 \arguments{
 \item{x}{A cmtk registration (the path to the registration folder on disk) or
 the resulting of reading one in with \code{\link{read.cmtkreg}}.}
 
 \item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
+
+\item{opacity}{opacity or alpha transparency to be used when the plotting backend is 'plotly'.}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{plot3d}}}
 }

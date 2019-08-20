@@ -5,14 +5,17 @@
 \title{Plot neurons in 3D using rgl library or plotly module}
 \usage{
 \method{plot3d}{neuron}(x, plotengine = getOption("nat.plotengine"),
-  WithLine = TRUE, NeuronNames = FALSE, WithNodes = TRUE,
-  WithAllPoints = FALSE, WithText = FALSE, PlotSubTrees = TRUE,
-  add = TRUE, col = NULL, soma = FALSE, ...)
+  plotly_plotonce = FALSE, WithLine = TRUE, NeuronNames = FALSE,
+  WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
+  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE,
+  opacity = 1, ...)
 }
 \arguments{
 \item{x}{A neuron to plot}
 
 \item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
+
+\item{plotly_plotonce}{set this to TRUE to skip redraw of the plotly plot per iteration.}
 
 \item{WithLine}{Whether to plot lines for all segments in neuron}
 
@@ -37,6 +40,8 @@ clearing the scene (default TRUE)}
 \item{soma}{Whether to plot a sphere at neuron's origin representing the
 soma. Either a logical value or a numeric indicating the radius (default
 \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
+
+\item{opacity}{opacity or alpha transparency to be used when the plotting backend is 'plotly'.}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 \code{\link[rgl]{spheres3d}} if somata are being plotted).}
