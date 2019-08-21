@@ -1,7 +1,7 @@
 #' Create and test cmtkreg objects that specify path to a CMTK registration
 #' 
 #' @description \code{cmtkreg} creates an object of class \code{cmtkreg} that
-#'   describes one (or more) \href{www.nitrc.org/projects/cmtk/}{CMTK}
+#'   describes one (or more) \href{https://www.nitrc.org/projects/cmtk/}{CMTK}
 #'   registrations. This is simply a character vector that also has class
 #'   cmtkreg.
 #' @param x Path to a cmtk registration (either plain character vector or 

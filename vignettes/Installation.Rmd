@@ -87,7 +87,7 @@ do not already have it.
 **nat** is self sufficient for core functionality, but the transformation of 3D
 data using Computational Morphometry Toolkit (CMTK) registrations depends on an
 external installation of that toolkit. CMTK binaries can be downloaded for
-Windows, Linux and Mac at <http://www.nitrc.org/projects/cmtk/>. Source code is 
+Windows, Linux and Mac at <https://www.nitrc.org/projects/cmtk/>. Source code is 
 available from the same site or an unofficial mirror repository at 
 <https://github.com/jefferis/cmtk>. We have extensive experience of using CMTK
 under Linux (where we compile from source) and Mac (where we compile or use the

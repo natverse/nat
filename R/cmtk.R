@@ -76,45 +76,46 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 }
 
 #' Return path to directory containing CMTK binaries
-#' 
-#' @description The \href{www.nitrc.org/projects/cmtk}{Computational Morphometry
-#'   Toolkit} (CMTK) is the default image registration toolkit supported by nat.
-#'   An external CMTK installation is required in order to apply CMTK 
-#'   registrations. This function attempts to locate the full path to the CMTK 
-#'   executable files and can query and set an option.
-#' @details Queries options('nat.cmtk.bindir') if \code{firstdir} is not 
-#'   specified. If that does not contain the appropriate binaries, it will look 
-#'   in the system PATH for the \code{cmtk} wrapper script installed by most 
+#'
+#' @description The \href{https://www.nitrc.org/projects/cmtk}{Computational
+#'   Morphometry Toolkit} (CMTK) is the default image registration toolkit
+#'   supported by nat. An external CMTK installation is required in order to
+#'   apply CMTK registrations. This function attempts to locate the full path to
+#'   the CMTK executable files and can query and set an option.
+#' @details Queries options('nat.cmtk.bindir') if \code{firstdir} is not
+#'   specified. If that does not contain the appropriate binaries, it will look
+#'   in the system PATH for the \code{cmtk} wrapper script installed by most
 #'   recent cmtk installations.
-#'   
-#'   Failing that, it will look for the cmtk tool specified by \code{cmtktool}, 
-#'   first in the path and then a succession of plausible places until it finds 
-#'   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing 
-#'   \code{firstdir=NA} will stop the function from trying to locate CMTK, 
+#'
+#'   Failing that, it will look for the cmtk tool specified by \code{cmtktool},
+#'   first in the path and then a succession of plausible places until it finds
+#'   something. Setting \code{options(nat.cmtk.bindir=NA)} or passing
+#'   \code{firstdir=NA} will stop the function from trying to locate CMTK,
 #'   always returning NULL unless \code{check=TRUE}, in which case it will error
 #'   out.
-#' @param firstdir Character vector specifying path containing CMTK binaries or 
+#' @param firstdir Character vector specifying path containing CMTK binaries or
 #'   NA (see details). This defaults to options('nat.cmtk.bindir').
 #' @param extradirs Where to look if CMTK is not in \code{firstdir} or the PATH
-#' @param set Whether to set options('nat.cmtk.bindir') with the found 
-#'   directory. Also check/sets cygwin path on Windows (see Installation 
+#' @param set Whether to set options('nat.cmtk.bindir') with the found
+#'   directory. Also check/sets cygwin path on Windows (see Installation
 #'   section).
 #' @param check Whether to (re)check that a path that has been set appropriately
-#'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or 
+#'   in options(nat.cmtk.bindir='/some/path') or now found in the PATH or
 #'   alternative directories. Will throw an error on failure.
-#' @param cmtktool Name of a specific cmtk tool which will be used to identify 
+#' @param cmtktool Name of a specific cmtk tool which will be used to identify
 #'   the location of all cmtk binaries.
-#' @return Character vector giving path to CMTK binary directory or NULL when 
+#' @return Character vector giving path to CMTK binary directory or NULL when
 #'   this cannot be found.
 #' @export
 #' @aliases cmtk
-#' @section Installation: It is recommended to install released CMTK versions 
-#'   available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A 
-#'   bug in composition of affine transformations from CMTK parameters in the 
-#'   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended. 
-#'   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTKv3
-#'   can correctly interpret and convert registrations from earlier versions.
-#'   
+#' @section Installation: It is recommended to install released CMTK versions
+#'   available from the \href{https://www.nitrc.org/projects/cmtk/}{NITRC
+#'   website}. A bug in composition of affine transformations from CMTK
+#'   parameters in the CMTK versions <2.4 series means that CMTK>=3.0 is
+#'   strongly recommended. CMTK v3 registrations are not backwards compatible
+#'   with CMTK v2, but CMTKv3 can correctly interpret and convert registrations
+#'   from earlier versions.
+#'
 #'   On Windows, when \code{set=TRUE}, cmtk.bindir will also check that the
 #'   cygwin bin directory is in the PATH. If it is not, then it is added for the
 #'   current R session. This should solve issues with missing cygwin dlls.
@@ -168,7 +169,7 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
   }
   if(check && is.null(bindir))
     stop("Cannot find CMTK. Please install from ",
-         "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
+         "https://www.nitrc.org//projects/cmtk and make sure that it is your path!")
   
   if(set) {
     options(nat.cmtk.bindir=bindir)

@@ -15,7 +15,7 @@ single file (used in preference to reading file \code{f}).}
 }
 \description{
 See http://www.vaa3d.org/ 
-  https://svn.janelia.org/penglab/projects/vaa3d/trunk/imagej_io/v3draw_io_imagej/raw_reader.java
+  https://github.com/Vaa3D/v3d_external/blob/master/imagej_io/v3draw_io_imagej/raw_reader.java
 }
 \details{
 Note that multiple files can be checked when a character vector of 
