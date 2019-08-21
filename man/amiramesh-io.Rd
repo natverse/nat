@@ -5,8 +5,9 @@
 \alias{read.amiramesh.header}
 \title{Read AmiraMesh data in binary or ascii format}
 \usage{
-read.amiramesh(file, sections = NULL, header = FALSE, simplify = TRUE,
-  endian = NULL, ReadByteAsRaw = FALSE, Verbose = FALSE)
+read.amiramesh(file, sections = NULL, header = FALSE,
+  simplify = TRUE, endian = NULL, ReadByteAsRaw = FALSE,
+  Verbose = FALSE)
 
 read.amiramesh.header(file, Parse = TRUE, Verbose = FALSE)
 }
@@ -53,3 +54,4 @@ Other amira: \code{\link{amiratype}},
   \code{\link{is.amiramesh}}, \code{\link{read.hxsurf}},
   \code{\link{write.hxsurf}}
 }
+\concept{amira}

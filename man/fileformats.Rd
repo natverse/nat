@@ -10,12 +10,13 @@
 fileformats(format = NULL, ext = NULL, read = NULL, write = NULL,
   class = NULL, rval = c("names", "info", "all"))
 
-registerformat(format = NULL, ext = format, read = NULL, write = NULL,
-  magic = NULL, magiclen = NA_integer_, class = NULL)
+registerformat(format = NULL, ext = format, read = NULL,
+  write = NULL, magic = NULL, magiclen = NA_integer_, class = NULL)
 
 getformatreader(file, class = NULL)
 
-getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
+getformatwriter(format = NULL, file = NULL, ext = NULL,
+  class = NULL)
 }
 \arguments{
 \item{format}{Character vector naming the format}

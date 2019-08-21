@@ -14,8 +14,8 @@ as.ngraph(x, ...)
 
 \method{as.ngraph}{data.frame}(x, directed = TRUE, ...)
 
-\method{as.ngraph}{neuron}(x, directed = TRUE, method = c("swc", "seglist"),
-  ...)
+\method{as.ngraph}{neuron}(x, directed = TRUE, method = c("swc",
+  "seglist"), ...)
 }
 \arguments{
 \item{el}{A two columm matrix (start, end) defining edges. \code{start} means
@@ -118,3 +118,4 @@ Other neuron: \code{\link{neuron}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}, \code{\link{subset.neuron}}
 }
+\concept{neuron}

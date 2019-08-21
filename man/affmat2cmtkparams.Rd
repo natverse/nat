@@ -27,3 +27,4 @@ Other cmtk-geometry: \code{\link{cmtk.dof2mat}},
   \code{\link{cmtk.mat2dof}},
   \code{\link{cmtkparams2affmat}}
 }
+\concept{cmtk-geometry}

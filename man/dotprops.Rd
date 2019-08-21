@@ -4,7 +4,6 @@
 \alias{dotprops}
 \alias{is.dotprops}
 \alias{as.dotprops}
-\alias{dotprops}
 \alias{dotprops.character}
 \alias{dotprops.dotprops}
 \alias{dotprops.im3d}
@@ -29,7 +28,8 @@ dotprops(x, ...)
 
 \method{dotprops}{neuron}(x, Labels = NULL, resample = NA, ...)
 
-\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
+\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{Object to be tested/converted}
@@ -55,8 +55,6 @@ be resampled. See \code{\link{resample.neuron}}.}
 \item{na.rm}{Whether to remove \code{NA} points (default FALSE)}
 }
 \description{
-dotprops: Neurons as point clouds with tangent vectors (but no connectivity)
-
 \code{dotprops} makes dotprops representation from raw 3D points
   (extracting vertices from S3 objects that have them)
 

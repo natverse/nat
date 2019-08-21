@@ -52,3 +52,4 @@ Other neuronlistfh: \code{\link{[.neuronlistfh}},
   \code{\link{read.neuronlistfh}},
   \code{\link{write.neuronlistfh}}
 }
+\concept{neuronlistfh}

@@ -5,8 +5,8 @@
 \title{Check equality on key fields of neuron object}
 \usage{
 \method{all.equal}{neuron}(target, current, tolerance = 1e-06,
-  check.attributes = FALSE, fieldsToCheck = c("NumPoints", "StartPoint",
-  "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
+  check.attributes = FALSE, fieldsToCheck = c("NumPoints",
+  "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
   fieldsToCheckIfPresent = c("NeuronName", "nTrees", "SubTrees"),
   fieldsToExclude = character(), CheckSharedFieldsOnly = FALSE, ...)
 }

@@ -7,8 +7,8 @@
 \usage{
 threshold(x, ...)
 
-\method{threshold}{im3d}(x, threshold = 0, mode = c("logical", "integer",
-  "raw", "numeric"), ...)
+\method{threshold}{im3d}(x, threshold = 0, mode = c("logical",
+  "integer", "raw", "numeric"), ...)
 }
 \arguments{
 \item{x}{Object to be thresholded}
@@ -47,3 +47,4 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{origin}}, \code{\link{projection}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
+\concept{im3d}

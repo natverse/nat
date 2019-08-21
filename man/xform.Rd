@@ -19,21 +19,22 @@ xform(x, reg, ...)
 
 \method{xform}{character}(x, reg, ...)
 
-\method{xform}{list}(x, reg, FallBackToAffine = TRUE, na.action = "error",
-  ...)
+\method{xform}{list}(x, reg, FallBackToAffine = TRUE,
+  na.action = "error", ...)
 
 \method{xform}{shape3d}(x, reg, FallBackToAffine = TRUE,
   na.action = "error", ...)
 
-\method{xform}{neuron}(x, reg, FallBackToAffine = TRUE, na.action = "error",
-  ...)
+\method{xform}{neuron}(x, reg, FallBackToAffine = TRUE,
+  na.action = "error", ...)
 
 \method{xform}{data.frame}(x, reg, subset = NULL, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-\method{xform}{neuronlist}(x, reg, subset = NULL, ..., OmitFailures = NA,
-  VectoriseRegistrations = FALSE, TransformDFCoords = TRUE)
+\method{xform}{neuronlist}(x, reg, subset = NULL, ...,
+  OmitFailures = NA, VectoriseRegistrations = FALSE,
+  TransformDFCoords = TRUE)
 }
 \arguments{
 \item{x}{an object to transform}

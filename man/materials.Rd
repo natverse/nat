@@ -25,8 +25,6 @@ disk.}
 A \code{data.frame} with columns \code{name, id, col}
 }
 \description{
-Extract or set the materials for an object
-
 \code{materials.character} will read the materials from an im3d 
   compatible image file on disk.
 
@@ -48,3 +46,4 @@ Other hxsurf: \code{\link{as.hxsurf}},
   \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
   \code{\link{write.hxsurf}}
 }
+\concept{hxsurf}

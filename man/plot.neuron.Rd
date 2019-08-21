@@ -7,9 +7,10 @@
 \method{plot}{neuron}(x, WithLine = TRUE, WithNodes = TRUE,
   WithAllPoints = FALSE, WithText = FALSE, PlotSubTrees = TRUE,
   soma = FALSE, PlotAxes = c("XY", "YZ", "XZ", "ZY"), axes = TRUE,
-  asp = 1, main = x$NeuronName, sub = NULL, xlim = NULL, ylim = NULL,
-  AxisDirections = c(1, -1, 1), add = FALSE, col = NULL, PointAlpha = 1,
-  tck = NA, lwd = par("lwd"), boundingbox = NULL, ...)
+  asp = 1, main = x$NeuronName, sub = NULL, xlim = NULL,
+  ylim = NULL, AxisDirections = c(1, -1, 1), add = FALSE,
+  col = NULL, PointAlpha = 1, tck = NA, lwd = par("lwd"),
+  boundingbox = NULL, ...)
 }
 \arguments{
 \item{x}{a neuron to plot.}
@@ -108,3 +109,4 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{spine}}, \code{\link{subset.neuron}}
 }
+\concept{neuron}

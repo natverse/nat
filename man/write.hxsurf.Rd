@@ -29,3 +29,5 @@ Other hxsurf: \code{\link{as.hxsurf}},
   \code{\link{plot3d.hxsurf}}, \code{\link{read.hxsurf}},
   \code{\link{subset.hxsurf}}
 }
+\concept{amira}
+\concept{hxsurf}

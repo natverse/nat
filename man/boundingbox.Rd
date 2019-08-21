@@ -23,8 +23,8 @@ boundingbox(x, ...)
 
 \method{boundingbox}{shape3d}(x, na.rm = FALSE, ...)
 
-\method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"),
-  ...)
+\method{boundingbox}{default}(x, dims, input = c("boundingbox",
+  "bounds"), ...)
 
 boundingbox(x) <- value
 }
@@ -53,8 +53,6 @@ a \code{matrix} with 2 rows and 3 columns with
   \code{class='boundingbox'} or \emph{NULL} when missing.
 }
 \description{
-Get the bounding box of an im3d volume or other compatible object
-
 \code{boundingbox.list} is designed to be used on objects that
   contain 3D point information and for which \code{xyzmatrix} is defined.
 
@@ -105,3 +103,4 @@ Other im3d: \code{\link{as.im3d}},
   \code{\link{projection}}, \code{\link{threshold}},
   \code{\link{unmask}}, \code{\link{voxdims}}
 }
+\concept{im3d}

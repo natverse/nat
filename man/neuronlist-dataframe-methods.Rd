@@ -4,7 +4,6 @@
 \alias{neuronlist-dataframe-methods}
 \alias{[.neuronlist}
 \alias{[<-.neuronlist}
-\alias{neuronlist-dataframe-methods}
 \alias{droplevels.neuronlist}
 \alias{droplevels}
 \alias{with.neuronlist}
@@ -118,3 +117,4 @@ Other neuronlist: \code{\link{*.neuronlist}},
   \code{\link{neuronlist}}, \code{\link{nlapply}},
   \code{\link{read.neurons}}, \code{\link{write.neurons}}
 }
+\concept{neuronlist}

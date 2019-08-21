@@ -53,8 +53,6 @@ Integer point number of root/branch point
 }
 \description{
 A neuron may have multiple subtrees and therefore multiple roots
-
-Return the branchpoints of a neuron or graph
 }
 \details{
 \code{branchpoints.neuron} returns a list if more than one subtree is
@@ -67,3 +65,4 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{spine}},
   \code{\link{subset.neuron}}
 }
+\concept{neuron}

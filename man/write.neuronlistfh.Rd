@@ -43,3 +43,4 @@ Other neuronlistfh: \code{\link{[.neuronlistfh}},
   \code{\link{neuronlistfh}},
   \code{\link{read.neuronlistfh}}, \code{\link{remotesync}}
 }
+\concept{neuronlistfh}

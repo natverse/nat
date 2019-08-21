@@ -4,8 +4,8 @@
 \alias{write.neurons}
 \title{Write neurons from a neuronlist object to individual files, or a zip archive}
 \usage{
-write.neurons(nl, dir, format = NULL, subdir = NULL, INDICES = names(nl),
-  files = NULL, Force = FALSE, ...)
+write.neurons(nl, dir, format = NULL, subdir = NULL,
+  INDICES = names(nl), files = NULL, Force = FALSE, ...)
 }
 \arguments{
 \item{nl}{neuronlist object}
@@ -78,3 +78,4 @@ Other neuronlist: \code{\link{*.neuronlist}},
 \author{
 jefferis
 }
+\concept{neuronlist}

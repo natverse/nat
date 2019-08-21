@@ -4,8 +4,8 @@
 \alias{spine}
 \title{Compute the longest path (aka spine or backbone) of a neuron}
 \usage{
-spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE, invert = FALSE,
-  rval = c("neuron", "length", "ids"))
+spine(n, UseStartPoint = FALSE, SpatialWeights = TRUE,
+  invert = FALSE, rval = c("neuron", "length", "ids"))
 }
 \arguments{
 \item{n}{the neuron to consider.}
@@ -68,3 +68,4 @@ Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
   \code{\link{resample}}, \code{\link{rootpoints}},
   \code{\link{subset.neuron}}
 }
+\concept{neuron}

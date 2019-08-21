@@ -27,8 +27,6 @@ a character vector specifying the full cmtk reformatx '--target' or
   '--target-grid' argument
 }
 \description{
-Defines a target volume for a CMTK reformatx operation
-
 \code{cmtk.targetvolume.list} is designed to cope with any 
   user-defined class for which an as.im3d method exists. Presently the only
   example in the nat.* ecosystem is

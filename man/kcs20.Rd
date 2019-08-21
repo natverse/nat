@@ -36,3 +36,4 @@ plot3d(kcs20, col=type)
 Other nat-data: \code{\link{Cell07PNs}},
   \code{\link{MBL.surf}}
 }
+\concept{nat-data}
