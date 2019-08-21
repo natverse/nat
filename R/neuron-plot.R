@@ -20,7 +20,6 @@
 #' @param soma Whether to plot a sphere at neuron's origin representing the
 #'   soma. Either a logical value or a numeric indicating the radius (default
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
-#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 #'   \code{\link[rgl]{spheres3d}} if somata are being plotted).
 #' @return list of rgl plotting ids (invisibly) separated into \code{lines},
@@ -58,8 +57,7 @@
 #' }
 plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'), plotly_plotonce = FALSE,
                         WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, WithAllPoints=FALSE, 
-                        WithText=FALSE, PlotSubTrees=TRUE, add=TRUE, col=NULL, soma=FALSE,
-                        opacity = 1,...){
+                        WithText=FALSE, PlotSubTrees=TRUE, add=TRUE, col=NULL, soma=FALSE,...){
   
   
   if (!add){
@@ -72,6 +70,11 @@ plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'), plotly_plot
   
   if (plotengine == 'plotly') {
     plotlyreturnlist <- openplotlyscene()
+    params=list(...)
+    if("alpha"%in%names(params)){
+      opacity = params$alpha
+    } else{
+      opacity = 1}
   }
     
   # skip so that the scene is updated only once per neuron
@@ -512,7 +515,6 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' 
 #' @param x the \code{\link{boundingbox}} object to plot.
 #' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
-#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
 #' @return A list of RGL object IDs.
 #'   
@@ -537,7 +539,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),opacity = 0.5, ...) {
+plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -554,6 +556,12 @@ plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),opacit
   } else {
     if (!exists("plotlyscenehandle", envir = .plotly3d)){
         .plotly3d$plotlyscenehandle = plotly::plot_ly()}
+    
+    params=list(...)
+      if("alpha"%in%names(params)){
+        opacity = params$alpha
+      } else{
+        opacity = 1}
     
     tempdata <- pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ]
     tempseglist <- list()

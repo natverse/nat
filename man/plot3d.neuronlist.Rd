@@ -10,7 +10,7 @@ expression}
   plotengine = getOption("nat.plotengine"), col = NULL,
   colpal = rainbow, plotly_plotonce = TRUE,
   skipRedraw = ifelse(interactive(), 200L, TRUE), WithNodes = FALSE,
-  soma = FALSE, opacity = 1, ..., SUBSTITUTE = TRUE)
+  soma = FALSE, ..., SUBSTITUTE = TRUE)
 
 \method{plot3d}{character}(x, db = NULL, ...)
 }
@@ -42,8 +42,6 @@ skip).}
 \item{soma}{Whether to plot a sphere at neuron's origin representing the
 soma. Either a logical value or a numeric indicating the radius (default
 \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.}
-
-\item{opacity}{opacity or alpha transparency to be used when the plotting backend is 'plotly'.}
 
 \item{...}{options passed on to plot3d (such as colours, line width etc)}
 

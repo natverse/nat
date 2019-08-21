@@ -31,11 +31,11 @@ test_that("we can read hxsurf object", {
   #For plotly..
   options(nat.plotengine='plotly')
   openplotlyscene()
-  plot3d(surf,col='red',opacity=0.2)
+  plot3d(surf,col='red',alpha=0.2)
   clearplotlyscene()
   plot3d(surf,opacity=0.2)
   clearplotlyscene()
-  plot3d(surf,col=rainbow,opacity=0.2)
+  plot3d(surf,col=rainbow,alpha=0.2)
   clearplotlyscene()
   
 })

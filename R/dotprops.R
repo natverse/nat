@@ -280,7 +280,6 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #'   \code{\link{dotprops}} for definition of \code{alpha}.
 #' @param color Character or numeric vector specifying colours for 
 #'   points/vectors. See details.
-#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param PlotPoints,PlotVectors Whether to plot points and/or tangent vectors 
 #'   (logical, default: tangent vectors only)
 #' @param UseAlpha Whether to scale tangent vector length by the value of 
@@ -303,7 +302,7 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }
 plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengine'),
-                          alpharange=NULL, color='black', opacity = 1,
+                          alpharange=NULL, color='black',
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
@@ -312,6 +311,11 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
   rlist=list()
   if (plotengine == 'plotly') {
     plotlyreturnlist <- openplotlyscene()
+    params=list(...)
+    if("alpha"%in%names(params)){
+      opacity = params$alpha
+    } else{
+      opacity = 1}
     }
   
   if(PlotPoints){

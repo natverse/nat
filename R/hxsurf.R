@@ -213,7 +213,6 @@ write.hxsurf <- function(surf, filename) {
 #' 
 #' @param x An hxsurf surface object
 #' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
-#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param materials Character vector or \code{\link[base]{regex}} naming
 #'   materials to plot (defaults to all materials in x). See
 #'   \code{\link{subset.hxsurf}}.
@@ -241,7 +240,7 @@ write.hxsurf <- function(surf, filename) {
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
 plot3d.hxsurf<-function(x, plotengine = getOption('nat.plotengine'),
-                        opacity = 0.5, materials=NULL, col=NULL, ...){
+                           materials=NULL, col=NULL, ...){
    
   # skip so that the scene is updated only once per hxsurf object
   if (plotengine == 'rgl'){
@@ -249,6 +248,11 @@ plot3d.hxsurf<-function(x, plotengine = getOption('nat.plotengine'),
       on.exit(par3d(skip))} 
   if (plotengine == 'plotly') {
     plotlyreturnlist <- openplotlyscene()
+    params=list(...)
+    if("alpha"%in%names(params)){
+      opacity = params$alpha
+    } else{
+      opacity = 1}
   }
   
   materials=subset(x, subset = materials, rval='names')

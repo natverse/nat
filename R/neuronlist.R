@@ -545,7 +545,6 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #'   skip).
 #' @param WithNodes Whether to plot points for end/branch points. Default: 
 #'   \code{FALSE}.
-#' @param opacity  opacity or alpha transparency to be used when the plotting backend is 'plotly'.
 #' @param ... options passed on to plot3d (such as colours, line width etc)
 #' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as 
 #'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
@@ -591,7 +590,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengine'), 
                             col=NULL, colpal=rainbow, plotly_plotonce = TRUE,
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
-                            WithNodes=FALSE, soma=FALSE, opacity = 1, ..., SUBSTITUTE=TRUE){
+                            WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -612,6 +611,11 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
     .plotly3d$plotlyscenehandle = plotly::plot_ly()
     plotlyreturnlist = list()
     plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
+    params=list(...)
+    if("alpha"%in%names(params)){
+      opacity = params$alpha
+    } else{
+      opacity = 1}
   }
   
   # Speed up drawing when there are lots of neurons
@@ -625,8 +629,7 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
   }
   
   rval=mapply(plot3d,x, plotengine = plotengine, plotly_plotonce = plotly_plotonce,
-              col=cols,soma=soma,opacity = opacity,..., 
-              MoreArgs = list(WithNodes=WithNodes),SIMPLIFY=FALSE)
+              col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     plotlyreturnlist$plotlyscenehandle <- rval[[length(rval)]]$plotlyscenehandle
   }
