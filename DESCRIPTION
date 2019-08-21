@@ -1,7 +1,7 @@
 Package: nat
 Type: Package
 Title: NeuroAnatomy Toolbox for Analysis of 3D Image Data
-Version: 1.8.12
+Version: 1.8.13
 Authors@R: c(
     person("Gregory", "Jefferis", , "jefferis@gmail.com", role = c("aut", "cre")),
     person("James", "Manton", role = c("aut"))

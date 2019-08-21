@@ -1,4 +1,4 @@
-# nat 1.8.11
+# nat 1.8.13
 
 * minor updates and fixes
 * includes fix for upcoming testthat v2 at request of Hadley Wickham
