@@ -196,9 +196,9 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
     names(x)=seq(x)
   }
   WriteObjects=match.arg(WriteObjects)
+  dbClass=match.arg(dbClass)
   if(WriteObjects!='yes' && dbClass!='RDS')
     stop("Must always write objects when dbClass!='RDS'")
-  dbClass=match.arg(dbClass)
   if(dbClass!='RDS' && !is.null(remote))
     stop("remote download only implemented for RDS class at the moment")
   # md5 by default. Should we use something else?
