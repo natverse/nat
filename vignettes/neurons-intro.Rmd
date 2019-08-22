@@ -14,10 +14,10 @@ features of nat by teaching you about how it handles individual neurons and
 collections of neurons.
 
 The source code for this vignette is available at 
-https://github.com/jefferis/nat/blob/master/vignettes/neurons-intro.Rmd. 
+https://github.com/natverse/nat/blob/master/vignettes/neurons-intro.Rmd. 
 If you find something unclear or notice a typo, I would be very happy if you 
 would click on the Pencil Icon on that page or follow 
-[this link to edit](https://github.com/jefferis/nat/edit/master/vignettes/neurons-intro.Rmd)
+[this link to edit](https://github.com/natverse/nat/edit/master/vignettes/neurons-intro.Rmd)
 and suggest an alternative wording. Don't be shy about doing this; I have to 
 review any change and even if your suggestion is not perfect it will still
 be a prompt for me to improve this document. Thank you!
@@ -65,7 +65,7 @@ A subset of the original data are distributed as a sample data object with the
 data("Cell07PNs")
 ```
 
-For more information about these data see [Cell07PNs](http://jefferis.github.io/nat/reference/Cell07PNs.html).
+For more information about these data see [Cell07PNs](http://natverse.github.io/nat/reference/Cell07PNs.html).
 
 This `Cell07PNs` object has two classes `neuronlist` and the base class `list`
 
@@ -172,7 +172,7 @@ Note that if you write `?plot` you will get the documentation for the basic
 `plot` function supplied with R.
 
 It is also good idea to look at 
-[nat's function reference page](http://jefferis.github.io/nat/reference/index.html)
+[nat's function reference page](http://natverse.github.io/nat/reference/index.html)
 which groups available functions into categories that often reflect the class
 of object they can work on.
 
@@ -212,7 +212,7 @@ summary(n1)
 summary(n1.lh)
 ```
 
-See [nat's function reference page](http://jefferis.github.io/nat/reference/index.html)
+See [nat's function reference page](http://natverse.github.io/nat/reference/index.html)
 for additional functions for working with neurons.
 
 ## Neuronlists
@@ -404,7 +404,7 @@ plot(Cell07PNs, subset=Glomerulus=="DA1", add=TRUE)
 So far we have only used 2D plots in this document, but especially for 
 interactive analysis and exploration, it is much more helpful to have 
 3D plots that can be rotated, zoomed etc. **nat** provides numerous functions 
-for [3D plots](http://jefferis.github.io/nat/reference/index.html#section--d-plotting-of-objects)
+for [3D plots](http://natverse.github.io/nat/reference/index.html#section--d-plotting-of-objects)
 based on the [rgl package](https://cran.r-project.org/package=rgl). It is 
 actually possible to embed fully interactive 3d figures in [rmarkdown](http://rmarkdown.rstudio.com/) reports
 like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
@@ -503,7 +503,7 @@ with a chance level of about 25% for these 4 classes.
 
 We hope this tutorial will provide you with a good foundation for further use of
 the **nat** and related packages. Please visit the main 
-[nat README](http://jefferis.github.io/nat/index.html) for
+[nat README](http://natverse.github.io/nat/index.html) for
 suggestions of resources to learn more and solve problems. You may also
 find that some time spent reading Hadley Wickham's [Advanced R](http://adv-r.had.co.nz/) 
 is a worthwhile investment. I recommend the first 7 chapters 

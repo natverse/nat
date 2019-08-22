@@ -6,8 +6,8 @@ Authors@R: c(
     person("Gregory", "Jefferis", , "jefferis@gmail.com", role = c("aut", "cre")),
     person("James", "Manton", role = c("aut"))
     )
-URL: https://github.com/jefferis/nat, http://jefferislab.org
-BugReports: https://github.com/jefferis/nat/issues
+URL: https://github.com/natverse/nat, https://natverse.github.io
+BugReports: https://github.com/natverse/nat/issues
 Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     biological image data, especially traced neurons. Reads and writes 3D images
     in NRRD and 'Amira' AmiraMesh formats and reads surfaces in 'Amira' hxsurf

@@ -1,10 +1,10 @@
 # nat: NeuroAnatomy Toolbox
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
-[![Release Version](https://img.shields.io/github/release/jefferis/nat.svg)](https://github.com/jefferis/nat/releases/latest) 
+[![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
-[![Build Status](https://img.shields.io/travis/jefferis/nat.svg)](https://travis-ci.org/jefferis/nat) 
-[![Coverage Status](https://coveralls.io/repos/jefferis/nat/badge.svg?branch=master)](https://coveralls.io/r/jefferis/nat?branch=master)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://jefferis.github.io/nat/reference/)
+[![Build Status](https://img.shields.io/travis/natverse/nat.svg)](https://travis-ci.org/natverse/nat) 
+[![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://natverse.github.io/nat/reference/)
 
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
@@ -52,15 +52,15 @@ the [devtools](https://cran.r-project.org/package=devtools) package.
 # install devtools if required
 if (!requireNamespace("devtools")) install.packages("devtools")
 # then install nat
-devtools::install_github("jefferis/nat")
+devtools::install_github("natverse/nat")
 ```
 
 ## Help
 If you want some help using **nat**, then please use the following resources
 
-* For installation issues, see the [Installation vignette](http://jefferis.github.io/nat/articles/Installation.html)
-* Start with the [overview package documentation](http://jefferis.github.io/nat/reference/nat-package.html) (`?nat` in R)
-* Thematically organised [function reference documentation](http://jefferis.github.io/nat/reference/)
+* For installation issues, see the [Installation vignette](http://natverse.github.io/nat/articles/Installation.html)
+* Start with the [overview package documentation](http://natverse.github.io/nat/reference/nat-package.html) (`?nat` in R)
+* Thematically organised [function reference documentation](http://natverse.github.io/nat/reference/)
 * [nat.examples](https://github.com/jefferis/nat.examples) sample code
 * [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
@@ -69,8 +69,8 @@ If you want some help using **nat**, then please use the following resources
 If you think that you have found a bug
 
 * Install the development version of nat using devtools (see above)
-* Check the [github issues](https://github.com/jefferis/nat/issues?q=is%3Aissue) and 
-  * [file a  bug report](https://github.com/jefferis/nat/issues/new) if this seems to be a new problem
+* Check the [github issues](https://github.com/natverse/nat/issues?q=is%3Aissue) and 
+  * [file a  bug report](https://github.com/natverse/nat/issues/new) if this seems to be a new problem
   * comment on an existing bug report 
 * Write to the [nat-user](https://groups.google.com/forum/#!forum/nat-user) list
   for help.
