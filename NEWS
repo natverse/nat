@@ -10,6 +10,7 @@ This release backports a few urgent fixes to the 1.8 branch
 
 It also updates URLs to point to nat's new home organisation on GitHub 
 (https://github.com/natverse/).
+
 nat 1.8.12
 ==========
 * Speed up (2-3x) summary.neuron(list) by faster calculation of total cable
