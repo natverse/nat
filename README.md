@@ -73,11 +73,11 @@ When you're ready to learn more:
 
 * Read the [overview package documentation](https://natverse.github.io/nat/reference/nat-package.html)
   (`?nat` in R)
-* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html article)
+* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html) article
 * Check out the thematically organised [function reference documentation](https://natverse.github.io/nat/reference/). 
   * Most help pages include examples.
 * Try out sample code:
-  - [nat.examples](https://github.com/natverse/nat.examples) has detailed 
+  - [nat.examples](https://github.com/jefferis/nat.examples) has detailed 
     examples for data sets from a range of model organisms and techniques
   - [frulhns](https://github.com/jefferis/frulhns) analysis of sexually dimorphic circuits
   - [NBLAST figures](https://github.com/jefferislab/NBLAST_figures/)

@@ -1,4 +1,5 @@
-pdf_path =  paste0('./',test_path(),'/','Rplots.pdf')
+pdf_path =  test_path('Rplots.pdf')
 
-if(file.exists(pdf_path))
+# check for write permission
+if(isTRUE(file.access(pdf_path, mode = 2)==0))
   file.remove(pdf_path)
