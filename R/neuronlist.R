@@ -542,7 +542,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
   if(.progress!='none'){
     p <- progress_natprogress()
     p$init(length(X))
-    FUN2=function(...) {FUN(...);p$step()}
+    FUN2=function(...) {p$step();FUN(...)}
   }
   
   TFUN = if(is.na(OmitFailures)) FUN2 else function(...) try(FUN2(...), silent=TRUE)
