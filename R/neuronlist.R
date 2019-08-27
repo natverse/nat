@@ -675,11 +675,12 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
     .plotly3d$plotlyscenehandle = plotly::plot_ly()
     plotlyreturnlist = list()
     plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
-    params=list(...)
-    if("alpha"%in%names(params)){
+    params = list(...)
+    if ("alpha" %in% names(params)) {
       opacity = params$alpha
-    } else{
-      opacity = 1}
+    } else {
+      opacity = 1
+    }
   }
   
   # Speed up drawing when there are lots of neurons

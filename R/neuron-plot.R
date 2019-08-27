@@ -587,17 +587,15 @@ plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),...) {
 #' 
 #' @export
 #' 
-clearplotlyscene <- function(){
-  if (exists("plotlyscenehandle", envir = .plotly3d)){
-    
-    rm("plotlyscenehandle", envir = .plotly3d)}
-  
+clearplotlyscene <- function() {
+  if (exists("plotlyscenehandle", envir = .plotly3d))
+    rm("plotlyscenehandle", envir = .plotly3d)
 }
 
 openplotlyscene <- function(){
-  if (!exists("plotlyscenehandle", envir = .plotly3d)){
-    .plotly3d$plotlyscenehandle = plotly::plot_ly()}
+  if (!exists("plotlyscenehandle", envir = .plotly3d))
+    .plotly3d$plotlyscenehandle = plotly::plot_ly()
   plotlyreturnlist = list()
   plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
-  return(plotlyreturnlist)
+  return(invisible(plotlyreturnlist))
 }
