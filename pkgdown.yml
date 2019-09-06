@@ -1,0 +1,9 @@
+pandoc: '2.2'
+pkgdown: 1.4.0
+pkgdown_sha: ~
+articles:
+  Installation: Installation.html
+  NeuroGeometry: NeuroGeometry.html
+  neurons-as-graph: neurons-as-graph.html
+  neurons-intro: neurons-intro.html
+
