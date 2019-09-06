@@ -1,0 +1,57 @@
+---
+title: "plotly"
+author: "Gregory Jefferis"
+date: "06/09/2019"
+output: html_document
+---
+
+## Introduction
+
+You can use the Plotly library as an alternative to rgl for 3D display. This is
+particularly useful for interactive html documents.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Plotly can do a whole range of plots. See https://plot.ly/r/ for examples. The
+standard approach looks like this.
+
+```{r, eval=FALSE}
+library(plotly)
+plot_ly(midwest, x = ~percollege, color = ~state, type = "box")
+```
+
+## Plotly + nat
+
+For nat we could add a specialised plot type for neurons etc to use with the
+`plot_ly` interface, we have opted to keep things as close as possible to the 
+`rgl::plot3d()` interface that we have already used.
+
+```{r, message=FALSE}
+library(nat)
+options(nat.plotengine = 'plotly')
+```
+
+We can plot just one neuron:
+
+```{r}
+plot3d(Cell07PNs[[1]], plotly_plotonce = TRUE)
+```
+
+Or multiple neurons from a `neuronlist()` object.
+
+```{r}
+nat:::clearplotlyscene()
+plot3d(Cell07PNs[1:3])
+```
+
+You can also display meshes and dotptops objects:
+
+```{r}
+nat:::clearplotlyscene()
+pns=plot3d(MBL.surf, alpha=.4)
+plot3d(kcs20, col=type, plotly_plotonce = TRUE)
+```
+
+

@@ -204,8 +204,7 @@ test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
   
   options(nat.plotengine='plotly')
   expect_error(f())
-  expect_is(f(SUBSTITUTE = FALSE), 'list')
-  
+  expect_is(f(SUBSTITUTE = FALSE), 'plotly')
 })
 
 test_that("basic interactive 3d functionality",{

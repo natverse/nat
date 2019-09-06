@@ -145,12 +145,9 @@ cmtkreg.filetype <- function(x) {
 plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
   
   if (plotengine == 'plotly') {
-    plotlyreturnlist <- openplotlyscene()
+    psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
-    if("alpha"%in%names(params)){
-      opacity = params$alpha
-    } else{
-      opacity = 1}
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
   }
   
   reg=NULL
@@ -170,15 +167,12 @@ plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
   } else{
     plotdata <- as.data.frame(coeffs[actives, ])
     names(plotdata) <- c('X','Y','Z')
-    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                          plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
-                                          hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                          opacity = opacity, marker=list(color = 'black', size = 3))
-    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                          plotly::layout(showlegend = FALSE, 
-                                                         scene=list(camera=.plotly3d$camera))
-    assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
-    print(.plotly3d$plotlyscenehandle)
-    invisible(plotlyreturnlist)
+    psh <- psh %>% 
+      plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+        hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+        opacity = opacity, marker=list(color = 'black', size = 3)) %>% 
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
   }
 }

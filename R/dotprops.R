@@ -310,23 +310,20 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
   
   rlist=list()
   if (plotengine == 'plotly') {
-    plotlyreturnlist <- openplotlyscene()
+    psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
-    if("alpha"%in%names(params)){
-      opacity = params$alpha
-    } else{
-      opacity = 1}
-    }
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
   
   if(PlotPoints){
     if (plotengine == 'rgl'){
       rlist$points=points3d(x$points, color=color, ...)
     } else {
       plotdata <- as.data.frame(x$points)
-      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
-                                            hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                            opacity = opacity, marker=list(color = color, size = 3))
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+        hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+        opacity = opacity, marker=list(color = color, size = 3))
     }
   }
     
@@ -342,7 +339,6 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
     if (plotengine == 'rgl'){
         rlist$segments=segments3d(interleaved, color=color, ...)
     } else {
-      
       tempdata <- interleaved
       tempseglist <- list()
       for (tempidx in seq(1,nrow(tempdata)/2)) {
@@ -353,23 +349,20 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
       
       plotdata <- as.data.frame(tempdata)
       names(plotdata) <- c('X','Y','Z')
-      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
-                                            hoverinfo = "none", type = 'scatter3d', mode = 'lines',
-                                            opacity = opacity, line=list(color = color, width = 4))
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+        hoverinfo = "none", type = 'scatter3d', mode = 'lines',
+        opacity = opacity, line=list(color = color, width = 4))
     }
   }
   if (plotengine == 'rgl'){
     invisible(rlist)
   } else {
-    plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                          plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
-    assign("plotlyscenehandle", plotlyreturnlist$plotlyscenehandle, envir=.plotly3d)
-    print(.plotly3d$plotlyscenehandle)
-    invisible(plotlyreturnlist)
+    psh <- psh %>% 
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
   }
-  
- 
 }
 
 #' @rdname plot.neuron

@@ -671,16 +671,9 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
   cols=makecols(cols, colpal, length(x))
   
   if (plotengine == 'plotly') {
-    clearplotlyscene()
-    .plotly3d$plotlyscenehandle = plotly::plot_ly()
-    plotlyreturnlist = list()
-    plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
-    params = list(...)
-    if ("alpha" %in% names(params)) {
-      opacity = params$alpha
-    } else {
-      opacity = 1
-    }
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
   }
   
   # Speed up drawing when there are lots of neurons
@@ -696,7 +689,7 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
   rval=mapply(plot3d,x, plotengine = plotengine, plotly_plotonce = plotly_plotonce,
               col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
-    plotlyreturnlist$plotlyscenehandle <- rval[[length(rval)]]$plotlyscenehandle
+    psh <- .plotly3d$plotlyscenehandle
   }
   df=as.data.frame(x)
   if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
@@ -706,12 +699,23 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
         rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
     } else{
       plotdata=df[, c("X", "Y", "Z")]
-      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
-                                            hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-                                            opacity = opacity, marker=list(symbol = 'circle', 
-                                                                           sizemode = 'diameter',
-                                                                    color = cols),sizes = 2*soma)
+      psh <- psh %>%
+        plotly::add_trace(
+          data = plotdata,
+          x = ~ X,
+          y = ~ Y ,
+          z = ~ Z,
+          hoverinfo = "none",
+          type = 'scatter3d',
+          mode = 'markers',
+          opacity = opacity,
+          marker = list(
+            symbol = 'circle',
+            sizemode = 'diameter',
+            color = cols
+          ),
+          sizes = 2 * soma
+        )
     }
   }
   if (plotengine == 'rgl'){
@@ -722,15 +726,12 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
   if (plotengine == 'rgl'){
       attr(rval,'df')=df
       invisible(rval)
-    } else{
-      
-      plotlyreturnlist$plotlyscenehandle <- plotlyreturnlist$plotlyscenehandle %>% 
-                                            plotly::layout(showlegend = FALSE, 
-                                                           scene=list(camera=.plotly3d$camera))
-      .plotly3d$plotlyscenehandle = plotlyreturnlist$plotlyscenehandle
-      print(.plotly3d$plotlyscenehandle)
-      attr(plotlyreturnlist,'df')=df
-      invisible(plotlyreturnlist)
+  } else{
+    psh <- psh %>%
+      plotly::layout(showlegend = FALSE, scene = list(camera =.plotly3d$camera))
+    .plotly3d$plotlyscenehandle = psh
+    attr(psh, 'df') = df
+    psh
   }
 }
 
