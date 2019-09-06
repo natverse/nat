@@ -40,6 +40,12 @@ Subset neuron by keeping only vertices that match given conditions
   the neuron.
 
   }
+
+  Note that due to its use of
+  \href{http://adv-r.had.co.nz/Computing-on-the-language.html}{non-standard
+  evaluation} \code{subset.neuron}, which is convenient interactive use but
+  can be fragile when used inside other functions. If you run into trouble it
+  is recommended to use the underlying \code{\link{prune_vertices}} function.
 }
 \examples{
 n=Cell07PNs[[1]]
