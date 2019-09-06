@@ -506,9 +506,10 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 
 
 #' Plot a bounding box in 3D
-#' 
+#'
 #' @param x the \code{\link{boundingbox}} object to plot.
 #' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
+#' @param col The colour of the bounding box lines (default 'black')
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
 #' @return A list of RGL object IDs.
 #'   
@@ -533,7 +534,8 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x, plotengine = getOption('nat.plotengine'), ...) {
+plot3d.boundingbox <- function(x, col='black', 
+                               plotengine = getOption('nat.plotengine'), ...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -547,11 +549,12 @@ plot3d.boundingbox <- function(x, plotengine = getOption('nat.plotengine'), ...)
   cuboid=pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ]
   
   if (plotengine == 'rgl'){
-    segments3d(cuboid, ...)
+    segments3d(cuboid, col=col, ...)
   } else {
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
+    width <- if("lwd" %in% names(params)) params$lwd else 1
     
     # reshape to 6 cols x 12 rows (i.e. edges)
     cuboid6=matrix(t(cuboid), ncol=6, byrow = T)
@@ -564,7 +567,7 @@ plot3d.boundingbox <- function(x, plotengine = getOption('nat.plotengine'), ...)
         data = as.data.frame(cuboidna), 
         x = ~X, y = ~Y , z = ~Z, 
         hoverinfo = "none", type = 'scatter3d', mode = 'lines',
-        opacity = opacity, line=list(color = 'black', width = 4))
+        opacity = opacity, line=list(color = col, width = width))
     .plotly3d$plotlyscenehandle <- psh
     psh
   }
