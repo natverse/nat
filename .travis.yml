@@ -31,3 +31,9 @@ after_success:
   - Rscript -e 'devtools::install();nat::cmtk.mat2dof(version=TRUE)'
   - Rscript -e 'library(covr);coveralls(line_exclusions="R/zzz.R")'
   - bash travisbuildchildren.sh
+
+before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::deploy_site_github()'
+  skip_cleanup: true
