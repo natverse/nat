@@ -6,11 +6,10 @@
 \title{3D plots of the elements in a neuronlist, optionally using a subset 
 expression}
 \usage{
-\method{plot3d}{neuronlist}(x, subset = NULL,
-  plotengine = getOption("nat.plotengine"), col = NULL,
-  colpal = rainbow, plotly_plotonce = TRUE,
-  skipRedraw = ifelse(interactive(), 200L, TRUE), WithNodes = FALSE,
-  soma = FALSE, ..., SUBSTITUTE = TRUE)
+\method{plot3d}{neuronlist}(x, subset = NULL, col = NULL,
+  colpal = rainbow, skipRedraw = ifelse(interactive(), 200L, TRUE),
+  WithNodes = FALSE, soma = FALSE, ..., SUBSTITUTE = TRUE,
+  plotengine = getOption("nat.plotengine"))
 
 \method{plot3d}{character}(x, db = NULL, ...)
 }
@@ -22,14 +21,10 @@ using \code{options(nat.default.neuronlist='mylist')}. See
 
 \item{subset}{Expression evaluating to logical mask for neurons. See details.}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
-
 \item{col}{An expression specifying a colour evaluated in the context of the 
 dataframe attached to nl (after any subsetting). See details.}
 
 \item{colpal}{A vector of colours or a function that generates colours}
-
-\item{plotly_plotonce}{set this to TRUE to skip redraw of the plotly plot per iteration.}
 
 \item{skipRedraw}{When plotting more than this many (default 200) neurons 
 skip redraw for individual neurons (this is much faster for large number of
@@ -48,6 +43,8 @@ soma. Either a logical value or a numeric indicating the radius (default
 \item{SUBSTITUTE}{Whether to \code{substitute} the expressions passed as 
 arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
 use only, when calling from another function.}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{db}{A neuronlist to use as the source of objects to plot. If
 \code{NULL}, the default, will use the neuronlist specified by

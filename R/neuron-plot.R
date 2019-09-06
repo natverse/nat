@@ -3,8 +3,6 @@
 #' @export
 #' @method plot3d neuron
 #' @param x A neuron to plot
-#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
-#' @param plotly_plotonce set this to TRUE to skip redraw of the plotly plot per iteration.
 #' @param WithLine Whether to plot lines for all segments in neuron
 #' @param NeuronNames Logical indicating whether to label the neuron in the plot
 #'   using the NeuronName field \strong{or} a character vector of names.
@@ -22,11 +20,15 @@
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
 #' @param ... Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 #'   \code{\link[rgl]{spheres3d}} if somata are being plotted).
+#' @inheritParams plot3d.neuronlist
+#'
 #' @return list of rgl plotting ids (invisibly) separated into \code{lines},
 #'   \code{points}, \code{texts} according to plot element. See
 #'   \code{rgl::\link[rgl]{plot3d}} for details.
+#'
 #' @seealso \code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}},
 #'   \code{nat::\link[nat]{plot3d}}, \code{rgl::\link[rgl]{plot3d}}
+#'
 #' @details Note that when \code{WithText=TRUE}, the numeric identifiers plotted
 #'   are \emph{raw indices} into the \code{x$d} array of the \code{neuron},
 #'   \emph{not} the values of the \code{PointNo} column.
@@ -36,8 +38,9 @@
 #'   \code{...} elements are necessarily relevant to both of these drawing
 #'   calls. Furthermore plotting a large number of somata with transparency
 #'   (i.e. \code{alpha < 1} ) can quickly result in very slow rgl draw and
-#'   refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when using
-#'   \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
+#'   refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when
+#'   using \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
+#'
 #' @examples
 #' # A new plot would have been opened if required
 #' open3d()
@@ -55,9 +58,10 @@
 #' plot3d(Cell07PNs[5], col='red', soma=3)
 #' rgl.close()
 #' }
-plot3d.neuron<-function(x, plotengine = getOption('nat.plotengine'), plotly_plotonce = FALSE,
-                        WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, WithAllPoints=FALSE, 
-                        WithText=FALSE, PlotSubTrees=TRUE, add=TRUE, col=NULL, soma=FALSE,...){
+plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, 
+                        WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE, 
+                        add=TRUE, col=NULL, soma=FALSE, ...,
+                        plotengine = getOption('nat.plotengine')){
   
   
   if (!add) {
@@ -508,12 +512,14 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' Plot a bounding box in 3D
 #'
 #' @param x the \code{\link{boundingbox}} object to plot.
-#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param col The colour of the bounding box lines (default 'black')
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
-#' @return A list of RGL object IDs.
-#'   
-#' @method plot3d boundingbox
+#' @inheritParams plot3d.neuronlist
+#'
+#' @return A list of rgl object IDs (as returned by
+#'   \code{\link[rgl]{segments3d}}) \bold{or} a
+#'   \code{\link[plotly:plot_ly]{plotly}} object.
+#'
 #' @export
 #' @seealso \code{\link{boundingbox}}
 #' @examples
@@ -525,10 +531,10 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(kcs20)
 #' # ... with their bounding box
 #' plot3d(boundingbox(kcs20))
-#' 
+#'
 #' plot3d(kcs20)
 #' # plot bounding box (in matching colours) for each neuron
-#' # NB makes use of nlapply/neuronlist in slightly unsusual context - 
+#' # NB makes use of nlapply/neuronlist in slightly unsusual context -
 #' # plot3d.neuronlist can cope with lists containing anything with
 #' # a valid plot3d method.
 #' plot3d(nlapply(kcs20,boundingbox))

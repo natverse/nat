@@ -15,7 +15,7 @@
 \item{scalevecs}{Factor by which to scale unit vectors (numeric, default: 
 1.0)}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{alpharange}{Restrict plotting to points with \code{alpha} values in 
 this range to plot (default: null => all points). See 

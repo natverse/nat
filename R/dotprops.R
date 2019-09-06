@@ -274,7 +274,6 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' @param x A dotprops object
 #' @param scalevecs Factor by which to scale unit vectors (numeric, default: 
 #'   1.0)
-#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param alpharange Restrict plotting to points with \code{alpha} values in 
 #'   this range to plot (default: null => all points). See 
 #'   \code{\link{dotprops}} for definition of \code{alpha}.
@@ -286,8 +285,9 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #'   \code{alpha}
 #' @param ... Additional arguments passed to \code{points3d} and/or 
 #'   \code{segments3d}
+#' @inheritParams plot3d.neuronlist
 #' @return invisible list of results of rgl plotting commands
-#' @method plot3d dotprops
+#' 
 #' @export
 #' @seealso \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d}, 
 #'   \link[rgl]{segments3d}}

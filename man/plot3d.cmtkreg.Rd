@@ -11,7 +11,7 @@
 \item{x}{A cmtk registration (the path to the registration folder on disk) or
 the resulting of reading one in with \code{\link{read.cmtkreg}}.}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{plot3d}}}
 }

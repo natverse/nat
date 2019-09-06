@@ -17,7 +17,7 @@ neurons to plot from the neuronlist specified by \code{db}.}
 \code{NULL}, the default, will use the neuronlist specified by
 options('nat.default.neuronlist')}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{col}{the color with which to plot the neurons (default \code{'red'}).}
 

@@ -4,17 +4,13 @@
 \alias{plot3d.neuron}
 \title{Plot neurons in 3D using rgl library or plotly module}
 \usage{
-\method{plot3d}{neuron}(x, plotengine = getOption("nat.plotengine"),
-  plotly_plotonce = FALSE, WithLine = TRUE, NeuronNames = FALSE,
+\method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
   WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
-  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...)
+  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...,
+  plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{A neuron to plot}
-
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
-
-\item{plotly_plotonce}{set this to TRUE to skip redraw of the plotly plot per iteration.}
 
 \item{WithLine}{Whether to plot lines for all segments in neuron}
 
@@ -42,6 +38,8 @@ soma. Either a logical value or a numeric indicating the radius (default
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 \code{\link[rgl]{spheres3d}} if somata are being plotted).}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 }
 \value{
 list of rgl plotting ids (invisibly) separated into \code{lines},
@@ -61,8 +59,8 @@ Note that when \code{WithText=TRUE}, the numeric identifiers plotted
   \code{...} elements are necessarily relevant to both of these drawing
   calls. Furthermore plotting a large number of somata with transparency
   (i.e. \code{alpha < 1} ) can quickly result in very slow rgl draw and
-  refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when using
-  \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
+  refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when
+  using \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
 }
 \examples{
 # A new plot would have been opened if required

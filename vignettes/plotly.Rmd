@@ -36,7 +36,7 @@ options(nat.plotengine = 'plotly')
 We can plot just one neuron:
 
 ```{r}
-plot3d(Cell07PNs[[1]], plotly_plotonce = TRUE)
+plot3d(Cell07PNs[[1]])
 ```
 
 Or multiple neurons from a `neuronlist()` object.
@@ -51,7 +51,7 @@ You can also display meshes and dotptops objects:
 ```{r}
 nat:::clearplotlyscene()
 pns=plot3d(MBL.surf, alpha=.4)
-plot3d(kcs20, col=type, plotly_plotonce = TRUE)
+plot3d(kcs20, col=type)
 ```
 
 

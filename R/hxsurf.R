@@ -212,7 +212,6 @@ write.hxsurf <- function(surf, filename) {
 #' Plot amira surface objects in 3D using rgl
 #' 
 #' @param x An hxsurf surface object
-#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
 #' @param materials Character vector or \code{\link[base]{regex}} naming
 #'   materials to plot (defaults to all materials in x). See
 #'   \code{\link{subset.hxsurf}}.
@@ -220,7 +219,8 @@ write.hxsurf <- function(surf, filename) {
 #'   function that will be called with the number of materials to plot. When
 #'   \code{NULL} (default) will use material colours defined in Amira (if
 #'   available), or \code{rainbow} otherwise.
-#' @param ... Additional arguments passed to
+#' @param ... Additional arguments passed to \code{triangles3d}
+#' @inheritParams plot3d.neuronlist
 #' @export
 #' @method plot3d hxsurf
 #' @seealso \code{\link{read.hxsurf}}

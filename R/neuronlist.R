@@ -597,12 +597,11 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See 
 #'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
-#' @param plotengine the plotting backend engine to use either 'rgl' or 'ploltly'.
+#' @param plotengine the plotting backend engine to use either 'rgl' or 'plotly'.
 #' @param subset Expression evaluating to logical mask for neurons. See details.
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param colpal A vector of colours or a function that generates colours
-#' @param plotly_plotonce set this to TRUE to skip redraw of the plotly plot per iteration.
 #' @param skipRedraw When plotting more than this many (default 200) neurons 
 #'   skip redraw for individual neurons (this is much faster for large number of
 #'   neurons). Can also accept logical values TRUE (always skip) FALSE (never 
@@ -651,10 +650,11 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengine'), 
-                            col=NULL, colpal=rainbow, plotly_plotonce = TRUE,
+plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
-                            WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
+                            WithNodes=FALSE, soma=FALSE, ..., 
+                            SUBSTITUTE=TRUE, 
+                            plotengine = getOption('nat.plotengine')){
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -686,8 +686,9 @@ plot3d.neuronlist<-function(x, subset=NULL, plotengine = getOption('nat.plotengi
     }
   }
   
-  rval=mapply(plot3d,x, plotengine = plotengine, plotly_plotonce = plotly_plotonce,
-              col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),SIMPLIFY=FALSE)
+  rval=mapply(plot3d, x, plotengine = plotengine,
+              col=cols, soma=soma,..., 
+              MoreArgs = list(WithNodes=WithNodes), SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     psh <- .plotly3d$plotlyscenehandle
   }

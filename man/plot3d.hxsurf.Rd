@@ -10,7 +10,7 @@
 \arguments{
 \item{x}{An hxsurf surface object}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'ploltly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{materials}{Character vector or \code{\link[base]{regex}} naming
 materials to plot (defaults to all materials in x). See
@@ -21,7 +21,7 @@ function that will be called with the number of materials to plot. When
 \code{NULL} (default) will use material colours defined in Amira (if
 available), or \code{rainbow} otherwise.}
 
-\item{...}{Additional arguments passed to}
+\item{...}{Additional arguments passed to \code{triangles3d}}
 }
 \description{
 Plot amira surface objects in 3D using rgl
