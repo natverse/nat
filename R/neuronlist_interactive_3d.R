@@ -134,7 +134,7 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' \dontrun{
 #' # could select e.g. the gamma neurons with unbranched axons
 #' gammas=nlscan(kcs20)
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20[gammas])
 #' 
 #' # plot surface model of brain first
@@ -144,7 +144,8 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' plot3d(FCWB)
 #' # could select e.g. the gamma neurons with unbranched axons
 #' gammas=nlscan(kcs20)
-#' clear3d()
+#' 
+#' nclear3d()
 #' plot3d(kcs20[gammas])
 #' }
 nlscan <- function(neurons, db=NULL, plotengine = getOption('nat.plotengine'),

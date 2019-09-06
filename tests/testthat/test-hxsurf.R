@@ -22,9 +22,9 @@ test_that("we can read hxsurf object", {
   options(nat.plotengine='rgl')
   open3d()
   plot3d(surf,col='red',alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
   rgl.close()
   
@@ -32,12 +32,11 @@ test_that("we can read hxsurf object", {
   options(nat.plotengine='plotly')
   openplotlyscene()
   plot3d(surf,col='red',alpha=0.2)
-  clearplotlyscene()
+  nclear3d()
   plot3d(surf,opacity=0.2)
-  clearplotlyscene()
+  nclear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
-  clearplotlyscene()
-  
+  nclear3d()
 })
 
 test_that("we fail for bad surface files", {

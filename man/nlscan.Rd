@@ -70,7 +70,7 @@ nlscan(kcs20[1:4], Wait=FALSE, sleep=0)
 \dontrun{
 # could select e.g. the gamma neurons with unbranched axons
 gammas=nlscan(kcs20)
-clear3d()
+nclear3d()
 plot3d(kcs20[gammas])
 
 # plot surface model of brain first
@@ -80,7 +80,8 @@ library(nat.flybrains)
 plot3d(FCWB)
 # could select e.g. the gamma neurons with unbranched axons
 gammas=nlscan(kcs20)
-clear3d()
+
+nclear3d()
 plot3d(kcs20[gammas])
 }
 }

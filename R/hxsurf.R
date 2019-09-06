@@ -231,11 +231,11 @@ write.hxsurf <- function(surf, filename) {
 #' 
 #' \donttest{
 #' # plot only vertical lobe
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, materials="VL", alpha=0.3)
 #' 
 #' # everything except vertical lobe
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
@@ -414,7 +414,7 @@ as.hxsurf.mesh3d <- function(x, region="Interior", col=NULL, ...) {
 #' plot3d(kcs20)
 #' 
 #' # there is also a shortcut for this
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, subset = "VL", alpha=0.3)
 #' }
 subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...){

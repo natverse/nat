@@ -295,9 +295,9 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' \donttest{
 #' open3d()
 #' plot3d(kcs20[[1]])
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20[[1]],col='red')
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }

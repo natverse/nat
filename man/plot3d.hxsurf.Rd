@@ -32,11 +32,11 @@ plot3d(MBL.surf)
 
 \donttest{
 # plot only vertical lobe
-clear3d()
+nclear3d()
 plot3d(MBL.surf, materials="VL", alpha=0.3)
 
 # everything except vertical lobe
-clear3d()
+nclear3d()
 plot3d(MBL.surf, alpha=0.3, 
   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 }

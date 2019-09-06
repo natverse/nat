@@ -410,7 +410,7 @@ actually possible to embed fully interactive 3d figures in [rmarkdown](http://rm
 like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
 
 ```{r, webgl=TRUE}
-clear3d()
+nclear3d()
 plot3d(Cell07PNs[[1]], col='red')
 # set a grey background so it's easier to see extent of the webgl canvas
 bg3d(col='lightgrey')

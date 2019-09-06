@@ -69,15 +69,14 @@ plot3d(Cell07PNs[[1]],col='red')
 plot3d(Cell07PNs[[2]],col='green')
 \donttest{
 # clear the current plot
-clear3d()
+nclear3d()
 plot3d(Cell07PNs[[2]],col='blue',add=FALSE)
 # plot the number of all nodes
-clear3d()
+nclear3d()
 plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 # include cell bodies
 plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 plot3d(Cell07PNs[5], col='red', soma=3)
-rgl.close()
 }
 }
 \seealso{

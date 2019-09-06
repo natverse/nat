@@ -54,9 +54,9 @@ Tangent vectors are plotted by \code{segments3d} and centred on the
 \donttest{
 open3d()
 plot3d(kcs20[[1]])
-clear3d()
+nclear3d()
 plot3d(kcs20[[1]],col='red')
-clear3d()
+nclear3d()
 plot3d(kcs20[[1]],col='red',lwd=2)
 plot3d(kcs20[[2]],col='green',lwd=2)
 }

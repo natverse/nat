@@ -48,38 +48,31 @@
 #' plot3d(Cell07PNs[[2]],col='green')
 #' \donttest{
 #' # clear the current plot
-#' clear3d()
+#' nclear3d()
 #' plot3d(Cell07PNs[[2]],col='blue',add=FALSE)
 #' # plot the number of all nodes
-#' clear3d()
+#' nclear3d()
 #' plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 #' # include cell bodies
 #' plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 #' plot3d(Cell07PNs[5], col='red', soma=3)
-#' rgl.close()
 #' }
 plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, 
                         WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE, 
                         add=TRUE, col=NULL, soma=FALSE, ...,
                         plotengine = getOption('nat.plotengine')){
+
+  if (!add)
+    nclear3d(plotengine)
   
-  
-  if (!add) {
-    if (plotengine == 'rgl') {
-      clear3d()
-    } else {
-      clearplotlyscene()
-    }
-  }
-  
-  if (plotengine == 'plotly') {
+  if(plotengine == 'plotly') {
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
   }
     
   # skip so that the scene is updated only once per neuron
-  if (plotengine == 'rgl') {
+  if(plotengine == 'rgl') {
     skip <- par3d(skipRedraw = TRUE)
     on.exit(par3d(skip))
   }
@@ -579,13 +572,30 @@ plot3d.boundingbox <- function(x, col='black',
   }
 }
 
-#' Clear the plotly scene
-#' 
+#' Clear the rgl or plotly 3D scene
+#'
+#' @details \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
+#'   quite different models for how to handle the active plot. \code{nclear3d}
+#'   allows you to treat them more similarly
+#' @inheritParams plot3d.neuronlist
+#' @param ... Additional arguments passed to
+#'   \code{\link[rgl:clear3d]{rgl::clear3d}}
 #' @export
+#' @seealso \code{\link[rgl:clear3d]{rgl::clear3d}}, \code{\link[nat]{plot3d}},
+#'   \code{\link[nat]{plot3d.neuronlist}}
+#' @examples
 #' 
-clearplotlyscene <- function() {
-  if (exists("plotlyscenehandle", envir = .plotly3d))
-    rm("plotlyscenehandle", envir = .plotly3d)
+#' \donttest{
+#' nclear3d()
+#' plot3d(Cell07PNs[[1]])
+#' }
+nclear3d <- function(plotengine = getOption('nat.plotengine'), ...) {
+  if(plotengine=='plotly') {
+    if (exists("plotlyscenehandle", envir = .plotly3d))
+      rm("plotlyscenehandle", envir = .plotly3d)
+  } else {
+    clear3d(...)
+  }
 }
 
 openplotlyscene <- function(){

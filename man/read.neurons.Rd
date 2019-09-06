@@ -86,7 +86,7 @@ rownames(vddf)=vddf$Neuron
 # attach metadata to neuronlist
 vdnl=read.neurons(vdurls, neuronnames=vds, df=vddf)
 # use metadata to plot a subset of neurons
-clear3d()
+nclear3d()
 plot3d(vdnl, grepl("P[1-6].app", Lineage))
 }
 }
