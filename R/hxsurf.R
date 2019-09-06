@@ -281,6 +281,8 @@ plot3d.hxsurf<-function(x, plotengine = getOption('nat.plotengine'),
                           j = tmpx$it[2,]-1, 
                           k = tmpx$it[3,]-1,
                           type = "mesh3d", opacity = opacity,
+                          hovertext=mat,
+                          hoverinfo="x+y+z+text",
                           facecolor = rep(col[mat],
                                           length(tmpx$it[1,])))
     }
