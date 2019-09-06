@@ -533,7 +533,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),...) {
+plot3d.boundingbox <- function(x, plotengine = getOption('nat.plotengine'), ...) {
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -544,26 +544,25 @@ plot3d.boundingbox <- function(x,plotengine = getOption('nat.plotengine'),...) {
   c(x[2, 1], x[2, 2], x[1, 3]),
   c(x[2, 1], x[2, 2], x[2, 3])
   ), ncol=3, byrow=TRUE)
+  cuboid=pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ]
   
   if (plotengine == 'rgl'){
-    segments3d(pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ], ...)
+    segments3d(cuboid, ...)
   } else {
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
     
-    tempdata <- pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ]
-    tempseglist <- list()
-    for (tempidx in seq(1,nrow(tempdata)/2)) {
-      tempseglist[[tempidx]] <- c(1,2)+2*(tempidx-1)
-    }
-     
-    tempdata<-do.call(rbind,sapply(tempseglist,function(s) {rbind(tempdata[s,],NA)},simplify=FALSE))
-    
-    plotdata <- as.data.frame(tempdata)
-    names(plotdata) <- c('X','Y','Z')
+    # reshape to 6 cols x 12 rows (i.e. edges)
+    cuboid6=matrix(t(cuboid), ncol=6, byrow = T)
+    # add 3 more columns with NAs and then reinterleave
+    cuboidna=matrix(t(cbind(cuboid6, NA, NA, NA)), 
+                    ncol=3, byrow = T,
+                    dimnames = list(NULL, c("X","Y","Z")))
     psh <- psh %>% 
-      plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+      plotly::add_trace(
+        data = as.data.frame(cuboidna), 
+        x = ~X, y = ~Y , z = ~Z, 
         hoverinfo = "none", type = 'scatter3d', mode = 'lines',
         opacity = opacity, line=list(color = 'black', width = 4))
     .plotly3d$plotlyscenehandle <- psh
