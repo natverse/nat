@@ -307,7 +307,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengi
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
-  
+  plotengine <- check_plotengine(plotengine)
   rlist=list()
   if (plotengine == 'plotly') {
     psh <- openplotlyscene()$plotlyscenehandle

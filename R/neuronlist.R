@@ -662,6 +662,7 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
                             WithNodes=FALSE, soma=FALSE, ..., 
                             SUBSTITUTE=TRUE, 
                             plotengine = getOption('nat.plotengine')){
+  plotengine <- check_plotengine(plotengine)
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to

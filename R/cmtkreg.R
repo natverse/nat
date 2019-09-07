@@ -145,7 +145,7 @@ cmtkreg.filetype <- function(x) {
 #' @importFrom rgl plot3d
 #' @export
 plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
-  
+  plotengine <- check_plotengine(plotengine)
   if (plotengine == 'plotly') {
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)

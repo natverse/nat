@@ -241,9 +241,9 @@ write.hxsurf <- function(surf, filename) {
 #' }
 plot3d.hxsurf<-function(x, plotengine = getOption('nat.plotengine'),
                            materials=NULL, col=NULL, ...){
-   
-  # skip so that the scene is updated only once per hxsurf object
+  plotengine <- check_plotengine(plotengine)
   if (plotengine == 'rgl'){
+    # skip so that the scene is updated only once per hxsurf object
     skip <- par3d(skipRedraw = TRUE)
     on.exit(par3d(skip))
   } 

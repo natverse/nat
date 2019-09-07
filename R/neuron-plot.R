@@ -61,7 +61,7 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
                         WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE, 
                         add=TRUE, col=NULL, soma=FALSE, ...,
                         plotengine = getOption('nat.plotengine')){
-
+  plotengine <- check_plotengine(plotengine)
   if (!add)
     nclear3d(plotengine)
   
@@ -167,7 +167,8 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
       plotdata <- as.data.frame(xyzl)
       psh <- psh %>% 
         plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
-          hoverinfo = "none", type = 'scatter3d', mode = 'lines',
+                          hovertext=x$NeuronName,
+          hoverinfo = "text", type = 'scatter3d', mode = 'lines',
           opacity = opacity, line=list(color = col, size = 1))
     }
   }
@@ -200,10 +201,12 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
       plotdata <- somapos
       psh <- psh %>% 
         plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
-          hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-          opacity = opacity, marker=list(symbol = 'circle', sizemode = 'diameter',
-          color = col), 
-        sizes = 2*somarad)
+          type = 'scatter3d', mode = 'markers',
+          hoverinfo = "text", hovertext=x$NeuronName,
+          opacity = opacity, marker=list(symbol = 'circle', 
+                                         sizemode = 'diameter',
+                                         color = col), 
+        sizes = somarad)
     }
   }
   
@@ -535,6 +538,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' 
 plot3d.boundingbox <- function(x, col='black', 
                                plotengine = getOption('nat.plotengine'), ...) {
+  plotengine <- check_plotengine(plotengine)
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -590,6 +594,7 @@ plot3d.boundingbox <- function(x, col='black',
 #' plot3d(Cell07PNs[[1]])
 #' }
 nclear3d <- function(plotengine = getOption('nat.plotengine'), ...) {
+  plotengine <- check_plotengine(plotengine)
   if(plotengine=='plotly') {
     if (exists("plotlyscenehandle", envir = .plotly3d))
       rm("plotlyscenehandle", envir = .plotly3d)
@@ -604,4 +609,11 @@ openplotlyscene <- function(){
   plotlyreturnlist = list()
   plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
   return(invisible(plotlyreturnlist))
+}
+
+check_plotengine <- function(plotengine) {
+  tryCatch(match.arg(plotengine, c("rgl", "plotly")),
+           error=function(e) 
+             stop('plotengine must be set to: "rgl" or "plotly"',
+                  "\nSee ?plot3d.neuronlist for details.", call.=FALSE))
 }
