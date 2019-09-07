@@ -148,10 +148,12 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' nclear3d()
 #' plot3d(kcs20[gammas])
 #' }
-nlscan <- function(neurons, db=NULL, plotengine = getOption('nat.plotengine'),
+nlscan <- function(neurons, db=NULL, plotengine = "rgl",
                    col='red', Verbose=T, Wait=T, sleep=0.1,
                    extrafun=NULL, selected_file=NULL, selected_col='green',
                    yaml=TRUE, ...) {
+  if(!isTRUE(plotengine=="rgl"))
+    stop("nlscan only supports the rgl plotengine at present!")
   if(is.neuronlist(neurons)) {
     db=neurons
     neurons=names(db)
