@@ -1,21 +1,58 @@
 ---
-title: "plotly"
+title: "3D Graphics"
 author: "Gregory Jefferis"
-date: "06/09/2019"
-output: html_document
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{3D Graphics}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## Introduction
+### Comparing rgl and plotly
+nat provides support for two different 3D graphics systems provided by the CRAN
+packages [rgl](https://cran.r-project.org/package=rgl) and
+[plotly](https://cran.r-project.org/package=plotly). These are quite different 
+in style and pedigree and there are pros and cons to the use of each.
 
-You can use the Plotly library as an alternative to rgl for 3D display. This is
-particularly useful for interactive html documents.
+*rgl* is a much longer standing library, largely written in C++ to talk to your
+graphics card's OpenGL functionality. In general it is more efficient for 
+displaying large amounts of data (hundreds to thousands of neurons). It has
+support for use in online web documents (via WebGL) but this is more restricted
+and can result in very large html files. It's web support does have quite a 
+flexible system for interacting with buttons/actions, which could be interesting
+in some cases (see [WebGL vignette](https://cran.r-project.org/package=rgl/vignettes/WebGL.html))
+
+You can use the *Plotly* library as an alternative to *rgl* for 3D display. This 
+is based on the commerically developed but open source 
+[plotly.js](https://plot.ly/javascript/) java script library.
+It is targeted at the web and particularly useful for interactive html documents.
+For html output, it seems to me more efficient for medium numbers of neurons
+(10s-100s) than *rgl*'s WebGL support. 
+It has also has nice functionality e.g. interactive
+"brushing" that continuously queries the inferred closest point to the cursor
+and can display configurable information (including database queries). This can
+identify e.g. individual neurons or brain region meshes shown in a busy plot.
+One limitation of plotly is that it does not yet support orthographic
+representations of 3D plots (but see [this PR](https://github.com/plotly/plotly.js/pull/3550).
+
+### Recommendation
+
+* Use *rgl* for interactive use unless you need the plotly brushing capability.
+* Use *plotly* for html (e.g. rmarkdown) ouptut unless you need orthographic 
+  plots
+* Neither package provides good support for very large numbers of neurons in
+  html output.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 Plotly can do a whole range of plots. See https://plot.ly/r/ for examples. The
-standard approach looks like this.
+standard approach looks like this:
 
 ```{r, eval=FALSE}
 library(plotly)
@@ -28,11 +65,16 @@ For nat we could add a specialised plot type for neurons etc to use with the
 `plot_ly` interface, we have opted to keep things as close as possible to the 
 `rgl::plot3d()` interface that we have already used.
 
+### plotly setup
+
+The only setup that is required in your rmarkdown document is to set the 
+`nat.plotengine` option to make plotly the default 3d plot engine.
 ```{r, message=FALSE}
 library(nat)
 options(nat.plotengine = 'plotly')
 ```
 
+### plotly examples
 We can plot just one neuron:
 
 ```{r}
@@ -50,8 +92,19 @@ You can also display meshes and dotptops objects:
 
 ```{r}
 nclear3d()
-pns=plot3d(MBL.surf, alpha=.4)
+dummy=plot3d(MBL.surf, alpha=.4)
 plot3d(kcs20, col=type)
 ```
 
+### rgl setup
 
+To set up a document to use rgl, you need to use the `rgl::setupKnitr()` 
+function:
+
+```{r, message=FALSE}
+library(nat)
+rgl::setupKnitr()
+```
+
+Additional setup is required for each chunk. You must choose either to output a
+2D snapshot of the 3D scene or to produce interactive .
