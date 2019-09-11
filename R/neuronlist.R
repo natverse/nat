@@ -695,7 +695,7 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
   }
   
   rval=mapply(plot3d, x, plotengine = plotengine,
-              col=cols, soma=soma,..., 
+              col=cols, soma=soma, ..., 
               MoreArgs = list(WithNodes=WithNodes), SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     psh <- .plotly3d$plotlyscenehandle
@@ -708,22 +708,24 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
         rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
     } else{
       plotdata=df[, c("X", "Y", "Z")]
+      plotdata=cbind(plotdata, name=rownames(x), col=cols)
       psh <- psh %>%
         plotly::add_trace(
           data = plotdata,
           x = ~ X,
           y = ~ Y ,
           z = ~ Z,
-          hoverinfo = "none",
+          hovertext = ~name,
+          hoverinfo='text',
           type = 'scatter3d',
           mode = 'markers',
           opacity = opacity,
           marker = list(
             symbol = 'circle',
             sizemode = 'diameter',
-            color = cols
+            color = ~col
           ),
-          sizes = 2 * soma
+          sizes = soma
         )
     }
   }
