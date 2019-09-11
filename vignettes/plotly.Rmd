@@ -26,12 +26,12 @@ and can result in very large html files. It's web support does have quite a
 flexible system for interacting with buttons/actions, which could be interesting
 in some cases (see [WebGL vignette](https://cran.r-project.org/package=rgl/vignettes/WebGL.html))
 
-You can use the *Plotly* library as an alternative to *rgl* for 3D display. This 
+You can use the **Plotly** library as an alternative to **rgl** for 3D display. This 
 is based on the commerically developed but open source 
 [plotly.js](https://plot.ly/javascript/) java script library.
 It is targeted at the web and particularly useful for interactive html documents.
 For html output, it seems to me more efficient for medium numbers of neurons
-(10s-100s) than *rgl*'s WebGL support. 
+(10s-100s) than **rgl**'s WebGL support. 
 It has also has nice functionality e.g. interactive
 "brushing" that continuously queries the inferred closest point to the cursor
 and can display configurable information (including database queries). This can
@@ -41,16 +41,22 @@ representations of 3D plots (but see [this PR](https://github.com/plotly/plotly.
 
 ### Recommendation
 
-* Use *rgl* for interactive use unless you need the plotly brushing capability.
-* Use *plotly* for html (e.g. rmarkdown) ouptut unless you need orthographic 
+* Use **rgl** for interactive use unless you need the plotly brushing capability.
+* Use **plotly** for html (e.g. rmarkdown) ouptut unless you need orthographic 
   plots
+
+### Limitations
+
 * Neither package provides good support for very large numbers of neurons in
   html output.
+* Some rgl plot types are not yet supported in plotly e.g. `wire3d()`/`shade3d()`
+  for surfaces/planes as `mesh3d()` objects and `alphashape3d::ashape3d()` objects.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Plotly
 Plotly can do a whole range of plots. See https://plot.ly/r/ for examples. The
 standard approach looks like this:
 
