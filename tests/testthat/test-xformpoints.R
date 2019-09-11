@@ -64,6 +64,25 @@ test_that("xformpoints.cmtkreg works ok", {
                xformpoints(creg2,points=xyz,direction='forward'),
                tolerance=1e-6)
 })
+
+test_that("xformpoints.cmtkreg works with cmtkr::", {
+  skip_if_not_installed('cmtkr')
+  xyz=matrix(1:24,ncol=3,byrow=TRUE)
+  m_base=matrix(c(0.993768017875764, 0.0124333660488193, 0.1029140991094, 
+                  0, 0.0997404961300905, 1.10393643798483, 0.40556613106989, 0, 
+                  0.0778012981466213, -0.0620696470929289, 1.19004163463567, 0, 
+                  100, 50, 50, 1), ncol=4)
+  # note direction = forward is required to give output equivalent to the affine
+  # matrix encoded in the registration file.
+
+  reg2=normalizePath(test_path("testdata/cmtk/dofv1.1wshears.list"))
+  creg2=cmtkreg(reg2)
+  op=options('nat.use.cmtkr'=TRUE)
+  on.exit(options(op))
+  expect_equal(xformpoints(m_base,xyz),
+               xformpoints(creg2, points=xyz, direction='forward'),
+               tolerance=1e-6)
+})
   
 test_that("xformpoints.character can work with reglist objects on disk",{
   dir.create(td <- tempfile(pattern = 'regdir1'))

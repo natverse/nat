@@ -43,7 +43,8 @@ Suggests:
     rmarkdown,
     MASS,
     alphashape3d,
-    Morpho
+    Morpho,
+    cmtkr
 License: GPL-3
 LazyData: yes
 Collate:

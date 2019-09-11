@@ -121,7 +121,8 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   }
 }
 
-cmtk.streamxform <- function(points, reg, direction, transformtype) {
+cmtk.streamxform <- function(points, reg, direction, transformtype, 
+                             use.cmtkr=getOption('nat.use.cmtkr', FALSE)) {
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile))
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
@@ -131,6 +132,18 @@ cmtk.streamxform <- function(points, reg, direction, transformtype) {
 
   # nb this -- is defensive since it may be required if the first transform
   # will be preceded by the inverse flag
+  
+  if(isTRUE(use.cmtkr)) {
+    regargs=c()
+    for(i in seq_along(reg)){
+      regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, reg[i])
+    }
+    pointst=cmtkr::streamxform(points, 
+                       reglist=regargs, 
+                       affineonly = transformtype=='affine')
+    return(pointst)
+  }
+  
   regargs="--"
   for(i in seq_along(reg)){
     regargs=c(regargs, if(direction[i]=="inverse") "--inverse" else NULL, shQuote(reg[i]))
