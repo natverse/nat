@@ -290,13 +290,9 @@ plot3d.hxsurf<-function(x, plotengine = getOption('nat.plotengine'),
   if (plotengine == 'rgl'){
       invisible(rlist)
   } else {
-    maxrange <- ceiling(max(tmpx$vb)/10)*10
-    minrange <- floor(min(tmpx$vb)/10)*10
     psh <- psh %>% 
-      plotly::layout(showlegend = FALSE, scene=list(xaxis = list(range = c(minrange,maxrange)), 
-                                                    yaxis = list(range = c(minrange,maxrange)),
-                                                    zaxis = list(range = c(minrange,maxrange)), 
-                                                    camera=.plotly3d$camera))
+      plotly::layout(showlegend = FALSE,
+                     scene=list(camera=.plotly3d$camera))
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

@@ -605,7 +605,8 @@ nclear3d <- function(plotengine = getOption('nat.plotengine'), ...) {
 
 openplotlyscene <- function(){
   if (!exists("plotlyscenehandle", envir = .plotly3d))
-    .plotly3d$plotlyscenehandle = plotly::plot_ly()
+    .plotly3d$plotlyscenehandle = plotly::plot_ly() %>% 
+      plotly::layout(scene=list(aspectmode='data'))
   plotlyreturnlist = list()
   plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
   return(invisible(plotlyreturnlist))
