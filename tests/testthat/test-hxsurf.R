@@ -18,13 +18,25 @@ test_that("we can read hxsurf object", {
   m=data.frame(name = regions, id = 1:19, col = cols, row.names=regions, 
                stringsAsFactors = FALSE)
   expect_equal(materials(surf), m)
+  
+  options(nat.plotengine='rgl')
   open3d()
   plot3d(surf,col='red',alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
   rgl.close()
+  
+  #For plotly..
+  options(nat.plotengine='plotly')
+  openplotlyscene()
+  plot3d(surf,col='red',alpha=0.2)
+  nclear3d()
+  plot3d(surf,opacity=0.2)
+  nclear3d()
+  plot3d(surf,col=rainbow,alpha=0.2)
+  nclear3d()
 })
 
 test_that("we fail for bad surface files", {

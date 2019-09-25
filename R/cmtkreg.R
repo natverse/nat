@@ -124,8 +124,11 @@ cmtkreg.filetype <- function(x) {
 #' @param x A cmtk registration (the path to the registration folder on disk) or
 #'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
 #' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
+#' @inheritParams plot3d.neuronlist
+#' 
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
 #'   \code{\link[rgl]{plot3d}}
+#' 
 #' @examples 
 #' \donttest{
 #' testdatadir=system.file("tests/testthat/testdata/cmtk", package="nat")
@@ -141,7 +144,14 @@ cmtkreg.filetype <- function(x) {
 #' }
 #' @importFrom rgl plot3d
 #' @export
-plot3d.cmtkreg <- function(x, ...) {
+plot3d.cmtkreg <- function(x,plotengine = getOption('nat.plotengine'), ...) {
+  plotengine <- check_plotengine(plotengine)
+  if (plotengine == 'plotly') {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
+  
   reg=NULL
   if(is.list(x)) {
     if(!is.null(x$registration)) reg=x$registration else reg=x
@@ -154,5 +164,17 @@ plot3d.cmtkreg <- function(x, ...) {
   coeffs=reg$spline_warp$coefficients
   aidxs=seq.int(from=1, by=3L, length.out = nrow(coeffs))
   actives=reg$spline_warp$active[aidxs]!=0
-  plot3d(coeffs[actives, ], xlab='X', ylab = "Y", zlab = "Z", ...)
+  if (plotengine == 'rgl'){
+    plot3d(coeffs[actives, ], xlab='X', ylab = "Y", zlab = "Z", ...)
+  } else{
+    plotdata <- as.data.frame(coeffs[actives, ])
+    names(plotdata) <- c('X','Y','Z')
+    psh <- psh %>% 
+      plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+        hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+        opacity = opacity, marker=list(color = 'black', size = 3)) %>% 
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
+  }
 }

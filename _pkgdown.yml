@@ -1,3 +1,5 @@
+toc:
+  depth: 3
 navbar:
   structure:
     left:
@@ -26,6 +28,8 @@ navbar:
         href: articles/neurons-intro.html
       - text: Working with individual neurons as graph structures
         href: articles/neurons-as-graph.html
+      - text: 3D graphics
+        href: articles/plotly.html
       - text: 'NeuroGeometry: Analysing 3D morphology of neurons'
         href: articles/NeuroGeometry.html
     news:

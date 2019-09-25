@@ -597,6 +597,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
 #'   using \code{options(nat.default.neuronlist='mylist')}. See 
 #'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
+#' @param plotengine the plotting backend engine to use either 'rgl' or 'plotly'.
 #' @param subset Expression evaluating to logical mask for neurons. See details.
 #' @param col An expression specifying a colour evaluated in the context of the 
 #'   dataframe attached to nl (after any subsetting). See details.
@@ -621,16 +622,23 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' open3d()
 #' plot3d(kcs20,type=='gamma',col='green')
 #' \donttest{
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20,col=type)
+#' 
+#' nclear3d()
 #' plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 #' plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
+#' 
 #' # Note use of default colour for non DA1 neurons
+#' nclear3d()
 #' plot3d(Cell07PNs,col=Glomerulus, colpal=c(DA1='red', 'grey'))
+#' 
 #' # a subset expression
+#' nclear3d()
 #' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),
 #'   col=c("red","green")[factor(Glomerulus)])
 #' # the same but not specifying colours explicitly
+#' nclear3d()
 #' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),col=Glomerulus)
 #' }
 #' \dontrun{
@@ -649,9 +657,12 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' jet.colors<-colorRampPalette(c('navy','cyan','yellow','red'))
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
-plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow, 
+plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
-                            WithNodes=FALSE, soma=FALSE, ..., SUBSTITUTE=TRUE){
+                            WithNodes=FALSE, soma=FALSE, ..., 
+                            SUBSTITUTE=TRUE, 
+                            plotengine = getOption('nat.plotengine')){
+  plotengine <- check_plotengine(plotengine)
   # Handle Subset
   if(!missing(subset)){
     # handle the subset expression - we still need to evaluate right away to
@@ -667,26 +678,72 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
   cols <- eval(col.sub, attr(x,'df'), parent.frame())
   cols=makecols(cols, colpal, length(x))
   
+  if (plotengine == 'plotly') {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
+  
   # Speed up drawing when there are lots of neurons
   if(is.numeric(skipRedraw)) skipRedraw=ifelse(length(x)>skipRedraw,TRUE,FALSE)
   if(is.logical(skipRedraw)) {
-    if(par3d()$skipRedraw) skipRedraw=TRUE
-    op=par3d(skipRedraw=skipRedraw)
-    on.exit(par3d(op))
+    if (plotengine == 'rgl'){
+        if(par3d()$skipRedraw) skipRedraw=TRUE
+        op=par3d(skipRedraw=skipRedraw)
+        on.exit(par3d(op))
+    }
   }
   
-  rval=mapply(plot3d,x,col=cols,soma=soma,..., MoreArgs = list(WithNodes=WithNodes),
-              SIMPLIFY=FALSE)
+  rval=mapply(plot3d, x, plotengine = plotengine,
+              col=cols, soma=soma, ..., 
+              MoreArgs = list(WithNodes=WithNodes), SIMPLIFY=FALSE)
+  if(plotengine == 'plotly'){
+    psh <- .plotly3d$plotlyscenehandle
+  }
   df=as.data.frame(x)
   if( (length(soma)>1 || soma) && isTRUE(is.dotprops(x[[1]])) &&
                all(c("X","Y","Z") %in% colnames(df))){
     if(is.logical(soma)) soma=2
-    rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
+    if (plotengine == 'rgl'){
+        rval <- c(rval, spheres3d(df[, c("X", "Y", "Z")], radius = soma, col = cols))
+    } else{
+      plotdata=df[, c("X", "Y", "Z")]
+      plotdata=cbind(plotdata, name=rownames(x), col=cols)
+      psh <- psh %>%
+        plotly::add_trace(
+          data = plotdata,
+          x = ~ X,
+          y = ~ Y ,
+          z = ~ Z,
+          hovertext = ~name,
+          hoverinfo='text',
+          type = 'scatter3d',
+          mode = 'markers',
+          opacity = opacity,
+          marker = list(
+            symbol = 'circle',
+            sizemode = 'diameter',
+            color = ~col
+          ),
+          sizes = soma
+        )
+    }
   }
-  assign(".last.plot3d", rval, envir=.plotted3d)
+  if (plotengine == 'rgl'){
+    assign(".last.plot3d", rval, envir=.plotted3d)
+  }
+  
   df$col=cols
-  attr(rval,'df')=df
-  invisible(rval)
+  if (plotengine == 'rgl'){
+      attr(rval,'df')=df
+      invisible(rval)
+  } else{
+    psh <- psh %>%
+      plotly::layout(showlegend = FALSE, scene = list(camera =.plotly3d$camera))
+    .plotly3d$plotlyscenehandle = psh
+    attr(psh, 'df') = df
+    psh
+  }
 }
 
 #' @rdname plot3d.neuronlist

@@ -1,6 +1,9 @@
 # nat (development version)
 
 * switch to https://github.com/natverse/nat
+* Support for plotly graphics engine (#409, #410)
+* Fix bug in nmapply with progress (#412)
+* Fix warning in resample.neuron when there are identical points (#405)
 
 # nat 1.9.1
 

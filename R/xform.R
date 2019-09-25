@@ -464,7 +464,7 @@ nvertices.neuronlist <- function(x, ...) {
 #' }
 #' 
 #' # also works with dotprops objects
-#' clear3d()
+#' nclear3d()
 #' y=kcs20[[1]]
 #' my=mirror(y,mirrorAxisSize=564.2532,transform='flip')
 #' \donttest{

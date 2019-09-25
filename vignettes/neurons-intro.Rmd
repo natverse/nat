@@ -38,6 +38,7 @@ library(nat)
 rgl::setupKnitr()
 library(knitr)
 opts_chunk$set(fig.width=5)
+options(nat.plotengine = 'plotly')
 ```
 
 ## Neurons and Neuronlists
@@ -409,11 +410,9 @@ based on the [rgl package](https://cran.r-project.org/package=rgl). It is
 actually possible to embed fully interactive 3d figures in [rmarkdown](http://rmarkdown.rstudio.com/) reports
 like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
 
-```{r, webgl=TRUE}
-clear3d()
+```{r}
+nclear3d()
 plot3d(Cell07PNs[[1]], col='red')
-# set a grey background so it's easier to see extent of the webgl canvas
-bg3d(col='lightgrey')
 ```
 
 You should be able to rotate (click and drag) and zoom (mouse wheel) this figure.
@@ -423,11 +422,12 @@ we will not use it further here. For now let's show a plot in which we
 both select a subset of neurons and colour them according to their glomerulus
 of origin.
 
-```{r, rgl=TRUE, fig.width=6}
+```{r, fig.width=6}
 # 3d plot of neurons from olfactory glomeruli beginning with a D
 # coloured by glomerulus
 rval=plot3d(Cell07PNs, subset=grepl("^D", Glomerulus), col=Glomerulus,
   lwd=2, WithNodes=FALSE)
+rval
 ```
 
 ```{r plot3d-legend, fig.width=3, fig.height=3}

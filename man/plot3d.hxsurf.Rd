@@ -4,10 +4,13 @@
 \alias{plot3d.hxsurf}
 \title{Plot amira surface objects in 3D using rgl}
 \usage{
-\method{plot3d}{hxsurf}(x, materials = NULL, col = NULL, ...)
+\method{plot3d}{hxsurf}(x, plotengine = getOption("nat.plotengine"),
+  materials = NULL, col = NULL, ...)
 }
 \arguments{
 \item{x}{An hxsurf surface object}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{materials}{Character vector or \code{\link[base]{regex}} naming
 materials to plot (defaults to all materials in x). See
@@ -18,7 +21,7 @@ function that will be called with the number of materials to plot. When
 \code{NULL} (default) will use material colours defined in Amira (if
 available), or \code{rainbow} otherwise.}
 
-\item{...}{Additional arguments passed to}
+\item{...}{Additional arguments passed to \code{triangles3d}}
 }
 \description{
 Plot amira surface objects in 3D using rgl
@@ -29,11 +32,11 @@ plot3d(MBL.surf)
 
 \donttest{
 # plot only vertical lobe
-clear3d()
+nclear3d()
 plot3d(MBL.surf, materials="VL", alpha=0.3)
 
 # everything except vertical lobe
-clear3d()
+nclear3d()
 plot3d(MBL.surf, alpha=0.3, 
   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 }
