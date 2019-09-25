@@ -15,21 +15,25 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,8 +41,8 @@
 
 
 
-<meta property="og:title" content="Write data and metadata to NRRD file or create a detached NRRD (nhdr) file. — write.nrrd" />
 
+<meta property="og:title" content="Write data and metadata to NRRD file or create a detached NRRD (nhdr) file. — write.nrrd" />
 <meta property="og:description" content="write.nrrd writes an array, vector or im3d object to a 
   NRRD file. When x is an im3d object, appropriate spatial 
   calibration fields are added to the header.
@@ -48,9 +52,9 @@ write.nrrd.header.for.file makes a detached NRRD
   NRRD compatible. This can be a convenient way to make NRRD inputs for other
   tools e.g. CMTK and also allows the same data block to pointed to by
   different nhdr files with different spatial calibration." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -62,6 +66,7 @@ write.nrrd.header.for.file makes a detached NRRD
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -80,7 +85,7 @@ write.nrrd.header.for.file makes a detached NRRD
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2</span>
       </span>
     </div>
 
@@ -103,16 +108,16 @@ write.nrrd.header.for.file makes a detached NRRD
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation details</a>
-    </li>
-    <li>
-      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
     <li>
       <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="../articles/plotly.html">3D graphics</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
   </ul>
 </li>
@@ -129,7 +134,6 @@ write.nrrd.header.for.file makes a detached NRRD
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://natverse.github.io">natverse</a>
@@ -147,6 +151,7 @@ write.nrrd.header.for.file makes a detached NRRD
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -158,7 +163,6 @@ write.nrrd.header.for.file makes a detached NRRD
     </div>
 
     <div class="ref-description">
-    
     <p><code>write.nrrd</code> writes an array, vector or im3d object to a 
   NRRD file. When <code>x</code> is an <code>im3d</code> object, appropriate spatial 
   calibration fields are added to the header.</p>
@@ -168,17 +172,16 @@ write.nrrd.header.for.file makes a detached NRRD
   NRRD compatible. This can be a convenient way to make NRRD inputs for other
   tools e.g. CMTK and also allows the same data block to pointed to by
   different nhdr files with different spatial calibration.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>write.nrrd</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>enc</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gzip"</span>, <span class='st'>"raw"</span>, <span class='st'>"text"</span>), <span class='kw'>dtype</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"float"</span>,
-  <span class='st'>"byte"</span>, <span class='st'>"short"</span>, <span class='st'>"ushort"</span>, <span class='st'>"int"</span>, <span class='st'>"double"</span>), <span class='kw'>header</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/attr'>attr</a></span>(<span class='no'>x</span>,
+    <pre class="usage"><span class='fu'>write.nrrd</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>enc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gzip"</span>, <span class='st'>"raw"</span>, <span class='st'>"text"</span>), <span class='kw'>dtype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"float"</span>,
+  <span class='st'>"byte"</span>, <span class='st'>"short"</span>, <span class='st'>"ushort"</span>, <span class='st'>"int"</span>, <span class='st'>"double"</span>), <span class='kw'>header</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>,
   <span class='st'>"header"</span>), <span class='kw'>endian</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>endian</span>, <span class='kw'>datafile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>write.nrrd.header</span>(<span class='no'>header</span>, <span class='no'>file</span>)
 
 <span class='fu'>write.nrrd.header.for.file</span>(<span class='no'>infile</span>, <span class='kw'>outfile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -222,7 +225,7 @@ written (see details).</p></td>
 default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="detached-nrrds"><a class="anchor" href="#detached-nrrds"></a>Detached NRRDs</h2>
 
     <p>NRRD files can be written in <em>detached</em> format 
@@ -244,7 +247,7 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
 <li><p>gzip <code>'&lt;nhdrstem&gt;.raw.gz'</code></p></li>
 <li><p>text <code>'&lt;nhdrstem&gt;.ascii'</code></p></li>
 </ul>
-    
+
     <h2 class="hasAnchor" id="data-file-paths"><a class="anchor" href="#data-file-paths"></a>Data file paths</h2>
 
     <p>When a detached NRRD is written, the 
@@ -257,7 +260,7 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
   used.</p>  
 <p>For <code>write.nrrd.header.for.file</code> if <code>outfile</code> is not specified 
   then the nhdr file will be placed next to the original image stack and the 
-  <code>datafile</code> field will therefore just be <code><a href='https://www.rdocumentation.org/packages/base/topics/basename'>basename(infile)</a></code>. If 
+  <code>datafile</code> field will therefore just be <code><a href='https://rdrr.io/r/base/basename.html'>basename(infile)</a></code>. If 
   outfile is specified explicitly, then <code>datafile</code> will be set to the 
   full path in the <code>infile</code> argument. Therefore if you wish to specify 
   <code>outfile</code>, you <em>must</em> set the current working directory (using 
@@ -265,7 +268,6 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
   ensure that the path to the datafile is correct. A future TODO would add 
   the ability to convert an absolute datafile path to a relative one (by
   finding the common path between datafile and nhdr folders).</p>
-    
     <h2 class="hasAnchor" id="header"><a class="anchor" href="#header"></a>Header</h2>
 
     <p>For <code>write.nrrd</code>, arguments <code>enc</code>, <code>dtype</code>, 
@@ -274,31 +276,26 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
   <code>header</code> argument. See 
   <a href='http://teem.sourceforge.net/nrrd/format.html'>http://teem.sourceforge.net/nrrd/format.html</a> for details of the NRRD 
   fields.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='im3d-io.html'>write.im3d</a></code>, <code><a href='https://www.rdocumentation.org/packages/base/topics/Platform'>.Platform</a></code></p>
+    <div class='dont-index'><p><code><a href='im3d-io.html'>write.im3d</a></code>, <code><a href='https://rdrr.io/r/base/Platform.html'>.Platform</a></code></p>
 <p>Other nrrd: <code><a href='is.nrrd.html'>is.nrrd</a></code>,
   <code><a href='nrrd.voxdims.html'>nrrd.voxdims</a></code>, <code><a href='read.nrrd.html'>read.nrrd</a></code></p></div>
-    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#detached-nrrds">Detached NRRDs</a></li>
-
       <li><a href="#data-file-paths">Data file paths</a></li>
-
       <li><a href="#header">Header</a></li>
-
       <li><a href="#see-also">See also</a></li>
-          </ul>
+    </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -306,13 +303,16 @@ default) then it will be set to <code>&lt;infilestem.nhdr&gt;</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

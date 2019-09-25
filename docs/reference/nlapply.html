@@ -15,21 +15,25 @@
 <link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,8 +41,8 @@
 
 
 
-<meta property="og:title" content="lapply and mapply for neuronlists (with optional parallelisation) — nlapply" />
 
+<meta property="og:title" content="lapply and mapply for neuronlists (with optional parallelisation) — nlapply" />
 <meta property="og:description" content="Versions of lapply and mapply that look after the class and
   attached dataframe of neuronlist objects. nlapply can apply a
   function to only a subset of elements in the input neuronlist.
@@ -46,9 +50,9 @@
   bars and simple parallelisation (see plyr section and examples).
 progress_natprogress provides a progress bar compatible
   with the progress::progress_bar." />
-
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -60,6 +64,7 @@ progress_natprogress provides a progress bar compatible
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -78,7 +83,7 @@ progress_natprogress provides a progress bar compatible
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2</span>
       </span>
     </div>
 
@@ -101,16 +106,16 @@ progress_natprogress provides a progress bar compatible
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Installation.html">Installation details</a>
-    </li>
-    <li>
-      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
+      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
     </li>
     <li>
       <a href="../articles/neurons-as-graph.html">Working with individual neurons as graph structures</a>
     </li>
     <li>
-      <a href="../articles/neurons-intro.html">Introduction to neurons and neuronlists</a>
+      <a href="../articles/plotly.html">3D graphics</a>
+    </li>
+    <li>
+      <a href="../articles/NeuroGeometry.html">NeuroGeometry: Analysing 3D morphology of neurons</a>
     </li>
   </ul>
 </li>
@@ -127,7 +132,6 @@ progress_natprogress provides a progress bar compatible
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://natverse.github.io">natverse</a>
@@ -145,6 +149,7 @@ progress_natprogress provides a progress bar compatible
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -156,26 +161,24 @@ progress_natprogress provides a progress bar compatible
     </div>
 
     <div class="ref-description">
-    
     <p>Versions of lapply and mapply that look after the class and
   attached dataframe of neuronlist objects. <code>nlapply</code> can apply a
   function to only a <code>subset</code> of elements in the input neuronlist.
-  Internally <code>nlapply</code> uses <code><a href='https://www.rdocumentation.org/packages/plyr/topics/llply'>plyr::llply</a></code> thereby enabling progress
+  Internally <code>nlapply</code> uses <code><a href='https://rdrr.io/pkg/plyr/man/llply.html'>plyr::llply</a></code> thereby enabling progress
   bars and simple parallelisation (see plyr section and examples).</p>
 <p><code>progress_natprogress</code> provides a progress bar compatible
-  with the <code><a href='https://www.rdocumentation.org/packages/progress/topics/progress_bar'>progress::progress_bar</a></code>.</p>
-    
+  with the <code><a href='https://rdrr.io/pkg/progress/man/progress_bar.html'>progress::progress_bar</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>nlapply</span>(<span class='no'>X</span>, <span class='no'>FUN</span>, <span class='no'>...</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>.progress</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"nat.progress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"auto"</span>))
+  <span class='kw'>.progress</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.progress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"auto"</span>))
 
 <span class='fu'>progress_natprogress</span>(<span class='no'>...</span>)
 
 <span class='fu'>nmapply</span>(<span class='no'>FUN</span>, <span class='no'>X</span>, <span class='no'>...</span>, <span class='kw'>MoreArgs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>SIMPLIFY</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>USE.NAMES</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>.progress</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>getOption</a></span>(<span class='st'>"nat.progress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"auto"</span>))</pre>
-    
+  <span class='kw'>.progress</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.progress"</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='st'>"auto"</span>))</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -210,7 +213,7 @@ details.</p></td>
 Progress bar section for details) The default value of <code>"auto"</code> shows
 a progress bar in interactive use after 2s. The default value can be
 overridden for the current session by setting the value of
-<code><a href='https://www.rdocumentation.org/packages/base/topics/options'>options(nat.progressbar)</a></code> (see examples).</p></td>
+<code><a href='https://rdrr.io/r/base/options.html'>options(nat.progressbar)</a></code> (see examples).</p></td>
     </tr>
     <tr>
       <th>MoreArgs</th>
@@ -220,20 +223,19 @@ overridden for the current session by setting the value of
       <th>SIMPLIFY</th>
       <td><p>logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
-    the <code>simplify</code> argument of <code><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>sapply</a></code>.</p></td>
+    the <code>simplify</code> argument of <code><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></code>.</p></td>
     </tr>
     <tr>
       <th>USE.NAMES</th>
-      <td><p>logical; use names if the first &#8230; argument has
+      <td><p>logical; use names if the first ... argument has
     names, or if it is a character vector, use that character vector as
     the names.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A neuronlist</p>
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When <code>OmitFailures</code> is not <code>NA</code>, <code>FUN</code> will be
@@ -243,8 +245,7 @@ overridden for the current session by setting the value of
   return values for which <code>FUN</code> evaluated successfully. When
   <code>OmitFailures=FALSE</code>, "try-error" objects will be left in place. In
   either of the last 2 cases error messages will not be printed because the
-  call is wrapped as <code><a href='https://www.rdocumentation.org/packages/base/topics/try'>try(expr, silent=TRUE)</a></code>.</p>
-    
+  call is wrapped as <code><a href='https://rdrr.io/r/base/try.html'>try(expr, silent=TRUE)</a></code>.</p>
     <h2 class="hasAnchor" id="plyr"><a class="anchor" href="#plyr"></a>plyr</h2>
 
     <p>The arguments of most interest from plyr are:</p>
@@ -256,9 +257,10 @@ overridden for the current session by setting the value of
 <li><p><code>.parallel</code> set to <code>TRUE</code> for parallelisation after
   registering a parallel backend (see below).</p></li>
 <li><p><code>.paropts</code> Additional arguments for parallel computation. See
-  <code><a href='https://www.rdocumentation.org/packages/plyr/topics/llply'>llply</a></code> for details.</p></li>
+  <code><a href='https://rdrr.io/pkg/plyr/man/llply.html'>llply</a></code> for details.</p></li>
 </ul>
-    <p>Before using parallel code within an R session you must register a suitable
+
+<p>Before using parallel code within an R session you must register a suitable
   parallel backend. The simplest example is the multicore option provided by
   the <code>doMC</code> package that is suitable for a spreading computational load
   across multiple cores on a single machine. An example is provided below.</p>
@@ -266,7 +268,6 @@ overridden for the current session by setting the value of
   time. You may want to start a potentially long-running job with the
   progress bar option and then abort and re-run with <code>.parallel=TRUE</code> if
   it looks likely to take a very long time.</p>
-    
     <h2 class="hasAnchor" id="progress-bar"><a class="anchor" href="#progress-bar"></a>Progress bar</h2>
 
     <p>There are currently two supported approaches to
@@ -288,90 +289,91 @@ overridden for the current session by setting the value of
   <code>.progress='auto'</code> (the default). The progress bar can be suppressed
   by setting <code>.progress='none'</code>. Any other value will result in a
   progress bar being shown in both interactive and batch modes.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></code></p>
-<p><code><a href='https://www.rdocumentation.org/packages/base/topics/mapply'>mapply</a></code></p>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></code></p>
+<p><code><a href='https://rdrr.io/r/base/mapply.html'>mapply</a></code></p>
 <p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
   <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
   <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
   <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
   <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## nlapply example</span>
-<span class='no'>kcs.reduced</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>kcs20</span>,<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>,<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>x</span>$<span class='no'>points</span>),<span class='fl'>50</span>)))
+<span class='no'>kcs.reduced</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>kcs20</span>,<span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>x</span>,<span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>$<span class='no'>points</span>),<span class='fl'>50</span>)))
 <span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
 #&gt;   4 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs.reduced</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'grey'</span>)
-<span class='fu'>rgl.close</span>()</div><span class='co'># NOT RUN {</span>
+<span class='fu'>rgl.close</span>()
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># example of using plyr's .inform argument for debugging error conditions</span>
 <span class='no'>xx</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='no'>prune_strahler</span>)
 <span class='co'># oh dear there was an error, let's get some details about the neuron</span>
 <span class='co'># that caused the problem</span>
 <span class='no'>xx</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='no'>prune_strahler</span>, <span class='kw'>.inform</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='co'># }</span><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+}
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>## nlapply example with plyr</span>
 <span class='co'>## dotprops.neuronlist uses nlapply under the hood</span>
 <span class='co'>## the .progress and .parallel arguments are passed straight to</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.time'>system.time</a></span>(<span class='no'>d1</span><span class='kw'>&lt;-</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.progress</span><span class='kw'>=</span><span class='st'>'text'</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>d1</span><span class='kw'>&lt;-</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.progress</span><span class='kw'>=</span><span class='st'>'text'</span>))
 <span class='co'>## plyr+parallel</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/library'>library</a></span>(<span class='no'>doMC</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>doMC</span>)
 <span class='co'># can also specify cores e.g. registerDoMC(cores=4)</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/doMC/topics/registerDoMC'>registerDoMC</a></span>()
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.time'>system.time</a></span>(<span class='no'>d2</span><span class='kw'>&lt;-</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>))
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/stopifnot'>stopifnot</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/all.equal'>all.equal</a></span>(<span class='no'>d1</span>,<span class='no'>d2</span>))
-<span class='co'># }</span><div class='input'>
+<span class='fu'><a href='https://rdrr.io/pkg/doMC/man/registerDoMC.html'>registerDoMC</a></span>()
+<span class='fu'><a href='https://rdrr.io/r/base/system.time.html'>system.time</a></span>(<span class='no'>d2</span><span class='kw'>&lt;-</span><span class='fu'><a href='dotprops.html'>dotprops</a></span>(<span class='no'>kcs20</span>,<span class='kw'>resample</span><span class='kw'>=</span><span class='fl'>1</span>,<span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>,<span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>d1</span>,<span class='no'>d2</span>))
+}
+
 <span class='co'>## nmapply example</span>
 <span class='co'># flip first neuron in X, second in Y and 3rd in Z</span>
-<span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='no'>mirror</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"X"</span>,<span class='st'>"Y"</span>,<span class='st'>"Z"</span>),
-  <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))
+<span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='no'>mirror</span>, <span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"X"</span>,<span class='st'>"Y"</span>,<span class='st'>"Z"</span>),
+  <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>,<span class='fl'>20</span>,<span class='fl'>30</span>))
 
 <span class='co'># this artificial example will show a progress bar in interactive use</span>
-<span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='kw'>function</span>(<span class='no'>...</span>) {<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.sleep'>Sys.sleep</a></span>(<span class='fl'>.2</span>);<span class='fu'><a href='mirror.html'>mirror</a></span>(<span class='no'>...</span>)}, <span class='no'>kcs20</span>,
-  <span class='kw'>mirrorAxis</span><span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/sample'>sample</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>24</span>:<span class='fl'>26</span>], <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
-  <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Uniform'>runif</a></span>(<span class='fl'>20</span>, <span class='kw'>min</span><span class='kw'>=</span><span class='fl'>40</span>, <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>200</span>))</div><div class='input'><span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
+<span class='no'>xyzflip</span><span class='kw'>=</span><span class='fu'>nmapply</span>(<span class='kw'>function</span>(<span class='no'>...</span>) {<span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>.2</span>);<span class='fu'><a href='mirror.html'>mirror</a></span>(<span class='no'>...</span>)}, <span class='no'>kcs20</span>,
+  <span class='kw'>mirrorAxis</span><span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='no'>LETTERS</span>[<span class='fl'>24</span>:<span class='fl'>26</span>], <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='kw'>replace</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>),
+  <span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span>(<span class='fl'>20</span>, <span class='kw'>min</span><span class='kw'>=</span><span class='fl'>40</span>, <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>200</span>))
+<span class='co'># \donttest{</span>
+<span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
 #&gt;   5 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>xyzflip</span>)
-<span class='fu'>rgl.close</span>()</div><div class='input'>
-</div><span class='co'># NOT RUN {</span>
+<span class='fu'>rgl.close</span>()
+<span class='co'># }</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'>## Override default progress bar behaviour via options</span>
 <span class='co'># sleep 50ms per neuron to ensure progress bar gets triggered</span>
-<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.sleep'>Sys.sleep</a></span>(<span class='fl'>0.05</span>);<span class='fu'><a href='seglengths.html'>seglengths</a></span>(<span class='no'>x</span>)})
+<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.05</span>);<span class='fu'><a href='seglengths.html'>seglengths</a></span>(<span class='no'>x</span>)})
 <span class='co'># the default progess bar for nat &lt; 1.9.1</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='st'>'traditional'</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='st'>'traditional'</span>)
 <span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
 <span class='co'># no progress bar ever</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='st'>'none'</span>)
-<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Sys.sleep'>Sys.sleep</a></span>(<span class='fl'>0.05</span>);<span class='fu'><a href='seglengths.html'>seglengths</a></span>(<span class='no'>x</span>)})
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='st'>'none'</span>)
+<span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) {<span class='fu'><a href='https://rdrr.io/r/base/Sys.sleep.html'>Sys.sleep</a></span>(<span class='fl'>0.05</span>);<span class='fu'><a href='seglengths.html'>seglengths</a></span>(<span class='no'>x</span>)})
 <span class='co'># back to normal</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/options'>options</a></span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='kw'>NULL</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/options.html'>options</a></span>(<span class='kw'>nat.progress</span><span class='kw'>=</span><span class='kw'>NULL</span>)
 <span class='no'>sl</span><span class='kw'>=</span><span class='fu'>nlapply</span>(<span class='no'>Cell07PNs</span>, <span class='kw'>FUN</span> <span class='kw'>=</span> <span class='no'>seglengths</span>)
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#plyr">plyr</a></li>
-
       <li><a href="#progress-bar">Progress bar</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -379,13 +381,16 @@ overridden for the current session by setting the value of
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
