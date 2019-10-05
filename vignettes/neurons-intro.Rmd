@@ -145,7 +145,7 @@ tailored to a particular class are called *methods*. Methods can be provided for
 pre-existing functions supplied with base R as well as new user-written functions.
 The system is quite simple. If a function `foo` is defined as a *generic* function
 then you can define new functions called `foo.bar` that will be called when
-you write `foo(x)` and `x` has class `bar.
+you write `foo(x)` and `x` has class `bar`.
 
 We already used one such method without comment, `plot.neuron`. There is a base
 R function called `plot`. nat defines a new function called `plot.neuron`, which
