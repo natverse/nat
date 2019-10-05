@@ -117,8 +117,8 @@ plot(sg)
 
 It can be useful to plot the graph with a tree layout:
 
-```{r, fig.width=5, fig.height=5}
-plot(sg, layout=igraph::layout_as_tree, edge.arrow.size=.3, vertex.size=12)
+```{r, fig.width=6, fig.height=6}
+plot(sg, layout=igraph::layout_as_tree, edge.arrow.size=.3, vertex.size=20)
 ```
 
 Note that the root of the neuron is placed at the top of the plot (point number
@@ -158,7 +158,7 @@ igraph::V(sg)$vid[ups]
 Here we plot those _terminal_ branchpoints in red while internal branches are
 displayed in blue.
 
-```{r}
+```{r, fig.height=4, fig.width=5}
 plot(n, WithNodes = F)
 terminal_branches=igraph::V(sg)$vid[ups]
 other_branches=setdiff(branchpoints(n), terminal_branches)

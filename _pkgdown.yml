@@ -59,6 +59,7 @@ articles:
   - '`neurons-intro`'
   - '`neurons-as-graph`'
   - '`NeuroGeometry`'
+  - '`plotly`'
 reference:
   - title: Package Help
     desc: Provides an overview of key functions and classes
