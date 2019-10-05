@@ -118,7 +118,7 @@ plot(sg)
 It can be useful to plot the graph with a tree layout:
 
 ```{r, fig.width=6, fig.height=6}
-plot(sg, layout=igraph::layout_as_tree, edge.arrow.size=.3, vertex.size=20)
+plot(sg, layout=igraph::layout_as_tree, edge.arrow.size=.3, vertex.size=15)
 ```
 
 Note that the root of the neuron is placed at the top of the plot (point number
