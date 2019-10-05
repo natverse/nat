@@ -105,21 +105,73 @@ plot(sp, add=T, col='blue')
 ### Segment graph
 
 You can use the `segmentgraph` function to make a simplified representation of
-the branching structure of the neuron. In this object (which has class `igraph`)
-each unbranched segment
-in the original neuron (which might have contained many vertices) is 
-collapsed to a single edge joining the branch points (which are retained).
+the branching structure of the neuron. In this object (which has class `igraph`
+associated with the powerful `igraph` package) each unbranched segment in the
+original neuron (which might have contained many vertices) is collapsed to a
+single edge joining the branch points (which are retained).
 
 ```{r, fig.width=5, fig.height=5}
 sg=segmentgraph(Cell07PNs[[1]])
 plot(sg)
 ```
 
+It can be useful to plot the graph with a tree layout:
+
+```{r, fig.width=5, fig.height=5}
+plot(sg, layout=igraph::layout_as_tree, edge.arrow.size=.3, vertex.size=12)
+```
+
+Note that the root of the neuron is placed at the top of the plot (point number
+1 in the graph above) and that successive branching orders and leaves are
+placed on levels further down the plot. Note also that the labels on the plot
+correspond to the identifiers of the points in the original neuron (aka the
+`PointNo` field, see [first section](#neurons-as-graphs)).
+
+If you need to work with the original identifiers of the points in the
+`segmentgraph` object, they are stored as `igraph` node attributes. You can
+access them like this:
+
+```{r}
+igraph::V(sg)$label
+igraph::V(sg)$vid
+```
+
+`label` encodes the `PointNo` column and `vid` the raw integer index of the
+point in the node array. If and only if the `PointNo` identifier is a
+sequentially increasing integer starting at 1, then these will be identical. The
+SWC format is a little vague about whether they should indeed be the same, but
+is normally understood to imply it. However there are many SWC files in the wild
+that violate this assumption.
+
+You can also use the `endpoints()` and `rootpoints()` functions with the
+`segmentgraph` objects as well as any function that expects an `igraph` object.
+We can use this to find the branchpoints upstream of all end points using the
+`igraph::adjacent_vertices()` function. We use `mode="all"` to handle the 
+situation where the root node is also an end point (i.e. a leaf node).
+
+```{r}
+endpoints(sg)
+ups=unlist(igraph::adjacent_vertices(sg, endpoints(sg), mode='all'))
+# this maps the segmentgraph node indices back to indices for the neuron
+igraph::V(sg)$vid[ups]
+```
+Here we plot those _terminal_ branchpoints in red while internal branches are
+displayed in blue.
+
+```{r}
+plot(n, WithNodes = F)
+terminal_branches=igraph::V(sg)$vid[ups]
+other_branches=setdiff(branchpoints(n), terminal_branches)
+points(xyzmatrix(n)[terminal_branches,1:2], col='red')
+points(xyzmatrix(n)[other_branches,1:2], col='blue')
+```
+
+
 ## ngraph objects
 
-The **nat** package provides a bridge to a rich cross-platform graph library, 
-**igraph**. We provide a class [`ngraph`](https://natverse.github.io/nat/reference/ngraph.html)
-that provides a thin wrapper for the `igraph` class. This looks after things 
+The **nat** package provides a bridge for neurons to the rich cross-platform **igraph** library. We provide a class
+[`ngraph`](https://natverse.github.io/nat/reference/ngraph.html)
+that is a thin wrapper for the `igraph` class. This looks after things 
 that we might need to know about a neuron (like the 3D coordinates of each node)
 while still giving access to all of the graph functions in the igraph package.
 
@@ -147,9 +199,8 @@ Note that although you can do `library(igraph)`, it adds a lot of functions to
 the search path, some of which have name clashes, so I often just use the 
 package name (`igraph::`) prepended to the function that I want to call.
 
-### walking along ngraph objects
-You can use the graph representation of neurons e.g. to find the path between
-nodes.
+### Walking along ngraph objects
+You can use the graph representation of neurons e.g. to find the path between nodes.
 
 ```{r}
 g=as.ngraph(Cell07PNs[[1]], weights=TRUE)
@@ -172,6 +223,53 @@ all.equal(p$vpath[[1]], rev(p3$vpath[[1]]))
 igraph::distances(g, v=1, to=180)
 igraph::distances(g, v=180, to=1)
 ```
+
+### Node identifiers and indices
+Note that in the previous code block, nodes are identified by their index (i.e.
+an integer starting at 1). As already discussed, some neurons have an arbitrary
+numeric identifier for each node (this can be a large integer from a database
+table e.g. for CATMAID neurons). You access this identifier in all of the above
+calls by quoting it. For example:
+
+```{r}
+# using raw indices
+igraph::distances(g, v=180, to=1)
+# using node identifiers
+igraph::distances(g, v='180', to='1')
+
+igraph::shortest_paths(g, from='1', to='180')$vpath[[1]]
+```
+
+In this instance, the results are identical since the node identifiers are the
+same as the raw indices. If we manipulate the node identifiers to add 1000 to
+each
+
+```{r}
+# make a copy of `ngraph` object and add 1000 to each identifier
+g2=g
+igraph::V(g2)$name <- igraph::V(g2)$name+1000
+# make a neuron with thoose identifiers to see what happened to its structure:
+n2=as.neuron(g2)
+head(n2$d)
+```
+
+then find path by identifier:
+
+```{r}
+p2=igraph::shortest_paths(g2, from='1001', to='1180')$vpath[[1]]
+p2
+```
+
+Note that when the path is printed it shows the node identifiers. But when using
+the path, it may be necessary to convert to integers. This results in raw indices
+again.
+
+```{r}
+as.integer(p2)
+names(p2)
+```
+
+### Downstream nodes
 
 You can also ask for nodes upstream or downstream of a given starting node. For 
 example the neurons in the `Cell07PNs` set have a tag called `AxonLHEP` that
