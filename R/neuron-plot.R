@@ -242,6 +242,7 @@ NULL
 #' Open customised rgl window
 #' 
 #' Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
+#' On a Mac trackpad, pan with two fingers left-right, zoom with two fingers in-out.
 #' Defaults to a white background and orthogonal projection (FOV=0)
 #' 
 #' Note that sometimes (parts of) objects seem to disappear after panning and
@@ -253,7 +254,7 @@ NULL
 #' @export
 #' @seealso \code{\link{open3d},\link{pan3d}}
 nopen3d<- function(bgcol='white', FOV=0, ...){
-  res=open3d(mouseMode=c("trackball","user","zoom"), FOV=FOV, ...)
+  res=open3d(mouseMode=c("trackball", "user", "zoom", "pull"), FOV=FOV, ...)
   bg3d(col=bgcol)
   pan3d(2)
   res

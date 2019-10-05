@@ -18,6 +18,7 @@ current rgl device
 }
 \description{
 Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
+On a Mac trackpad, pan with two fingers left-right, zoom with two fingers in-out.
 Defaults to a white background and orthogonal projection (FOV=0)
 }
 \details{
