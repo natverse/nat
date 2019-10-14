@@ -624,7 +624,7 @@ resample_segment<-function(d, stepsize, ...) {
     } else {
       approx(cumlength, d[,n], internalPoints, 
              method = ifelse(is.double(d[,n]), "linear", "constant"),
-             ties=list("ordered", mean))$y
+             ties="ordered")$y
     }
   }
   dnew
