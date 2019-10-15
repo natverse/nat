@@ -614,6 +614,8 @@ openplotlyscene <- function(){
 }
 
 check_plotengine <- function(plotengine) {
+  if(is.null(plotengine))
+    return('rgl')
   tryCatch(match.arg(plotengine, c("rgl", "plotly")),
            error=function(e) 
              stop('plotengine must be set to: "rgl" or "plotly"',
