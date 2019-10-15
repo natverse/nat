@@ -614,8 +614,11 @@ openplotlyscene <- function(){
 }
 
 check_plotengine <- function(plotengine) {
+  if(is.null(plotengine))
+    return('rgl')
   tryCatch(match.arg(plotengine, c("rgl", "plotly")),
            error=function(e) 
-             stop('plotengine must be set to: "rgl" or "plotly"',
+             stop('plotengine must be set to: "rgl" or "plotly" not',
+                  '"', plotengine, '"',
                   "\nSee ?plot3d.neuronlist for details.", call.=FALSE))
 }
