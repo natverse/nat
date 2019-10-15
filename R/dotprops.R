@@ -301,9 +301,9 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }
-plot3d.dotprops<-function(x, scalevecs=1.0, plotengine = getOption('nat.plotengine'),
-                          alpharange=NULL, color='black',
-                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
+plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
+                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, 
+                          ..., plotengine = getOption('nat.plotengine')){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])

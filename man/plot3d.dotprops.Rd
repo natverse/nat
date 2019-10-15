@@ -4,18 +4,15 @@
 \alias{plot3d.dotprops}
 \title{3D plots of dotprops objects using rgl package}
 \usage{
-\method{plot3d}{dotprops}(x, scalevecs = 1,
-  plotengine = getOption("nat.plotengine"), alpharange = NULL,
+\method{plot3d}{dotprops}(x, scalevecs = 1, alpharange = NULL,
   color = "black", PlotPoints = FALSE, PlotVectors = TRUE,
-  UseAlpha = FALSE, ...)
+  UseAlpha = FALSE, ..., plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{A dotprops object}
 
 \item{scalevecs}{Factor by which to scale unit vectors (numeric, default: 
 1.0)}
-
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{alpharange}{Restrict plotting to points with \code{alpha} values in 
 this range to plot (default: null => all points). See 
@@ -32,6 +29,8 @@ points/vectors. See details.}
 
 \item{...}{Additional arguments passed to \code{points3d} and/or 
 \code{segments3d}}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 }
 \value{
 invisible list of results of rgl plotting commands
