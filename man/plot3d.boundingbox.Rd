@@ -4,15 +4,22 @@
 \alias{plot3d.boundingbox}
 \title{Plot a bounding box in 3D}
 \usage{
-\method{plot3d}{boundingbox}(x, ...)
+\method{plot3d}{boundingbox}(x, col = "black",
+  plotengine = getOption("nat.plotengine"), ...)
 }
 \arguments{
 \item{x}{the \code{\link{boundingbox}} object to plot.}
 
+\item{col}{The colour of the bounding box lines (default 'black')}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+
 \item{...}{additional arguments to pass to \code{\link[rgl]{segments3d}}.}
 }
 \value{
-A list of RGL object IDs.
+A list of rgl object IDs (as returned by
+  \code{\link[rgl]{segments3d}}) \bold{or} a
+  \code{\link[plotly:plot_ly]{plotly}} object.
 }
 \description{
 Plot a bounding box in 3D
@@ -29,7 +36,7 @@ plot3d(boundingbox(kcs20))
 
 plot3d(kcs20)
 # plot bounding box (in matching colours) for each neuron
-# NB makes use of nlapply/neuronlist in slightly unsusual context - 
+# NB makes use of nlapply/neuronlist in slightly unsusual context -
 # plot3d.neuronlist can cope with lists containing anything with
 # a valid plot3d method.
 plot3d(nlapply(kcs20,boundingbox))

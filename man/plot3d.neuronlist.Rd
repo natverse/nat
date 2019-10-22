@@ -8,7 +8,8 @@ expression}
 \usage{
 \method{plot3d}{neuronlist}(x, subset = NULL, col = NULL,
   colpal = rainbow, skipRedraw = ifelse(interactive(), 200L, TRUE),
-  WithNodes = FALSE, soma = FALSE, ..., SUBSTITUTE = TRUE)
+  WithNodes = FALSE, soma = FALSE, ..., SUBSTITUTE = TRUE,
+  plotengine = getOption("nat.plotengine"))
 
 \method{plot3d}{character}(x, db = NULL, ...)
 }
@@ -42,6 +43,8 @@ soma. Either a logical value or a numeric indicating the radius (default
 \item{SUBSTITUTE}{Whether to \code{substitute} the expressions passed as 
 arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
 use only, when calling from another function.}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 
 \item{db}{A neuronlist to use as the source of objects to plot. If
 \code{NULL}, the default, will use the neuronlist specified by
@@ -90,16 +93,23 @@ plot3d.character will check if options('nat.default.neuronlist') has
 open3d()
 plot3d(kcs20,type=='gamma',col='green')
 \donttest{
-clear3d()
+nclear3d()
 plot3d(kcs20,col=type)
+
+nclear3d()
 plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
+
 # Note use of default colour for non DA1 neurons
+nclear3d()
 plot3d(Cell07PNs,col=Glomerulus, colpal=c(DA1='red', 'grey'))
+
 # a subset expression
+nclear3d()
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),
   col=c("red","green")[factor(Glomerulus)])
 # the same but not specifying colours explicitly
+nclear3d()
 plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),col=Glomerulus)
 }
 \dontrun{

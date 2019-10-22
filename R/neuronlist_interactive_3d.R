@@ -134,22 +134,26 @@ find.soma <- function (sel3dfun = select3d(), indices = names(db),
 #' \dontrun{
 #' # could select e.g. the gamma neurons with unbranched axons
 #' gammas=nlscan(kcs20)
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20[gammas])
 #' 
 #' # plot surface model of brain first
 #' # nb depends on package only available on github
-#' devtools::install_github(username = "jefferislab/nat.flybrains")
+#' devtools::install_github(username = "natverse/nat.flybrains")
 #' library(nat.flybrains)
 #' plot3d(FCWB)
 #' # could select e.g. the gamma neurons with unbranched axons
 #' gammas=nlscan(kcs20)
-#' clear3d()
+#' 
+#' nclear3d()
 #' plot3d(kcs20[gammas])
 #' }
-nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
+nlscan <- function(neurons, db=NULL,
+                   col='red', Verbose=T, Wait=T, sleep=0.1,
                    extrafun=NULL, selected_file=NULL, selected_col='green',
-                   yaml=TRUE, ...) {
+                   yaml=TRUE, ..., plotengine = "rgl") {
+  if(!isTRUE(plotengine=="rgl"))
+    stop("nlscan only supports the rgl plotengine at present!")
   if(is.neuronlist(neurons)) {
     db=neurons
     neurons=names(db)
@@ -181,7 +185,8 @@ nlscan <- function(neurons, db=NULL, col='red', Verbose=T, Wait=T, sleep=0.1,
     if(i > length(neurons) || i < 1) break
     n <- neurons[i]
     cat("Current neuron:", n, "(", i, "/", length(neurons), ")\n")
-    pl <- plot3d(n, db=db, col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
+    pl <- plot3d(n, db=db, plotengine = plotengine,
+                 col=substitute(ifelse(n %in% selected, selected_col, col[i])), ..., SUBSTITUTE=FALSE)
     # call user supplied function
     more_rgl_ids <- list()
     if(!is.null(extrafun))

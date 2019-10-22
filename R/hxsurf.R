@@ -219,7 +219,8 @@ write.hxsurf <- function(surf, filename) {
 #'   function that will be called with the number of materials to plot. When
 #'   \code{NULL} (default) will use material colours defined in Amira (if
 #'   available), or \code{rainbow} otherwise.
-#' @param ... Additional arguments passed to
+#' @param ... Additional arguments passed to \code{triangles3d}
+#' @inheritParams plot3d.neuronlist
 #' @export
 #' @method plot3d hxsurf
 #' @seealso \code{\link{read.hxsurf}}
@@ -230,18 +231,27 @@ write.hxsurf <- function(surf, filename) {
 #' 
 #' \donttest{
 #' # plot only vertical lobe
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, materials="VL", alpha=0.3)
 #' 
 #' # everything except vertical lobe
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
-plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
-  # skip so that the scene is updated only once per hxsurf object
-  skip <- par3d(skipRedraw = TRUE)
-  on.exit(par3d(skip))
+plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
+                        plotengine = getOption('nat.plotengine')){
+  plotengine <- check_plotengine(plotengine)
+  if (plotengine == 'rgl'){
+    # skip so that the scene is updated only once per hxsurf object
+    skip <- par3d(skipRedraw = TRUE)
+    on.exit(par3d(skip))
+  } 
+  if (plotengine == 'plotly') {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
   
   materials=subset(x, subset = materials, rval='names')
   
@@ -255,13 +265,37 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   if(length(col)==1 && length(materials)>1) col=rep(col,length(materials))
   names(col)=materials
   rlist=list()
-  for(mat in materials){
+  for(mat in materials) {
     # get order triangle vertices
     tri=as.integer(t(x$Regions[[mat]]))
-    rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
-                             x[['Vertices']]$Z[tri],col=col[mat],...)
+    if (plotengine == 'rgl'){
+      rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
+                               x[['Vertices']]$Z[tri],col=col[mat], ...)
+    } else {
+      tmpx <- as.mesh3d.hxsurf(x, Regions = mat)
+      psh <- psh %>% 
+        plotly::add_trace(x = tmpx$vb[1,], 
+                          y = tmpx$vb[2,], 
+                          z = tmpx$vb[3,],
+                          i = tmpx$it[1,]-1, 
+                          j = tmpx$it[2,]-1, 
+                          k = tmpx$it[3,]-1,
+                          type = "mesh3d", opacity = opacity,
+                          hovertext=mat,
+                          hoverinfo="x+y+z+text",
+                          facecolor = rep(col[mat],
+                                          length(tmpx$it[1,])))
+    }
   }
-  invisible(rlist)
+  if (plotengine == 'rgl'){
+      invisible(rlist)
+  } else {
+    psh <- psh %>% 
+      plotly::layout(showlegend = FALSE,
+                     scene=list(camera=.plotly3d$camera))
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
+  }
 }
 
 #' Convert an object to an rgl mesh3d
@@ -381,8 +415,8 @@ as.hxsurf.mesh3d <- function(x, region="Interior", col=NULL, ...) {
 #' plot3d(kcs20)
 #' 
 #' # there is also a shortcut for this
-#' clear3d()
-#' plot3d(MBL.surf, "VL", alpha=0.3)
+#' nclear3d()
+#' plot3d(MBL.surf, subset = "VL", alpha=0.3)
 #' }
 subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...){
   rval=match.arg(rval)

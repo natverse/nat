@@ -48,9 +48,9 @@ registration, or simply flip about midplane of axis.}
 (character/logical/integer) that specify a subset of the members of
 \code{x} to be transformed.}
 
-\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an 
-error. The default value (\code{NA}) will result in nlapply stopping with 
-an error message the moment there is an error. For other values, see 
+\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
+error. The default value (\code{NA}) will result in nlapply stopping with
+an error message the moment there is an error. For other values, see
 details.}
 }
 \value{
@@ -92,7 +92,7 @@ plot3d(mx,col='green')
 }
 
 # also works with dotprops objects
-clear3d()
+nclear3d()
 y=kcs20[[1]]
 my=mirror(y,mirrorAxisSize=564.2532,transform='flip')
 \donttest{

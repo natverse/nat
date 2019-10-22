@@ -70,7 +70,7 @@ all(pointsinside(kcs20, kcs20.mesh))
 # and show that we can also use the alphashape directly
 all(pointsinside(kcs20, kcs20.a))
 
-clear3d()
+nclear3d()
 wire3d(kcs20.mesh)
 plot3d(kcs20, col=type, lwd=2)
 }

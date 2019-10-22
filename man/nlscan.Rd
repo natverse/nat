@@ -6,7 +6,7 @@
 \usage{
 nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
   sleep = 0.1, extrafun = NULL, selected_file = NULL,
-  selected_col = "green", yaml = TRUE, ...)
+  selected_col = "green", yaml = TRUE, ..., plotengine = "rgl")
 }
 \arguments{
 \item{neurons}{a \code{neuronlist} object or a character vector of names of 
@@ -42,6 +42,8 @@ specified in \code{selected_file}) should be plotted.}
 format.}
 
 \item{...}{extra arguments to pass to \code{\link{plot3d}}.}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 }
 \value{
 A character vector of names of any selected neurons, of length 0 if 
@@ -67,17 +69,18 @@ nlscan(kcs20[1:4], Wait=FALSE, sleep=0)
 \dontrun{
 # could select e.g. the gamma neurons with unbranched axons
 gammas=nlscan(kcs20)
-clear3d()
+nclear3d()
 plot3d(kcs20[gammas])
 
 # plot surface model of brain first
 # nb depends on package only available on github
-devtools::install_github(username = "jefferislab/nat.flybrains")
+devtools::install_github(username = "natverse/nat.flybrains")
 library(nat.flybrains)
 plot3d(FCWB)
 # could select e.g. the gamma neurons with unbranched axons
 gammas=nlscan(kcs20)
-clear3d()
+
+nclear3d()
 plot3d(kcs20[gammas])
 }
 }

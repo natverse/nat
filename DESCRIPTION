@@ -1,14 +1,14 @@
 Package: nat
 Type: Package
 Title: NeuroAnatomy Toolbox for Analysis of 3D Image Data
-Version: 1.9.0
+Version: 1.9.2
 Authors@R: c(
     person("Gregory","Jefferis", email="jefferis@gmail.com", 
     role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0587-9355")),
     person("James", "Manton", role = c("aut"), comment = c(ORCID = "0000-0001-9260-3156"))
     )
-URL: https://github.com/jefferis/nat, http://jefferislab.org
-BugReports: https://github.com/jefferis/nat/issues
+URL: https://github.com/natverse/nat, https://natverse.github.io
+BugReports: https://github.com/natverse/nat/issues
 Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     biological image data, especially traced neurons. Reads and writes 3D images
     in NRRD and 'Amira' AmiraMesh formats and reads surfaces in 'Amira' hxsurf
@@ -31,7 +31,8 @@ Imports:
     digest,
     nat.utils (>= 0.4.2),
     plyr,
-    yaml
+    yaml,
+    progress
 Suggests:
     spelling,
     Rvcg (>= 0.17),
@@ -42,7 +43,8 @@ Suggests:
     rmarkdown,
     MASS,
     alphashape3d,
-    Morpho
+    Morpho,
+    plotly
 License: GPL-3
 LazyData: yes
 Collate:
