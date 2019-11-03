@@ -4,6 +4,7 @@
 \alias{nvertices}
 \alias{nvertices.default}
 \alias{nvertices.neuronlist}
+\alias{nvertices.shapelist3d}
 \title{Find the number of vertices in an object (or each element of a neuronlist)}
 \usage{
 nvertices(x, ...)
@@ -11,6 +12,8 @@ nvertices(x, ...)
 \method{nvertices}{default}(x, ...)
 
 \method{nvertices}{neuronlist}(x, ...)
+
+\method{nvertices}{shapelist3d}(x, ...)
 }
 \arguments{
 \item{x}{An object with 3d vertices (e.g. neuron, surface etc)}

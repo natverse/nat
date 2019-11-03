@@ -281,6 +281,10 @@ xyzmatrix.neuronlist<-function(x, ...) {
 
 #' @export
 #' @rdname xyzmatrix
+xyzmatrix.shapelist3d <- xyzmatrix.neuronlist
+
+#' @export
+#' @rdname xyzmatrix
 xyzmatrix.dotprops<-function(x, ...) x$points
 
 #' @export
@@ -391,6 +395,10 @@ xyzmatrix.mesh3d<-function(x, ...){
   x
 }
 
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.shapelist3d`<-`xyzmatrix<-.neuronlist`
+
 #' Find the number of vertices in an object (or each element of a neuronlist)
 #' 
 #' @param x An object with 3d vertices (e.g. neuron, surface etc)
@@ -422,6 +430,10 @@ nvertices.dotprops <- function(x, ...) nrow(x$points)
 nvertices.neuronlist <- function(x, ...) {
   sapply(x, nvertices)
 }
+
+#' @rdname nvertices
+#' @export
+nvertices.shapelist3d <- nvertices.neuronlist
 
 #' Mirror 3D object about a given axis, optionally using a warping registration
 #' 
