@@ -158,19 +158,19 @@
     <p>Clear the rgl or plotly 3D scene</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nclear3d</span>(<span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>nclear3d</span>(<span class='no'>...</span>, <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
       <td><p>Additional arguments passed to
 <code><a href='https://rdrr.io/pkg/rgl/man/scene.html'>rgl::clear3d</a></code></p></td>
+    </tr>
+    <tr>
+      <th>plotengine</th>
+      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     </table>
 
@@ -178,11 +178,14 @@
 
     <p><code>rgl</code> and <code><a href='https://rdrr.io/pkg/plotly/man/plot_ly.html'>plotly</a></code> have
   quite different models for how to handle the active plot. <code>nclear3d</code>
-  allows you to treat them more similarly</p>
+  and <code><a href='nopen3d.html'>nopen3d</a></code> allow you to treat them more similarly. Use them
+  wherever you use the rgl <code>clear3d</code> and <code>open3d</code> commands and your
+  could she be able to run with both <b>plotly</b> or <b>rgl</b> as the
+  <code>plotengine</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/rgl/man/scene.html'>rgl::clear3d</a></code>, <code><a href='plot3d.html'>plot3d</a></code>,
-  <code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code></p></div>
+  <code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code>, <code><a href='nopen3d.html'>nopen3d</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>

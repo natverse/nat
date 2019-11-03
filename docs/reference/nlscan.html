@@ -160,9 +160,9 @@ forwards and backwards." />
 forwards and backwards.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nlscan</span>(<span class='no'>neurons</span>, <span class='kw'>db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='st'>"rgl"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-  <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>Wait</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>sleep</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>extrafun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>selected_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>selected_col</span> <span class='kw'>=</span> <span class='st'>"green"</span>, <span class='kw'>yaml</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>nlscan</span>(<span class='no'>neurons</span>, <span class='kw'>db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>Wait</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>sleep</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>extrafun</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>selected_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>selected_col</span> <span class='kw'>=</span> <span class='st'>"green"</span>, <span class='kw'>yaml</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>, <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='st'>"rgl"</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,10 +177,6 @@ neurons to plot from the neuronlist specified by <code>db</code>.</p></td>
       <td><p>A neuronlist to use as the source of objects to plot. If
 <code>NULL</code>, the default, will use the neuronlist specified by
 options('nat.default.neuronlist')</p></td>
-    </tr>
-    <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -226,6 +222,10 @@ format.</p></td>
     <tr>
       <th>...</th>
       <td><p>extra arguments to pass to <code><a href='plot3d.html'>plot3d</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>plotengine</th>
+      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     </table>
 

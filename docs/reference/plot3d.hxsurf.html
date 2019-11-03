@@ -159,8 +159,8 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for hxsurf</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>),
-  <span class='kw'>materials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>materials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>,
+  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,10 +168,6 @@
     <tr>
       <th>x</th>
       <td><p>An hxsurf surface object</p></td>
-    </tr>
-    <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     <tr>
       <th>materials</th>
@@ -189,6 +185,10 @@ available), or <code>rainbow</code> otherwise.</p></td>
     <tr>
       <th>...</th>
       <td><p>Additional arguments passed to <code>triangles3d</code></p></td>
+    </tr>
+    <tr>
+      <th>plotengine</th>
+      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     </table>
 
