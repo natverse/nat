@@ -20,7 +20,10 @@ in style and pedigree and there are pros and cons to the use of each.
 
 *rgl* is a much longer standing library, largely written in C++ to talk to your
 graphics card's OpenGL functionality. In general it is more efficient for 
-displaying large amounts of data (hundreds to thousands of neurons). It has
+displaying large amounts of data (hundreds to thousands of neurons). Its main
+weak point for interactive plotting is that transparent surfaces 
+(i.e. with `alpha` < 1) are not efficiently handled especially when there 
+is more than one such surface in a scene. It has
 support for use in online web documents (via WebGL) but this is more restricted
 and can result in very large html files. Its web support does have quite a 
 flexible system for interacting with buttons/actions, which could be interesting
@@ -41,9 +44,10 @@ representations of 3D plots (but see [this PR](https://github.com/plotly/plotly.
 
 ### Recommendation
 
-* Use **rgl** for interactive use unless you need the plotly brushing capability.
+* Use **rgl** for interactive use unless you need the plotly brushing capability
+  or need to plot multiple overlapping transparent surfaces.
 * Use **plotly** for html (e.g. rmarkdown) output unless you need orthographic 
-  plots
+  plots.
 
 ### Limitations
 
