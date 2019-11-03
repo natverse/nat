@@ -4,6 +4,11 @@
 * Support for plotly graphics engine (#409, #410)
 * Fix bug in nmapply with progress (#412)
 * Fix warning in resample.neuron when there are identical points (#405)
+* Fix fig size missing in vignette plotly.Rmd (#417)
+* Add `xyzmatrix()`, `xyzmatrix<-()` and`nvertices()` methods for `shapelist3d`
+  thereby enabling these rgl objects containing multiple meshes to be 
+  transformed. Currently most relevant when fetching neuroglancer meshes (#419).
+* `xyzmatrix.mesh3d()` now has colnames XYZ for consistency (#418)
 
 # nat 1.9.1
 
