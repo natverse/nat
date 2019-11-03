@@ -306,7 +306,7 @@ xyzmatrix.igraph<-function(x, ...){
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.mesh3d<-function(x, ...){
-  cbind(x$vb[1, ]/x$vb[4, ], x$vb[2, ]/x$vb[4, ], x$vb[3, ]/x$vb[4, ])
+  cbind(X=x$vb[1, ]/x$vb[4, ], Y=x$vb[2, ]/x$vb[4, ], Z=x$vb[3, ]/x$vb[4, ])
 }
 
 #' @description \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
@@ -372,7 +372,7 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' @export
 #' @rdname xyzmatrix
 `xyzmatrix<-.shape3d`<-function(x, value){
-  x$vb=t(cbind(value, 1))
+  x$vb=t(cbind(unname(value), 1))
   x
 }
 
