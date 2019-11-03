@@ -240,19 +240,28 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
 NULL
 
 #' Open customised rgl window
-#' 
-#' Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
-#' On a Mac trackpad, pan with two fingers left-right, zoom with two fingers in-out.
-#' Defaults to a white background and orthogonal projection (FOV=0)
-#' 
-#' Note that sometimes (parts of) objects seem to disappear after panning and
-#' zooming. See help for \code{\link{pan3d}}.
+#'
+#' @details Pan with right button (Ctrl+click), zoom with middle
+#'   (Alt/Meta+click) button. On a Mac trackpad, pan with two fingers
+#'   left-right, zoom with two fingers in-out. Defaults to a white background
+#'   and orthogonal projection (FOV=0)
+#'
+#'   Note that sometimes (parts of) objects seem to disappear after panning and
+#'   zooming. See help for \code{\link{pan3d}}.
+#'
+#'   \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
+#'   different models for how to handle the active plot. \code{nopen3d} and
+#'   \code{\link{nclear3d}} allow you to treat them more similarly. Use them
+#'   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
+#'   could she be able to run with both \bold{plotly} or \bold{rgl} as the
+#'   \code{plotengine}.
+#'
 #' @param bgcol background colour
 #' @param FOV field of view
 #' @param ... additional options passed to open3d
 #' @return current rgl device
 #' @export
-#' @seealso \code{\link{open3d},\link{pan3d}}
+#' @seealso \code{\link{open3d},\link{pan3d}}, \code{\link{nclear3d}}
 nopen3d<- function(bgcol='white', FOV=0, ...){
   res=open3d(mouseMode=c("trackball", "user", "zoom", "pull"), FOV=FOV, ...)
   bg3d(col=bgcol)
@@ -581,15 +590,18 @@ plot3d.boundingbox <- function(x, col='black',
 #'
 #' @details \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
 #'   quite different models for how to handle the active plot. \code{nclear3d}
-#'   allows you to treat them more similarly
+#'   and \code{\link{nopen3d}} allow you to treat them more similarly. Use them
+#'   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
+#'   could she be able to run with both \bold{plotly} or \bold{rgl} as the
+#'   \code{plotengine}.
 #' @inheritParams plot3d.neuronlist
 #' @param ... Additional arguments passed to
 #'   \code{\link[rgl:clear3d]{rgl::clear3d}}
 #' @export
 #' @seealso \code{\link[rgl:clear3d]{rgl::clear3d}}, \code{\link[nat]{plot3d}},
-#'   \code{\link[nat]{plot3d.neuronlist}}
+#'   \code{\link[nat]{plot3d.neuronlist}}, \code{\link[nat]{nopen3d}}
 #' @examples
-#' 
+#'
 #' \donttest{
 #' nclear3d()
 #' plot3d(Cell07PNs[[1]])

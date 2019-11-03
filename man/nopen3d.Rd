@@ -17,14 +17,24 @@ nopen3d(bgcol = "white", FOV = 0, ...)
 current rgl device
 }
 \description{
-Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
-On a Mac trackpad, pan with two fingers left-right, zoom with two fingers in-out.
-Defaults to a white background and orthogonal projection (FOV=0)
+Open customised rgl window
 }
 \details{
-Note that sometimes (parts of) objects seem to disappear after panning and
-zooming. See help for \code{\link{pan3d}}.
+Pan with right button (Ctrl+click), zoom with middle
+  (Alt/Meta+click) button. On a Mac trackpad, pan with two fingers
+  left-right, zoom with two fingers in-out. Defaults to a white background
+  and orthogonal projection (FOV=0)
+
+  Note that sometimes (parts of) objects seem to disappear after panning and
+  zooming. See help for \code{\link{pan3d}}.
+
+  \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
+  different models for how to handle the active plot. \code{nopen3d} and
+  \code{\link{nclear3d}} allow you to treat them more similarly. Use them
+  wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
+  could she be able to run with both \bold{plotly} or \bold{rgl} as the
+  \code{plotengine}.
 }
 \seealso{
-\code{\link{open3d},\link{pan3d}}
+\code{\link{open3d},\link{pan3d}}, \code{\link{nclear3d}}
 }
