@@ -70,9 +70,35 @@ scale.dotprops<-function(x, center=TRUE, scale=TRUE){
 #' @rdname dotprops
 dotprops<-function(x, ...) UseMethod('dotprops')
 
+#' @description \code{dotprops.character} makes dotprops objects from one or
+#'   more files on disk (typically binary segmentations saved as NRRDs).
+#'   \code{x} can a vector of paths or be a directory (in which case
+#'   \code{pattern} can be used to restrict the files to read). The \code{...}
+#'   argument is passed first to \code{\link{nlapply}} (if there is more than
+#'   one file) and then to \code{dotprops.default}.
 #' @export
 #' @rdname dotprops
-dotprops.character <- function(x, ...) {
+#' @inheritParams base::list.files
+#' @examples
+#' \dontrun{
+#' # process a single file on disk
+#' dp=dotprops.character('~/skeleton-nrrds/file01.nrrd', k=5)
+#' # process a whole directory of files
+#' dps=dotprops.character('~/skeleton-nrrds/', OmitFailures=T, k=5)
+#' }
+dotprops.character <- function(x, pattern = NULL, OmitFailures = NA, ...) {
+  if(length(x)==1 && file.info(x)$isdir)
+    x=dir(x, full.names = TRUE, pattern = pattern)
+  
+  if(length(x)>1) {
+    # process many files by making a dummy neuronlist
+    df=data.frame(filename=basename(x), stringsAsFactors = FALSE)
+    rownames(df)=tools::file_path_sans_ext(df$filename)
+    nl=as.neuronlist(as.list(x), df = df)
+    res=nlapply(nl, dotprops, OmitFailures = OmitFailures, ...)
+    return(res)
+  }
+  
   fileName <- x
   x <- read.im3d(x)
   l <- dotprops(x, ...)

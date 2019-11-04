@@ -18,7 +18,7 @@ as.dotprops(x, ...)
 
 dotprops(x, ...)
 
-\method{dotprops}{character}(x, ...)
+\method{dotprops}{character}(x, pattern = NULL, OmitFailures = NA, ...)
 
 \method{dotprops}{dotprops}(x, k = attr(x, "k"), ...)
 
@@ -36,13 +36,16 @@ dotprops(x, ...)
 
 \item{...}{Additional arguments passed to methods}
 
-\item{k}{Number of nearest neighbours to use for tangent vector calculation 
-(set to k=20 when passed NULL)}
+\item{pattern}{an optional \link{regular expression}.  Only file names
+    which match the regular expression will be returned.}
 
 \item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
 error. The default value (\code{NA}) will result in nlapply stopping with
 an error message the moment there is an error. For other values, see
 details.}
+
+\item{k}{Number of nearest neighbours to use for tangent vector calculation 
+(set to k=20 when passed NULL)}
 
 \item{Labels}{Vector of labels for each point e.g. identifying axon vs 
 dendrite. The default value \code{NULL} will produce class-specific default
@@ -58,6 +61,13 @@ be resampled. See \code{\link{resample.neuron}}.}
 \code{dotprops} makes dotprops representation from raw 3D points
   (extracting vertices from S3 objects that have them)
 
+\code{dotprops.character} makes dotprops objects from one or
+  more files on disk (typically binary segmentations saved as NRRDs).
+  \code{x} can a vector of paths or be a directory (in which case
+  \code{pattern} can be used to restrict the files to read). The \code{...}
+  argument is passed first to \code{\link{nlapply}} (if there is more than
+  one file) and then to \code{dotprops.default}.
+
 \code{dotprops.dotprops} will default to the original vale of 
   \code{k} and copy over all attributes that are not set by
   \code{dotprops.default}.
@@ -70,6 +80,14 @@ be resampled. See \code{\link{resample.neuron}}.}
 \code{k} will default to 20 nearest neighbours when unset (i.e. when
   it has default value of NA) unless \code{x} is a dotprops object (when the
   original value of \code{k} is reused).
+}
+\examples{
+\dontrun{
+# process a single file on disk
+dp=dotprops.character('~/skeleton-nrrds/file01.nrrd', k=5)
+# process a whole directory of files
+dps=dotprops.character('~/skeleton-nrrds/', OmitFailures=T, k=5)
+}
 }
 \references{
 The dotprops format is essentially identical to that developed 

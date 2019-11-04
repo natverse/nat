@@ -2,6 +2,7 @@
 
 * switch to https://github.com/natverse/nat
 * Support for plotly graphics engine (#409, #410)
+* Teach dotprops.character to handle multiple input files (#420)
 * Fix bug in nmapply with progress (#412)
 * Fix warning in resample.neuron when there are identical points (#405)
 * Fix fig size missing in vignette plotly.Rmd (#417)
