@@ -18,6 +18,7 @@ BoundingBox
 branchpoints
 BranchPoints
 Cachero
+CATMAID
 centers
 Chklovskii
 Chuang
@@ -125,7 +126,9 @@ InputFileStat
 int
 io
 ioregistry
+java
 jefferis
+js
 kcs
 KCs
 keyfilemap
@@ -163,6 +166,7 @@ NeuroAnatomy
 neurodebian
 Neurogeometry
 NeuroGeometry
+neuroglancer
 neuroimage
 Neuroimage
 Neuroinformatics
@@ -215,6 +219,9 @@ outfile
 OverWrite
 params
 Peng's
+plotengine
+plotly
+Plotly
 PlotSubTrees
 plyr
 PNs
@@ -242,6 +249,7 @@ rgl's
 RLE
 rm
 rmarkdown
+Rmd
 Rohlfing
 roxygen
 rs
@@ -315,6 +323,7 @@ vtk
 VTK
 warpfile
 webgl
+webGL
 winbuilder
 WithAllPoints
 WithNodes
