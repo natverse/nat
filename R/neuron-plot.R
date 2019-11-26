@@ -606,7 +606,7 @@ plot3d.boundingbox <- function(x, col='black',
 #' nclear3d()
 #' plot3d(Cell07PNs[[1]])
 #' }
-nclear3d <- function(..., plotengine = getOption('nat.plotengine')) {
+nclear3d <- function(plotengine = getOption('nat.plotengine'),...) {
   plotengine <- check_plotengine(plotengine)
   if(plotengine=='plotly') {
     if (exists("plotlyscenehandle", envir = .plotly3d))
