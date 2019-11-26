@@ -57,19 +57,17 @@ wire3d <- function(x, plotengine = getOption('nat.plotengine'), ...) {
                                        mode = "lines",
                                        opacity = opacity,
                                        line = list(width = width, color = color))
-    }
-    
-    # Just retain the previous behaviour
-    if(plotengine == 'rgl') { rglreturnlist <- rgl::wire3d(tmesh, ...)}
-    
-    if (plotengine == 'rgl'){
-      invisible(rglreturnlist)
-    } else{
-      psh <- psh %>% 
-        plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+      
+      psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
       assign("plotlyscenehandle", psh, envir=.plotly3d)
       psh
+    } else{
+      # Just retain the previous behaviour
+      rglreturnlist <- rgl::wire3d(tmesh, ...)
+      invisible(rglreturnlist)
     }
-    
+  
+  } else{
+    stop("The object supplied is not of mesh3d class")
   }
 }
