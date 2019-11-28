@@ -38,13 +38,14 @@ test_that("Wireframe for non-mesh objects", {
   
   kcs20.mesh = c(1,2,3)
   
-  options(nat.plotengine='rgl')
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
   nclear3d()
-  expect_error(wire3d(kcs20.mesh), "The object supplied is not of mesh3d class")
+  expect_error(wire3d(kcs20.mesh), "No wire3d method defined for objects of class: numeric")
   
   options(nat.plotengine='plotly')
   nclear3d()
-  expect_error(wire3d(kcs20.mesh), "The object supplied is not of mesh3d class")
+  expect_error(wire3d(kcs20.mesh), "No wire3d method defined for objects of class: plotlynumeric, numeric")
   
 })
 

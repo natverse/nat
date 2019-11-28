@@ -21,32 +21,53 @@
 #' }
 wire3d <- function(x, ..., plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
-  if(plotengine == 'rgl') {
-    rglreturnlist <- rgl::wire3d(x, ...)
-    return(invisible(rglreturnlist))
-  } else
-    UseMethod("wire3d")
-}  
-
-
-#' @export
-wire3d.hxsurf <- function(x, ...) {
-  wire3d(as.mesh3d(x, ...))
+  if(plotengine == 'plotly') {
+    class(x)=c(paste0("plotly", class(x)[1]), class(x))
+  }
+  rgl::wire3d(x, ...)
 }
 
+#' @method wire3d hxsurf
 #' @export
-wire3d.shapelist3d <- function (x, override = TRUE, ...) 
+wire3d.hxsurf <- function(x, Regions=NULL, ...) {
+  wire3d(as.mesh3d(x, Regions=Regions), ..., plotengine = 'rgl')
+}
+
+#' @method wire3d plotlyhxsurf
+#' @export
+wire3d.plotlyhxsurf <- function(x, Regions=NULL, ...) {
+  wire3d(as.mesh3d(x, Regions=Regions), ..., plotengine = 'plotly')
+}
+
+#' @method wire3d default
+#' @export
+wire3d.default <- function(x, ...) {
+  stop("No wire3d method defined for objects of class: ", paste(class(x), collapse = ", "))
+}
+
+
+#' @method wire3d plotlyshapelist3d
+#' @export
+wire3d.plotlyshapelist3d <- function (x, override = TRUE, ...) 
 {
   invisible(unlist(sapply(x, function(item) wire3d(item, override = override, ...))))
 }
 
+#' @method wire3d plotlymesh3d
 #' @export
-wire3d.mesh3d <- function(x, ...) {
-
+wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
+  
   psh <- openplotlyscene()$plotlyscenehandle
   params=list(...)
-  opacity <- if("alpha" %in% names(params)) params$alpha else 1
-  color <- if("col" %in% names(params)) params$col else 'black'
+  material <- x$material
+  opacity <- if("alpha" %in% names(params) && override == TRUE) {
+                params$alpha } else if (!is.null(material$alpha)){
+                  material$alpha 
+                } else 1
+  color <- if("col" %in% names(params) && override == TRUE)  {
+              params$col } else if (!is.null(material$color)){
+                material$color 
+              } else 'black'
   width <- if("width" %in% names(params)) params$width else 2
   
   #Gather all edges for the faces..
