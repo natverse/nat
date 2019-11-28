@@ -4,15 +4,15 @@
 \alias{wire3d}
 \title{Wire frame plots}
 \usage{
-wire3d(x, plotengine = getOption("nat.plotengine"), ...)
+wire3d(x, ..., plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{mesh object of type 'mesh3d' (which should be a triangular mesh)}
 
-\item{plotengine}{Whether to use plotting backend of 'rgl' or 'plotly'}
-
 \item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}}
+
+\item{plotengine}{Whether to use plotting backend of 'rgl' or 'plotly'}
 }
 \description{
 This function directs the wireframe plot based on the plotengine backend selected.
