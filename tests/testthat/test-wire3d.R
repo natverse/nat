@@ -7,12 +7,14 @@ kcs20.mesh=as.mesh3d(kcs20.a)
 
 test_that("Wireframe for triangular meshes in 3D - default options", {
  
-  options(nat.plotengine='rgl')
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
   nclear3d()
   wireframes <- wire3d(kcs20.mesh)
   expect_equal(names(wireframes), "triangles")
   
-  options(nat.plotengine='plotly')
+  op <- options(nat.plotengine='plotly')
+  on.exit(options(op))
   nclear3d()
   wireframes <- wire3d(kcs20.mesh)
   expect_type(wireframes, "list")
@@ -21,12 +23,14 @@ test_that("Wireframe for triangular meshes in 3D - default options", {
 
 test_that("Wireframe for triangular meshes in 3D - options of color and transparency", {
   
-  options(nat.plotengine='rgl')
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
   nclear3d()
   wireframes <- wire3d(kcs20.mesh,alpha = 0.1, col = 'blue')
   expect_equal(names(wireframes), "triangles")
   
-  options(nat.plotengine='plotly')
+  op <- options(nat.plotengine='plotly')
+  on.exit(options(op))
   nclear3d()
   wireframes <- wire3d(kcs20.mesh,alpha = 0.1, col = 'blue')
   expect_type(wireframes, "list")
@@ -42,10 +46,54 @@ test_that("Wireframe for quad meshes", {
   wireframes <- wire3d(quadmesh,alpha = 0.5, col = 'green')
   expect_equal(names(wireframes), "quads")
   
-  options(nat.plotengine='plotly')
+  op <- options(nat.plotengine='plotly')
+  on.exit(options(op))
   nclear3d()
   wireframes <- wire3d(quadmesh,alpha = 0.5, col = 'red')
   expect_type(wireframes, "list")
+  
+})
+
+test_that("Change mesh properties", {
+  
+  color = "yellow"
+  quadmesh = rgl::cube3d(color = color)
+  
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
+  wireframes <- wire3d(quadmesh, plotengine = 'rgl')
+  expect_equal(names(wireframes), "quads")
+  
+  op <- options(nat.plotengine='plotly')
+  on.exit(options(op))
+  nclear3d()
+  wireframes <- wire3d(quadmesh)
+  expect_type(wireframes, "list")
+  expect_equal(wireframes$x$attrs[2][[names(wireframes$x$attrs)[1]]]$line$color, color)
+  
+})
+
+test_that("Check if override properties work", {
+  
+  color = "yellow"
+  quadmesh = rgl::cube3d(color = color,meshColor = "edges")
+  
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
+  wireframes <- wire3d(quadmesh, plotengine = 'rgl',col = 'blue', override = TRUE)
+  expect_equal(names(wireframes), "quads")
+  
+  op <- options(nat.plotengine='plotly')
+  on.exit(options(op))
+  nclear3d()
+  wireframes <- wire3d(quadmesh, col = 'blue', override = TRUE)
+  expect_type(wireframes, "list")
+  expect_equal(wireframes$x$attrs[2][[names(wireframes$x$attrs)[1]]]$line$color, 'blue')
+  
+  nclear3d()
+  wireframes <- wire3d(quadmesh, col = 'blue', override = FALSE)
+  expect_type(wireframes, "list")
+  expect_equal(wireframes$x$attrs[2][[names(wireframes$x$attrs)[1]]]$line$color, color)
   
 })
 
