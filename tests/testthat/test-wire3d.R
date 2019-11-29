@@ -33,6 +33,22 @@ test_that("Wireframe for triangular meshes in 3D - options of color and transpar
   
 })
 
+test_that("Wireframe for quad meshes", {
+  
+  quadmesh = rgl::cube3d()
+  
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
+  wireframes <- wire3d(quadmesh,alpha = 0.5, col = 'green')
+  expect_equal(names(wireframes), "quads")
+  
+  options(nat.plotengine='plotly')
+  nclear3d()
+  wireframes <- wire3d(quadmesh,alpha = 0.5, col = 'red')
+  expect_type(wireframes, "list")
+  
+})
+
 
 test_that("Wireframe for non-mesh objects", {
   

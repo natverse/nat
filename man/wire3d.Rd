@@ -7,7 +7,7 @@
 wire3d(x, ..., plotengine = getOption("nat.plotengine"))
 }
 \arguments{
-\item{x}{object of type 'mesh3d' (which should be a triangular mesh), 'hxsurf' or 'shapelist3d'}
+\item{x}{object of type 'mesh3d' (triangular mesh or quad mesh), 'hxsurf' or 'shapelist3d'}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}}

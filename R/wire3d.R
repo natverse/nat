@@ -1,7 +1,7 @@
 #' Wire frame plots 
 #' 
 #' This function directs the wireframe plot based on the plotengine backend selected.
-#' @param x object of type 'mesh3d' (which should be a triangular mesh), 'hxsurf' or 'shapelist3d'
+#' @param x object of type 'mesh3d' (triangular mesh or quad mesh), 'hxsurf' or 'shapelist3d'
 #' @param plotengine Whether to use plotting backend of 'rgl' or 'plotly'
 #' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 #' \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}
@@ -72,17 +72,31 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
   #Here vb is the points of the mesh, it is the faces of the mesh (this just has the order)..
   #To get the edges, just put the put the orders(faces) and collect the points represented by them..
   xyz=xyzmatrix(x)
-  x_pts =  xyz[x$it, 1]
-  y_pts =  xyz[x$it, 2]
-  z_pts =  xyz[x$it, 3]
+  
+  if(exists('it', where=x)){
+    #Triangular mesh..
+    x_pts =  xyz[x$it, 1]
+    y_pts =  xyz[x$it, 2]
+    z_pts =  xyz[x$it, 3]
+    
+    #Add na's after every three sets of points(as it is a triangle mesh)
+    #The below fragment is to seperate them out into triangles..
+    npts = 3 #triangle mesh
+  }else if (exists('ib', where=x)){
+    #Quad mesh..
+    x_pts =  xyz[x$ib, 1]
+    y_pts =  xyz[x$ib, 2]
+    z_pts =  xyz[x$ib, 3]
+    
+    #Add na's after every three sets of points(as it is a quad mesh)
+    #The below fragment is to seperate them out into triangles..
+    npts = 4 #quad mesh
+  }else stop("The mesh is neither triangle or quad type!")
+ 
   
   ptsmat = cbind(x_pts,y_pts,z_pts)
   
-  #Add na's after every three sets of points(as it is a triangle mesh)
-  #The below fragment is to seperate them out into triangles..
-  npts = 3 #triangle mesh
-  
-  #insert na's every idx pts..
+  #insert na's every npts..
   idx <- seq(from = npts+1, to = (npts+1)*nrow(ptsmat)/npts, by = npts+1)
   ptsna <- matrix(NA, nrow = (npts+1)*nrow(ptsmat)/npts, ncol=3) 
   idx_pts <- setdiff(1:nrow(ptsna),idx)
