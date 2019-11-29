@@ -98,6 +98,28 @@ test_that("Check if override properties work", {
 })
 
 
+
+
+test_that("Wireframe for shapelist3d objects", {
+  
+  shapelist <- rgl::shapelist3d(icosahedron3d(), x = rnorm(10), 
+                                y = rnorm(10), z = rnorm(10), 
+                                col = 1:5, size = 0.3, plot = FALSE)
+  
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
+  wireframes <- wire3d(shapelist,alpha = 0.5, col = 'green')
+  expect_equal(names(wireframes), rep("triangles", length = length(shapelist)))
+  
+  op <- options(nat.plotengine='plotly')
+  on.exit(options(op))
+  nclear3d()
+  wireframes <- wire3d(shapelist,alpha = 0.5, col = 'red')
+  expect_type(wireframes, "list")
+  
+})
+
+
 test_that("Wireframe for non-mesh objects", {
   
   kcs20.mesh = c(1,2,3)

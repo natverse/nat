@@ -48,7 +48,9 @@ wire3d.default <- function(x, ...) {
 #' @export
 wire3d.plotlyshapelist3d <- function (x, override = TRUE, ...) 
 {
-  invisible(unlist(sapply(x, function(item) wire3d(item, override = override, ...))))
+  sapply(x, function(item) wire3d(item, override = override, ...))
+  psh <- openplotlyscene()$plotlyscenehandle
+  psh
 }
 
 #' @method wire3d plotlymesh3d
