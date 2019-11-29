@@ -1,7 +1,7 @@
 #' Wire frame plots 
 #' 
 #' This function directs the wireframe plot based on the plotengine backend selected.
-#' @param x mesh object of type 'mesh3d' (which should be a triangular mesh)
+#' @param x object of type 'mesh3d' (which should be a triangular mesh), 'hxsurf' or 'shapelist3d'
 #' @param plotengine Whether to use plotting backend of 'rgl' or 'plotly'
 #' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 #' \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}
@@ -24,25 +24,23 @@ wire3d <- function(x, ..., plotengine = getOption('nat.plotengine')) {
   if(plotengine == 'plotly') {
     class(x)=c(paste0("plotly", class(x)[1]), class(x))
   }
-  rgl::wire3d(x, ...)
+  UseMethod('wire3d',x)
 }
 
 #' @method wire3d hxsurf
 #' @export
 wire3d.hxsurf <- function(x, Regions=NULL, ...) {
-  wire3d(as.mesh3d(x, Regions=Regions), ..., plotengine = 'rgl')
+  wire3d(as.mesh3d(x, Regions=Regions), ...)
 }
 
 #' @method wire3d plotlyhxsurf
 #' @export
-wire3d.plotlyhxsurf <- function(x, Regions=NULL, ...) {
-  wire3d(as.mesh3d(x, Regions=Regions), ..., plotengine = 'plotly')
-}
+wire3d.plotlyhxsurf <- wire3d.hxsurf
 
 #' @method wire3d default
 #' @export
 wire3d.default <- function(x, ...) {
-  stop("No wire3d method defined for objects of class: ", paste(class(x), collapse = ", "))
+  stop("No wire3d method defined for objects of class: ", class(x))
 }
 
 
@@ -102,3 +100,23 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
   assign("plotlyscenehandle", psh, envir=.plotly3d)
   psh
 }
+
+
+#The below section is for adding the additional methods
+#that are actually available in rgl for the wire3d class with the methods(nat::wire3d)
+
+#' methods here imported from rgl
+#' @method wire3d mesh3d
+#' @inheritParams rgl::wire3d.mesh3d
+#' @export 
+wire3d.mesh3d <- utils::getFromNamespace("wire3d.mesh3d", "rgl")
+
+#' methods here imported from rgl
+#' @method wire3d shapelist3d
+#' @param x object of type 'shapelist3d'
+#' @param override Whether the material properties should override the ones in the shapes
+#' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}}
+#' @export 
+wire3d.shapelist3d <- utils::getFromNamespace("wire3d.shapelist3d", "rgl")
+
+

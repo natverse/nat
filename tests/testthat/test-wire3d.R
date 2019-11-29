@@ -45,7 +45,7 @@ test_that("Wireframe for non-mesh objects", {
   
   options(nat.plotengine='plotly')
   nclear3d()
-  expect_error(wire3d(kcs20.mesh), "No wire3d method defined for objects of class: plotlynumeric, numeric")
+  expect_error(wire3d(kcs20.mesh), "No wire3d method defined for objects of class: numeric")
   
 })
 
