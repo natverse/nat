@@ -4,13 +4,15 @@
 \alias{wire3d}
 \title{Wire frame plots}
 \usage{
-wire3d(x, ..., plotengine = getOption("nat.plotengine"))
+wire3d(x, ..., add = FALSE, plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{object of type 'mesh3d' (triangular mesh or quad mesh), 'hxsurf' or 'shapelist3d'}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}}
+
+\item{add}{whether to add objects to an existing plot}
 
 \item{plotengine}{Whether to use plotting backend of 'rgl' or 'plotly'}
 }

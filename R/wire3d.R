@@ -2,6 +2,7 @@
 #' 
 #' This function directs the wireframe plot based on the plotengine backend selected.
 #' @param x object of type 'mesh3d' (triangular mesh or quad mesh), 'hxsurf' or 'shapelist3d'
+#' @param add whether to add objects to an existing plot
 #' @param plotengine Whether to use plotting backend of 'rgl' or 'plotly'
 #' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 #' \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}
@@ -19,8 +20,10 @@
 #' options(nat.plotengine = 'plotly')
 #' wire3d(kcs20.mesh,alpha = 0.1, col = 'blue')
 #' }
-wire3d <- function(x, ..., plotengine = getOption('nat.plotengine')) {
+wire3d <- function(x, ..., add = FALSE, plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
+  if (!add)
+    nclear3d(plotengine = plotengine)
   if(plotengine == 'plotly') {
     class(x)=c(paste0("plotly", class(x)[1]), class(x))
   }
