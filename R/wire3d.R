@@ -14,13 +14,17 @@
 #' plot(kcs20.a)
 #' 
 #' # convert to mesh3d
-#' kcs20.mesh=as.mesh3d(kcs20.a)
+#' kcs20.mesh=as.mesh3d(kcs20.a, meshColor = "edges")
 #'
-#' nclear3d()
+#' # For plotly..
 #' options(nat.plotengine = 'plotly')
-#' wire3d(kcs20.mesh,alpha = 0.1, col = 'blue')
+#' wire3d(kcs20.mesh,alpha = 0.1, add = FALSE, col = 'blue')
+#' 
+#' # For rgl..
+#' options(nat.plotengine = 'rgl')
+#' wire3d(kcs20.mesh,alpha = 0.1, add = FALSE, col = 'blue')
 #' }
-wire3d <- function(x, ..., add = FALSE, plotengine = getOption('nat.plotengine')) {
+wire3d <- function(x, ..., add = TRUE, plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
   if (!add)
     nclear3d(plotengine = plotengine)
