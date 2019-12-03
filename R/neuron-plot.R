@@ -63,7 +63,7 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
                         plotengine = getOption('nat.plotengine')){
   plotengine <- check_plotengine(plotengine)
   if (!add)
-    nclear3d(plotengine)
+    nclear3d(plotengine = plotengine)
   
   if(plotengine == 'plotly') {
     psh <- openplotlyscene()$plotlyscenehandle
@@ -606,7 +606,7 @@ plot3d.boundingbox <- function(x, col='black',
 #' nclear3d()
 #' plot3d(Cell07PNs[[1]])
 #' }
-nclear3d <- function(..., plotengine = getOption('nat.plotengine')) {
+nclear3d <- function(...,plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
   if(plotengine=='plotly') {
     if (exists("plotlyscenehandle", envir = .plotly3d))

@@ -86,6 +86,7 @@ Collate:
     'utils.R'
     'vaa3draw-io.R'
     'vtk-io.R'
+    'wire3d.R'
     'xform.R'
     'xformimage.R'
     'xformpoints.R'
