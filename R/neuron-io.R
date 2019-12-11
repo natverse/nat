@@ -516,6 +516,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
 #'   \code{read.neuron.swc} passes them to \code{\link{ngraph}}.
 #' @seealso \code{\link{is.swc}}
+#' @export
 read.neuron.swc<-function(f, ...){
   d=read.swc(f)
   # multiply by 2 to get diam which is what I work with internally
