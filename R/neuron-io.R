@@ -500,22 +500,29 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 }
 
 #' Read a neuron in swc file format
-#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully 
-#'   parsed \code{\link{neuron}} representation.
-#' @details These functions will accept SWC neurons with multiple trees and 
+#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully
+#'   parsed \code{\link{neuron}} representation. However we normally recommend
+#'   using \code{\link[=read.neuron]{read.neuron(s)}} since those functions cope
+#'   with any file type.
+#' @details These functions will accept SWC neurons with multiple trees and
 #'   arbitrary point index order. However only \code{read.ngraph.swc} will
 #'   accept SWC files with cycles.
-#'   
-#'   These functions would normally be called from \code{read.neuron(s)} rather 
-#'   than used directly.
-#' @section SWC Format: According to 
-#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html} SWC file format has a
-#'   radius not a diameter specification
+#'
+#'   These functions would normally be called from
+#'   \code{\link[=read.neuron]{read.neuron(s)}} rather than used directly. The
+#'   only benefit of using \code{read.neuron.swc} is to avoid a very small
+#'   overhead in identifying the SWC file type. Note that only
+#'   \code{\link{read.neurons}} can read many files in one command to construct
+#'   a \code{\link{neuronlist}} object.
+#'
+#' @section SWC Format: According to
+#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html}
+#'    SWC file format has a radius not a diameter specification
 #' @param f path to file
-#' @param ... Additional arguments. \code{read.neuron.swc} passes these to 
-#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
+#' @param ... Additional arguments. \code{read.neuron.swc} passes these to
+#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}.
 #'   \code{read.neuron.swc} passes them to \code{\link{ngraph}}.
-#' @seealso \code{\link{is.swc}}
+#' @seealso \code{\link{is.swc}}, \code{\link{read.neuron}}
 #' @export
 read.neuron.swc<-function(f, ...){
   d=read.swc(f)
