@@ -984,27 +984,30 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
   
   # Step 3: Compute the longest path..
   longestseglist <- igraph::get_diameter(ng, directed=T)
-  longel <-  prune_edges(ng, longestseglist, invert = !invert) #you can plot this..
+  longneuron <-  prune_edges(ng, longestseglist, invert = !invert) #you can plot this..
+  neuron_list=list()
+  neuron_list[[1]] = longneuron
  
   if(n == 0){
-    longel
+    
   }else{
     tempseglist = longestseglist
     tempng = ng
-    path_el=list()
-    path_el[[1]] = longel
     # Step 4: Now keep on adding as many branches as required..
     for (idx in 1:n) {
-      tempel= prune_edges(tempng, tempseglist, invert = invert) #you can plot this (new graph..
-      tempng <- as.ngraph(tempel, weights = T)
+          
+      tempneuron= prune_edges(tempng, tempseglist, invert = FALSE) #you can plot this (new graph..
+      tempng <- as.ngraph(tempneuron, weights = T)
       tempseglist <- igraph::get_diameter(tempng, directed=T)
-      path_el[[idx+1]]= prune_edges(tempng, tempseglist, invert = !invert) #you can plot this..
-       
-      #Now add this path to the long edge list..
       
+      #now take the seglist of the original neuron..
+      
+      neuron_list[[idx+1]]= prune_edges(tempng, tempseglist, invert = !invert) #you can plot this..
     }
-    
-    path_el
   }
+  
+  class(neuron_list) <- 'neuronlist'
+  requested_neuron <- c(neuron_list)
+  requested_neuron
   
 }
