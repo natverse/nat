@@ -851,14 +851,17 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
 #' dl1.simp=simplify_neuron(dl1)
 #' dl1.simp4=simplify_neuron(dl1, n=4)
-#' plot(dl1, col='green', WithNodes = FALSE)
-#' plot(dl1.simp4, col='blue', add = TRUE)
-#' plot(dl1.simp, col='red', add = TRUE)
+#' options(nat.plotengine = 'plotly')
+#' nclear3d()
+#' plot3d(dl1, col='green', alpha = 0.5, WithNodes = FALSE)
+#' plot3d(dl1.simp4, col='blue', alpha = 0.5, add = TRUE)
+#' plot3d(dl1.simp, col='red', alpha = 0.5, add = TRUE)
 #'
 #' # calculate the inverse as well
 #' dl1.simp4.inv=simplify_neuron(dl1, n=4, invert=TRUE)
-#' plot(dl1.simp4, col='blue')
-#' plot(dl1.simp4.inv, col='red', add = TRUE)
+#' nclear3d()
+#' plot3d(dl1.simp4, col='blue',alpha = 0.5)
+#' plot3d(dl1.simp4.inv, col='red', alpha = 0.5, add = TRUE)
 #' }
 simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   #Step 1a:Get the number of branch points in the neuron.. 
@@ -935,7 +938,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
     dd[, furthest_leaf_idx] = Inf
     
     # Step 6 or 9: Find the path to that chosen leaf from the start point..
-    path = lp(start, furthest_leaf)
+    path = leafpath(ng, start, furthest_leaf)
     lp_verts[[i+1]]=path
     # add one to count of any bps used
     bpsused[bps %in% path] = bpsused[bps %in% path] + 1
@@ -948,7 +951,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   prune_edges(ng, el, invert = !invert)
 }
 
-lp <- function(from, to) {
+leafpath <- function(ng, from, to) {
   res=igraph::get.shortest.paths(ng,from = from,to = to,mode = "out")
   as.integer(res$vpath[[1]])
 }
