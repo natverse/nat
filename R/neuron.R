@@ -861,84 +861,102 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' plot(dl1.simp4.inv, col='red', add = TRUE)
 #' }
 simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
+  #Step 1a:Get the number of branch points in the neuron.. 
   nbps=length(branchpoints(x))
+  #Step 1b:Compare with the actual branch points requested.. 
   if (nbps <= n)
     return(x)
   if (n < 0)
     stop("Must request >=0 branch points!")
   
+  #Step 2:Convert to ngraph object.. 
   ng = as.ngraph(x, weights = T)
+  
   if (!igraph::is_dag(ng)) {
     stop("I can't simplify neurons with cycles!")
   }
-  # plan is to label all nodes with their longest distal diameter
-  # distance table from endpoints/leaves (which are now rootpoints)
-  # to branchpoints
-  # rows are source i.e. branchpoints
-  # cols are leaves
+  
+  # Step 3a: Compute all the leaf nodes..
   leaves=setdiff(endpoints(ng, original.ids=FALSE), rootpoints(ng, original.ids=FALSE))
+  # Step 3b: Compute all the branch nodes..
   bps=branchpoints(ng, original.ids=FALSE)
+  # Step 3c: Compute the distance from all the branch nodes to the leaf nodes let's call 
+  # it distance table.. Rows are branch nodes and Columns are leaf nodes..
   dd=igraph::distances(ng, v=bps, to=leaves, mode = 'out')
   
-  # so we know how many descendant paths we can consider for each node
+  # Step 3d: Compute the decendant paths for all the branch nodes (to get the possibilities
+  #           of different paths from a particular branch point)..
   bpdesccount=igraph::ego_size(ng, order = 1, nodes = bps, mode='out', mindist = 1)
+  
   names(bpdesccount)=bps
   bpsused=rep(0L, length(bps))
   names(bpsused)=bps
-  lp <- function(from, to) {
-    res=igraph::get.shortest.paths(
-      ng,
-      from = from,
-      to = to,
-      mode = "out")
-    as.integer(res$vpath[[1]])
-  }
   lp_verts=list()
+  
+  # The approach is to find the longest tree (lets call it spine) from the root to the 
+  # farthest leaf node first..
+  # Then additional branches are added to the spine such that they are longest that can be
+  # added..
+  
   for (i in 0:n) {
     if (i == 0) {
-      # initialisation
+      # Step 4a: Compute the spine, so for that compute the farthest leaf node 
+      # with the distance table..
       start = rootpoints(ng, original.ids=FALSE)
-      robust_max=function(x) {
-        x=x[is.finite(x)]
-        if(length(x)) max(x) else {
-          warning("Some points in neuron cannot be reached! Multiple trees?")
-          -Inf
-        }
-      }
+      
+      # Step 4b: Find out the leaf node which is farthest
       furthest_leaf_idx = which.max(apply(dd, 2, robust_max))
+      
     } else {
-      # select the bps that we can consider
-      # must be currently in use but not all used up
+      # Step 7a: Find out the leaf node which is farthest Select only the branch nodes 
+      # that are currently in our selected spine
+      # Also, choose only those who still have some unused descendent paths..
       bps_available = bpsused > 0 & bpsused < bpdesccount
       
       # find the length we could add for each leaf
       # nb this will be the smallest value that can be added to
       # currently selected nodes
+      # Step 7b: Now choose the shortest path to all the leaf nodes from the available 
+      # branch nodes.. 
       additional_length = apply(dd[bps_available, , drop=FALSE], 2, min, na.rm = T)
       # remove any infinite values
       additional_length[!is.finite(additional_length)] = 0
-      # the next leaf to add is the one with max length
+      
+      # Step 7c: Now choose the leaf nodes that is the farthest of distance among all the 
+      # shortest path to the leaf nodes.. 
       furthest_leaf_idx = which.max(additional_length)
       start_idx = which.min(dd[bps_available, furthest_leaf_idx])
-      # nb we need the vertex index in the original graph
+      # Step 7d: Get the vertex index in the original graph
       start = bps[which(bps_available)[start_idx]]
     }
+    # Step 5 or 8: Avoid the choosen leaf from distance computations in next iteration
     furthest_leaf = leaves[furthest_leaf_idx]
     # strike off selected leaf
     dd[, furthest_leaf_idx] = Inf
-    # find path to that leaf
+    
+    # Step 6 or 9: Find the path to that chosen leaf from the start point..
     path = lp(start, furthest_leaf)
     lp_verts[[i+1]]=path
     # add one to count of any bps used
     bpsused[bps %in% path] = bpsused[bps %in% path] + 1
   }
-  # ok now we have as output a list of vertices defining selected paths
+  
+  # Step 10: Find the edgelist from the path(start to farthest leaf)..
   el=EdgeListFromSegList(lp_verts)
-  # subset original neuron keeping vertices in that list
-  # subset(x, unique(unlist(lp_verts)))
+  
+  # Step 11: Prune the edgelist and choose to retain the pruned one (based on the invert flag)..
   prune_edges(ng, el, invert = !invert)
 }
 
+lp <- function(from, to) {
+  res=igraph::get.shortest.paths(ng,from = from,to = to,mode = "out")
+  as.integer(res$vpath[[1]])
+}
 
-
-
+robust_max=function(x) {
+  x=x[is.finite(x)]
+  if(length(x)) max(x) else {
+    warning("Some points in neuron cannot be reached! Multiple trees?")
+    -Inf
+  }
+}
