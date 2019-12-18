@@ -983,31 +983,47 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
   
   
   # Step 3: Compute the longest path..
-  longestseglist <- igraph::get_diameter(ng, directed=T)
-  longneuron <-  prune_edges(ng, longestseglist, invert = !invert) #you can plot this..
-  neuron_list=list()
-  neuron_list[[1]] = longneuron
+  pts_pair <- igraph::farthest_vertices(ng, directed=T)
+  node_ids <- igraph::vertex_attr(ng, 'name')
+  pts_start <- which(igraph::vertex_attr(ng, 'name')[pts_pair$vertices[1]]  == node_ids)
+  pts_stop <-  which(igraph::vertex_attr(ng, 'name')[pts_pair$vertices[2]]  == node_ids)
+  
+  longestpath <- as.integer(igraph::shortest_paths(graph = ng, from = pts_start, to = pts_stop)$vpath[[1]])
+  path_list=list()
+  path_list[[1]] = longestpath
  
   if(n == 0){
     
   }else{
-    tempseglist = longestseglist
+    templongpath = longestpath
     tempng = ng
     # Step 4: Now keep on adding as many branches as required..
     for (idx in 1:n) {
           
-      tempneuron= prune_edges(tempng, tempseglist, invert = FALSE) #you can plot this (new graph..
+      tempneuron= prune_edges(tempng, templongpath, invert = FALSE)
       tempng <- as.ngraph(tempneuron, weights = T)
-      tempseglist <- igraph::get_diameter(tempng, directed=T)
       
-      #now take the seglist of the original neuron..
+      pts_pair <- igraph::farthest_vertices(tempng, directed=T)
       
-      neuron_list[[idx+1]]= prune_edges(tempng, tempseglist, invert = !invert) #you can plot this..
+      pts_start <- which(igraph::vertex_attr(tempng, 'name')[pts_pair$vertices[1]]  == node_ids)
+      pts_stop <-  which(igraph::vertex_attr(tempng, 'name')[pts_pair$vertices[2]]  == node_ids)
+      
+      #now take the path in the original neuron..
+      templongpath <- as.integer(igraph::shortest_paths(graph = ng, from = pts_start, to = pts_stop)$vpath[[1]])
+      
+      path_list[[idx+1]]= templongpath
+      
+      #now get the path for the reduced graph for use in next iteration..
+      templongpath <- as.integer(igraph::shortest_paths(graph = tempng, from = pts_pair$vertices[1], 
+                                                        to = pts_pair$vertices[2])$vpath[[1]])
     }
   }
   
-  class(neuron_list) <- 'neuronlist'
-  requested_neuron <- c(neuron_list)
-  requested_neuron
+  # Step 5: Find the edgelist for the paths..
+  el=EdgeListFromSegList(path_list)
+  
+  # Step 6: Prune the edgelist and choose to retain the pruned one (based on the invert flag)..
+  req_neuron <- prune_edges(ng, el, invert = !invert)
+  req_neuron
   
 }
