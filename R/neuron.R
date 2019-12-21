@@ -966,9 +966,14 @@ robust_max=function(x) {
 
 
 simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
-  #Step 1a:Get the number of branch points in the neuron.. 
+  
+  #Step 1a: Handle subtrees here..
+  x <- handlesubtrees(x)
+  
+  #Step 1b:Get the number of branch points in the neuron.. 
   nbps=length(branchpoints(x))
-  #Step 1b:Compare with the actual branch points requested.. 
+  
+  #Step 1c:Compare with the actual branch points requested.. 
   if (nbps <= n)
     return(x)
   if (n < 0)
@@ -1026,4 +1031,19 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
   req_neuron <- prune_edges(ng, el, invert = !invert)
   req_neuron
   
+}
+
+
+handlesubtrees=function(x) {
+  if(x$nTrees>1){
+    warning("Multiple trees here so choosing one along the main(long) path")
+    ng = as.ngraph(x, weights = T)
+    sub_gs <- igraph::components(ng)$membership
+    pts_pair <- igraph::farthest_vertices(ng, directed=T)
+    maincomp <- sub_gs[pts_pair$vertices[1]]
+    rm_nodes <- names(which(sub_gs != maincomp))
+    ng <- igraph::delete.vertices(ng, rm_nodes)
+    x <- as.neuron(ng)
+  }
+  x
 }
