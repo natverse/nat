@@ -851,7 +851,6 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
 #' dl1.simp=simplify_neuron(dl1)
 #' dl1.simp4=simplify_neuron(dl1, n=4)
-#' options(nat.plotengine = 'plotly')
 #' nclear3d()
 #' plot3d(dl1, col='green', alpha = 0.5, WithNodes = FALSE)
 #' plot3d(dl1.simp4, col='blue', alpha = 0.5, add = TRUE)
@@ -964,7 +963,34 @@ robust_max=function(x) {
   }
 }
 
-
+#' Simplify a neuron to the longest tree with n branch points
+#'
+#' @details If the neuron already contains fewer than or exactly the requested
+#'   number of branches, then the original neuron is returned. The approach is 
+#'   basically to compute the longest path in the neuron and then collect that path,
+#'   further delete that path and recompute the longest path and then collect that new
+#'   path again. Perform this approach until you reach the requested number of branchpoints.
+#'
+#' @inheritParams simplify_neuron 
+#' @export
+#' @seealso \code{\link[nat]{simplify_neuron}} 
+#' @examples
+#' \dontrun{
+#' library(catmaid)
+#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
+#' dl1.simp=simplify_neuron2(dl1)
+#' dl1.simp4=simplify_neuron2(dl1, n=4)
+#' nclear3d()
+#' plot3d(dl1, col='green', alpha = 0.5, WithNodes = FALSE)
+#' plot3d(dl1.simp4, col='blue', alpha = 0.5, add = TRUE)
+#' plot3d(dl1.simp, col='red', alpha = 0.5, add = TRUE)
+#'
+#' # calculate the inverse as well
+#' dl1.simp4.inv=simplify_neuron2(dl1, n=4, invert=TRUE)
+#' nclear3d()
+#' plot3d(dl1.simp4, col='blue',alpha = 0.5)
+#' plot3d(dl1.simp4.inv, col='red', alpha = 0.5, add = TRUE)
+#' }
 simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
   
   #Step 1a: Handle subtrees here..
