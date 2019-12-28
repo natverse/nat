@@ -140,9 +140,7 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
 wire3d.mesh3d <- utils::getFromNamespace("wire3d.mesh3d", "rgl")
 
 #' @method wire3d shapelist3d
-#' @param x object of type 'shapelist3d'
-#' @param override Whether the material properties should override the ones in the shapes
-#' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}}
+#' @inheritParams rgl::wire3d
 #' @export
 #' @rdname wire3d
 wire3d.shapelist3d <- utils::getFromNamespace("wire3d.shapelist3d", "rgl")

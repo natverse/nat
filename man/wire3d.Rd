@@ -30,14 +30,10 @@ wire3d(x, ..., add = TRUE, plotengine = getOption("nat.plotengine"))
 Default plots all. Seed \code{\link{as.mesh3d}} for details of how the
 argument is handled.}
 
-\item{override}{Whether the material properties should override the ones in the shapes}
+\item{override}{should the parameters specified here override those stored in the object?}
 
 \item{meshColor}{how should colours be interpreted?  See details 
   below}
-
-\item{x}{object of type 'shapelist3d'}
-
-\item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}}}
 }
 \description{
 This function directs the wireframe plot based on the plotengine backend selected.
