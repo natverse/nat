@@ -2,9 +2,19 @@
 % Please edit documentation in R/wire3d.R
 \name{wire3d}
 \alias{wire3d}
+\alias{wire3d.hxsurf}
+\alias{wire3d.mesh3d}
+\alias{wire3d.shapelist3d}
 \title{Wire frame plots}
 \usage{
 wire3d(x, ..., add = TRUE, plotengine = getOption("nat.plotengine"))
+
+\method{wire3d}{hxsurf}(x, Regions = NULL, ...)
+
+\method{wire3d}{mesh3d}(x, override = TRUE, meshColor = c("vertices",
+  "edges", "faces", "legacy"), ...)
+
+\method{wire3d}{shapelist3d}(x, override = TRUE, ...)
 }
 \arguments{
 \item{x}{object of type 'mesh3d' (triangular mesh or quad mesh), 'hxsurf' or 'shapelist3d'}
@@ -15,6 +25,19 @@ wire3d(x, ..., add = TRUE, plotengine = getOption("nat.plotengine"))
 \item{add}{whether to add objects to an existing plot}
 
 \item{plotengine}{Whether to use plotting backend of 'rgl' or 'plotly'}
+
+\item{Regions}{When \code{x} is a multi region \code{\link{hxsurf}} object.
+Default plots all. Seed \code{\link{as.mesh3d}} for details of how the
+argument is handled.}
+
+\item{override}{Whether the material properties should override the ones in the shapes}
+
+\item{meshColor}{how should colours be interpreted?  See details 
+  below}
+
+\item{x}{object of type 'shapelist3d'}
+
+\item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}}}
 }
 \description{
 This function directs the wireframe plot based on the plotengine backend selected.
@@ -36,4 +59,7 @@ wire3d(kcs20.mesh,alpha = 0.1, add = FALSE, col = 'blue')
 options(nat.plotengine = 'rgl')
 wire3d(kcs20.mesh,alpha = 0.1, add = FALSE, col = 'blue')
 }
+}
+\seealso{
+\code{\link[rgl]{wire3d}}
 }

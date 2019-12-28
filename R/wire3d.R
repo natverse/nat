@@ -7,6 +7,7 @@
 #' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}} or 
 #' \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}
 #' @export
+#' @seealso \code{\link[rgl]{wire3d}}
 #' @examples 
 #' \donttest{
 #' library(alphashape3d)
@@ -36,6 +37,10 @@ wire3d <- function(x, ..., add = TRUE, plotengine = getOption('nat.plotengine'))
 
 #' @method wire3d hxsurf
 #' @export
+#' @rdname wire3d
+#' @param Regions When \code{x} is a multi region \code{\link{hxsurf}} object.
+#'   Default plots all. Seed \code{\link{as.mesh3d}} for details of how the
+#'   argument is handled.
 wire3d.hxsurf <- function(x, Regions=NULL, ...) {
   wire3d(as.mesh3d(x, Regions=Regions), ...)
 }
@@ -128,18 +133,18 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
 #The below section is for adding the additional methods
 #that are actually available in rgl for the wire3d class with the methods(nat::wire3d)
 
-#' methods here imported from rgl
 #' @method wire3d mesh3d
 #' @inheritParams rgl::wire3d.mesh3d
-#' @export 
+#' @export
+#' @rdname wire3d
 wire3d.mesh3d <- utils::getFromNamespace("wire3d.mesh3d", "rgl")
 
-#' methods here imported from rgl
 #' @method wire3d shapelist3d
 #' @param x object of type 'shapelist3d'
 #' @param override Whether the material properties should override the ones in the shapes
 #' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}}
-#' @export 
+#' @export
+#' @rdname wire3d
 wire3d.shapelist3d <- utils::getFromNamespace("wire3d.shapelist3d", "rgl")
 
 
