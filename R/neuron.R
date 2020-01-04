@@ -1073,3 +1073,87 @@ handlesubtrees=function(x) {
   }
   x
 }
+
+#' Stitch multiple fragments into single neuron using minimum spanning tree
+#'
+#' @details Neurons will be ordered by default such the largest (by node count)
+#'   neuron with a soma tag is the \code{master} neuron - i.e. the one
+#'   containing the root node. Fragments are joined recursively in this sort
+#'   order each time simply picking the closest fragment to the current
+#'   \emph{master}. Closest is here defined by the distance between nearest
+#'   endpoints.
+#' @param x Fragments that could be neuronlist or a single neuron with muliple trees(fragments) 
+#' @return A single \code{neuron} object containing all input fragments.
+#' @seealso \code{\link{simplify_neuron}}
+#' @export
+#' @examples
+#' \dontrun{
+#' dl1=catmaid::read.neuron.catmaid(catmaid::catmaid_skids('annotation:DL1')[1])
+#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+#' #There will be several fragments in the neuron dl1_branches which could be stiched together..
+#' dl1_branches$nTrees
+#' dl1_whole=stitch_neurons(dl1_branches)
+#' plot3d(dl1_whole)
+#' }
+
+stitch_neurons <- function(x) {
+  
+  #Step 1: Convert to ngraph object..
+  ng = as.ngraph(x, weights = T)
+  masterng <- ng
+  
+  #Step 2a: Find the rootnode of the largest cluster, this will be the rootnode of the stiched neuron..
+  cc=igraph::components(ng)
+  sorted=order(cc$csize, decreasing = T)
+  root_points <- rootpoints(ng, original.ids = FALSE)
+  master_root <- names(which(cc$membership[root_points] == sorted[1]))
+  
+  
+  #Step 2b: Set the weights of existing edges to zero, so they are not affected by
+  #any operations done below..
+  igraph::E(ng)$weight = 0
+    
+  
+  #Step 3: Find all the leaf nodes now, these are the potential sites to stich..
+  end_points=endpoints(ng, original.ids=FALSE)
+  branch_points=branchpoints(ng, original.ids=FALSE)
+  
+  leaves = union(end_points,branch_points)
+   
+  #Step 4: Create list of edges that will be added (from potential sites..) and compute the distances between them..
+  edge_list <- utils::combn(leaves,m =2)
+  
+  starts<-edge_list[1,]
+  stops<-edge_list[2,]
+  xyz <- xyzmatrix(x)
+  # nb drop = FALSE to ensure that we always have a matrix
+  vecs=xyz[stops, , drop=FALSE] - xyz[starts, , drop=FALSE]
+  weights=sqrt(rowSums(vecs*vecs))
+  
+  #Step 5: Add those edges and create a new graph..
+  mod_graph <- igraph::add_edges(ng,edge_list,"weight"= weights)
+  
+  #Step 6: Find the minimum spanning tree of the new graph..
+  mst <- igraph::minimum.spanning.tree(mod_graph)
+  
+  #Step 7: Find the new edges added by the mst..
+  new_edges <- igraph::difference(igraph::E(mst),igraph::E(masterng))
+  
+  newedge_list <- igraph::as_ids(new_edges)
+  
+  rawel <- igraph::ends(mst,new_edges)
+  weight_attr <- igraph::edge_attr(graph = mst, 'weight', index = new_edges)
+  nodenames <- names(igraph::V(masterng))
+  
+  #Step 8: Now add the new edges in the master graph vertex by vertex..
+  stichedng <- masterng
+  for (idx in 1:nrow(rawel)) {
+  vertex_ids <- match(rawel[idx,], nodenames)
+  stichedng <- igraph::add_edges(stichedng,c(vertex_ids[[1]], vertex_ids[[2]]), "weight"= weight_attr[idx])
+  }
+  
+  #Step 9: Set the root of the stiched graph now..
+  stichedneuron <- as.neuron(stichedng, origin = master_root)
+  
+    
+}
