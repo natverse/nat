@@ -1061,7 +1061,7 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
 
 
 handlesubtrees=function(x) {
-  if(x$nTrees>1){
+  if(exists("x$nTrees") && x$nTrees>1){
     warning("Multiple trees here so choosing one along the main(long) path")
     ng = as.ngraph(x, weights = T)
     sub_gs <- igraph::components(ng)$membership
