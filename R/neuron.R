@@ -1079,7 +1079,7 @@ handlesubtrees=function(x) {
 #' @details The neurons are joined using the minimum spanning tree which the tree which minimises the sum of
 #' edge weights (here they would be euclidean distance). The neuron is also rooted considering the root of the 
 #' largest cluster. 
-#' @param x Fragments that could be neuronlist or a single neuron with muliple trees(fragments) 
+#' @param x Fragments that could be neuronlist or a single neuron with multiple trees(fragments) 
 #' @return A single \code{neuron} object containing all input fragments.
 #' @seealso \code{\link{simplify_neuron}}
 #' @export
@@ -1087,7 +1087,7 @@ handlesubtrees=function(x) {
 #' \dontrun{
 #' dl1=catmaid::read.neuron.catmaid(catmaid::catmaid_skids('annotation:DL1')[1])
 #' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#' #Example with a single neuron, here the neuron has several fragments which could be stiched together..
+#' #Example with a single neuron, that has several fragments which could be stiched together..
 #' dl1_branches$nTrees
 #' dl1_whole=stitch_neurons(dl1_branches)
 #' plot3d(dl1_whole)
