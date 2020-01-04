@@ -1090,16 +1090,48 @@ handlesubtrees=function(x) {
 #' \dontrun{
 #' dl1=catmaid::read.neuron.catmaid(catmaid::catmaid_skids('annotation:DL1')[1])
 #' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#' #There will be several fragments in the neuron dl1_branches which could be stiched together..
+#' #Example with a single neuron, here the neuron has several fragments which could be stiched together..
 #' dl1_branches$nTrees
 #' dl1_whole=stitch_neurons(dl1_branches)
 #' plot3d(dl1_whole)
+#' #Example with neuronlist
+#' dl1_main=simplify_neuron(dl1, n = 1, invert = F)
+#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+#' dl1_fragment <- list(dl1_main,dl1_branches)
+#' dl1_fragment <- as.neuronlist(dl1_fragment)
+#' x <- dl1_fragment
+#' 
 #' }
 
-stitch_neurons <- function(x) {
+stitch_neurons_mst <- function(x) {
   
-  #Step 1: Convert to ngraph object..
-  ng = as.ngraph(x, weights = T)
+  #Step 1: Check input and convert to ngraph object..
+  if(is.neuronlist(x)){
+    if(length(x)<=1) return(x)
+    
+    for (nlidx in 1:(length(x)-1)) {
+      # if there are any repeats in PointNo, augment those in subsequent neuron
+      if(any(x[[nlidx]]$d$PointNo%in%x[[nlidx+1]]$d$PointNo)){
+        x[[nlidx+1]]$d$PointNo=x[[nlidx+1]]$d$PointNo+max(x[[nlidx]]$d$PointNo)
+        x[[nlidx+1]]$d$Parent=x[[nlidx+1]]$d$Parent+max(x[[nlidx]]$d$PointNo)
+      }
+    }
+    
+    #Convert the neuronlist to list of ngraph objects..
+    ngraph_list=nlapply(x, FUN = function(x) {as.ngraph(x, weights = T, method = 'seglist')})
+    
+    
+    #Make a single ngraph object..
+    ng=as.ngraph(igraph::disjoint_union(ngraph_list))
+    
+  }else if(is.neuron(x)){
+    
+    ng = as.ngraph(x, weights = T)
+  }else{
+    stop("x must be a neuronlist or a neuron object!")
+  }
+  
+  #make a copy of the master graph now..
   masterng <- ng
   
   #Step 2a: Find the rootnode of the largest cluster, this will be the rootnode of the stiched neuron..
@@ -1150,10 +1182,10 @@ stitch_neurons <- function(x) {
   for (idx in 1:nrow(rawel)) {
   vertex_ids <- match(rawel[idx,], nodenames)
   stichedng <- igraph::add_edges(stichedng,c(vertex_ids[[1]], vertex_ids[[2]]), "weight"= weight_attr[idx])
+  
   }
   
   #Step 9: Set the root of the stiched graph now..
   stichedneuron <- as.neuron(stichedng, origin = master_root)
-  
     
 }
