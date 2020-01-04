@@ -1076,12 +1076,9 @@ handlesubtrees=function(x) {
 
 #' Stitch multiple fragments into single neuron using minimum spanning tree
 #'
-#' @details Neurons will be ordered by default such the largest (by node count)
-#'   neuron with a soma tag is the \code{master} neuron - i.e. the one
-#'   containing the root node. Fragments are joined recursively in this sort
-#'   order each time simply picking the closest fragment to the current
-#'   \emph{master}. Closest is here defined by the distance between nearest
-#'   endpoints.
+#' @details The neurons are joined using the minimum spanning tree which the tree which minimises the sum of
+#' edge weights (here they would be euclidean distance). The neuron is also rooted considering the root of the 
+#' largest cluster. 
 #' @param x Fragments that could be neuronlist or a single neuron with muliple trees(fragments) 
 #' @return A single \code{neuron} object containing all input fragments.
 #' @seealso \code{\link{simplify_neuron}}
@@ -1099,7 +1096,7 @@ handlesubtrees=function(x) {
 #' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
 #' dl1_fragment <- list(dl1_main,dl1_branches)
 #' dl1_fragment <- as.neuronlist(dl1_fragment)
-#' x <- dl1_fragment
+#' dl1_whole = stitch_neurons_mst(dl1_fragment)
 #' 
 #' }
 
@@ -1116,7 +1113,6 @@ stitch_neurons_mst <- function(x) {
         x[[nlidx+1]]$d$Parent=x[[nlidx+1]]$d$Parent+max(x[[nlidx]]$d$PointNo)
       }
     }
-    
     #Convert the neuronlist to list of ngraph objects..
     ngraph_list=nlapply(x, FUN = function(x) {as.ngraph(x, weights = T, method = 'seglist')})
     
@@ -1147,10 +1143,8 @@ stitch_neurons_mst <- function(x) {
     
   
   #Step 3: Find all the leaf nodes now, these are the potential sites to stich..
-  end_points=endpoints(ng, original.ids=FALSE)
-  branch_points=branchpoints(ng, original.ids=FALSE)
-  
-  leaves = union(end_points,branch_points)
+  root_id <- which(names(V(ng)) == master_root)
+  leaves = setdiff(1:length(V(ng)),root_id) #actually use all of them, slower but accurate..
    
   #Step 4: Create list of edges that will be added (from potential sites..) and compute the distances between them..
   edge_list <- utils::combn(leaves,m =2)
@@ -1165,8 +1159,12 @@ stitch_neurons_mst <- function(x) {
   #Step 5: Add those edges and create a new graph..
   mod_graph <- igraph::add_edges(ng,edge_list,"weight"= weights)
   
+  rm(vecs,weights) #Clear variables to save memory..
+  
   #Step 6: Find the minimum spanning tree of the new graph..
   mst <- igraph::minimum.spanning.tree(mod_graph)
+  
+  rm(mod_graph,edge_list) #Clear variables to save memory..
   
   #Step 7: Find the new edges added by the mst..
   new_edges <- igraph::difference(igraph::E(mst),igraph::E(masterng))
