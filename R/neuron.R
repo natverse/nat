@@ -1085,11 +1085,12 @@ handlesubtrees=function(x) {
 #' @export
 #' @examples
 #' \dontrun{
-#' dl1=catmaid::read.neuron.catmaid(catmaid::catmaid_skids('annotation:DL1')[1])
+#' library(catmaid)
+#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
 #' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
 #' #Example with a single neuron, that has several fragments which could be stiched together..
 #' dl1_branches$nTrees
-#' dl1_whole=stitch_neurons(dl1_branches)
+#' dl1_whole=stitch_neurons_mst(dl1_branches)
 #' plot3d(dl1_whole)
 #' #Example with neuronlist
 #' dl1_main=simplify_neuron(dl1, n = 1, invert = F)

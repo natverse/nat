@@ -277,3 +277,35 @@ test_that("we can subset a neuron with a vertex sequence", {
   expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = F), 'neuron')
   expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = T), 'neuron')
 })
+
+
+expect_warning(dl1<-catmaid::read.neuron.catmaid(catmaid::catmaid_skids('annotation:DL1')[1]),
+               'matching annotations')
+
+test_that("Simplify a neuron to n-branchpoints", {
+  
+  dl1_branches=simplify_neuron(dl1, n = 1, invert = F)
+  expect_equal(length(branchpoints(dl1_branches)),1)
+  
+  dl1_branches=simplify_neuron2(dl1, n = 2, invert = F)
+  expect_equal(length(branchpoints(dl1_branches)),2)
+  
+})
+
+test_that("Stitch a neuron that has been fragmented", {
+  
+  dl1_main=simplify_neuron(dl1, n = 1, invert = F)
+  dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+  
+  expect_gt(dl1_branches$nTrees,1)
+  
+  #For neuronlist..
+  dl1_fragment <- list(dl1_main,dl1_branches)
+  dl1_fragment <- as.neuronlist(dl1_fragment)
+  dl1_whole <- stitch_neurons_mst(dl1_fragment)
+  expect_equal(dl1_whole$nTrees,1)
+  
+  #For neuron..
+  dl1_whole <- stitch_neurons_mst(dl1_branches)
+  expect_equal(dl1_whole$nTrees,1)
+})
