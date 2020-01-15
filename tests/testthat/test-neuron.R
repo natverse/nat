@@ -278,7 +278,7 @@ test_that("we can subset a neuron with a vertex sequence", {
   expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = T), 'neuron')
 })
 
-
+context("manipulate neurons")
 
 sample_neuron = Cell07PNs[[1]]
 
@@ -289,6 +289,11 @@ test_that("Simplify a neuron to n-branchpoints", {
   
   sample_branches2=simplify_neuron2(sample_neuron, n = 2, invert = F)
   expect_equal(length(branchpoints(sample_branches2)),2)
+  
+  #test if both apis perform the same..
+  sample_branches=simplify_neuron(sample_neuron,n = 2, invert = T)
+  sample_branches2=simplify_neuron2(sample_neuron, n = 2, invert = T)
+  all.equal(sample_branches, sample_branches2)
   
 })
 
