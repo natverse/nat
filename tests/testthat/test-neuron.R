@@ -293,7 +293,7 @@ test_that("Simplify a neuron to n-branchpoints", {
   #test if both apis perform the same..
   sample_branches=simplify_neuron(sample_neuron,n = 2, invert = T)
   sample_branches2=simplify_neuron2(sample_neuron, n = 2, invert = T)
-  all.equal(sample_branches, sample_branches2)
+  expect_equal(sample_branches, sample_branches2)
   
 })
 
