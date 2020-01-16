@@ -47,3 +47,6 @@ plot3d(dl1.simp4.inv, col='red', alpha = 0.5, add = TRUE)
 \seealso{
 \code{\link[nat]{simplify_neuron}}
 }
+\author{
+Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
+}

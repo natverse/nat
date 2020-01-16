@@ -55,3 +55,6 @@ plot3d(dl1.simp4.inv, col='red', alpha = 0.5, add = TRUE)
 \seealso{
 \code{\link[nat]{spine}}
 }
+\author{
+Gregory Jefferis \email{jefferis@gmail.com}
+}

@@ -41,3 +41,6 @@ dl1_whole = stitch_neurons_mst(dl1_fragment)
 \seealso{
 \code{\link{simplify_neuron}}
 }
+\author{
+Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
+}

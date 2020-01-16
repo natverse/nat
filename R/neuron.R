@@ -843,6 +843,7 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #'
 #' @return The simplified \code{neuron} or the untouched original neuron for
 #'   neurons that have <=n branch points.
+#' @author Gregory Jefferis \email{jefferis@gmail.com}
 #' @export
 #' @seealso \code{\link[nat]{spine}}
 #' @examples
@@ -972,6 +973,7 @@ robust_max=function(x) {
 #'   path again. Perform this approach until you reach the requested number of branchpoints.
 #'
 #' @inheritParams simplify_neuron 
+#' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com} 
 #' @export
 #' @seealso \code{\link[nat]{simplify_neuron}} 
 #' @examples
@@ -1081,6 +1083,7 @@ handlesubtrees=function(x) {
 #' largest cluster. 
 #' @param x Fragments that could be neuronlist or a single neuron with multiple trees(fragments) 
 #' @return A single \code{neuron} object containing all input fragments.
+#' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com} 
 #' @seealso \code{\link{simplify_neuron}}
 #' @export
 #' @examples
@@ -1187,4 +1190,70 @@ stitch_neurons_mst <- function(x) {
   #Step 9: Set the root of the stiched graph now..
   stichedneuron <- as.neuron(stichedng, origin = master_root)
     
+}
+
+
+#' Stitch two neurons together at their closest endpoint
+#'
+#' @param a,b Neurons to join together
+#' @details This function joins two neurons at their nearest point (only one).
+#'   Let's say you have two neurons a and b. a and b will be joined at one point that are closest to each other.
+#'   However, when say there are multiple points at a and b which are closer and could be joined, 
+#'   then do not use this function, use the function \code{\link{stitch_neurons_mst}}, 
+#'   which is slower but will merge at multiple points.
+#'   Note that for CATMAID neurons the neuron with the soma tag will be
+#'   treated as the first (master neuron). Furthermore in this case the PointNo
+#'   (aka node id) should already be unique. Otherwise it will be adjusted to
+#'   ensure this.
+#' @author Gregory Jefferis \email{jefferis@gmail.com} 
+#' @export
+#' @seealso \code{\link{stitch_neurons}}
+#' @examples
+#' \dontrun{
+#' library(catmaid)
+#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
+#' dl1_main=simplify_neuron(dl1, n = 1, invert = F)
+#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+#' dl1_whole = stitch_neuron(dl1_main,dl1_branches)
+#' 
+#' }
+stitch_neuron<-function(a, b){
+  
+  #Step1: if there are any repeats in PointNo, augment those in second neuron
+  if(any(a$d$PointNo%in%b$d$PointNo)){
+    b$d$PointNo=b$d$PointNo+max(a$d$PointNo)
+    b$d$Parent=b$d$Parent+max(a$d$PointNo)
+  }
+  
+  #Step2: Convert them to ngraph objects and make a single graph(that can have multiple subtrees)
+  ag=as.ngraph(a, weights = T, method = 'seglist')
+  bg=as.ngraph(b, weights = T, method = 'seglist')
+  abg=as.ngraph(igraph::disjoint_union(ag, bg))
+  
+  
+  #Step3: find closest node (or endpoint?) in each neuron and join those
+  ce=closest_ends(a, b)
+  a_pointno=a$d$PointNo[ce$a_idx]
+  b_pointno=b$d$PointNo[ce$b_idx]
+  # older versions of nat use label for nodes, newer use name
+  node_label=intersect(c("name","label"),
+                       igraph::list.vertex.attributes(ag))[1]
+  if(all(is.na(node_label))) stop("Graph nodes are not labelled!")
+  abg=abg+igraph::edge(which(igraph::vertex_attr(abg, node_label)==a_pointno),
+                       which(igraph::vertex_attr(abg, node_label)==b_pointno))
+  
+  #Step4: Convert them back to neuron..
+  as.neuron(as.ngraph(abg))
+}
+
+# Find raw vertex ids and distance for closest end points of two neurons
+closest_ends<-function(a, b){
+  epa=endpoints(a)
+  epb=endpoints(b)
+  axyz=a$d[epa,c("X","Y","Z")]
+  bxyz=b$d[epb,c("X","Y","Z")]
+  nnres=nabor::knn(axyz, bxyz, k=1)
+  b_idx=which.min(nnres$nn.dists)
+  a_idx=nnres$nn.idx[b_idx,1]
+  return(list(a_idx=epa[a_idx], b_idx=epb[b_idx], dist=min(nnres$nn.dists)))
 }
