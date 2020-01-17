@@ -1110,12 +1110,16 @@ stitch_neurons_mst <- function(x) {
   if(is.neuronlist(x)){
     if(length(x)<=1) return(x)
     
-    for (nlidx in 1:(length(x)-1)) {
-      # if there are any repeats in PointNo, augment those in subsequent neuron
-      if(any(x[[nlidx]]$d$PointNo%in%x[[nlidx+1]]$d$PointNo)){
-        x[[nlidx+1]]$d$PointNo=x[[nlidx+1]]$d$PointNo+max(x[[nlidx]]$d$PointNo)
-        x[[nlidx+1]]$d$Parent=x[[nlidx+1]]$d$Parent+max(x[[nlidx]]$d$PointNo)
-      }
+    
+    for (baseidx in 1:(length(x)-1)){
+        for (targetidx in (baseidx+1):length(x)) {
+            # if there are any repeats in PointNo, augment those in subsequent neuron
+            cat('\nComparing base idx#:',baseidx,'with target idx#:',targetidx)
+            if(any(x[[baseidx]]$d$PointNo%in%x[[targetidx]]$d$PointNo)){
+                x[[targetidx]]$d$PointNo=x[[targetidx]]$d$PointNo+max(x[[baseidx]]$d$PointNo)
+                x[[targetidx]]$d$Parent=x[[targetidx]]$d$Parent+max(x[[baseidx]]$d$PointNo)
+              }
+        }
     }
     #Convert the neuronlist to list of ngraph objects..
     ngraph_list=nlapply(x, FUN = function(x) {as.ngraph(x, weights = T, method = 'seglist')})
@@ -1232,7 +1236,8 @@ stitch_neuron<-function(a, b){
   
   
   #Step3: find closest node (or endpoint?) in each neuron and join those
-  ce=closest_ends(a, b)
+  ce=closest_ends(a, b) #b neuron is the query neuron let's say has 3 pts and a neuron has 230 pts, then we 
+  #end up with a 230x3 matrix and find out the closest point in b neuron 
   a_pointno=a$d$PointNo[ce$a_idx]
   b_pointno=b$d$PointNo[ce$b_idx]
   # older versions of nat use label for nodes, newer use name
@@ -1280,42 +1285,53 @@ closest_ends<-function(a, b){
 #' @export
 #' @examples
 #' \dontrun{
-#' pn57334=read.neurons.catmaid("name:PN 57334")
-#' # there were 3 fragments when I wrote this that all contained PN 57334 in
-#' # their name
-#' length(pn57334)
-#' summary(pn57334)
-#' pn57334.whole=stitch_neurons(pn57334)
-#' summary(pn57334.whole)
-#' plot3d(pn57334.whole)
+#' library(catmaid)
+#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
+#' dl1_main=simplify_neuron(dl1, n = 1, invert = F)
+#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+#' dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = F)
+#' dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = T)
+#' dl1_fragment <- list(dl1_main,dl1_branches1,dl1_branches2)
+#' dl1_fragment <- as.neuronlist(dl1_fragment)
+#' dl1_whole = stitch_neurons(dl1_fragment)
 #' }
 stitch_neurons <- function(x, prefer_soma=TRUE, sort=TRUE, warndist=1000) {
+  #Step1: Check if it is neuronlist
   if(!is.neuronlist(x)) stop("x must be a neuronlist object!")
   if(length(x)<=1) return(x)
   
+  #Step2a: Check if there is a soma tag associated (this will be considered as base or master neuron)
   if(prefer_soma) {
     svec=sapply(x, has_soma)
   } else {
     svec=rep(0,length(x))
   }
+  
+  #Step2b: If sort is enabled then you sort by number of nodes, so that the neuron with the largest number of nodes
+  #becomes the base or master neuron
   if(sort){
     nnodes=sapply(x, function(n) nrow(n$d))
     eps=1/(max(nnodes)+1)
-    svec=(eps+svec)*nnodes
+    svec=(eps+svec)*nnodes  #just normalising here such that the highest one gets 1 and others are weighted by it..
   }
+  
+  #Step3: Sort the neurons in the list so you can get a base or master neuron (the first element in the vector)
   if(any(svec>0))
     x=x[order(svec, decreasing = TRUE)]
   
+  #Step4: if there are only two neurons, just merge them by their closest points by knn algoirthm
   if(length(x)==2) return(stitch_neuron(x[[1]], x[[2]]))
-  #
-  dists=sapply(x[-1], function(n) closest_ends(x[[1]], n)$dist)
+  
+  #Step4a: if there are more than two neurons, just merge them by their closest points by knn algoirthm
+  dists=sapply(x[-1], function(n) closest_ends(x[[1]], n)$dist) #find the closest fragment to the base fragment..
   mindist=min(dists)
   if(isTRUE(is.finite(warndist)) && mindist>warndist){
     warning("Suspicious minimum distance between fragments ( ",mindist, ")!")
   }
-  chosen=which.min(dists)+1
+  chosen=which.min(dists)+1 #find the index of the closest to the base fragment..
+  #Step4b: stitch the base fragment to the closest fragment..
   x[[1]]=stitch_neuron(x[[1]], x[[chosen]])
-  # no need to sort any more
+  #Step4c: iteratively do this process by removing the already merged fragment..
   stitch_neurons(x[-chosen], prefer_soma=FALSE, sort=FALSE)
 }
 

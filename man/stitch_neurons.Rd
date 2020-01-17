@@ -33,14 +33,15 @@ Neurons will be ordered by default such the largest (by node count)
 }
 \examples{
 \dontrun{
-pn57334=read.neurons.catmaid("name:PN 57334")
-# there were 3 fragments when I wrote this that all contained PN 57334 in
-# their name
-length(pn57334)
-summary(pn57334)
-pn57334.whole=stitch_neurons(pn57334)
-summary(pn57334.whole)
-plot3d(pn57334.whole)
+library(catmaid)
+dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
+dl1_main=simplify_neuron(dl1, n = 1, invert = F)
+dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = F)
+dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = T)
+dl1_fragment <- list(dl1_main,dl1_branches1,dl1_branches2)
+dl1_fragment <- as.neuronlist(dl1_fragment)
+dl1_whole = stitch_neurons(dl1_fragment)
 }
 }
 \seealso{
