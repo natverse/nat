@@ -313,4 +313,20 @@ test_that("Stitch a neuron that has been fragmented", {
   #For neuron..
   sample_whole <- stitch_neurons_mst(sample_branches)
   expect_equal(sample_whole$nTrees,1)
+  
+  
+  
+  #Stitching based on closest points..
+  #Actually this doesn't guarentee only one tree as the stitching is done at only one closest point..
+  #Hence the strategy here is to test if the merged neuron actually has points from both the parents.
+  
+  expect_warning(sample_whole <- stitch_neuron(sample_main,sample_branches), 
+                 "Multiple origins found! Using first origin.")
+  expect_equal(sample_whole$NumPoints, sample_main$NumPoints + sample_branches$NumPoints)
+  
+  expect_warning(sample_whole <- stitch_neurons(sample_fragment), 
+                 "Multiple origins found! Using first origin.")
+  expect_equal(sample_whole$NumPoints,sample_fragment[[1]]$NumPoints + sample_fragment[[2]]$NumPoints )
+  
+  
 })
