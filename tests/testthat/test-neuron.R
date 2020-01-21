@@ -330,3 +330,18 @@ test_that("Stitch a neuron that has been fragmented", {
   
   
 })
+
+
+test_that("nodes distal to a given node", {
+  n = Cell07PNs[[1]]
+  rootnode <- rootpoints(n)
+  
+  nodeorder <- distal_to(n, node.pointno = rootnode) #Actually listing all the nodes distal to the rootnode here..
+  expect_equal(length(nodeorder),n$NumPoints) #This should contain all the nodes in the neuron
+  
+  nodeorder2 <- distal_to(n, node.pointno = n$NumPoints/2) #Take a node in the middle of the neuron run..
+  reducednodeorder <- nodeorder[nodeorder>=min(nodeorder2)]
+  #Just comparing the reduced path(computed originally from the root) with the distal node list path
+  expect_equal(reducednodeorder,nodeorder2) 
+ 
+})

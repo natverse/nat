@@ -1338,3 +1338,73 @@ stitch_neurons <- function(x, prefer_soma=TRUE, sort=TRUE, warndist=1000) {
 has_soma<-function(x){
   !is.null(x$tags$soma)
 }
+
+
+
+#' Return indices of points in a neuron distal to a given node
+#'
+#' @description This function returns a list (containing the order of nodes) travelled using a depth
+#' first search starting from the given node.
+#' @param x A neuron
+#' @param node.idx,node.pointno The id(s) of node(s) from which distal points
+#'   will be selected. \code{node.idx} defines the integer index (counting from
+#'   1) into the neuron's point array whereas \code{node.pointno} matches the
+#'   PointNo column which will be the CATMAID id for a node.
+#' @param root.idx,root.pointno The root node of the neuron for the purpose of
+#'   selection. You will rarely need to change this from the default value. See
+#'   \code{node} argument for the difference between \code{root.idx} and
+#'   \code{root.pointno} forms.
+#' @return Integer 1-based indices into the point array of points that are
+#'   distal to the specified node(s) when traversing the neuron from the root to
+#'   that node. Will be a vector if only one node is specified, otherwise a list is returned
+#' @export
+#' @seealso \code{\link[nat]{subset.neuron}}, \code{\link[nat]{prune}}
+#' @examples
+#' \dontrun{
+#' ## Fetch a finished DL1 projection neuron
+#' library(catmaid)
+#' finished_pns=catmaid_get_neuronnames('annotation:^LH_DONE')
+#' # should only be one neuron but pick first just in case
+#' dl1skid=names(grep('DL1', finished_pns, value = TRUE))[1]
+#' dl1=read.neuron.catmaid(dl1skid)
+#'
+#' ## subset to part of neuron distal to a tag "SCHLEGEL_LH"
+#' # nb distal_to can accept either the PointNo vertex id or raw index as a
+#' # pivot point
+#' dl1.lh=subset(dl1, distal_to(dl1,node.pointno = dl1$tags$SCHLEGEL_LH))
+#' plot(dl1,col='blue', WithNodes = FALSE)
+#' plot(dl1.lh, col='red', WithNodes = FALSE, add=TRUE)
+#' }
+distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,
+                      root.pointno=NULL) {
+  #Step1: Check the node.idx and node.pointno argument and map them to node.idx..
+  if(is.null(node.idx)) {
+    if(is.null(node.pointno))
+      stop("At least one of node.idx or node.pointno must be supplied")
+    node.idx=match(node.pointno, x$d$PointNo)
+    if(any(is.na(node.idx)))
+      stop("One or more invalid node.pointno. Should match entries in x$d$PointNo!")
+  }
+  #Step2: Convert the neuron to ngraph object and reroot it if root.idx or root.pointno is given..
+  if(is.null(root.idx) && is.null(root.pointno)) {
+    g=as.ngraph(x)
+  } else {
+    if(!is.null(root.pointno))
+      root.idx=match(root.pointno, x$d$PointNo)
+    if(length(root.idx)>1)
+      stop("A single unique root point must be supplied")
+    # we need to re-root the graph onto the supplied root
+    gorig=as.ngraph(x)
+    g=as.directed.usingroot(gorig, root = root.idx)
+  }
+  
+  #Step3: For each node id, travese the graph from the given node using depth first search and return the visited
+  #nodes..
+  l=sapply(node.idx, dfs_traversal, g, simplify = FALSE)
+  if(length(node.idx)==1) l[[1]] else l
+}
+
+dfs_traversal <- function(x, g) {
+  gdfs=igraph::dfs(g, root = x, unreachable = FALSE)
+  as.integer(gdfs$order)[!is.na(gdfs$order)]
+}
