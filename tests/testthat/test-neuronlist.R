@@ -319,3 +319,16 @@ test_that("[<-.neuronlist does the right thing",{
   
   expect_null(colnames(kcs13[,]<-NULL))
 })
+
+test_that("prune twigs of a neuronlist", {
+  n = Cell07PNs[1:3]
+  
+  pruned_nl <- prune_twigs(n, twig_length = 5)
+  
+  #simple test comparing the number of edges after pruning.
+  expect_lt(pruned_nl[[1]]$NumSegs,n[[1]]$NumSegs)
+  expect_lt(pruned_nl[[2]]$NumSegs,n[[2]]$NumSegs)
+  expect_lt(pruned_nl[[3]]$NumSegs,n[[3]]$NumSegs)
+  
+  
+})

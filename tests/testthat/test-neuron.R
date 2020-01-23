@@ -345,3 +345,15 @@ test_that("nodes distal to a given node", {
   expect_equal(reducednodeorder,nodeorder2) 
  
 })
+
+
+test_that("prune twigs of a neuron", {
+  n = Cell07PNs[[1]]
+  
+  pruned_neuron <- prune_twigs(n, twig_length = 5)
+  
+  #simple test comparing the number of edges after pruning.
+  expect_lt(pruned_neuron$NumSegs,n$NumSegs)
+  
+  
+})
