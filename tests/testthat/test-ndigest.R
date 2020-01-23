@@ -7,11 +7,13 @@ test_that("ndigest works for overloaded and regular classes",{
   expect_equal(ndigest(''),digest(''))
   
   skip_on_cran()
+  skip_on_travis() #this will be present until the issue https://github.com/natverse/nat/issues/411 
+  #is resolved
   
   expect_equal(ndigest(kcs20[[1]]),"4c045b0343938259cd9986494fc1c2b0")
   
-  tmpneuron <- read.neuron('testdata/neuron/EBT7R.CNG.swc')
-  expect_equal(ndigest(tmpneuron),"988c480faa104167d456d3e300fc7f5f")
+  expect_equal(ndigest(read.neuron('testdata/neuron/EBT7R.am')),
+               "f24c1252d17b6bd9898c7842f1ad9f5d")
   
   # three neuronlists with different names but same contents
   tf=tempfile('kcs20fh')
