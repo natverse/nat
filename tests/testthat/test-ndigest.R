@@ -11,10 +11,10 @@ test_that("ndigest works for overloaded and regular classes",{
   expect_equal(ndigest(kcs20[[1]]),"4c045b0343938259cd9986494fc1c2b0")
   
   tmpneuron <- read.neuron('testdata/neuron/EBT7R.am')
-  exclfields=c("NeuronName","InputFileName","CreatedAt",
-                    "NodeName","InputFileStat",
-                    "InputFileMD5")
-  expect_equal(ndigest(tmpneuron,fieldsToExclude = exclfields),"a23ae26ebcdd79a7c75f32baf9ac82a9")
+  exclfields=c("NeuronName","InputFileName","CreatedAt", "NodeName","InputFileStat",
+               "InputFileMD5", "NumPoints","StartPoint","BranchPoints","EndPoints" ,   
+               "nTrees","NumSegs","SegList")
+  expect_equal(ndigest(tmpneuron,fieldsToExclude = exclfields),"027373324906430f127de8bb9676256d")
   
   # three neuronlists with different names but same contents
   tf=tempfile('kcs20fh')
