@@ -10,7 +10,8 @@ test_that("ndigest works for overloaded and regular classes",{
   
   expect_equal(ndigest(kcs20[[1]]),"4c045b0343938259cd9986494fc1c2b0")
   
-  expect_equal(ndigest(read.neuron('testdata/neuron/EBT7R.am')),
+  tmpneuron <- read.neuron('testdata/neuron/EBT7R.am')
+  expect_equal(ndigest(tmpneuron),
                "f24c1252d17b6bd9898c7842f1ad9f5d")
   
   # three neuronlists with different names but same contents
