@@ -1408,3 +1408,93 @@ dfs_traversal <- function(x, g) {
   gdfs=igraph::dfs(g, root = x, unreachable = FALSE)
   as.integer(gdfs$order)[!is.na(gdfs$order)]
 }
+
+
+#' @description \code{prune_twigs} will prune twigs less than a certain path length from a neuron
+#' @export
+#' @rdname prune_twigs
+prune_twigs<-function(x, ...) UseMethod('prune_twigs')
+
+#' Remove all twigs less than a certain path length from a neuron
+#'
+#' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
+#' @param twig_length Twigs shorter than this will be pruned
+#' @param ... Additional arguments passed to \code{\link{nlapply}},
+#'   \code{\link{prune_vertices}} and eventually \code{\link{as.ngraph}}.
+#'
+#' @author Gregory Jefferis \email{jefferis@gmail.com} 
+#' @export
+#' @rdname prune_twigs
+#' @examples
+#' # Prune twigs up to 5 microns long
+#' pt5=prune_twigs(Cell07PNs[1:3], twig_length = 5)
+#' # compare original (coloured) and pruned (black) neurons
+#' plot(Cell07PNs[1:3], WithNodes=FALSE, lwd=2, xlim=c(240,300), ylim=c(120, 90))
+#' plot(pt5, WithNodes=FALSE, add=TRUE, lwd=2, col='black')
+prune_twigs.neuron <- function(x, twig_length, ...) {
+  #Step1: Convert the neuron to ngraph object..
+  ng = as.ngraph(x, weights = T)
+  if (!igraph::is_dag(ng)) {
+    stop("I can't prune neurons with cycles!")
+  }
+  root <- rootpoints(ng, original.ids=FALSE)
+  if(length(root)!=1)
+    stop("I can't prune neurons with more than 1 root!")
+  
+  #Step2: Make a table with rows(branch pts) and columns (leaves), the item entry would be the distance..
+  #This will help us identify the leaves (end pts) that are farthest away from the branch pts and eliminate them..
+ 
+  #Step2a: Compute the leaves and branchpoints..
+  leaves=setdiff(endpoints(ng, original.ids=FALSE), root)
+  bps=branchpoints(ng, original.ids=FALSE)
+  #Step2b: Compute the table where rows(branch points) and columns (leaves)..
+  dd=igraph::distances(ng, v=bps, to=leaves, mode = 'out')
+  
+  
+  #Step3: For each column(leaf) set the bps that are farther than twig_length as -1, if all the bps are farther
+  #then set the particular column as NA..Then each column find the index of the element(which is the bps) 
+  #that is farthest..
+  max_bp_idx <- apply(dd, 2, function(x) {
+    # set values that are too long to signalling length of -1
+    too_long=x>twig_length
+    if(all(too_long)) return(NA_integer_)
+    x[too_long]=-1
+    wm=which.max(x)  #here choose the leaf that has the max length to prune
+    if(is.finite(x[wm]) & x[wm]>0) wm else NA_integer_
+  })
+  
+  #Step4: Now take only leaves that have finite values (which are acceptable eps that have less than the twig_length)
+  # and also compute their corresponding starting pts(which are bps)
+  eps_to_prune <- leaves[is.finite(max_bp_idx)]
+  bps_to_start <- bps[max_bp_idx[is.finite(max_bp_idx)]]
+  
+  #Step5: Now we need a structure that will hold the bps and eps that we want to keep, the easiest approach 
+  #would be to simply remove the eps we don't need by removing path to those eps, but the path may
+  #actually pass through other bps that we want to keep, so we need to isolate those bps we want to keep
+  #and those eps we want to keep
+  #For e.g. we  also want to keep paths up until the branch points proximal to
+  # the twigs that we are pruning - even if we prune all the twigs
+  # downstream of those branch points
+  
+  #Step5a: Find the eps that we want to keep
+  eps_to_keep <- setdiff(leaves, eps_to_prune)
+  
+  #Step5b: Also find the bps that we want to keep and collate them to nodes that we want to keep...
+  nodes_to_keep=c(eps_to_keep, bps_to_start)
+  
+  #Step5c: Now compute the paths from the root to all the nodes that we want to keep..
+  # note that mode = 'o' should be fine(as we have a directed graph from root), but mode 'all' is probably safer
+  res2 <-
+    igraph::shortest_paths(
+      ng,
+      from = root,
+      to = nodes_to_keep,
+      mode = 'all',
+      weights = NA
+    )
+  
+  #Step5d:Now compute the vertices you want to keep and prune the rest of the vertices
+  verts_to_keep=unique(unlist(res2$vpath))
+  # now we can basically prune everything not in that set
+  prune_vertices(ng, verts_to_keep, invert=TRUE, ...)
+}
