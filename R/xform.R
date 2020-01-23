@@ -571,3 +571,80 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
   NextMethod()
 }
+
+
+
+#' Thin plate spline registrations via xform and friends
+#'
+#' @description \code{tpsreg} creates an object encapsulating a thin plate spine
+#'   transform mapping a paired landmark set.
+#' @param sample,reference Matrices defining the sample (or floating) and
+#'   reference (desired target after transformation) spaces. See details.
+#' @param ... additional arguments passed to \code{\link{xformpoints.tpsreg}}
+#' @details  Note that we use the \bold{nat} convention for naming the
+#'   sample/reference space arguments but these actually clash with the
+#'   nomenclature in the underlying \code{Morpho::\link[Morpho]{tps3d}}
+#'   function. \itemize{
+#'
+#'   \item refmat (Morpho3d) == sample (nat)
+#'
+#'   \item tarmat (Morpho3d) == reference (nat)
+#'
+#'   }
+#' @export
+#' @seealso \code{\link[nat]{reglist}}, \code{\link[nat]{read.landmarks}}
+#' @examples
+#' \donttest{
+#' ## A full worked example of using landmarks based registration to construct
+#' ## a mirroring registration from one side of the brain to the other.
+#'
+#' # read in set of landmarks defined in FAFB CATMAID
+#' emlandmarks=catmaid::read.neurons.catmaid('annotation:^GJLandmark')
+#' # Match up L and R pairs
+#' library(stringr)
+#' emlandmarks[,'side']=stringr::str_match(emlandmarks[,'name'], "([LR]) Landmark")[,2]
+#' emlandmarks[,'shortname']=stringr::str_match(emlandmarks[,'name'], "(.*)([LR]) Landmark.*")[,2]
+#' emlandmarks[,'shortname']=sub("[_ ]+$", "", emlandmarks[,'shortname'])
+#' library(dplyr)
+#' lmpairs=dplyr::inner_join(
+#'   dplyr::filter(emlandmarks[,], side=="L"),
+#'   dplyr::filter(emlandmarks[,], side=="R"),
+#'   by='shortname', suffix=c(".L",".R"))
+#'
+#' # find mean xyz position of each landmark (they are drawn as a little cross)
+#' lmxyz=t(sapply(emlandmarks, function(x) colMeans(xyzmatrix(x))))
+#' # construct thin plate splines registration (here mapping the right side neurons to left side)
+#' mirror_reg=tpsreg(
+#'   lmxyz[as.character(lmpairs$skid.R),],
+#'   lmxyz[as.character(lmpairs$skid.L),]
+#' )
+#' # map RHS DA2 PNs onto left and compare with LHS neurons
+#' da2pns.R=catmaid::read.neurons.catmaid('glomerulus DA2 right')
+#' da2pns.L=catmaid::read.neurons.catmaid('glomerulus DA2 left')
+#' da2pns.R.L=xform(da2pns.R, reg = mirror_reg)
+#' plot(da2pns.L, col='red')
+#' plot(da2pns.R.L, col='blue', add=TRUE)
+#' }
+tpsreg<-function(sample, reference, ...){
+  structure(list(refmat=data.matrix(sample), tarmat=data.matrix(reference), ...),
+            class='tpsreg')
+}
+
+#' @description \code{xformpoints.tpsreg} enables \code{\link[nat]{xform}} and
+#'   friends to transform 3d vertices (or more complex objects containing 3d
+#'   vertices) using a thin plate spline mapping stored in a \code{tpsreg}
+#'   object.
+#' @rdname tpsreg
+#' @param reg The \code{tpsreg} registration object
+#' @param points The 3D points to transform
+#' @param swap Whether to change the direction of registration (default of
+#'   \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise
+#' @export
+xformpoints.tpsreg <- function(reg, points, swap=NULL, ...){
+  if(isTRUE(swap) || isTRUE(attr(reg, 'swap'))) {
+    tmp=reg$refmat
+    reg$refmat=reg$tarmat
+    reg$tarmat=tmp
+  }
+  do.call(Morpho::tps3d, c(list(x=points), reg,  list(...)))
+}

@@ -1124,12 +1124,10 @@ stitch_neurons_mst <- function(x) {
     #Convert the neuronlist to list of ngraph objects..
     ngraph_list=nlapply(x, FUN = function(x) {as.ngraph(x, weights = T, method = 'seglist')})
     
-    
     #Make a single ngraph object..
     ng=as.ngraph(igraph::disjoint_union(ngraph_list))
     
   }else if(is.neuron(x)){
-    
     ng = as.ngraph(x, weights = T)
   }else{
     stop("x must be a neuronlist or a neuron object!")
