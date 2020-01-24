@@ -594,18 +594,21 @@ mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
 #' @export
 #' @seealso \code{\link[nat]{reglist}}, \code{\link[nat]{read.landmarks}}
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' ## A full worked example of using landmarks based registration to construct
 #' ## a mirroring registration from one side of the brain to the other.
 #'
 #' # read in set of landmarks defined in FAFB CATMAID
+#' library('catmaid')
 #' emlandmarks=catmaid::read.neurons.catmaid('annotation:^GJLandmark')
+#' 
 #' # Match up L and R pairs
-#' library(stringr)
+#' library('stringr')
 #' emlandmarks[,'side']=stringr::str_match(emlandmarks[,'name'], "([LR]) Landmark")[,2]
 #' emlandmarks[,'shortname']=stringr::str_match(emlandmarks[,'name'], "(.*)([LR]) Landmark.*")[,2]
 #' emlandmarks[,'shortname']=sub("[_ ]+$", "", emlandmarks[,'shortname'])
-#' library(dplyr)
+#' 
+#' library('dplyr')
 #' lmpairs=dplyr::inner_join(
 #'   dplyr::filter(emlandmarks[,], side=="L"),
 #'   dplyr::filter(emlandmarks[,], side=="R"),
@@ -621,6 +624,7 @@ mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
 #' # map RHS DA2 PNs onto left and compare with LHS neurons
 #' da2pns.R=catmaid::read.neurons.catmaid('glomerulus DA2 right')
 #' da2pns.L=catmaid::read.neurons.catmaid('glomerulus DA2 left')
+#' 
 #' da2pns.R.L=xform(da2pns.R, reg = mirror_reg)
 #' plot(da2pns.L, col='red')
 #' plot(da2pns.R.L, col='blue', add=TRUE)
