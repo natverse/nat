@@ -4,8 +4,13 @@
 \alias{unmask}
 \title{Make im3d image array containing values at locations defined by a mask}
 \usage{
-unmask(x, mask, default = NA, attributes. = attributes(mask),
-  copyAttributes = TRUE)
+unmask(
+  x,
+  mask,
+  default = NA,
+  attributes. = attributes(mask),
+  copyAttributes = TRUE
+)
 }
 \arguments{
 \item{x}{the data to place on a regular grid}
@@ -49,12 +54,19 @@ image(imslice(stripes,11), asp=TRUE)
 }
 }
 \seealso{
-Other im3d: \code{\link{as.im3d}},
-  \code{\link{boundingbox}}, \code{\link{im3d-coords}},
-  \code{\link{im3d-io}}, \code{\link{im3d}},
-  \code{\link{imexpand.grid}}, \code{\link{imslice}},
-  \code{\link{is.im3d}}, \code{\link{mask}},
-  \code{\link{origin}}, \code{\link{projection}},
-  \code{\link{threshold}}, \code{\link{voxdims}}
+Other im3d: 
+\code{\link{as.im3d}()},
+\code{\link{boundingbox}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d-io}},
+\code{\link{im3d}()},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{mask}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{voxdims}()}
 }
 \concept{im3d}

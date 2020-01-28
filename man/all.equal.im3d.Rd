@@ -4,9 +4,15 @@
 \alias{all.equal.im3d}
 \title{Check equality on data and key attributes of im3d objects}
 \usage{
-\method{all.equal}{im3d}(target, current, tolerance = 1e-06,
-  attrsToCheck = c("BoundingBox"), attrsToCheckIfPresent = c("dim",
-  "names", "dimnames", "x", "y", "z"), CheckSharedAttrsOnly = FALSE, ...)
+\method{all.equal}{im3d}(
+  target,
+  current,
+  tolerance = 1e-06,
+  attrsToCheck = c("BoundingBox"),
+  attrsToCheckIfPresent = c("dim", "names", "dimnames", "x", "y", "z"),
+  CheckSharedAttrsOnly = FALSE,
+  ...
+)
 }
 \arguments{
 \item{target}{\R object.}

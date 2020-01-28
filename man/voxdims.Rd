@@ -38,12 +38,19 @@ We follow Amira's convention of returning a voxel dimension equal to
 \seealso{
 \code{\link{boundingbox}}
 
-Other im3d: \code{\link{as.im3d}},
-  \code{\link{boundingbox}}, \code{\link{im3d-coords}},
-  \code{\link{im3d-io}}, \code{\link{im3d}},
-  \code{\link{imexpand.grid}}, \code{\link{imslice}},
-  \code{\link{is.im3d}}, \code{\link{mask}},
-  \code{\link{origin}}, \code{\link{projection}},
-  \code{\link{threshold}}, \code{\link{unmask}}
+Other im3d: 
+\code{\link{as.im3d}()},
+\code{\link{boundingbox}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d-io}},
+\code{\link{im3d}()},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{mask}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{unmask}()}
 }
 \concept{im3d}

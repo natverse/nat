@@ -4,8 +4,12 @@
 \alias{wire3d.mesh3d}
 \title{methods here imported from rgl}
 \usage{
-\method{wire3d}{mesh3d}(x, override = TRUE, meshColor = c("vertices",
-  "edges", "faces", "legacy"), ...)
+\method{wire3d}{mesh3d}(
+  x,
+  override = TRUE,
+  meshColor = c("vertices", "edges", "faces", "legacy"),
+  ...
+)
 }
 \arguments{
 \item{x}{a \code{mesh3d} object (class \code{qmesh3d} or \code{tmesh3d}).}

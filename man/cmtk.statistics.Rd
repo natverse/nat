@@ -4,8 +4,14 @@
 \alias{cmtk.statistics}
 \title{Calculate image statistics for a nrrd or other CMTK compatible file}
 \usage{
-cmtk.statistics(f, mask, imagetype = c("greyscale", "label"),
-  masktype = c("label", "binary"), ..., Verbose = FALSE)
+cmtk.statistics(
+  f,
+  mask,
+  imagetype = c("greyscale", "label"),
+  masktype = c("label", "binary"),
+  ...,
+  Verbose = FALSE
+)
 }
 \arguments{
 \item{f}{Path to image file (any CMTK compatible format)}

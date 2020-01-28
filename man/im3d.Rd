@@ -4,8 +4,15 @@
 \alias{im3d}
 \title{Construct an im3d object representing 3D image data, densities etc}
 \usage{
-im3d(x = numeric(0), dims = NULL, voxdims = NULL, origin = NULL,
-  BoundingBox = NULL, bounds = NULL, ...)
+im3d(
+  x = numeric(0),
+  dims = NULL,
+  voxdims = NULL,
+  origin = NULL,
+  BoundingBox = NULL,
+  bounds = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{The object to turn into an im3d}
@@ -41,12 +48,19 @@ We follow Amira's convention of setting the bounding box equal to
   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 }
 \seealso{
-Other im3d: \code{\link{as.im3d}},
-  \code{\link{boundingbox}}, \code{\link{im3d-coords}},
-  \code{\link{im3d-io}}, \code{\link{imexpand.grid}},
-  \code{\link{imslice}}, \code{\link{is.im3d}},
-  \code{\link{mask}}, \code{\link{origin}},
-  \code{\link{projection}}, \code{\link{threshold}},
-  \code{\link{unmask}}, \code{\link{voxdims}}
+Other im3d: 
+\code{\link{as.im3d}()},
+\code{\link{boundingbox}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d-io}},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{mask}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{unmask}()},
+\code{\link{voxdims}()}
 }
 \concept{im3d}

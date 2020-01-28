@@ -7,8 +7,7 @@
 \usage{
 mask(x, ...)
 
-\method{mask}{im3d}(x, mask, levels = NULL, rval = c("im3d", "values"),
-  invert = FALSE, ...)
+\method{mask}{im3d}(x, mask, levels = NULL, rval = c("im3d", "values"), invert = FALSE, ...)
 }
 \arguments{
 \item{x}{Object to be masked}
@@ -48,12 +47,19 @@ image(mask(x, mask=m, levels=1)[,,1])
 image(mask(x, mask=m, levels=1:2)[,,1])
 }
 \seealso{
-Other im3d: \code{\link{as.im3d}},
-  \code{\link{boundingbox}}, \code{\link{im3d-coords}},
-  \code{\link{im3d-io}}, \code{\link{im3d}},
-  \code{\link{imexpand.grid}}, \code{\link{imslice}},
-  \code{\link{is.im3d}}, \code{\link{origin}},
-  \code{\link{projection}}, \code{\link{threshold}},
-  \code{\link{unmask}}, \code{\link{voxdims}}
+Other im3d: 
+\code{\link{as.im3d}()},
+\code{\link{boundingbox}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d-io}},
+\code{\link{im3d}()},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{unmask}()},
+\code{\link{voxdims}()}
 }
 \concept{im3d}

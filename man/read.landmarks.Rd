@@ -7,8 +7,15 @@
 \usage{
 read.landmarks(f, ...)
 
-write.landmarks(x, file, format = "amiralandmarks", ext = NULL,
-  Force = FALSE, MakeDir = TRUE, ...)
+write.landmarks(
+  x,
+  file,
+  format = "amiralandmarks",
+  ext = NULL,
+  Force = FALSE,
+  MakeDir = TRUE,
+  ...
+)
 }
 \arguments{
 \item{f}{Path to a file (can also be a URL)}

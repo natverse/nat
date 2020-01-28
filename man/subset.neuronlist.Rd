@@ -4,8 +4,13 @@
 \alias{subset.neuronlist}
 \title{Subset neuronlist returning either new neuronlist or names of chosen neurons}
 \usage{
-\method{subset}{neuronlist}(x, subset, filterfun, rval = c("neuronlist",
-  "names", "data.frame"), ...)
+\method{subset}{neuronlist}(
+  x,
+  subset,
+  filterfun,
+  rval = c("neuronlist", "names", "data.frame"),
+  ...
+)
 }
 \arguments{
 \item{x}{a neuronlist}

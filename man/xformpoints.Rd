@@ -12,8 +12,14 @@ xformpoints(reg, points, ...)
 
 \method{xformpoints}{character}(reg, points, ...)
 
-\method{xformpoints}{cmtkreg}(reg, points, transformtype = c("warp",
-  "affine"), direction = NULL, FallBackToAffine = FALSE, ...)
+\method{xformpoints}{cmtkreg}(
+  reg,
+  points,
+  transformtype = c("warp", "affine"),
+  direction = NULL,
+  FallBackToAffine = FALSE,
+  ...
+)
 
 \method{xformpoints}{reglist}(reg, points, ...)
 

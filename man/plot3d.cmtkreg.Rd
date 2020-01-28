@@ -4,8 +4,7 @@
 \alias{plot3d.cmtkreg}
 \title{Plot the domain of a CMTK registration}
 \usage{
-\method{plot3d}{cmtkreg}(x, ...,
-  plotengine = getOption("nat.plotengine"))
+\method{plot3d}{cmtkreg}(x, ..., plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{A cmtk registration (the path to the registration folder on disk) or
