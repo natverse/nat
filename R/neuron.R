@@ -847,22 +847,38 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' @export
 #' @seealso \code{\link[nat]{spine}}
 #' @examples
-#' \dontrun{
-#' library(catmaid)
-#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-#' dl1.simp=simplify_neuron(dl1)
-#' dl1.simp4=simplify_neuron(dl1, n=4)
-#' nclear3d()
-#' plot3d(dl1, col='green', alpha = 0.5, WithNodes = FALSE)
-#' plot3d(dl1.simp4, col='blue', alpha = 0.5, add = TRUE)
-#' plot3d(dl1.simp, col='red', alpha = 0.5, add = TRUE)
+#' \donttest{
+#' n=Cell07PNs[['ECA34L']]
+#' n.simp=simplify_neuron(n)
+#' n.simp4=simplify_neuron(n, n=4)
+#' 
+#' plot(n.simp, col='red', add = TRUE)
+#' plot(n.simp4, col='blue', add = TRUE)
+#' plot(n, col='green', WithNodes = FALSE)
 #'
 #' # calculate the inverse as well
-#' dl1.simp4.inv=simplify_neuron(dl1, n=4, invert=TRUE)
-#' nclear3d()
-#' plot3d(dl1.simp4, col='blue',alpha = 0.5)
-#' plot3d(dl1.simp4.inv, col='red', alpha = 0.5, add = TRUE)
+#' n.simp4.inv=simplify_neuron(n, n=4, invert=TRUE)
+#' plot(n.simp4, col='blue')
+#' plot(n.simp4.inv, col='red', add = TRUE)
 #' }
+#' 
+#' # 3D plots
+#' \dontrun{
+#' nclear3d()
+#' plot3d(n.simp, col='red', add = TRUE)
+#' plot3d(n.simp4, col='blue', add = TRUE)
+#' plot3d(n, col='green', WithNodes = FALSE)
+#' }
+#' 
+#' # or with plotly where transparency works
+#' \dontrun{
+#' options(nat.plotengine = 'plotly')
+#' nclear3d()
+#' plot3d(n.simp, col='red', alpha = 0.5, add = TRUE)
+#' plot3d(n.simp4, col='blue', alpha = 0.5, add = TRUE)
+#' plot3d(n, col='green', alpha = 0.5, WithNodes = FALSE)
+#' }
+#' 
 simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   #Step 1a:Get the number of branch points in the neuron.. 
   nbps=length(branchpoints(x))
