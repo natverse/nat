@@ -1124,8 +1124,8 @@ stitch_neurons_mst <- function(x) {
   
   #Step 1: Check input and convert to ngraph object..
   if(is.neuronlist(x)){
-    if(length(x)<=1) return(x)
-    
+    if(length(x)==0) return(NULL)
+    if(length(x)==1) return(x[[1]])
     
     for (baseidx in 1:(length(x)-1)){
         for (targetidx in (baseidx+1):length(x)) {
