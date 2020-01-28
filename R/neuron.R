@@ -1094,34 +1094,38 @@ handlesubtrees=function(x) {
 
 #' Stitch multiple fragments into single neuron using minimum spanning tree
 #'
-#' @details The neurons are joined using the minimum spanning tree which the tree which minimises the sum of
-#' edge weights (here they would be euclidean distance). The neuron is also rooted considering the root of the 
-#' largest cluster. 
-#' @param x Fragments that could be neuronlist or a single neuron with multiple trees(fragments) 
+#' @details The neurons are joined using the minimum spanning tree i.e. the tree
+#'   that minimises the sum of edge weights (here, the Euclidean distance). The
+#'   neuron is rooted in the largest cluster; if this cluster contained the
+#'   original root of the neuron, then this should be retained.
+#' @param x Fragments that could be \code{\link{neuronlist}} or a single neuron
+#'   with multiple unconnected subtrees.
 #' @return A single \code{neuron} object containing all input fragments.
-#' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com} 
-#' @seealso \code{\link{simplify_neuron}}
+#' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
+#' @seealso \code{\link{simplify_neuron}}, \code{\link{spine}},
+#'   \code{\link{ngraph}}, \code{igraph::\link[igraph]{mst}}
 #' @export
 #' @examples
+#'
+#' n=Cell07PNs[['ECA34L']]
+#' n_main=simplify_neuron(n, n = 10)
+#' n_branches=simplify_neuron(n, n = 10, invert = TRUE)
+#'
+#' # this is the setup
+#' plot(n_main, col='red', WithNodes=FALSE)
+#' plot(n_branches, col='blue', add=TRUE, WithNodes=FALSE)
+#'
+#' # make a neuronlist containing the two fragments
+#' nl=neuronlist(n_main, n_branches)
+#' # and stitch those
+#' n_stitched=stitch_neurons_mst(nl)
+#'
 #' \dontrun{
-#' library(catmaid)
-#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#' #Example with a single neuron, that has several fragments which could be stitched together..
-#' dl1_branches$nTrees
-#' dl1_whole=stitch_neurons_mst(dl1_branches)
-#' plot3d(dl1_whole)
-#' #Example with neuronlist
-#' dl1_main=simplify_neuron(dl1, n = 1, invert = F)
-#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#' dl1_fragment <- list(dl1_main,dl1_branches)
-#' dl1_fragment <- as.neuronlist(dl1_fragment)
-#' dl1_whole = stitch_neurons_mst(dl1_fragment)
-#' 
+#' # look at the neurons in 3D - they appear identical in this case
+#' plot3d(n, alpha=.5, col='cyan', WithNodes=FALSE)
+#' plot3d(n_stitched, alpha=.5, col='red', WithNodes=FALSE)
 #' }
-
 stitch_neurons_mst <- function(x) {
-  
   #Step 1: Check input and convert to ngraph object..
   if(is.neuronlist(x)){
     if(length(x)==0) return(NULL)
@@ -1130,7 +1134,6 @@ stitch_neurons_mst <- function(x) {
     for (baseidx in 1:(length(x)-1)){
         for (targetidx in (baseidx+1):length(x)) {
             # if there are any repeats in PointNo, augment those in subsequent neuron
-            cat('\nComparing base idx#:',baseidx,'with target idx#:',targetidx)
             if(any(x[[baseidx]]$d$PointNo%in%x[[targetidx]]$d$PointNo)){
                 x[[targetidx]]$d$PointNo=x[[targetidx]]$d$PointNo+max(x[[baseidx]]$d$PointNo)
                 x[[targetidx]]$d$Parent=x[[targetidx]]$d$Parent+max(x[[baseidx]]$d$PointNo)
@@ -1143,9 +1146,9 @@ stitch_neurons_mst <- function(x) {
     #Make a single ngraph object..
     ng=as.ngraph(igraph::disjoint_union(ngraph_list))
     
-  }else if(is.neuron(x)){
+  } else if(is.neuron(x)) {
     ng = as.ngraph(x, weights = T)
-  }else{
+  } else {
     stop("x must be a neuronlist or a neuron object!")
   }
   
@@ -1158,11 +1161,9 @@ stitch_neurons_mst <- function(x) {
   root_points <- rootpoints(ng, original.ids = FALSE)
   master_root <- names(which(cc$membership[root_points] == sorted[1]))
   
-  
   #Step 2b: Set the weights of existing edges to zero, so they are not affected by
   #any operations done below..
   igraph::E(ng)$weight = 0
-    
   
   #Step 3: Find all the leaf nodes now, these are the potential sites to stitch..
   root_id <- which(names(V(ng)) == master_root)
@@ -1181,12 +1182,8 @@ stitch_neurons_mst <- function(x) {
   #Step 5: Add those edges and create a new graph..
   mod_graph <- igraph::add_edges(ng,edge_list,"weight"= weights)
   
-  rm(vecs,weights) #Clear variables to save memory..
-  
   #Step 6: Find the minimum spanning tree of the new graph..
   mst <- igraph::minimum.spanning.tree(mod_graph)
-  
-  rm(mod_graph,edge_list) #Clear variables to save memory..
   
   #Step 7: Find the new edges added by the mst..
   new_edges <- igraph::difference(igraph::E(mst),igraph::E(masterng))
@@ -1200,14 +1197,15 @@ stitch_neurons_mst <- function(x) {
   #Step 8: Now add the new edges in the master graph vertex by vertex..
   stitchedng <- masterng
   for (idx in 1:nrow(rawel)) {
-  vertex_ids <- match(rawel[idx,], nodenames)
-  stitchedng <- igraph::add_edges(stitchedng,c(vertex_ids[[1]], vertex_ids[[2]]), "weight"= weight_attr[idx])
-  
+    vertex_ids <- match(rawel[idx, ], nodenames)
+    stitchedng <-
+      igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+                        "weight" = weight_attr[idx])
   }
   
   #Step 9: Set the root of the stitched graph now..
   stitchedneuron <- as.neuron(stitchedng, origin = master_root)
-    
+  stitchedneuron
 }
 
 

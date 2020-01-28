@@ -7,7 +7,8 @@
 stitch_neurons_mst(x)
 }
 \arguments{
-\item{x}{Fragments that could be neuronlist or a single neuron with multiple trees(fragments)}
+\item{x}{Fragments that could be \code{\link{neuronlist}} or a single neuron
+with multiple unconnected subtrees.}
 }
 \value{
 A single \code{neuron} object containing all input fragments.
@@ -16,30 +17,35 @@ A single \code{neuron} object containing all input fragments.
 Stitch multiple fragments into single neuron using minimum spanning tree
 }
 \details{
-The neurons are joined using the minimum spanning tree which the tree which minimises the sum of
-edge weights (here they would be euclidean distance). The neuron is also rooted considering the root of the 
-largest cluster.
+The neurons are joined using the minimum spanning tree i.e. the tree
+  that minimises the sum of edge weights (here, the Euclidean distance). The
+  neuron is rooted in the largest cluster; if this cluster contained the
+  original root of the neuron, then this should be retained.
 }
 \examples{
-\dontrun{
-library(catmaid)
-dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#Example with a single neuron, that has several fragments which could be stiched together..
-dl1_branches$nTrees
-dl1_whole=stitch_neurons_mst(dl1_branches)
-plot3d(dl1_whole)
-#Example with neuronlist
-dl1_main=simplify_neuron(dl1, n = 1, invert = F)
-dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-dl1_fragment <- list(dl1_main,dl1_branches)
-dl1_fragment <- as.neuronlist(dl1_fragment)
-dl1_whole = stitch_neurons_mst(dl1_fragment)
 
+n=Cell07PNs[['ECA34L']]
+n_main=simplify_neuron(n, n = 10)
+n_branches=simplify_neuron(n, n = 10, invert = TRUE)
+
+# this is the setup
+plot(n_main, col='red', WithNodes=FALSE)
+plot(n_branches, col='blue', add=TRUE, WithNodes=FALSE)
+
+# make a neuronlist containing the two fragments
+nl=neuronlist(n_main, n_branches)
+# and stitch those
+n_stitched=stitch_neurons_mst(nl)
+
+\dontrun{
+# look at the neurons in 3D - they appear identical in this case
+plot3d(n, alpha=.5, col='cyan', WithNodes=FALSE)
+plot3d(n_stitched, alpha=.5, col='red', WithNodes=FALSE)
 }
 }
 \seealso{
-\code{\link{simplify_neuron}}
+\code{\link{simplify_neuron}}, \code{\link{spine}},
+  \code{\link{ngraph}}, \code{igraph::\link[igraph]{mst}}
 }
 \author{
 Sridhar Jagannathan \email{j.sridharrajan@gmail.com}

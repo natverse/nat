@@ -305,8 +305,7 @@ test_that("Stitch a neuron that has been fragmented", {
   expect_gt(sample_branches$nTrees,1)
   
   #For neuronlist..
-  sample_fragment <- list(sample_main,sample_branches)
-  sample_fragment <- as.neuronlist(sample_fragment)
+  sample_fragment <- neuronlist(sample_main,sample_branches)
   sample_whole <- stitch_neurons_mst(sample_fragment)
   expect_equal(sample_whole$nTrees,1)
   
