@@ -1107,7 +1107,7 @@ handlesubtrees=function(x) {
 #' library(catmaid)
 #' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
 #' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#' #Example with a single neuron, that has several fragments which could be stiched together..
+#' #Example with a single neuron, that has several fragments which could be stitched together..
 #' dl1_branches$nTrees
 #' dl1_whole=stitch_neurons_mst(dl1_branches)
 #' plot3d(dl1_whole)
@@ -1152,7 +1152,7 @@ stitch_neurons_mst <- function(x) {
   #make a copy of the master graph now..
   masterng <- ng
   
-  #Step 2a: Find the rootnode of the largest cluster, this will be the rootnode of the stiched neuron..
+  #Step 2a: Find the rootnode of the largest cluster, this will be the rootnode of the stitched neuron..
   cc=igraph::components(ng)
   sorted=order(cc$csize, decreasing = T)
   root_points <- rootpoints(ng, original.ids = FALSE)
@@ -1164,7 +1164,7 @@ stitch_neurons_mst <- function(x) {
   igraph::E(ng)$weight = 0
     
   
-  #Step 3: Find all the leaf nodes now, these are the potential sites to stich..
+  #Step 3: Find all the leaf nodes now, these are the potential sites to stitch..
   root_id <- which(names(V(ng)) == master_root)
   leaves = setdiff(1:length(V(ng)),root_id) #actually use all of them, slower but accurate..
    
@@ -1198,15 +1198,15 @@ stitch_neurons_mst <- function(x) {
   nodenames <- names(igraph::V(masterng))
   
   #Step 8: Now add the new edges in the master graph vertex by vertex..
-  stichedng <- masterng
+  stitchedng <- masterng
   for (idx in 1:nrow(rawel)) {
   vertex_ids <- match(rawel[idx,], nodenames)
-  stichedng <- igraph::add_edges(stichedng,c(vertex_ids[[1]], vertex_ids[[2]]), "weight"= weight_attr[idx])
+  stitchedng <- igraph::add_edges(stitchedng,c(vertex_ids[[1]], vertex_ids[[2]]), "weight"= weight_attr[idx])
   
   }
   
-  #Step 9: Set the root of the stiched graph now..
-  stichedneuron <- as.neuron(stichedng, origin = master_root)
+  #Step 9: Set the root of the stitched graph now..
+  stitchedneuron <- as.neuron(stitchedng, origin = master_root)
     
 }
 
