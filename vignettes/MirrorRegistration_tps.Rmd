@@ -1,0 +1,100 @@
+---
+title: "Mirroring neurons from one side of brain to another using Thin Plate Spline registration"
+author: "Gregory Jefferis and Sridhar Jagannathan"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{MirrorRegistration_tps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+A full worked example of using landmarks based registration to construct
+a mirroring registration from one side of the brain to the other.
+
+### Set up plotting preferences
+```{r echo=TRUE, message=FALSE, warning=TRUE}
+library(nat)
+options(nat.plotengine = 'plotly')
+```
+
+### Read in set of landmarks defined in FAFB CATMAID
+
+```{r echo=TRUE, message=FALSE, warning=TRUE}
+if(requireNamespace("catmaid", quietly = TRUE)) {
+  library('catmaid')
+}
+```
+
+```{r}
+emlandmarks=read.neurons.catmaid('annotation:^GJLandmark')
+```
+
+### Match up L and R pairs
+
+```{r echo=TRUE, message=FALSE, warning=TRUE}
+if(requireNamespace("stringr", quietly = TRUE)) {
+library('stringr')
+}
+```
+
+```{r message=TRUE, include=FALSE}
+emlandmarks[,'side']=str_match(emlandmarks[,'name'], "([LR]) Landmark")[,2]
+emlandmarks[,'shortname']=str_match(emlandmarks[,'name'], "(.*)([LR]) Landmark.*")[,2]
+emlandmarks[,'shortname']=sub("[_ ]+$", "", emlandmarks[,'shortname'])
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=TRUE}
+if(requireNamespace("dplyr", quietly = TRUE)) {
+library('dplyr')
+}
+```
+
+```{r message=TRUE, include=FALSE}
+lmpairs=inner_join(filter(emlandmarks[,], side=="L"),filter(emlandmarks[,], side=="R"),
+  by='shortname', suffix=c(".L",".R"))
+```
+
+### Find mean xyz position of each landmark (they are drawn as a little cross)
+
+```{r}
+lmxyz=t(sapply(emlandmarks, function(x) colMeans(xyzmatrix(x))))
+# construct thin plate splines registration (here mapping the right side neurons to left side)
+mirror_reg=tpsreg(
+  lmxyz[as.character(lmpairs$skid.R),],
+  lmxyz[as.character(lmpairs$skid.L),]
+)
+```
+
+### Map RHS DA2 PNs onto left and compare with LHS neurons
+
+```{r}
+da2pns.R=read.neurons.catmaid('glomerulus DA2 right')
+da2pns.L=read.neurons.catmaid('glomerulus DA2 left')
+```
+
+
+### Now transform them to the left side
+
+```{r}
+da2pns.R.L=xform(da2pns.R, reg = mirror_reg)
+```
+
+### Plot the final results
+```{r echo=TRUE, message=FALSE, warning=TRUE}
+if(requireNamespace("elmr", quietly = TRUE)) {
+library('elmr')
+}
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE}
+tempval <- plot3d(FAFB14, alpha='0.5')
+tempval <- plot3d(da2pns.L, col='red')
+```
+
+```{r}
+plot3d(da2pns.R.L, col='blue')
+```
+
