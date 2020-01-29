@@ -1100,6 +1100,9 @@ handlesubtrees=function(x) {
 #'   original root of the neuron, then this should be retained.
 #' @param x Fragments that could be \code{\link{neuronlist}} or a single neuron
 #'   with multiple unconnected subtrees.
+#' @param thresh_el The threshold distance (units in microns) above which new vertices 
+#' will not be connected (default=1000, set to NULL to disable this feature). This parameter prevents the 
+#' merging of vertices that are so far away from the main neuron such that they are likely to be spurious.
 #' @return A single \code{neuron} object containing all input fragments.
 #' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
 #' @seealso \code{\link{simplify_neuron}}, \code{\link{spine}},
@@ -1125,7 +1128,7 @@ handlesubtrees=function(x) {
 #' plot3d(n, alpha=.5, col='cyan', WithNodes=FALSE)
 #' plot3d(n_stitched, alpha=.5, col='red', WithNodes=FALSE)
 #' }
-stitch_neurons_mst <- function(x) {
+stitch_neurons_mst <- function(x, thresh_el = 1000) {
   #Step 1: First check if the input is fragmented and then proceed further..
   if(is.neuron(x)){
     if(x$nTrees == 1){
@@ -1206,9 +1209,21 @@ stitch_neurons_mst <- function(x) {
   stitchedng <- masterng
   for (idx in 1:nrow(rawel)) {
     vertex_ids <- match(rawel[idx, ], nodenames)
-    stitchedng <-
-      igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
-                        "weight" = weight_attr[idx])
+    if (is.null(thresh_el)){
+      stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+                          "weight" = weight_attr[idx])
+    }else{
+      #Choose only those edges that are below a certain threshold..
+      if(weight_attr[idx]<=thresh_el){
+      stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+                                        "weight" = weight_attr[idx])
+      }else{
+        warning(paste0("Could not connect two vertices as edge length (in microns) ", 
+                       round(weight_attr[idx],digits = 2), " is above threshold"))
+      }
+      
+    }
+    
   }
   
   #Step 10: Set the root of the stitched graph now..
