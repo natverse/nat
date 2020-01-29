@@ -72,6 +72,7 @@ especiall
 etc
 Evers
 exe
+FAFB
 FCWB
 fftw
 fijitraces
@@ -231,6 +232,7 @@ prechecks
 R's
 rda
 rds
+refmat
 reformatx
 refs
 regex
@@ -296,6 +298,7 @@ swc
 SWC
 SWCData
 targetvolume
+tarmat
 templatebrain
 templatebrains
 testthat
