@@ -46,7 +46,7 @@ Suggests:
     alphashape3d,
     Morpho,
     plotly,
-    catmaid,
+    rcatmaid,
     dplyr,
     stringr
 License: GPL-3
