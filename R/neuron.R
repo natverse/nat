@@ -1181,7 +1181,25 @@ stitch_neurons_mst <- function(x, thresh_el = 1000) {
   leaves = setdiff(1:length(V(ng)),root_id) #actually use all of them, slower but accurate..
    
   #Step 5: Create list of edges that will be added (from potential sites..) and compute the distances between them..
-  edge_list <- utils::combn(leaves,m =2)
+  #Now divide them into clusters and compute combinations among them..
+  cc_membership <- unique(cc$membership)
+  combedge_start <- NULL
+  combedge_stop <- NULL
+  for (clusterbaseidx in 1:(length(cc_membership)-1)){
+    for (clustertargetidx in (clusterbaseidx+1):length(cc_membership)) {
+      cat('\nComparing base cluster idx#:',clusterbaseidx,'with target cluster idx#:',clustertargetidx)
+      leaves_base <- intersect(leaves, which(cc$membership == clusterbaseidx))
+      leaves_target <- intersect(leaves, which(cc$membership == clustertargetidx))
+      leaves_combo <- expand.grid(leaves_base,leaves_target)
+      combedge_start <- c(combedge_start,leaves_combo[,1])
+      combedge_stop <- c(combedge_stop,leaves_combo[,2])
+    }
+    
+  }
+  
+  #edge_list <- utils::combn(leaves,m =2)
+  edge_list <- rbind(combedge_start,combedge_stop)
+  
   
   starts<-edge_list[1,]
   stops<-edge_list[2,]
