@@ -1185,12 +1185,32 @@ stitch_neurons_mst <- function(x, thresh_el = 1000) {
   cc_membership <- unique(cc$membership)
   combedge_start <- NULL
   combedge_stop <- NULL
+  
+  xyz <- xyzmatrix(x) #for using with knn..
+  
   for (clusterbaseidx in 1:(length(cc_membership)-1)){
     for (clustertargetidx in (clusterbaseidx+1):length(cc_membership)) {
-      cat('\nComparing base cluster idx#:',clusterbaseidx,'with target cluster idx#:',clustertargetidx)
+      #cat('\nComparing base cluster idx#:',clusterbaseidx,'with target cluster idx#:',clustertargetidx)
       leaves_base <- intersect(leaves, which(cc$membership == clusterbaseidx))
       leaves_target <- intersect(leaves, which(cc$membership == clustertargetidx))
-      leaves_combo <- expand.grid(leaves_base,leaves_target)
+      
+       #take the locations of pts in base leaf and target leaf..
+       base_pt=xyz[leaves_base,]
+       target_pt=xyz[leaves_target,]
+       
+       #find the pts nearest in base leaf to the target leaf..
+       minval <- min(10,length(leaves_base),length(leaves_target))
+       nnres=nabor::knn(base_pt, target_pt, k=minval)
+       
+       targetpt_idx=which.min(nnres$nn.dists)
+       basept_idx=nnres$nn.idx[targetpt_idx,1]
+       
+       trunc_base <- leaves_base[basept_idx]
+      
+       #compute the combination now, only based on the truncated base leaf pt and all pts in target leaf
+       leaves_combo <- expand.grid(trunc_base,leaves_target)
+      
+      #leaves_combo <- expand.grid(leaves_base,leaves_target)
       combedge_start <- c(combedge_start,leaves_combo[,1])
       combedge_stop <- c(combedge_stop,leaves_combo[,2])
     }
@@ -1203,7 +1223,7 @@ stitch_neurons_mst <- function(x, thresh_el = 1000) {
   
   starts<-edge_list[1,]
   stops<-edge_list[2,]
-  xyz <- xyzmatrix(x)
+  
   # nb drop = FALSE to ensure that we always have a matrix
   vecs=xyz[stops, , drop=FALSE] - xyz[starts, , drop=FALSE]
   weights=sqrt(rowSums(vecs*vecs))
