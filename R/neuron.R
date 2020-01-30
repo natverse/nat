@@ -1226,8 +1226,21 @@ stitch_neurons_mst <- function(x, thresh_el = 1000) {
     
   }
   
-  #Step 10: Set the root of the stitched graph now..
+  #Step 10: Now keep only vertices that are connected to the master root and cross verify the same..
+  cc_stitched=igraph::components(stitchedng)
+  stitchedroot_id <- which(names(V(stitchedng)) == master_root)
+  verticestoprune <- which(cc_stitched$membership != cc_stitched$membership[stitchedroot_id])
+  sorted=order(cc_stitched$csize, decreasing = T)
+  if(sorted[1] != cc_stitched$membership[stitchedroot_id]){
+    warning("The root node doesn't belong to the largest fragment")
+  }
+  
+  stitchedng=igraph::delete.vertices(stitchedng, verticestoprune)
+  
+  #Step 11: Set the root of the stitched graph now..
   stitchedneuron <- as.neuron(stitchedng, origin = master_root)
+  if(stitchedneuron$nTrees!= 1){
+    stop('The neuron being returned has multiple fragments')}
   stitchedneuron
 }
 
