@@ -1179,7 +1179,7 @@ stitch_neurons_mst <- function(x, thresh_el = 1000, k=10L) {
   
   #Step 4: Find all the leaf nodes now, these are the potential sites to stitch..
   root_id <- which(names(V(ng)) == master_root)
-  leaves = setdiff(1:length(V(ng)),root_id) #actually use all of them, slower but accurate..
+  leaves = 1:length(V(ng))#actually use all of them including the root
    
   #Step 5: Create list of edges that will be added (from potential sites..) and compute the distances between them..
   #Now divide them into clusters and compute combinations among them..
