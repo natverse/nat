@@ -4,13 +4,8 @@
 \alias{distal_to}
 \title{Return indices of points in a neuron distal to a given node}
 \usage{
-distal_to(
-  x,
-  node.idx = NULL,
-  node.pointno = NULL,
-  root.idx = NULL,
-  root.pointno = NULL
-)
+distal_to(x, node.idx = NULL, node.pointno = NULL, root.idx = NULL,
+  root.pointno = NULL)
 }
 \arguments{
 \item{x}{A neuron}

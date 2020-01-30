@@ -4,20 +4,9 @@
 \alias{nlscan}
 \title{Scan through a set of neurons, individually plotting each one in 3D}
 \usage{
-nlscan(
-  neurons,
-  db = NULL,
-  col = "red",
-  Verbose = T,
-  Wait = T,
-  sleep = 0.1,
-  extrafun = NULL,
-  selected_file = NULL,
-  selected_col = "green",
-  yaml = TRUE,
-  ...,
-  plotengine = "rgl"
-)
+nlscan(neurons, db = NULL, col = "red", Verbose = T, Wait = T,
+  sleep = 0.1, extrafun = NULL, selected_file = NULL,
+  selected_col = "green", yaml = TRUE, ..., plotengine = "rgl")
 }
 \arguments{
 \item{neurons}{a \code{neuronlist} object or a character vector of names of 

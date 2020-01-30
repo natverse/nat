@@ -45,7 +45,7 @@ Suggests:
     MASS,
     alphashape3d,
     Morpho,
-    plotly,
+    plotly
 License: GPL-3
 LazyData: yes
 Collate:
@@ -92,7 +92,7 @@ Collate:
     'xformimage.R'
     'xformpoints.R'
     'zzz.R'
-RoxygenNote: 7.0.2
+RoxygenNote: 6.1.1
 Encoding: UTF-8
 VignetteBuilder: knitr
 Language: en-GB

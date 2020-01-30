@@ -4,7 +4,8 @@
 \alias{plot3d.boundingbox}
 \title{Plot a bounding box in 3D}
 \usage{
-\method{plot3d}{boundingbox}(x, col = "black", plotengine = getOption("nat.plotengine"), ...)
+\method{plot3d}{boundingbox}(x, col = "black",
+  plotengine = getOption("nat.plotengine"), ...)
 }
 \arguments{
 \item{x}{the \code{\link{boundingbox}} object to plot.}

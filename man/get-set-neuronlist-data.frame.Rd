@@ -6,7 +6,8 @@
 \alias{data.frame<-.neuronlist}
 \title{Get or set the attached data.frame of a neuronlist}
 \usage{
-\method{as.data.frame}{neuronlist}(x, row.names = names(x), optional = FALSE, ...)
+\method{as.data.frame}{neuronlist}(x, row.names = names(x),
+  optional = FALSE, ...)
 
 data.frame(x) <- value
 

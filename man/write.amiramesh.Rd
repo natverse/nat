@@ -4,14 +4,9 @@
 \alias{write.amiramesh}
 \title{Write a 3D data object to an AmiraMesh format file}
 \usage{
-write.amiramesh(
-  x,
-  file,
-  enc = c("binary", "raw", "text", "hxzip"),
+write.amiramesh(x, file, enc = c("binary", "raw", "text", "hxzip"),
   dtype = c("float", "byte", "short", "ushort", "int", "double"),
-  endian = .Platform$endian,
-  WriteNrrdHeader = FALSE
-)
+  endian = .Platform$endian, WriteNrrdHeader = FALSE)
 }
 \arguments{
 \item{x}{The image data to write (an im3d, or capable of being interpreted as

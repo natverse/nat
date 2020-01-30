@@ -41,12 +41,9 @@ Presently only AmiraMesh images are supported since they have a
   key-value pairs according to some ad hoc convention.
 }
 \seealso{
-Other hxsurf: 
-\code{\link{as.hxsurf}()},
-\code{\link{as.mesh3d}()},
-\code{\link{plot3d.hxsurf}()},
-\code{\link{read.hxsurf}()},
-\code{\link{subset.hxsurf}()},
-\code{\link{write.hxsurf}()}
+Other hxsurf: \code{\link{as.hxsurf}},
+  \code{\link{as.mesh3d}}, \code{\link{plot3d.hxsurf}},
+  \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
+  \code{\link{write.hxsurf}}
 }
 \concept{hxsurf}

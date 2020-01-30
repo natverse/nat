@@ -6,14 +6,9 @@
 \alias{nrrd.datafiles}
 \title{Read NRRD files/headers into memory}
 \usage{
-read.nrrd(
-  file,
-  origin = NULL,
-  ReadData = TRUE,
-  AttachFullHeader = TRUE,
-  Verbose = FALSE,
-  ReadByteAsRaw = c("unsigned", "all", "none")
-)
+read.nrrd(file, origin = NULL, ReadData = TRUE,
+  AttachFullHeader = TRUE, Verbose = FALSE,
+  ReadByteAsRaw = c("unsigned", "all", "none"))
 
 read.nrrd.header(file, Verbose = FALSE)
 
@@ -61,9 +56,7 @@ A list with elements for the key nrrd header fields
 \seealso{
 \code{\link{write.nrrd}}, \code{\link{read.im3d}}
 
-Other nrrd: 
-\code{\link{is.nrrd}()},
-\code{\link{nrrd.voxdims}()},
-\code{\link{write.nrrd}()}
+Other nrrd: \code{\link{is.nrrd}},
+  \code{\link{nrrd.voxdims}}, \code{\link{write.nrrd}}
 }
 \concept{nrrd}

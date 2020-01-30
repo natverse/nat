@@ -5,13 +5,8 @@
 \alias{cmtk.system2}
 \title{Utility function to create and run calls to CMTK command line tools}
 \usage{
-cmtk.call(
-  tool,
-  PROCESSED.ARGS = NULL,
-  ...,
-  FINAL.ARGS = NULL,
-  RETURN.TYPE = c("string", "list")
-)
+cmtk.call(tool, PROCESSED.ARGS = NULL, ..., FINAL.ARGS = NULL,
+  RETURN.TYPE = c("string", "list"))
 
 cmtk.system2(cmtkcall, moreargs = NULL, ...)
 }

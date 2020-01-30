@@ -24,10 +24,8 @@ Tries to be as fast as possible by reading only first 11 bytes and
   checking if they equal to "# AmiraMesh" or (deprecated) "# HyperMesh".
 }
 \seealso{
-Other amira: 
-\code{\link{amiratype}()},
-\code{\link{read.amiramesh}()},
-\code{\link{read.hxsurf}()},
-\code{\link{write.hxsurf}()}
+Other amira: \code{\link{amiratype}},
+  \code{\link{read.amiramesh}}, \code{\link{read.hxsurf}},
+  \code{\link{write.hxsurf}}
 }
 \concept{amira}

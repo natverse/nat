@@ -28,14 +28,15 @@ dotprops(x, ...)
 
 \method{dotprops}{neuron}(x, Labels = NULL, resample = NA, ...)
 
-\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
+\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{Object to be tested/converted}
 
 \item{...}{Additional arguments passed to methods}
 
-\item{pattern}{an optional \link[base]{regular expression}.  Only file names
+\item{pattern}{an optional \link{regular expression}.  Only file names
     which match the regular expression will be returned.}
 
 \item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an

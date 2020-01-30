@@ -7,12 +7,8 @@
 \usage{
 pointsinside(x, surf, ...)
 
-\method{pointsinside}{default}(
-  x,
-  surf,
-  ...,
-  rval = c("logical", "distance", "mesh3d", "consistent_logical")
-)
+\method{pointsinside}{default}(x, surf, ..., rval = c("logical",
+  "distance", "mesh3d", "consistent_logical"))
 }
 \arguments{
 \item{x}{an object with 3D points.}

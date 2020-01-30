@@ -24,10 +24,8 @@ Note that when checking a file we first test if it is an AmiraMesh
   and determining content type (slow).
 }
 \seealso{
-Other amira: 
-\code{\link{is.amiramesh}()},
-\code{\link{read.amiramesh}()},
-\code{\link{read.hxsurf}()},
-\code{\link{write.hxsurf}()}
+Other amira: \code{\link{is.amiramesh}},
+  \code{\link{read.amiramesh}}, \code{\link{read.hxsurf}},
+  \code{\link{write.hxsurf}}
 }
 \concept{amira}
