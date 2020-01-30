@@ -4,7 +4,7 @@
 \alias{stitch_neurons_mst}
 \title{Stitch multiple fragments into single neuron using minimum spanning tree}
 \usage{
-stitch_neurons_mst(x, thresh_el = 1000)
+stitch_neurons_mst(x, thresh_el = 1000, k = 10L)
 }
 \arguments{
 \item{x}{Fragments that could be \code{\link{neuronlist}} or a single neuron
@@ -13,6 +13,8 @@ with multiple unconnected subtrees.}
 \item{thresh_el}{The threshold distance (units in microns) above which new vertices 
 will not be connected (default=1000, set to NULL to disable this feature). This parameter prevents the 
 merging of vertices that are so far away from the main neuron such that they are likely to be spurious.}
+
+\item{k}{The number of nearest neighbours to consider when trying to merge different clusters.}
 }
 \value{
 A single \code{neuron} object containing all input fragments.

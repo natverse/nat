@@ -1103,6 +1103,7 @@ handlesubtrees=function(x) {
 #' @param thresh_el The threshold distance (units in microns) above which new vertices 
 #' will not be connected (default=1000, set to NULL to disable this feature). This parameter prevents the 
 #' merging of vertices that are so far away from the main neuron such that they are likely to be spurious.
+#' @param k The number of nearest neighbours to consider when trying to merge different clusters.
 #' @return A single \code{neuron} object containing all input fragments.
 #' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
 #' @seealso \code{\link{simplify_neuron}}, \code{\link{spine}},
@@ -1128,7 +1129,7 @@ handlesubtrees=function(x) {
 #' plot3d(n, alpha=.5, col='cyan', WithNodes=FALSE)
 #' plot3d(n_stitched, alpha=.5, col='red', WithNodes=FALSE)
 #' }
-stitch_neurons_mst <- function(x, thresh_el = 1000) {
+stitch_neurons_mst <- function(x, thresh_el = 1000, k=10L) {
   #Step 1: First check if the input is fragmented and then proceed further..
   if(is.neuron(x)){
     if(x$nTrees == 1){
@@ -1188,9 +1189,11 @@ stitch_neurons_mst <- function(x, thresh_el = 1000) {
   
   xyz <- xyzmatrix(x) #for using with knn..
   
-  for (clusterbaseidx in 1:(length(cc_membership)-1)){
-    for (clustertargetidx in (clusterbaseidx+1):length(cc_membership)) {
-      #cat('\nComparing base cluster idx#:',clusterbaseidx,'with target cluster idx#:',clustertargetidx)
+  ccsort=order(cc$csize, decreasing = TRUE)
+  for (i in 1:(length(cc_membership)-1)){
+    for (j in (i+1):length(cc_membership)) {
+      clusterbaseidx=ccsort[i]
+      clustertargetidx=ccsort[j]
       leaves_base <- intersect(leaves, which(cc$membership == clusterbaseidx))
       leaves_target <- intersect(leaves, which(cc$membership == clustertargetidx))
       
@@ -1199,13 +1202,14 @@ stitch_neurons_mst <- function(x, thresh_el = 1000) {
        target_pt=xyz[leaves_target,]
        
        #find the pts nearest in base leaf to the target leaf..
-       minval <- min(10,length(leaves_base),length(leaves_target))
+       minval <- min(k,length(leaves_base),length(leaves_target))
        nnres=nabor::knn(base_pt, target_pt, k=minval)
        
        targetpt_idx=which.min(nnres$nn.dists)
        basept_idx=nnres$nn.idx[targetpt_idx,1]
        
        trunc_base <- leaves_base[basept_idx]
+       trunc_target <- leaves_target[targetpt_idx]
       
        #compute the combination now, only based on the truncated base leaf pt and all pts in target leaf
        leaves_combo <- expand.grid(trunc_base,leaves_target)
