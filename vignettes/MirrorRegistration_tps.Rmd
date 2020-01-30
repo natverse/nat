@@ -27,7 +27,7 @@ if(requireNamespace("catmaid", quietly = TRUE)) {
 ```
 
 ```{r}
-emlandmarks=read.neurons.catmaid('annotation:^GJLandmark')
+emlandmarks=catmaid::read.neurons.catmaid('annotation:^GJLandmark')
 ```
 
 ### Match up L and R pairs
@@ -39,8 +39,8 @@ library('stringr')
 ```
 
 ```{r message=TRUE, include=FALSE}
-emlandmarks[,'side']=str_match(emlandmarks[,'name'], "([LR]) Landmark")[,2]
-emlandmarks[,'shortname']=str_match(emlandmarks[,'name'], "(.*)([LR]) Landmark.*")[,2]
+emlandmarks[,'side']=stringr::str_match(emlandmarks[,'name'], "([LR]) Landmark")[,2]
+emlandmarks[,'shortname']=stringr::str_match(emlandmarks[,'name'], "(.*)([LR]) Landmark.*")[,2]
 emlandmarks[,'shortname']=sub("[_ ]+$", "", emlandmarks[,'shortname'])
 ```
 
@@ -52,7 +52,7 @@ library('dplyr')
 ```
 
 ```{r message=TRUE, include=FALSE}
-lmpairs=inner_join(filter(emlandmarks[,], side=="L"),filter(emlandmarks[,], side=="R"),
+lmpairs=dplyr::inner_join(dplyr::filter(emlandmarks[,], side=="L"),dplyr::filter(emlandmarks[,], side=="R"),
   by='shortname', suffix=c(".L",".R"))
 ```
 
@@ -70,8 +70,8 @@ mirror_reg=tpsreg(
 ### Map RHS DA2 PNs onto left and compare with LHS neurons
 
 ```{r}
-da2pns.R=read.neurons.catmaid('glomerulus DA2 right')
-da2pns.L=read.neurons.catmaid('glomerulus DA2 left')
+da2pns.R=catmaid::read.neurons.catmaid('glomerulus DA2 right')
+da2pns.L=catmaid::read.neurons.catmaid('glomerulus DA2 left')
 ```
 
 
