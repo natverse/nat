@@ -45,7 +45,10 @@ Suggests:
     MASS,
     alphashape3d,
     Morpho,
-    plotly
+    plotly,
+    catmaid,
+    dplyr,
+    stringr
 License: GPL-3
 LazyData: yes
 Collate:

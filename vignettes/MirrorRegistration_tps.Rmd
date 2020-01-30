@@ -16,7 +16,6 @@ a mirroring registration from one side of the brain to the other.
 ### Set up plotting preferences
 ```{r echo=TRUE, message=FALSE, warning=TRUE}
 library(nat)
-options(nat.plotengine = 'plotly')
 ```
 
 ### Read in set of landmarks defined in FAFB CATMAID
@@ -83,18 +82,9 @@ da2pns.R.L=xform(da2pns.R, reg = mirror_reg)
 ```
 
 ### Plot the final results
-```{r echo=TRUE, message=FALSE, warning=TRUE}
-if(requireNamespace("elmr", quietly = TRUE)) {
-library('elmr')
-}
-```
-
-```{r echo=TRUE, message=FALSE, warning=FALSE}
-tempval <- plot3d(FAFB14, alpha='0.5')
-tempval <- plot3d(da2pns.L, col='red')
-```
 
 ```{r}
-plot3d(da2pns.R.L, col='blue')
+plot(da2pns.L, col='red')
+plot(da2pns.R.L, col='blue', add=T)
 ```
 
