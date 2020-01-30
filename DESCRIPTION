@@ -46,9 +46,6 @@ Suggests:
     alphashape3d,
     Morpho,
     plotly,
-    rcatmaid,
-    dplyr,
-    stringr
 License: GPL-3
 LazyData: yes
 Collate:
