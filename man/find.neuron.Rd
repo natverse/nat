@@ -4,9 +4,14 @@
 \alias{find.neuron}
 \title{Find neurons within a 3D selection box (usually drawn in rgl window)}
 \usage{
-find.neuron(sel3dfun = select3d(), indices = names(db),
-  db = getOption("nat.default.neuronlist"), threshold = 0,
-  invert = FALSE, rval = c("names", "data.frame", "neuronlist"))
+find.neuron(
+  sel3dfun = select3d(),
+  indices = names(db),
+  db = getOption("nat.default.neuronlist"),
+  threshold = 0,
+  invert = FALSE,
+  rval = c("names", "data.frame", "neuronlist")
+)
 }
 \arguments{
 \item{sel3dfun}{A \code{\link{select3d}} style function to indicate if points

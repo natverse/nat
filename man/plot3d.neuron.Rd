@@ -4,10 +4,20 @@
 \alias{plot3d.neuron}
 \title{Plot neurons in 3D using rgl library or plotly module}
 \usage{
-\method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
-  WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
-  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...,
-  plotengine = getOption("nat.plotengine"))
+\method{plot3d}{neuron}(
+  x,
+  WithLine = TRUE,
+  NeuronNames = FALSE,
+  WithNodes = TRUE,
+  WithAllPoints = FALSE,
+  WithText = FALSE,
+  PlotSubTrees = TRUE,
+  add = TRUE,
+  col = NULL,
+  soma = FALSE,
+  ...,
+  plotengine = getOption("nat.plotengine")
+)
 }
 \arguments{
 \item{x}{A neuron to plot}

@@ -49,6 +49,7 @@ planes3d(plc[,1:3], d=plc[,'d'])
 }
 }
 \seealso{
-Other geometry: \code{\link{plane_coefficients}}
+Other geometry: 
+\code{\link{plane_coefficients}()}
 }
 \concept{geometry}

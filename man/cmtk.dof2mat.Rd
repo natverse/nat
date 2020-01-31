@@ -25,11 +25,13 @@ Transpose is true by default since this results in the orientation
   unless you're sure you know what you're doing!
 }
 \seealso{
-Other cmtk-commandline: \code{\link{cmtk.mat2dof}}
+Other cmtk-commandline: 
+\code{\link{cmtk.mat2dof}()}
 
-Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
-  \code{\link{cmtk.mat2dof}},
-  \code{\link{cmtkparams2affmat}}
+Other cmtk-geometry: 
+\code{\link{affmat2cmtkparams}()},
+\code{\link{cmtk.mat2dof}()},
+\code{\link{cmtkparams2affmat}()}
 }
 \concept{cmtk-commandline}
 \concept{cmtk-geometry}

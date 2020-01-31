@@ -23,8 +23,9 @@ The version attribute of the resultant matrix marks this as
   (de)composition was fixed.
 }
 \seealso{
-Other cmtk-geometry: \code{\link{cmtk.dof2mat}},
-  \code{\link{cmtk.mat2dof}},
-  \code{\link{cmtkparams2affmat}}
+Other cmtk-geometry: 
+\code{\link{cmtk.dof2mat}()},
+\code{\link{cmtk.mat2dof}()},
+\code{\link{cmtkparams2affmat}()}
 }
 \concept{cmtk-geometry}

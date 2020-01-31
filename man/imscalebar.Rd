@@ -4,9 +4,17 @@
 \alias{imscalebar}
 \title{Make a scalebar to accompany an image.im3d plot}
 \usage{
-imscalebar(levels, col, nlevels = NULL, zlim = NULL,
-  horizontal = TRUE, lab = "Density", mar = c(4, 2, 2, 2) + 0.1,
-  border = NULL, ...)
+imscalebar(
+  levels,
+  col,
+  nlevels = NULL,
+  zlim = NULL,
+  horizontal = TRUE,
+  lab = "Density",
+  mar = c(4, 2, 2, 2) + 0.1,
+  border = NULL,
+  ...
+)
 }
 \arguments{
 \item{levels}{The levels at which z values were cut \strong{or} a list 

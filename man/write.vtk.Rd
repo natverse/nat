@@ -7,8 +7,14 @@
 \usage{
 write.vtk(x, file, ...)
 
-\method{write.vtk}{neuron}(x, file, datatype = c("float", "double"),
-  title = file, WriteAllSubTrees = TRUE, ...)
+\method{write.vtk}{neuron}(
+  x,
+  file,
+  datatype = c("float", "double"),
+  title = file,
+  WriteAllSubTrees = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{Object to write}

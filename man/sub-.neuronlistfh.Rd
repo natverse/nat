@@ -55,9 +55,10 @@ unlink(tf, recursive=TRUE)
 \code{\link{neuronlistfh}}, \code{\link{[.neuronlist}}, 
   \code{\link{[.data.frame}}, \code{\link{[<-.data.frame}},
 
-Other neuronlistfh: \code{\link{neuronlistfh}},
-  \code{\link{read.neuronlistfh}},
-  \code{\link{remotesync}},
-  \code{\link{write.neuronlistfh}}
+Other neuronlistfh: 
+\code{\link{neuronlistfh}()},
+\code{\link{read.neuronlistfh}()},
+\code{\link{remotesync}()},
+\code{\link{write.neuronlistfh}()}
 }
 \concept{neuronlistfh}

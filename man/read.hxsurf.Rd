@@ -5,8 +5,13 @@
 \alias{hxsurf}
 \title{Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object}
 \usage{
-read.hxsurf(filename, RegionNames = NULL, RegionChoice = "both",
-  FallbackRegionCol = "grey", Verbose = FALSE)
+read.hxsurf(
+  filename,
+  RegionNames = NULL,
+  RegionChoice = "both",
+  FallbackRegionCol = "grey",
+  Verbose = FALSE
+)
 }
 \arguments{
 \item{filename}{Character vector defining path to file}
@@ -68,14 +73,19 @@ read.hxsurf("my.surf", RegionChoice="both")
 \seealso{
 \code{\link{plot3d.hxsurf}, \link{rgb}}
 
-Other amira: \code{\link{amiratype}},
-  \code{\link{is.amiramesh}}, \code{\link{read.amiramesh}},
-  \code{\link{write.hxsurf}}
+Other amira: 
+\code{\link{amiratype}()},
+\code{\link{is.amiramesh}()},
+\code{\link{read.amiramesh}()},
+\code{\link{write.hxsurf}()}
 
-Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{as.mesh3d}}, \code{\link{materials}},
-  \code{\link{plot3d.hxsurf}}, \code{\link{subset.hxsurf}},
-  \code{\link{write.hxsurf}}
+Other hxsurf: 
+\code{\link{as.hxsurf}()},
+\code{\link{as.mesh3d}()},
+\code{\link{materials}()},
+\code{\link{plot3d.hxsurf}()},
+\code{\link{subset.hxsurf}()},
+\code{\link{write.hxsurf}()}
 }
 \concept{amira}
 \concept{hxsurf}

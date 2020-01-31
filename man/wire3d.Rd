@@ -11,8 +11,12 @@ wire3d(x, ..., add = TRUE, plotengine = getOption("nat.plotengine"))
 
 \method{wire3d}{hxsurf}(x, Regions = NULL, ...)
 
-\method{wire3d}{mesh3d}(x, override = TRUE, meshColor = c("vertices",
-  "edges", "faces", "legacy"), ...)
+\method{wire3d}{mesh3d}(
+  x,
+  override = TRUE,
+  meshColor = c("vertices", "edges", "faces", "legacy"),
+  ...
+)
 
 \method{wire3d}{shapelist3d}(x, override = TRUE, ...)
 }

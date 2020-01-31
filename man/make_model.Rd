@@ -4,8 +4,12 @@
 \alias{make_model}
 \title{Generate a 3D model from connector and/or tree node data}
 \usage{
-make_model(x, substrate = c("cable", "connectors", "both"), alpha = 30,
-  auto.selection = TRUE)
+make_model(
+  x,
+  substrate = c("cable", "connectors", "both"),
+  alpha = 30,
+  auto.selection = TRUE
+)
 }
 \arguments{
 \item{x}{a neuronlist or neuron object, or another object that consists of 3D points}

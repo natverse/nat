@@ -4,12 +4,25 @@
 \alias{image.im3d}
 \title{Method to plot spatially calibrated image arrays}
 \usage{
-\method{image}{im3d}(x, xlim = NULL, ylim = NULL, zlim = NULL,
-  plotdims = NULL, flipdims = "y", filled.contour = FALSE, asp = 1,
-  axes = FALSE, xlab = NULL, ylab = NULL, nlevels = 20,
+\method{image}{im3d}(
+  x,
+  xlim = NULL,
+  ylim = NULL,
+  zlim = NULL,
+  plotdims = NULL,
+  flipdims = "y",
+  filled.contour = FALSE,
+  asp = 1,
+  axes = FALSE,
+  xlab = NULL,
+  ylab = NULL,
+  nlevels = 20,
   levels = pretty(zlim, nlevels + 1),
   color.palette = colorRampPalette(c("navy", "cyan", "yellow", "red")),
-  col = color.palette(length(levels) - 1), useRaster = NULL, ...)
+  col = color.palette(length(levels) - 1),
+  useRaster = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{The im3d object containing the data to be plotted  (\code{NA}s are 

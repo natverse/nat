@@ -5,9 +5,17 @@
 \title{2D plots of the elements in a neuronlist, optionally using a subset 
 expression}
 \usage{
-\method{plot}{neuronlist}(x, subset = NULL, col = NULL,
-  colpal = rainbow, add = NULL, boundingbox = NULL, soma = FALSE,
-  ..., SUBSTITUTE = TRUE)
+\method{plot}{neuronlist}(
+  x,
+  subset = NULL,
+  col = NULL,
+  colpal = rainbow,
+  add = NULL,
+  boundingbox = NULL,
+  soma = FALSE,
+  ...,
+  SUBSTITUTE = TRUE
+)
 }
 \arguments{
 \item{x}{a neuron list or, for \code{plot3d.character}, a character vector of

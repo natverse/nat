@@ -8,11 +8,9 @@
 \usage{
 prune_in_volume(x, surf, neuropil = NULL, invert = TRUE, ...)
 
-\method{prune_in_volume}{neuron}(x, surf, neuropil = NULL,
-  invert = TRUE, ...)
+\method{prune_in_volume}{neuron}(x, surf, neuropil = NULL, invert = TRUE, ...)
 
-\method{prune_in_volume}{neuronlist}(x, surf, neuropil = NULL,
-  invert = TRUE, ...)
+\method{prune_in_volume}{neuronlist}(x, surf, neuropil = NULL, invert = TRUE, ...)
 }
 \arguments{
 \item{x}{a \code{neuron} object}
