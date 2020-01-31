@@ -162,7 +162,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' # attach metadata to neuronlist
 #' vdnl=read.neurons(vdurls, neuronnames=vds, df=vddf)
 #' # use metadata to plot a subset of neurons
-#' clear3d()
+#' nclear3d()
 #' plot3d(vdnl, grepl("P[1-6].app", Lineage))
 #' }
 #' @importFrom tools file_path_sans_ext
@@ -242,7 +242,15 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
   # immediately so that we can tell which neuron generated them
   ow=options(warn=1)
   on.exit(options(ow), add = TRUE)
+  if(interactive())
+    pb <- progress::progress_bar$new(format = "  reading :current/:total [:bar]  eta: :eta",
+                                   clear = FALSE,
+                                   total = length(paths),
+                                   show_after=2)
+  
   for(n in names(paths)){
+    if(interactive())
+      pb$tick()
     f=unname(paths[n])
     x=withCallingHandlers(try(read.neuron(f, format=format, ...), silent=TRUE),
                           warning = function(w) message("While reading file: ",f),
@@ -492,22 +500,30 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 }
 
 #' Read a neuron in swc file format
-#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully 
-#'   parsed \code{\link{neuron}} representation.
-#' @details These functions will accept SWC neurons with multiple trees and 
+#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully
+#'   parsed \code{\link{neuron}} representation. However we normally recommend
+#'   using \code{\link[=read.neuron]{read.neuron(s)}} since those functions cope
+#'   with any file type.
+#' @details These functions will accept SWC neurons with multiple trees and
 #'   arbitrary point index order. However only \code{read.ngraph.swc} will
 #'   accept SWC files with cycles.
-#'   
-#'   These functions would normally be called from \code{read.neuron(s)} rather 
-#'   than used directly.
-#' @section SWC Format: According to 
-#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html} SWC file format has a
-#'   radius not a diameter specification
+#'
+#'   These functions would normally be called from
+#'   \code{\link[=read.neuron]{read.neuron(s)}} rather than used directly. The
+#'   only benefit of using \code{read.neuron.swc} is to avoid a very small
+#'   overhead in identifying the SWC file type. Note that only
+#'   \code{\link{read.neurons}} can read many files in one command to construct
+#'   a \code{\link{neuronlist}} object.
+#'
+#' @section SWC Format: According to
+#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html}
+#'    SWC file format has a radius not a diameter specification
 #' @param f path to file
-#' @param ... Additional arguments. \code{read.neuron.swc} passes these to 
-#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
+#' @param ... Additional arguments. \code{read.neuron.swc} passes these to
+#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}.
 #'   \code{read.neuron.swc} passes them to \code{\link{ngraph}}.
-#' @seealso \code{\link{is.swc}}
+#' @seealso \code{\link{is.swc}}, \code{\link{read.neuron}}
+#' @export
 read.neuron.swc<-function(f, ...){
   d=read.swc(f)
   # multiply by 2 to get diam which is what I work with internally
@@ -825,6 +841,12 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     if(is.null(names(files))) names(files)=INDICES
   }
   written=structure(rep("",length(INDICES)), .Names = INDICES)
+  if(interactive())
+    pb <- progress::progress_bar$new(format = "  writing :current/:total [:bar]  eta: :eta",
+                                     clear = FALSE,
+                                     total = length(INDICES),
+                                     show_after=2)
+  
   for(nn in INDICES){
     n=nl[[nn]]
     thisdir=dir
@@ -837,7 +859,15 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
       thisdir=subdirs[nn]
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
-    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, Force=Force, ...)
+    file=files[nn]
+    if(!isTRUE(nzchar(file)) && is.neuron(n) && is.null(n$InputFileName)){
+      # the filename was not specified explicitly and we can't figure it out
+      # from field inside the neuron, so set to name of object in neuronlist
+      file=nn
+    }
+    if(interactive())
+      pb$tick()
+    written[nn]=write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, ...)
   }
   if(!is.null(zip_file)) {
     owd=setwd(dir)

@@ -2,11 +2,12 @@
 % Please edit documentation in R/neuron-plot.R
 \name{plot3d.neuron}
 \alias{plot3d.neuron}
-\title{Plot neurons in 3D using rgl library}
+\title{Plot neurons in 3D using rgl library or plotly module}
 \usage{
 \method{plot3d}{neuron}(x, WithLine = TRUE, NeuronNames = FALSE,
   WithNodes = TRUE, WithAllPoints = FALSE, WithText = FALSE,
-  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...)
+  PlotSubTrees = TRUE, add = TRUE, col = NULL, soma = FALSE, ...,
+  plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{A neuron to plot}
@@ -37,6 +38,8 @@ soma. Either a logical value or a numeric indicating the radius (default
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 \code{\link[rgl]{spheres3d}} if somata are being plotted).}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 }
 \value{
 list of rgl plotting ids (invisibly) separated into \code{lines},
@@ -44,7 +47,7 @@ list of rgl plotting ids (invisibly) separated into \code{lines},
   \code{rgl::\link[rgl]{plot3d}} for details.
 }
 \description{
-Plot neurons in 3D using rgl library
+Plot neurons in 3D using rgl library or plotly module
 }
 \details{
 Note that when \code{WithText=TRUE}, the numeric identifiers plotted
@@ -56,8 +59,8 @@ Note that when \code{WithText=TRUE}, the numeric identifiers plotted
   \code{...} elements are necessarily relevant to both of these drawing
   calls. Furthermore plotting a large number of somata with transparency
   (i.e. \code{alpha < 1} ) can quickly result in very slow rgl draw and
-  refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when using
-  \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
+  refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when
+  using \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
 }
 \examples{
 # A new plot would have been opened if required
@@ -66,15 +69,14 @@ plot3d(Cell07PNs[[1]],col='red')
 plot3d(Cell07PNs[[2]],col='green')
 \donttest{
 # clear the current plot
-clear3d()
+nclear3d()
 plot3d(Cell07PNs[[2]],col='blue',add=FALSE)
 # plot the number of all nodes
-clear3d()
+nclear3d()
 plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 # include cell bodies
 plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 plot3d(Cell07PNs[5], col='red', soma=3)
-rgl.close()
 }
 }
 \seealso{

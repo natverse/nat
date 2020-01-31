@@ -141,8 +141,15 @@ test_that("we can plot neurons in 2D", {
 })
 
 test_that("we can plot neurons in 3D", {
+  options(nat.plotengine='rgl')
   plottedLines <- plot3d(Cell07PNs[[1]], soma=3, WithText=T, WithNodes = T, WithAllPoints=T)$lines
   expect_gt(plottedLines, 0)
+  
+  options(nat.plotengine='plotly')
+  plottedLines <- plot3d(Cell07PNs[[1]], soma=3, WithText=T, WithNodes = T, WithAllPoints=T)
+  expect_type(plottedLines, "list")
+  
+  
 })
 
 test_that("we can plot dotprops in 2D", {
@@ -151,8 +158,14 @@ test_that("we can plot dotprops in 2D", {
 })
 
 test_that("we can plot dotprops in 3D", {
+  options(nat.plotengine='rgl')
   plottedSegments <- plot3d(kcs20[[1]])$segments
   expect_gt(plottedSegments, 0)
+  
+  options(nat.plotengine='plotly')
+  plottedSegments <- plot3d(kcs20[[1]])
+  expect_type(plottedSegments, "list")
+  
 })
 
 context("neuron seglengths/resampling")
@@ -189,6 +202,23 @@ test_that("we can resample neurons", {
   s3=testn$SegList[[3]]
   expect_equivalent(resample_segment(testn$d[s3, c("X", "Y", "Z")], 0.5),
                testn$d[s3[1], c("X", "Y", "Z"), drop=F]+c(0,0.5,0))
+
+  # real life example with duplicate point  
+  d=matrix(c(33.1389, 33.0951, 33.0876, 33.0971, 33.0001, 32.9394, 
+                32.8519, 32.8519, 32.7398, 32.7247, 32.7854, 32.7911, 32.8006, 
+                32.7988, 32.7854, 32.9071, 61.9844, 61.5798, 61.5551, 61.5551, 
+                61.5189, 61.4866, 61.5056, 61.5056, 61.5684, 61.5741, 61.6349, 
+                61.6691, 61.6899, 61.7184, 61.7299, 61.6368, 43.15, 43.15, 43.1, 
+                43.05, 43, 42.95, 42.9, 42.9, 42.85, 42.8, 42.75, 42.7, 42.65, 
+                42.6, 42.55, 42.5, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, 
+                -2, -2, -2, -2, -2), 
+           ncol=4, dimnames = list(NULL, c("X", "Y", "Z", "W")))
+  
+  baseline <-
+    matrix(c(32.726738385323, 61.5733305432887, 42.8067496202749,-2),
+            ncol = 4, dimnames  = list(NULL, c("X", "Y", "Z", "W")))
+  expect_silent(rsd <- resample_segment(d, 1))
+  expect_equal(rsd, baseline, tolerance=1e-6)
   
   expect_is(resampled<-resample(testn, 1.2), 'neuron')
   expect_equal(seglengths(resampled), seglengths(testn))

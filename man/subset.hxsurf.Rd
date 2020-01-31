@@ -35,8 +35,8 @@ plot3d(vertical_lobe, alpha=0.3)
 plot3d(kcs20)
 
 # there is also a shortcut for this
-clear3d()
-plot3d(MBL.surf, "VL", alpha=0.3)
+nclear3d()
+plot3d(MBL.surf, subset = "VL", alpha=0.3)
 }
 }
 \seealso{

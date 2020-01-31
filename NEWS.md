@@ -1,3 +1,16 @@
+# nat (development version)
+
+* switch to https://github.com/natverse/nat
+* Support for plotly graphics engine (#409, #410)
+* Teach dotprops.character to handle multiple input files (#420)
+* Fix bug in nmapply with progress (#412)
+* Fix warning in resample.neuron when there are identical points (#405)
+* Fix fig size missing in vignette plotly.Rmd (#417)
+* Add `xyzmatrix()`, `xyzmatrix<-()` and`nvertices()` methods for `shapelist3d`
+  thereby enabling these rgl objects containing multiple meshes to be 
+  transformed. Currently most relevant when fetching neuroglancer meshes (#419).
+* `xyzmatrix.mesh3d()` now has colnames XYZ for consistency (#418)
+
 # nat 1.9.1
 
 * Fix very slow loading of neurons in `neuronlistfh()` objects. 
@@ -128,7 +141,7 @@ Fixes
 # nat 1.8.7
 
 This release includes some bug fixes and significantly improved online package
-documentation visible at http://jefferis.github.io/nat/ including two vignettes.
+documentation visible at https://natverse.github.io/nat/ including two vignettes.
 
 * Teach xform and friends to transform soma positions (#206)
 * Copy attributes (including templatebrains) of neuronlists when subsetting (#310)

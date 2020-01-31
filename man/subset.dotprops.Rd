@@ -11,7 +11,7 @@
 
 \item{subset}{A subset of points defined by indices, an expression or a function (see Details)}
 
-\item{invert}{Whether to invert the subset criteria - a convenience when 
+\item{invert}{Whether to invert the subset criteria - a convenience when
 selecting by function or indices.}
 
 \item{...}{Additional parameters (currently ignored)}

@@ -6,7 +6,7 @@
 \usage{
 \method{plot3d}{dotprops}(x, scalevecs = 1, alpharange = NULL,
   color = "black", PlotPoints = FALSE, PlotVectors = TRUE,
-  UseAlpha = FALSE, ...)
+  UseAlpha = FALSE, ..., plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{A dotprops object}
@@ -29,6 +29,8 @@ points/vectors. See details.}
 
 \item{...}{Additional arguments passed to \code{points3d} and/or 
 \code{segments3d}}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 }
 \value{
 invisible list of results of rgl plotting commands
@@ -51,9 +53,9 @@ Tangent vectors are plotted by \code{segments3d} and centred on the
 \donttest{
 open3d()
 plot3d(kcs20[[1]])
-clear3d()
+nclear3d()
 plot3d(kcs20[[1]],col='red')
-clear3d()
+nclear3d()
 plot3d(kcs20[[1]],col='red',lwd=2)
 plot3d(kcs20[[2]],col='green',lwd=2)
 }

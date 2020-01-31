@@ -145,22 +145,30 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
       stop("cmtk is _not_ installed at:", bindir,
            "\nPlease check value of options('nat.cmtk.bindir')")
   }
-  if(is.null(bindir)){
+  # note the use of while loop + break to avoid heavy if nesting
+  while(is.null(bindir)){
     if(nzchar(cmtkwrapperpath<-Sys.which("cmtk"))) {
       # try looking for cmtk wrapper script
       # e.g. /usr/bin/cmtk => /usr/lib/cmtk/bin
       bindir=file.path(dirname(dirname(cmtkwrapperpath)), "lib", "cmtk","bin")
-    } else if(nzchar(cmtktoolpath<-Sys.which(cmtktool))){
+      if(file.exists(file.path(bindir, cmtktool)))
+        break
+      # we couldn't find the actual cmtk tools in the appropriate location
+      bindir <- NULL
+    }
+    if(nzchar(cmtktoolpath<-Sys.which(cmtktool))){
       bindir=dirname(cmtktoolpath)
-    } else {
-      # check some plausible locations
-      for(d in extradirs){
-        if(file.exists(file.path(d,cmtktool))) {
-          bindir=d
-          break
-        }
+      break
+    }
+    # otherwise check some plausible locations
+    for(d in extradirs){
+      if(file.exists(file.path(d,cmtktool))) {
+        bindir=d
+        break
       }
     }
+    # we're out of luck but we still need to break out of the while loop
+    break
   }
   if(!is.null(bindir)){
     if(is.na(bindir)) bindir=NULL

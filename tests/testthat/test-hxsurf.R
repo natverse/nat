@@ -18,13 +18,25 @@ test_that("we can read hxsurf object", {
   m=data.frame(name = regions, id = 1:19, col = cols, row.names=regions, 
                stringsAsFactors = FALSE)
   expect_equal(materials(surf), m)
+  
+  options(nat.plotengine='rgl')
   open3d()
   plot3d(surf,col='red',alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
   rgl.close()
+  
+  #For plotly..
+  options(nat.plotengine='plotly')
+  openplotlyscene()
+  plot3d(surf,col='red',alpha=0.2)
+  nclear3d()
+  plot3d(surf,opacity=0.2)
+  nclear3d()
+  plot3d(surf,col=rainbow,alpha=0.2)
+  nclear3d()
 })
 
 test_that("we fail for bad surface files", {
@@ -113,6 +125,12 @@ test_that("we can convert boundingbox to rgl::mesh3d",{
   expect_equal(as.mesh3d(bb), rgl::cube3d())
 })
 
+test_that("we can convert use xyzmatrix on shapelist3d object",{
+  m=as.mesh3d(MBL.surf)
+  expect_equal(xyzmatrix(shapelist3d(m, plot=F)),
+               xyzmatrix(m))
+})
+
 test_that("we can convert ashape3d to rgl::mesh3d",{
   skip_if_not_installed('alphashape3d')
   kcs20.a=alphashape3d::ashape3d(xyzmatrix(kcs20), alpha = 10)
@@ -122,7 +140,6 @@ test_that("we can convert ashape3d to rgl::mesh3d",{
   # also shows that we can use the alphashape directly in pointsinside
   expect_true(all(pointsinside(kcs20, kcs20.a)))
 })
-
 
 test_that("we can save and re-read hxsurf object", {
   surffile <- tempfile()

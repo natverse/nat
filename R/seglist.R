@@ -130,7 +130,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # _original_ vertex ids specified by "vid" attribute of input graph
   curseg=vids[orders[1]]
   if(length(ncount)==1) stop("Unexpected singleton point found!")
-  sl=seglist()
+  sl=list()
   # we have more than 1 point in graph and some work to do!
   fathers=as.integer(dfs$father)
   for(i in seq.int(from=2,to=length(dfs$order))){
@@ -148,7 +148,9 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
       curseg=integer(0)
     }
   }
-  sl
+  # nb it is *way* faster to operate on a base list object
+  # and then turn it into a seglist when done.
+  as.seglist(sl)
 }
 
 #' Recalculate Neurons's SWCData using SegList and point information
