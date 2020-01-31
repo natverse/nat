@@ -69,7 +69,7 @@ plot3d(kcs20,col='grey')
 }
 \seealso{
 \code{\link{prune_strahler}}, \code{\link{spine}},
-  \code{\link{prune_vertices}}
+  \code{\link{prune_vertices}}, \code{\link{subset.neuron}}
 
 \code{\link{subset.neuron}}
 
