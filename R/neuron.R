@@ -1203,16 +1203,29 @@ stitch_neurons_mst <- function(x, thresh_el = 1000, k=10L) {
        
        #find the pts nearest in base leaf to the target leaf..
        minval <- min(k,length(leaves_base),length(leaves_target))
-       nnres=nabor::knn(base_pt, target_pt, k=minval)
+       nnres=nabor::knn(base_pt, target_pt, k=minval) #Get k nearest pts in base_pt
        
-       targetpt_idx=which.min(nnres$nn.dists)
-       basept_idx=nnres$nn.idx[targetpt_idx,1]
+       
+       sortedvals <- sort(nnres$nn.dists,index.return = T)
+       sortedidx <- arrayInd(sortedvals$ix, dim(nnres$nn.dists))
+       
+       #The first column here is coresponds to 'leaves_target', the second to 'leaves_base'
+       targetpt_idx = sortedidx[1:minval,1]
+       basept_idx_temp = sortedidx[1:minval,2]
+      
+       basept_idx = NULL
+       for (bpidx in 1:length(basept_idx_temp)){
+         basept_idx  = c(basept_idx,nnres$nn.idx[targetpt_idx[bpidx],basept_idx_temp[bpidx]])
+       }
        
        trunc_base <- leaves_base[basept_idx]
        trunc_target <- leaves_target[targetpt_idx]
       
-       #compute the combination now, only based on the truncated base leaf pt and all pts in target leaf
-       leaves_combo <- expand.grid(trunc_base,leaves_target)
+       #based on the nearest points in base cluster, but all pts in target cluster..
+       leaves_combo <- expand.grid(trunc_base,leaves_target) 
+       #Only based on actual nearest points in both clusters..
+       #leaves_combo <- cbind(trunc_base,trunc_target) 
+       
       
       #leaves_combo <- expand.grid(leaves_base,leaves_target)
       combedge_start <- c(combedge_start,leaves_combo[,1])
