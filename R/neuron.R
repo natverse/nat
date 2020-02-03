@@ -1203,6 +1203,10 @@ stitch_neurons_mst <- function(x, thresh_el = 1000, k=10L) {
        
        #find the pts nearest in base leaf to the target leaf..
        minval <- min(k,length(leaves_base),length(leaves_target))
+       if(minval == 1){#For processing point inputs..
+         if(!is.matrix(base_pt)){base_pt = t(base_pt)}
+         if(!is.matrix(target_pt)){target_pt = t(target_pt)}
+       }
        nnres=nabor::knn(base_pt, target_pt, k=minval) #Get k nearest pts in base_pt
        
        
