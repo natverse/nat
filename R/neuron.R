@@ -1100,7 +1100,7 @@ handlesubtrees=function(x) {
 #'   original root of the neuron, then this should be retained.
 #' @param x Fragments that could be \code{\link{neuronlist}} or a single neuron
 #'   with multiple unconnected subtrees.
-#' @param thresh_el The threshold distance (units in microns) above which new vertices 
+#' @param thresh_el The threshold distance (units in nanometers) above which new vertices 
 #' will not be connected (default=1000, set to NULL to disable this feature). This parameter prevents the 
 #' merging of vertices that are so far away from the main neuron such that they are likely to be spurious.
 #' @param k The number of nearest neighbours to consider when trying to merge different clusters.

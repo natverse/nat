@@ -10,7 +10,7 @@ stitch_neurons_mst(x, thresh_el = 1000, k = 10L)
 \item{x}{Fragments that could be \code{\link{neuronlist}} or a single neuron
 with multiple unconnected subtrees.}
 
-\item{thresh_el}{The threshold distance (units in microns) above which new vertices 
+\item{thresh_el}{The threshold distance (units in nanometers) above which new vertices 
 will not be connected (default=1000, set to NULL to disable this feature). This parameter prevents the 
 merging of vertices that are so far away from the main neuron such that they are likely to be spurious.}
 
