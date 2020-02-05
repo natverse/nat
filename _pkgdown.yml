@@ -147,9 +147,11 @@ reference:
     contents:
       - plot3d
       - nopen3d
+      - nclear3d
       - nview3d
       - npop3d
       - pan3d
+      - wire3d
       - nlscan
       - plot3d.boundingbox
       - plot3d.dotprops
@@ -157,16 +159,14 @@ reference:
       - plot3d.neuron
       - plot3d.cmtkreg
   - title: 3D Interaction with Objects
-    desc: Functions to review, identify, and modify objects by interactive selection
-    in RGL windows.
-    contents: 
+    desc: Functions to review, identify, and modify objects by interactive selection in RGL windows.
+    contents:
       - find.neuron
       - find.soma
       - select_points
       - correct_root
       - prune_online
       - make_model
-      - manually_assign_axon_dendrite
   - title: 3D Geometry
     desc: Functions for analysing 3D geometry of neurons and other objects
     contents:
