@@ -4,13 +4,30 @@
 \alias{plot.neuron}
 \title{Plot a 2D projection of a neuron}
 \usage{
-\method{plot}{neuron}(x, WithLine = TRUE, WithNodes = TRUE,
-  WithAllPoints = FALSE, WithText = FALSE, PlotSubTrees = TRUE,
-  soma = FALSE, PlotAxes = c("XY", "YZ", "XZ", "ZY"), axes = TRUE,
-  asp = 1, main = x$NeuronName, sub = NULL, xlim = NULL,
-  ylim = NULL, AxisDirections = c(1, -1, 1), add = FALSE,
-  col = NULL, PointAlpha = 1, tck = NA, lwd = par("lwd"),
-  boundingbox = NULL, ...)
+\method{plot}{neuron}(
+  x,
+  WithLine = TRUE,
+  WithNodes = TRUE,
+  WithAllPoints = FALSE,
+  WithText = FALSE,
+  PlotSubTrees = TRUE,
+  soma = FALSE,
+  PlotAxes = c("XY", "YZ", "XZ", "ZY"),
+  axes = TRUE,
+  asp = 1,
+  main = x$NeuronName,
+  sub = NULL,
+  xlim = NULL,
+  ylim = NULL,
+  AxisDirections = c(1, -1, 1),
+  add = FALSE,
+  col = NULL,
+  PointAlpha = 1,
+  tck = NA,
+  lwd = par("lwd"),
+  boundingbox = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{a neuron to plot.}
@@ -104,9 +121,14 @@ plot(Cell07PNs[[4]], WithNodes=FALSE, soma=1.25)
 \seealso{
 \code{\link{plot3d.neuron}}
 
-Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{potential_synapses}}, \code{\link{prune}},
-  \code{\link{resample}}, \code{\link{rootpoints}},
-  \code{\link{spine}}, \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{neuron}()},
+\code{\link{ngraph}()},
+\code{\link{potential_synapses}()},
+\code{\link{prune}()},
+\code{\link{resample}()},
+\code{\link{rootpoints}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

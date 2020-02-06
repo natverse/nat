@@ -30,10 +30,14 @@ resample a neuron with a new spacing
 \seealso{
 \code{\link{approx}}, \code{\link{seglengths}}
 
-Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.neuron}},
-  \code{\link{potential_synapses}}, \code{\link{prune}},
-  \code{\link{rootpoints}}, \code{\link{spine}},
-  \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{neuron}()},
+\code{\link{ngraph}()},
+\code{\link{plot.neuron}()},
+\code{\link{potential_synapses}()},
+\code{\link{prune}()},
+\code{\link{rootpoints}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

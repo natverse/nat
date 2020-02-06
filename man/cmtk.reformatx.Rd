@@ -4,11 +4,21 @@
 \alias{cmtk.reformatx}
 \title{Reformat an image with a CMTK registration using the reformatx tool}
 \usage{
-cmtk.reformatx(floating, registrations, output, target, mask = FALSE,
-  direction = NULL, interpolation = c("linear", "nn", "cubic", "pv",
-  "sinc-cosine", "sinc-hamming"), dryrun = FALSE, Verbose = TRUE,
-  MakeLock = TRUE, OverWrite = c("no", "update", "yes"),
-  filesToIgnoreModTimes = NULL, ...)
+cmtk.reformatx(
+  floating,
+  registrations,
+  output,
+  target,
+  mask = FALSE,
+  direction = NULL,
+  interpolation = c("linear", "nn", "cubic", "pv", "sinc-cosine", "sinc-hamming"),
+  dryrun = FALSE,
+  Verbose = TRUE,
+  MakeLock = TRUE,
+  OverWrite = c("no", "update", "yes"),
+  filesToIgnoreModTimes = NULL,
+  ...
+)
 }
 \arguments{
 \item{floating}{The floating image to be reformatted}

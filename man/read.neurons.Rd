@@ -4,9 +4,17 @@
 \alias{read.neurons}
 \title{Read one or more neurons from file to a neuronlist in memory}
 \usage{
-read.neurons(paths, pattern = NULL, neuronnames = basename,
-  format = NULL, nl = NULL, df = NULL, OmitFailures = TRUE,
-  SortOnUpdate = FALSE, ...)
+read.neurons(
+  paths,
+  pattern = NULL,
+  neuronnames = basename,
+  format = NULL,
+  nl = NULL,
+  df = NULL,
+  OmitFailures = TRUE,
+  SortOnUpdate = FALSE,
+  ...
+)
 }
 \arguments{
 \item{paths}{Paths to neuron input files \emph{or} a directory containing 
@@ -92,10 +100,13 @@ plot3d(vdnl, grepl("P[1-6].app", Lineage))
 \code{\link{read.neuron}}, \code{\link{write.neurons}},
   \code{\link{fileformats}}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
-  \code{\link{nlapply}}, \code{\link{write.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistfh}()},
+\code{\link{neuronlist}()},
+\code{\link{nlapply}()},
+\code{\link{write.neurons}()}
 }
 \concept{neuronlist}

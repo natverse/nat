@@ -9,11 +9,16 @@
 \usage{
 mirror(x, ...)
 
-\method{mirror}{character}(x, output, mirrorAxisSize = NULL,
-  target = x, ...)
+\method{mirror}{character}(x, output, mirrorAxisSize = NULL, target = x, ...)
 
-\method{mirror}{default}(x, mirrorAxisSize, mirrorAxis = c("X", "Y",
-  "Z"), warpfile = NULL, transform = c("warp", "affine", "flip"), ...)
+\method{mirror}{default}(
+  x,
+  mirrorAxisSize,
+  mirrorAxis = c("X", "Y", "Z"),
+  warpfile = NULL,
+  transform = c("warp", "affine", "flip"),
+  ...
+)
 
 \method{mirror}{neuronlist}(x, subset = NULL, OmitFailures = NA, ...)
 }

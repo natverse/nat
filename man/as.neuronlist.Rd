@@ -7,8 +7,7 @@
 \usage{
 as.neuronlist(l, ...)
 
-\method{as.neuronlist}{default}(l, df = NULL, AddClassToNeurons = TRUE,
-  ...)
+\method{as.neuronlist}{default}(l, df = NULL, AddClassToNeurons = TRUE, ...)
 }
 \arguments{
 \item{l}{An existing list or a single neuron to start a list}

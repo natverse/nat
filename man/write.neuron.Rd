@@ -4,8 +4,16 @@
 \alias{write.neuron}
 \title{Write out a neuron in any of the file formats we know about}
 \usage{
-write.neuron(n, file = NULL, dir = NULL, format = NULL, ext = NULL,
-  Force = FALSE, MakeDir = TRUE, ...)
+write.neuron(
+  n,
+  file = NULL,
+  dir = NULL,
+  format = NULL,
+  ext = NULL,
+  Force = FALSE,
+  MakeDir = TRUE,
+  ...
+)
 }
 \arguments{
 \item{n}{A neuron}

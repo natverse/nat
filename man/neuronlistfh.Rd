@@ -13,9 +13,15 @@ is.neuronlistfh(nl)
 
 as.neuronlistfh(x, df, ...)
 
-\method{as.neuronlistfh}{neuronlist}(x, df = attr(x, "df"),
-  dbdir = NULL, dbClass = c("RDS", "RDS2"), remote = NULL,
-  WriteObjects = c("yes", "no", "missing"), ...)
+\method{as.neuronlistfh}{neuronlist}(
+  x,
+  df = attr(x, "df"),
+  dbdir = NULL,
+  dbClass = c("RDS", "RDS2"),
+  remote = NULL,
+  WriteObjects = c("yes", "no", "missing"),
+  ...
+)
 }
 \arguments{
 \item{db}{a \code{filehash} object that manages an on disk database of neuron
@@ -174,16 +180,20 @@ plot3d(subset(kcs20fh, type=='gamma'))
 \seealso{
 \code{\link[filehash]{filehash-class}}
 
-Other neuronlistfh: \code{\link{[.neuronlistfh}},
-  \code{\link{read.neuronlistfh}},
-  \code{\link{remotesync}},
-  \code{\link{write.neuronlistfh}}
+Other neuronlistfh: 
+\code{\link{[.neuronlistfh}()},
+\code{\link{read.neuronlistfh}()},
+\code{\link{remotesync}()},
+\code{\link{write.neuronlistfh}()}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlist}}, \code{\link{nlapply}},
-  \code{\link{read.neurons}}, \code{\link{write.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlist}()},
+\code{\link{nlapply}()},
+\code{\link{read.neurons}()},
+\code{\link{write.neurons}()}
 }
 \concept{neuronlist}
 \concept{neuronlistfh}

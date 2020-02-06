@@ -4,9 +4,16 @@
 \alias{plot3d.dotprops}
 \title{3D plots of dotprops objects using rgl package}
 \usage{
-\method{plot3d}{dotprops}(x, scalevecs = 1, alpharange = NULL,
-  color = "black", PlotPoints = FALSE, PlotVectors = TRUE,
-  UseAlpha = FALSE, ...)
+\method{plot3d}{dotprops}(
+  x,
+  scalevecs = 1,
+  alpharange = NULL,
+  color = "black",
+  PlotPoints = FALSE,
+  PlotVectors = TRUE,
+  UseAlpha = FALSE,
+  ...
+)
 }
 \arguments{
 \item{x}{A dotprops object}

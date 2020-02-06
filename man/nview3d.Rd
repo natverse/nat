@@ -4,9 +4,13 @@
 \alias{nview3d}
 \title{Set the 3D viewpoint of an RGL window using anatomical terms}
 \usage{
-nview3d(viewpoint = c("frontal", "anterior", "dorsal", "ventral",
-  "posterior", "left", "right", "oblique_right", "oblique_left"),
-  FOV = 0, extramat = NULL, ...)
+nview3d(
+  viewpoint = c("frontal", "anterior", "dorsal", "ventral", "posterior", "left",
+    "right", "oblique_right", "oblique_left"),
+  FOV = 0,
+  extramat = NULL,
+  ...
+)
 }
 \arguments{
 \item{viewpoint}{Character vector specifying viewpoint}

@@ -10,9 +10,19 @@
 \alias{as.neuron.default}
 \title{neuron: class to represent traced neurons}
 \usage{
-neuron(d, NumPoints = nrow(d), StartPoint, BranchPoints = integer(),
-  EndPoints, SegList, SubTrees = NULL, InputFileName = NULL,
-  NeuronName = NULL, ..., MD5 = TRUE)
+neuron(
+  d,
+  NumPoints = nrow(d),
+  StartPoint,
+  BranchPoints = integer(),
+  EndPoints,
+  SegList,
+  SubTrees = NULL,
+  InputFileName = NULL,
+  NeuronName = NULL,
+  ...,
+  MD5 = TRUE
+)
 
 is.neuron(x, Strict = FALSE)
 
@@ -20,8 +30,7 @@ as.neuron(x, ...)
 
 \method{as.neuron}{data.frame}(x, ...)
 
-\method{as.neuron}{ngraph}(x, vertexData = NULL, origin = NULL,
-  Verbose = FALSE, ...)
+\method{as.neuron}{ngraph}(x, vertexData = NULL, origin = NULL, Verbose = FALSE, ...)
 
 \method{as.neuron}{igraph}(x, ...)
 
@@ -167,10 +176,14 @@ plot(as.neuron(gstem2))
 
 \code{\link{graph.dfs}, \link{as.seglist}}
 
-Other neuron: \code{\link{ngraph}},
-  \code{\link{plot.neuron}},
-  \code{\link{potential_synapses}}, \code{\link{prune}},
-  \code{\link{resample}}, \code{\link{rootpoints}},
-  \code{\link{spine}}, \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{ngraph}()},
+\code{\link{plot.neuron}()},
+\code{\link{potential_synapses}()},
+\code{\link{prune}()},
+\code{\link{resample}()},
+\code{\link{rootpoints}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

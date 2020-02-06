@@ -28,8 +28,7 @@ dotprops(x, ...)
 
 \method{dotprops}{neuron}(x, Labels = NULL, resample = NA, ...)
 
-\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE,
-  ...)
+\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
 }
 \arguments{
 \item{x}{Object to be tested/converted}

@@ -5,9 +5,15 @@
 \alias{read.amiramesh.header}
 \title{Read AmiraMesh data in binary or ascii format}
 \usage{
-read.amiramesh(file, sections = NULL, header = FALSE,
-  simplify = TRUE, endian = NULL, ReadByteAsRaw = FALSE,
-  Verbose = FALSE)
+read.amiramesh(
+  file,
+  sections = NULL,
+  header = FALSE,
+  simplify = TRUE,
+  endian = NULL,
+  ReadByteAsRaw = FALSE,
+  Verbose = FALSE
+)
 
 read.amiramesh.header(file, Parse = TRUE, Verbose = FALSE)
 }
@@ -50,8 +56,10 @@ reading byte data as raw arrays requires 1/4 memory but complicates
 \seealso{
 \code{\link{readBin}, \link{.Platform}}
 
-Other amira: \code{\link{amiratype}},
-  \code{\link{is.amiramesh}}, \code{\link{read.hxsurf}},
-  \code{\link{write.hxsurf}}
+Other amira: 
+\code{\link{amiratype}()},
+\code{\link{is.amiramesh}()},
+\code{\link{read.hxsurf}()},
+\code{\link{write.hxsurf}()}
 }
 \concept{amira}

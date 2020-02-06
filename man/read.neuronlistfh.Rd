@@ -63,8 +63,10 @@ When reading a remote \code{neuronlistfh} object, it is downloaded
   neuronlistfh object, an error will result.
 }
 \seealso{
-Other neuronlistfh: \code{\link{[.neuronlistfh}},
-  \code{\link{neuronlistfh}}, \code{\link{remotesync}},
-  \code{\link{write.neuronlistfh}}
+Other neuronlistfh: 
+\code{\link{[.neuronlistfh}()},
+\code{\link{neuronlistfh}()},
+\code{\link{remotesync}()},
+\code{\link{write.neuronlistfh}()}
 }
 \concept{neuronlistfh}

@@ -5,11 +5,25 @@
 \alias{nmapply}
 \title{lapply and mapply for neuronlists (with optional parallelisation)}
 \usage{
-nlapply(X, FUN, ..., subset = NULL, OmitFailures = NA,
-  .progress = getOption("nat.progress", default = "auto"))
+nlapply(
+  X,
+  FUN,
+  ...,
+  subset = NULL,
+  OmitFailures = NA,
+  .progress = getOption("nat.progress", default = "auto")
+)
 
-nmapply(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
-  USE.NAMES = TRUE, subset = NULL, OmitFailures = NA)
+nmapply(
+  FUN,
+  X,
+  ...,
+  MoreArgs = NULL,
+  SIMPLIFY = FALSE,
+  USE.NAMES = TRUE,
+  subset = NULL,
+  OmitFailures = NA
+)
 }
 \arguments{
 \item{X}{A neuronlist}
@@ -38,7 +52,7 @@ examples).}
 
 \item{SIMPLIFY}{logical or character string; attempt to reduce the
     result to a vector, matrix or higher dimensional array; see
-    the \code{simplify} argument of \code{\link{sapply}}.}
+    the \code{simplify} argument of \code{\link[base]{sapply}}.}
 
 \item{USE.NAMES}{logical; use names if the first \dots argument has
     names, or if it is a character vector, use that character vector as
@@ -148,10 +162,13 @@ sl=nlapply(Cell07PNs, FUN = seglengths)
 
 \code{\link{mapply}}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
-  \code{\link{read.neurons}}, \code{\link{write.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistfh}()},
+\code{\link{neuronlist}()},
+\code{\link{read.neurons}()},
+\code{\link{write.neurons}()}
 }
 \concept{neuronlist}

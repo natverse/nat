@@ -39,8 +39,10 @@ This function writes the main neuronlistfh object to disk, but makes
 \seealso{
 \code{\link{saveRDS}}
 
-Other neuronlistfh: \code{\link{[.neuronlistfh}},
-  \code{\link{neuronlistfh}},
-  \code{\link{read.neuronlistfh}}, \code{\link{remotesync}}
+Other neuronlistfh: 
+\code{\link{[.neuronlistfh}()},
+\code{\link{neuronlistfh}()},
+\code{\link{read.neuronlistfh}()},
+\code{\link{remotesync}()}
 }
 \concept{neuronlistfh}

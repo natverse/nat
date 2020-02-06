@@ -18,8 +18,10 @@ extract the registration element from the registration file.}
 Read a CMTK format registration
 }
 \seealso{
-Other cmtk-io: \code{\link{cmtk.extract_affine}},
-  \code{\link{read.cmtk}}, \code{\link{write.cmtkreg}},
-  \code{\link{write.cmtk}}
+Other cmtk-io: 
+\code{\link{cmtk.extract_affine}()},
+\code{\link{read.cmtk}()},
+\code{\link{write.cmtkreg}()},
+\code{\link{write.cmtk}()}
 }
 \concept{cmtk-io}

@@ -4,8 +4,7 @@
 \alias{is.nrrd}
 \title{Check if a file is a NRRD file}
 \usage{
-is.nrrd(f = NULL, bytes = NULL, ReturnVersion = FALSE,
-  TrustSuffix = FALSE)
+is.nrrd(f = NULL, bytes = NULL, ReturnVersion = FALSE, TrustSuffix = FALSE)
 }
 \arguments{
 \item{f}{A character vector specifying the path or a raw vector with at least

@@ -4,8 +4,16 @@
 \alias{write.neurons}
 \title{Write neurons from a neuronlist object to individual files, or a zip archive}
 \usage{
-write.neurons(nl, dir, format = NULL, subdir = NULL,
-  INDICES = names(nl), files = NULL, Force = FALSE, ...)
+write.neurons(
+  nl,
+  dir,
+  format = NULL,
+  subdir = NULL,
+  INDICES = names(nl),
+  files = NULL,
+  Force = FALSE,
+  ...
+)
 }
 \arguments{
 \item{nl}{neuronlist object}
@@ -69,11 +77,14 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 \code{\link{write.neuron}}, \code{\link{read.neurons}},
   \code{\link{fileformats}}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
-  \code{\link{nlapply}}, \code{\link{read.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistfh}()},
+\code{\link{neuronlist}()},
+\code{\link{nlapply}()},
+\code{\link{read.neurons}()}
 }
 \author{
 jefferis

@@ -59,10 +59,14 @@ A neuron may have multiple subtrees and therefore multiple roots
   specified
 }
 \seealso{
-Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.neuron}},
-  \code{\link{potential_synapses}}, \code{\link{prune}},
-  \code{\link{resample}}, \code{\link{spine}},
-  \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{neuron}()},
+\code{\link{ngraph}()},
+\code{\link{plot.neuron}()},
+\code{\link{potential_synapses}()},
+\code{\link{prune}()},
+\code{\link{resample}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

@@ -43,9 +43,12 @@ plot3d(teth)
 \seealso{
 \code{\link{as.mesh3d}}
 
-Other hxsurf: \code{\link{as.mesh3d}},
-  \code{\link{materials}}, \code{\link{plot3d.hxsurf}},
-  \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
-  \code{\link{write.hxsurf}}
+Other hxsurf: 
+\code{\link{as.mesh3d}()},
+\code{\link{materials}()},
+\code{\link{plot3d.hxsurf}()},
+\code{\link{read.hxsurf}()},
+\code{\link{subset.hxsurf}()},
+\code{\link{write.hxsurf}()}
 }
 \concept{hxsurf}

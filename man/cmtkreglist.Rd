@@ -4,8 +4,7 @@
 \alias{cmtkreglist}
 \title{Make in-memory CMTK registration list from affine matrix or CMTK parameters}
 \usage{
-cmtkreglist(x, centre = c(0, 0, 0), reference = "dummy",
-  floating = "dummy")
+cmtkreglist(x, centre = c(0, 0, 0), reference = "dummy", floating = "dummy")
 }
 \arguments{
 \item{x}{5x3 matrix of CMTK registration parameters OR 4x4 homogeneous affine

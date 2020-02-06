@@ -5,9 +5,14 @@
 \alias{read.nrrd.header}
 \title{Read nrrd file into an array in memory}
 \usage{
-read.nrrd(file, origin = NULL, ReadData = TRUE,
-  AttachFullHeader = TRUE, Verbose = FALSE,
-  ReadByteAsRaw = c("unsigned", "all", "none"))
+read.nrrd(
+  file,
+  origin = NULL,
+  ReadData = TRUE,
+  AttachFullHeader = TRUE,
+  Verbose = FALSE,
+  ReadByteAsRaw = c("unsigned", "all", "none")
+)
 
 read.nrrd.header(file, Verbose = FALSE)
 }

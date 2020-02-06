@@ -4,8 +4,7 @@
 \alias{cmtk.mat2dof}
 \title{Use CMTK mat2dof to convert homogeneous affine matrix into CMTK registration}
 \usage{
-cmtk.mat2dof(m, f = NULL, centre = NULL, Transpose = TRUE,
-  version = FALSE)
+cmtk.mat2dof(m, f = NULL, centre = NULL, Transpose = TRUE, version = FALSE)
 }
 \arguments{
 \item{m}{Homogenous affine matrix (4x4) last row 0 0 0 1 etc}
@@ -34,11 +33,13 @@ Transpose is true by default since this results in an R matrix with
   the transpose in the fourth column being correctly interpreted by cmtk.
 }
 \seealso{
-Other cmtk-commandline: \code{\link{cmtk.dof2mat}}
+Other cmtk-commandline: 
+\code{\link{cmtk.dof2mat}()}
 
-Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
-  \code{\link{cmtk.dof2mat}},
-  \code{\link{cmtkparams2affmat}}
+Other cmtk-geometry: 
+\code{\link{affmat2cmtkparams}()},
+\code{\link{cmtk.dof2mat}()},
+\code{\link{cmtkparams2affmat}()}
 }
 \concept{cmtk-commandline}
 \concept{cmtk-geometry}

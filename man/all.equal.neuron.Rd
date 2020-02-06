@@ -4,11 +4,18 @@
 \alias{all.equal.neuron}
 \title{Check equality on key fields of neuron object}
 \usage{
-\method{all.equal}{neuron}(target, current, tolerance = 1e-06,
-  check.attributes = FALSE, fieldsToCheck = c("NumPoints",
-  "StartPoint", "BranchPoints", "EndPoints", "NumSegs", "SegList", "d"),
+\method{all.equal}{neuron}(
+  target,
+  current,
+  tolerance = 1e-06,
+  check.attributes = FALSE,
+  fieldsToCheck = c("NumPoints", "StartPoint", "BranchPoints", "EndPoints", "NumSegs",
+    "SegList", "d"),
   fieldsToCheckIfPresent = c("NeuronName", "nTrees", "SubTrees"),
-  fieldsToExclude = character(), CheckSharedFieldsOnly = FALSE, ...)
+  fieldsToExclude = character(),
+  CheckSharedFieldsOnly = FALSE,
+  ...
+)
 }
 \arguments{
 \item{target}{\R object.}
@@ -20,7 +27,7 @@
     \code{1.5e-8}.}
 
 \item{check.attributes}{logical indicating if the
-    \code{\link{attributes}} of \code{target} and \code{current}
+    \code{\link[base]{attributes}} of \code{target} and \code{current}
     (other than the names) should be compared.}
 
 \item{fieldsToCheck}{Which fields in the neuron are always checked. The

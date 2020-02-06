@@ -23,8 +23,7 @@ boundingbox(x, ...)
 
 \method{boundingbox}{shape3d}(x, na.rm = FALSE, ...)
 
-\method{boundingbox}{default}(x, dims, input = c("boundingbox",
-  "bounds"), ...)
+\method{boundingbox}{default}(x, dims, input = c("boundingbox", "bounds"), ...)
 
 boundingbox(x) <- value
 }
@@ -95,12 +94,19 @@ boundingbox(Cell07PNs[[1]])
 \seealso{
 \code{\link{plot3d.boundingbox}}
 
-Other im3d: \code{\link{as.im3d}},
-  \code{\link{im3d-coords}}, \code{\link{im3d-io}},
-  \code{\link{im3d}}, \code{\link{imexpand.grid}},
-  \code{\link{imslice}}, \code{\link{is.im3d}},
-  \code{\link{mask}}, \code{\link{origin}},
-  \code{\link{projection}}, \code{\link{threshold}},
-  \code{\link{unmask}}, \code{\link{voxdims}}
+Other im3d: 
+\code{\link{as.im3d}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d-io}},
+\code{\link{im3d}()},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{mask}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{unmask}()},
+\code{\link{voxdims}()}
 }
 \concept{im3d}

@@ -10,8 +10,7 @@ as.im3d(x, ...)
 
 \method{as.im3d}{im3d}(x, ...)
 
-\method{as.im3d}{matrix}(x, voxdims, origin = NULL, BoundingBox = NULL,
-  ...)
+\method{as.im3d}{matrix}(x, voxdims, origin = NULL, BoundingBox = NULL, ...)
 }
 \arguments{
 \item{x}{Object to turn into an im3d}
@@ -68,12 +67,19 @@ im=as.im3d(xyzmatrix(kcs20), JFRC2)
 
 \code{\link{im3d}}, \code{\link{as.im3d}}
 
-Other im3d: \code{\link{boundingbox}},
-  \code{\link{im3d-coords}}, \code{\link{im3d-io}},
-  \code{\link{im3d}}, \code{\link{imexpand.grid}},
-  \code{\link{imslice}}, \code{\link{is.im3d}},
-  \code{\link{mask}}, \code{\link{origin}},
-  \code{\link{projection}}, \code{\link{threshold}},
-  \code{\link{unmask}}, \code{\link{voxdims}}
+Other im3d: 
+\code{\link{boundingbox}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d-io}},
+\code{\link{im3d}()},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{mask}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{unmask}()},
+\code{\link{voxdims}()}
 }
 \concept{im3d}
