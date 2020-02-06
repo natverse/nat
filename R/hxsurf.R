@@ -440,6 +440,7 @@ NULL
 #' @param ... additional arguments for methods, eventually passed to as.mesh3d.
 #' @export
 #' @examples
+#' \donttest{
 #' # check if the vertices in these neurons are inside the mushroom body calyx
 #' # surface object
 #' inout=pointsinside(kcs20, surf=subset(MBL.surf, "MB_CA_L"))
@@ -449,7 +450,7 @@ NULL
 #' MBCAL=subset(MBL.surf, "MB_CA_L")
 #' inout5=pointsinside(kcs20, surf=MBCAL, rval='distance') > -5
 #' table(inout5)
-#' \donttest{
+#' 
 #' # show which points are in or out
 #' # Hmm seems like there are a few red points in the vertical lobe
 #' # that are well outside the calyx
