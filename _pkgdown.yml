@@ -75,6 +75,7 @@ reference:
     - subset.neuron
     - prune
     - prune_vertices
+    - prune_in_volume
     - Ops.neuron
     - scale.neuron
     - resample
@@ -141,23 +142,31 @@ reference:
       - as.hxsurf
       - as.mesh3d
       - pointsinside
-  - title: 3D Plotting of objects
-    desc: Functions to help plot neurons and surfaces in 3D and to review and 
-      identify objects by interactive selection.
+  - title: 3D Plotting of Objects
+    desc: Functions to help plot neurons, surfaces and other 3D objects via RGL.
     contents:
       - plot3d
       - nopen3d
+      - nclear3d
       - nview3d
       - npop3d
       - pan3d
-      - find.neuron
-      - find.soma
+      - wire3d
       - nlscan
       - plot3d.boundingbox
       - plot3d.dotprops
       - plot3d.hxsurf
       - plot3d.neuron
       - plot3d.cmtkreg
+  - title: 3D Interaction with Objects
+    desc: Functions to review, identify, and modify objects by interactive selection in RGL windows.
+    contents:
+      - find.neuron
+      - find.soma
+      - select_points
+      - correct_root
+      - prune_online
+      - make_model
   - title: 3D Geometry
     desc: Functions for analysing 3D geometry of neurons and other objects
     contents:

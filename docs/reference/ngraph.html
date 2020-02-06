@@ -174,8 +174,16 @@ as.ngraph.neuron construct ngraph from a neuron" />
 <p><code>as.ngraph.neuron</code> construct ngraph from a neuron</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ngraph</span>(<span class='no'>el</span>, <span class='no'>vertexnames</span>, <span class='kw'>xyz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>diam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vertex.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>graph.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>ngraph</span>(
+  <span class='no'>el</span>,
+  <span class='no'>vertexnames</span>,
+  <span class='kw'>xyz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>diam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>vertex.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>graph.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
 <span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
@@ -183,8 +191,7 @@ as.ngraph.neuron construct ngraph from a neuron" />
 <span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"swc"</span>,
-  <span class='st'>"seglist"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"swc"</span>, <span class='st'>"seglist"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -282,11 +289,15 @@ neuronal connectivity to generate graph.</p></td>
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/igraph/man/aaa-igraph-package.html'>igraph</a></code>, <code><a href='https://rdrr.io/pkg/igraph/man/set_vertex_attr.html'>set.vertex.attribute</a></code>,
   <code><a href='subset.neuron.html'>subset.neuron</a></code> for example of graph-based manipulation of a
   neuron.</p>
-<p>Other neuron: <code><a href='neuron.html'>neuron</a></code>,
-  <code><a href='plot.neuron.html'>plot.dotprops</a></code>,
-  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
-  <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
-  <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p></div>
+<p>Other neuron: 
+<code><a href='neuron.html'>neuron</a>()</code>,
+<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='potential_synapses.html'>potential_synapses</a>()</code>,
+<code><a href='prune.html'>prune</a>()</code>,
+<code><a href='resample.html'>resample</a>()</code>,
+<code><a href='rootpoints.html'>rootpoints</a>()</code>,
+<code><a href='spine.html'>spine</a>()</code>,
+<code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
@@ -336,7 +347,7 @@ neuronal connectivity to generate graph.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

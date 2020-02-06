@@ -158,8 +158,14 @@
     <p>Make 2D (orthogonal) projection of 3D image data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>projection</span>(<span class='no'>a</span>, <span class='kw'>projdim</span> <span class='kw'>=</span> <span class='st'>"z"</span>, <span class='kw'>projfun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"integrate"</span>, <span class='st'>"mean"</span>, <span class='st'>"sum"</span>),
-  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>projection</span>(
+  <span class='no'>a</span>,
+  <span class='kw'>projdim</span> <span class='kw'>=</span> <span class='st'>"z"</span>,
+  <span class='kw'>projfun</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"integrate"</span>, <span class='st'>"mean"</span>, <span class='st'>"sum"</span>),
+  <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='no'>T</span>,
+  <span class='kw'>mask</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,13 +212,20 @@ image data when calculating function results. default: <code>TRUE</code></p></td
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/groupGeneric.html'>groupGeneric</a></code>, <code><a href='clampmax.html'>clampmax</a></code></p>
-<p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
-  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
-  <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='im3d.html'>im3d</a></code>,
-  <code><a href='imexpand.grid.html'>imexpand.grid</a></code>, <code><a href='imslice.html'>imslice</a></code>,
-  <code><a href='is.im3d.html'>is.im3d</a></code>, <code><a href='mask.html'>mask</a></code>,
-  <code><a href='origin.html'>origin</a></code>, <code><a href='threshold.html'>threshold</a></code>,
-  <code><a href='unmask.html'>unmask</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p></div>
+<p>Other im3d: 
+<code><a href='as.im3d.html'>as.im3d</a>()</code>,
+<code><a href='boundingbox.html'>boundingbox</a>()</code>,
+<code><a href='im3d-coords.html'>im3d-coords</a></code>,
+<code><a href='im3d-io.html'>im3d-io</a></code>,
+<code><a href='im3d.html'>im3d</a>()</code>,
+<code><a href='imexpand.grid.html'>imexpand.grid</a>()</code>,
+<code><a href='imslice.html'>imslice</a>()</code>,
+<code><a href='is.im3d.html'>is.im3d</a>()</code>,
+<code><a href='mask.html'>mask</a>()</code>,
+<code><a href='origin.html'>origin</a>()</code>,
+<code><a href='threshold.html'>threshold</a>()</code>,
+<code><a href='unmask.html'>unmask</a>()</code>,
+<code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -247,7 +260,7 @@ image data when calculating function results. default: <code>TRUE</code></p></td
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

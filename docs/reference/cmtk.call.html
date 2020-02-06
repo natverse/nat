@@ -164,8 +164,13 @@ cmtk.system2 actually calls a cmtk tool using a call list
   produced by <code>cmtk.call</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>cmtk.call</span>(<span class='no'>tool</span>, <span class='kw'>PROCESSED.ARGS</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>FINAL.ARGS</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>RETURN.TYPE</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"string"</span>, <span class='st'>"list"</span>))
+    <pre class="usage"><span class='fu'>cmtk.call</span>(
+  <span class='no'>tool</span>,
+  <span class='kw'>PROCESSED.ARGS</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>FINAL.ARGS</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>RETURN.TYPE</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"string"</span>, <span class='st'>"list"</span>)
+)
 
 <span class='fu'>cmtk.system2</span>(<span class='no'>cmtkcall</span>, <span class='kw'>moreargs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
@@ -271,7 +276,7 @@ is suitable for use with <code><a href='https://rdrr.io/r/base/system2.html'>sys
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

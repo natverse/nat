@@ -3,11 +3,14 @@
 \name{resample}
 \alias{resample}
 \alias{resample.neuron}
+\alias{resample.neuronlist}
 \title{Resample an object with a new spacing}
 \usage{
 resample(x, ...)
 
 \method{resample}{neuron}(x, stepsize, ...)
+
+\method{resample}{neuronlist}(x, stepsize, ...)
 }
 \arguments{
 \item{x}{An object to resample}
@@ -30,10 +33,14 @@ resample a neuron with a new spacing
 \seealso{
 \code{\link{approx}}, \code{\link{seglengths}}
 
-Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.dotprops}},
-  \code{\link{potential_synapses}}, \code{\link{prune}},
-  \code{\link{rootpoints}}, \code{\link{spine}},
-  \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{neuron}()},
+\code{\link{ngraph}()},
+\code{\link{plot.dotprops}()},
+\code{\link{potential_synapses}()},
+\code{\link{prune}()},
+\code{\link{rootpoints}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

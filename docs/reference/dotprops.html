@@ -45,6 +45,12 @@
 <meta property="og:title" content="dotprops: Neurons as point clouds with tangent vectors (but no connectivity) — dotprops" />
 <meta property="og:description" content="dotprops makes dotprops representation from raw 3D points
   (extracting vertices from S3 objects that have them)
+dotprops.character makes dotprops objects from one or
+  more files on disk (typically binary segmentations saved as NRRDs).
+  x can a vector of paths or be a directory (in which case
+  pattern can be used to restrict the files to read). The ...
+  argument is passed first to nlapply (if there is more than
+  one file) and then to dotprops.default.
 dotprops.dotprops will default to the original vale of 
   k and copy over all attributes that are not set by
   dotprops.default.
@@ -164,6 +170,12 @@ dotprops.neuronlist will run for every object in the
     <div class="ref-description">
     <p><code>dotprops</code> makes dotprops representation from raw 3D points
   (extracting vertices from S3 objects that have them)</p>
+<p><code>dotprops.character</code> makes dotprops objects from one or
+  more files on disk (typically binary segmentations saved as NRRDs).
+  <code>x</code> can a vector of paths or be a directory (in which case
+  <code>pattern</code> can be used to restrict the files to read). The <code>...</code>
+  argument is passed first to <code><a href='nlapply.html'>nlapply</a></code> (if there is more than
+  one file) and then to <code>dotprops.default</code>.</p>
 <p><code>dotprops.dotprops</code> will default to the original vale of 
   <code>k</code> and copy over all attributes that are not set by
   <code>dotprops.default</code>.</p>
@@ -179,7 +191,7 @@ dotprops.neuronlist will run for every object in the
 <span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for dotprops</span>
 <span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"k"</span>), <span class='no'>...</span>)
@@ -194,8 +206,7 @@ dotprops.neuronlist will run for every object in the
 <span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='kw'>Labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>resample</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'>dotprops</span>(<span class='no'>x</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>na.rm</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,9 +220,9 @@ dotprops.neuronlist will run for every object in the
       <td><p>Additional arguments passed to methods</p></td>
     </tr>
     <tr>
-      <th>k</th>
-      <td><p>Number of nearest neighbours to use for tangent vector calculation 
-(set to k=20 when passed NULL)</p></td>
+      <th>pattern</th>
+      <td><p>an optional <a href='https://rdrr.io/r/base/regex.html'>regular expression</a>.  Only file names
+    which match the regular expression will be returned.</p></td>
     </tr>
     <tr>
       <th>OmitFailures</th>
@@ -219,6 +230,11 @@ dotprops.neuronlist will run for every object in the
 error. The default value (<code>NA</code>) will result in nlapply stopping with
 an error message the moment there is an error. For other values, see
 details.</p></td>
+    </tr>
+    <tr>
+      <th>k</th>
+      <td><p>Number of nearest neighbours to use for tangent vector calculation 
+(set to k=20 when passed NULL)</p></td>
     </tr>
     <tr>
       <th>Labels</th>
@@ -255,6 +271,13 @@ be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</p><
 
     <div class='dont-index'><p><code><a href='nlapply.html'>nlapply</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># process a single file on disk</span>
+<span class='no'>dp</span><span class='kw'>=</span><span class='fu'>dotprops.character</span>(<span class='st'>'~/skeleton-nrrds/file01.nrrd'</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>)
+<span class='co'># process a whole directory of files</span>
+<span class='no'>dps</span><span class='kw'>=</span><span class='fu'>dotprops.character</span>(<span class='st'>'~/skeleton-nrrds/'</span>, <span class='kw'>OmitFailures</span><span class='kw'>=</span><span class='no'>T</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -263,6 +286,7 @@ be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</p><
       <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
@@ -275,7 +299,7 @@ be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</p><
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

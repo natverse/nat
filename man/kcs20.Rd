@@ -33,7 +33,8 @@ plot3d(kcs20, col=type)
   \code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}},
   \code{\link{dotprops}}
 
-Other nat-data: \code{\link{Cell07PNs}},
-  \code{\link{MBL.surf}}
+Other nat-data: 
+\code{\link{Cell07PNs}},
+\code{\link{MBL.surf}}
 }
 \concept{nat-data}

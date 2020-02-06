@@ -5,12 +5,23 @@
 \alias{remotesync.neuronlistfh}
 \title{Synchronise a remote object}
 \usage{
-remotesync(x, remote = attr(x, "remote"), download.missing = TRUE,
-  delete.extra = FALSE, ...)
+remotesync(
+  x,
+  remote = attr(x, "remote"),
+  download.missing = TRUE,
+  delete.extra = FALSE,
+  ...
+)
 
-\method{remotesync}{neuronlistfh}(x, remote = attr(x, "remote"),
-  download.missing = FALSE, delete.extra = FALSE, indices = NULL,
-  update.object = TRUE, ...)
+\method{remotesync}{neuronlistfh}(
+  x,
+  remote = attr(x, "remote"),
+  download.missing = FALSE,
+  delete.extra = FALSE,
+  indices = NULL,
+  update.object = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{Object to synchronise with a remote URL}
@@ -47,9 +58,10 @@ kcs20=remotesync(kcs20, indices=mbvl_neurons, download.missing=TRUE)
 }
 }
 \seealso{
-Other neuronlistfh: \code{\link{[.neuronlistfh}},
-  \code{\link{neuronlistfh}},
-  \code{\link{read.neuronlistfh}},
-  \code{\link{write.neuronlistfh}}
+Other neuronlistfh: 
+\code{\link{[.neuronlistfh}()},
+\code{\link{neuronlistfh}()},
+\code{\link{read.neuronlistfh}()},
+\code{\link{write.neuronlistfh}()}
 }
 \concept{neuronlistfh}

@@ -65,6 +65,8 @@ Collate:
     'graph-nodes.R'
     'hxsurf.R'
     'im3d.R'
+    'interactive.R'
+    'morphometry.R'
     'nat-data.R'
     'nat-package.R'
     'ndigest.R'
@@ -92,7 +94,7 @@ Collate:
     'xformimage.R'
     'xformpoints.R'
     'zzz.R'
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Encoding: UTF-8
 VignetteBuilder: knitr
 Language: en-GB

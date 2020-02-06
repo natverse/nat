@@ -163,19 +163,50 @@ plot.neuron plots a 2D projection of a neuron" />
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+  <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotAxes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span>), <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>NeuronName</span>, <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>AxisDirections</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>PointAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='st'>"lwd"</span>),
-  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>PlotAxes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span>),
+  <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>NeuronName</span>,
+  <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>AxisDirections</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>1</span>),
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>PointAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='st'>"lwd"</span>),
+  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -328,10 +359,15 @@ consistent with the latter.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot3d.neuron.html'>plot3d.neuron</a></code></p>
-<p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
-  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
-  <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
-  <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p></div>
+<p>Other neuron: 
+<code><a href='neuron.html'>neuron</a>()</code>,
+<code><a href='ngraph.html'>ngraph</a>()</code>,
+<code><a href='potential_synapses.html'>potential_synapses</a>()</code>,
+<code><a href='prune.html'>prune</a>()</code>,
+<code><a href='resample.html'>resample</a>()</code>,
+<code><a href='rootpoints.html'>rootpoints</a>()</code>,
+<code><a href='spine.html'>spine</a>()</code>,
+<code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
@@ -364,7 +400,7 @@ consistent with the latter.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

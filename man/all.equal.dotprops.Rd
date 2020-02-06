@@ -4,8 +4,13 @@
 \alias{all.equal.dotprops}
 \title{all.equal method tailored to dotprops objects}
 \usage{
-\method{all.equal}{dotprops}(target, current, check.attributes = FALSE,
-  absoluteVectors = TRUE, ...)
+\method{all.equal}{dotprops}(
+  target,
+  current,
+  check.attributes = FALSE,
+  absoluteVectors = TRUE,
+  ...
+)
 }
 \arguments{
 \item{target, current}{dotprops objects to compare}

@@ -158,11 +158,14 @@
     <p>Normalise an SWC format block of neuron morphology data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>normalise_swc</span>(<span class='no'>x</span>, <span class='kw'>requiredColumns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PointNo"</span>, <span class='st'>"Label"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span>,
-  <span class='st'>"W"</span>, <span class='st'>"Parent"</span>), <span class='kw'>ifMissing</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"usedefaults"</span>, <span class='st'>"warning"</span>, <span class='st'>"stop"</span>),
-  <span class='kw'>includeExtraCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>defaultValue</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>PointNo</span> <span class='kw'>=</span>
-  <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>)), <span class='kw'>Label</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Y</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>W</span>
-  <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Parent</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>))</pre>
+    <pre class="usage"><span class='fu'>normalise_swc</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>requiredColumns</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PointNo"</span>, <span class='st'>"Label"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span>, <span class='st'>"W"</span>, <span class='st'>"Parent"</span>),
+  <span class='kw'>ifMissing</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"usedefaults"</span>, <span class='st'>"warning"</span>, <span class='st'>"stop"</span>),
+  <span class='kw'>includeExtraCols</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>defaultValue</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>PointNo</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq.int</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>x</span>)), <span class='kw'>Label</span> <span class='kw'>=</span> <span class='fl'>2L</span>, <span class='kw'>X</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Y</span> <span class='kw'>=</span>
+    <span class='fl'>NA_real_</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>W</span> <span class='kw'>=</span> <span class='fl'>NA_real_</span>, <span class='kw'>Parent</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,7 +226,7 @@ columns</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

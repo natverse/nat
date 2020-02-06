@@ -4,9 +4,25 @@
 \alias{cmtkparams2affmat}
 \title{Compose homogeneous affine matrix from CMTK registration parameters}
 \usage{
-cmtkparams2affmat(params = NULL, tx = 0, ty = 0, tz = 0, rx = 0,
-  ry = 0, rz = 0, sx = 1, sy = 1, sz = 1, shx = 0, shy = 0,
-  shz = 0, cx = 0, cy = 0, cz = 0, legacy = NA)
+cmtkparams2affmat(
+  params = NULL,
+  tx = 0,
+  ty = 0,
+  tz = 0,
+  rx = 0,
+  ry = 0,
+  rz = 0,
+  sx = 1,
+  sy = 1,
+  sz = 1,
+  shx = 0,
+  shy = 0,
+  shz = 0,
+  cx = 0,
+  cy = 0,
+  cz = 0,
+  legacy = NA
+)
 }
 \arguments{
 \item{params}{5x3 matrix of CMTK registration parameters or list of length 5.}
@@ -39,7 +55,9 @@ translation and centre components are assumed to be in physical
   coordinates.
 }
 \seealso{
-Other cmtk-geometry: \code{\link{affmat2cmtkparams}},
-  \code{\link{cmtk.dof2mat}}, \code{\link{cmtk.mat2dof}}
+Other cmtk-geometry: 
+\code{\link{affmat2cmtkparams}()},
+\code{\link{cmtk.dof2mat}()},
+\code{\link{cmtk.mat2dof}()}
 }
 \concept{cmtk-geometry}

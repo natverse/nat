@@ -164,10 +164,18 @@ expression</h1>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for neuronlist</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colpal</span> <span class='kw'>=</span> <span class='no'>rainbow</span>, <span class='kw'>skipRedraw</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(), <span class='fl'>200L</span>, <span class='fl'>TRUE</span>),
-  <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>, <span class='kw'>SUBSTITUTE</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>))
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>colpal</span> <span class='kw'>=</span> <span class='no'>rainbow</span>,
+  <span class='kw'>skipRedraw</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>(), <span class='fl'>200L</span>, <span class='fl'>TRUE</span>),
+  <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>SUBSTITUTE</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>)
+)
 
 <span class='co'># S3 method for character</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>db</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
@@ -329,7 +337,7 @@ options('nat.default.neuronlist')</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

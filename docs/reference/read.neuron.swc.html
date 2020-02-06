@@ -43,8 +43,10 @@
 
 
 <meta property="og:title" content="Read a neuron in swc file format — read.neuron.swc" />
-<meta property="og:description" content="read.neuron.swc reads an SWC file on disk into a fully 
-  parsed neuron representation.
+<meta property="og:description" content="read.neuron.swc reads an SWC file on disk into a fully
+  parsed neuron representation. However we normally recommend
+  using read.neuron(s) since those functions cope
+  with any file type.
 read.ngraph.swc reads an SWC file on disk into the more 
   generic (and forgiving) ngraph representation which provides
   a bridge to the igraph library." />
@@ -159,8 +161,10 @@ read.ngraph.swc reads an SWC file on disk into the more
     </div>
 
     <div class="ref-description">
-    <p><code>read.neuron.swc</code> reads an SWC file on disk into a fully 
-  parsed <code><a href='neuron.html'>neuron</a></code> representation.</p>
+    <p><code>read.neuron.swc</code> reads an SWC file on disk into a fully
+  parsed <code><a href='neuron.html'>neuron</a></code> representation. However we normally recommend
+  using <code><a href='read.neuron.html'>read.neuron(s)</a></code> since those functions cope
+  with any file type.</p>
 <p><code>read.ngraph.swc</code> reads an SWC file on disk into the more 
   generic (and forgiving) <code><a href='ngraph.html'>ngraph</a></code> representation which provides
   a bridge to the <code><a href='https://rdrr.io/pkg/igraph/man/aaa-igraph-package.html'>igraph</a></code> library.</p>
@@ -179,8 +183,8 @@ read.ngraph.swc reads an SWC file on disk into the more
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments. <code>read.neuron.swc</code> passes these to 
-<code><a href='neuron.html'>as.neuron</a></code> and then on to <code><a href='neuron.html'>neuron</a></code>. 
+      <td><p>Additional arguments. <code>read.neuron.swc</code> passes these to
+<code><a href='neuron.html'>as.neuron</a></code> and then on to <code><a href='neuron.html'>neuron</a></code>.
 <code>read.neuron.swc</code> passes them to <code><a href='ngraph.html'>ngraph</a></code>.</p></td>
     </tr>
     <tr>
@@ -197,19 +201,23 @@ read.ngraph.swc reads an SWC file on disk into the more
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>These functions will accept SWC neurons with multiple trees and 
+    <p>These functions will accept SWC neurons with multiple trees and
   arbitrary point index order. However only <code>read.ngraph.swc</code> will
-  accept SWC files with cycles.</p>  
-<p>These functions would normally be called from <code><a href='read.neuron.html'>read.neuron(s)</a></code> rather 
-  than used directly.</p>
+  accept SWC files with cycles.</p>
+<p>These functions would normally be called from
+  <code><a href='read.neuron.html'>read.neuron(s)</a></code> rather than used directly. The
+  only benefit of using <code>read.neuron.swc</code> is to avoid a very small
+  overhead in identifying the SWC file type. Note that only
+  <code><a href='read.neurons.html'>read.neurons</a></code> can read many files in one command to construct
+  a <code><a href='neuronlist.html'>neuronlist</a></code> object.</p>
     <h2 class="hasAnchor" id="swc-format"><a class="anchor" href="#swc-format"></a>SWC Format</h2>
 
-    <p>According to 
-  <a href='http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html'>http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html</a> SWC file format has a
-  radius not a diameter specification</p>
+    <p>According to
+  <a href='http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html'>http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html</a>
+   SWC file format has a radius not a diameter specification</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='is.swc.html'>is.swc</a></code></p></div>
+    <div class='dont-index'><p><code><a href='is.swc.html'>is.swc</a></code>, <code><a href='read.neuron.html'>read.neuron</a></code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -231,7 +239,7 @@ read.ngraph.swc reads an SWC file on disk into the more
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

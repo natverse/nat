@@ -165,12 +165,17 @@ mirror.character handles images on disk" />
     <pre class="usage"><span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='no'>output</span>, <span class='kw'>mirrorAxisSize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>target</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='no'>output</span>, <span class='kw'>mirrorAxisSize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='no'>mirrorAxisSize</span>, <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"X"</span>, <span class='st'>"Y"</span>,
-  <span class='st'>"Z"</span>), <span class='kw'>warpfile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warp"</span>, <span class='st'>"affine"</span>, <span class='st'>"flip"</span>), <span class='no'>...</span>)
+<span class='fu'>mirror</span>(
+  <span class='no'>x</span>,
+  <span class='no'>mirrorAxisSize</span>,
+  <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span>),
+  <span class='kw'>warpfile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warp"</span>, <span class='st'>"affine"</span>, <span class='st'>"flip"</span>),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for neuronlist</span>
 <span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
@@ -308,7 +313,7 @@ details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

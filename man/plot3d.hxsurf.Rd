@@ -4,8 +4,13 @@
 \alias{plot3d.hxsurf}
 \title{Plot amira surface objects in 3D using rgl}
 \usage{
-\method{plot3d}{hxsurf}(x, materials = NULL, col = NULL, ...,
-  plotengine = getOption("nat.plotengine"))
+\method{plot3d}{hxsurf}(
+  x,
+  materials = NULL,
+  col = NULL,
+  ...,
+  plotengine = getOption("nat.plotengine")
+)
 }
 \arguments{
 \item{x}{An hxsurf surface object}
@@ -44,9 +49,12 @@ plot3d(MBL.surf, alpha=0.3,
 \seealso{
 \code{\link{read.hxsurf}}
 
-Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{as.mesh3d}}, \code{\link{materials}},
-  \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
-  \code{\link{write.hxsurf}}
+Other hxsurf: 
+\code{\link{as.hxsurf}()},
+\code{\link{as.mesh3d}()},
+\code{\link{materials}()},
+\code{\link{read.hxsurf}()},
+\code{\link{subset.hxsurf}()},
+\code{\link{write.hxsurf}()}
 }
 \concept{hxsurf}

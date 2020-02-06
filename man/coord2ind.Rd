@@ -7,8 +7,16 @@
 \usage{
 coord2ind(coords, ...)
 
-\method{coord2ind}{default}(coords, imdims, voxdims = NULL,
-  origin = NULL, aperm, Clamp = FALSE, CheckRanges = !Clamp, ...)
+\method{coord2ind}{default}(
+  coords,
+  imdims,
+  voxdims = NULL,
+  origin = NULL,
+  aperm,
+  Clamp = FALSE,
+  CheckRanges = !Clamp,
+  ...
+)
 }
 \arguments{
 \item{coords}{spatial coordinates of image voxels.}
