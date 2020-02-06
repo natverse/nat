@@ -19,20 +19,25 @@ overlap(output.neurons, input.neurons, delta = 1, progress = TRUE)
 a matrix of overlap scores
 }
 \description{
-Generates an 'overlap matrix' of overlap scores between neurons in the \code{output.neurons} and \code{input.neurons} pools.
-For every point in a given neuron in \code{output.neurons}, a distance score is calculated to every point in a neuron in \code{input.neurons}.
-The sum of this score is added to the final output matrix. The score is calculated as \code{e(-d^2/2δ^2)}, where d is the euclidean distance between the two points,
-and δ is the expected distance in um that is considered 'close'. It is recommended that the user resamples neurons before use, using \code{\link{resample}}.
+Generates an 'overlap matrix' of overlap scores between neurons
+  in the \code{output.neurons} and \code{input.neurons} pools. For every
+  point in a given neuron in \code{output.neurons}, a distance score is
+  calculated to every point in a neuron in \code{input.neurons}. The sum of
+  this score is added to the final output matrix. The score is calculated as
+  \code{e(-d^2/(2*delta^2))}, where d is the euclidean distance between the
+  two points, and delta is the expected distance in um that is considered
+  'close'. It is recommended that the user resamples neurons before use,
+  using \code{\link{resample}}.
 }
 \examples{
-\dontrun{ 
+\dontrun{
 # Calculate how much some neurons overlap with one another
 ## Example requires the package nat.flybrains
 Cell07PNs_overlap = overlap(output.neurons = Cell07PNs, input.neurons = Cell07PNs)
 
 ## Plot the results
 heatmap(Cell07PNs_overlap)
-} 
+}
 }
 \seealso{
 \code{\link{potential_synapses}}, \code{\link{resample}}

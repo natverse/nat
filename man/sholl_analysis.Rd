@@ -6,17 +6,29 @@
 \alias{sholl_analysis.neuronlist}
 \title{Perform a sholl analysis on neuron skeletons}
 \usage{
-sholl_analysis(x, start = colMeans(xyzmatrix(x)),
-  starting.radius = radius.step, ending.radius = 1000,
-  radius.step = ending.radius/100)
+sholl_analysis(
+  x,
+  start = colMeans(xyzmatrix(x)),
+  starting.radius = radius.step,
+  ending.radius = 1000,
+  radius.step = ending.radius/100
+)
 
-\method{sholl_analysis}{neuron}(x, start = colMeans(xyzmatrix(x)),
-  starting.radius = radius.step, ending.radius = 1000,
-  radius.step = ending.radius/100)
+\method{sholl_analysis}{neuron}(
+  x,
+  start = colMeans(xyzmatrix(x)),
+  starting.radius = radius.step,
+  ending.radius = 1000,
+  radius.step = ending.radius/100
+)
 
-\method{sholl_analysis}{neuronlist}(x, start = colMeans(xyzmatrix(x)),
-  starting.radius = radius.step, ending.radius = 1000,
-  radius.step = ending.radius/100)
+\method{sholl_analysis}{neuronlist}(
+  x,
+  start = colMeans(xyzmatrix(x)),
+  starting.radius = radius.step,
+  ending.radius = 1000,
+  radius.step = ending.radius/100
+)
 }
 \arguments{
 \item{x}{a neuron or neuronlist object}
