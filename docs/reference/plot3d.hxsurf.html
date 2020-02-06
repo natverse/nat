@@ -159,8 +159,13 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for hxsurf</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>),
-  <span class='kw'>materials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>materials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,10 +173,6 @@
     <tr>
       <th>x</th>
       <td><p>An hxsurf surface object</p></td>
-    </tr>
-    <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     <tr>
       <th>materials</th>
@@ -190,15 +191,22 @@ available), or <code>rainbow</code> otherwise.</p></td>
       <th>...</th>
       <td><p>Additional arguments passed to <code>triangles3d</code></p></td>
     </tr>
+    <tr>
+      <th>plotengine</th>
+      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='read.hxsurf.html'>read.hxsurf</a></code></p>
-<p>Other hxsurf: <code><a href='as.hxsurf.html'>as.hxsurf</a></code>,
-  <code><a href='as.mesh3d.html'>as.mesh3d</a></code>, <code><a href='materials.html'>materials</a></code>,
-  <code><a href='read.hxsurf.html'>read.hxsurf</a></code>, <code><a href='subset.hxsurf.html'>subset.hxsurf</a></code>,
-  <code><a href='write.hxsurf.html'>write.hxsurf</a></code></p></div>
+<p>Other hxsurf: 
+<code><a href='as.hxsurf.html'>as.hxsurf</a>()</code>,
+<code><a href='as.mesh3d.html'>as.mesh3d</a>()</code>,
+<code><a href='materials.html'>materials</a>()</code>,
+<code><a href='read.hxsurf.html'>read.hxsurf</a>()</code>,
+<code><a href='subset.hxsurf.html'>subset.hxsurf</a>()</code>,
+<code><a href='write.hxsurf.html'>write.hxsurf</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
@@ -233,7 +241,7 @@ available), or <code>rainbow</code> otherwise.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

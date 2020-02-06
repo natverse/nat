@@ -4,9 +4,13 @@
 \alias{find.soma}
 \title{Find neurons with soma inside 3D selection box (usually drawn in rgl window)}
 \usage{
-find.soma(sel3dfun = select3d(), indices = names(db),
-  db = getOption("nat.default.neuronlist"), invert = FALSE,
-  rval = c("names", "neuronlist", "data.frame"))
+find.soma(
+  sel3dfun = select3d(),
+  indices = names(db),
+  db = getOption("nat.default.neuronlist"),
+  invert = FALSE,
+  rval = c("names", "neuronlist", "data.frame")
+)
 }
 \arguments{
 \item{sel3dfun}{A \code{\link{select3d}} style function to indicate if points

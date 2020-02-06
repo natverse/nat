@@ -158,11 +158,21 @@
     <p>Reformat an image with a CMTK registration using the reformatx tool</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cmtk.reformatx</span>(<span class='no'>floating</span>, <span class='no'>registrations</span>, <span class='no'>output</span>, <span class='no'>target</span>, <span class='kw'>mask</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interpolation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"linear"</span>, <span class='st'>"nn"</span>, <span class='st'>"cubic"</span>, <span class='st'>"pv"</span>,
-  <span class='st'>"sinc-cosine"</span>, <span class='st'>"sinc-hamming"</span>), <span class='kw'>dryrun</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>MakeLock</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>OverWrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"no"</span>, <span class='st'>"update"</span>, <span class='st'>"yes"</span>),
-  <span class='kw'>filesToIgnoreModTimes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>cmtk.reformatx</span>(
+  <span class='no'>floating</span>,
+  <span class='no'>registrations</span>,
+  <span class='no'>output</span>,
+  <span class='no'>target</span>,
+  <span class='kw'>mask</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interpolation</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"linear"</span>, <span class='st'>"nn"</span>, <span class='st'>"cubic"</span>, <span class='st'>"pv"</span>, <span class='st'>"sinc-cosine"</span>, <span class='st'>"sinc-hamming"</span>),
+  <span class='kw'>dryrun</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>MakeLock</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>OverWrite</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"no"</span>, <span class='st'>"update"</span>, <span class='st'>"yes"</span>),
+  <span class='kw'>filesToIgnoreModTimes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -280,7 +290,7 @@ processing by <code><a href='cmtk.call.html'>cmtk.call</a></code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

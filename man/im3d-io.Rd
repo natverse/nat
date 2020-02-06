@@ -6,8 +6,13 @@
 \alias{write.im3d}
 \title{Read/Write calibrated 3D blocks of image data}
 \usage{
-read.im3d(file, ReadData = TRUE, SimplifyAttributes = FALSE,
-  ReadByteAsRaw = FALSE, ...)
+read.im3d(
+  file,
+  ReadData = TRUE,
+  SimplifyAttributes = FALSE,
+  ReadByteAsRaw = FALSE,
+  ...
+)
 
 write.im3d(x, file, format = NULL, ...)
 }
@@ -59,12 +64,19 @@ read.im3d("L1DS1_crop_straight.raw", ReadData = F, chan=2)
 
 \code{\link{write.nrrd}}, \code{\link{getformatwriter}}
 
-Other im3d: \code{\link{as.im3d}},
-  \code{\link{boundingbox}}, \code{\link{im3d-coords}},
-  \code{\link{im3d}}, \code{\link{imexpand.grid}},
-  \code{\link{imslice}}, \code{\link{is.im3d}},
-  \code{\link{mask}}, \code{\link{origin}},
-  \code{\link{projection}}, \code{\link{threshold}},
-  \code{\link{unmask}}, \code{\link{voxdims}}
+Other im3d: 
+\code{\link{as.im3d}()},
+\code{\link{boundingbox}()},
+\code{\link{im3d-coords}},
+\code{\link{im3d}()},
+\code{\link{imexpand.grid}()},
+\code{\link{imslice}()},
+\code{\link{is.im3d}()},
+\code{\link{mask}()},
+\code{\link{origin}()},
+\code{\link{projection}()},
+\code{\link{threshold}()},
+\code{\link{unmask}()},
+\code{\link{voxdims}()}
 }
 \concept{im3d}

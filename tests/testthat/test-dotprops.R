@@ -29,12 +29,24 @@ test_that("dotprops gives same result as matlab original", {
 
 test_that("a dotprops object can be made from a nrrd, via im3d", {
   imageFile <- "testdata/nrrd/FruMARCM-F000002_seg001_03-acrop.nrrd"
-  expect_is(dp<-dotprops(imageFile), 'dotprops')
-  points.expected <- structure(c(188.493801707317, 188.493801707317, 191.402656585366, 
-                                 194.893282439024, 189.075572682927, 102.391696778523, 102.391696778523, 
-                                 101.228154765101, 101.228154765101, 101.809925771812, 31, 32, 
-                                 33, 33, 33), .Dim = c(5L, 3L), .Dimnames = list(NULL, c("X", "Y", "Z")))
-  expect_equal(dp$points[1:5, ], points.expected, tol=1e-4)
+  points.expected <-
+    matrix(
+      c(
+        188.493801, 188.493801, 191.402656, 194.893282, 189.075572, 
+        102.391696, 102.391696, 101.228154, 101.228154, 101.809925,
+        31, 32, 33, 33, 33
+      ),
+      ncol = 3,
+      dimnames = list(NULL, c("X", "Y", "Z"))
+    )
+  # make two copies of test image to check dotprops.character works for n>1
+  dir.create(td <- tempfile())
+  on.exit(unlink(td))
+  file.copy(imageFile, file.path(td, '1.nrrd'))
+  file.copy(imageFile, file.path(td, '2.nrrd'))
+  expect_is(dps <- dotprops(td), 'neuronlist')
+  expect_is(dps[[1]], 'dotprops')
+  expect_equal(dps[[1]]$points[1:5, ], points.expected, tol=1e-4)
 })
 
 test_that("make a dotprops object from a neuron",{

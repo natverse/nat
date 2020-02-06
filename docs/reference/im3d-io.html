@@ -158,8 +158,13 @@
     <p>Read/Write calibrated 3D blocks of image data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read.im3d</span>(<span class='no'>file</span>, <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>SimplifyAttributes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>read.im3d</span>(
+  <span class='no'>file</span>,
+  <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>SimplifyAttributes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='fu'>write.im3d</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
@@ -218,13 +223,20 @@ file extension. See <code><a href='fileformats.html'>getformatwriter</a></code> 
 
     <div class='dont-index'><p><code><a href='read.nrrd.html'>read.nrrd</a>, <a href='amiramesh-io.html'>read.amiramesh</a></code></p>
 <p><code><a href='write.nrrd.html'>write.nrrd</a></code>, <code><a href='fileformats.html'>getformatwriter</a></code></p>
-<p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
-  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
-  <code><a href='im3d.html'>im3d</a></code>, <code><a href='imexpand.grid.html'>imexpand.grid</a></code>,
-  <code><a href='imslice.html'>imslice</a></code>, <code><a href='is.im3d.html'>is.im3d</a></code>,
-  <code><a href='mask.html'>mask</a></code>, <code><a href='origin.html'>origin</a></code>,
-  <code><a href='projection.html'>projection</a></code>, <code><a href='threshold.html'>threshold</a></code>,
-  <code><a href='unmask.html'>unmask</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p></div>
+<p>Other im3d: 
+<code><a href='as.im3d.html'>as.im3d</a>()</code>,
+<code><a href='boundingbox.html'>boundingbox</a>()</code>,
+<code><a href='im3d-coords.html'>im3d-coords</a></code>,
+<code><a href='im3d.html'>im3d</a>()</code>,
+<code><a href='imexpand.grid.html'>imexpand.grid</a>()</code>,
+<code><a href='imslice.html'>imslice</a>()</code>,
+<code><a href='is.im3d.html'>is.im3d</a>()</code>,
+<code><a href='mask.html'>mask</a>()</code>,
+<code><a href='origin.html'>origin</a>()</code>,
+<code><a href='projection.html'>projection</a>()</code>,
+<code><a href='threshold.html'>threshold</a>()</code>,
+<code><a href='unmask.html'>unmask</a>()</code>,
+<code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -252,7 +264,7 @@ file extension. See <code><a href='fileformats.html'>getformatwriter</a></code> 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

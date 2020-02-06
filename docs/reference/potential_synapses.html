@@ -164,12 +164,27 @@
 <span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>s</span>, <span class='no'>bounds</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>), <span class='no'>...</span>)
+<span class='fu'>potential_synapses</span>(
+  <span class='no'>a</span>,
+  <span class='no'>b</span>,
+  <span class='no'>s</span>,
+  <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>s</span>,
+  <span class='no'>bounds</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>),
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for dotprops</span>
-<span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>s</span>,
-  <span class='kw'>seglength</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>potential_synapses</span>(
+  <span class='no'>a</span>,
+  <span class='no'>b</span>,
+  <span class='no'>s</span>,
+  <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>s</span>,
+  <span class='kw'>seglength</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,10 +235,15 @@
   <a href='http://dx.doi.org/10.1016/j.tins.2005.05.006'>http://dx.doi.org/10.1016/j.tins.2005.05.006</a></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
-  <code><a href='plot.neuron.html'>plot.dotprops</a></code>, <code><a href='prune.html'>prune</a></code>,
-  <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
-  <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p></div>
+    <div class='dont-index'><p>Other neuron: 
+<code><a href='neuron.html'>neuron</a>()</code>,
+<code><a href='ngraph.html'>ngraph</a>()</code>,
+<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='prune.html'>prune</a>()</code>,
+<code><a href='resample.html'>resample</a>()</code>,
+<code><a href='rootpoints.html'>rootpoints</a>()</code>,
+<code><a href='spine.html'>spine</a>()</code>,
+<code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt;        EBH11R
@@ -258,7 +278,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

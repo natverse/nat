@@ -170,8 +170,7 @@
 <span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>maxdist</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"near"</span>, <span class='st'>"far"</span>),
-  <span class='kw'>return.indices</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>prune</span>(<span class='no'>x</span>, <span class='no'>target</span>, <span class='no'>maxdist</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"near"</span>, <span class='st'>"far"</span>), <span class='kw'>return.indices</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -213,14 +212,18 @@ than the 3D object/points (default <code>FALSE</code>)</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='prune_strahler.html'>prune_strahler</a></code>, <code><a href='spine.html'>spine</a></code>,
-  <code><a href='prune_vertices.html'>prune_vertices</a></code></p>
+  <code><a href='prune_vertices.html'>prune_vertices</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p>
 <p><code><a href='subset.neuron.html'>subset.neuron</a></code></p>
 <p><code><a href='subset.dotprops.html'>subset.dotprops</a></code></p>
-<p>Other neuron: <code><a href='neuron.html'>neuron</a></code>, <code><a href='ngraph.html'>ngraph</a></code>,
-  <code><a href='plot.neuron.html'>plot.dotprops</a></code>,
-  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='resample.html'>resample</a></code>,
-  <code><a href='rootpoints.html'>rootpoints</a></code>, <code><a href='spine.html'>spine</a></code>,
-  <code><a href='subset.neuron.html'>subset.neuron</a></code></p></div>
+<p>Other neuron: 
+<code><a href='neuron.html'>neuron</a>()</code>,
+<code><a href='ngraph.html'>ngraph</a>()</code>,
+<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='potential_synapses.html'>potential_synapses</a>()</code>,
+<code><a href='resample.html'>resample</a>()</code>,
+<code><a href='rootpoints.html'>rootpoints</a>()</code>,
+<code><a href='spine.html'>spine</a>()</code>,
+<code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## prune single neurons</span>
@@ -265,7 +268,7 @@ than the 3D object/points (default <code>FALSE</code>)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

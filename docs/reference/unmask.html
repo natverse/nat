@@ -158,8 +158,13 @@
     <p>Make im3d image array containing values at locations defined by a mask</p>
     </div>
 
-    <pre class="usage"><span class='fu'>unmask</span>(<span class='no'>x</span>, <span class='no'>mask</span>, <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>attributes.</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>mask</span>),
-  <span class='kw'>copyAttributes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>unmask</span>(
+  <span class='no'>x</span>,
+  <span class='no'>mask</span>,
+  <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>attributes.</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>mask</span>),
+  <span class='kw'>copyAttributes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,13 +207,20 @@ from the mask to the returned object. default: <code>TRUE</code></p></td>
   subscripting of arrays (see e.g. <code><a href='https://rdrr.io/r/base/which.html'>arrayInd</a></code>).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
-  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
-  <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='im3d.html'>im3d</a></code>,
-  <code><a href='imexpand.grid.html'>imexpand.grid</a></code>, <code><a href='imslice.html'>imslice</a></code>,
-  <code><a href='is.im3d.html'>is.im3d</a></code>, <code><a href='mask.html'>mask</a></code>,
-  <code><a href='origin.html'>origin</a></code>, <code><a href='projection.html'>projection</a></code>,
-  <code><a href='threshold.html'>threshold</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p></div>
+    <div class='dont-index'><p>Other im3d: 
+<code><a href='as.im3d.html'>as.im3d</a>()</code>,
+<code><a href='boundingbox.html'>boundingbox</a>()</code>,
+<code><a href='im3d-coords.html'>im3d-coords</a></code>,
+<code><a href='im3d-io.html'>im3d-io</a></code>,
+<code><a href='im3d.html'>im3d</a>()</code>,
+<code><a href='imexpand.grid.html'>imexpand.grid</a>()</code>,
+<code><a href='imslice.html'>imslice</a>()</code>,
+<code><a href='is.im3d.html'>is.im3d</a>()</code>,
+<code><a href='mask.html'>mask</a>()</code>,
+<code><a href='origin.html'>origin</a>()</code>,
+<code><a href='projection.html'>projection</a>()</code>,
+<code><a href='threshold.html'>threshold</a>()</code>,
+<code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -243,7 +255,7 @@ from the mask to the returned object. default: <code>TRUE</code></p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

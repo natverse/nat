@@ -158,8 +158,16 @@
     <p>Write neurons from a neuronlist object to individual files, or a zip archive</p>
     </div>
 
-    <pre class="usage"><span class='fu'>write.neurons</span>(<span class='no'>nl</span>, <span class='no'>dir</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>INDICES</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>nl</span>), <span class='kw'>files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>write.neurons</span>(
+  <span class='no'>nl</span>,
+  <span class='no'>dir</span>,
+  <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>INDICES</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>nl</span>),
+  <span class='kw'>files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>Force</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,11 +224,14 @@ examples and <code><a href='write.neuron.html'>write.neuron</a></code> for detai
 
     <div class='dont-index'><p><code><a href='write.neuron.html'>write.neuron</a></code>, <code><a href='read.neurons.html'>read.neurons</a></code>,
   <code><a href='fileformats.html'>fileformats</a></code></p>
-<p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
-  <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code>,
-  <code><a href='nlapply.html'>nlapply</a></code>, <code><a href='read.neurons.html'>read.neurons</a></code></p></div>
+<p>Other neuronlist: 
+<code><a href='neuronlist-arithmetic.html'>*.neuronlist</a>()</code>,
+<code><a href='is.neuronlist.html'>is.neuronlist</a>()</code>,
+<code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
+<code><a href='neuronlistfh.html'>neuronlistfh</a>()</code>,
+<code><a href='neuronlist.html'>neuronlist</a>()</code>,
+<code><a href='nlapply.html'>nlapply</a>()</code>,
+<code><a href='read.neurons.html'>read.neurons</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -272,7 +283,7 @@ examples and <code><a href='write.neuron.html'>write.neuron</a></code> for detai
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

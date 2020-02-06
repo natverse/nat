@@ -176,9 +176,19 @@ as.neuron.default will add class &quot;neuron&quot; to a neuron-like
   object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>neuron</span>(<span class='no'>d</span>, <span class='kw'>NumPoints</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>d</span>), <span class='no'>StartPoint</span>, <span class='kw'>BranchPoints</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(),
-  <span class='no'>EndPoints</span>, <span class='no'>SegList</span>, <span class='kw'>SubTrees</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>InputFileName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>NeuronName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>MD5</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+    <pre class="usage"><span class='fu'>neuron</span>(
+  <span class='no'>d</span>,
+  <span class='kw'>NumPoints</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>d</span>),
+  <span class='no'>StartPoint</span>,
+  <span class='kw'>BranchPoints</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(),
+  <span class='no'>EndPoints</span>,
+  <span class='no'>SegList</span>,
+  <span class='kw'>SubTrees</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>InputFileName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>NeuronName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>MD5</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)
 
 <span class='fu'>is.neuron</span>(<span class='no'>x</span>, <span class='kw'>Strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
@@ -188,8 +198,7 @@ as.neuron.default will add class &quot;neuron&quot; to a neuron-like
 <span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for ngraph</span>
-<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='kw'>vertexData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='kw'>vertexData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for igraph</span>
 <span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)
@@ -302,11 +311,15 @@ subtree, not the whole neuron.</p>
 
     <div class='dont-index'><p><code><a href='neuronlist.html'>neuronlist</a></code></p>
 <p><code>graph.dfs, <a href='seglist.html'>as.seglist</a></code></p>
-<p>Other neuron: <code><a href='ngraph.html'>ngraph</a></code>,
-  <code><a href='plot.neuron.html'>plot.dotprops</a></code>,
-  <code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='prune.html'>prune</a></code>,
-  <code><a href='resample.html'>resample</a></code>, <code><a href='rootpoints.html'>rootpoints</a></code>,
-  <code><a href='spine.html'>spine</a></code>, <code><a href='subset.neuron.html'>subset.neuron</a></code></p></div>
+<p>Other neuron: 
+<code><a href='ngraph.html'>ngraph</a>()</code>,
+<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='potential_synapses.html'>potential_synapses</a>()</code>,
+<code><a href='prune.html'>prune</a>()</code>,
+<code><a href='resample.html'>resample</a>()</code>,
+<code><a href='rootpoints.html'>rootpoints</a>()</code>,
+<code><a href='spine.html'>spine</a>()</code>,
+<code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## See help for functions listed in See Also for more detailed examples</span>
@@ -434,9 +447,10 @@ subtree, not the whole neuron.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span>(<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'neuron'</span>)</div><div class='output co'>#&gt;  [1] all.equal          as.neuron          as.ngraph          as.seglist        
 #&gt;  [5] branchpoints       dotprops           endpoints          intersect_plane   
 #&gt;  [9] ndigest            nvertices          Ops                plot              
-#&gt; [13] plot3d             potential_synapses prune              resample          
-#&gt; [17] rootpoints         scale              subset             summary           
-#&gt; [21] write.vtk          xform              xyzmatrix          xyzmatrix&lt;-       
+#&gt; [13] plot3d             potential_synapses prune_in_volume    prune_online      
+#&gt; [17] prune              resample           rootpoints         scale             
+#&gt; [21] subset             summary            write.vtk          xform             
+#&gt; [25] xyzmatrix          xyzmatrix&lt;-       
 #&gt; see '?methods' for accessing help and source code</div><div class='input'>
 <span class='co'>## Neurons as graphs </span>
 <span class='co'># convert to graph and find longest paths by number of nodes</span>
@@ -516,7 +530,7 @@ subtree, not the whole neuron.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

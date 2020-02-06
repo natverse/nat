@@ -159,10 +159,17 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>), <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+  <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,10 +182,6 @@
       <th>scalevecs</th>
       <td><p>Factor by which to scale unit vectors (numeric, default: 
 1.0)</p></td>
-    </tr>
-    <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     <tr>
       <th>alpharange</th>
@@ -205,6 +208,10 @@ points/vectors. See details.</p></td>
       <th>...</th>
       <td><p>Additional arguments passed to <code>points3d</code> and/or 
 <code>segments3d</code></p></td>
+    </tr>
+    <tr>
+      <th>plotengine</th>
+      <td><p>the plotting backend engine to use either 'rgl' or 'plotly'.</p></td>
     </tr>
     </table>
 
@@ -257,7 +264,7 @@ points/vectors. See details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

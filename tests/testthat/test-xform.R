@@ -207,4 +207,5 @@ test_that("we can extract/replace coords and xform shape3d objects",{
   expect_equal(dim(xyz), c(1068L, 3L))
   # dummy transformation
   expect_equal(xform(m, function(x,...) x), m)
+  expect_equal(xform(shapelist3d(m, plot = F), function(x,...) x)[[1]], m)
 })

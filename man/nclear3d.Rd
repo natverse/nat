@@ -18,7 +18,10 @@ Clear the rgl or plotly 3D scene
 \details{
 \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
   quite different models for how to handle the active plot. \code{nclear3d}
-  allows you to treat them more similarly
+  and \code{\link{nopen3d}} allow you to treat them more similarly. Use them
+  wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
+  could she be able to run with both \bold{plotly} or \bold{rgl} as the
+  \code{plotengine}.
 }
 \examples{
 
@@ -29,5 +32,5 @@ plot3d(Cell07PNs[[1]])
 }
 \seealso{
 \code{\link[rgl:clear3d]{rgl::clear3d}}, \code{\link[nat]{plot3d}},
-  \code{\link[nat]{plot3d.neuronlist}}
+  \code{\link[nat]{plot3d.neuronlist}}, \code{\link[nat]{nopen3d}}
 }
