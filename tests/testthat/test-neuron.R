@@ -331,11 +331,9 @@ test_that("Stitch a neuron that has been fragmented", {
   #Check if it can stich a actual fragmented neuron from neuprintr
   fragneuron <- readRDS("testdata/neuron/fragmented_neuron.rds")
   expect_gt(fragneuron$nTrees,1)
-  expect_warning(sample_whole <- stitch_neurons_mst(fragneuron), 
-                 regexp = "Could not connect two vertices as edge length", "is above threshold")
+  expect_warning(sample_whole <- stitch_neurons_mst(fragneuron, threshold = 1000), 
+                 regexp = "Could not connect two vertices as edge length")
   expect_equal(sample_whole$nTrees,1)
-  
-  
 })
 
 

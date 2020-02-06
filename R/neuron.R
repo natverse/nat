@@ -1098,38 +1098,61 @@ handlesubtrees=function(x) {
 #'   that minimises the sum of edge weights (here, the Euclidean distance). The
 #'   neuron is rooted in the largest cluster; if this cluster contained the
 #'   original root of the neuron, then this should be retained.
-#' @param x Fragments that could be \code{\link{neuronlist}} or a single neuron
-#'   with multiple unconnected subtrees.
-#' @param thresh_el The threshold distance (units in nanometers) above which new vertices 
-#' will not be connected (default=1000, set to NULL to disable this feature). This parameter prevents the 
-#' merging of vertices that are so far away from the main neuron such that they are likely to be spurious.
-#' @param k The number of nearest neighbours to consider when trying to merge different clusters.
+#'
+#'   Note that when a threshold length is used, it must be specified in the same
+#'   units (microns, nm etc) as the neuron being stitched.
+#'
+#'   If you wish to process a neuronlist containing multiple neurons each of
+#'   which must have all their subtrees stitched then you must use
+#'   \code{\link{nlapply}} to process the list iteratively.
+#' @param x Fragments that could be a \code{\link{neuronlist}} containing
+#'   multiple neurons or a single neuron with multiple unconnected subtrees.
+#' @param threshold The threshold distance above which new vertices will not be
+#'   connected (default=\code{Inf} disables this feature). This parameter
+#'   prevents the merging of vertices that are so far away from the main neuron
+#'   that they are likely to be spurious.
+#' @param k The number of nearest neighbours to consider when trying to merge
+#'   different clusters.
 #' @return A single \code{neuron} object containing all input fragments.
 #' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
 #' @seealso \code{\link{simplify_neuron}}, \code{\link{spine}},
 #'   \code{\link{ngraph}}, \code{igraph::\link[igraph]{mst}}
 #' @export
 #' @examples
-#'
 #' n=Cell07PNs[['ECA34L']]
+#' # find the tree with the 10 most important branches
 #' n_main=simplify_neuron(n, n = 10)
+#' # and the complement
 #' n_branches=simplify_neuron(n, n = 10, invert = TRUE)
 #'
-#' # this is the setup
+#' # plot the inputs
 #' plot(n_main, col='red', WithNodes=FALSE)
 #' plot(n_branches, col='blue', add=TRUE, WithNodes=FALSE)
 #'
-#' # make a neuronlist containing the two fragments
+#' # join the two fragments back together again
+#' # first make a neuronlist containing the two fragments
 #' nl=neuronlist(n_main, n_branches)
 #' # and stitch those
 #' n_stitched=stitch_neurons_mst(nl)
-#'
+#' 
 #' \dontrun{
 #' # look at the neurons in 3D - they appear identical in this case
 #' plot3d(n, alpha=.5, col='cyan', WithNodes=FALSE)
 #' plot3d(n_stitched, alpha=.5, col='red', WithNodes=FALSE)
 #' }
-stitch_neurons_mst <- function(x, thresh_el = 1000, k=10L) {
+#' 
+#' ## second example neuron containing multiple sub trees
+#' n=Cell07PNs[['ECA34L']]
+#' # remove a single vertex, breaking the neuron in two
+#' # note that the root (purple node) has moved 
+#' np=prune_vertices(n, 105)
+#' plot(np)
+#' 
+#' # now stitch the broken neuron back together again
+#' nph=stitch_neurons_mst(np)
+#' # note that the root remains the same as the input neuron (np)
+#' plot(nph)
+stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
   #Step 1: First check if the input is fragmented and then proceed further..
   if(is.neuron(x)){
     if(x$nTrees == 1){
@@ -1268,21 +1291,19 @@ stitch_neurons_mst <- function(x, thresh_el = 1000, k=10L) {
   stitchedng <- masterng
   for (idx in 1:nrow(rawel)) {
     vertex_ids <- match(rawel[idx, ], nodenames)
-    if (is.null(thresh_el)){
-      stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
-                          "weight" = weight_attr[idx])
-    }else{
+    if (isTRUE(is.finite(threshold))){
       #Choose only those edges that are below a certain threshold..
-      if(weight_attr[idx]<=thresh_el){
-      stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+      if(weight_attr[idx]<=threshold){
+        stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
                                         "weight" = weight_attr[idx])
       }else{
-        warning(paste0("Could not connect two vertices as edge length (in microns) ", 
+        warning(paste0("Could not connect two vertices as edge length", 
                        round(weight_attr[idx],digits = 2), " is above threshold"))
       }
-      
+    } else {
+      stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+                                      "weight" = weight_attr[idx])
     }
-    
   }
   
   #Step 10: Now keep only vertices that are connected to the master root and cross verify the same..
