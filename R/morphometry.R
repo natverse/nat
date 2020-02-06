@@ -5,8 +5,8 @@
 #'
 #' @description Generates an 'overlap matrix' of overlap scores between neurons in the \code{outputneurons} and \code{inputneurons} pools.
 #' For every point in a given neuron in \code{outputneurons}, a distance score is calculated to every point in a neuron in \code{inputneurons}.
-#' The sum of this score is added to the final output matrix. The score is calculated as \code{e(-d^2/2δ^2)}, where d is the euclidean distance between the two points,
-#' and δ is the expected distance in um that is considered 'close'. It is recommended that the user resamples neurons before use, using \code{\link{resample}}.
+#' The sum of this score is added to the final output matrix. The score is calculated as \code{e(-d^2/(2*delta^2))}, where d is the euclidean distance between the two points,
+#' and delta is the expected distance in um that is considered 'close'. It is recommended that the user resamples neurons before use, using \code{\link{resample}}.
 #'
 #' @param outputneurons first set of neurons
 #' @param inputneurons second set of neurons
