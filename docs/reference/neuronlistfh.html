@@ -197,9 +197,15 @@ as.neuronlistfh.neuronlist converts a regular neuronlist
 <span class='fu'>as.neuronlistfh</span>(<span class='no'>x</span>, <span class='no'>df</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>as.neuronlistfh</span>(<span class='no'>x</span>, <span class='kw'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"df"</span>),
-  <span class='kw'>dbdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dbClass</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"RDS"</span>, <span class='st'>"RDS2"</span>), <span class='kw'>remote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>WriteObjects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"yes"</span>, <span class='st'>"no"</span>, <span class='st'>"missing"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>as.neuronlistfh</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>df</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"df"</span>),
+  <span class='kw'>dbdir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dbClass</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"RDS"</span>, <span class='st'>"RDS2"</span>),
+  <span class='kw'>remote</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>WriteObjects</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"yes"</span>, <span class='st'>"no"</span>, <span class='st'>"missing"</span>),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -330,15 +336,19 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/filehash/man/filehash-class.html'>filehash-class</a></code></p>
-<p>Other neuronlistfh: <code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a></code>,
-  <code><a href='read.neuronlistfh.html'>read.neuronlistfh</a></code>,
-  <code><a href='remotesync.html'>remotesync</a></code>,
-  <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p>
-<p>Other neuronlist: <code><a href='neuronlist-arithmetic.html'>*.neuronlist</a></code>,
-  <code><a href='is.neuronlist.html'>is.neuronlist</a></code>,
-  <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
-  <code><a href='neuronlist.html'>neuronlist</a></code>, <code><a href='nlapply.html'>nlapply</a></code>,
-  <code><a href='read.neurons.html'>read.neurons</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code></p></div>
+<p>Other neuronlistfh: 
+<code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a>()</code>,
+<code><a href='read.neuronlistfh.html'>read.neuronlistfh</a>()</code>,
+<code><a href='remotesync.html'>remotesync</a>()</code>,
+<code><a href='write.neuronlistfh.html'>write.neuronlistfh</a>()</code></p>
+<p>Other neuronlist: 
+<code><a href='neuronlist-arithmetic.html'>*.neuronlist</a>()</code>,
+<code><a href='is.neuronlist.html'>is.neuronlist</a>()</code>,
+<code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
+<code><a href='neuronlist.html'>neuronlist</a>()</code>,
+<code><a href='nlapply.html'>nlapply</a>()</code>,
+<code><a href='read.neurons.html'>read.neurons</a>()</code>,
+<code><a href='write.neurons.html'>write.neurons</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -382,7 +392,7 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

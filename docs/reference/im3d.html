@@ -168,8 +168,15 @@ corresponds to the <strong>node</strong> centers option in the
 <a href='http://teem.sourceforge.net/nrrd/format.html'>NRRD format</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>im3d</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>numeric</a></span>(<span class='fl'>0</span>), <span class='kw'>dims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>BoundingBox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>im3d</span>(
+  <span class='kw'>x</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>numeric</a></span>(<span class='fl'>0</span>),
+  <span class='kw'>dims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>voxdims</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>BoundingBox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,13 +221,20 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
   voxel dimension (rather than 0) for any dimension with only 1 voxel.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other im3d: <code><a href='as.im3d.html'>as.im3d</a></code>,
-  <code><a href='boundingbox.html'>boundingbox</a></code>, <code><a href='im3d-coords.html'>im3d-coords</a></code>,
-  <code><a href='im3d-io.html'>im3d-io</a></code>, <code><a href='imexpand.grid.html'>imexpand.grid</a></code>,
-  <code><a href='imslice.html'>imslice</a></code>, <code><a href='is.im3d.html'>is.im3d</a></code>,
-  <code><a href='mask.html'>mask</a></code>, <code><a href='origin.html'>origin</a></code>,
-  <code><a href='projection.html'>projection</a></code>, <code><a href='threshold.html'>threshold</a></code>,
-  <code><a href='unmask.html'>unmask</a></code>, <code><a href='voxdims.html'>voxdims</a></code></p></div>
+    <div class='dont-index'><p>Other im3d: 
+<code><a href='as.im3d.html'>as.im3d</a>()</code>,
+<code><a href='boundingbox.html'>boundingbox</a>()</code>,
+<code><a href='im3d-coords.html'>im3d-coords</a></code>,
+<code><a href='im3d-io.html'>im3d-io</a></code>,
+<code><a href='imexpand.grid.html'>imexpand.grid</a>()</code>,
+<code><a href='imslice.html'>imslice</a>()</code>,
+<code><a href='is.im3d.html'>is.im3d</a>()</code>,
+<code><a href='mask.html'>mask</a>()</code>,
+<code><a href='origin.html'>origin</a>()</code>,
+<code><a href='projection.html'>projection</a>()</code>,
+<code><a href='threshold.html'>threshold</a>()</code>,
+<code><a href='unmask.html'>unmask</a>()</code>,
+<code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -242,7 +256,7 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

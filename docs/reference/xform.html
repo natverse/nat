@@ -177,23 +177,19 @@ be required for expert use; in almost all circumstances, you should use only
     <pre class="usage"><span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warn"</span>, <span class='st'>"none"</span>, <span class='st'>"drop"</span>,
-  <span class='st'>"error"</span>), <span class='no'>...</span>)
+<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warn"</span>, <span class='st'>"none"</span>, <span class='st'>"drop"</span>, <span class='st'>"error"</span>), <span class='no'>...</span>)
 
 <span class='co'># S3 method for character</span>
 <span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for shape3d</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
@@ -202,9 +198,15 @@ be required for expert use; in almost all circumstances, you should use only
 <span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>,
-  <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>VectoriseRegistrations</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>TransformDFCoords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>xform</span>(
+  <span class='no'>x</span>,
+  <span class='no'>reg</span>,
+  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
+  <span class='kw'>VectoriseRegistrations</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>TransformDFCoords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -363,7 +365,7 @@ as well.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

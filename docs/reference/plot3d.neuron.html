@@ -159,10 +159,20 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for neuron</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>, <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>NeuronNames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>,
-  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>))</pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(
+  <span class='no'>x</span>,
+  <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>NeuronNames</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -254,9 +264,11 @@ soma. Either a logical value or a numeric indicating the radius (default
 <span class='co'># \donttest{</span>
 <span class='co'># clear the current plot</span>
 <span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>,<span class='kw'>add</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in rgl.enum(type, shapes = 1, lights = 2, bboxdeco = 3, userviewpoint = 4,     material = 5, background = 6, subscene = 7, modelviewpoint = 8,     multi = TRUE): Symbolic value must be chosen from: c("shapes", "lights", "bboxdeco", "userviewpoint", "material", "background", "subscene", "modelviewpoint")</span></div><div class='input'><span class='co'># plot the number of all nodes</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>,<span class='kw'>add</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
+<span class='co'># plot the number of all nodes</span>
 <span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>,<span class='kw'>WithText</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>add</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in rgl.enum(type, shapes = 1, lights = 2, bboxdeco = 3, userviewpoint = 4,     material = 5, background = 6, subscene = 7, modelviewpoint = 8,     multi = TRUE): Symbolic value must be chosen from: c("shapes", "lights", "bboxdeco", "userviewpoint", "material", "background", "subscene", "modelviewpoint")</span></div><div class='input'><span class='co'># include cell bodies</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>,<span class='kw'>WithText</span><span class='kw'>=</span><span class='fl'>TRUE</span>,<span class='kw'>add</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
+<span class='co'># include cell bodies</span>
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>[<span class='fl'>3</span>:<span class='fl'>4</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
 <span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>[<span class='fl'>5</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>3</span>)
 <span class='co'># }</span></div></pre>
@@ -281,7 +293,7 @@ soma. Either a logical value or a numeric indicating the radius (default
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

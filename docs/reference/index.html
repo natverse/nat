@@ -225,6 +225,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="prune_in_volume.html">prune_in_volume()</a></code> </p>
+        </td>
+        <td><p>Prune neuron(s) within a volume defined by a 3D mesh</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="neuron-arithmetic.html">Ops(<i>&lt;neuron&gt;</i>)</a></code> </p>
         </td>
         <td><p>Arithmetic for neuron coordinates</p></td>
@@ -550,8 +556,8 @@ expression</p></td>
     </tbody><tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section--d-plotting-of-objects" class="hasAnchor"><a href="#section--d-plotting-of-objects" class="anchor"></a>3D Plotting of objects</h2>
-          <p class="section-desc"><p>Functions to help plot neurons and surfaces in 3D and to review and identify objects by interactive selection.</p></p>
+          <h2 id="section--d-plotting-of-objects" class="hasAnchor"><a href="#section--d-plotting-of-objects" class="anchor"></a>3D Plotting of Objects</h2>
+          <p class="section-desc"><p>Functions to help plot neurons, surfaces and other 3D objects via RGL.</p></p>
         </th>
       </tr>
       <tr>
@@ -566,6 +572,12 @@ expression</p></td>
           <p><code><a href="nopen3d.html">nopen3d()</a></code> </p>
         </td>
         <td><p>Open customised rgl window</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="nclear3d.html">nclear3d()</a></code> </p>
+        </td>
+        <td><p>Clear the rgl or plotly 3D scene</p></td>
       </tr><tr>
         
         <td>
@@ -587,15 +599,9 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="find.neuron.html">find.neuron()</a></code> </p>
+          <p><code><a href="wire3d.html">wire3d()</a></code> </p>
         </td>
-        <td><p>Find neurons within a 3D selection box (usually drawn in rgl window)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="find.soma.html">find.soma()</a></code> </p>
-        </td>
-        <td><p>Find neurons with soma inside 3D selection box (usually drawn in rgl window)</p></td>
+        <td><p>Wire frame plots</p></td>
       </tr><tr>
         
         <td>
@@ -632,6 +638,50 @@ expression</p></td>
           <p><code><a href="plot3d.cmtkreg.html">plot3d(<i>&lt;cmtkreg&gt;</i>)</a></code> </p>
         </td>
         <td><p>Plot the domain of a CMTK registration</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section--d-interaction-with-objects" class="hasAnchor"><a href="#section--d-interaction-with-objects" class="anchor"></a>3D Interaction with Objects</h2>
+          <p class="section-desc"><p>Functions to review, identify, and modify objects by interactive selection in RGL windows.</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="find.neuron.html">find.neuron()</a></code> </p>
+        </td>
+        <td><p>Find neurons within a 3D selection box (usually drawn in rgl window)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="find.soma.html">find.soma()</a></code> </p>
+        </td>
+        <td><p>Find neurons with soma inside 3D selection box (usually drawn in rgl window)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="select_points.html">select_points()</a></code> </p>
+        </td>
+        <td><p>Interactively select 3D points in space</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="correct_root.html">correct_root()</a></code> </p>
+        </td>
+        <td><p>Interactively re-root neurons (usually to their soma)</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="prune_online.html">prune_online()</a></code> </p>
+        </td>
+        <td><p>Prune a neuron interactively in an rgl window</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="make_model.html">make_model()</a></code> </p>
+        </td>
+        <td><p>Generate a 3D model from connector and/or tree node data</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -1191,7 +1241,8 @@ expression</p></td>
       <li><a href="#section-collections-of-neurons-neuronlists-">Collections of Neurons (neuronlists)</a></li>
       <li><a href="#section-collections-of-neurons-with-remote-data-neuronlistfh-">Collections of Neurons with Remote Data (neuronlistfh)</a></li>
       <li><a href="#section-surfaces-and-landmarks-hxsurf-mesh-d-">Surfaces and Landmarks (hxsurf, mesh3d)</a></li>
-      <li><a href="#section--d-plotting-of-objects">3D Plotting of objects</a></li>
+      <li><a href="#section--d-plotting-of-objects">3D Plotting of Objects</a></li>
+      <li><a href="#section--d-interaction-with-objects">3D Interaction with Objects</a></li>
       <li><a href="#section--d-geometry">3D Geometry</a></li>
       <li><a href="#section-object-transformation">Object transformation</a></li>
       <li><a href="#section-images-im-d-">Images (im3d)</a></li>
@@ -1211,7 +1262,7 @@ expression</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

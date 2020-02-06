@@ -161,8 +161,12 @@
     <pre class="usage"><span class='fu'>pointsinside</span>(<span class='no'>x</span>, <span class='no'>surf</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>pointsinside</span>(<span class='no'>x</span>, <span class='no'>surf</span>, <span class='no'>...</span>, <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"logical"</span>,
-  <span class='st'>"distance"</span>, <span class='st'>"mesh3d"</span>, <span class='st'>"consistent_logical"</span>))</pre>
+<span class='fu'>pointsinside</span>(
+  <span class='no'>x</span>,
+  <span class='no'>surf</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"logical"</span>, <span class='st'>"distance"</span>, <span class='st'>"mesh3d"</span>, <span class='st'>"consistent_logical"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -269,7 +273,7 @@ and <code>ashape3d</code> objects.</p></td>
   <span class='co'># convert to a mesh3d object used by rgl and Morpho packge</span>
   <span class='no'>MBCAL.mesh</span><span class='kw'>=</span><span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span>))
   <span class='no'>fn</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/updateNormals.html'>facenormals</a></span>(<span class='no'>MBCAL.mesh</span>)
-  <span class='fu'>wire3d</span>(<span class='no'>MBCAL.mesh</span>)
+  <span class='fu'><a href='wire3d.html'>wire3d</a></span>(<span class='no'>MBCAL.mesh</span>)
   <span class='co'># show that the normals point out of the object</span>
   <span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/plotNormals.html'>plotNormals</a></span>(<span class='no'>fn</span>, <span class='kw'>long</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
 
@@ -298,7 +302,7 @@ and <code>ashape3d</code> objects.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -158,9 +158,14 @@
     <p>Write a 3D data object to an AmiraMesh format file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>write.amiramesh</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>enc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"binary"</span>, <span class='st'>"raw"</span>, <span class='st'>"text"</span>, <span class='st'>"hxzip"</span>),
+    <pre class="usage"><span class='fu'>write.amiramesh</span>(
+  <span class='no'>x</span>,
+  <span class='no'>file</span>,
+  <span class='kw'>enc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"binary"</span>, <span class='st'>"raw"</span>, <span class='st'>"text"</span>, <span class='st'>"hxzip"</span>),
   <span class='kw'>dtype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"float"</span>, <span class='st'>"byte"</span>, <span class='st'>"short"</span>, <span class='st'>"ushort"</span>, <span class='st'>"int"</span>, <span class='st'>"double"</span>),
-  <span class='kw'>endian</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>endian</span>, <span class='kw'>WriteNrrdHeader</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>endian</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>endian</span>,
+  <span class='kw'>WriteNrrdHeader</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -231,7 +236,7 @@ details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -158,13 +158,24 @@
     <p>Synchronise a remote object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>remotesync</span>(<span class='no'>x</span>, <span class='kw'>remote</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"remote"</span>), <span class='kw'>download.missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>delete.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>remotesync</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>remote</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"remote"</span>),
+  <span class='kw'>download.missing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>delete.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for neuronlistfh</span>
-<span class='fu'>remotesync</span>(<span class='no'>x</span>, <span class='kw'>remote</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"remote"</span>),
-  <span class='kw'>download.missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>delete.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>indices</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>update.object</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>remotesync</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>remote</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attr.html'>attr</a></span>(<span class='no'>x</span>, <span class='st'>"remote"</span>),
+  <span class='kw'>download.missing</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>delete.extra</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>indices</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>update.object</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,10 +218,11 @@ object has not been renamed after it was downloaded.</p></td>
     <p>The updated <code>neuronlistfh</code> object (invisibly)</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other neuronlistfh: <code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a></code>,
-  <code><a href='neuronlistfh.html'>neuronlistfh</a></code>,
-  <code><a href='read.neuronlistfh.html'>read.neuronlistfh</a></code>,
-  <code><a href='write.neuronlistfh.html'>write.neuronlistfh</a></code></p></div>
+    <div class='dont-index'><p>Other neuronlistfh: 
+<code><a href='sub-.neuronlistfh.html'>[.neuronlistfh</a>()</code>,
+<code><a href='neuronlistfh.html'>neuronlistfh</a>()</code>,
+<code><a href='read.neuronlistfh.html'>read.neuronlistfh</a>()</code>,
+<code><a href='write.neuronlistfh.html'>write.neuronlistfh</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
@@ -241,7 +253,7 @@ object has not been renamed after it was downloaded.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

@@ -166,8 +166,13 @@
 <span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for cmtkreg</span>
-<span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='kw'>transformtype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warp"</span>,
-  <span class='st'>"affine"</span>), <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>xformimage</span>(
+  <span class='no'>reg</span>,
+  <span class='no'>image</span>,
+  <span class='kw'>transformtype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warp"</span>, <span class='st'>"affine"</span>),
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for reglist</span>
 <span class='fu'>xformimage</span>(<span class='no'>reg</span>, <span class='no'>image</span>, <span class='no'>...</span>)
@@ -272,7 +277,7 @@ space (called <strong>forward</strong> by CMTK) or from reference to sample spac
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>
