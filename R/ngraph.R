@@ -620,7 +620,6 @@ EdgeListFromSegList<-function(SegList){
 #' LH_arbour = prune_in_volume(x = Cell07PNs, surf = nat.flybrains::IS2NP.surf,
 #'   neuropil = "LH_L", OmitFailures = TRUE)
 #' }
-#' @inheritParams prune
 #' @return A pruned neuron/neuronlist object
 #' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
 #'   \code{\link{prune.neuron}}, \code{\link{prune}}
