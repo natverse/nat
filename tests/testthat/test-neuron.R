@@ -277,3 +277,88 @@ test_that("we can subset a neuron with a vertex sequence", {
   expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = F), 'neuron')
   expect_is(n_subset <- subset(n, n_graph_dfs$order, invert = T), 'neuron')
 })
+
+context("manipulate neurons")
+
+sample_neuron = Cell07PNs[[1]]
+
+test_that("Simplify a neuron to n-branchpoints", {
+  
+  sample_branches=simplify_neuron(sample_neuron, n = 1, invert = F)
+  expect_equal(length(branchpoints(sample_branches)),1)
+  
+  sample_branches2=simplify_neuron2(sample_neuron, n = 2, invert = F)
+  expect_equal(length(branchpoints(sample_branches2)),2)
+  
+  #test if both apis perform the same..
+  sample_branches=simplify_neuron(sample_neuron,n = 2, invert = T)
+  sample_branches2=simplify_neuron2(sample_neuron, n = 2, invert = T)
+  expect_equal(sample_branches, sample_branches2)
+  
+})
+
+test_that("Stitch a neuron that has been fragmented", {
+  
+  sample_main=simplify_neuron(sample_neuron, n = 1, invert = F)
+  sample_branches=simplify_neuron(sample_neuron, n = 1, invert = T)
+  
+  expect_gt(sample_branches$nTrees,1)
+  
+  #For neuronlist..
+  sample_fragment <- neuronlist(sample_main,sample_branches)
+  sample_whole <- stitch_neurons_mst(sample_fragment)
+  expect_equal(sample_whole$nTrees,1)
+  
+  #For neuron..
+  sample_whole <- stitch_neurons_mst(sample_branches)
+  expect_equal(sample_whole$nTrees,1)
+  
+  
+  
+  #Stitching based on closest points..
+  #Actually this doesn't guarentee only one tree as the stitching is done at only one closest point..
+  #Hence the strategy here is to test if the merged neuron actually has points from both the parents.
+  
+  expect_warning(sample_whole <- stitch_neuron(sample_main,sample_branches), 
+                 "Multiple origins found! Using first origin.")
+  expect_equal(sample_whole$NumPoints, sample_main$NumPoints + sample_branches$NumPoints)
+  
+  expect_warning(sample_whole <- stitch_neurons(sample_fragment), 
+                 "Multiple origins found! Using first origin.")
+  expect_equal(sample_whole$NumPoints,sample_fragment[[1]]$NumPoints + sample_fragment[[2]]$NumPoints )
+  
+  
+  #Check if it can stich a actual fragmented neuron from neuprintr
+  fragneuron <- readRDS("testdata/neuron/fragmented_neuron.rds")
+  expect_gt(fragneuron$nTrees,1)
+  expect_warning(sample_whole <- stitch_neurons_mst(fragneuron, threshold = 1000), 
+                 regexp = "Could not connect two vertices as edge length")
+  expect_equal(sample_whole$nTrees,1)
+})
+
+
+test_that("nodes distal to a given node", {
+  n = Cell07PNs[[1]]
+  rootnode <- rootpoints(n)
+  
+  nodeorder <- distal_to(n, node.pointno = rootnode) #Actually listing all the nodes distal to the rootnode here..
+  expect_equal(length(nodeorder),n$NumPoints) #This should contain all the nodes in the neuron
+  
+  nodeorder2 <- distal_to(n, node.pointno = n$NumPoints/2) #Take a node in the middle of the neuron run..
+  reducednodeorder <- nodeorder[nodeorder>=min(nodeorder2)]
+  #Just comparing the reduced path(computed originally from the root) with the distal node list path
+  expect_equal(reducednodeorder,nodeorder2) 
+ 
+})
+
+
+test_that("prune twigs of a neuron", {
+  n = Cell07PNs[[1]]
+  
+  pruned_neuron <- prune_twigs(n, twig_length = 5)
+  
+  #simple test comparing the number of edges after pruning.
+  expect_lt(pruned_neuron$NumSegs,n$NumSegs)
+  
+  
+})

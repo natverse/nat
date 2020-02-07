@@ -7,6 +7,8 @@ test_that("ndigest works for overloaded and regular classes",{
   expect_equal(ndigest(''),digest(''))
   
   skip_on_cran()
+  skip_on_travis() #this will be present until the issue https://github.com/natverse/nat/issues/411 
+  #is resolved
   
   expect_equal(ndigest(kcs20[[1]]),"4c045b0343938259cd9986494fc1c2b0")
 

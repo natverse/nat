@@ -82,5 +82,28 @@ test_that("xformpoints.character can work with reglist objects on disk",{
                xform(pts, m))
   expect_equal(xform(pts, reg = file.path(td,c('rhubarb.rds','crumble.rds'))),
                xform(pts, m))
-})  
+}) 
+
+test_that("Thin plate spine registration", {
+
+  xyz=xyzmatrix(kcs20)
+  sids=sample(nrow(xyz), size=10) #Sample some points from the kenyon cells
+  
+  landmarks=xyz[sids,] #take some points as landmarks
+  landmarkst=scale(xyz[sids,], center = T, scale = rep(1.5, 3)) #now scale the landmarks..
+  
+  #compute a transformation with sameple as scaled landmarks and reference as the original landmarks
+  mytps=tpsreg(sample=landmarkst, reference = landmarks)
+  
+  kcs20.t=xform(kcs20, mytps)
+  
+  kcs20.swap=xform(kcs20.t, mytps, swap=TRUE)
+  
+  #check if the inverse transform produces points that are similar to the original ones..
+  expect_equal(kcs20.swap[[1]][["points"]],
+               kcs20[[1]][["points"]],
+               tolerance=1e-6)
+  
+})
+
 }

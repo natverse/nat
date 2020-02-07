@@ -1098,3 +1098,12 @@ subset.neuronlist<-function(x, subset, filterfun,
   
   switch(rval, neuronlist=x[r], names=r, data.frame=df[r, ])
 }
+
+
+#' @rdname prune_twigs
+#' @inheritParams nlapply
+#' @export
+prune_twigs.neuronlist <- function(x, twig_length, OmitFailures=NA, ...) {
+  if(missing(twig_length)) stop("Missing twig_length argument")
+  nlapply(x, prune_twigs, twig_length=twig_length, OmitFailures=OmitFailures, ...)
+}

@@ -154,6 +154,7 @@ mirrorAxisSize
 morphml
 Morpho
 nabor
+nanometers
 nat's
 natverse
 nb
@@ -231,6 +232,7 @@ prechecks
 R's
 rda
 rds
+refmat
 reformatx
 refs
 regex
@@ -296,6 +298,7 @@ swc
 SWC
 SWCData
 targetvolume
+tarmat
 templatebrain
 templatebrains
 testthat
