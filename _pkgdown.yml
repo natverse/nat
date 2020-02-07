@@ -80,7 +80,6 @@ reference:
     - scale.neuron
     - resample
     - smooth_neuron
-    - potential_synapses
     - normalise_swc
   - title: Neurons (as graphs)
     desc: Functions for working with the graph structure of neurons
@@ -172,6 +171,10 @@ reference:
     contents:
     - nvertices
     - xyzmatrix
+    - potential_synapses
+    - overlap
+    - overlap_score
+    - sholl_analysis
     - plane_coefficients
     - intersect_plane
   - title: Object transformation
