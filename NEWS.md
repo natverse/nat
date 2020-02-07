@@ -1,5 +1,21 @@
 # nat (development version)
 
+* Add morphometry functions (#404 by @alexanderbates)
+* Add pruning functions (#403 by @alexanderbates)
+* Revamp/replace `pointsinside()` (#353)
+* Use progress package for auto progress bars (#275)
+* Implement 3d-wireframe plot in plotly (#421 by @SridharJagannathan)
+* Teach dotprops.character to handle multiple input files (#420)
+* Add `xyzmatrix.shapelist3d()` method (#419)
+* `xyzmatrix.mesh3d()` should have colnames XYZ (#418)
+* Teach `write.neuron()` to set label column of soma when writing SWCs (#415)
+* Setting fig size missing in vignette plotly.Rmd (#417 by @mmc46)
+* Fix as.seglist.igraph is slow #425
+* Neuron: fix use of "ties" parameter in `approx()` call bug (#416)
+* Fix scroll to zoom does not work using `nopen3d()` (#413)
+
+# nat 1.9.2
+
 * switch to https://github.com/natverse/nat
 * Support for plotly graphics engine (#409, #410)
 * Teach dotprops.character to handle multiple input files (#420)

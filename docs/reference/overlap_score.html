@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Generate a 3D model from connector and/or tree node data — make_model • nat</title>
+<title>Generate a connectivity matrix based on euclidean distance between points — overlap_score • nat</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -42,9 +42,11 @@
 
 
 
-<meta property="og:title" content="Generate a 3D model from connector and/or tree node data — make_model" />
-<meta property="og:description" content="Generate a mesh3d model based on points contained in a
-  neuronlist or neuron object, or another object that consists of 3D points." />
+<meta property="og:title" content="Generate a connectivity matrix based on euclidean distance between points — overlap_score" />
+<meta property="og:description" content="Generates an 'overlap matrix' of overlap scores between neurons in the outputneurons and inputneurons pools.
+For every point in a given neuron in outputneurons, a distance score is calculated to every point in a neuron in inputneurons.
+The sum of this score is added to the final output matrix. The score is calculated as e(-d^2/(2*delta^2)), where d is the euclidean distance between the two points,
+and delta is the expected distance in um that is considered 'close'. It is recommended that the user resamples neurons before use, using resample." />
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -150,67 +152,56 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Generate a 3D model from connector and/or tree node data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/natverse/nat/blob/master/R/interactive.R'><code>R/interactive.R</code></a></small>
-    <div class="hidden name"><code>make_model.Rd</code></div>
+    <h1>Generate a connectivity matrix based on euclidean distance between points</h1>
+    <small class="dont-index">Source: <a href='https://github.com/natverse/nat/blob/master/R/morphometry.R'><code>R/morphometry.R</code></a></small>
+    <div class="hidden name"><code>overlap_score.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Generate a mesh3d model based on points contained in a
-  neuronlist or neuron object, or another object that consists of 3D points.</p>
+    <p>Generates an 'overlap matrix' of overlap scores between neurons in the <code>outputneurons</code> and <code>inputneurons</code> pools.
+For every point in a given neuron in <code>outputneurons</code>, a distance score is calculated to every point in a neuron in <code>inputneurons</code>.
+The sum of this score is added to the final output matrix. The score is calculated as <code>e(-d^2/(2*delta^2))</code>, where d is the euclidean distance between the two points,
+and delta is the expected distance in um that is considered 'close'. It is recommended that the user resamples neurons before use, using <code><a href='resample.html'>resample</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_model</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>substrate</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cable"</span>, <span class='st'>"connectors"</span>, <span class='st'>"both"</span>),
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>30</span>,
-  <span class='kw'>auto.selection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>overlap_score</span>(<span class='no'>outputneurons</span>, <span class='no'>inputneurons</span>, <span class='kw'>delta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a neuronlist or neuron object, or another object that consists of 3D points</p></td>
+      <th>outputneurons</th>
+      <td><p>first set of neurons</p></td>
     </tr>
     <tr>
-      <th>substrate</th>
-      <td><p>whether to make the model based on the 3D location of
-connectors, neuron cable or both. Connectors are pre-synapse locations, 
-e.g. the pre-synapses of a <code>catmaidneuron</code> from the R package <code>catmaid</code>)</p></td>
+      <th>inputneurons</th>
+      <td><p>second set of neurons</p></td>
     </tr>
     <tr>
-      <th>alpha</th>
-      <td><p>a single value or vector of values for alpha, fed to
-<code><a href='https://rdrr.io/pkg/alphashape3d/man/ashape3d.html'>alphashape3d::ashape3d</a></code>. Selection is subsequently interactive.</p></td>
+      <th>delta</th>
+      <td><p>the distance (in um) at which a synapse might occur</p></td>
     </tr>
     <tr>
-      <th>auto.selection</th>
-      <td><p>logical, whether or not to try and remove points based on interactively
-choosing simple values for clustering.</p></td>
+      <th>progress</th>
+      <td><p>whether or not to have a progress bar</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A mesh3d object</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Interactive function that allows a users to select points in 3D space from neuronlist/neuron objects,
-or another object that is coercible in 3D points using <code><a href='xyzmatrix.html'>xyzmatrix</a></code>. Points can first be automatically chosen, by
-selecting an integer number of nearest neighbours to find for each point using <code><a href='https://rdrr.io/pkg/nabor/man/knn.html'>nabor::knn</a></code>, and then a 
-maximum distance at which nodes can be part of a cluster. Next, <code><a href='select_points.html'>select_points</a></code> is used to manually pick desired 3D
-points. Lastly, <code><a href='https://rdrr.io/pkg/alphashape3d/man/ashape3d.html'>alphashape3d::ashape3d</a></code> is used to create an alphashape around these points. The user can trial different values for
-alpha until they get their desired result.</p>
+    <p>a matrix of overlap scores</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='prune_online.html'>prune_online</a></code></p></div>
+    <div class='dont-index'><p><code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='resample.html'>resample</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># Make a model based off of fly olfactory projection neuron arbours</span>
-<span class='no'>PN_blob</span> <span class='kw'>=</span> <span class='fu'>make_model</span>(<span class='no'>Cell07PNs</span>)
+<span class='co'># Calculate how much some neurons overlap with one another</span>
+<span class='co'>## Example requires the package nat.flybrains</span>
+<span class='no'>Cell07PNs_overlap</span> <span class='kw'>=</span> <span class='fu'>overlap_score</span>(<span class='kw'>outputneurons</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span>, <span class='kw'>inputneurons</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span>)
+
+<span class='co'>## Plot the results</span>
+<span class='fu'><a href='https://rdrr.io/r/stats/heatmap.html'>heatmap</a></span>(<span class='no'>Cell07PNs_overlap</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -218,7 +209,6 @@ alpha until they get their desired result.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
