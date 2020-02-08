@@ -43,7 +43,7 @@ overlap_score <- function(outputneurons, inputneurons,
 }
 
 
-#' Perform a sholl analysis on neuron skeletons
+#' Perform a Sholl analysis on neuron skeletons
 #'
 #' @description Functions for Sholl analysis of neuronal skeletons
 #'

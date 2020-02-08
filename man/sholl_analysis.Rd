@@ -4,7 +4,7 @@
 \alias{sholl_analysis}
 \alias{sholl_analysis.neuron}
 \alias{sholl_analysis.neuronlist}
-\title{Perform a sholl analysis on neuron skeletons}
+\title{Perform a Sholl analysis on neuron skeletons}
 \usage{
 sholl_analysis(
   x,

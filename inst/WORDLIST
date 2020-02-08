@@ -154,7 +154,6 @@ mirrorAxisSize
 morphml
 Morpho
 nabor
-nanometers
 nat's
 natverse
 nb
@@ -276,6 +275,7 @@ setMouseCallbacks
 Shanice
 shapelist
 Shih
+Sholl
 SkeletonGraph
 skeletonisation
 skeletonised
@@ -297,6 +297,7 @@ sumsegment
 swc
 SWC
 SWCData
+SWCs
 targetvolume
 tarmat
 templatebrain
