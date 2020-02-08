@@ -1162,7 +1162,6 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
   #Step 1: First check if the input is fragmented and then proceed further..
   if(is.neuron(x)){
     if(x$nTrees == 1){
-      message("The neuron is already complete, so not stiching it further")
       return(x)
     }
   }
