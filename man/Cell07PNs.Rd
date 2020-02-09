@@ -5,8 +5,8 @@
 \alias{Cell07PNs}
 \title{Cell07PNs: 40 Sample Projection Neurons from Jefferis, Potter et al 2007}
 \description{
-These R lists (which have additional class neuronlist) contain 40 traced 
-olfactory projection neurons from Jefferis, Potter et al 2007 that have been 
+These R lists (which have additional class neuronlist) contain 40 traced
+olfactory projection neurons from Jefferis, Potter et al 2007 that have been
 transformed onto the IS2 template brain (Cachero, Ostrovsky et al 2010).
 }
 \examples{
@@ -25,7 +25,8 @@ Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E.
 \href{http://dx.doi.org/10.1016/j.cub.2010.07.045}{doi:10.1016/j.cub.2010.07.045}
 }
 \seealso{
-\code{\link{head.neuronlist}}, \code{\link{with.neuronlist}}
+\code{\link{head.neuronlist}}, \code{\link{with.neuronlist}},
+  \code{\link{dl1neuron}}
 
 Other nat-data: 
 \code{\link{MBL.surf}},

@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10</span>
       </span>
     </div>
 
@@ -249,6 +249,24 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="seglist.html">seglist()</a></code> <code><a href="seglist.html">as.seglist()</a></code> </p>
+        </td>
+        <td><p>Make/convert neuron connectivity information into a seglist object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seglist2swc.html">seglist2swc()</a></code> </p>
+        </td>
+        <td><p>Recalculate Neurons's SWCData using SegList and point information</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="seglengths.html">seglengths()</a></code> </p>
+        </td>
+        <td><p>Calculate length of all segments in neuron</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="smooth_neuron.html">smooth_neuron()</a></code> <code><a href="smooth_neuron.html">smooth_segment_gauss()</a></code> </p>
         </td>
         <td><p>Smooth the 3D coordinates of a neuron skeleton</p></td>
@@ -281,39 +299,21 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="prune_strahler.html">prune_strahler()</a></code> </p>
-        </td>
-        <td><p>Prune a neuron by removing segments with a given Strahler order</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="rootpoints.html">rootpoints()</a></code> <code><a href="rootpoints.html">branchpoints()</a></code> <code><a href="rootpoints.html">endpoints()</a></code> </p>
         </td>
         <td><p>Return the root, branch, or end points of a neuron or graph</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="seglengths.html">seglengths()</a></code> </p>
-        </td>
-        <td><p>Calculate length of all segments in neuron</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="seglist.html">seglist()</a></code> <code><a href="seglist.html">as.seglist()</a></code> </p>
-        </td>
-        <td><p>Make/convert neuron connectivity information into a seglist object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="seglist2swc.html">seglist2swc()</a></code> </p>
-        </td>
-        <td><p>Recalculate Neurons's SWCData using SegList and point information</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="segmentgraph.html">segmentgraph()</a></code> </p>
         </td>
         <td><p>Return a simplified segment graph for a neuron</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="distal_to.html">distal_to()</a></code> </p>
+        </td>
+        <td><p>Return indices of points in a neuron distal to a given node</p></td>
       </tr><tr>
         
         <td>
@@ -326,6 +326,42 @@
           <p><code><a href="strahler_order.html">strahler_order()</a></code> </p>
         </td>
         <td><p>Find the Strahler order of each point in a neuron</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="prune_strahler.html">prune_strahler()</a></code> </p>
+        </td>
+        <td><p>Prune a neuron by removing segments with a given Strahler order</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="prune_twigs.html">prune_twigs()</a></code> </p>
+        </td>
+        <td><p>Remove all twigs less than a certain path length from a neuron</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="simplify_neuron.html">simplify_neuron()</a></code> </p>
+        </td>
+        <td><p>Simplify a neuron to the longest tree with n branch points</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stitch_neuron.html">stitch_neuron()</a></code> </p>
+        </td>
+        <td><p>Stitch two neurons together at their closest endpoint</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stitch_neurons.html">stitch_neurons()</a></code> </p>
+        </td>
+        <td><p>Stitch multiple fragments into single neuron using nearest endpoints</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="stitch_neurons_mst.html">stitch_neurons_mst()</a></code> </p>
+        </td>
+        <td><p>Stitch multiple fragments into single neuron using minimum spanning tree</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -705,12 +741,6 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="overlap.html">overlap()</a></code> </p>
-        </td>
-        <td><p>Generate a connectivity matrix based on euclidean distance between points</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="overlap_score.html">overlap_score()</a></code> </p>
         </td>
         <td><p>Generate a connectivity matrix based on euclidean distance between points</p></td>
@@ -719,7 +749,7 @@ expression</p></td>
         <td>
           <p><code><a href="sholl_analysis.html">sholl_analysis()</a></code> </p>
         </td>
-        <td><p>Perform a sholl analysis on neuron skeletons</p></td>
+        <td><p>Perform a Sholl analysis on neuron skeletons</p></td>
       </tr><tr>
         
         <td>
@@ -737,7 +767,7 @@ expression</p></td>
       <tr>
         <th colspan="2">
           <h2 id="section-object-transformation" class="hasAnchor"><a href="#section-object-transformation" class="anchor"></a>Object transformation</h2>
-          <p class="section-desc"><p>Generic strategies for transforming 3D objects/images</p></p>
+          <p class="section-desc"><p>Generic strategies for transforming 3D objects/images and registration</p></p>
         </th>
       </tr>
       <tr>
@@ -776,6 +806,12 @@ expression</p></td>
           <p><code><a href="simplify_reglist.html">simplify_reglist()</a></code> </p>
         </td>
         <td><p>Simplify a registration list</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tpsreg.html">tpsreg()</a></code> <code><a href="tpsreg.html">xformpoints(<i>&lt;tpsreg&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Thin plate spline registrations via xform and friends</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -1037,6 +1073,12 @@ expression</p></td>
       </tr><tr>
         
         <td>
+          <p><code><a href="dl1neuron.html">dl1neuron</a></code> </p>
+        </td>
+        <td><p>Olfactory Projection Neuron reconstructed from EM data</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="MBL.surf.html">MBL.surf</a></code> </p>
         </td>
         <td><p>Surface object (hxsurf) for the left mushroom body in FCWB template space</p></td>
@@ -1276,7 +1318,7 @@ expression</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Gregory Jefferis, James Manton.</p>
+  <p>Developed by Gregory Jefferis, James Manton, Sridhar Jagannathan.</p>
 </div>
 
 <div class="pkgdown">

@@ -79,6 +79,9 @@ reference:
     - Ops.neuron
     - scale.neuron
     - resample
+    - seglist
+    - seglist2swc
+    - seglengths
     - smooth_neuron
     - normalise_swc
   - title: Neurons (as graphs)
@@ -86,14 +89,17 @@ reference:
     contents:
     - ngraph
     - graph.nodes
-    - prune_strahler
     - rootpoints
-    - seglengths
-    - seglist
-    - seglist2swc
     - segmentgraph
+    - distal_to
     - spine
     - strahler_order
+    - prune_strahler
+    - prune_twigs
+    - simplify_neuron
+    - stitch_neuron
+    - stitch_neurons
+    - stitch_neurons_mst
   - title: Skeletonised Neurons (dotprops aka vector cloud)
     desc: Functions for working with skeletonised neurons consisting of 
       unconnected vectors rather than a fully connected tree.
@@ -172,13 +178,12 @@ reference:
     - nvertices
     - xyzmatrix
     - potential_synapses
-    - overlap
     - overlap_score
     - sholl_analysis
     - plane_coefficients
     - intersect_plane
   - title: Object transformation
-    desc: Generic strategies for transforming 3D objects/images
+    desc: Generic strategies for transforming 3D objects/images and registration
     contents:
     - xform
     - mirror
@@ -186,6 +191,7 @@ reference:
     - xformimage
     - xformpoints
     - simplify_reglist  
+    - tpsreg
   - title: Images (im3d)
     desc: Functions for working with 3d image volumes 
     contents:
@@ -234,6 +240,7 @@ reference:
     contents:
       - Cell07PNs
       - kcs20
+      - dl1neuron
       - MBL.surf
   - title: Generic Functions
     desc: Generic versions of base functions for which we provide specialised 

@@ -1,8 +1,14 @@
-# nat (development version)
+# nat (1.10)
 
-* Add morphometry functions (#404 by @alexanderbates)
-* Add pruning functions (#403 by @alexanderbates)
-* Revamp/replace `pointsinside()` (#353)
+* Add functions from elmr package including 
+  pruning: `prune_twigs()`, `simplify_neuron()`, 
+  stitching neuron fragments: `stitch_neuron()`, `stitch_neurons()`, `stitch_neurons_mst()`, 
+  thin plate splines registration: `tpsreg()`
+  (#423 by @SridharJagannathan)
+* Add large collection of morphometry functions (#404 by @alexanderbates)
+* Add collection of pruning functions (#403 by @alexanderbates)
+* remove `overlap()` which duplicates `overlap_score()` (#426)
+* Revamp `pointsinside()` (#353)
 * Use progress package for auto progress bars (#275)
 * Implement 3d-wireframe plot in plotly (#421 by @SridharJagannathan)
 * Teach dotprops.character to handle multiple input files (#420)

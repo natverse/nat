@@ -16,4 +16,7 @@ A DL1 olfactory projection neuuronobject traced in CATMAID from the FAFB
 whole brain EM volume. This has a complex morphology that makes a good test
 for pruning and simplifcation strategies.
 }
+\seealso{
+\code{\link{Cell07PNs}}
+}
 \keyword{datasets}
