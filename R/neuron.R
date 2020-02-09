@@ -858,9 +858,9 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' n.simp=simplify_neuron(n)
 #' n.simp4=simplify_neuron(n, n=4)
 #' 
+#' plot(n, col='green', WithNodes = FALSE)
 #' plot(n.simp, col='red', add = TRUE)
 #' plot(n.simp4, col='blue', add = TRUE)
-#' plot(n, col='green', WithNodes = FALSE)
 #'
 #' # calculate the inverse as well
 #' n.simp4.inv=simplify_neuron(n, n=4, invert=TRUE)
@@ -878,7 +878,7 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' 
 #' # or with plotly where transparency works
 #' \dontrun{
-#' options(nat.plotengine = 'plotly')
+#' op <- options(nat.plotengine = 'plotly')
 #' nclear3d()
 #' plot3d(n.simp, col='red', alpha = 0.5, add = TRUE)
 #' plot3d(n.simp4, col='blue', alpha = 0.5, add = TRUE)
@@ -999,13 +999,11 @@ robust_max=function(x) {
 # @export
 # @seealso \code{\link[nat]{simplify_neuron}} 
 # @examples
-# \dontrun{
-# library(catmaid)
-# dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-# dl1.simp=simplify_neuron2(dl1)
-# dl1.simp4=simplify_neuron2(dl1, n=4)
+# \donttest{
+# dl1.simp=simplify_neuron2(dl1neuron)
+# dl1.simp4=simplify_neuron2(dl1neuron, n=4)
 # nclear3d()
-# plot3d(dl1, col='green', alpha = 0.5, WithNodes = FALSE)
+# plot3d(dl1neuron, col='green', alpha = 0.5, WithNodes = FALSE)
 # plot3d(dl1.simp4, col='blue', alpha = 0.5, add = TRUE)
 # plot3d(dl1.simp, col='red', alpha = 0.5, add = TRUE)
 #
@@ -1346,13 +1344,10 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
 #' @export
 #' @seealso \code{\link{stitch_neurons}}
 #' @examples
-#' \dontrun{
-#' library(catmaid)
-#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-#' dl1_main=simplify_neuron(dl1, n = 1, invert = F)
-#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+#' \donttest{
+#' dl1_main=simplify_neuron(dl1neuron, n = 1, invert = FALSE)
+#' dl1_branches=simplify_neuron(dl1neuron, n = 1, invert = TRUE)
 #' dl1_whole = stitch_neuron(dl1_main,dl1_branches)
-#' 
 #' }
 stitch_neuron<-function(a, b){
   
@@ -1418,12 +1413,10 @@ closest_ends<-function(a, b){
 #' @export
 #' @examples
 #' \dontrun{
-#' library(catmaid)
-#' dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-#' dl1_main=simplify_neuron(dl1, n = 1, invert = F)
-#' dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-#' dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = F)
-#' dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = T)
+#' dl1_main=simplify_neuron(dl1neuron, n = 1, invert = FALSE)
+#' dl1_branches=simplify_neuron(dl1neuron, n = 1, invert = TRUE)
+#' dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = FALSE)
+#' dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = TRUE)
 #' dl1_fragment <- list(dl1_main,dl1_branches1,dl1_branches2)
 #' dl1_fragment <- as.neuronlist(dl1_fragment)
 #' dl1_whole = stitch_neurons(dl1_fragment)
@@ -1493,19 +1486,15 @@ has_soma<-function(x){
 #' @export
 #' @seealso \code{\link[nat]{subset.neuron}}, \code{\link[nat]{prune}}
 #' @examples
-#' \dontrun{
-#' ## Fetch a finished DL1 projection neuron
-#' library(catmaid)
-#' finished_pns=catmaid_get_neuronnames('annotation:^LH_DONE')
-#' # should only be one neuron but pick first just in case
-#' dl1skid=names(grep('DL1', finished_pns, value = TRUE))[1]
-#' dl1=read.neuron.catmaid(dl1skid)
+#' \donttest{
+#' ## Use EM  finished DL1 projection neuron
 #'
 #' ## subset to part of neuron distal to a tag "SCHLEGEL_LH"
 #' # nb distal_to can accept either the PointNo vertex id or raw index as a
 #' # pivot point
-#' dl1.lh=subset(dl1, distal_to(dl1,node.pointno = dl1$tags$SCHLEGEL_LH))
-#' plot(dl1,col='blue', WithNodes = FALSE)
+#' dl1.lh=subset(dl1neuron, distal_to(dl1neuron,
+#'   node.pointno = dl1neuron$tags$SCHLEGEL_LH))
+#' plot(dl1neuron,col='blue', WithNodes = FALSE)
 #' plot(dl1.lh, col='red', WithNodes = FALSE, add=TRUE)
 #' }
 distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,

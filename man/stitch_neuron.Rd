@@ -24,13 +24,10 @@ This function joins two neurons at their nearest point (only one).
   ensure this.
 }
 \examples{
-\dontrun{
-library(catmaid)
-dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-dl1_main=simplify_neuron(dl1, n = 1, invert = F)
-dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
+\donttest{
+dl1_main=simplify_neuron(dl1neuron, n = 1, invert = FALSE)
+dl1_branches=simplify_neuron(dl1neuron, n = 1, invert = TRUE)
 dl1_whole = stitch_neuron(dl1_main,dl1_branches)
-
 }
 }
 \seealso{

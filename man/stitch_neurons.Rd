@@ -33,12 +33,10 @@ Neurons will be ordered by default such the largest (by node count)
 }
 \examples{
 \dontrun{
-library(catmaid)
-dl1=read.neuron.catmaid(catmaid_skids('annotation:DL1')[1])
-dl1_main=simplify_neuron(dl1, n = 1, invert = F)
-dl1_branches=simplify_neuron(dl1, n = 1, invert = T)
-dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = F)
-dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = T)
+dl1_main=simplify_neuron(dl1neuron, n = 1, invert = FALSE)
+dl1_branches=simplify_neuron(dl1neuron, n = 1, invert = TRUE)
+dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = FALSE)
+dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = TRUE)
 dl1_fragment <- list(dl1_main,dl1_branches1,dl1_branches2)
 dl1_fragment <- as.neuronlist(dl1_fragment)
 dl1_whole = stitch_neurons(dl1_fragment)

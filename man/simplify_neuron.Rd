@@ -40,9 +40,9 @@ n=Cell07PNs[['ECA34L']]
 n.simp=simplify_neuron(n)
 n.simp4=simplify_neuron(n, n=4)
 
+plot(n, col='green', WithNodes = FALSE)
 plot(n.simp, col='red', add = TRUE)
 plot(n.simp4, col='blue', add = TRUE)
-plot(n, col='green', WithNodes = FALSE)
 
 # calculate the inverse as well
 n.simp4.inv=simplify_neuron(n, n=4, invert=TRUE)
@@ -60,7 +60,7 @@ plot3d(n, col='green', WithNodes = FALSE)
 
 # or with plotly where transparency works
 \dontrun{
-options(nat.plotengine = 'plotly')
+op <- options(nat.plotengine = 'plotly')
 nclear3d()
 plot3d(n.simp, col='red', alpha = 0.5, add = TRUE)
 plot3d(n.simp4, col='blue', alpha = 0.5, add = TRUE)
