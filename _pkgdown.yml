@@ -163,6 +163,7 @@ reference:
       - plot3d.hxsurf
       - plot3d.neuron
       - plot3d.cmtkreg
+      - plot3d.ngraph
   - title: 3D Interaction with Objects
     desc: Functions to review, identify, and modify objects by interactive selection in RGL windows.
     contents:
