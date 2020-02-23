@@ -76,7 +76,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.1</span>
       </span>
     </div>
 
@@ -152,6 +152,30 @@
       <small>Source: <a href='https://github.com/natverse/nat/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="nat-1-10-1" class="section level1">
+<h1 class="page-header">
+<a href="#nat-1-10-1" class="anchor"></a>nat 1.10.1<small> Unreleased </small>
+</h1>
+<p>We are bumping a whole version point because of a large number of new functions. Note that 1.10.0 was never formally released.</p>
+<ul>
+<li>Add functions from elmr package including pruning: <code><a href="../reference/prune_twigs.html">prune_twigs()</a></code>, <code><a href="../reference/simplify_neuron.html">simplify_neuron()</a></code>, stitching neuron fragments: <code><a href="../reference/stitch_neuron.html">stitch_neuron()</a></code>, <code><a href="../reference/stitch_neurons.html">stitch_neurons()</a></code>, <code><a href="../reference/stitch_neurons_mst.html">stitch_neurons_mst()</a></code>, thin plate splines registration: <code><a href="../reference/tpsreg.html">tpsreg()</a></code> (<a href='https://github.com/natverse/nat/issues/423'>#423</a> by <a href='https://github.com/SridharJagannathan'>@SridharJagannathan</a>)</li>
+<li>Add large collection of morphometry functions (<a href='https://github.com/natverse/nat/issues/404'>#404</a> by <a href='https://github.com/alexanderbates'>@alexanderbates</a>)</li>
+<li>Add collection of pruning functions (<a href='https://github.com/natverse/nat/issues/403'>#403</a> by <a href='https://github.com/alexanderbates'>@alexanderbates</a>)</li>
+<li>remove <code>overlap()</code> which duplicates <code><a href="../reference/overlap_score.html">overlap_score()</a></code> (<a href='https://github.com/natverse/nat/issues/426'>#426</a>)</li>
+<li>Revamp <code><a href="../reference/pointsinside.html">pointsinside()</a></code> (<a href='https://github.com/natverse/nat/issues/353'>#353</a>)</li>
+<li>Use progress package for auto progress bars (<a href='https://github.com/natverse/nat/issues/275'>#275</a>)</li>
+<li>Implement 3d-wireframe plot in plotly (<a href='https://github.com/natverse/nat/issues/421'>#421</a> by <a href='https://github.com/SridharJagannathan'>@SridharJagannathan</a>)</li>
+<li>Teach dotprops.character to handle multiple input files (<a href='https://github.com/natverse/nat/issues/420'>#420</a>)</li>
+<li>Add <code><a href="../reference/xyzmatrix.html">xyzmatrix.shapelist3d()</a></code> method (<a href='https://github.com/natverse/nat/issues/419'>#419</a>)</li>
+<li>
+<code><a href="../reference/xyzmatrix.html">xyzmatrix.mesh3d()</a></code> should have colnames XYZ (<a href='https://github.com/natverse/nat/issues/418'>#418</a>)</li>
+<li>Teach <code><a href="../reference/write.neuron.html">write.neuron()</a></code> to set label column of soma when writing SWCs (<a href='https://github.com/natverse/nat/issues/415'>#415</a>)</li>
+<li>Setting fig size missing in vignette plotly.Rmd (<a href='https://github.com/natverse/nat/issues/417'>#417</a> by <a href='https://github.com/mmc46'>@mmc46</a>)</li>
+<li>Fix as.seglist.igraph is slow <a href='https://github.com/natverse/nat/issues/425'>#425</a></li>
+<li>Neuron: fix use of “ties” parameter in <code><a href="https://rdrr.io/r/stats/approxfun.html">approx()</a></code> call bug (<a href='https://github.com/natverse/nat/issues/416'>#416</a>)</li>
+<li>Fix scroll to zoom does not work using <code><a href="../reference/nopen3d.html">nopen3d()</a></code> (<a href='https://github.com/natverse/nat/issues/413'>#413</a>)</li>
+</ul>
+</div>
     <div id="nat-1-9-2" class="section level1">
 <h1 class="page-header">
 <a href="#nat-1-9-2" class="anchor"></a>nat 1.9.2<small> Unreleased </small>
@@ -1055,6 +1079,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#nat-1-10-1">1.10.1</a></li>
         <li><a href="#nat-1-9-2">1.9.2</a></li>
         <li><a href="#nat-1-9-1">1.9.1</a></li>
         <li><a href="#nat-1-9-0">1.9.0</a></li>

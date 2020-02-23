@@ -1,4 +1,7 @@
-# nat (1.10)
+# nat 1.10.1
+
+We are bumping a whole version point because of a large number of new functions.
+Note that 1.10.0 was never formally released.
 
 * Add functions from elmr package including 
   pruning: `prune_twigs()`, `simplify_neuron()`, 
