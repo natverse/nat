@@ -1,9 +1,11 @@
 context("potential synapses")
 
 test_that("can call potential synapses on some neurons",{
-  potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s=2)
-  potential_synapses(Cell07PNs[[1]], Cell07PNs[[1]], s=2)
-  potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s=2, method='approx')
+  expect_equal(potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s=2), 219L)
+  expect_equal(potential_synapses(Cell07PNs[[1]], Cell07PNs[[1]], s=2), 902L)
+  expect_is(potential_synapses(Cell07PNs[[1]], Cell07PNs[[2]], s = 2, 
+                               method = 'approx'),
+            'numeric')
 })
 
 test_that("can calculat potential synapses with bounding box",{
