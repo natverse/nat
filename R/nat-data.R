@@ -74,9 +74,9 @@ NULL
 
 #' Olfactory Projection Neuron reconstructed from EM data
 #'
-#' A DL1 olfactory projection neuuronobject traced in CATMAID from the FAFB
+#' A DL1 olfactory projection neuron object traced in CATMAID from the FAFB
 #' whole brain EM volume. This has a complex morphology that makes a good test
-#' for pruning and simplifcation strategies.
+#' for pruning and simplification strategies.
 #'
 #' @format A \code{neuron} object with additional class \code{catmaidneuron}
 #' @source \url{http://www.diamondse.info/}
