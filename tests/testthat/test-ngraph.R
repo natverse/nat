@@ -213,6 +213,12 @@ test_that("Strahler order", {
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
 })
 
+
+test_that("plot3d.ngraph works",{
+  nclear3d()
+  plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes')
+})
+
 context("distal_to")
 
 test_that("distal_to works", {
@@ -236,4 +242,5 @@ test_that("distal_to works", {
   expect_equal(distal_to(x, node.pointno = lhep, root.idx = x$StartPoint), dtlhep)
   expect_equal(distal_to(x, node.pointno = lhep, root.pointno = x$tags$soma), dtlhep)
 })
+
 
