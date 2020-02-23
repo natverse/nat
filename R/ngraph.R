@@ -57,7 +57,7 @@
 #' @family neuron
 #' @seealso \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
 #'   \code{\link{subset.neuron}} for example of graph-based manipulation of a
-#'   neuron.
+#'   neuron, \code{\link{plot3d.ngraph}}
 #' @export
 #' @importFrom igraph V<-
 #' @examples

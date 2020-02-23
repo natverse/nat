@@ -1055,5 +1055,5 @@ test_that("we can write a neuron to vtk format", {
   testn=as.neuron(testd)
   tf <- tempfile(fileext = '.vtk')
   write.vtk(testn, tf)
-  readLines(tf)
+  expect_true(length(readLines(tf))>10)
 })

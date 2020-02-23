@@ -12,9 +12,9 @@
 dl1neuron
 }
 \description{
-A DL1 olfactory projection neuuronobject traced in CATMAID from the FAFB
+A DL1 olfactory projection neuron object traced in CATMAID from the FAFB
 whole brain EM volume. This has a complex morphology that makes a good test
-for pruning and simplifcation strategies.
+for pruning and simplification strategies.
 }
 \seealso{
 \code{\link{Cell07PNs}}

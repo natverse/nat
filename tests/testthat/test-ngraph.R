@@ -213,3 +213,34 @@ test_that("Strahler order", {
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
 })
 
+
+test_that("plot3d.ngraph works",{
+  nclear3d()
+  plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes')
+})
+
+context("distal_to")
+
+test_that("distal_to works", {
+  x=dl1neuron
+  lhep=x$tags[['SCHLEGEL_LH']]
+  lhep.idx=match(lhep, x$d$PointNo)
+  expect_equal(dtlhep <- distal_to(x, node.pointno = lhep),
+               distal_to(x, node.idx = lhep.idx))
+  
+  # manually work out
+  matching_seg_id=which(sapply(x$SegList, function(x) any(lhep.idx %in% x)))
+  matching_seg=x$SegList[[matching_seg_id]]
+  
+  matching_part = matching_seg[seq.int(from = which(matching_seg == lhep.idx),
+                                       to = length(matching_seg))]
+  
+  expect_equal(matching_part, dtlhep[1:length(matching_part)],
+               label = 'Initial part of distal_to returns correct indices')
+  
+  # check that if we specify the soma things still work
+  expect_equal(distal_to(x, node.pointno = lhep, root.idx = x$StartPoint), dtlhep)
+  expect_equal(distal_to(x, node.pointno = lhep, root.pointno = x$tags$soma), dtlhep)
+})
+
+

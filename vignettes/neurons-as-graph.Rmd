@@ -304,3 +304,41 @@ plot(pruned, lwd=2, add = T)
 ```
 
 The pruned neurons show up in red, green, and blue in the above plot.
+
+### Distal nodes
+As of nat v1.10.0 there is a `distal_to()` function to provide a simpler 
+access to nodes defined by graph position. 
+```{r}
+n=Cell07PNs[[1]]
+distal_to(n, node.idx = n$AxonLHEP)
+```
+
+One can find the complement (i.e. all the nodes that are not in the distal set)
+by  comparing with the indices of all vertices.
+
+```{r}
+setdiff(seq_len(nvertices(n)), distal_to(n, node.idx = n$AxonLHEP))
+```
+
+
+`distal_to()` allows you to write a slightly simpler version of the function
+above:
+```{r}
+prune_from_lhep2 <- function(n, ...) {
+  downstream_indices=distal_to(n, node.idx = n$AxonLHEP)
+  prune_vertices(n, verticestoprune = downstream_indices, invert = TRUE)
+}
+
+all.equal(nlapply(Cell07PNs[1:3], prune_from_lhep2), pruned)
+```
+
+Notice that `distal_to()` will help with the situation where you need to find
+nodes using their identifiers rather than indices. For example tags in neurons
+loaded from the CATMAID reconstruction tool are defined by ids not indices.
+
+```{r}
+tokeep=distal_to(dl1neuron, node.pointno = dl1neuron$tags$SCHLEGEL_LH)
+plot(dl1neuron, WithNodes = F, soma=2000)
+plot(prune_vertices(dl1neuron, tokeep, invert = T), add=T, WithNodes = F, col='red', lwd=2)
+```
+
