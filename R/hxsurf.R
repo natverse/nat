@@ -54,7 +54,14 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   # Check for header confirming file type
   firstLine=readLines(filename,n=1)
   if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+ascii",firstLine,ignore.case=T,perl=T))){
-    stop(filename," does not appear to be an Amira HyperSurface ASCII file!")
+    if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+binary",firstLine,ignore.case=T,perl=T))){
+      stop(filename," does not appear to be an Amira HyperSurface file!")
+    }
+    res=tryCatch(read.hxsurf.bin(filename = filename), error=function(e) 
+      stop("Support for reading binary Amira HyperSurface is still limited.\n",
+           "See https://github.com/natverse/nat/issues/429. Detailed error messgae",
+           as.character(e)))
+    return(res)
   }
   initialcaps<-function(x) {substr(x,1,1)=toupper(substr(x,1,1)); x}
   RegionChoice=match.arg(initialcaps(RegionChoice), c("Inner", "Outer", "Both"), 
@@ -163,10 +170,6 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
 }
 
 read.hxsurf.bin <- function(filename) {
-  firstLine=readLines(filename,n=1)
-  if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+binary",firstLine,ignore.case=T,perl=T))){
-    stop(filename," does not appear to be an Amira HyperSurface binary file!")
-  }
   con=file(filename, open='rb')
   on.exit(close(con))
   vertex_regex='^Vertices \\d+$'
