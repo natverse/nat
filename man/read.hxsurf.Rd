@@ -64,6 +64,10 @@ Note that when \code{RegionChoice="both"} or
   As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more 
   regions than you wanted, then try switching to \code{RegionChoice="Inner"}
   or \code{RegionChoice="Outer"}.
+  
+  Note that there is currently only limited support for reading Amira's 
+  binary mesh format. In particular only single region mesh files are 
+  supported.
 }
 \examples{
 \dontrun{
