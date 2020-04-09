@@ -33,7 +33,9 @@ Imports:
     nat.utils (>= 0.4.2),
     plyr,
     yaml,
-    progress
+    progress,
+    checkmate,
+    stringr
 Suggests:
     spelling,
     Rvcg (>= 0.17),
