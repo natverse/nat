@@ -17,6 +17,10 @@
 #'   regions than you wanted, then try switching to \code{RegionChoice="Inner"}
 #'   or \code{RegionChoice="Outer"}.
 #'   
+#'   Note that there is currently only limited support for reading Amira's 
+#'   binary mesh format. In particular only single region mesh files are 
+#'   supported.
+#'   
 #' @param filename Character vector defining path to file
 #' @param RegionNames Character vector specifying which regions should be read 
 #'   from file. Default value of \code{NULL} => all regions.
@@ -57,10 +61,19 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
     if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+binary",firstLine,ignore.case=T,perl=T))){
       stop(filename," does not appear to be an Amira HyperSurface file!")
     }
-    res=tryCatch(read.hxsurf.bin(filename = filename), error=function(e) 
-      stop("Support for reading binary Amira HyperSurface is still limited.\n",
-           "See https://github.com/natverse/nat/issues/429. Detailed error messgae",
-           as.character(e)))
+    res = tryCatch(
+      read.hxsurf.bin(
+        filename = filename,
+        FallbackRegionCol = FallbackRegionCol,
+        Verbose = Verbose
+      ),
+      error = function(e)
+        stop(
+          "Support for reading binary Amira HyperSurface is still limited.\n",
+          "See https://github.com/natverse/nat/issues/429. Detailed error message",
+          as.character(e)
+        )
+    )
     return(res)
   }
   initialcaps<-function(x) {substr(x,1,1)=toupper(substr(x,1,1)); x}
@@ -169,7 +182,7 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   return(d)
 }
 
-read.hxsurf.bin <- function(filename) {
+read.hxsurf.bin <- function(filename, return.raw=FALSE, FallbackRegionCol='grey', Verbose=FALSE) {
   con=file(filename, open='rb')
   on.exit(close(con))
   vertex_regex='^Vertices \\d+$'
@@ -181,6 +194,11 @@ read.hxsurf.bin <- function(filename) {
     h=c(h, line)
     line <- readLines(con, n=1)
   }
+  
+  params=.ParseAmirameshParameters(h)
+  materials=names(params$Parameters$Materials)
+  if(isFALSE(all(materials %in% c("Exterior", "Inside"))))
+    stop("FIXME: read.hxsurf.bin only supports surfaces with materials Inside/Exterior!")
   # read data blocks
   data_regex='^\\s*(\\w+)\\s+(\\d+)$'
   
@@ -194,7 +212,9 @@ read.hxsurf.bin <- function(filename) {
       n
     }, error=function(e) {NA_integer_})
   }
-  data <- list(header=h)
+  
+  data <- list(header=h, params=params)
+  
   curpatch=NA_integer_
   while(TRUE) {
     if(length(line)<1) break
@@ -233,8 +253,52 @@ read.hxsurf.bin <- function(filename) {
     
     line <- readLines(con, 1)
   }
-  data
+  if(return.raw)
+    data
+  else parse.hxsurf.bin(data, FallbackRegionCol=FallbackRegionCol, Verbose=Verbose)
 }
+
+# FIXME: Ideally this would be harmonised with the code for read.hxsurf to 
+# avoid duplication
+parse.hxsurf.bin <- function(data, FallbackRegionCol, Verbose) {
+  materials=data$params$Parameters$Materials
+  d=list()
+  d[['Vertices']]=as.data.frame(xyzmatrix(data$Vertices))
+  d[['Vertices']][,'PointNo']=seq_len(nrow(d[['Vertices']]))
+  
+  d$Regions=list()
+  for(p in seq_along(data$Patches)) {
+    thispatch=as.data.frame(data$Patches[[p]])
+    pi=.ParseAmirameshParameters(data$PatchInfo[[p]])
+    RegionName <- pi$InnerRegion
+    
+    if(RegionName%in%names(d$Regions)){
+      # add to the old patch
+      if(Verbose) cat("Adding to patch name",RegionName,"\n")
+      d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],thispatch)
+    } else {
+      # new patch
+      if(Verbose) cat("Making new patch name",RegionName,"\n")
+      d[['Regions']][[RegionName]]=thispatch
+    }
+  }
+  
+  d$RegionList=names(d$Regions)
+  
+  d$RegionColourList <- vector(length=length(d$RegionList))
+  for(regionName in d$RegionList) {
+    rgbValues <-  materials[[regionName]][['Color']]
+    if(isTRUE(length(rgbValues)==3)) {
+      color <- rgb(rgbValues[[1]], rgbValues[[2]], rgbValues[[3]])
+    } else {
+      color <- FallbackRegionCol
+    } 
+    d$RegionColourList[which(d$RegionList == regionName)] <- color
+  }
+  class(d) <- c('hxsurf',class(d))
+  return(d)
+}
+
 
 #' Write Amira surface (aka HxSurface or HyperSurface) into .surf file.
 #' 
