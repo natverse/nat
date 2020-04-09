@@ -62,7 +62,6 @@ xform<-function(x, reg, ...) UseMethod('xform')
 
 #' @details TODO get this to work for matrices with more than 3 columns by
 #'   working on xyzmatrix definition.
-#' @method xform default
 #' @export
 #' @param na.action How to handle NAs. NB drop may not work for some classes.
 #' @rdname xform
@@ -97,7 +96,6 @@ xform.character<-function(x, reg, ...) {
   xformimage(reg, x, ...)
 }
 
-#' @method xform list
 #' @export
 #' @rdname xform
 #' @param FallBackToAffine Whether to use an affine transform when a cmtk
@@ -133,7 +131,6 @@ xform.data.frame <- function(x, reg, subset=NULL, ...) {
   x
 }
 
-#' @method xform dotprops
 #' @export
 #' @rdname xform
 #' @details For the \code{xform.dotprops} method, dotprops tangent vectors will 
@@ -166,7 +163,6 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
   dotprops(x, ...)
 }
 
-#' @method xform neuronlist
 #' @details With \code{xform.neuronlist}, if you want to apply a different 
 #'   registration to each object in the neuronlist \code{x}, then you should use
 #'   \code{VectoriseRegistrations=TRUE}.
@@ -243,7 +239,6 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
 #' methods('xyzmatrix<-')
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
-#' @method xyzmatrix default
 #' @param y,z separate y and z coordinates
 #' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
 #'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
@@ -526,7 +521,6 @@ mirror.character<-function(x, output, mirrorAxisSize=NULL, target=x, ...){
 #'   specifies a non-rigid transformation to correct asymmetries in an image.
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
-#' @method mirror default
 #' @export
 #' @rdname mirror
 mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
@@ -560,7 +554,6 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
 }
 
-#' @method mirror neuronlist
 #' @param subset For \code{mirror.neuronlist} indices
 #'   (character/logical/integer) that specify a subset of the members of
 #'   \code{x} to be transformed.

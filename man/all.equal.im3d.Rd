@@ -4,7 +4,7 @@
 \alias{all.equal.im3d}
 \title{Check equality on data and key attributes of im3d objects}
 \usage{
-\method{all.equal}{im3d}(
+\method{all}{equal.im3d}(
   target,
   current,
   tolerance = 1e-06,

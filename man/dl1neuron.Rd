@@ -4,7 +4,9 @@
 \name{dl1neuron}
 \alias{dl1neuron}
 \title{Olfactory Projection Neuron reconstructed from EM data}
-\format{A \code{neuron} object with additional class \code{catmaidneuron}}
+\format{
+A \code{neuron} object with additional class \code{catmaidneuron}
+}
 \source{
 \url{http://www.diamondse.info/}
 }

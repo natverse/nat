@@ -112,7 +112,6 @@ dotprops.character <- function(x, pattern = NULL, OmitFailures = NA, ...) {
 #' @description \code{dotprops.dotprops} will default to the original vale of 
 #'   \code{k} and copy over all attributes that are not set by
 #'   \code{dotprops.default}.
-#' @method dotprops dotprops
 #' @export
 #' @export
 #' @rdname dotprops
@@ -144,7 +143,6 @@ dotprops.list<-function(x, ...) {
 #'   neuronlist using \code{\link{nlapply}}. \code{...} arguments will be passed to 
 #'   \code{nlapply} in addition to the named argument \code{OmitFailures}.
 #' @export
-#' @method dotprops neuronlist
 #' @rdname dotprops
 #' @inheritParams nlapply
 #' @seealso \code{\link{nlapply}}
@@ -153,7 +151,6 @@ dotprops.neuronlist<-function(x, ..., OmitFailures=NA) {
 }
 
 #' @export
-#' @method dotprops neuron
 #' @param resample When finite, a new length to which all segmented edges will
 #'   be resampled. See \code{\link{resample.neuron}}.
 #' @rdname dotprops
@@ -164,7 +161,6 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
   dotprops(xyzmatrix(x), Labels=Labels, ...)
 }
 
-#' @method dotprops default
 #' @export
 #' @rdname dotprops
 #' @param k Number of nearest neighbours to use for tangent vector calculation 
@@ -257,7 +253,6 @@ dotprops2swc<-function(x, label=0L, veclength=1, radius=0) {
 #'   using an eigenvector decomposition where the sign of the eigenvector is
 #'   essentially random and subject to small numerical instabilities. Therefore
 #'   it does not usually make sense to check the value of vect exactly.
-#' @method all.equal dotprops
 #' @param target,current dotprops objects to compare
 #' @param check.attributes Whether to check attributes (false by default)
 #' @param absoluteVectors Whether to check only the absolute value of
@@ -458,7 +453,6 @@ plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black',
 #' @param ... Additional parameters (currently ignored)
 #' @inheritParams subset.neuron
 #' @return subsetted dotprops object
-#' @method subset dotprops
 #' @export
 #' @seealso \code{prune.dotprops}, \code{subset.neuron}
 #' @examples
@@ -575,7 +569,6 @@ prune.neuron<-function(x, target, ...){
 }
 
 #' @export
-#' @method prune dotprops
 #' @rdname prune
 #' @seealso \code{\link{subset.dotprops}}
 prune.dotprops<-function(x, target, ...){
@@ -584,14 +577,12 @@ prune.dotprops<-function(x, target, ...){
 }
 
 #' @export
-#' @method prune neuronlist
 #' @rdname prune
 prune.neuronlist<-function(x, target, ...){
   nlapply(x, prune, target=target, ...)
 }
 
 #' @export
-#' @method prune default
 #' @rdname prune
 #' @param maxdist The threshold distance for keeping points
 #' @param keep Whether to keep points in x that are near or far from the target

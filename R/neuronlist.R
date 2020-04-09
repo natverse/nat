@@ -67,7 +67,6 @@ as.neuronlist<-function(l, ...) UseMethod("as.neuronlist")
 #' @param df the data.frame to attach with additional metadata.
 #' @param AddClassToNeurons Whether to ensure neurons have class \code{neuron}
 #'   (see details).
-#' @method as.neuronlist default
 #' @rdname as.neuronlist
 as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   if(is.neuron(l)) {
@@ -94,7 +93,6 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
   l
 }
 
-#' @method [ neuronlist
 #' @description \code{[.neuronlist} and \code{[<-.neuronlist} behave like the 
 #'   corresponding base methods (\code{[.data.frame}, \code{[<-.data.frame}) 
 #'   allowing extraction or replacement of parts of the data.frame attached to
@@ -616,7 +614,6 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
 #'   \code{'df'}
 #' @export
-#' @method plot3d neuronlist
 #' @seealso \code{\link{nat-package}}
 #' @examples
 #' open3d()
@@ -747,7 +744,6 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
 }
 
 #' @rdname plot3d.neuronlist
-#' @method plot3d character
 #' @export
 #' @param db A neuronlist to use as the source of objects to plot. If
 #'   \code{NULL}, the default, will use the neuronlist specified by
@@ -909,7 +905,6 @@ makecols<-function(cols, colpal, nitems) {
 #' @return modified neuronlist
 #' @export
 #' @rdname neuronlist-arithmetic
-#' @method * neuronlist
 #' @examples
 #' mn2<-Cell07PNs[1:10]*2
 `*.neuronlist` <- function(x,y) {
@@ -919,13 +914,11 @@ makecols<-function(cols, colpal, nitems) {
 
 #' @export
 #' @rdname neuronlist-arithmetic
-#' @method + neuronlist
 #' @family neuronlist
 `+.neuronlist` <- function(x,y) nlapply(x,`+`,y)
 
 #' @export
 #' @rdname neuronlist-arithmetic
-#' @method - neuronlist
 `-.neuronlist` <- function(x,y) {
   if(missing(y)) x*-1
   else x+(-y)
@@ -933,7 +926,6 @@ makecols<-function(cols, colpal, nitems) {
 
 #' @export
 #' @rdname neuronlist-arithmetic
-#' @method / neuronlist
 `/.neuronlist` <- function(x,y) x*(1/y)
 
 #' Methods for working with the dataframe attached to a neuronlist
@@ -959,7 +951,6 @@ droplevels.neuronlist<-function(x, except=NULL, ...){
 #' @rdname neuronlist-dataframe-methods
 #' @aliases with.neuronlist with
 #' @export
-#' @method with neuronlist
 #' @seealso \code{\link{with}}
 with.neuronlist<-function(data, expr, ...) {
   eval(substitute(expr), attr(data,'df'), enclos = parent.frame())
@@ -1020,7 +1011,6 @@ tail.neuronlist<-function(x, ...) {
 #' @return A \code{neuronlist}, character vector of names or the attached 
 #'   data.frame according to the value of \code{rval}
 #' @export
-#' @method subset neuronlist
 #' @seealso \code{\link{neuronlist}, \link{find.neuron}, 
 #'   \link{subset.data.frame}, \link{subset.neuron}, \link{subset.dotprops}}
 #' @examples

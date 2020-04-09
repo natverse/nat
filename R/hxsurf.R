@@ -222,7 +222,6 @@ write.hxsurf <- function(surf, filename) {
 #' @param ... Additional arguments passed to \code{triangles3d}
 #' @inheritParams plot3d.neuronlist
 #' @export
-#' @method plot3d hxsurf
 #' @seealso \code{\link{read.hxsurf}}
 #' @family hxsurf
 #' @examples 
@@ -404,7 +403,6 @@ as.hxsurf.mesh3d <- function(x, region="Interior", col=NULL, ...) {
 #'   the matching regions
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted hxsurf object
-#' @method subset hxsurf
 #' @export
 #' @family hxsurf
 #' @examples

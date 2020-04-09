@@ -132,7 +132,6 @@ as.ngraph.ngraph<-function(x, ...) x
 
 #' @description \code{as.ngraph.dataframe} construct ngraph from a data.frame 
 #'   containing SWC format data
-#' @method as.ngraph data.frame
 #' @export
 #' @rdname ngraph
 as.ngraph.data.frame<-function(x, directed=TRUE, ...){
@@ -143,7 +142,6 @@ as.ngraph.data.frame<-function(x, directed=TRUE, ...){
 #' @description \code{as.ngraph.neuron} construct ngraph from a neuron
 #' @rdname ngraph
 #' @export
-#' @method as.ngraph neuron
 #' @param method Whether to use the swc data (x$d) or the seglist to define 
 #'   neuronal connectivity to generate graph.
 #' @details Note that the \code{as.ngraph.neuron} method \emph{always} keeps the

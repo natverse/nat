@@ -32,7 +32,6 @@
 #' }
 potential_synapses<-function(a, b, s, ...) UseMethod('potential_synapses')
 
-#' @method potential_synapses neuronlist
 #' @export
 #' @rdname potential_synapses
 potential_synapses.neuronlist<-function(a, b, s, ...) {
@@ -41,7 +40,6 @@ potential_synapses.neuronlist<-function(a, b, s, ...) {
   else res
 }
 
-#' @method potential_synapses neuron
 #' @export
 #' @rdname potential_synapses
 #' @family neuron
@@ -65,7 +63,6 @@ potential_synapses.neuron<-function(a, b, s, sigma=s, bounds, method=c("direct",
   }
 }
 
-#' @method potential_synapses dotprops
 #' @param seglength how long to consider each distance between points.
 #' @export
 #' @rdname potential_synapses
@@ -97,7 +94,6 @@ potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds=NULL
 
 PotentialSynapses <- function(a, b, s, sigma, ...) UseMethod("PotentialSynapses")
 
-#' @method PotentialSynapses default
 PotentialSynapses.default <- function(a, b, s=2, sigma=2) {
   #Compare for matrices of input data rather than neurons
   
@@ -148,7 +144,6 @@ PotentialSynapses.default <- function(a, b, s=2, sigma=2) {
   return(rval)
 }
 
-#' @method PotentialSynapses dotprops
 PotentialSynapses.dotprops <- function(a, b, s, sigma, seglength) {
   # short circuit if there are no points to check in one list or other!
   if(nrow(a$points) * nrow(b$points) == 0) return(0)

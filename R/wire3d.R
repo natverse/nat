@@ -35,7 +35,6 @@ wire3d <- function(x, ..., add = TRUE, plotengine = getOption('nat.plotengine'))
   UseMethod('wire3d',x)
 }
 
-#' @method wire3d hxsurf
 #' @export
 #' @rdname wire3d
 #' @param Regions When \code{x} is a multi region \code{\link{hxsurf}} object.
@@ -45,18 +44,15 @@ wire3d.hxsurf <- function(x, Regions=NULL, ...) {
   wire3d(as.mesh3d(x, Regions=Regions), ...)
 }
 
-#' @method wire3d plotlyhxsurf
 #' @export
 wire3d.plotlyhxsurf <- wire3d.hxsurf
 
-#' @method wire3d default
 #' @export
 wire3d.default <- function(x, ...) {
   stop("No wire3d method defined for objects of class: ", class(x))
 }
 
 
-#' @method wire3d plotlyshapelist3d
 #' @export
 wire3d.plotlyshapelist3d <- function (x, override = TRUE, ...) 
 {
@@ -65,7 +61,6 @@ wire3d.plotlyshapelist3d <- function (x, override = TRUE, ...)
   psh
 }
 
-#' @method wire3d plotlymesh3d
 #' @export
 wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
   
@@ -133,13 +128,11 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
 #The below section is for adding the additional methods
 #that are actually available in rgl for the wire3d class with the methods(nat::wire3d)
 
-#' @method wire3d mesh3d
 #' @inheritParams rgl::wire3d.mesh3d
 #' @export
 #' @rdname wire3d
 wire3d.mesh3d <- utils::getFromNamespace("wire3d.mesh3d", "rgl")
 
-#' @method wire3d shapelist3d
 #' @inheritParams rgl::wire3d
 #' @export
 #' @rdname wire3d

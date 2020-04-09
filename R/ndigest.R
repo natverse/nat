@@ -18,7 +18,6 @@ ndigest<-function(x, ...) UseMethod('ndigest')
 #' @details \code{ndigest.neuronlistfh} only considers the \code{keyfilemap} and
 #'   \code{df} (metadata data.frame) when computing the hash value. See
 #'   \code{\link{neuronlistfh}} for the significance of these two fields.
-#' @method ndigest neuronlistfh
 #' @export
 #' @rdname ndigest
 ndigest.neuronlistfh<-function(x, ...){

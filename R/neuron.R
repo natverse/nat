@@ -202,7 +202,6 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #'   (NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList, 
 #'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
 #' @export
-#' @method as.neuron ngraph
 #' @importFrom igraph V V<- vcount decompose.graph
 #' @rdname neuron
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
@@ -391,7 +390,6 @@ Ops.neuron <- function(e1, e2=NULL) {
 #' @param center 3-vector to subtract from x,y,z coords
 #' @param scale 3-vector used to divide x,y,z coords
 #' @return neuron with scaled coordinates
-#' @method scale neuron
 #' @export
 #' @seealso \code{\link{scale.default}}, \code{\link{Ops.neuron}}
 #' @aliases scale
@@ -415,7 +413,6 @@ scale.neuron<-function(x, center=TRUE, scale=TRUE){
 #' @param CheckSharedFieldsOnly Logical whether to check shared fields only 
 #'   (default: FALSE)
 #' @param ... additional arguments passed to \code{all.equal}
-#' @method all.equal neuron
 #' @export
 #' @seealso \code{\link[base]{all.equal}}
 #' @examples

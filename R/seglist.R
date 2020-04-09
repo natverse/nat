@@ -36,7 +36,6 @@ as.seglist.list<-function(x, ...) {
 #'   n.b. when \code{all=TRUE} but \code{flatten=FALSE} the result will
 #'   \emph{always} be a list of \code{seglist} objects (even if the neuron has
 #'   only one subtree i.e. is fully connected).
-#' @method as.seglist neuron
 #' @export
 #' @param all Whether to include segments from all subtrees
 #' @param flatten When \code{all=TRUE} flatten the lists of lists into a 
@@ -72,7 +71,6 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @return a \code{list} with one entry for each unbranched segment.
 #' @seealso \code{\link{ngraph},\link{igraph}}
 #' @export
-#' @method as.seglist igraph
 #' @importFrom igraph is.directed is.connected graph.dfs degree
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){

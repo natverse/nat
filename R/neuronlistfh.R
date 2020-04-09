@@ -185,7 +185,6 @@ as.neuronlistfh<-function(x, df, ...)
 #'   existing objects will not be overwritten. Default \code{"yes"}.
 #' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
 #'   to one backed by a filehash object with an on disk representation
-#' @method as.neuronlistfh neuronlist
 #' @export
 #' @importFrom digest digest
 #' @rdname neuronlistfh
@@ -225,7 +224,6 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
 }
 
 #' convert neuronlistfh to a regular (in memory) neuronlist
-#' @method as.neuronlist neuronlistfh
 #' @export
 #' @inheritParams as.neuronlist
 as.neuronlist.neuronlistfh<-function(l, ...){

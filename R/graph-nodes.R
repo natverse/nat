@@ -76,7 +76,6 @@ rootpoints<-function (x, ...)
 rootpoints.default<-function(x, ...) rootpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
-#' @method rootpoints neuron
 #' @export
 #' @param subtrees Integer index of the fully connected subtree in 
 #'   \code{x$SubTrees}. Only applicable when a \code{neuron} consists of 
@@ -90,7 +89,6 @@ rootpoints.neuron<-function(x, subtrees=1, ...){
 }
 
 #' @rdname rootpoints
-#' @method rootpoints igraph
 #' @export
 rootpoints.igraph<-function(x, ...) graph.nodes(x, type='root', ...)
 
@@ -103,14 +101,12 @@ branchpoints<-function (x, ...)
 
 #' @rdname rootpoints
 #' @export
-#' @method branchpoints default
 branchpoints.default<-function(x, ...) branchpoints(as.ngraph(x), ...)
 
 #' @rdname rootpoints
 #' @details \code{branchpoints.neuron} returns a list if more than one subtree
 #'   is specified
 #' @export
-#' @method branchpoints neuron
 branchpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(x$BranchPoints)
   nTrees=ifelse(is.null(x$nTrees),1,x$nTrees)
@@ -120,7 +116,6 @@ branchpoints.neuron<-function(x, subtrees=1, ...){
 }
 
 #' @rdname rootpoints
-#' @method branchpoints igraph
 #' @export
 branchpoints.igraph<-function(x, ...) graph.nodes(x, type='branch', ...)
 
@@ -131,7 +126,6 @@ branchpoints.igraph<-function(x, ...) graph.nodes(x, type='branch', ...)
 endpoints<-function (x, ...) UseMethod("endpoints")
 
 #' @rdname rootpoints
-#' @method endpoints neuron
 #' @export
 endpoints.neuron<-function(x, subtrees=1, ...){
   if(isTRUE(subtrees==1)) return(endpoints=x$EndPoints)
@@ -142,11 +136,9 @@ endpoints.neuron<-function(x, subtrees=1, ...){
 }
 
 #' @rdname rootpoints
-#' @method endpoints igraph
 #' @export
 endpoints.igraph<-function(x, ...) graph.nodes(x, type='end', ...)
 
 #' @rdname rootpoints
 #' @export
-#' @method endpoints default
 endpoints.default<-function(x, ...) endpoints(as.ngraph(x), ...)

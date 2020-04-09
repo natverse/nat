@@ -1,7 +1,6 @@
 #' Plot neurons in 3D using rgl library or plotly module
 #'
 #' @export
-#' @method plot3d neuron
 #' @param x A neuron to plot
 #' @param WithLine Whether to plot lines for all segments in neuron
 #' @param NeuronNames Logical indicating whether to label the neuron in the plot

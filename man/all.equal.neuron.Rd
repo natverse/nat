@@ -4,7 +4,7 @@
 \alias{all.equal.neuron}
 \title{Check equality on key fields of neuron object}
 \usage{
-\method{all.equal}{neuron}(
+\method{all}{equal.neuron}(
   target,
   current,
   tolerance = 1e-06,

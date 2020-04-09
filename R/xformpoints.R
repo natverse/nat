@@ -17,7 +17,6 @@ xformpoints<-function(reg, points, ...) {
 #' @details If a list of transformations is passed in, these transformations are
 #' performed in sequence order, such that \code{xformpoints(c(a,b,c), x) ==
 #' xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
-#' @method xformpoints character
 #' @export
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
@@ -37,7 +36,6 @@ xformpoints.character<-function(reg, points, ...){
   xformpoints(reg, points, ...)
 }
 
-#' @method xformpoints cmtkreg
 #' @details Note that the direction of CMTK registrations can be the source of
 #'   much confusion. This is because CMTK defines the \emph{forward} direction
 #'   as the transform required to reformat an image in \emph{sample} (floating)
@@ -174,7 +172,6 @@ xformpoints.reglist<-function(reg, points, ...){
   }
 }
 
-#' @method xformpoints default
 #' @export
 #' @rdname xformpoints
 xformpoints.default<-function(reg, points, ...){
