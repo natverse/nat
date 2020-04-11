@@ -109,7 +109,8 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @param voxdims vector of 3 voxels dimensions (width, height, depth).
 #' @param origin the origin of the 3D image.
 #' @param aperm permutation order for axes.
-#' @param Clamp ???
+#' @param Clamp Whether or not to map out of range coordinates to the nearest 
+#'   in range index (default \code{FALSE})
 #' @param CheckRanges whether to check if coordinates are out of range.
 #' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 #' @export

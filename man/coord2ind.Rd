@@ -32,7 +32,8 @@ coord2ind(coords, ...)
 
 \item{aperm}{permutation order for axes.}
 
-\item{Clamp}{???}
+\item{Clamp}{Whether or not to map out of range coordinates to the nearest 
+in range index (default \code{FALSE})}
 
 \item{CheckRanges}{whether to check if coordinates are out of range.}
 }
