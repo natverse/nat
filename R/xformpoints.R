@@ -59,7 +59,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
                               direction=NULL,
                               FallBackToAffine=FALSE, ...){
   if(is.list(reg)){
-    # we've been given an in memory list specifying registation parameters
+    # we've been given an in memory list specifying registration parameters
     # we need to write this out to a temporary file
     regfile=as.cmtkreg(tempfile(fileext=".list"))
     on.exit(unlink(regfile,recursive=TRUE))
@@ -82,7 +82,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   if(length(reg)>1){
     # need to recycle manually
     if(length(direction)==1) direction=rep(direction, length(reg))
-    if(!cmtk.version(minimum = '3.2.2')){
+    if(isFALSE(cmtk.version(minimum = '3.2.2'))){
     # there is a bug in applying compound registrations in CMTK<=3.2.1
     # see https://github.com/jefferis/cmtk/commit/209168d892d8980e47
       for(i in seq_along(reg)) {
