@@ -115,7 +115,8 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 #' @export
 #' @rdname coord2ind
-coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp, ...){
+coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, aperm=NULL,
+                            Clamp=FALSE, CheckRanges=!Clamp, ...){
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
       imdims=as.im3d(imdims)
@@ -152,7 +153,7 @@ coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=F
   }
   
   # convert to 1d indices
-  if (!missing(aperm))
+  if (!is.null(aperm))
     imdims=imdims[aperm]
   sub2ind(imdims,pixcoords)
 }

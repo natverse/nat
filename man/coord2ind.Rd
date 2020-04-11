@@ -12,7 +12,7 @@ coord2ind(coords, ...)
   imdims,
   voxdims = NULL,
   origin = NULL,
-  aperm,
+  aperm = NULL,
   Clamp = FALSE,
   CheckRanges = !Clamp,
   ...
