@@ -48,11 +48,12 @@ test_that("we fail for bad surface files", {
                "does not appear to be an Amira HyperSurface")
 })
 
-test_that("we can use fallback colour for surfaces", {
+test_that("we can use fallback colour for surfaces& binary reading", {
   tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
   tet.hxsurf2=read.hxsurf("testdata/amira/tetrahedron_nocol.surf",
                           FallbackRegionCol = '#FF0000')
   expect_equal(tet.hxsurf2, tet.hxsurf)
+  expect_equal(read.hxsurf("testdata/amira/tetrahedron-bin.surf"), tet.hxsurf)
 })
 
 test_that("we can cope with Color line preceding id", {

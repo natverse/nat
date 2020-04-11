@@ -17,6 +17,10 @@
 #'   regions than you wanted, then try switching to \code{RegionChoice="Inner"}
 #'   or \code{RegionChoice="Outer"}.
 #'   
+#'   Note that there is currently only limited support for reading Amira's 
+#'   binary mesh format. In particular only single region mesh files are 
+#'   supported.
+#'   
 #' @param filename Character vector defining path to file
 #' @param RegionNames Character vector specifying which regions should be read 
 #'   from file. Default value of \code{NULL} => all regions.
@@ -54,7 +58,23 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   # Check for header confirming file type
   firstLine=readLines(filename,n=1)
   if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+ascii",firstLine,ignore.case=T,perl=T))){
-    stop(filename," does not appear to be an Amira HyperSurface ASCII file!")
+    if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+binary",firstLine,ignore.case=T,perl=T))){
+      stop(filename," does not appear to be an Amira HyperSurface file!")
+    }
+    res = tryCatch(
+      read.hxsurf.bin(
+        filename = filename,
+        FallbackRegionCol = FallbackRegionCol,
+        Verbose = Verbose
+      ),
+      error = function(e)
+        stop(
+          "Support for reading binary Amira HyperSurface is still limited.\n",
+          "See https://github.com/natverse/nat/issues/429. Detailed error message",
+          as.character(e)
+        )
+    )
+    return(res)
   }
   initialcaps<-function(x) {substr(x,1,1)=toupper(substr(x,1,1)); x}
   RegionChoice=match.arg(initialcaps(RegionChoice), c("Inner", "Outer", "Both"), 
@@ -161,6 +181,124 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   class(d) <- c('hxsurf',class(d))
   return(d)
 }
+
+read.hxsurf.bin <- function(filename, return.raw=FALSE, FallbackRegionCol='grey', Verbose=FALSE) {
+  con=file(filename, open='rb')
+  on.exit(close(con))
+  vertex_regex='^Vertices \\d+$'
+  
+  # read header
+  h <- character()
+  line <- readLines(con, n=1)
+  while(!isTRUE(grepl(vertex_regex, line))) {
+    h=c(h, line)
+    line <- readLines(con, n=1)
+  }
+  
+  params=.ParseAmirameshParameters(h)
+  materials=names(params$Parameters$Materials)
+  if(isFALSE(all(materials %in% c("Exterior", "Inside"))))
+    stop("FIXME: read.hxsurf.bin only supports surfaces with materials Inside/Exterior!")
+  # read data blocks
+  data_regex='^\\s*(\\w+)\\s+(\\d+)$'
+  
+  parse_data_line <- function(line) {
+    tryCatch({
+      res=stringr::str_match(line, data_regex)
+      n=suppressWarnings(as.integer(res[,3]))
+      checkmate::assert_int(n)
+      label=checkmate::assert_character(res[,2])
+      names(n)=label
+      n
+    }, error=function(e) {NA_integer_})
+  }
+  
+  data <- list(header=h, params=params)
+  
+  curpatch=NA_integer_
+  while(TRUE) {
+    if(length(line)<1) break
+    if(is.finite(curpatch)) {
+      if(length(data[['PatchInfo']])<curpatch)
+        data[['PatchInfo']][[curpatch]]=line
+      else 
+        data[['PatchInfo']][[curpatch]]=c(data[['PatchInfo']][[curpatch]], line)
+    } else {
+      data[['header']]=c(data[["header"]], line)
+    }
+    # is this a closing bracket at the end of a section
+    firstchar=substr(trimws(line), 1, 1)
+    if(isTRUE(firstchar=='}') && is.finite(curpatch)) curpatch=curpatch+1
+    
+    n=parse_data_line(line)
+    if(is.na(n) || n==0) {
+      line <- readLines(con, 1)
+      next
+    }
+    label=names(n)
+    if(label=='Vertices') {
+      chunk=readBin(con, what='numeric', n=n*3, size=4, endian = 'big')
+      data[['Vertices']]=matrix(chunk, ncol=3, byrow = T)
+    } else if (label=='Triangles') {
+      npatches=length(data[['Patches']])
+      chunk=readBin(con, what='integer', n=n*3, size=4, endian = 'big')
+      data[['Patches']][[npatches+1]]=matrix(chunk, ncol=3, byrow = T)
+    } else if(label=='Patches') {
+      curpatch=1
+      if(is.null(data[['Patches']])) data[['Patches']]=list()
+      if(is.null(data[['PatchInfo']])) data[['PatchInfo']]=list()
+    } else {
+      stop("Error parsing binary hxsurf file!")
+    }
+    
+    line <- readLines(con, 1)
+  }
+  if(return.raw)
+    data
+  else parse.hxsurf.bin(data, FallbackRegionCol=FallbackRegionCol, Verbose=Verbose)
+}
+
+# FIXME: Ideally this would be harmonised with the code for read.hxsurf to 
+# avoid duplication
+parse.hxsurf.bin <- function(data, FallbackRegionCol, Verbose) {
+  materials=data$params$Parameters$Materials
+  d=list()
+  d[['Vertices']]=as.data.frame(xyzmatrix(data$Vertices))
+  d[['Vertices']][,'PointNo']=seq_len(nrow(d[['Vertices']]))
+  
+  d$Regions=list()
+  for(p in seq_along(data$Patches)) {
+    thispatch=as.data.frame(data$Patches[[p]])
+    pi=.ParseAmirameshParameters(data$PatchInfo[[p]])
+    RegionName <- pi$InnerRegion
+    
+    if(RegionName%in%names(d$Regions)){
+      # add to the old patch
+      if(Verbose) cat("Adding to patch name",RegionName,"\n")
+      d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],thispatch)
+    } else {
+      # new patch
+      if(Verbose) cat("Making new patch name",RegionName,"\n")
+      d[['Regions']][[RegionName]]=thispatch
+    }
+  }
+  
+  d$RegionList=names(d$Regions)
+  
+  d$RegionColourList <- vector(length=length(d$RegionList))
+  for(regionName in d$RegionList) {
+    rgbValues <-  materials[[regionName]][['Color']]
+    if(isTRUE(length(rgbValues)==3)) {
+      color <- rgb(rgbValues[[1]], rgbValues[[2]], rgbValues[[3]])
+    } else {
+      color <- FallbackRegionCol
+    } 
+    d$RegionColourList[which(d$RegionList == regionName)] <- color
+  }
+  class(d) <- c('hxsurf',class(d))
+  return(d)
+}
+
 
 #' Write Amira surface (aka HxSurface or HyperSurface) into .surf file.
 #' 
