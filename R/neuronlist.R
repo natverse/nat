@@ -682,7 +682,6 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
-    gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   }
   
   # Speed up drawing when there are lots of neurons
@@ -695,7 +694,7 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
     }
   }
   
-  rval=mapply(plot3d, x, plotengine = plotengine,
+  rval=mapply(plot3d, x, plotengine = plotengine, gridlines = gridlines,
               col=cols, soma=soma, ..., 
               MoreArgs = list(WithNodes=WithNodes), SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){

@@ -56,15 +56,15 @@ wire3d.default <- function(x, ...) {
 
 
 #' @export
-wire3d.plotlyshapelist3d <- function (x, override = TRUE, ...) 
+wire3d.plotlyshapelist3d <- function (x, override = TRUE, gridlines = FALSE, ...) 
 {
-  sapply(x, function(item) wire3d(item, override = override, ...))
+  sapply(x, function(item) wire3d(item, override = override, gridlines = gridlines, ...))
   psh <- openplotlyscene()$plotlyscenehandle
   psh
 }
 
 #' @export
-wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
+wire3d.plotlymesh3d <- function(x, override = TRUE, gridlines = FALSE, ...) {
   
   psh <- openplotlyscene()$plotlyscenehandle
   params=list(...)
@@ -78,8 +78,6 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
                 material$color 
               } else 'black'
   width <- if("width" %in% names(params)) params$width else 2
-  
-  gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   
   #Gather all edges for the faces..
   #Here vb is the points of the mesh, it is the faces of the mesh (this just has the order)..

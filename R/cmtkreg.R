@@ -152,7 +152,6 @@ plot3d.cmtkreg <- function(x, ..., gridlines = FALSE, plotengine = getOption('na
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
-    gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   }
   
   reg=NULL

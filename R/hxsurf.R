@@ -378,8 +378,7 @@ write.hxsurf <- function(surf, filename) {
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
-plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
-                        gridlines = FALSE,
+plot3d.hxsurf<-function(x, materials=NULL, col=NULL, gridlines = FALSE, ...,
                         plotengine = getOption('nat.plotengine')){
   plotengine <- check_plotengine(plotengine)
   if (plotengine == 'rgl'){
@@ -391,7 +390,6 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
-    gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   }
   
   materials=subset(x, subset = materials, rval='names')
