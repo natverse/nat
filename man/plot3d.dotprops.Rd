@@ -13,6 +13,7 @@
   PlotVectors = TRUE,
   UseAlpha = FALSE,
   ...,
+  gridlines = FALSE,
   plotengine = getOption("nat.plotengine")
 )
 }
@@ -37,6 +38,9 @@ points/vectors. See details.}
 
 \item{...}{Additional arguments passed to \code{points3d} and/or 
 \code{segments3d}}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
 
 \item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 }

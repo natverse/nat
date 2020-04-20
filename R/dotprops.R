@@ -306,6 +306,8 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #'   \code{alpha}
 #' @param ... Additional arguments passed to \code{points3d} and/or 
 #'   \code{segments3d}
+#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
+#' engine (default: \code{FALSE})
 #' @inheritParams plot3d.neuronlist
 #' @return invisible list of results of rgl plotting commands
 #' 
@@ -324,7 +326,8 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' }
 plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, 
-                          ..., plotengine = getOption('nat.plotengine')){
+                          ..., gridlines = FALSE,
+                          plotengine = getOption('nat.plotengine')){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
@@ -334,6 +337,7 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
+    gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   }
   
   if(PlotPoints){
@@ -379,11 +383,14 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
   if (plotengine == 'rgl'){
     invisible(rlist)
   } else {
-    psh <- psh %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera,
-                                                    xaxis=.plotly3d$xaxis,
-                                                    yaxis=.plotly3d$yaxis,
-                                                    zaxis=.plotly3d$zaxis))
+ 
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

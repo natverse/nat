@@ -124,6 +124,8 @@ cmtkreg.filetype <- function(x) {
 #' @param x A cmtk registration (the path to the registration folder on disk) or
 #'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
 #' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
+#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
+#' engine (default: \code{FALSE})
 #' @inheritParams plot3d.neuronlist
 #' 
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},
@@ -144,12 +146,13 @@ cmtkreg.filetype <- function(x) {
 #' }
 #' @importFrom rgl plot3d
 #' @export
-plot3d.cmtkreg <- function(x, ..., plotengine = getOption('nat.plotengine')) {
+plot3d.cmtkreg <- function(x, ..., gridlines = FALSE, plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
   if (plotengine == 'plotly') {
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
+    gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   }
   
   reg=NULL
@@ -172,11 +175,15 @@ plot3d.cmtkreg <- function(x, ..., plotengine = getOption('nat.plotengine')) {
     psh <- psh %>% 
       plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
         hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-        opacity = opacity, marker=list(color = 'black', size = 3)) %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera,
-                                                    xaxis=.plotly3d$xaxis,
-                                                    yaxis=.plotly3d$yaxis,
-                                                    zaxis=.plotly3d$zaxis))
+        opacity = opacity, marker=list(color = 'black', size = 3))
+    
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

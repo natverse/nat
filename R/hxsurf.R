@@ -357,6 +357,8 @@ write.hxsurf <- function(surf, filename) {
 #'   function that will be called with the number of materials to plot. When
 #'   \code{NULL} (default) will use material colours defined in Amira (if
 #'   available), or \code{rainbow} otherwise.
+#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
+#' engine (default: \code{FALSE})
 #' @param ... Additional arguments passed to \code{triangles3d}
 #' @inheritParams plot3d.neuronlist
 #' @export
@@ -377,6 +379,7 @@ write.hxsurf <- function(surf, filename) {
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
 plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
+                        gridlines = FALSE,
                         plotengine = getOption('nat.plotengine')){
   plotengine <- check_plotengine(plotengine)
   if (plotengine == 'rgl'){
@@ -388,6 +391,7 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
     psh <- openplotlyscene()$plotlyscenehandle
     params=list(...)
     opacity <- if("alpha" %in% names(params)) params$alpha else 1
+    gridlines <- if("gridlines" %in% names(params)) params$gridlines else FALSE
   }
   
   materials=subset(x, subset = materials, rval='names')
@@ -427,12 +431,12 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
   if (plotengine == 'rgl'){
       invisible(rlist)
   } else {
-    psh <- psh %>% 
-      plotly::layout(showlegend = FALSE,
-                     scene=list(camera=.plotly3d$camera,
-                                xaxis=.plotly3d$xaxis,
-                                yaxis=.plotly3d$yaxis,
-                                zaxis=.plotly3d$zaxis))
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }
