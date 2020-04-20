@@ -79,6 +79,8 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, gridlines = FALSE, ...) {
               } else 'black'
   width <- if("width" %in% names(params)) params$width else 2
   
+  label <- if("label" %in% names(params)) params$label else NULL
+  
   #Gather all edges for the faces..
   #Here vb is the points of the mesh, it is the faces of the mesh (this just has the order)..
   #To get the edges, just put the put the orders(faces) and collect the points represented by them..
@@ -119,6 +121,7 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, gridlines = FALSE, ...) {
                                    z = ptsna[,3],
                                    mode = "lines",
                                    opacity = opacity,
+                                   name = label,
                                    line = list(width = width, color = color))
   
   psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
