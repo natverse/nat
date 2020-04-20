@@ -380,7 +380,10 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
     invisible(rlist)
   } else {
     psh <- psh %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera,
+                                                    xaxis=.plotly3d$xaxis,
+                                                    yaxis=.plotly3d$yaxis,
+                                                    zaxis=.plotly3d$zaxis))
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

@@ -119,7 +119,11 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
                                    opacity = opacity,
                                    line = list(width = width, color = color))
   
-  psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+  psh <- psh %>% plotly::layout(showlegend = FALSE, 
+                                scene=list(camera=.plotly3d$camera,
+                                           xaxis=.plotly3d$xaxis,
+                                           yaxis=.plotly3d$yaxis,
+                                           zaxis=.plotly3d$zaxis))
   assign("plotlyscenehandle", psh, envir=.plotly3d)
   psh
 }

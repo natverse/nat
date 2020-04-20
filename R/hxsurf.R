@@ -429,7 +429,10 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
   } else {
     psh <- psh %>% 
       plotly::layout(showlegend = FALSE,
-                     scene=list(camera=.plotly3d$camera))
+                     scene=list(camera=.plotly3d$camera,
+                                xaxis=.plotly3d$xaxis,
+                                yaxis=.plotly3d$yaxis,
+                                zaxis=.plotly3d$zaxis))
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

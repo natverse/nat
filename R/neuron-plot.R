@@ -213,7 +213,10 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
     invisible(rglreturnlist)
   } else{
     psh <- psh %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera,
+                                                    xaxis=.plotly3d$xaxis,
+                                                    yaxis=.plotly3d$yaxis,
+                                                    zaxis=.plotly3d$zaxis))
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

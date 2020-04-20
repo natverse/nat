@@ -736,7 +736,10 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
       invisible(rval)
   } else{
     psh <- psh %>%
-      plotly::layout(showlegend = FALSE, scene = list(camera =.plotly3d$camera))
+      plotly::layout(showlegend = FALSE, scene = list(camera =.plotly3d$camera,
+                                                      xaxis=.plotly3d$xaxis,
+                                                      yaxis=.plotly3d$yaxis,
+                                                      zaxis=.plotly3d$zaxis))
     .plotly3d$plotlyscenehandle = psh
     attr(psh, 'df') = df
     psh

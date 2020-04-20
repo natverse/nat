@@ -173,7 +173,10 @@ plot3d.cmtkreg <- function(x, ..., plotengine = getOption('nat.plotengine')) {
       plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
         hoverinfo = "none",type = 'scatter3d', mode = 'markers',
         opacity = opacity, marker=list(color = 'black', size = 3)) %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera,
+                                                    xaxis=.plotly3d$xaxis,
+                                                    yaxis=.plotly3d$yaxis,
+                                                    zaxis=.plotly3d$zaxis))
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }
