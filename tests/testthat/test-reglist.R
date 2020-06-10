@@ -4,7 +4,7 @@ test_that('We can simplify reglists',{
               t(rgl::translationMatrix(1,2,3)))
   expect_equal(simplify_reglist(rl0), rl0[2])
   
-  reg="testdata/cmtk/FCWB_mirror_level-01.list"
+  reg=system.file("cmtk/FCWB_mirror_level-01.list", package='nat')
   rl=c(rl0, reg)
   expect_is(rl, 'reglist')
   expect_equal(length(rl), 3L)

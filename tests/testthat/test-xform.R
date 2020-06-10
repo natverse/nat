@@ -119,7 +119,7 @@ if(!is.null(cmtk.bindir())){
   })
   
   test_that("we can mirror some image data", {
-    reg="testdata/cmtk/FCWB_mirror_level-01.list"
+    reg=system.file("cmtk/FCWB_mirror_level-01.list", package='nat')
     img="testdata/nrrd/FCWB_2um_mask.nrrd"
     bim=boundingbox(read.im3d(img, ReadData = F))
     tf=tempfile(fileext = '.nrrd')
