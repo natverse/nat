@@ -165,3 +165,36 @@
 #' @keywords package
 #' @import rgl graphics grDevices utils
 NULL
+
+
+dr_nat <- function() {
+  message("nat: ", packageVersion("nat"))
+  
+  message("\nCMTK:")
+  ver <- try(cmtk.mat2dof(version = T))
+  if(inherits(ver, 'try-error')) {
+    message("Cannot find CMTK. See installation section of ?cmtk for help.")
+  } else {
+    cat("cmtk.version:", ver, "\n")
+    cat("cmtk.bindir:", cmtk.bindir(), "\n")
+    
+    reg=system.file("cmtk/FCWB_mirror_level-01.list", package='nat')
+    ptsm=try(mirror(
+      cbind(100, 100, 50),
+      mirrorAxisSize = 563.9342,
+      mirrorAxis = 'X',
+      warpfile = reg,
+      stderr=TRUE
+    ), silent = T)
+    if(inherits(ptsm, "try-error")) {
+      warning("Trouble running CMTK streamxform. Your CMTK install may be broken!",
+              immediate. = TRUE)
+      message("For troubleshooting advice, see http://natverse.org/help/")
+    }
+  }
+  
+  message("\nPackage options:")
+  ops=options()[grep("^nat\\.", names(options()))]
+  print(ops)
+  
+}
