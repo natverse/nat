@@ -97,7 +97,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
     origpoints=points
     points=points[!nas, , drop=FALSE]
   }
-  pointst=cmtk.streamxform(points, reg, direction, transformtype)
+  pointst=cmtk.streamxform(points, reg, direction, transformtype, ...)
   if(transformtype=='warp'){
     naPoints=is.na(pointst[,1])
     if(any(naPoints)){
@@ -119,7 +119,8 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   }
 }
 
-cmtk.streamxform <- function(points, reg, direction, transformtype) {
+cmtk.streamxform <- function(points, reg, direction, transformtype, 
+                             stderr=FALSE, ...) {
   pointsfile=tempfile(fileext=".txt")
   on.exit(unlink(pointsfile))
   write.table(points, file=pointsfile, row.names=FALSE, col.names=FALSE)
@@ -140,7 +141,7 @@ cmtk.streamxform <- function(points, reg, direction, transformtype) {
                     moreargs = regargs,
                     stdin=pointsfile, 
                     stdout=outfile,
-                    stderr=FALSE)
+                    stderr=stderr)
   
   if(rval!=0) stop("Error running CMTK streamxform!")
   cmtkOut <- read.table(outfile,
