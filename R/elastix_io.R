@@ -9,7 +9,7 @@ read.elastixreg <- function(x, ...) {
   l
 }
 
-#' internal function to read the elastix files into an R list
+# internal function to read the elastix files into an R list
 read.elastix<-function(con, CheckLabel=TRUE){
   
   l=list()

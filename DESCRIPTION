@@ -63,6 +63,8 @@ Collate:
     'dist3D_Segment_to_Segment.R'
     'neuron.R'
     'dotprops.R'
+    'elastix.R'
+    'elastix_io.R'
     'geometry.R'
     'graph-nodes.R'
     'hxsurf.R'
