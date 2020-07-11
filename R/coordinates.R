@@ -81,7 +81,7 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 }
 
 
-#' Find 1D indices into a 3D image given spatial coordinates
+#' Find 1D or 3D voxel indices into a 3D image given spatial coordinates
 #' 
 #' @details \code{coord2ind} is designed to cope with any user-defined class for
 #'   which an as.im3d method exists. Presently the only example in the nat.* 
@@ -108,13 +108,18 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #'   \code{\link{as.im3d}} object has been defined (see Details).
 #' @param voxdims vector of 3 voxels dimensions (width, height, depth).
 #' @param origin the origin of the 3D image.
+#' @param linear.indices Whether or not to convert the voxel indices into a 
+#'   linear 1D form (the default) or to keep as 3D indices.
 #' @param aperm permutation order for axes.
-#' @param Clamp ???
+#' @param Clamp Whether or not to map out of range coordinates to the nearest 
+#'   in range index (default \code{FALSE})
 #' @param CheckRanges whether to check if coordinates are out of range.
 #' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 #' @export
 #' @rdname coord2ind
-coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=FALSE,CheckRanges=!Clamp, ...){
+coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
+                            linear.indices=TRUE, aperm=NULL,
+                            Clamp=FALSE, CheckRanges=!Clamp, ...){
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
       imdims=as.im3d(imdims)
@@ -151,9 +156,9 @@ coord2ind.default<-function(coords,imdims,voxdims=NULL,origin=NULL,aperm,Clamp=F
   }
   
   # convert to 1d indices
-  if (!missing(aperm))
+  if (!is.null(aperm))
     imdims=imdims[aperm]
-  sub2ind(imdims,pixcoords)
+  if(isTRUE(linear.indices)) sub2ind(imdims, pixcoords) else pixcoords
 }
 
 

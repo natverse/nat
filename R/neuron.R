@@ -918,8 +918,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   # The approach is to find the longest tree (lets call it spine) from the root to the 
   # farthest leaf node first..
   # Then additional branches are added to the spine such that they are longest that can be
-  # added..
-  
+  # added.
   for (i in 0:n) {
     if (i == 0) {
       # Step 4a: Compute the spine, so for that compute the farthest leaf node 

@@ -87,7 +87,7 @@ dotprops<-function(x, ...) UseMethod('dotprops')
 #' dps=dotprops.character('~/skeleton-nrrds/', OmitFailures=T, k=5)
 #' }
 dotprops.character <- function(x, pattern = NULL, OmitFailures = NA, ...) {
-  if(length(x)==1 && file.info(x)$isdir)
+  if(length(x)==1 && isTRUE(file.info(x)$isdir))
     x=dir(x, full.names = TRUE, pattern = pattern)
   
   if(length(x)>1) {

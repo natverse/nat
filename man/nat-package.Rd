@@ -63,18 +63,18 @@ neuroanatomical data, especially representations of neurons.
   streamline arithmetic (e.g. scaling all the points in all neurons see
   \code{\link{*.neuronlist}}) and transformations (see \bold{Transformations}
   section below and \code{\link{xform}}). Arbitrary functions can be applied
-  to each individual neuron can be applied using the \code{\link{nlapply}}
-  function, which also provides options for progress bars and simple
-  parallelisation.
+  to each individual neuron using the \code{\link{nlapply}} function, which
+  also provides options for progress bars and simple parallelisation.
 }
 
 \section{Transformations}{
  \code{\link{neuron}} or \code{\link{dotprops}}
   objects can be transformed from e.g. sample to template brain space using
-  affine or non-rigid registrations, typically calculated with the open
-  source CMTK package available at \url{www.nitrc.org/projects/cmtk/}, see
-  ?\link{cmtk} for installation details. The function \code{\link{xform}} has
-  methods to deal with a variety of types of interest.
+  affine or non-rigid registrations. \bold{nat} has built in support for
+  registrations calculated with the open source CMTK package available at
+  \url{www.nitrc.org/projects/cmtk}. See ?\link{cmtk} for installation
+  details. The function \code{\link{xform}} has methods to deal with a
+  variety of types of interest.
 }
 
 \section{3D Image Data}{
@@ -135,8 +135,8 @@ neuroanatomical data, especially representations of neurons.
 \section{plotly Package}{
  Since \bold{nat} v1.9.2 there is support for
   \code{\link[plotly:plot_ly]{plotly}} as an alternative 3D visualisation
-  engine. You can set \code{option(nat.plotengine='plotly')} to make this
-  the default. See the 3D graphics vignette for further details.
+  engine. You can set \code{option(nat.plotengine='plotly')} to make this the
+  default. See the 3D graphics vignette for further details.
 }
 
 \section{File Formats}{

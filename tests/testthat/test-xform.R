@@ -185,6 +185,18 @@ test_that("can replace xyz coords of a matrix",{
   expect_equal(mx3, mx3.saved)
 })
 
+test_that("can replace xyz coords of a data.frame",{
+  # we just need to handle some edge cases with 0 row data here
+  
+  df <- df2 <- data.frame(x=numeric(), y=numeric(), z=numeric())
+  expect_silent(xyzmatrix(df) <- xyzmatrix(df)+1)
+  # check no change
+  expect_equal(df, df2)
+  # nb generates both error and warning
+  expect_warning(expect_error(xyzmatrix(df) <- 1:3))
+})
+
+
 test_that("can extract xyz coords from a neuronlist",{
   xyz12=rbind(xyzmatrix(kcs20[[1]]),xyzmatrix(kcs20[[2]]))
   expect_is(xyzmatrix(kcs20[1:2]),'matrix')

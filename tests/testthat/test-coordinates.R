@@ -17,8 +17,13 @@ test_that("ind2coord returns correct coordinates when given an im3d", {
 })
 
 test_that("coord2ind returns correct coordinates", {
-  testImage <- read.im3d("testdata/nrrd/LHMask.nrrd")
+  testImage <- read.im3d("testdata/nrrd/LHMask.nrrd", ReadData = F)
   ind <- coord2ind(matrix(c(10, 20, 30, 11, 20, 30), nrow=2, byrow=TRUE), testImage)
   ind.expected <- c(53208, 53209)
   expect_equal(ind, ind.expected)
+  # with 3d rather than 1d indices
+  expect_equal(coord2ind(
+      matrix(c(10, 20, 30, 11, 20, 30), nrow = 2, byrow = TRUE),
+      testImage, linear.indices = F),
+    structure(c(8, 9, 15, 15, 22, 22), .Dim = 2:3))
 })

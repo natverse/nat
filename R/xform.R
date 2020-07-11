@@ -327,6 +327,16 @@ xyzmatrix.mesh3d<-function(x, ...){
 
 #' @export
 `xyzmatrix<-.default`<-function(x, value){
+  # count number of elements in matrices/data.frames and vectors
+  nelems <- function(y) {
+    dy=dim(y)
+    if(is.null(dy)) length(y) else prod(dy)
+  }
+  
+  # short circuit if x and value have no elements
+  if(isTRUE(nrow(x)==0 && nelems(value)==0))
+    return(x)
+  
   xyzn=c("X","Y","Z")
   if(ncol(x)==3) {
     x[,]=value
