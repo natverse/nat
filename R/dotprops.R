@@ -306,8 +306,6 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #'   \code{alpha}
 #' @param ... Additional arguments passed to \code{points3d} and/or 
 #'   \code{segments3d}
-#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
-#' engine (default: \code{FALSE})
 #' @inheritParams plot3d.neuronlist
 #' @return invisible list of results of rgl plotting commands
 #' 

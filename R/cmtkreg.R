@@ -124,8 +124,6 @@ cmtkreg.filetype <- function(x) {
 #' @param x A cmtk registration (the path to the registration folder on disk) or
 #'   the resulting of reading one in with \code{\link{read.cmtkreg}}.
 #' @param ... Additional arguments passed to \code{\link[rgl]{plot3d}}
-#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
-#' engine (default: \code{FALSE})
 #' @inheritParams plot3d.neuronlist
 #' 
 #' @seealso \code{\link{cmtkreg}}, \code{\link{read.cmtkreg}},

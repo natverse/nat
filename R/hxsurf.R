@@ -357,8 +357,6 @@ write.hxsurf <- function(surf, filename) {
 #'   function that will be called with the number of materials to plot. When
 #'   \code{NULL} (default) will use material colours defined in Amira (if
 #'   available), or \code{rainbow} otherwise.
-#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
-#' engine (default: \code{FALSE})
 #' @param ... Additional arguments passed to \code{triangles3d}
 #' @inheritParams plot3d.neuronlist
 #' @export

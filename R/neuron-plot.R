@@ -19,8 +19,6 @@
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
 #' @param ... Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 #'   \code{\link[rgl]{spheres3d}} if somata are being plotted).
-#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
-#' engine (default: \code{FALSE})
 #' @inheritParams plot3d.neuronlist
 #'
 #' @return list of rgl plotting ids (invisibly) separated into \code{lines},
@@ -554,7 +552,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' }
 #' 
 plot3d.boundingbox <- function(x, col='black', 
-                               plotengine = getOption('nat.plotengine'), ...) {
+                               gridlines = FALSE, plotengine = getOption('nat.plotengine'), ...) {
   plotengine <- check_plotengine(plotengine)
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
@@ -588,6 +586,11 @@ plot3d.boundingbox <- function(x, col='black',
         x = ~X, y = ~Y , z = ~Z, 
         hoverinfo = "none", type = 'scatter3d', mode = 'lines',
         opacity = opacity, line=list(color = col, width = width))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
     .plotly3d$plotlyscenehandle <- psh
     psh
   }
