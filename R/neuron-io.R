@@ -26,6 +26,10 @@
 #'   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single 
 #'   unnamed neuron, whereas rda contains one or more named neurons.
 #'   
+#'   \items \bold{obj,ply} 3D Mesh formats encoding surface models of neurons.
+#'     These depend on the suggested package Rvcg (for ply format) and readobj
+#'     (for Wavefront obj format).
+#'   
 #'   }
 #' @export
 #' @param f Path to file. This can be a URL, in which case the file is 
@@ -98,7 +102,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' Read one or more neurons from file to a neuronlist in memory
 #' 
 #' @details This function will cope with the same set of file formats offered by
-#'   \code{read.neuron}.
+#'   \code{\link{read.neuron}}.
 #'   
 #'   If the \code{paths} argument specifies a (single) directory then all files 
 #'   in that directory will be read unless an optional regex pattern is also 
