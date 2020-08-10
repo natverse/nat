@@ -1,0 +1,11 @@
+test_that("read/write works", {
+  skip_if_not_installed('Rvcg')
+  bl=neuronlist(icosahedron3d(), tetrahedron3d())
+  names(bl)=c("a","b")
+  td=tempfile()
+  dir.create(td)
+  expect_silent(write.neurons(bl, dir=td, format = 'ply'))
+  expect_is(bl2 <- read.neurons(td, format='ply'), 'neuronlist')
+  expect_equal(nvertices(bl), nvertices(bl2))
+  unlink(td)
+})
