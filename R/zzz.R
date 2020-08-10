@@ -24,10 +24,10 @@ update_igraph <- FALSE
   # meshes to be read by read.neurons 
   # a bit of a cheat, since these won't have class neuron, but can usefully
   # represent neurons and go in a neuronlist
-  registerformat('neuron.obj', ext=c('.obj'), 
-                 read=read.neuron.mesh, class='neuron')
+  registerformat('neuron.obj', ext='.obj', 
+                 read=read.neuron.mesh, write=write.neuron.obj, class='neuron')
   registerformat('neuron.ply', ext='.ply', magic=is.ply, magiclen = 3,
-                 read=read.neuron.mesh, class='neuron')
+                 read=read.neuron.mesh, write=write.neuron.ply, class='neuron')
 
   # image formats
   registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d.nrrd, 

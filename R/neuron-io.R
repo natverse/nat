@@ -598,7 +598,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
   all(sapply(first_line[c("X", "Y", "Z", "W")], is.numeric))
 }
 
-#' Write out a neuron in any of the file formats we know about
+#' Write out a neuron skeleton or mesh in any of the file formats we know about
 #'
 #' If file is not specified the neuron's InputFileName field will be checked
 #' (for a dotprops object it will be the \code{'file'} attribute). If this is
@@ -622,8 +622,9 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param file Path to output file
 #' @param dir Path to directory (this will replace dirname(file) if specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
-#'   the filename and the ext parameter, then it defaults to 'swc'
+#'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
+#'   (neuron meshes). If no format can be extracted from the filename and the
+#'   ext parameter, then it defaults to 'swc'.
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -674,7 +675,10 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     if(!(length(ext) && is.na(ext)))
       file=tools::file_path_sans_ext(file)
   }
-  
+  if(!is.null(format)) {
+    if(format=='obj') format='neuron.obj'
+    else if(format=='ply') format='neuron.ply'
+  }
   fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
   if(inherits(fw, 'try-error')) {
     if(is.null(format)){
@@ -863,10 +867,11 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
     file=files[nn]
-    if(!isTRUE(nzchar(file)) && is.neuron(n) && is.null(n$InputFileName)){
+    if(!isTRUE(nchar(file)>0)){
       # the filename was not specified explicitly and we can't figure it out
       # from field inside the neuron, so set to name of object in neuronlist
-      file=nn
+      if(!is.neuron(n) || is.null(n$InputFileName))
+        file=nn
     }
     if(interactive())
       pb$tick()
