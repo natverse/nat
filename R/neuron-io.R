@@ -616,15 +616,17 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #'   \code{normalise.ids=NA} will normalise \code{PointNo} vertex ids only when
 #'   a vertex is connected (by the \code{Parent} field) to a vertex that had not
 #'   yet been defined. Many readers make the assumption that this is true. When
-#'   \code{normalise.ids=F} the vertex ids will not be touched.
+#'   \code{normalise.ids=FALSE} the vertex ids will not be touched.
 #'
 #' @param n A neuron
 #' @param file Path to output file
-#' @param dir Path to directory (this will replace dirname(file) if specified)
+#' @param dir Path to directory (this will replace \code{dirname(file)} if
+#'   specified)
 #' @param format Unique abbreviation of one of the registered file formats for
 #'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
-#'   (neuron meshes). If no format can be extracted from the filename and the
-#'   ext parameter, then it defaults to 'swc'.
+#'   (neuron meshes). If no format can be extracted from the filename or the
+#'   \code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
+#'   meshes.
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -640,12 +642,14 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' # show the currently registered file formats that we can write
 #' fileformats(class='neuron', write=TRUE)
 #' \dontrun{
-#' # write out "myneuron.swc" in SWC format
+#' # write neuron to "myneuron.swc" in SWC format
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
-#' # write out "myneuron.swc" in SWC format, normalising the integer ids that
-#' # label every node (this is required by some SWC readers e.g. Fiji)
+#' # write in SWC format, normalising the integer ids that label every node
+#' # (this is required by some SWC readers e.g. Fiji)
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc', normalise.ids=TRUE)
-#'
+#' # write out "myneuron.swc" in SWC format withour the final extension
+#' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
+
 #' # write out "myneuron.amiramesh" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
 #'
@@ -676,15 +680,17 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
       file=tools::file_path_sans_ext(file)
   }
   if(!is.null(format)) {
+    # TODO - one day it should be possible to have one file format associated 
+    # with different R classes
     if(format=='obj') format='neuron.obj'
     else if(format=='ply') format='neuron.ply'
   }
   fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
   if(inherits(fw, 'try-error')) {
     if(is.null(format)){
-      format='swc'
+      format <- if(inherits(n, 'mesh3d')) 'neuron.ply' else 'swc'
       fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
-      warning('write.neuron: using default format="swc"')
+      warning('write.neuron: using default format="',format,'"')
     } else {
       # rethrow the error
       stop(fw)
@@ -792,9 +798,18 @@ write.dotprops.swc<-function(x, file, ...) {
 #' write.neurons(Cell07PNs, dir="testwn", format='swc')
 #' # write some neurons in swc format for picky software
 #' write.neurons(Cell07PNs, dir="testwn", format='swc', normalise.ids=TRUE)
+#' # write some neurons in swc format and zip them up
+#' write.neurons(Cell07PNs, dir="testwn.zip", format='swc')
 #' 
 #' # write some neurons in Amira hxlineset format
 #' write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
+#' 
+#' # write some neuron meshes in Stanford ply format (the default for meshes)
+#' write.neurons(myneurons, dir="testwn")
+#' # specify the format to avoid a warning. Write to a zip file.
+#' write.neurons(myneurons, dir="testmeshes.zip", format='ply')
+#' # Wavefront obj format
+#' write.neurons(myneurons, dir="testwn", format='obj')
 #' 
 #' # organise new files in directory hierarchy by glomerulus and Scored.By field
 #' write.neurons(Cell07PNs,dir="testwn",

@@ -49,6 +49,10 @@ This function will handle \code{neuron} and \code{dotprops} objects
   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single 
   unnamed neuron, whereas rda contains one or more named neurons.
   
+  \items \bold{obj,ply} 3D Mesh formats encoding surface models of neurons.
+    These depend on the suggested package Rvcg (for ply format) and readobj
+    (for Wavefront obj format).
+  
   }
 }
 \examples{
