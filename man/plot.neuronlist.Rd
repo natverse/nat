@@ -44,8 +44,8 @@ soma. Either a logical value or a numeric indicating the radius (default
 
 \item{...}{options passed on to plot (such as colours, line width etc)}
 
-\item{SUBSTITUTE}{Whether to \code{substitute} the expressions passed as 
-arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
+\item{SUBSTITUTE}{Whether to \code{substitute} the expressions passed as
+arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert
 use only, when calling from another function.}
 }
 \value{

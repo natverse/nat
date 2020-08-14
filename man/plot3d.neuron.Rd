@@ -49,7 +49,8 @@ soma. Either a logical value or a numeric indicating the radius (default
 \item{...}{Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 \code{\link[rgl]{spheres3d}} if somata are being plotted).}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \value{
 list of rgl plotting ids (invisibly) separated into \code{lines},

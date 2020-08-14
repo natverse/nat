@@ -11,7 +11,8 @@
 
 \item{col}{The colour of the bounding box lines (default 'black')}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 
 \item{...}{additional arguments to pass to \code{\link[rgl]{segments3d}}.}
 }

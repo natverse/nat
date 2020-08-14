@@ -12,7 +12,8 @@ the resulting of reading one in with \code{\link{read.cmtkreg}}.}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{plot3d}}}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \description{
 Plot the domain of a CMTK registration

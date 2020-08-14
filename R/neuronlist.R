@@ -563,52 +563,53 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
   }
 }
 
-#' 3D plots of the elements in a neuronlist, optionally using a subset 
+#' 3D plots of the elements in a neuronlist, optionally using a subset
 #' expression
-#' 
-#' @details The col and subset parameters are evaluated in the context of the 
-#'   dataframe attribute of the neuronlist. If col evaluates to a factor and 
-#'   colpal is a named vector then colours will be assigned by matching factor 
+#'
+#' @details The col and subset parameters are evaluated in the context of the
+#'   dataframe attribute of the neuronlist. If col evaluates to a factor and
+#'   colpal is a named vector then colours will be assigned by matching factor
 #'   levels against the named elements of colpal. If there is one unnamed level,
 #'   this will be used as catch-all default value (see examples).
-#'   
-#'   If col evaluates to a factor and colpal is a function then it will be used 
+#'
+#'   If col evaluates to a factor and colpal is a function then it will be used
 #'   to generate colours with the same number of levels as are used in col.
-#'   
-#'   WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist} 
-#'   but remains \code{TRUE} by default when plotting single neurons with 
-#'   \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots 
+#'
+#'   WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist}
+#'   but remains \code{TRUE} by default when plotting single neurons with
+#'   \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots
 #'   with multiple neurons rather busy.
-#'   
-#'   When \code{soma} is \code{TRUE} or a vector of numeric values (recycled as 
-#'   appropriate), the values are used to plot cell bodies. For neurons the 
-#'   values are passed to \code{plot3d.neuron} for neurons. In contrast 
-#'   \code{dotprops} objects still need special handling. There must be columns 
-#'   called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then 
+#'
+#'   When \code{soma} is \code{TRUE} or a vector of numeric values (recycled as
+#'   appropriate), the values are used to plot cell bodies. For neurons the
+#'   values are passed to \code{plot3d.neuron} for neurons. In contrast
+#'   \code{dotprops} objects still need special handling. There must be columns
+#'   called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then
 #'   used directly by code in \code{plot3d.neuronlist}.
-#'   
-#'   Whenever plot3d.neuronlist is called, it will add an entry to an 
-#'   environment \code{.plotted3d} in \code{nat} that stores the ids of all the 
+#'
+#'   Whenever plot3d.neuronlist is called, it will add an entry to an
+#'   environment \code{.plotted3d} in \code{nat} that stores the ids of all the
 #'   plotted shapes (neurons, cell bodies) so that they can then be removed by a
 #'   call to \code{npop3d}.
 #' @param x a neuron list or, for \code{plot3d.character}, a character vector of
 #'   neuron names. The default neuronlist used by plot3d.character can be set by
-#'   using \code{options(nat.default.neuronlist='mylist')}. See 
+#'   using \code{options(nat.default.neuronlist='mylist')}. See
 #'   ?\code{\link{nat}} for details. \code{\link{nat-package}}.
-#' @param plotengine the plotting backend engine to use either 'rgl' or 'plotly'.
+#' @param plotengine the plotting backend engine to use either 'rgl' or
+#'   'plotly'.
 #' @param subset Expression evaluating to logical mask for neurons. See details.
-#' @param col An expression specifying a colour evaluated in the context of the 
+#' @param col An expression specifying a colour evaluated in the context of the
 #'   dataframe attached to nl (after any subsetting). See details.
 #' @param colpal A vector of colours or a function that generates colours
-#' @param skipRedraw When plotting more than this many (default 200) neurons 
-#'   skip redraw for individual neurons (this is much faster for large number of
-#'   neurons). Can also accept logical values TRUE (always skip) FALSE (never 
-#'   skip).
-#' @param WithNodes Whether to plot points for end/branch points. Default: 
+#' @param skipRedraw By default \code{TRUE} which is much faster when plotting
+#'   large numbers of neurons). Can also accept \code{FALSE} (never skip) or
+#'   integers specifying a threshold number of neurons, above which redrawing is
+#'   skipped.
+#' @param WithNodes Whether to plot points for end/branch points. Default:
 #'   \code{FALSE}.
 #' @param ... options passed on to plot3d (such as colours, line width etc)
-#' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as 
-#'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
+#' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as
+#'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert
 #'   use only, when calling from another function.
 #' @inheritParams plot3d.neuron
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
@@ -621,15 +622,15 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' \donttest{
 #' nclear3d()
 #' plot3d(kcs20,col=type)
-#' 
+#'
 #' nclear3d()
 #' plot3d(Cell07PNs,Glomerulus=="DA1",col='red')
 #' plot3d(Cell07PNs,Glomerulus=="VA1d",col='green')
-#' 
+#'
 #' # Note use of default colour for non DA1 neurons
 #' nclear3d()
 #' plot3d(Cell07PNs,col=Glomerulus, colpal=c(DA1='red', 'grey'))
-#' 
+#'
 #' # a subset expression
 #' nclear3d()
 #' plot3d(Cell07PNs,Glomerulus%in%c("DA1",'VA1d'),
@@ -643,7 +644,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' # see https://github.com/jefferis/frulhns for details
 #' library(frulhns)
 #' # notice the sexually dimorphic projection patterns for these neurons
-#' plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029', 
+#' plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029',
 #'   col=sex,colpal=c(male='green',female='magenta'))
 #'
 #' ## colour neurons of a class by input resistance

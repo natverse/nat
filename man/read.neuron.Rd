@@ -50,8 +50,8 @@ This function will handle \code{neuron} and \code{dotprops} objects
   unnamed neuron, whereas rda contains one or more named neurons.
 
   \item \bold{obj,ply} 3D Mesh formats encoding surface models of neurons.
-  These depend on the suggested package \link{code{Rvcg}} (for 'ply' format)
-  and \link{code{readobj}} (for Wavefront 'obj' format).
+  These depend on the suggested package \code{\link[Rvcg]{Rvcg}} (for 'ply'
+  format) and \code{\link[readobj]{readobj}} (for Wavefront 'obj' format).
 
   }
 }

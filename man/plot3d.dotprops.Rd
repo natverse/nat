@@ -38,7 +38,8 @@ points/vectors. See details.}
 \item{...}{Additional arguments passed to \code{points3d} and/or 
 \code{segments3d}}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \value{
 invisible list of results of rgl plotting commands
