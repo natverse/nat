@@ -1,5 +1,7 @@
 context("read neurons from remote url")
 
+skip_if_offline()
+
 test_that("we can read neuron from remote url", {
   
   if(!requireNamespace('XML', quietly = TRUE)) skip('Please install the XML package in order to use read.morphml!')
