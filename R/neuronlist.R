@@ -655,7 +655,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' plot3d(jkn.aspg,col=cut(Ri,20),colpal=jet.colors)
 #' }
 plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
-                            skipRedraw=ifelse(interactive(), 200L, TRUE),
+                            skipRedraw=TRUE,
                             add=TRUE,
                             WithNodes=FALSE, soma=FALSE, ..., 
                             SUBSTITUTE=TRUE, 
