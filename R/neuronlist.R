@@ -656,6 +656,7 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' }
 plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
                             skipRedraw=ifelse(interactive(), 200L, TRUE),
+                            add=TRUE,
                             WithNodes=FALSE, soma=FALSE, ..., 
                             SUBSTITUTE=TRUE, 
                             plotengine = getOption('nat.plotengine')){
@@ -692,7 +693,7 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
   }
   
   rval=mapply(plot3d, x, plotengine = plotengine,
-              col=cols, soma=soma, ..., 
+              col=cols, soma=soma, add=add, ..., 
               MoreArgs = list(WithNodes=WithNodes), SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
     psh <- .plotly3d$plotlyscenehandle
