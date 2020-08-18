@@ -1,9 +1,12 @@
+skip_if_not_installed('Rvcg')
+
+bl=neuronlist(icosahedron3d(), tetrahedron3d())
+names(bl)=c("a","b")
+td=tempfile()
+setup(dir.create(td))
+teardown(unlink(td, recursive = TRUE))
+
 test_that("read/write works", {
-  skip_if_not_installed('Rvcg')
-  bl=neuronlist(icosahedron3d(), tetrahedron3d())
-  names(bl)=c("a","b")
-  td=tempfile()
-  dir.create(td)
   expect_silent(ff1 <- write.neurons(bl, dir=td, format='ply'))
   md5.1=tools::md5sum(ff1)
   expect_warning(ff2 <- write.neurons(bl, dir=td, Force=TRUE), regexp = 'ply')
@@ -11,8 +14,20 @@ test_that("read/write works", {
   expect_equal(md5.1, md5.2)
   
   expect_is(bl2 <- read.neurons(td, format='ply'), 'neuronlist')
-  expect_equal(nvertices(bl), nvertices(bl2))
-  expect_equal(sapply(bl, Rvcg::nfaces), sapply(bl2, Rvcg::nfaces))
+  expect_equal(sbl <- summary(bl), summary(bl2))
   
-  unlink(td, recursive = TRUE)
+  expect_is(sbl, 'data.frame')
+  expect_known_value(sbl, file = 'testdata/summary_bl.rds')
+})
+
+skip_if_not_installed('readobj')
+
+td2=tempfile()
+setup(dir.create(td2))
+teardown(unlink(td2, recursive = TRUE))
+
+test_that("read/write works with obj files", {
+  expect_silent(ff1 <- write.neurons(bl, dir=td2, format='obj'))
+  expect_is(bl2 <- read.neurons(td2), 'neuronlist')
+  expect_equal(summary(bl), summary(bl2))
 })
