@@ -7,7 +7,13 @@
 \alias{wire3d.shapelist3d}
 \title{Wire frame plots}
 \usage{
-wire3d(x, ..., add = TRUE, plotengine = getOption("nat.plotengine"))
+wire3d(
+  x,
+  ...,
+  add = TRUE,
+  gridlines = FALSE,
+  plotengine = getOption("nat.plotengine")
+)
 
 \method{wire3d}{hxsurf}(x, Regions = NULL, ...)
 
@@ -23,10 +29,13 @@ wire3d(x, ..., add = TRUE, plotengine = getOption("nat.plotengine"))
 \arguments{
 \item{x}{object of type 'mesh3d' (triangular mesh or quad mesh), 'hxsurf' or 'shapelist3d'}
 
-\item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}} or 
-\code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}}
+\item{...}{Additional arguments passed to \code{\link[rgl]{wire3d}} or}
 
 \item{add}{whether to add objects to an existing plot}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})
+\code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}}
 
 \item{plotengine}{Whether to use plotting backend of 'rgl' or 'plotly'}
 

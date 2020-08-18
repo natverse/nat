@@ -324,7 +324,8 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' }
 plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
                           PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, 
-                          ..., plotengine = getOption('nat.plotengine')){
+                          ..., gridlines = FALSE,
+                          plotengine = getOption('nat.plotengine')){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
@@ -379,8 +380,14 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
   if (plotengine == 'rgl'){
     invisible(rlist)
   } else {
-    psh <- psh %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+ 
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

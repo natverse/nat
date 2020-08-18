@@ -608,8 +608,10 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
 #' @param WithNodes Whether to plot points for end/branch points. Default:
 #'   \code{FALSE}.
 #' @param ... options passed on to plot3d (such as colours, line width etc)
-#' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as
-#'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert
+#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
+#' engine (default: \code{FALSE})
+#' @param SUBSTITUTE Whether to \code{substitute} the expressions passed as 
+#'   arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
 #'   use only, when calling from another function.
 #' @inheritParams plot3d.neuron
 #' @return list of values of \code{plot3d} with subsetted dataframe as attribute
@@ -660,6 +662,7 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
                             add=TRUE,
                             WithNodes=FALSE, soma=FALSE, ..., 
                             SUBSTITUTE=TRUE, 
+                            gridlines = FALSE,
                             plotengine = getOption('nat.plotengine')){
   plotengine <- check_plotengine(plotengine)
   # Handle Subset
@@ -693,7 +696,7 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
     }
   }
   
-  rval=mapply(plot3d, x, plotengine = plotengine,
+  rval=mapply(plot3d, x, plotengine = plotengine, gridlines = gridlines,
               col=cols, soma=soma, add=add, ..., 
               MoreArgs = list(WithNodes=WithNodes), SIMPLIFY=FALSE)
   if(plotengine == 'plotly'){
@@ -737,8 +740,13 @@ plot3d.neuronlist<-function(x, subset=NULL, col=NULL, colpal=rainbow,
       attr(rval,'df')=df
       invisible(rval)
   } else{
-    psh <- psh %>%
-      plotly::layout(showlegend = FALSE, scene = list(camera =.plotly3d$camera))
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
     .plotly3d$plotlyscenehandle = psh
     attr(psh, 'df') = df
     psh

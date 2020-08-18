@@ -8,6 +8,7 @@
   x,
   materials = NULL,
   col = NULL,
+  gridlines = FALSE,
   ...,
   plotengine = getOption("nat.plotengine")
 )
@@ -23,6 +24,9 @@ materials to plot (defaults to all materials in x). See
 function that will be called with the number of materials to plot. When
 \code{NULL} (default) will use material colours defined in Amira (if
 available), or \code{rainbow} otherwise.}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
 
 \item{...}{Additional arguments passed to \code{triangles3d}}
 

@@ -16,6 +16,7 @@
   col = NULL,
   soma = FALSE,
   ...,
+  gridlines = FALSE,
   plotengine = getOption("nat.plotengine")
 )
 }
@@ -48,6 +49,9 @@ soma. Either a logical value or a numeric indicating the radius (default
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 \code{\link[rgl]{spheres3d}} if somata are being plotted).}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
 
 \item{plotengine}{the plotting backend engine to use either 'rgl' or
 'plotly'.}

@@ -101,3 +101,10 @@ update_igraph <- FALSE
 .plotly3d$camera = list(up=list(x=0, y=0, z=1),
               center=list(x=0, y=0, z=0),
               eye=list(x=-0.1, y=-2.5, z=0.1))
+
+.plotly3d$xaxis = list(title = "", zeroline = FALSE, 
+                       showline = FALSE, showticklabels = FALSE,showgrid = FALSE)
+.plotly3d$yaxis = list(title = "", zeroline = FALSE, 
+                       showline = FALSE, showticklabels = FALSE,showgrid = FALSE)
+.plotly3d$zaxis = list(title = "", zeroline = FALSE, ticks = "",
+                        showline = FALSE, showticklabels = FALSE,showgrid = FALSE)
