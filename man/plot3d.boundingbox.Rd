@@ -4,12 +4,21 @@
 \alias{plot3d.boundingbox}
 \title{Plot a bounding box in 3D}
 \usage{
-\method{plot3d}{boundingbox}(x, col = "black", plotengine = getOption("nat.plotengine"), ...)
+\method{plot3d}{boundingbox}(
+  x,
+  col = "black",
+  gridlines = FALSE,
+  plotengine = getOption("nat.plotengine"),
+  ...
+)
 }
 \arguments{
 \item{x}{the \code{\link{boundingbox}} object to plot.}
 
 \item{col}{The colour of the bounding box lines (default 'black')}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
 
 \item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 

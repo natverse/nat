@@ -16,6 +16,7 @@ expression}
   soma = FALSE,
   ...,
   SUBSTITUTE = TRUE,
+  gridlines = FALSE,
   plotengine = getOption("nat.plotengine")
 )
 
@@ -51,6 +52,9 @@ soma. Either a logical value or a numeric indicating the radius (default
 \item{SUBSTITUTE}{Whether to \code{substitute} the expressions passed as 
 arguments \code{subset} and \code{col}. Default: \code{TRUE}. For expert 
 use only, when calling from another function.}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
 
 \item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
 

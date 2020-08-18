@@ -5,6 +5,8 @@
 #' @param add whether to add objects to an existing plot
 #' @param plotengine Whether to use plotting backend of 'rgl' or 'plotly'
 #' @param ... Additional arguments passed to \code{\link[rgl]{wire3d}} or 
+#' @param gridlines Whether to display gridlines when using plotly as the backend plotting
+#' engine (default: \code{FALSE})
 #' \code{\link[plotly]{add_trace} depending on the @param plotengine option choosen}
 #' @export
 #' @seealso \code{\link[rgl]{wire3d}}
@@ -25,7 +27,7 @@
 #' options(nat.plotengine = 'rgl')
 #' wire3d(kcs20.mesh,alpha = 0.1, add = FALSE, col = 'blue')
 #' }
-wire3d <- function(x, ..., add = TRUE, plotengine = getOption('nat.plotengine')) {
+wire3d <- function(x, ..., add = TRUE, gridlines = FALSE, plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
   if (!add)
     nclear3d(plotengine = plotengine)
@@ -54,15 +56,15 @@ wire3d.default <- function(x, ...) {
 
 
 #' @export
-wire3d.plotlyshapelist3d <- function (x, override = TRUE, ...) 
+wire3d.plotlyshapelist3d <- function (x, override = TRUE, gridlines = FALSE, ...) 
 {
-  sapply(x, function(item) wire3d(item, override = override, ...))
+  sapply(x, function(item) wire3d(item, override = override, gridlines = gridlines, ...))
   psh <- openplotlyscene()$plotlyscenehandle
   psh
 }
 
 #' @export
-wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
+wire3d.plotlymesh3d <- function(x, override = TRUE, gridlines = FALSE, ...) {
   
   psh <- openplotlyscene()$plotlyscenehandle
   params=list(...)
@@ -76,6 +78,8 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
                 material$color 
               } else 'black'
   width <- if("width" %in% names(params)) params$width else 2
+  
+  label <- if("label" %in% names(params)) params$label else NULL
   
   #Gather all edges for the faces..
   #Here vb is the points of the mesh, it is the faces of the mesh (this just has the order)..
@@ -117,9 +121,16 @@ wire3d.plotlymesh3d <- function(x, override = TRUE, ...) {
                                    z = ptsna[,3],
                                    mode = "lines",
                                    opacity = opacity,
+                                   name = label,
                                    line = list(width = width, color = color))
   
   psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+  if(gridlines == FALSE){
+    psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                               yaxis=.plotly3d$yaxis,
+                                               zaxis=.plotly3d$zaxis))
+  }
+  
   assign("plotlyscenehandle", psh, envir=.plotly3d)
   psh
 }

@@ -59,6 +59,7 @@
 plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, 
                         WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE, 
                         add=TRUE, col=NULL, soma=FALSE, ...,
+                        gridlines = FALSE,
                         plotengine = getOption('nat.plotengine')){
   plotengine <- check_plotengine(plotengine)
   if (!add)
@@ -212,8 +213,13 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
   if (plotengine == 'rgl'){
     invisible(rglreturnlist)
   } else{
-    psh <- psh %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }
@@ -546,7 +552,7 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' }
 #' 
 plot3d.boundingbox <- function(x, col='black', 
-                               plotengine = getOption('nat.plotengine'), ...) {
+                               gridlines = FALSE, plotengine = getOption('nat.plotengine'), ...) {
   plotengine <- check_plotengine(plotengine)
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
@@ -580,6 +586,11 @@ plot3d.boundingbox <- function(x, col='black',
         x = ~X, y = ~Y , z = ~Z, 
         hoverinfo = "none", type = 'scatter3d', mode = 'lines',
         opacity = opacity, line=list(color = col, width = width))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
     .plotly3d$plotlyscenehandle <- psh
     psh
   }
