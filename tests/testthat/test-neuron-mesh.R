@@ -18,6 +18,8 @@ test_that("read/write works", {
   
   expect_is(sbl, 'data.frame')
   expect_known_value(sbl, file = 'testdata/summary_bl.rds')
+  
+  expect_error(write.neurons(Cell07PNs[1:3], format = 'ply'))
 })
 
 skip_if_not_installed('readobj')
@@ -30,4 +32,5 @@ test_that("read/write works with obj files", {
   expect_silent(ff1 <- write.neurons(bl, dir=td2, format='obj'))
   expect_is(bl2 <- read.neurons(td2), 'neuronlist')
   expect_equal(summary(bl), summary(bl2))
+  expect_error(write.neurons(Cell07PNs[1:3], format = 'obj'))
 })
