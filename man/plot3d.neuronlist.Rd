@@ -3,7 +3,7 @@
 \name{plot3d.neuronlist}
 \alias{plot3d.neuronlist}
 \alias{plot3d.character}
-\title{3D plots of the elements in a neuronlist, optionally using a subset 
+\title{3D plots of the elements in a neuronlist, optionally using a subset
 expression}
 \usage{
 \method{plot3d}{neuronlist}(
@@ -11,7 +11,8 @@ expression}
   subset = NULL,
   col = NULL,
   colpal = rainbow,
-  skipRedraw = ifelse(interactive(), 200L, TRUE),
+  skipRedraw = TRUE,
+  add = TRUE,
   WithNodes = FALSE,
   soma = FALSE,
   ...,
@@ -25,22 +26,25 @@ expression}
 \arguments{
 \item{x}{a neuron list or, for \code{plot3d.character}, a character vector of
 neuron names. The default neuronlist used by plot3d.character can be set by
-using \code{options(nat.default.neuronlist='mylist')}. See 
+using \code{options(nat.default.neuronlist='mylist')}. See
 ?\code{\link{nat}} for details. \code{\link{nat-package}}.}
 
 \item{subset}{Expression evaluating to logical mask for neurons. See details.}
 
-\item{col}{An expression specifying a colour evaluated in the context of the 
+\item{col}{An expression specifying a colour evaluated in the context of the
 dataframe attached to nl (after any subsetting). See details.}
 
 \item{colpal}{A vector of colours or a function that generates colours}
 
-\item{skipRedraw}{When plotting more than this many (default 200) neurons 
-skip redraw for individual neurons (this is much faster for large number of
-neurons). Can also accept logical values TRUE (always skip) FALSE (never 
-skip).}
+\item{skipRedraw}{By default \code{TRUE} which is much faster when plotting
+large numbers of neurons). Can also accept \code{FALSE} (never skip) or
+integers specifying a threshold number of neurons, above which redrawing is
+skipped.}
 
-\item{WithNodes}{Whether to plot points for end/branch points. Default: 
+\item{add}{Whether to add the neuron to existing rgl plot rather than
+clearing the scene (default TRUE)}
+
+\item{WithNodes}{Whether to plot points for end/branch points. Default:
 \code{FALSE}.}
 
 \item{soma}{Whether to plot a sphere at neuron's origin representing the
@@ -56,7 +60,8 @@ use only, when calling from another function.}
 \item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
 engine (default: \code{FALSE})}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 
 \item{db}{A neuronlist to use as the source of objects to plot. If
 \code{NULL}, the default, will use the neuronlist specified by
@@ -71,29 +76,29 @@ list of values of \code{plot3d} with subsetted dataframe as attribute
   exploratory work on the command line.
 }
 \details{
-The col and subset parameters are evaluated in the context of the 
-  dataframe attribute of the neuronlist. If col evaluates to a factor and 
-  colpal is a named vector then colours will be assigned by matching factor 
+The col and subset parameters are evaluated in the context of the
+  dataframe attribute of the neuronlist. If col evaluates to a factor and
+  colpal is a named vector then colours will be assigned by matching factor
   levels against the named elements of colpal. If there is one unnamed level,
   this will be used as catch-all default value (see examples).
-  
-  If col evaluates to a factor and colpal is a function then it will be used 
+
+  If col evaluates to a factor and colpal is a function then it will be used
   to generate colours with the same number of levels as are used in col.
-  
-  WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist} 
-  but remains \code{TRUE} by default when plotting single neurons with 
-  \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots 
+
+  WithNodes is \code{FALSE} by default when using \code{plot3d.neuronlist}
+  but remains \code{TRUE} by default when plotting single neurons with
+  \code{\link{plot3d.neuron}}. This is because the nodes quickly make plots
   with multiple neurons rather busy.
-  
-  When \code{soma} is \code{TRUE} or a vector of numeric values (recycled as 
-  appropriate), the values are used to plot cell bodies. For neurons the 
-  values are passed to \code{plot3d.neuron} for neurons. In contrast 
-  \code{dotprops} objects still need special handling. There must be columns 
-  called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then 
+
+  When \code{soma} is \code{TRUE} or a vector of numeric values (recycled as
+  appropriate), the values are used to plot cell bodies. For neurons the
+  values are passed to \code{plot3d.neuron} for neurons. In contrast
+  \code{dotprops} objects still need special handling. There must be columns
+  called \code{X,Y,Z} in the data.frame attached to \code{x}, that are then
   used directly by code in \code{plot3d.neuronlist}.
-  
-  Whenever plot3d.neuronlist is called, it will add an entry to an 
-  environment \code{.plotted3d} in \code{nat} that stores the ids of all the 
+
+  Whenever plot3d.neuronlist is called, it will add an entry to an
+  environment \code{.plotted3d} in \code{nat} that stores the ids of all the
   plotted shapes (neurons, cell bodies) so that they can then be removed by a
   call to \code{npop3d}.
 
@@ -129,7 +134,7 @@ plot3d(Cell07PNs,Glomerulus\%in\%c("DA1",'VA1d'),col=Glomerulus)
 # see https://github.com/jefferis/frulhns for details
 library(frulhns)
 # notice the sexually dimorphic projection patterns for these neurons
-plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029', 
+plot3d(jkn,cluster=='aSP-f' &shortGenotype=='JK1029',
   col=sex,colpal=c(male='green',female='magenta'))
 
 ## colour neurons of a class by input resistance

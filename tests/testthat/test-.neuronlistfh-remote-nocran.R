@@ -1,5 +1,7 @@
 context("neuronlistfh remote")
 
+skip_if_offline()
+
 test_that("we can download a neuronlistfh object with MD5'd objects", {
   localdir <- tempfile()
   dir.create(localdir)

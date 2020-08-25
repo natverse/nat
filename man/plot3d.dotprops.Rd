@@ -42,7 +42,8 @@ points/vectors. See details.}
 \item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
 engine (default: \code{FALSE})}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \value{
 invisible list of results of rgl plotting commands

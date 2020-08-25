@@ -50,7 +50,7 @@ Read one or more neurons from file to a neuronlist in memory
 }
 \details{
 This function will cope with the same set of file formats offered by
-  \code{read.neuron}.
+  \code{\link{read.neuron}}.
   
   If the \code{paths} argument specifies a (single) directory then all files 
   in that directory will be read unless an optional regex pattern is also 

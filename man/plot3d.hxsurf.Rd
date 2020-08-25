@@ -30,7 +30,8 @@ engine (default: \code{FALSE})}
 
 \item{...}{Additional arguments passed to \code{triangles3d}}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \description{
 Plot amira surface objects in 3D using rgl
