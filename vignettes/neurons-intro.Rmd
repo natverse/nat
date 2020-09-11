@@ -257,8 +257,9 @@ Cell07PNs
 
 A length 1 `neuronlist`
 ```{r}
-```
 Cell07PNs[1]
+```
+
 The first element, a `neuron`.
 ```{r}
 Cell07PNs[[1]]
