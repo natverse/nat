@@ -133,6 +133,10 @@ When the graph vertices have a label attribute derived from PointNo,
 ## Basic properties
 # a sample neuron 
 n = Cell07PNs[[1]]
+
+# summarise it
+n
+
 # inspect its internal structure
 str(n)
 # summary of 3D points

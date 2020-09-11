@@ -26,8 +26,14 @@
 #' # slice an existing neuronlist with regular indexing
 #' kcs5=kcs20[1:5]
 #' 
+#' # simple summary of neuronlist contents
+#' Cell07PNs
+#' # subset to make a smaller neuronlist
+#' Cell07PNs[1:3]
 #' # extract a single neuron from a neuronlist
 #' n1=Cell07PNs[[1]]
+#' n1
+#' 
 #' 
 #' # list all methods for neuronlist objects
 #' methods(class='neuronlist')
