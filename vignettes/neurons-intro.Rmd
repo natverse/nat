@@ -246,6 +246,24 @@ object at the given position. So in the figure `x[1]` is a `neuronlist` object
 of length 1, whereas `x[[1]]` is the `neuron` object at the first position in 
 the list.
 
+You can see this distinction by comparing the action of the `[` and `[[` 
+operators on the sample dataset we used earlier.
+
+
+The original `neuronlist`
+```{r}
+Cell07PNs
+```
+
+A length 1 `neuronlist`
+```{r}
+```
+Cell07PNs[1]
+The first element, a `neuron`.
+```{r}
+Cell07PNs[[1]]
+```
+
 ### Worked Examples
 
 Let us start by extracting the first five neurons from our sample data.
