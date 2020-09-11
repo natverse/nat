@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,8 +47,7 @@
 
 
 <meta property="og:title" content="Function reference" />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.2</span>
       </span>
     </div>
 
@@ -166,6 +169,11 @@
           <p class="section-desc"><p>Provides an overview of key functions and classes</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -180,6 +188,11 @@
           <p class="section-desc"><p>Functions for working with traced neurons (fully connected tree structures)</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -197,7 +210,7 @@
         <td>
           <p><code><a href="write.neuron.html">write.neuron()</a></code> </p>
         </td>
-        <td><p>Write out a neuron in any of the file formats we know about</p></td>
+        <td><p>Write out a neuron skeleton or mesh in any of the file formats we know about</p></td>
       </tr><tr>
         
         <td>
@@ -284,6 +297,11 @@
           <p class="section-desc"><p>Functions for working with the graph structure of neurons</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -370,6 +388,11 @@
           <p class="section-desc"><p>Functions for working with skeletonised neurons consisting of unconnected vectors rather than a fully connected tree.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -396,6 +419,11 @@
           <p class="section-desc"><p>Functions for working with collections of neurons, which are packaged as neuronlist objects with an attached data.frame containing metadata.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -432,7 +460,7 @@ expression</p></td>
         <td>
           <p><code><a href="plot3d.neuronlist.html">plot3d(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="plot3d.neuronlist.html">plot3d(<i>&lt;character&gt;</i>)</a></code> </p>
         </td>
-        <td><p>3D plots of the elements in a neuronlist, optionally using a subset 
+        <td><p>3D plots of the elements in a neuronlist, optionally using a subset
 expression</p></td>
       </tr><tr>
         
@@ -443,7 +471,7 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="summary.neuron.html">summary(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="summary.neuron.html">summary(<i>&lt;neuron&gt;</i>)</a></code> <code><a href="summary.neuron.html">summary(<i>&lt;dotprops&gt;</i>)</a></code> </p>
+          <p><code><a href="summary.neuron.html">summary(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="summary.neuron.html">summary(<i>&lt;neuron&gt;</i>)</a></code> <code><a href="summary.neuron.html">summary(<i>&lt;mesh3d&gt;</i>)</a></code> <code><a href="summary.neuron.html">summary(<i>&lt;dotprops&gt;</i>)</a></code> </p>
         </td>
         <td><p>Summary statistics for neurons (e.g. cable length, number of nodes)</p></td>
       </tr><tr>
@@ -461,7 +489,7 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="get-set-neuronlist-data.frame.html">as.data.frame(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="get-set-neuronlist-data.frame.html">`data.frame<-`()</a></code> </p>
+          <p><code><a href="get-set-neuronlist-data.frame.html">as.data.frame(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="get-set-neuronlist-data.frame.html">`data.frame&lt;-`()</a></code> </p>
         </td>
         <td><p>Get or set the attached data.frame of a neuronlist</p></td>
       </tr><tr>
@@ -479,7 +507,7 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="neuronlist-dataframe-methods.html">`[`(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">`[<-`(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">droplevels(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">with(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">head(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">tail(<i>&lt;neuronlist&gt;</i>)</a></code> </p>
+          <p><code><a href="neuronlist-dataframe-methods.html">`[`(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">`[&lt;-`(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">droplevels(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">with(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">head(<i>&lt;neuronlist&gt;</i>)</a></code> <code><a href="neuronlist-dataframe-methods.html">tail(<i>&lt;neuronlist&gt;</i>)</a></code> </p>
         </td>
         <td><p>Methods for working with the dataframe attached to a neuronlist</p></td>
       </tr>
@@ -490,6 +518,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions for working with collections of neurons where the data will be dynamically loaded into memory from disk and/or downloaded from a remote site.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -534,6 +567,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions for working with surface data, either in a class hxsurf modeled on Amira’s representation of surfaces or the rgl::mesh3d class.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -590,6 +628,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions to help plot neurons, surfaces and other 3D objects via RGL.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -682,6 +725,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions to review, identify, and modify objects by interactive selection in RGL windows.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -726,6 +774,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions for analysing 3D geometry of neurons and other objects</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -735,7 +788,7 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="xyzmatrix.html">xyzmatrix()</a></code> <code><a href="xyzmatrix.html">`xyzmatrix<-`()</a></code> </p>
+          <p><code><a href="xyzmatrix.html">xyzmatrix()</a></code> <code><a href="xyzmatrix.html">`xyzmatrix&lt;-`()</a></code> </p>
         </td>
         <td><p>Get and assign coordinates for classes containing 3D vertex data</p></td>
       </tr><tr>
@@ -776,6 +829,11 @@ expression</p></td>
           <p class="section-desc"><p>Generic strategies for transforming 3D objects/images and registration</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -826,6 +884,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions for working with 3d image volumes</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -907,7 +970,7 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="boundingbox.html">boundingbox()</a></code> <code><a href="boundingbox.html">`boundingbox<-`()</a></code> </p>
+          <p><code><a href="boundingbox.html">boundingbox()</a></code> <code><a href="boundingbox.html">`boundingbox&lt;-`()</a></code> </p>
         </td>
         <td><p>Get the bounding box of an image volume or object containing 3D vertices</p></td>
       </tr><tr>
@@ -945,7 +1008,7 @@ expression</p></td>
         <td>
           <p><code><a href="coord2ind.html">coord2ind()</a></code> </p>
         </td>
-        <td><p>Find 1D indices into a 3D image given spatial coordinates</p></td>
+        <td><p>Find 1D or 3D voxel indices into a 3D image given spatial coordinates</p></td>
       </tr><tr>
         
         <td>
@@ -978,6 +1041,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions to interface to the CMTK image registration suite</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -1064,6 +1132,11 @@ expression</p></td>
           <p class="section-desc"><p>Sample data objects (neurons, surfaces)</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -1096,6 +1169,11 @@ expression</p></td>
           <p class="section-desc"><p>Generic versions of base functions for which we provide specialised methods for nat objects.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -1128,6 +1206,11 @@ expression</p></td>
           <p class="section-desc"><p>Functions primarily intended for developer use</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -1137,19 +1220,19 @@ expression</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="all.equal.dotprops.html">all.equal(<i>&lt;dotprops&gt;</i>)</a></code> </p>
+          <p><code><a href="all.equal.dotprops.html">all(<i>&lt;equal.dotprops&gt;</i>)</a></code> </p>
         </td>
         <td><p>all.equal method tailored to dotprops objects</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="all.equal.im3d.html">all.equal(<i>&lt;im3d&gt;</i>)</a></code> </p>
+          <p><code><a href="all.equal.im3d.html">all(<i>&lt;equal.im3d&gt;</i>)</a></code> </p>
         </td>
         <td><p>Check equality on data and key attributes of im3d objects</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="all.equal.neuron.html">all.equal(<i>&lt;neuron&gt;</i>)</a></code> </p>
+          <p><code><a href="all.equal.neuron.html">all(<i>&lt;equal.neuron&gt;</i>)</a></code> </p>
         </td>
         <td><p>Check equality on key fields of neuron object</p></td>
       </tr>
@@ -1160,6 +1243,11 @@ expression</p></td>
           <p class="section-desc"><p>Support for different formats. It is generally recommended to use more generic functions such as read.neuron(s) rather than these functions.</p></p>
         </th>
       </tr>
+      
+      
+    </tbody><tbody>
+      
+      
       <tr>
         
         <td>
@@ -1297,27 +1385,10 @@ expression</p></td>
     </table>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-package-help">Package Help</a></li>
-      <li><a href="#section-neurons-traced-">Neurons (traced)</a></li>
-      <li><a href="#section-neurons-as-graphs-">Neurons (as graphs)</a></li>
-      <li><a href="#section-skeletonised-neurons-dotprops-aka-vector-cloud-">Skeletonised Neurons (dotprops aka vector cloud)</a></li>
-      <li><a href="#section-collections-of-neurons-neuronlists-">Collections of Neurons (neuronlists)</a></li>
-      <li><a href="#section-collections-of-neurons-with-remote-data-neuronlistfh-">Collections of Neurons with Remote Data (neuronlistfh)</a></li>
-      <li><a href="#section-surfaces-and-landmarks-hxsurf-mesh-d-">Surfaces and Landmarks (hxsurf, mesh3d)</a></li>
-      <li><a href="#section--d-plotting-of-objects">3D Plotting of Objects</a></li>
-      <li><a href="#section--d-interaction-with-objects">3D Interaction with Objects</a></li>
-      <li><a href="#section--d-geometry">3D Geometry</a></li>
-      <li><a href="#section-object-transformation">Object transformation</a></li>
-      <li><a href="#section-images-im-d-">Images (im3d)</a></li>
-      <li><a href="#section-cmtk-registration">CMTK Registration</a></li>
-      <li><a href="#section-sample-data">Sample Data</a></li>
-      <li><a href="#section-generic-functions">Generic Functions</a></li>
-      <li><a href="#section-utility-functions">Utility Functions</a></li>
-      <li><a href="#section-file-formats">File formats</a></li>
-    </ul>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -1328,7 +1399,7 @@ expression</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

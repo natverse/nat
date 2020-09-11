@@ -17,23 +17,27 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,8 +47,7 @@
 
 
 <meta property="og:title" content="Changelog" />
-<meta property="og:image" content="/logo.png" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="/logo.svg" />
 
 
 
@@ -62,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -76,7 +79,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.2</span>
       </span>
     </div>
 
@@ -148,13 +151,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/natverse/nat/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="nat-1-10-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-10-1" class="anchor"></a>nat 1.10.1<small> Unreleased </small>
+    <div id="nat-1102" class="section level1">
+<h1 class="page-header" data-toc-text="1.10.2">
+<a href="#nat-1102" class="anchor"></a>nat 1.10.2<small> Unreleased </small>
+</h1>
+<p>This release brings support for reading, plotting and writing 3D surface meshes of neurons into line with the skeleton support. It also includes an essential fix requested by CRAN.</p>
+<p><a href="https://github.com/natverse/nat/issues?q=closed%3A2020-02-23" class="uri">https://github.com/natverse/nat/issues?q=closed%3A2020-02-23</a>..2020-09-11+</p>
+<ul>
+<li>Fix test failure on R-devel (R 4.1) for <code>c.neuronlist</code> (<a href='https://github.com/natverse/nat/issues/444'>#444</a>)</li>
+<li>Add <code>print.neuron()</code>, <code>print.neuronlist()</code>,<code>print.dotprops()</code> methods <a href='https://github.com/natverse/nat/issues/443'>#443</a></li>
+<li>Better support for reading / plotting neuron meshes (<a href='https://github.com/natverse/nat/issues/441'>#441</a>, <a href='https://github.com/natverse/nat/issues/442'>#442</a>)</li>
+<li>Bug in <code><a href="../reference/xyzmatrix.html">xyzmatrix()</a></code> for 0 row data.frames (<a href='https://github.com/natverse/nat/issues/433'>#433</a>)</li>
+<li>Updated parameter for toggling grid lines in plotly (<a href='https://github.com/natverse/nat/issues/432'>#432</a>)</li>
+<li>Add support for Amira hxsurf binary format to <code><a href="../reference/read.hxsurf.html">read.hxsurf()</a></code> (<a href='https://github.com/natverse/nat/issues/431'>#431</a>)</li>
+<li>improve error message for <code><a href="../reference/cmtk.version.html">cmtk.version()</a></code> (<a href='https://github.com/natverse/nat/issues/430'>#430</a>)</li>
+<li>Remaining items to move from elmr (<a href='https://github.com/natverse/nat/issues/428'>#428</a>)</li>
+<li>Turn off grid lines when using plotly engine (<a href='https://github.com/natverse/nat/issues/427'>#427</a>)</li>
+<li>Move features to nat from other packages (<a href='https://github.com/natverse/nat/issues/423'>#423</a>)</li>
+<li>Add support for thin plate spine transformations via <code><a href="../reference/tpsreg.html">tpsreg()</a></code> (<a href='https://github.com/natverse/nat/issues/289'>#289</a>)</li>
+</ul>
+</div>
+    <div id="nat-1101" class="section level1">
+<h1 class="page-header" data-toc-text="1.10.1">
+<a href="#nat-1101" class="anchor"></a>nat 1.10.1<small> Unreleased </small>
 </h1>
 <p>We are bumping a whole version point because of a large number of new functions. Note that 1.10.0 was never formally released.</p>
 <ul>
@@ -176,9 +199,9 @@
 <li>Fix scroll to zoom does not work using <code><a href="../reference/nopen3d.html">nopen3d()</a></code> (<a href='https://github.com/natverse/nat/issues/413'>#413</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-9-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-9-2" class="anchor"></a>nat 1.9.2<small> Unreleased </small>
+    <div id="nat-192" class="section level1">
+<h1 class="page-header" data-toc-text="1.9.2">
+<a href="#nat-192" class="anchor"></a>nat 1.9.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>switch to <a href="https://github.com/natverse/nat" class="uri">https://github.com/natverse/nat</a>
@@ -193,17 +216,17 @@
 <code><a href="../reference/xyzmatrix.html">xyzmatrix.mesh3d()</a></code> now has colnames XYZ for consistency (<a href='https://github.com/natverse/nat/issues/418'>#418</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-9-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-9-1" class="anchor"></a>nat 1.9.1<small> Unreleased </small>
+    <div id="nat-191" class="section level1">
+<h1 class="page-header" data-toc-text="1.9.1">
+<a href="#nat-191" class="anchor"></a>nat 1.9.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Fix very slow loading of neurons in <code><a href="../reference/neuronlistfh.html">neuronlistfh()</a></code> objects. Apparently due to a change in behaviour in R 3.6.0 (<a href='https://github.com/natverse/nat/issues/402'>#402</a>). Thanks to Shanice Bailey and Lisa Marin for the bug report.</li>
 </ul>
 </div>
-    <div id="nat-1-9-0" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-9-0" class="anchor"></a>nat 1.9.0<small> Unreleased </small>
+    <div id="nat-190" class="section level1">
+<h1 class="page-header" data-toc-text="1.9.0">
+<a href="#nat-190" class="anchor"></a>nat 1.9.0<small> Unreleased </small>
 </h1>
 <p>We are bumping a whole version point because of some changes in the default behaviour of nat. We do not expect to submit this first version in the 1.9.x series to CRAN without further testing, but it is our current recommended version for general use.</p>
 <p>Significant changes:</p>
@@ -242,9 +265,9 @@
 </li>
 </ul>
 </div>
-    <div id="nat-1-8-12" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-12" class="anchor"></a>nat 1.8.12<small> Unreleased </small>
+    <div id="nat-1812" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.12">
+<a href="#nat-1812" class="anchor"></a>nat 1.8.12<small> Unreleased </small>
 </h1>
 <ul>
 <li>Speed up (2-3x) summary.neuron(list) by faster calculation of total cable length. Note that this may cause some changes in the reported cable length because all cable is now included (as it should always have been). (<a href='https://github.com/natverse/nat/issues/361'>#361</a>)</li>
@@ -252,9 +275,9 @@
 <li>Add nview3d function to set anatomical viewpoints (<a href='https://github.com/natverse/nat/issues/359'>#359</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-11" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-11" class="anchor"></a>nat 1.8.11<small> 2017-11-12 </small>
+    <div id="nat-1811" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.11">
+<a href="#nat-1811" class="anchor"></a>nat 1.8.11<small> 2017-11-12 </small>
 </h1>
 <p>Fixes</p>
 <ul>
@@ -263,9 +286,9 @@
 <li>breaking change with testthat v2 <a href='https://github.com/natverse/nat/issues/355'>#355</a></li>
 </ul>
 </div>
-    <div id="nat-1-8-10" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-10" class="anchor"></a>nat 1.8.10<small> Unreleased </small>
+    <div id="nat-1810" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.10">
+<a href="#nat-1810" class="anchor"></a>nat 1.8.10<small> Unreleased </small>
 </h1>
 <ul>
 <li>pointsinside now works with alpha shape (ashape3d) objects directly (<a href='https://github.com/natverse/nat/issues/350'>#350</a>)</li>
@@ -277,9 +300,9 @@
 <li>Switch pointsinside to use Rvcg::vcgClostKD, thereby fixing some cases where points were incorrectly reported to be inside a surface. (<a href='https://github.com/natverse/nat/issues/352'>#352</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-9" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-9" class="anchor"></a>nat 1.8.9<small> 2017-05-08 </small>
+    <div id="nat-189" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.9">
+<a href="#nat-189" class="anchor"></a>nat 1.8.9<small> 2017-05-08 </small>
 </h1>
 <ul>
 <li>fix reading of neurons when origin is not an endpoint (<a href='https://github.com/natverse/nat/issues/342'>#342</a>) nb this bug was introduced in 1.8.8</li>
@@ -287,9 +310,9 @@
 <li>add PlotSubTrees option for plot.neuron (<a href='https://github.com/natverse/nat/issues/339'>#339</a>) thanks to Zhihao Zheng</li>
 </ul>
 </div>
-    <div id="nat-1-8-8" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-8" class="anchor"></a>nat 1.8.8<small> Unreleased </small>
+    <div id="nat-188" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.8">
+<a href="#nat-188" class="anchor"></a>nat 1.8.8<small> Unreleased </small>
 </h1>
 <ul>
 <li>add xyzmatrix&lt;-.neuronlist so that we can replace the vertices of a set of objects in one go (<a href='https://github.com/natverse/nat/issues/328'>#328</a>)</li>
@@ -307,9 +330,9 @@
 <li>only warn if xform.neuronlist fails to transform soma positions (<a href='https://github.com/natverse/nat/issues/326'>#326</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-7" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-7" class="anchor"></a>nat 1.8.7<small> 2016-11-10 </small>
+    <div id="nat-187" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.7">
+<a href="#nat-187" class="anchor"></a>nat 1.8.7<small> 2016-11-10 </small>
 </h1>
 <p>This release includes some bug fixes and significantly improved online package documentation visible at <a href="https://natverse.github.io/nat/" class="uri">https://natverse.github.io/nat/</a> including two vignettes.</p>
 <ul>
@@ -319,9 +342,9 @@
 <li>replace nat::trim with base::trimws (<a href='https://github.com/natverse/nat/issues/313'>#313</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-6" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-6" class="anchor"></a>nat 1.8.6<small> Unreleased </small>
+    <div id="nat-186" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.6">
+<a href="#nat-186" class="anchor"></a>nat 1.8.6<small> Unreleased </small>
 </h1>
 <ul>
 <li>Add xform.data.frame method (<a href='https://github.com/natverse/nat/issues/309'>#309</a>)</li>
@@ -330,9 +353,9 @@
 <li>Fix namespace issues for smooth_neuron</li>
 </ul>
 </div>
-    <div id="nat-1-8-5" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-5" class="anchor"></a>nat 1.8.5<small> Unreleased </small>
+    <div id="nat-185" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.5">
+<a href="#nat-185" class="anchor"></a>nat 1.8.5<small> Unreleased </small>
 </h1>
 <p>The main feature of this release is improved support for nat+CMTK on Windows.</p>
 <ul>
@@ -344,9 +367,9 @@
 <li>Don’t use shell features on Windows (<a href='https://github.com/natverse/nat/issues/295'>#295</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-4" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-4" class="anchor"></a>nat 1.8.4<small> 2016-07-18 </small>
+    <div id="nat-184" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.4">
+<a href="#nat-184" class="anchor"></a>nat 1.8.4<small> 2016-07-18 </small>
 </h1>
 <ul>
 <li>fix build failures with testthat &gt;=0.12 (<a href='https://github.com/natverse/nat/issues/293'>#293</a>)</li>
@@ -358,9 +381,9 @@
 <li>Documentation improvements for neurons and file formats</li>
 </ul>
 </div>
-    <div id="nat-1-8-3" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-3" class="anchor"></a>nat 1.8.3<small> Unreleased </small>
+    <div id="nat-183" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.3">
+<a href="#nat-183" class="anchor"></a>nat 1.8.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>nat now handles compound registrations via reglist objects (<a href='https://github.com/natverse/nat/issues/286'>#286</a>). These can contain homogeneous affine, CMTK registrations (in disk or in memory) and R functions (which can be used to wrap arbitrary registration types not directly supported by nat). NB xformimage.reglist will currently only work for CMTK compatible registrations.</li>
@@ -377,25 +400,25 @@
 <li>The idiom neuronlist[,] will never drop columns (since it is a useful shortcut for as.data.frame(neuronlist)) (<a href='https://github.com/natverse/nat/issues/277'>#277</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-2" class="anchor"></a>nat 1.8.2<small> Unreleased </small>
+    <div id="nat-182" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.2">
+<a href="#nat-182" class="anchor"></a>nat 1.8.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>roll back rgl NULL mode changes from 1.8.0 in favour of less invasive approach of marking the majority of rgl based plotting examples as donttest (<a href='https://github.com/natverse/nat/issues/274'>#274</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-8-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-1" class="anchor"></a>nat 1.8.1<small> 2015-12-30 </small>
+    <div id="nat-181" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.1">
+<a href="#nat-181" class="anchor"></a>nat 1.8.1<small> 2015-12-30 </small>
 </h1>
 <ul>
 <li>fix non-canonical URLs to CRAN packages (thanks to Uwe Ligges)</li>
 </ul>
 </div>
-    <div id="nat-1-8-0" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-8-0" class="anchor"></a>nat 1.8.0<small> Unreleased </small>
+    <div id="nat-180" class="section level1">
+<h1 class="page-header" data-toc-text="1.8.0">
+<a href="#nat-180" class="anchor"></a>nat 1.8.0<small> Unreleased </small>
 </h1>
 <p>This is tagged as a major release because of a change in behaviour that (by default) suppresses interactive rgl windows when running in batch (non-interactive) mode. See ?nat “rgl Package” section for details.</p>
 <ul>
@@ -410,9 +433,9 @@
 <li>Documentation improvements (especiall package overview - see ?nat)</li>
 </ul>
 </div>
-    <div id="nat-1-7-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-7-2" class="anchor"></a>nat 1.7.2<small> Unreleased </small>
+    <div id="nat-172" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.2">
+<a href="#nat-172" class="anchor"></a>nat 1.7.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>new function subset.neuron can keep/remove individual vertices from a neuron based on internal variables such as position, width, vertex number etc while still producing a valid neuron with an appropriate graph structure (<a href='https://github.com/natverse/nat/issues/261'>#261</a>)</li>
@@ -424,9 +447,9 @@
 <li>fix bug: xformpoint.cmtkreg fails for in memory registration lists (<a href='https://github.com/natverse/nat/issues/259'>#259</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-7-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-7-1" class="anchor"></a>nat 1.7.1<small> Unreleased </small>
+    <div id="nat-171" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.1">
+<a href="#nat-171" class="anchor"></a>nat 1.7.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>new functions strahler_order and prune_strahler to calculate the Strahler order of points in a neuron and to remove lower order (terminal) branches.</li>
@@ -435,9 +458,9 @@
 <li>enable segmentgraph to return segment ids</li>
 </ul>
 </div>
-    <div id="nat-1-7-0" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-7-0" class="anchor"></a>nat 1.7.0<small> 2015-07-01 </small>
+    <div id="nat-170" class="section level1">
+<h1 class="page-header" data-toc-text="1.7.0">
+<a href="#nat-170" class="anchor"></a>nat 1.7.0<small> 2015-07-01 </small>
 </h1>
 <ul>
 <li>implement extraction/replacement of the data.frame attached to a neuronlist using the [ operator (<a href='https://github.com/natverse/nat/issues/217'>#217</a>)</li>
@@ -464,9 +487,9 @@
 <li>support for igraph 1.0 (<a href='https://github.com/natverse/nat/issues/248'>#248</a>)</li>
 </ul>
 </div>
-    <div id="nat-1-6-6" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-6" class="anchor"></a>nat 1.6.6<small> 2015-05-28 </small>
+    <div id="nat-166" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.6">
+<a href="#nat-166" class="anchor"></a>nat 1.6.6<small> 2015-05-28 </small>
 </h1>
 <ul>
 <li>Fixes description capitalisation/quoting for CRAN</li>
@@ -475,15 +498,15 @@
 <li>likewise for xyzmatrix.default for 1-row &gt;3-col matrices</li>
 </ul>
 </div>
-    <div id="nat-1-6-5" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-5" class="anchor"></a>nat 1.6.5<small> Unreleased </small>
+    <div id="nat-165" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.5">
+<a href="#nat-165" class="anchor"></a>nat 1.6.5<small> Unreleased </small>
 </h1>
 <ul>
 <li>add xyzmatrix get/set methods for class mesh3d along with xform.shape3d. This should enable rgl::mesh3d objects (used in a number of other packages) to be transformed using CMTK registrations.</li>
 <li>add tail.neuronlist</li>
 <li>add as.data.frame.neuronlist for convenient generation of a data.frame from a neuronlist</li>
-<li>add help topics for generics subset and plot3d so that e.g. ?subset will give the option to see our documentation as well as base docs.</li>
+<li>add help topics for generics subset and plot3d so that e.g. ?subset will give the option to see our documentation as well as base docs.</li>
 <li>subset.hxsurf drops unused vertices by default</li>
 <li>add sample surface object of mushroom body</li>
 <li>teach cmtk.statistics to handle imagetype ‘label’ (<a href='https://github.com/natverse/nat/issues/221'>#221</a>)</li>
@@ -504,25 +527,25 @@
 <li>dev: improvements in test coverage (up to 84%) catching numerous small bugs in the process.</li>
 </ul>
 </div>
-    <div id="nat-1-6-4" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-4" class="anchor"></a>nat 1.6.4<small> 2015-02-10 </small>
+    <div id="nat-164" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.4">
+<a href="#nat-164" class="anchor"></a>nat 1.6.4<small> 2015-02-10 </small>
 </h1>
 <ul>
 <li>Edits to package description for CRAN</li>
 </ul>
 </div>
-    <div id="nat-1-6-3" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-3" class="anchor"></a>nat 1.6.3<small> Unreleased </small>
+    <div id="nat-163" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.3">
+<a href="#nat-163" class="anchor"></a>nat 1.6.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix invalid url in README.md noticed by r-devel/BDR</li>
 </ul>
 </div>
-    <div id="nat-1-6-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-2" class="anchor"></a>nat 1.6.2<small> Unreleased </small>
+    <div id="nat-162" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.2">
+<a href="#nat-162" class="anchor"></a>nat 1.6.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>add as.im3d.matrix which allows conversion of a Nx3 matrix of coordinates into a volume representation</li>
@@ -534,9 +557,9 @@
 <li>dev: fix a cmtk-dependent test that was not guarded against cmtk’s absence</li>
 </ul>
 </div>
-    <div id="nat-1-6-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-1" class="anchor"></a>nat 1.6.1<small> Unreleased </small>
+    <div id="nat-161" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.1">
+<a href="#nat-161" class="anchor"></a>nat 1.6.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>add ability to transform images (specified as path to a file)</li>
@@ -546,9 +569,9 @@
 <li>add support for applying multiple registrations in xform.neuronlist, as well as vectorisation (where each registration is applied to a different object)</li>
 </ul>
 </div>
-    <div id="nat-1-6-0" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-6-0" class="anchor"></a>nat 1.6.0<small> Unreleased </small>
+    <div id="nat-160" class="section level1">
+<h1 class="page-header" data-toc-text="1.6.0">
+<a href="#nat-160" class="anchor"></a>nat 1.6.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>Add support for reading NeuroML and Fiji Simple Neurite Tracer neurons</li>
@@ -564,9 +587,9 @@
 <li>fix node colours in plot3d.neuron when WithAllPoints=TRUE</li>
 </ul>
 </div>
-    <div id="nat-1-5-14" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-14" class="anchor"></a>nat 1.5.14<small> Unreleased </small>
+    <div id="nat-1514" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.14">
+<a href="#nat-1514" class="anchor"></a>nat 1.5.14<small> Unreleased </small>
 </h1>
 <ul>
 <li>add nlscan function to review a set of neurons, optionally selecting a subset</li>
@@ -578,9 +601,9 @@
 <li>minor doc fixes and clarifications</li>
 </ul>
 </div>
-    <div id="nat-1-5-13" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-13" class="anchor"></a>nat 1.5.13<small> Unreleased </small>
+    <div id="nat-1513" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.13">
+<a href="#nat-1513" class="anchor"></a>nat 1.5.13<small> Unreleased </small>
 </h1>
 <ul>
 <li>mat2dof output gets descriptive rownames</li>
@@ -592,9 +615,9 @@
 <li>dev: update help to roxygen2 4.0.2</li>
 </ul>
 </div>
-    <div id="nat-1-5-12" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-12" class="anchor"></a>nat 1.5.12<small> 2014-08-21 </small>
+    <div id="nat-1512" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.12">
+<a href="#nat-1512" class="anchor"></a>nat 1.5.12<small> 2014-08-21 </small>
 </h1>
 <ul>
 <li>fix bug in updating neuronlistfh objects from remote url</li>
@@ -605,41 +628,41 @@
 <li>warn if resampling a neuron with multiple subtrees that only the main subtree will be kept.</li>
 </ul>
 </div>
-    <div id="nat-1-5-11" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-11" class="anchor"></a>nat 1.5.11<small> Unreleased </small>
+    <div id="nat-1511" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.11">
+<a href="#nat-1511" class="anchor"></a>nat 1.5.11<small> Unreleased </small>
 </h1>
 <ul>
 <li>add cmtk.statistics function</li>
 <li>fix infinite recursion in cmtk.targetvolume</li>
 </ul>
 </div>
-    <div id="nat-1-5-10" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-10" class="anchor"></a>nat 1.5.10<small> Unreleased </small>
+    <div id="nat-1510" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.10">
+<a href="#nat-1510" class="anchor"></a>nat 1.5.10<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix: write.neurons subdir argument can accept a column of the attached data.frame (unquoted)</li>
 <li>fix: write.neuron(s) can add an extension to an output filename that does not have one</li>
 <li>write.neurons now has an explicit files argument</li>
-<li>cmtk.targetvolume (and therefore cmtk.reformatx) can accept e.g. templatebrains (as contained in nat.flybrains package) to specify target image for registration.</li>
+<li>cmtk.targetvolume (and therefore cmtk.reformatx) can accept e.g.  templatebrains (as contained in nat.flybrains package) to specify target image for registration.</li>
 </ul>
 </div>
-    <div id="nat-1-5-9" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-9" class="anchor"></a>nat 1.5.9<small> Unreleased </small>
+    <div id="nat-159" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.9">
+<a href="#nat-159" class="anchor"></a>nat 1.5.9<small> Unreleased </small>
 </h1>
 <ul>
-<li>fix transformation of points using compound CMTK registrations (this was broken for CMTK&lt;3.2.2, so a workaround is required).</li>
-<li>Add cmtk.version function.</li>
-<li>xyzmatrix can cope with lower case x,y,z for column names</li>
+<li><p>fix transformation of points using compound CMTK registrations (this was broken for CMTK&lt;3.2.2, so a workaround is required).</p></li>
+<li><p>Add cmtk.version function.</p></li>
+<li><p>xyzmatrix can cope with lower case x,y,z for column names</p></li>
 <li><p>doc: fixes in xform</p></li>
 <li><p>dev: fix test for winbuilder</p></li>
 </ul>
 </div>
-    <div id="nat-1-5-8" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-8" class="anchor"></a>nat 1.5.8<small> Unreleased </small>
+    <div id="nat-158" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.8">
+<a href="#nat-158" class="anchor"></a>nat 1.5.8<small> Unreleased </small>
 </h1>
 <ul>
 <li>Add boundingbox.list method to find boundingbox for neurons, surfaces etc</li>
@@ -651,18 +674,18 @@
 <li>minor bug/doc fixes</li>
 </ul>
 </div>
-    <div id="nat-1-5-7" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-7" class="anchor"></a>nat 1.5.7<small> Unreleased </small>
+    <div id="nat-157" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.7">
+<a href="#nat-157" class="anchor"></a>nat 1.5.7<small> Unreleased </small>
 </h1>
 <ul>
 <li>teach plot3d.neuronlist and friends to plot soma locations.</li>
 <li>add npop3d function to remove last plotted neurons (identical to flycircuit::pop3dfc, except that it works with any neurons plotted by plot3d.neuronlist, rather than only those plotted by plot3dfc)</li>
 </ul>
 </div>
-    <div id="nat-1-5-6" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-6" class="anchor"></a>nat 1.5.6<small> Unreleased </small>
+    <div id="nat-156" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.6">
+<a href="#nat-156" class="anchor"></a>nat 1.5.6<small> Unreleased </small>
 </h1>
 <ul>
 <li>give mirror/xform.neuronlist subset arguments</li>
@@ -671,9 +694,9 @@
 <li>fix: write.neurons into subdirs when df=NULL</li>
 </ul>
 </div>
-    <div id="nat-1-5-5" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-5" class="anchor"></a>nat 1.5.5<small> Unreleased </small>
+    <div id="nat-155" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.5">
+<a href="#nat-155" class="anchor"></a>nat 1.5.5<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix bug in reading swc files with many decimal places specific to R 3.1.0</li>
@@ -683,17 +706,17 @@
 <li>doc: minor improvements to read.im3d docs and examples</li>
 </ul>
 </div>
-    <div id="nat-1-5-4" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-4" class="anchor"></a>nat 1.5.4<small> Unreleased </small>
+    <div id="nat-154" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.4">
+<a href="#nat-154" class="anchor"></a>nat 1.5.4<small> Unreleased </small>
 </h1>
 <ul>
 <li>remove internal is.gzip function and depend on nat.utils &gt;=0.4.2</li>
 </ul>
 </div>
-    <div id="nat-1-5-3" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-3" class="anchor"></a>nat 1.5.3<small> Unreleased </small>
+    <div id="nat-153" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.3">
+<a href="#nat-153" class="anchor"></a>nat 1.5.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>new function pointsinside to determine if points (e.g. neuron) are inside a closed surface</li>
@@ -705,9 +728,9 @@
 <li>zenodo DOI for package</li>
 </ul>
 </div>
-    <div id="nat-1-5-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-2" class="anchor"></a>nat 1.5.2<small> Unreleased </small>
+    <div id="nat-152" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.2">
+<a href="#nat-152" class="anchor"></a>nat 1.5.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>add seglengths function for neurons</li>
@@ -721,9 +744,9 @@
 <li>dev: switch to roxygen2 v4</li>
 </ul>
 </div>
-    <div id="nat-1-5-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-5-1" class="anchor"></a>nat 1.5.1<small> Unreleased </small>
+    <div id="nat-151" class="section level1">
+<h1 class="page-header" data-toc-text="1.5.1">
+<a href="#nat-151" class="anchor"></a>nat 1.5.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>add potential_synapses (from nat.as)</li>
@@ -738,9 +761,9 @@
 <li>fix: prune.neuronlist method signature (and therefore dispatch)</li>
 </ul>
 </div>
-    <div id="nat-1-4-10" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-10" class="anchor"></a>nat 1.4.10<small> 2014-04-30 </small>
+    <div id="nat-1410" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.10">
+<a href="#nat-1410" class="anchor"></a>nat 1.4.10<small> 2014-04-30 </small>
 </h1>
 <ul>
 <li>add function to prune objects by removing points close to or far from another object</li>
@@ -757,9 +780,9 @@
 <li>doc: numerous small documentation improvements</li>
 </ul>
 </div>
-    <div id="nat-1-4-9" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-9" class="anchor"></a>nat 1.4.9<small> Unreleased </small>
+    <div id="nat-149" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.9">
+<a href="#nat-149" class="anchor"></a>nat 1.4.9<small> Unreleased </small>
 </h1>
 <ul>
 <li>add spine() function to find longest path (aka backbone) of a neuron</li>
@@ -768,17 +791,17 @@
 <li>fix bug in setting graph attributes in ngraph</li>
 </ul>
 </div>
-    <div id="nat-1-4-8" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-8" class="anchor"></a>nat 1.4.8<small> Unreleased </small>
+    <div id="nat-148" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.8">
+<a href="#nat-148" class="anchor"></a>nat 1.4.8<small> Unreleased </small>
 </h1>
 <ul>
 <li>bugfix: ensure ind2coords.im3d is exported</li>
 </ul>
 </div>
-    <div id="nat-1-4-7" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-7" class="anchor"></a>nat 1.4.7<small> Unreleased </small>
+    <div id="nat-147" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.7">
+<a href="#nat-147" class="anchor"></a>nat 1.4.7<small> Unreleased </small>
 </h1>
 <ul>
 <li>add ability to make a dotprops object directly from an image file on disk or an im3d object in memory.</li>
@@ -791,9 +814,9 @@
 <li>dev: build nat.flybrains (as well as nat) after flycircuit build</li>
 </ul>
 </div>
-    <div id="nat-1-4-6" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-6" class="anchor"></a>nat 1.4.6<small> 2014-03-30 </small>
+    <div id="nat-146" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.6">
+<a href="#nat-146" class="anchor"></a>nat 1.4.6<small> 2014-03-30 </small>
 </h1>
 <ul>
 <li>fix bug in handling vertexData argument in as.neuron.ngraph</li>
@@ -801,9 +824,9 @@
 <li>dev: fix remaining warnings in tests</li>
 </ul>
 </div>
-    <div id="nat-1-4-5" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-5" class="anchor"></a>nat 1.4.5<small> 2014-03-28 </small>
+    <div id="nat-145" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.5">
+<a href="#nat-145" class="anchor"></a>nat 1.4.5<small> 2014-03-28 </small>
 </h1>
 <ul>
 <li>add plot.neuron for 2d plots (ajdm, from code in AnalysisSuite)</li>
@@ -819,9 +842,9 @@
 <li>dev: restart travis build of flycircuit package when nat is pushed to github</li>
 </ul>
 </div>
-    <div id="nat-1-4-4" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-4" class="anchor"></a>nat 1.4.4<small> Unreleased </small>
+    <div id="nat-144" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.4">
+<a href="#nat-144" class="anchor"></a>nat 1.4.4<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix handling of logical expressions including NAs by subset.neuronlist</li>
@@ -833,9 +856,9 @@
 <li>give image.im3d a useRaster option, which defaults to TRUE when possible.</li>
 </ul>
 </div>
-    <div id="nat-1-4-3" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-3" class="anchor"></a>nat 1.4.3<small> Unreleased </small>
+    <div id="nat-143" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.3">
+<a href="#nat-143" class="anchor"></a>nat 1.4.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>new ndigest (normalised digest) function to compute hash values. Methods for neuronlistfh and dotprops objects. Can be used e.g. to compute a hash value for a standard dps object to determine if a data.</li>
@@ -843,26 +866,26 @@
 <li>more flexible im3d constructor can use an existing im3d object to supply spatial attributes.</li>
 </ul>
 </div>
-    <div id="nat-1-4-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-2" class="anchor"></a>nat 1.4.2<small> Unreleased </small>
+    <div id="nat-142" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.2">
+<a href="#nat-142" class="anchor"></a>nat 1.4.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix bug in read.neuronlistfh resulting in error if a remote file was downloaded and then read back in (using cached copy) before any neurons were downloaded.</li>
 </ul>
 </div>
-    <div id="nat-1-4-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-1" class="anchor"></a>nat 1.4.1<small> Unreleased </small>
+    <div id="nat-141" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.1">
+<a href="#nat-141" class="anchor"></a>nat 1.4.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix bug in write.nrrd - was failing to write essential space dimensions field.</li>
 <li>make gzip the default encoding for nrrd images - this is pretty much always what one wants.</li>
 </ul>
 </div>
-    <div id="nat-1-4-0" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-4-0" class="anchor"></a>nat 1.4.0<small> Unreleased </small>
+    <div id="nat-140" class="section level1">
+<h1 class="page-header" data-toc-text="1.4.0">
+<a href="#nat-140" class="anchor"></a>nat 1.4.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>add cmtk.reformatx command for reformatting images using CMTK registrations</li>
@@ -872,26 +895,26 @@
 <li>fix hashmap functionality of neuronlistfh (speeds up access to single neurons)</li>
 </ul>
 </div>
-    <div id="nat-1-3-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-3-2" class="anchor"></a>nat 1.3.2<small> Unreleased </small>
+    <div id="nat-132" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.2">
+<a href="#nat-132" class="anchor"></a>nat 1.3.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix bug in find.neuron for neuronlistfh objects</li>
 <li>fix bug in neuronlistfh constructor (wasn’t adding hashmap) and [[.neuronlistfh (was not searching properly for objects when using hashmap).</li>
 </ul>
 </div>
-    <div id="nat-1-3-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-3-1" class="anchor"></a>nat 1.3.1<small> Unreleased </small>
+    <div id="nat-131" class="section level1">
+<h1 class="page-header" data-toc-text="1.3.1">
+<a href="#nat-131" class="anchor"></a>nat 1.3.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>add find.neuron for interactive selection of neurons in 3d.</li>
 </ul>
 </div>
-    <div id="nat-1-3" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-3" class="anchor"></a>nat 1.3<small> Unreleased </small>
+    <div id="nat-13" class="section level1">
+<h1 class="page-header" data-toc-text="1.3">
+<a href="#nat-13" class="anchor"></a>nat 1.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>implementation of new im3d image manipulations functions including image.im3d, projection, unmask, imslice, imscalebar, imexpand.grid, flip, origin, boundingbox&lt;-, xyzpos, ijkpos</li>
@@ -900,9 +923,9 @@
 <li>dev: fix nocran tests</li>
 </ul>
 </div>
-    <div id="nat-1-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-2" class="anchor"></a>nat 1.2<small> Unreleased </small>
+    <div id="nat-12" class="section level1">
+<h1 class="page-header" data-toc-text="1.2">
+<a href="#nat-12" class="anchor"></a>nat 1.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>Basic implementation of reading/writing NRRD format image data. See read.nrrd and write.nrrd for details.</li>
@@ -916,9 +939,9 @@
 <li>dev: travis continuous integration support (ajdm)</li>
 </ul>
 </div>
-    <div id="nat-1-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-1" class="anchor"></a>nat 1.1<small> Unreleased </small>
+    <div id="nat-11" class="section level1">
+<h1 class="page-header" data-toc-text="1.1">
+<a href="#nat-11" class="anchor"></a>nat 1.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Implemented reading and writing of groups of neurons from/to neuronlists. See read.neurons and write.neurons.</li>
@@ -928,17 +951,17 @@
 <li>dev: speed and flexibility improvements in fileformats ioregistry. see ?fileformats for details of new functions.</li>
 </ul>
 </div>
-    <div id="nat-1-0-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-0-1" class="anchor"></a>nat 1.0.1<small> 2014-02-07 </small>
+    <div id="nat-101" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.1">
+<a href="#nat-101" class="anchor"></a>nat 1.0.1<small> 2014-02-07 </small>
 </h1>
 <ul>
 <li>fix bug in cmtk.bindir() on Solaris (thanks to Brian Ripley)</li>
 </ul>
 </div>
-    <div id="nat-1-0" class="section level1">
-<h1 class="page-header">
-<a href="#nat-1-0" class="anchor"></a>nat 1.0<small> 2014-02-04 </small>
+    <div id="nat-10" class="section level1">
+<h1 class="page-header" data-toc-text="1.0">
+<a href="#nat-10" class="anchor"></a>nat 1.0<small> 2014-02-04 </small>
 </h1>
 <ul>
 <li>implement reading of amiramesh data</li>
@@ -947,9 +970,9 @@
 <li>retire stashR backend for neuronlistfh remote repositories (too slow)</li>
 </ul>
 </div>
-    <div id="nat-0-9" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-9" class="anchor"></a>nat 0.9<small> Unreleased </small>
+    <div id="nat-09" class="section level1">
+<h1 class="page-header" data-toc-text="0.9">
+<a href="#nat-09" class="anchor"></a>nat 0.9<small> Unreleased </small>
 </h1>
 <ul>
 <li>support for automatic download of neurons from stashR remote repositories on the web. ?neuronlistfh for details and an example.</li>
@@ -957,9 +980,9 @@
 <li>dev: small doc fixes to make package CRAN compatible.</li>
 </ul>
 </div>
-    <div id="nat-0-8" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-8" class="anchor"></a>nat 0.8<small> Unreleased </small>
+    <div id="nat-08" class="section level1">
+<h1 class="page-header" data-toc-text="0.8">
+<a href="#nat-08" class="anchor"></a>nat 0.8<small> Unreleased </small>
 </h1>
 <ul>
 <li>important new feature: neuronlistfh objects backed by an on disk filehash allow single neurons to be loaded from disk on demand</li>
@@ -968,9 +991,9 @@
 <li>furthermore neuronlistfh objects can be subsetted/converted to give in memory neuronlist objects.</li>
 </ul>
 </div>
-    <div id="nat-0-7" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-7" class="anchor"></a>nat 0.7<small> Unreleased </small>
+    <div id="nat-07" class="section level1">
+<h1 class="page-header" data-toc-text="0.7">
+<a href="#nat-07" class="anchor"></a>nat 0.7<small> Unreleased </small>
 </h1>
 <ul>
 <li>implement read.neuron and read.neurons</li>
@@ -979,9 +1002,9 @@
 <li>developer: seglists in neurons now have class ‘seglist’</li>
 </ul>
 </div>
-    <div id="nat-0-6" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-6" class="anchor"></a>nat 0.6<small> Unreleased </small>
+    <div id="nat-06" class="section level1">
+<h1 class="page-header" data-toc-text="0.6">
+<a href="#nat-06" class="anchor"></a>nat 0.6<small> Unreleased </small>
 </h1>
 <ul>
 <li>major new functionality - bidirectional interconversion of graph and regular neuron representation</li>
@@ -990,19 +1013,19 @@
 <li>depends on igraph package</li>
 </ul>
 </div>
-    <div id="nat-0-5-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-5-2" class="anchor"></a>nat 0.5.2<small> Unreleased </small>
+    <div id="nat-052" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.2">
+<a href="#nat-052" class="anchor"></a>nat 0.5.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>add subset.neuronlist</li>
-<li>add methods for working with dataframe attached to neuronlist (see e.g. ?with.neuronlist)</li>
+<li>add methods for working with dataframe attached to neuronlist (see e.g. ?with.neuronlist)</li>
 <li>TODO harmonise plot3d.neuronlist subset expressions with subset.neuronlist</li>
 </ul>
 </div>
-    <div id="nat-0-5-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-5-1" class="anchor"></a>nat 0.5.1<small> Unreleased </small>
+    <div id="nat-051" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.1">
+<a href="#nat-051" class="anchor"></a>nat 0.5.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>Switch license to GPL-3</li>
@@ -1018,9 +1041,9 @@
 <li>doc: some notes on CMTK installation</li>
 </ul>
 </div>
-    <div id="nat-0-5" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-5" class="anchor"></a>nat 0.5<small> Unreleased </small>
+    <div id="nat-05" class="section level1">
+<h1 class="page-header" data-toc-text="0.5">
+<a href="#nat-05" class="anchor"></a>nat 0.5<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix broken handling of cmtk affine transformations</li>
@@ -1030,9 +1053,9 @@
 <li>(developer) Switch to roxygen2 v3.0 for documentation</li>
 </ul>
 </div>
-    <div id="nat-0-4" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-4" class="anchor"></a>nat 0.4<small> Unreleased </small>
+    <div id="nat-04" class="section level1">
+<h1 class="page-header" data-toc-text="0.4">
+<a href="#nat-04" class="anchor"></a>nat 0.4<small> Unreleased </small>
 </h1>
 <ul>
 <li>read.hxsurf and plot3d.hxsurf for reading/plotting Amira surfaces</li>
@@ -1041,30 +1064,30 @@
 <li>plot3d for neurons and dotprops</li>
 </ul>
 </div>
-    <div id="nat-0-3" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-3" class="anchor"></a>nat 0.3<small> Unreleased </small>
+    <div id="nat-03" class="section level1">
+<h1 class="page-header" data-toc-text="0.3">
+<a href="#nat-03" class="anchor"></a>nat 0.3<small> Unreleased </small>
 </h1>
 <ul>
 <li>basic and self-contained implementation of neuron class</li>
 <li>basic and self-contained implementation of dotprops</li>
 <li>new xform generic + methods for clean transformation of objects including neurons and dotprops objects</li>
 <li>this includes improved interaction between dotprops and xform so that xform can use the previously value of k when recalculating a dotprops object post transformation</li>
-<li>sample data (40 PNs from Jefferis, Potter et al. ’07 and 20 KCs from Chiang et al. 2011)</li>
+<li>sample data (40 PNs from Jefferis, Potter et al. ’07 and 20 KCs from Chiang et al. 2011)</li>
 <li>1 use of .Internal and missing nlapply remain to be fixed.</li>
 </ul>
 </div>
-    <div id="nat-0-2-1" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-2-1" class="anchor"></a>nat 0.2.1<small> Unreleased </small>
+    <div id="nat-021" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.1">
+<a href="#nat-021" class="anchor"></a>nat 0.2.1<small> Unreleased </small>
 </h1>
 <ul>
 <li>fix install error due to missing neuron(*).R files that contain docs only so far</li>
 </ul>
 </div>
-    <div id="nat-0-2" class="section level1">
-<h1 class="page-header">
-<a href="#nat-0-2" class="anchor"></a>nat 0.2<small> Unreleased </small>
+    <div id="nat-02" class="section level1">
+<h1 class="page-header" data-toc-text="0.2">
+<a href="#nat-02" class="anchor"></a>nat 0.2<small> Unreleased </small>
 </h1>
 <ul>
 <li>Fairly complete implementation of CMTK registration I/O and geometry</li>
@@ -1075,82 +1098,10 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#nat-1-10-1">1.10.1</a></li>
-        <li><a href="#nat-1-9-2">1.9.2</a></li>
-        <li><a href="#nat-1-9-1">1.9.1</a></li>
-        <li><a href="#nat-1-9-0">1.9.0</a></li>
-        <li><a href="#nat-1-8-12">1.8.12</a></li>
-        <li><a href="#nat-1-8-11">1.8.11</a></li>
-        <li><a href="#nat-1-8-10">1.8.10</a></li>
-        <li><a href="#nat-1-8-9">1.8.9</a></li>
-        <li><a href="#nat-1-8-8">1.8.8</a></li>
-        <li><a href="#nat-1-8-7">1.8.7</a></li>
-        <li><a href="#nat-1-8-6">1.8.6</a></li>
-        <li><a href="#nat-1-8-5">1.8.5</a></li>
-        <li><a href="#nat-1-8-4">1.8.4</a></li>
-        <li><a href="#nat-1-8-3">1.8.3</a></li>
-        <li><a href="#nat-1-8-2">1.8.2</a></li>
-        <li><a href="#nat-1-8-1">1.8.1</a></li>
-        <li><a href="#nat-1-8-0">1.8.0</a></li>
-        <li><a href="#nat-1-7-2">1.7.2</a></li>
-        <li><a href="#nat-1-7-1">1.7.1</a></li>
-        <li><a href="#nat-1-7-0">1.7.0</a></li>
-        <li><a href="#nat-1-6-6">1.6.6</a></li>
-        <li><a href="#nat-1-6-5">1.6.5</a></li>
-        <li><a href="#nat-1-6-4">1.6.4</a></li>
-        <li><a href="#nat-1-6-3">1.6.3</a></li>
-        <li><a href="#nat-1-6-2">1.6.2</a></li>
-        <li><a href="#nat-1-6-1">1.6.1</a></li>
-        <li><a href="#nat-1-6-0">1.6.0</a></li>
-        <li><a href="#nat-1-5-14">1.5.14</a></li>
-        <li><a href="#nat-1-5-13">1.5.13</a></li>
-        <li><a href="#nat-1-5-12">1.5.12</a></li>
-        <li><a href="#nat-1-5-11">1.5.11</a></li>
-        <li><a href="#nat-1-5-10">1.5.10</a></li>
-        <li><a href="#nat-1-5-9">1.5.9</a></li>
-        <li><a href="#nat-1-5-8">1.5.8</a></li>
-        <li><a href="#nat-1-5-7">1.5.7</a></li>
-        <li><a href="#nat-1-5-6">1.5.6</a></li>
-        <li><a href="#nat-1-5-5">1.5.5</a></li>
-        <li><a href="#nat-1-5-4">1.5.4</a></li>
-        <li><a href="#nat-1-5-3">1.5.3</a></li>
-        <li><a href="#nat-1-5-2">1.5.2</a></li>
-        <li><a href="#nat-1-5-1">1.5.1</a></li>
-        <li><a href="#nat-1-4-10">1.4.10</a></li>
-        <li><a href="#nat-1-4-9">1.4.9</a></li>
-        <li><a href="#nat-1-4-8">1.4.8</a></li>
-        <li><a href="#nat-1-4-7">1.4.7</a></li>
-        <li><a href="#nat-1-4-6">1.4.6</a></li>
-        <li><a href="#nat-1-4-5">1.4.5</a></li>
-        <li><a href="#nat-1-4-4">1.4.4</a></li>
-        <li><a href="#nat-1-4-3">1.4.3</a></li>
-        <li><a href="#nat-1-4-2">1.4.2</a></li>
-        <li><a href="#nat-1-4-1">1.4.1</a></li>
-        <li><a href="#nat-1-4-0">1.4.0</a></li>
-        <li><a href="#nat-1-3-2">1.3.2</a></li>
-        <li><a href="#nat-1-3-1">1.3.1</a></li>
-        <li><a href="#nat-1-3">1.3</a></li>
-        <li><a href="#nat-1-2">1.2</a></li>
-        <li><a href="#nat-1-1">1.1</a></li>
-        <li><a href="#nat-1-0-1">1.0.1</a></li>
-        <li><a href="#nat-1-0">1.0</a></li>
-        <li><a href="#nat-0-9">0.9</a></li>
-        <li><a href="#nat-0-8">0.8</a></li>
-        <li><a href="#nat-0-7">0.7</a></li>
-        <li><a href="#nat-0-6">0.6</a></li>
-        <li><a href="#nat-0-5-2">0.5.2</a></li>
-        <li><a href="#nat-0-5-1">0.5.1</a></li>
-        <li><a href="#nat-0-5">0.5</a></li>
-        <li><a href="#nat-0-4">0.4</a></li>
-        <li><a href="#nat-0-3">0.3</a></li>
-        <li><a href="#nat-0-2-1">0.2.1</a></li>
-        <li><a href="#nat-0-2">0.2</a></li>
-      </ul>
-    </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -1162,7 +1113,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
