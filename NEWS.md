@@ -1,3 +1,22 @@
+# nat 1.10.2
+
+This release brings support for reading, plotting and writing 3D surface meshes of neurons into line with the skeleton support. It also includes an 
+essential fix requested by CRAN.
+
+https://github.com/natverse/nat/issues?q=closed%3A2020-02-23..2020-09-11+
+
+* Fix test failure on R-devel (R 4.1) for `c.neuronlist` (#444)
+* Add `print.neuron()`, `print.neuronlist()`,`print.dotprops()` methods #443
+* Better support for reading / plotting neuron meshes (#441, #442)
+* Bug in `xyzmatrix()` for 0 row data.frames (#433)
+* Updated parameter for toggling grid lines in plotly (#432)
+* Add support for Amira hxsurf binary format to `read.hxsurf()` (#431)
+* improve error message for `cmtk.version()` (#430)
+* Remaining items to move from elmr (#428)
+* Turn off grid lines when using plotly engine (#427)
+* Move features to nat from other packages (#423)
+* Add support for thin plate spine transformations via `tpsreg()` (#289)
+
 # nat 1.10.1
 
 We are bumping a whole version point because of a large number of new functions.
