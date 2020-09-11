@@ -91,3 +91,48 @@ summary.dotprops<-function(object, veclength=1, ...) {
   data.frame(nodes=nrow(object$points), 
              cable.length=nrow(object$points)*veclength)
 }
+
+#' @export
+print.neuron <- function(x, ...) {
+  ntrees=if(is.null(x$nTrees)) 1 else x$nTrees
+  nx=nvertices(x)
+  
+  cat("'neuron' with", nx, ifelse(nx==1, 'vertex', 'vertices'),
+      'in', ntrees, ifelse(ntrees==1, 'tree', 'trees'))
+  extraclasses=setdiff(class(x), c("neuron","list"))
+  squote <- function(x) paste("'",x,"'", collapse = ', ', sep='')
+  if(length(extraclasses)>0)
+    cat(" and additional classes", squote(extraclasses))
+  cat("\n")
+}
+
+#' @export
+print.dotprops <- function(x, ...) {
+  nx=nvertices(x)
+  cat("'dotprops' object with", nx, ifelse(nx==1, 'vertex', 'vertices'))
+  cat("\n")
+}
+
+#' @export
+print.neuronlist <- function(x, ...) {
+  firstclass <- function(x) class(x)[[1]]
+  contents.classes <- sapply(x, firstclass, USE.NAMES = F)
+  ucontents.classes <- unique(contents.classes)
+  
+  nc=ncol(as.data.frame(x))
+  
+  cat("'",firstclass(x),"'", " containing ", length(x), 
+      " '",ucontents.classes,"' ",
+      ifelse(length(x)==1, "object", "objects"), " ", sep=""
+  )
+  if(length(ucontents.classes)>1) {
+    cat("of classes\n")
+    tt=table(contents.classes)
+    dimnames(tt)=unname(dimnames(tt))
+    print(tt)
+  }
+  cat("and 'data.frame' with",nc,'vars ')
+  cat("[", 
+      format(object.size(x), units='auto', standard="SI"), 
+      "]", "\n", sep="")
+}
