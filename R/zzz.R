@@ -21,6 +21,14 @@ update_igraph <- FALSE
                  class='neuron', magiclen=14L)
   registerformat('vtk', ext='.vtk', write=write.vtk.neuron, class='neuron')
   
+  # meshes to be read by read.neurons 
+  # a bit of a cheat, since these won't have class neuron, but can usefully
+  # represent neurons and go in a neuronlist
+  registerformat('neuron.obj', ext='.obj', 
+                 read=read.neuron.mesh, write=write.neuron.obj, class='neuron')
+  registerformat('neuron.ply', ext='.ply', magic=is.ply, magiclen = 3,
+                 read=read.neuron.mesh, write=write.neuron.ply, class='neuron')
+
   # image formats
   registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d.nrrd, 
                  write=write.nrrd, magic=is.nrrd,
@@ -93,3 +101,10 @@ update_igraph <- FALSE
 .plotly3d$camera = list(up=list(x=0, y=0, z=1),
               center=list(x=0, y=0, z=0),
               eye=list(x=-0.1, y=-2.5, z=0.1))
+
+.plotly3d$xaxis = list(title = "", zeroline = FALSE, 
+                       showline = FALSE, showticklabels = FALSE,showgrid = FALSE)
+.plotly3d$yaxis = list(title = "", zeroline = FALSE, 
+                       showline = FALSE, showticklabels = FALSE,showgrid = FALSE)
+.plotly3d$zaxis = list(title = "", zeroline = FALSE, ticks = "",
+                        showline = FALSE, showticklabels = FALSE,showgrid = FALSE)

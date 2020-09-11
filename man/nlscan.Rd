@@ -54,7 +54,8 @@ format.}
 
 \item{...}{extra arguments to pass to \code{\link{plot3d}}.}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \value{
 A character vector of names of any selected neurons, of length 0 if 

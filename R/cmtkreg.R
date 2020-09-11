@@ -144,7 +144,7 @@ cmtkreg.filetype <- function(x) {
 #' }
 #' @importFrom rgl plot3d
 #' @export
-plot3d.cmtkreg <- function(x, ..., plotengine = getOption('nat.plotengine')) {
+plot3d.cmtkreg <- function(x, ..., gridlines = FALSE, plotengine = getOption('nat.plotengine')) {
   plotengine <- check_plotengine(plotengine)
   if (plotengine == 'plotly') {
     psh <- openplotlyscene()$plotlyscenehandle
@@ -172,8 +172,15 @@ plot3d.cmtkreg <- function(x, ..., plotengine = getOption('nat.plotengine')) {
     psh <- psh %>% 
       plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
         hoverinfo = "none",type = 'scatter3d', mode = 'markers',
-        opacity = opacity, marker=list(color = 'black', size = 3)) %>% 
-      plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+        opacity = opacity, marker=list(color = 'black', size = 3))
+    
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

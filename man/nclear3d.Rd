@@ -10,7 +10,8 @@ nclear3d(..., plotengine = getOption("nat.plotengine"))
 \item{...}{Additional arguments passed to
 \code{\link[rgl:clear3d]{rgl::clear3d}}}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \description{
 Clear the rgl or plotly 3D scene

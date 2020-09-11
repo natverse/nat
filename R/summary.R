@@ -11,7 +11,7 @@
 #' @export
 #' @rdname summary.neuron
 #' @aliases summary
-#' @seealso \code{\link{seglengths}}
+#' @seealso \code{\link{seglengths}}, \code{\link[Rvcg]{vcgArea}}
 #' @examples 
 #' # summary for a whole neuronlist
 #' summary(Cell07PNs)
@@ -51,6 +51,23 @@ summary.neuron<-function(object, ...) {
              branchpoints=length(object$BranchPoints),
              endpoints=length(object$EndPoints),
              cable.length=total_cable(object))
+}
+
+#' @export
+#' @rdname summary.neuron
+#' @description \code{summary.mesh3d} computes statistics including face numbers
+#'   and surface area for meshes. See \code{\link[Rvcg]{vcgArea}} for details of
+#'   area calculation.
+summary.mesh3d <- function(object, ...) {
+  inds=if(is.null(object$it)) object$ib else object$it
+  area <- if(requireNamespace('Rvcg', quietly=TRUE))
+    Rvcg::vcgArea(object, perface = FALSE)
+  else NA
+  df=data.frame(vertices=ncol(object$vb),
+             faces=ncol(inds), 
+             edges=length(inds),
+             area=area,
+             facetype=ifelse(nrow(inds)==3, "triangle", "quad"))
 }
 
 total_cable <- function(x) {

@@ -376,7 +376,7 @@ write.hxsurf <- function(surf, filename) {
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
-plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
+plot3d.hxsurf<-function(x, materials=NULL, col=NULL, gridlines = FALSE, ...,
                         plotengine = getOption('nat.plotengine')){
   plotengine <- check_plotengine(plotengine)
   if (plotengine == 'rgl'){
@@ -427,9 +427,12 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...,
   if (plotengine == 'rgl'){
       invisible(rlist)
   } else {
-    psh <- psh %>% 
-      plotly::layout(showlegend = FALSE,
-                     scene=list(camera=.plotly3d$camera))
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
     assign("plotlyscenehandle", psh, envir=.plotly3d)
     psh
   }

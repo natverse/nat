@@ -47,7 +47,8 @@ Suggests:
     MASS,
     alphashape3d,
     Morpho,
-    plotly
+    plotly,
+    readobj
 License: GPL-3
 LazyData: yes
 Collate:
@@ -76,6 +77,7 @@ Collate:
     'neuron-io-fiji.R'
     'neuron-io-neuroml.R'
     'neuron-io.R'
+    'neuron-mesh.R'
     'neuron-plot.R'
     'neuronlist.R'
     'neuronlist_interactive_3d.R'

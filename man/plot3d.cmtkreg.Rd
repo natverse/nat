@@ -4,7 +4,7 @@
 \alias{plot3d.cmtkreg}
 \title{Plot the domain of a CMTK registration}
 \usage{
-\method{plot3d}{cmtkreg}(x, ..., plotengine = getOption("nat.plotengine"))
+\method{plot3d}{cmtkreg}(x, ..., gridlines = FALSE, plotengine = getOption("nat.plotengine"))
 }
 \arguments{
 \item{x}{A cmtk registration (the path to the registration folder on disk) or
@@ -12,7 +12,11 @@ the resulting of reading one in with \code{\link{read.cmtkreg}}.}
 
 \item{...}{Additional arguments passed to \code{\link[rgl]{plot3d}}}
 
-\item{plotengine}{the plotting backend engine to use either 'rgl' or 'plotly'.}
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \description{
 Plot the domain of a CMTK registration
