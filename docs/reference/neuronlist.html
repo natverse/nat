@@ -218,8 +218,11 @@ containing information about each neuron.</p></td>
 <span class='co'># slice an existing neuronlist with regular indexing</span>
 <span class='no'>kcs5</span><span class='kw'>=</span><span class='no'>kcs20</span>[<span class='fl'>1</span>:<span class='fl'>5</span>]
 
-<span class='co'># extract a single neuron from a neuronlist</span>
+<span class='co'># simple summary of neuronlist contents</span>
+<span class='no'>Cell07PNs</span></div><div class='output co'>#&gt; 'neuronlist' containing 40 'neuron' objects and 'data.frame' with 27 vars [4.4 MB]</div><div class='input'><span class='co'># subset to make a smaller neuronlist</span>
+<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>]</div><div class='output co'>#&gt; 'neuronlist' containing 3 'neuron' objects and 'data.frame' with 27 vars [129.4 kB]</div><div class='input'><span class='co'># extract a single neuron from a neuronlist</span>
 <span class='no'>n1</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+<span class='no'>n1</span></div><div class='output co'>#&gt; 'neuron' with 180 vertices in 1 tree</div><div class='input'>
 
 <span class='co'># list all methods for neuronlist objects</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span>(<span class='kw'>class</span><span class='kw'>=</span><span class='st'>'neuronlist'</span>)</div><div class='output co'>#&gt;  [1] -                  [                  [&lt;-                *                 

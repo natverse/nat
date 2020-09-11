@@ -1,7 +1,8 @@
 # nat 1.10.2
 
-This release brings support for reading, plotting and writing 3D surface meshes of neurons into line with the skeleton support. It also includes an 
-essential fix requested by CRAN.
+This release brings support for reading, plotting and writing 3D surface meshes
+of neurons into line with the skeleton support. It also includes an essential
+fix requested by CRAN.
 
 https://github.com/natverse/nat/issues?q=closed%3A2020-02-23..2020-09-11+
 

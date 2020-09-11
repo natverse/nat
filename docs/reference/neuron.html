@@ -329,6 +329,9 @@ subtree, not the whole neuron.</p>
 <span class='co'>## Basic properties</span>
 <span class='co'># a sample neuron </span>
 <span class='no'>n</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
+<span class='co'># summarise it</span>
+<span class='no'>n</span></div><div class='output co'>#&gt; 'neuron' with 180 vertices in 1 tree</div><div class='input'>
 <span class='co'># inspect its internal structure</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>n</span>)</div><div class='output co'>#&gt; List of 24
 #&gt;  $ CellType     : chr "DA1"
@@ -470,7 +473,7 @@ subtree, not the whole neuron.</p>
 <span class='co'># but if you had an undirected graph </span>
 <span class='no'>ug</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/as.directed.html'>as.undirected</a></span>(<span class='no'>gstem</span>)
 <span class='co'># you get a warning because there is no explicit origin for the graph</span>
-<span class='fu'>as.neuron</span>(<span class='no'>ug</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: No valid origin found! Using first endpoint as origin</span></div><div class='output co'>#&gt; neuron object with 10 vertices</div><div class='input'>
+<span class='fu'>as.neuron</span>(<span class='no'>ug</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: No valid origin found! Using first endpoint as origin</span></div><div class='output co'>#&gt; 'neuron' with 10 vertices in 1 tree</div><div class='input'>
 <span class='co'># If you need finer control of the conversion process </span>
 <span class='no'>gstem2</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>ug</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>gstem2</span>)</div><div class='img'><img src='neuron-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem2</span>))</div><div class='img'><img src='neuron-7.png' alt='' width='700' height='433' /></div></pre>
