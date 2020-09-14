@@ -15,7 +15,7 @@
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
 #'   
 #'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
-#'   used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple Neurite 
+#'   used by the \href{https://imagej.net/Simple_Neurite_Tracerr}{Simple Neurite 
 #'   Tracer} plugin of Fiji/ImageJ.
 #'   
 #'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira. 
@@ -490,7 +490,7 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 #'   These functions would normally be called from \code{read.neuron(s)} rather 
 #'   than used directly.
 #' @section SWC Format: According to 
-#'   \url{http://research.mssm.edu/cnic/swc.html} SWC file format has a
+#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html} SWC file format has a
 #'   radius not a diameter specification
 #' @param f path to file
 #' @param ... Additional arguments. \code{read.neuron.swc} passes theseto 

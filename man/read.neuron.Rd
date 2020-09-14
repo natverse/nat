@@ -38,7 +38,7 @@ This function will handle \code{neuron} and \code{dotprops} objects
   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
   
   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
-  used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple Neurite 
+  used by the \href{https://imagej.net/Simple_Neurite_Tracerr}{Simple Neurite 
   Tracer} plugin of Fiji/ImageJ.
   
   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira. 

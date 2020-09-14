@@ -31,7 +31,7 @@ pre-requisite for most functionality is a recent version of R (>=3.1.0 recommend
 you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11
 window manager, installed. This is no longer a default install since Mac OS X 
 10.8. You need to install XQuartz, before installing the nat package. Logout and login for the installation to take effect. You can get it from 
-https://xquartz.macosforge.org/landing/. This page is also linked from the 
+https://www.xquartz.org/. This page is also linked from the 
 [Download R for (Mac) OS X](https://cran.r-project.org/bin/macosx/) page.
 
 If you want to apply non-rigid registrations calculated by the 

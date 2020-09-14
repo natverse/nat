@@ -3,12 +3,12 @@
 [![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
 [![Build Status](https://img.shields.io/travis/natverse/nat.svg)](https://travis-ci.org/natverse/nat) 
-[![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
+[![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/github/natverse/nat)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://natverse.github.io/nat/reference/)
 
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
-single neurons. See [nat.examples](https://github.com/jefferis/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
+single neurons. See [nat.examples](https://github.com/natverse/nat.examples) and [frulhns](https://github.com/jefferis/frulhns) for sample code.
 
 **nat** is a cleaned up version of [code](https://github.com/jefferis/AnalysisSuite) that has been used in a number of papers from our group including:
 
@@ -58,8 +58,8 @@ devtools::install_github("natverse/nat")
 ## Help
 If you want some help using **nat**, then please use the following resources
 
-* For installation issues, see the [Installation vignette](http://natverse.github.io/nat/articles/Installation.html)
-* Start with the [overview package documentation](http://natverse.github.io/nat/reference/nat-package.html) (`?nat` in R)
+* For installation issues, see the [Installation vignette](http://natverse.org/nat/articles/Installation.html)
+* Start with the [overview package documentation](http://natverse.org/nat/reference/nat-package.html) (`?nat` in R)
 * Thematically organised [function reference documentation](http://natverse.github.io/nat/reference/)
 * [nat.examples](https://github.com/jefferis/nat.examples) sample code
 * [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
