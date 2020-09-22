@@ -1,25 +1,16 @@
-# nat 1.8.14
+# nat 1.8.15
 
-This is a maintenance release to fix a failing test on CRAN when the suggested
-Rvcg package is unavailable (thanks to BDR).
-
+This is a maintenance release to fix a failing test on R-devel (R 4.1). This
+updates the expectation to account for new behaviour of the c() generic
+function. See https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17900
 
 ## Test environments
-* local OS X install, R 3.6.2
-* Ubuntu 16.04.6 LTS (on travis-ci), R 3.6.2
+* local OS X install, R 4.0.2 and 4.1.0
+* Ubuntu 16.04.6 LTS (on travis-ci), R 4.0.2
 * win-builder (r-devel)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
-https://travis-ci.org/natverse/nat/builds/647101233
-
-Please note that previous versions of R reported possible spelling errors in 
-the DESCRIPTION file, but these were all false positives.
-
-## Tests
-Note that some tests have been marked as donttest to reduce the standard test
-time including on CRAN. I have succesfully run all tests using 
-
-  R CMD CHECK --run-donttest --as-cran
+https://win-builder.r-project.org/5a09qIbsh1J5/00check.log
