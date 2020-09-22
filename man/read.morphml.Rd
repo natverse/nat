@@ -42,7 +42,7 @@ NeuroML files consist of an XML tree containing one more or more
   information, but will probably be more convenient for most purposes.
 }
 \references{
-\url{http://www.neuroml.org/specifications}
+\url{https://neuroml.org/specifications}
 }
 \seealso{
 \code{link[XML]{xmlParse}}, \code{\link{read.neuron.neuroml}}
