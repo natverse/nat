@@ -11,3 +11,4 @@ travisbuildchildren.sh
 ^vignettes/.*pdf$
 ^\.httr-oauth$
 ^spare$
+^CRAN-RELEASE$
