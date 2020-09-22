@@ -1,49 +1,49 @@
 #' Read a single neuron from a file
-#' 
-#' @details This function will handle \code{neuron} and \code{dotprops} objects 
-#'   saved in R .rds or .rda format by default. Additional file formats can be 
+#'
+#' @details This function will handle \code{neuron} and \code{dotprops} objects
+#'   saved in R .rds or .rda format by default. Additional file formats can be
 #'   registered using \code{fileformats}.
-#'   
-#'   At the moment the following formats are supported using file readers 
+#'
+#'   At the moment the following formats are supported using file readers
 #'   already included with the nat package: \itemize{
-#'   
-#'   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also 
-#'   return an \code{\link{ngraph}} object containing the neuron structure in a 
-#'   (permissive) general graph format that also contains the 3D positions for 
+#'
+#'   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also
+#'   return an \code{\link{ngraph}} object containing the neuron structure in a
+#'   (permissive) general graph format that also contains the 3D positions for
 #'   each vertex.
-#'   
+#'
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
-#'   
+#'
 #'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
-#'   used by the \href{https://imagej.net/Simple_Neurite_Tracerr}{Simple Neurite 
+#'   used by the \href{https://imagej.net/Simple_Neurite_Tracer}{Simple Neurite
 #'   Tracer} plugin of Fiji/ImageJ.
-#'   
-#'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira. 
-#'   \code{hxlineset} is the generic one, \code{hxskel} is used by the 
+#'
+#'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira.
+#'   \code{hxlineset} is the generic one, \code{hxskel} is used by the
 #'   hxskeletonize extension of Schmitt and Evers (see refs).
-#'   
-#'   \item \bold{rda,rds} Native R cross-platform binary formats (see 
-#'   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single 
+#'
+#'   \item \bold{rda,rds} Native R cross-platform binary formats (see
+#'   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single
 #'   unnamed neuron, whereas rda contains one or more named neurons.
-#'   
+#'
 #'   }
 #' @export
-#' @param f Path to file. This can be a URL, in which case the file is 
+#' @param f Path to file. This can be a URL, in which case the file is
 #'   downloaded to a temporary location before reading.
-#' @param format The file format of the neuron. When \code{format=NULL}, the 
-#'   default, \code{read.neuron} will infer the file format from the extension 
+#' @param format The file format of the neuron. When \code{format=NULL}, the
+#'   default, \code{read.neuron} will infer the file format from the extension
 #'   or file header (aka magic) using the \code{fileformats} registry.
-#' @param class The class of the returned object - presently either 
+#' @param class The class of the returned object - presently either
 #'   \code{"neuron"} or \code{"ngraph"}
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{write.neuron}}, \code{\link{read.neurons}},
 #'   \code{\link{fileformats}}
-#' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and 
-#'   Obermayer, K. (2004). New methods for the computer-assisted 3-D 
-#'   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
-#'   1283--98. 
+#' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
+#'   Obermayer, K. (2004). New methods for the computer-assisted 3-D
+#'   reconstruction of neurons from confocal image stacks. Neuroimage 4,
+#'   1283--98.
 #'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
-#'   
+#'
 #' @examples
 #' \dontrun{
 #' # note that we override the default NeuronName field

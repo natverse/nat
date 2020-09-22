@@ -4,7 +4,7 @@
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
 [![Build Status](https://img.shields.io/travis/natverse/nat.svg)](https://travis-ci.org/natverse/nat) 
 [![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/github/natverse/nat)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://natverse.github.io/nat/reference/)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](http://natverse.org/nat/reference/)
 
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
@@ -60,8 +60,8 @@ If you want some help using **nat**, then please use the following resources
 
 * For installation issues, see the [Installation vignette](http://natverse.org/nat/articles/Installation.html)
 * Start with the [overview package documentation](http://natverse.org/nat/reference/nat-package.html) (`?nat` in R)
-* Thematically organised [function reference documentation](http://natverse.github.io/nat/reference/)
-* [nat.examples](https://github.com/jefferis/nat.examples) sample code
+* Thematically organised [function reference documentation](http://natverse.org/nat/reference/)
+* [nat.examples](https://github.com/natverse/nat.examples) sample code
 * [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 
