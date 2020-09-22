@@ -1,3 +1,8 @@
+nat 1.8.15
+==========
+
+* Fix failing test on CRAN for R 4.1 (thanks to KH, #444).
+
 nat 1.8.14
 ==========
 
