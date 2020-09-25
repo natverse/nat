@@ -1,8 +1,8 @@
-# nat 1.8.15
+# nat 1.8.16
 
 This is a maintenance release to fix a failing test on R-devel (R 4.1). This
 updates the expectation to account for new behaviour of the c() generic
-function. See https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17900
+function. See https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17900. It also fixes some URLs that were picked up in CRAN pre-test (but not winbuilder).
 
 ## Test environments
 * local OS X install, R 4.0.2 and 4.1.0
