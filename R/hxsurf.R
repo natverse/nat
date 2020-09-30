@@ -1,55 +1,57 @@
 #' Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object
-#' 
-#' @details Note that when \code{RegionChoice="both"} or 
-#'   \code{RegionChoice=c("Inner", "Outer")} both polygons in inner and outer 
-#'   regions will be added to named regions. To understand the significance of 
-#'   this, consider two adjacent regions, A and B, with a shared surface. For 
-#'   the polygons in both A and B, Amira will have a patch with (say) 
-#'   InnerRegion A and OuterRegion B. This avoids duplication in the file. 
-#'   However, it might be convenient to add these polygons to both regions when 
-#'   we read them into R, so that regions A and B in our R object are both 
-#'   closed surfaces. To achieve this when \code{RegionChoice="both"}, 
-#'   \code{read.hxsurf} adds these polygons to region B (as well as region A) 
+#'
+#' @details Note that when \code{RegionChoice="both"} or
+#'   \code{RegionChoice=c("Inner", "Outer")} both polygons in inner and outer
+#'   regions will be added to named regions. To understand the significance of
+#'   this, consider two adjacent regions, A and B, with a shared surface. For
+#'   the polygons in both A and B, Amira will have a patch with (say)
+#'   InnerRegion A and OuterRegion B. This avoids duplication in the file.
+#'   However, it might be convenient to add these polygons to both regions when
+#'   we read them into R, so that regions A and B in our R object are both
+#'   closed surfaces. To achieve this when \code{RegionChoice="both"},
+#'   \code{read.hxsurf} adds these polygons to region B (as well as region A)
 #'   but swaps the order of the vertices defining the polygon to ensure that the
 #'   surface directionality is correct.
-#'   
-#'   As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more 
+#'
+#'   As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more
 #'   regions than you wanted, then try switching to \code{RegionChoice="Inner"}
 #'   or \code{RegionChoice="Outer"}.
-#'   
-#'   Note that there is currently only limited support for reading Amira's 
-#'   binary mesh format. In particular only single region mesh files are 
-#'   supported.
-#'   
+#'
+#'   Note that the support for reading Amira's binary mesh format (HxSurface
+#'   binary) is less mature and in particular only a few multi region mesh files
+#'   have been tested. Finally there is no support to read meshes from the newer
+#'   "Amira Binary Surface format" although such files can be read into a list
+#'   using the \code{read.amiramesh} function.
+#'
 #' @param filename Character vector defining path to file
-#' @param RegionNames Character vector specifying which regions should be read 
+#' @param RegionNames Character vector specifying which regions should be read
 #'   from file. Default value of \code{NULL} => all regions.
-#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or 
-#'   \emph{both} (default), should define the material of the patch. See 
+#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or
+#'   \emph{both} (default), should define the material of the patch. See
 #'   details.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
 #' @return A list with S3 class hxsurf with elements \itemize{
-#'   
+#'
 #'   \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
-#'   
-#'   \item{Regions}{ A list with 3 column data.frames specifying triplets of 
-#'   vertices for each region (with reference to \code{PointNo} column in 
+#'
+#'   \item{Regions}{ A list with 3 column data.frames specifying triplets of
+#'   vertices for each region (with reference to \code{PointNo} column in
 #'   \code{Vertices} element)}
-#'   
-#'   \item{RegionList}{ Character vector of region names (should match names of 
+#'
+#'   \item{RegionList}{ Character vector of region names (should match names of
 #'   \code{Regions} element)}
-#'   
+#'
 #'   \item{RegionColourList}{ Character vector specifying default colour to plot
 #'   each region in R's \code{\link{rgb}} format}
-#'   
+#'
 #'   }
 #' @export
 #' @seealso \code{\link{plot3d.hxsurf}, \link{rgb}}
 #' @aliases hxsurf
 #' @family amira
 #' @family hxsurf
-#' @examples 
+#' @examples
 #' \dontrun{
 #' read.hxsurf("my.surf", RegionChoice="both")
 #' }
@@ -197,8 +199,7 @@ read.hxsurf.bin <- function(filename, return.raw=FALSE, FallbackRegionCol='grey'
   
   params=.ParseAmirameshParameters(h)
   materials=names(params$Parameters$Materials)
-  if(isFALSE(all(materials %in% c("Exterior", "Inside"))))
-    stop("FIXME: read.hxsurf.bin only supports surfaces with materials Inside/Exterior!")
+
   # read data blocks
   data_regex='^\\s*(\\w+)\\s+(\\d+)$'
   
