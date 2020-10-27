@@ -331,6 +331,7 @@ nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral",
 #' @param button Integer from 1 to 3 indicating mouse button
 #' @seealso \code{\link{rgl.setMouseCallbacks}}
 #' @author Duncan Murdoch
+#' @export
 #' @examples
 #' \dontrun{
 #'  open3d()
