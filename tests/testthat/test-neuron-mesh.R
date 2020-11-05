@@ -17,7 +17,7 @@ test_that("read/write works", {
   expect_equal(sbl <- summary(bl), summary(bl2))
   
   expect_is(sbl, 'data.frame')
-  #expect_known_value(sbl, file = 'testdata/summary_bl.rds')
+  expect_known_value(sbl, file = 'testdata/summary_bl.rds')
   
   expect_error(write.neurons(Cell07PNs[1:3], format = 'ply'))
 })
