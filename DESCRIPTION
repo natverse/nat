@@ -50,7 +50,8 @@ Suggests:
     plotly,
     readobj,
     reticulate,
-    readr
+    readr,
+    memoise
 License: GPL-3
 LazyData: yes
 Collate:
