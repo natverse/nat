@@ -48,13 +48,16 @@ Suggests:
     alphashape3d,
     Morpho,
     plotly,
-    readobj
+    readobj,
+    reticulate,
+    readr
 License: GPL-3
 LazyData: yes
 Collate:
     'alphashape3d.R'
     'amiralandmarks-io.R'
     'amiramesh-io.R'
+    'cloudvolume-interface.R'
     'cmtk-reformat.R'
     'cmtk.R'
     'cmtk_geometry.R'
