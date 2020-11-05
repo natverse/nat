@@ -35,7 +35,8 @@ Imports:
     yaml,
     progress,
     checkmate,
-    stringr
+    stringr,
+    memoise
 Suggests:
     spelling,
     Rvcg (>= 0.17),
@@ -50,8 +51,7 @@ Suggests:
     plotly,
     readobj,
     reticulate,
-    readr,
-    memoise
+    readr
 License: GPL-3
 LazyData: yes
 Collate:
