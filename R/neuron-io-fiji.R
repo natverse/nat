@@ -9,8 +9,8 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
   
   l<-list()
   stopifnot(names(r)[1:2]==c("samplespacing","imagesize"))	
-  attr(l,"samplespacing")<-r['samplespacing'][[1]]
-  attr(l,"imagesize")<-r['imagesize'][[1]]
+  attr(l,"samplespacing")<-XML::xmlAttrs(r['samplespacing'][[1]])
+  attr(l,"imagesize")<-XML::xmlAttrs(r['imagesize'][[1]])
   
   tracings=r[-c(1:2)]
   if(length(tracings)==0) stop("No tracings in this file")
