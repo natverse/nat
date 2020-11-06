@@ -16,16 +16,22 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
   if(length(tracings)==0) stop("No tracings in this file")
   if(Verbose) cat("There are",length(tracings),"tracings in this file\n")	
   
-  for(i in 1:length(tracings)){
-    l[[i]]=XML::xmlSApply(tracings[[i]],function(x) as.numeric(XML::xmlAttrs(x)[c("xd","yd","zd")]))
-    l[[i]]=t(l[[i]])
-    rownames(l[[i]])<-NULL
-    colnames(l[[i]])<-c("X","Y","Z")
+  fetch_attrs <- function(x, attrs) {
+    res=XML::xmlSApply(tracings[[i]],function(x) as.numeric(XML::xmlAttrs(x)[attrs]))
+    res=t(res)
+    rownames(res)<-NULL
+    # use names of attrs if present as colnames of output
+    colnames(res) <- if(!is.null(names(attrs))) names(attrs) else attrs
     pathAttributes=XML::xmlAttrs(tracings[[i]])
-    attr(l[[i]],'pathAttributes')=pathAttributes
+    attr(res,'pathAttributes')=pathAttributes
+    res
+  }
+  
+  for(i in 1:length(tracings)){
+    l[[i]]=fetch_attrs(tracings[[i]], c(X="xd",Y="yd",Z="zd"))
     # set the list item name to the tracing id 
     # (a number, but not necessarily from a perfect 0 indexed sequence)
-    names(l)[i]=pathAttributes['id']
+    names(l)[i]=attr(l[[i]],'pathAttributes')['id']
   }
   l
 }
