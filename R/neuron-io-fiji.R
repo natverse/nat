@@ -1,4 +1,4 @@
-read.fijixml<-function(f, ..., Verbose=FALSE){
+read.fijixml<-function(f, components=c("path", "fill"), ..., Verbose=FALSE){
   if(!file.exists(f)) 
     stop("File: ", f, "does not exist!")
   doc=try(XML::xmlParse(f, ...))
@@ -29,17 +29,21 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
   
   for(i in 1:length(tracings)){
     nti=names(tracings)[i]
+    if(isFALSE(nti %in% components))
+      next
+    # we will store the result in the next empty slot in the list
+    lidx=length(l)+1
     if(isTRUE(nti=='path')) {
-      l[[i]]=fetch_attrs(tracings[[i]], c(X="xd",Y="yd",Z="zd"))
+      l[[lidx]]=fetch_attrs(tracings[[i]], c(X="xd",Y="yd",Z="zd"))
     } else if(isTRUE(nti=='fill')) {
-      l[[i]]=fetch_attrs(tracings[[i]], c(id="id", X="x",Y="y",Z="z", d="distance"))
+      l[[lidx]]=fetch_attrs(tracings[[i]], c(id="id", X="x",Y="y",Z="z", d="distance"))
     } else {
       warning("Ignoring unrecognised traces file component: ", nti)
     }
     
     # set the list item name to the tracing id 
     # (a number, but not necessarily from a perfect 0 indexed sequence)
-    names(l)[i]=attr(l[[i]],'pathAttributes')['id']
+    names(l)[lidx]=attr(l[[lidx]],'pathAttributes')['id']
   }
   l
 }
