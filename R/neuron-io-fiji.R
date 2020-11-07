@@ -49,19 +49,57 @@ read.fijixml<-function(f, components=c("path", "fill"), ..., Verbose=FALSE){
 }
 
 #' Read a neuron saved by Fiji's Simple Neurite Tracer Plugin
-#' 
+#'
 #' @param f Path to a file
 #' @param ... Additional arguments passed to \code{\link[XML]{xmlParse}}.
-#' @param simplify Whether to return a single neuron as a \code{neuron} object 
+#' @param simplify Whether to return a single neuron as a \code{neuron} object
 #'   rather than a \code{neuronlist} of length 1.
+#' @param components Which components to read in (path or fill). Only paths are
+#'   properly supported at present (see details).
 #' @param Verbose Whether to print status messages during parsing.
-#' @details This is an XML based format so parsing it depends on installation of
-#'   the suggested XML package.
-#' @references \url{http://fiji.sc/Simple_Neurite_Tracer} 
+#' @details simple neurite tracer .traces files are an XML based format so
+#'   parsing it depends on installation of the suggested XML package.
+#'
+#'   They can contain both paths (skeleton lines) and fill information (saved as
+#'   XYZ coordinates of voxels inside the object). The latter cannot currently
+#'   be handled very well by \code{\link{read.neuron}}. If you wish to access
+#'   them you will probably need to use the private \code{read.fijixml} function
+#'   to do so (see examples).
+#'
+#'   Your best best if you want to produce a fully 3D object with "width"
+#'   information would be to generate a 3D mesh using Fiji's 3D viewer. You can
+#'   do this by selecting the object in the viewer and the choosing \code{File
+#'   ... Export Surface ... Wavefront} \emph{while the 3D viewer window is
+#'   active}. The resultant obj file can then be read in by
+#'   \code{\link{read.neurons}}. You could use this mesh to find radius
+#'   information for a skeleton by shooting rays from skeleton to mesh to
+#'   estimate the radius.
+#'
+#' @references \url{http://fiji.sc/Simple_Neurite_Tracer}
 #'   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 #' @export
-read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
-  l=read.fijixml(f, ..., Verbose=Verbose)
+#'
+#' @examples
+#' \dontrun{
+#' n=read.neuron.fiji("my.traces")
+#' plot3d(n)
+#' fill=read.neuron.fiji("my.traces", components='fill')
+#' points3d(fill, col='grey')
+#' }
+read.neuron.fiji<-function(f, ..., simplify=TRUE, 
+                           components=c("path", "fill"),
+                           Verbose=FALSE){
+  components=match.arg(components, several.ok = FALSE)
+  
+  l=read.fijixml(f, ..., components=components, Verbose=Verbose)
+  if(components=='fill') {
+    voxdims=as.numeric(attr(l, 'samplespacing')[1:3])
+    for(i in seq_along(l)) {
+      xyzmmatrix(l[[i]])=scale(xyzmatrix(l[[i]]), scale = 1/voxdims, center = F)
+    }
+    return(l)
+  }
+  
   dflist=as.list(rep(NA,length(l)))
   MasterPath=seq(l)
   pointOffsets=rep(0,length(l))

@@ -4,15 +4,24 @@
 \alias{read.neuron.fiji}
 \title{Read a neuron saved by Fiji's Simple Neurite Tracer Plugin}
 \usage{
-read.neuron.fiji(f, ..., simplify = TRUE, Verbose = FALSE)
+read.neuron.fiji(
+  f,
+  ...,
+  simplify = TRUE,
+  components = c("path", "fill"),
+  Verbose = FALSE
+)
 }
 \arguments{
 \item{f}{Path to a file}
 
 \item{...}{Additional arguments passed to \code{\link[XML]{xmlParse}}.}
 
-\item{simplify}{Whether to return a single neuron as a \code{neuron} object 
+\item{simplify}{Whether to return a single neuron as a \code{neuron} object
 rather than a \code{neuronlist} of length 1.}
+
+\item{components}{Which components to read in (path or fill). Only paths are
+properly supported at present (see details).}
 
 \item{Verbose}{Whether to print status messages during parsing.}
 }
@@ -20,10 +29,33 @@ rather than a \code{neuronlist} of length 1.}
 Read a neuron saved by Fiji's Simple Neurite Tracer Plugin
 }
 \details{
-This is an XML based format so parsing it depends on installation of
-  the suggested XML package.
+simple neurite tracer .traces files are an XML based format so
+  parsing it depends on installation of the suggested XML package.
+
+  They can contain both paths (skeleton lines) and fill information (saved as
+  XYZ coordinates of voxels inside the object). The latter cannot currently
+  be handled very well by \code{\link{read.neuron}}. If you wish to access
+  them you will probably need to use the private \code{read.fijixml} function
+  to do so (see examples).
+
+  Your best best if you want to produce a fully 3D object with "width"
+  information would be to generate a 3D mesh using Fiji's 3D viewer. You can
+  do this by selecting the object in the viewer and the choosing \code{File
+  ... Export Surface ... Wavefront} \emph{while the 3D viewer window is
+  active}. The resultant obj file can then be read in by
+  \code{\link{read.neurons}}. You could use this mesh to find radius
+  information for a skeleton by shooting rays from skeleton to mesh to
+  estimate the radius.
+}
+\examples{
+\dontrun{
+n=read.neuron.fiji("my.traces")
+plot3d(n)
+fill=read.neuron.fiji("my.traces", components='fill')
+points3d(fill, col='grey')
+}
 }
 \references{
-\url{http://fiji.sc/Simple_Neurite_Tracer} 
+\url{http://fiji.sc/Simple_Neurite_Tracer}
   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 }
