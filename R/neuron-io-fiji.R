@@ -28,7 +28,15 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
   }
   
   for(i in 1:length(tracings)){
-    l[[i]]=fetch_attrs(tracings[[i]], c(X="xd",Y="yd",Z="zd"))
+    nti=names(tracings)[i]
+    if(isTRUE(nti=='path')) {
+      l[[i]]=fetch_attrs(tracings[[i]], c(X="xd",Y="yd",Z="zd"))
+    } else if(isTRUE(nti=='fill')) {
+      l[[i]]=fetch_attrs(tracings[[i]], c(id="id", X="x",Y="y",Z="z", d="distance"))
+    } else {
+      warning("Ignoring unrecognised traces file component: ", nti)
+    }
+    
     # set the list item name to the tracing id 
     # (a number, but not necessarily from a perfect 0 indexed sequence)
     names(l)[i]=attr(l[[i]],'pathAttributes')['id']
