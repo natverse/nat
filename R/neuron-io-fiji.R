@@ -95,7 +95,7 @@ read.neuron.fiji<-function(f, ..., simplify=TRUE,
   if(components=='fill') {
     voxdims=as.numeric(attr(l, 'samplespacing')[1:3])
     for(i in seq_along(l)) {
-      xyzmmatrix(l[[i]])=scale(xyzmatrix(l[[i]]), scale = 1/voxdims, center = F)
+      xyzmatrix(l[[i]])=scale(xyzmatrix(l[[i]]), scale = 1/voxdims, center = F)
     }
     return(l)
   }
