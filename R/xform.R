@@ -237,6 +237,12 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
 #' methods('xyzmatrix')
 #' # ... and for the assignment method
 #' methods('xyzmatrix<-')
+#' 
+#' # basic usage
+#' xyzmatrix(cbind(-1,2,3))
+#' 
+#' # character vector - useful e.g. when encoded in 1 column of a table 
+#' xyzmatrix("(-1,+2,3)")
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
 #' @param y,z separate y and z coordinates
@@ -262,6 +268,16 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
   colnames(mx)=xyzn
   mx
 }
+
+#' @export
+#' @rdname xyzmatrix
+xyzmatrix.character<-function(x, ...) {
+  cc=gsub("[^0-9.\\+eE-]+"," ", x)
+  cc=trimws(cc)
+  mat=read.table(text = cc)
+  xyzmatrix(mat)
+}
+
 
 #' @export
 #' @rdname xyzmatrix

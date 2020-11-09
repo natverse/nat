@@ -185,6 +185,17 @@ test_that("can replace xyz coords of a matrix",{
   expect_equal(mx3, mx3.saved)
 })
 
+test_that("can extract xyz coords of a character vector",{
+  mx=matrix((1:24)/3-5,ncol=3)
+  coordstr=paste("(", paste(mx[,1], mx[,2], mx[,3], sep=", "), ")")
+  expect_equal(xyzmatrix(mx), xyzmatrix(coordstr))
+  
+  tricky=c(1e-1, 1E+3, -1.01)
+  expect_equal(xyzmatrix("1e-1, 1E+3, -1.01"), 
+               xyzmatrix(matrix(tricky, ncol=3)))
+})
+
+
 test_that("can replace xyz coords of a data.frame",{
   # we just need to handle some edge cases with 0 row data here
   

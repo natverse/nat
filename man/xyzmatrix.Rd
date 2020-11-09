@@ -3,6 +3,7 @@
 \name{xyzmatrix}
 \alias{xyzmatrix}
 \alias{xyzmatrix.default}
+\alias{xyzmatrix.character}
 \alias{xyzmatrix.neuron}
 \alias{xyzmatrix.neuronlist}
 \alias{xyzmatrix.shapelist3d}
@@ -23,6 +24,8 @@
 xyzmatrix(x, ...)
 
 \method{xyzmatrix}{default}(x, y = NULL, z = NULL, ...)
+
+\method{xyzmatrix}{character}(x, ...)
 
 \method{xyzmatrix}{neuron}(x, ...)
 
