@@ -183,6 +183,9 @@ test_that("can replace xyz coords of a matrix",{
   mx3.saved=mx3
   expect_is(xyzmatrix(mx3)<-xyzmatrix(mx2), 'matrix')
   expect_equal(mx3, mx3.saved)
+  
+  
+  
 })
 
 test_that("can extract xyz coords of a character vector",{
@@ -193,6 +196,11 @@ test_that("can extract xyz coords of a character vector",{
   tricky=c(1e-1, 1E+3, -1.01)
   expect_equal(xyzmatrix("1e-1, 1E+3, -1.01"), 
                xyzmatrix(matrix(tricky, ncol=3)))
+  
+  mx2=mx*-3
+  coordstr2=paste("(", paste(mx2[,1], mx2[,2], mx2[,3], sep=", "), ")")
+  expect_equivalent(xyzmatrix(coordstr) <- mx*-3, xyzmatrix(coordstr2))
+  expect_equal(coordstr, coordstr2)
 })
 
 

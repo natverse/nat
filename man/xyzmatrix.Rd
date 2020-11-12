@@ -12,6 +12,7 @@
 \alias{xyzmatrix.igraph}
 \alias{xyzmatrix.mesh3d}
 \alias{xyzmatrix<-}
+\alias{xyzmatrix<-.character}
 \alias{xyzmatrix<-.neuron}
 \alias{xyzmatrix<-.dotprops}
 \alias{xyzmatrix<-.hxsurf}
@@ -42,6 +43,8 @@ xyzmatrix(x, ...)
 \method{xyzmatrix}{mesh3d}(x, ...)
 
 xyzmatrix(x) <- value
+
+\method{xyzmatrix}{character}(x) <- value
 
 \method{xyzmatrix}{neuron}(x) <- value
 
@@ -88,6 +91,12 @@ Note that \code{xyzmatrix} can extract or set 3D coordinates in a
 methods('xyzmatrix')
 # ... and for the assignment method
 methods('xyzmatrix<-')
+
+# basic usage
+xyzmatrix(cbind(-1,2,3))
+
+# character vector - useful e.g. when encoded in 1 column of a table 
+xyzmatrix("(-1,+2,3)")
 n=Cell07PNs[[1]]
 xyzmatrix(n)<-xyzmatrix(n)
 stopifnot(isTRUE(

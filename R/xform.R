@@ -242,7 +242,13 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
 #' xyzmatrix(cbind(-1,2,3))
 #' 
 #' # character vector - useful e.g. when encoded in 1 column of a table 
-#' xyzmatrix("(-1,+2,3)")
+#' str123="(-1,+2,3)"
+#' xyzmatrix(str123)
+#' # replace
+#' xyzmatrix(str123) <- xyzmatrix(str123)/3
+#' str123
+#' xyzmatrix(str123) <- xyzmatrix(str123)*3
+#' str123
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
 #' @param y,z separate y and z coordinates
@@ -361,6 +367,20 @@ xyzmatrix.mesh3d<-function(x, ...){
   }
   else stop("Not a neuron or dotprops object or a matrix-like object with XYZ colnames")
   x
+}
+
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.character`<-function(x, value){
+  stopifnot(ncol(value)==3)
+  stopifnot(nrow(value)==1 || nrow(value)==length(x))
+  if(any(grepl("%g", x, fixed=T)))
+    stop("Sorry I cannot handle input character vectors containing %f")
+    
+  # turn input values into a format string
+  fmtstr=gsub("[0-9.\\+eE-]+","%g", x)
+  value <- zapsmall(value)
+  sprintf(fmtstr, value[,1], value[,2], value[,3])
 }
 
 #' @export
