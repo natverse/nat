@@ -197,7 +197,7 @@ test_that("can extract xyz coords of a character vector",{
   expect_equal(xyzmatrix("1e-1, 1E+3, -1.01"), 
                xyzmatrix(matrix(tricky, ncol=3)))
   
-  mx2=mx*-3
+  mx2=round(mx*-3, digits=6)
   coordstr2=paste("(", paste(mx2[,1], mx2[,2], mx2[,3], sep=", "), ")")
   expect_equivalent(xyzmatrix(coordstr) <- mx*-3, xyzmatrix(coordstr2))
   expect_equal(coordstr, coordstr2)

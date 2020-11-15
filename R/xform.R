@@ -380,6 +380,8 @@ xyzmatrix.mesh3d<-function(x, ...){
   # turn input values into a format string
   fmtstr=gsub("[0-9.\\+eE-]+","%g", x)
   value <- zapsmall(value)
+  # remove any negative zeros ...
+  value[value==0]=0
   sprintf(fmtstr, value[,1], value[,2], value[,3])
 }
 

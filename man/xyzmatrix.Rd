@@ -96,7 +96,13 @@ methods('xyzmatrix<-')
 xyzmatrix(cbind(-1,2,3))
 
 # character vector - useful e.g. when encoded in 1 column of a table 
-xyzmatrix("(-1,+2,3)")
+str123="(-1,+2,3)"
+xyzmatrix(str123)
+# replace
+xyzmatrix(str123) <- xyzmatrix(str123)/3
+str123
+xyzmatrix(str123) <- xyzmatrix(str123)*3
+str123
 n=Cell07PNs[[1]]
 xyzmatrix(n)<-xyzmatrix(n)
 stopifnot(isTRUE(
