@@ -257,6 +257,15 @@ xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 #'   \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
 #'   columns are character vectors, they will be correctly converted to numeric
 #'   (with a warning for any NA values).
+#'
+#'   \code{xyzmatrix} can also both get and set 3D coordinates from a character
+#'   vector (including a single data frame column) in which each string encodes
+#'   all 3 coordinates e.g. \code{"-1, 4, 10"}. It should handle a range of
+#'   separators such as spaces, tabs, commas, semicolons and ignore extraneous
+#'   characters such as brackets. Note that data are rounded by
+#'   \code{\link{zapsmall}} in the replacement version to try to avoid cases
+#'   where rounding errors result in long strings of digits to the right of the
+#'   decimal place.
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
