@@ -82,9 +82,11 @@ For \code{xyzmatrix<-}: Original object with modified coords
   or x, y, z.
 }
 \details{
-Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
+Note that \code{xyzmatrix} can extract or set 3D coordinates in a
   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
-  \bold{or} has 3 columns named X,Y,Z or x,y,z.
+  \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
+  columns are character vectors, they will be correctly converted to numeric
+  (with a warning for any NA values).
 }
 \examples{
 # see all available methods for different classes

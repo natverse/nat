@@ -252,9 +252,11 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
 #' @param y,z separate y and z coordinates
-#' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
+#' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a
 #'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
-#'   \bold{or} has 3 columns named X,Y,Z or x,y,z.
+#'   \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
+#'   columns are character vectors, they will be correctly converted to numeric
+#'   (with a warning for any NA values).
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
@@ -270,7 +272,11 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
       else stop("Ambiguous column names. Unable to retrieve XYZ data")
     } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
   }
-  mx=data.matrix(x)
+  mx=as.matrix(x)
+  if(mode(mx)=='character'){
+    tryCatch(mode(mx) <- 'numeric', 
+             warning=function(w, ...) warning("xyzmatrix: ", w, call. = F))
+  }
   colnames(mx)=xyzn
   mx
 }

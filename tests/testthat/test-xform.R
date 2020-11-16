@@ -170,6 +170,14 @@ test_that("can extract xyz coords from a matrix and other objects",{
   expect_equal(xyzmatrix(fake_neuron), xyz1)
   expect_equal(xyzmatrix(1,1,1), xyz1)
   expect_equal(xyzmatrix(real_neuron), xyzmatrix(fake_neuron))
+  
+  # check that if the input has columns of type character we interpret
+  # as numeric (not factors, which is what data.matrix does)
+  dfc=as.data.frame(sapply(df, as.character, simplify = F))
+  expect_equal(xyzmatrix(dfc), xyzmatrix(df))
+  # make sure we get a warning if we have non-numeric input
+  dfc$X[1]="a"
+  expect_warning(xyzmatrix(dfc))
 })
 
 test_that("can replace xyz coords of a matrix",{
