@@ -237,12 +237,35 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
 #' methods('xyzmatrix')
 #' # ... and for the assignment method
 #' methods('xyzmatrix<-')
+#' 
+#' # basic usage
+#' xyzmatrix(cbind(-1,2,3))
+#' 
+#' # character vector - useful e.g. when encoded in 1 column of a table 
+#' str123="(-1,+2,3)"
+#' xyzmatrix(str123)
+#' # replace
+#' xyzmatrix(str123) <- xyzmatrix(str123)/3
+#' str123
+#' xyzmatrix(str123) <- xyzmatrix(str123)*3
+#' str123
 xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 
 #' @param y,z separate y and z coordinates
-#' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
+#' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a
 #'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
-#'   \bold{or} has 3 columns named X,Y,Z or x,y,z.
+#'   \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
+#'   columns are character vectors, they will be correctly converted to numeric
+#'   (with a warning for any NA values).
+#'
+#'   \code{xyzmatrix} can also both get and set 3D coordinates from a character
+#'   vector (including a single data frame column) in which each string encodes
+#'   all 3 coordinates e.g. \code{"-1, 4, 10"}. It should handle a range of
+#'   separators such as spaces, tabs, commas, semicolons and ignore extraneous
+#'   characters such as brackets. Note that data are rounded by
+#'   \code{\link{zapsmall}} in the replacement version to try to avoid cases
+#'   where rounding errors result in long strings of digits to the right of the
+#'   decimal place.
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
@@ -258,10 +281,24 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
       else stop("Ambiguous column names. Unable to retrieve XYZ data")
     } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
   }
-  mx=data.matrix(x)
+  mx=as.matrix(x)
+  if(mode(mx)=='character'){
+    tryCatch(mode(mx) <- 'numeric', 
+             warning=function(w, ...) warning("xyzmatrix: ", w, call. = F))
+  }
   colnames(mx)=xyzn
   mx
 }
+
+#' @export
+#' @rdname xyzmatrix
+xyzmatrix.character<-function(x, ...) {
+  cc=gsub("[^0-9.\\+eE-]+"," ", x)
+  cc=trimws(cc)
+  mat=read.table(text = cc)
+  xyzmatrix(mat)
+}
+
 
 #' @export
 #' @rdname xyzmatrix
@@ -345,6 +382,22 @@ xyzmatrix.mesh3d<-function(x, ...){
   }
   else stop("Not a neuron or dotprops object or a matrix-like object with XYZ colnames")
   x
+}
+
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.character`<-function(x, value){
+  stopifnot(ncol(value)==3)
+  stopifnot(nrow(value)==1 || nrow(value)==length(x))
+  if(any(grepl("%g", x, fixed=T)))
+    stop("Sorry I cannot handle input character vectors containing %f")
+    
+  # turn input values into a format string
+  fmtstr=gsub("[0-9.\\+eE-]+","%g", x)
+  value <- zapsmall(value)
+  # remove any negative zeros ...
+  value[value==0]=0
+  sprintf(fmtstr, value[,1], value[,2], value[,3])
 }
 
 #' @export

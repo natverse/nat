@@ -3,6 +3,7 @@
 \name{xyzmatrix}
 \alias{xyzmatrix}
 \alias{xyzmatrix.default}
+\alias{xyzmatrix.character}
 \alias{xyzmatrix.neuron}
 \alias{xyzmatrix.neuronlist}
 \alias{xyzmatrix.shapelist3d}
@@ -11,6 +12,7 @@
 \alias{xyzmatrix.igraph}
 \alias{xyzmatrix.mesh3d}
 \alias{xyzmatrix<-}
+\alias{xyzmatrix<-.character}
 \alias{xyzmatrix<-.neuron}
 \alias{xyzmatrix<-.dotprops}
 \alias{xyzmatrix<-.hxsurf}
@@ -23,6 +25,8 @@
 xyzmatrix(x, ...)
 
 \method{xyzmatrix}{default}(x, y = NULL, z = NULL, ...)
+
+\method{xyzmatrix}{character}(x, ...)
 
 \method{xyzmatrix}{neuron}(x, ...)
 
@@ -39,6 +43,8 @@ xyzmatrix(x, ...)
 \method{xyzmatrix}{mesh3d}(x, ...)
 
 xyzmatrix(x) <- value
+
+\method{xyzmatrix}{character}(x) <- value
 
 \method{xyzmatrix}{neuron}(x) <- value
 
@@ -76,15 +82,38 @@ For \code{xyzmatrix<-}: Original object with modified coords
   or x, y, z.
 }
 \details{
-Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
+Note that \code{xyzmatrix} can extract or set 3D coordinates in a
   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
-  \bold{or} has 3 columns named X,Y,Z or x,y,z.
+  \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
+  columns are character vectors, they will be correctly converted to numeric
+  (with a warning for any NA values).
+
+  \code{xyzmatrix} can also both get and set 3D coordinates from a character
+  vector (including a single data frame column) in which each string encodes
+  all 3 coordinates e.g. \code{"-1, 4, 10"}. It should handle a range of
+  separators such as spaces, tabs, commas, semicolons and ignore extraneous
+  characters such as brackets. Note that data are rounded by
+  \code{\link{zapsmall}} in the replacement version to try to avoid cases
+  where rounding errors result in long strings of digits to the right of the
+  decimal place.
 }
 \examples{
 # see all available methods for different classes
 methods('xyzmatrix')
 # ... and for the assignment method
 methods('xyzmatrix<-')
+
+# basic usage
+xyzmatrix(cbind(-1,2,3))
+
+# character vector - useful e.g. when encoded in 1 column of a table 
+str123="(-1,+2,3)"
+xyzmatrix(str123)
+# replace
+xyzmatrix(str123) <- xyzmatrix(str123)/3
+str123
+xyzmatrix(str123) <- xyzmatrix(str123)*3
+str123
 n=Cell07PNs[[1]]
 xyzmatrix(n)<-xyzmatrix(n)
 stopifnot(isTRUE(

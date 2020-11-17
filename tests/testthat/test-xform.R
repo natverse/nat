@@ -124,7 +124,7 @@ if(!is.null(cmtk.bindir())){
     bim=boundingbox(read.im3d(img, ReadData = F))
     tf=tempfile(fileext = '.nrrd')
     on.exit(unlink(tf))
-    mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img)
+    mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img, Verbose=FALSE)
     expect_true(file.exists(tf))
     expect_equal(boundingbox(tf), bim)
   })
@@ -170,6 +170,14 @@ test_that("can extract xyz coords from a matrix and other objects",{
   expect_equal(xyzmatrix(fake_neuron), xyz1)
   expect_equal(xyzmatrix(1,1,1), xyz1)
   expect_equal(xyzmatrix(real_neuron), xyzmatrix(fake_neuron))
+  
+  # check that if the input has columns of type character we interpret
+  # as numeric (not factors, which is what data.matrix does)
+  dfc=as.data.frame(sapply(df, as.character, simplify = F))
+  expect_equal(xyzmatrix(dfc), xyzmatrix(df))
+  # make sure we get a warning if we have non-numeric input
+  dfc$X[1]="a"
+  expect_warning(xyzmatrix(dfc))
 })
 
 test_that("can replace xyz coords of a matrix",{
@@ -183,7 +191,26 @@ test_that("can replace xyz coords of a matrix",{
   mx3.saved=mx3
   expect_is(xyzmatrix(mx3)<-xyzmatrix(mx2), 'matrix')
   expect_equal(mx3, mx3.saved)
+  
+  
+  
 })
+
+test_that("can extract xyz coords of a character vector",{
+  mx=matrix((1:24)/3-5,ncol=3)
+  coordstr=paste("(", paste(mx[,1], mx[,2], mx[,3], sep=", "), ")")
+  expect_equal(xyzmatrix(mx), xyzmatrix(coordstr))
+  
+  tricky=c(1e-1, 1E+3, -1.01)
+  expect_equal(xyzmatrix("1e-1, 1E+3, -1.01"), 
+               xyzmatrix(matrix(tricky, ncol=3)))
+  
+  mx2=round(mx*-3, digits=6)
+  coordstr2=paste("(", paste(mx2[,1], mx2[,2], mx2[,3], sep=", "), ")")
+  expect_equivalent(xyzmatrix(coordstr) <- mx*-3, xyzmatrix(coordstr2))
+  expect_equal(coordstr, coordstr2)
+})
+
 
 test_that("can replace xyz coords of a data.frame",{
   # we just need to handle some edge cases with 0 row data here
