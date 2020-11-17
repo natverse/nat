@@ -170,12 +170,12 @@ the objects in the neuronlist.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for neuronlist</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>x</span>, <span class='kw'>row.names</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>x</span>), <span class='kw'>optional</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, row.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, optional <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,7 +216,8 @@ examples)</p></td>
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></code>, <code><a href='neuronlist.html'>neuronlist</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='neuronlist-dataframe-methods.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>kcs20</span>))</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
+    <pre class="examples"><div class='input'><span class='fu'><a href='neuronlist-dataframe-methods.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                                       gene_name          Name  idid soma_side
 #&gt; FruMARCM-M001205_seg002 FruMARCM-M001205_seg002  fru-M-500112  1024         L
 #&gt; GadMARCM-F000122_seg001 GadMARCM-F000122_seg001 Gad1-F-900005 10616         L
 #&gt; GadMARCM-F000050_seg001 GadMARCM-F000050_seg001 Gad1-F-100010  8399         R
@@ -238,7 +239,8 @@ examples)</p></td>
 #&gt; FruMARCM-F000270_seg001 FruMARCM-F000270_seg001      64 1331    ab
 #&gt; FruMARCM-F001115_seg002 FruMARCM-F001115_seg002      44  795    ab</div><div class='input'>
 <span class='co'># add additional variables</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>kcs20</span>, <span class='kw'>i</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='no'>kcs20</span>), <span class='kw'>abc</span><span class='kw'>=</span><span class='no'>LETTERS</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='no'>kcs20</span>)]))</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  16 variables:
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>kcs20</span>, i<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>, abc<span class='op'>=</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  16 variables:
 #&gt;  $ gene_name: chr  "FruMARCM-M001205_seg002" "GadMARCM-F000122_seg001" "GadMARCM-F000050_seg001" "GadMARCM-F000142_seg002" ...
 #&gt;  $ Name     : chr  "fru-M-500112" "Gad1-F-900005" "Gad1-F-100010" "Gad1-F-300043" ...
 #&gt;  $ idid     : num  1024 10616 8399 10647 9758 ...
@@ -255,9 +257,10 @@ examples)</p></td>
 #&gt;  $ type     : Factor w/ 3 levels "ab","apbp","gamma": 3 3 1 2 1 1 1 2 2 1 ...
 #&gt;  $ i        : int  1 2 3 4 5 6 7 8 9 10 ...
 #&gt;  $ abc      : chr  "A" "B" "C" "D" ...</div><div class='input'><span class='co'># stop character columns being turned into factors</span>
-<span class='no'>newdf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='no'>kcs20</span>, <span class='kw'>i</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='no'>kcs20</span>), <span class='kw'>abc</span><span class='kw'>=</span><span class='no'>LETTERS</span>[<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='no'>kcs20</span>)],
-  <span class='kw'>stringsAsFactors</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>newdf</span>)</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  16 variables:
+<span class='va'>newdf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>kcs20</span>, i<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>, abc<span class='op'>=</span><span class='va'>LETTERS</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span><span class='op'>]</span>, 
+  stringsAsFactors<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>newdf</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  16 variables:
 #&gt;  $ gene_name: chr  "FruMARCM-M001205_seg002" "GadMARCM-F000122_seg001" "GadMARCM-F000050_seg001" "GadMARCM-F000142_seg002" ...
 #&gt;  $ Name     : chr  "fru-M-500112" "Gad1-F-900005" "Gad1-F-100010" "Gad1-F-300043" ...
 #&gt;  $ idid     : num  1024 10616 8399 10647 9758 ...
@@ -273,7 +276,8 @@ examples)</p></td>
 #&gt;  $ idx      : int  156 1519 1132 1535 1331 795 268 1265 898 190 ...
 #&gt;  $ type     : Factor w/ 3 levels "ab","apbp","gamma": 3 3 1 2 1 1 1 2 2 1 ...
 #&gt;  $ i        : int  1 2 3 4 5 6 7 8 9 10 ...
-#&gt;  $ abc      : chr  "A" "B" "C" "D" ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='no'>kcs20</span>)<span class='kw'>=</span><span class='no'>newdf</span></div></pre>
+#&gt;  $ abc      : chr  "A" "B" "C" "D" ...</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span><span class='op'>=</span><span class='va'>newdf</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -289,7 +293,7 @@ examples)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

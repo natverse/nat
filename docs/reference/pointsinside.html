@@ -161,15 +161,15 @@
     <p>Find which points of an object are inside a surface</p>
     </div>
 
-    <pre class="usage"><span class='fu'>pointsinside</span>(<span class='no'>x</span>, <span class='no'>surf</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>pointsinside</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>surf</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>pointsinside</span>(
-  <span class='no'>x</span>,
-  <span class='no'>surf</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"logical"</span>, <span class='st'>"distance"</span>, <span class='st'>"mesh3d"</span>, <span class='st'>"consistent_logical"</span>)
-)</pre>
+<span class='fu'>pointsinside</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>surf</span>,
+  <span class='va'>...</span>,
+  rval <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"logical"</span>, <span class='st'>"distance"</span>, <span class='st'>"mesh3d"</span>, <span class='st'>"consistent_logical"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -236,55 +236,61 @@ and <code>ashape3d</code> objects.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># check if the vertices in these neurons are inside the mushroom body calyx</span>
 <span class='co'># surface object</span>
-<span class='no'>inout</span><span class='kw'>=</span><span class='fu'>pointsinside</span>(<span class='no'>kcs20</span>, <span class='kw'>surf</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>inout</span>)</div><div class='output co'>#&gt; inout
+<span class='va'>inout</span><span class='op'>=</span><span class='fu'>pointsinside</span><span class='op'>(</span><span class='va'>kcs20</span>, surf<span class='op'>=</span><span class='fu'><a href='subset.html'>subset</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>inout</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; inout
 #&gt; FALSE  TRUE 
 #&gt;  6530  1991 </div><div class='input'><span class='co'># you can also check if points are inside a bounding box</span>
-<span class='no'>mbcalbb</span><span class='kw'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span>))
-<span class='no'>inout2</span><span class='kw'>=</span><span class='fu'>pointsinside</span>(<span class='no'>kcs20</span>, <span class='no'>mbcalbb</span>)
+<span class='va'>mbcalbb</span><span class='op'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span><span class='op'>(</span><span class='fu'><a href='subset.html'>subset</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>inout2</span><span class='op'>=</span><span class='fu'>pointsinside</span><span class='op'>(</span><span class='va'>kcs20</span>, <span class='va'>mbcalbb</span><span class='op'>)</span>
 <span class='co'># compare those two</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>inout</span>, <span class='no'>inout2</span>)</div><div class='output co'>#&gt;        inout2
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>inout</span>, <span class='va'>inout2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        inout2
 #&gt; inout   FALSE TRUE
 #&gt;   FALSE  5691  839
-#&gt;   TRUE      0 1991</div><div class='input'><span class='no'>pts</span><span class='kw'>=</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>)
+#&gt;   TRUE      0 1991</div><div class='input'><span class='va'>pts</span><span class='op'>=</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>
 <span class='co'># nb that colour expressions maps combinations of two logicals onto 1:4</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pts</span>[,<span class='fl'>1</span>:<span class='fl'>2</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='fl'>1</span>+<span class='no'>inout</span>+<span class='no'>inout2</span>*<span class='fl'>2</span>)</div><div class='img'><img src='pointsinside-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># the colours are defined by</span>
-<span class='fu'><a href='https://rdrr.io/r/grDevices/palette.html'>palette</a></span>()[<span class='fl'>1</span>:<span class='fl'>4</span>]</div><div class='output co'>#&gt; [1] "black"   "#DF536B" "#61D04F" "#2297E6"</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>pts</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span><span class='op'>]</span>, col<span class='op'>=</span><span class='fl'>1</span><span class='op'>+</span><span class='va'>inout</span><span class='op'>+</span><span class='va'>inout2</span><span class='op'>*</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='img'><img src='pointsinside-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># the colours are defined by</span>
+<span class='fu'><a href='https://rdrr.io/r/grDevices/palette.html'>palette</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
+</div><div class='output co'>#&gt; [1] "black"   "#DF536B" "#61D04F" "#2297E6"</div><div class='input'>
 <span class='co'># be a bit more lenient and include points less than 5 microns from surface</span>
-<span class='no'>MBCAL</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span>)
-<span class='no'>inout5</span><span class='kw'>=</span><span class='fu'>pointsinside</span>(<span class='no'>kcs20</span>, <span class='kw'>surf</span><span class='kw'>=</span><span class='no'>MBCAL</span>, <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'distance'</span>) <span class='kw'>&gt;</span> -<span class='fl'>5</span>
-<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span>(<span class='no'>inout5</span>)</div><div class='output co'>#&gt; inout5
+<span class='va'>MBCAL</span><span class='op'>=</span><span class='fu'><a href='subset.html'>subset</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span><span class='op'>)</span>
+<span class='va'>inout5</span><span class='op'>=</span><span class='fu'>pointsinside</span><span class='op'>(</span><span class='va'>kcs20</span>, surf<span class='op'>=</span><span class='va'>MBCAL</span>, rval<span class='op'>=</span><span class='st'>'distance'</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='op'>-</span><span class='fl'>5</span>
+<span class='fu'><a href='https://rdrr.io/r/base/table.html'>table</a></span><span class='op'>(</span><span class='va'>inout5</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; inout5
 #&gt; FALSE  TRUE 
 #&gt;  5604  2917 </div><div class='input'><span class='co'># \donttest{</span>
 <span class='co'># show which points are in or out</span>
 <span class='co'># Hmm seems like there are a few red points in the vertical lobe</span>
 <span class='co'># that are well outside the calyx</span>
-<span class='fu'>points3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>inout5</span>, <span class='st'>'red'</span>, <span class='st'>'black'</span>))
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>MBL.surf</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.3</span>)
+<span class='fu'>points3d</span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>, col<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>inout5</span>, <span class='st'>'red'</span>, <span class='st'>'black'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, alpha<span class='op'>=</span><span class='fl'>.3</span><span class='op'>)</span>
 
 <span class='co'># Let's try to make an alphashape for the mesh to clean it up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>alphashape3d</span>)
-<span class='no'>MBCAL.as</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/alphashape3d/man/ashape3d.html'>ashape3d</a></span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>MBCAL</span>), <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>alphashape3d</span><span class='op'>)</span>
+<span class='va'>MBCAL.as</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/alphashape3d/man/ashape3d.html'>ashape3d</a></span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>MBCAL</span><span class='op'>)</span>, alpha <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 <span class='co'># Plotting the points, we can see that is much better behaved</span>
-<span class='fu'>points3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>),
-  <span class='kw'>col</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='fu'>pointsinside</span>(<span class='no'>kcs20</span>, <span class='no'>MBCAL.as</span>), <span class='st'>'red'</span>, <span class='st'>'black'</span>))
+<span class='fu'>points3d</span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>,
+  col<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='fu'>pointsinside</span><span class='op'>(</span><span class='va'>kcs20</span>, <span class='va'>MBCAL.as</span><span class='op'>)</span>, <span class='st'>'red'</span>, <span class='st'>'black'</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># }</span>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Show the face normals for a surface</span>
-<span class='kw'>if</span>(<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='st'>'Morpho'</span>)) {
+<span class='kw'>if</span><span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/zarquon42b/Morpho'>'Morpho'</a></span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='co'># convert to a mesh3d object used by rgl and Morpho packge</span>
-  <span class='no'>MBCAL.mesh</span><span class='kw'>=</span><span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span>(<span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span>))
-  <span class='no'>fn</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/updateNormals.html'>facenormals</a></span>(<span class='no'>MBCAL.mesh</span>)
-  <span class='fu'><a href='wire3d.html'>wire3d</a></span>(<span class='no'>MBCAL.mesh</span>)
+  <span class='va'>MBCAL.mesh</span><span class='op'>=</span><span class='fu'><a href='as.mesh3d.html'>as.mesh3d</a></span><span class='op'>(</span><span class='fu'><a href='subset.html'>subset</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, <span class='st'>"MB_CA_L"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>fn</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/updateNormals.html'>facenormals</a></span><span class='op'>(</span><span class='va'>MBCAL.mesh</span><span class='op'>)</span>
+  <span class='fu'><a href='wire3d.html'>wire3d</a></span><span class='op'>(</span><span class='va'>MBCAL.mesh</span><span class='op'>)</span>
   <span class='co'># show that the normals point out of the object</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/plotNormals.html'>plotNormals</a></span>(<span class='no'>fn</span>, <span class='kw'>long</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/plotNormals.html'>plotNormals</a></span><span class='op'>(</span><span class='va'>fn</span>, long<span class='op'>=</span><span class='fl'>5</span>, col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
 
   <span class='co'># invert the faces of the mesh and show that normals point in</span>
-  <span class='no'>MBCAL.inv</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/invertFaces.html'>invertFaces</a></span>(<span class='no'>MBCAL.mesh</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/plotNormals.html'>plotNormals</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/updateNormals.html'>facenormals</a></span>(<span class='no'>MBCAL.inv</span>), <span class='kw'>long</span><span class='kw'>=</span><span class='fl'>5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'cyan'</span>)
-}
-}</div></pre>
+  <span class='va'>MBCAL.inv</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/invertFaces.html'>invertFaces</a></span><span class='op'>(</span><span class='va'>MBCAL.mesh</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/plotNormals.html'>plotNormals</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/Morpho/man/updateNormals.html'>facenormals</a></span><span class='op'>(</span><span class='va'>MBCAL.inv</span><span class='op'>)</span>, long<span class='op'>=</span><span class='fl'>5</span>, col<span class='op'>=</span><span class='st'>'cyan'</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -300,7 +306,7 @@ and <code>ashape3d</code> objects.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

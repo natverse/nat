@@ -162,14 +162,14 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for hxsurf</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>materials</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>gridlines</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>)
-)</pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  materials <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  gridlines <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>,
+  plotengine <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"nat.plotengine"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,19 +219,20 @@ engine (default: <code>FALSE</code>)</p></td>
 <code><a href='write.hxsurf.html'>write.hxsurf</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>MBL.surf</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>MBL.surf</span><span class='op'>)</span>
 
 <span class='co'># \donttest{</span>
 <span class='co'># plot only vertical lobe</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>MBL.surf</span>, <span class='kw'>materials</span><span class='kw'>=</span><span class='st'>"VL"</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>0.3</span>)
+<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, materials<span class='op'>=</span><span class='st'>"VL"</span>, alpha<span class='op'>=</span><span class='fl'>0.3</span><span class='op'>)</span>
 
 <span class='co'># everything except vertical lobe</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>MBL.surf</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>0.3</span>,
-  <span class='kw'>materials</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='st'>"VL"</span>, <span class='no'>MBL.surf</span>$<span class='no'>RegionList</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))
-<span class='co'># }</span></div></pre>
+<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>MBL.surf</span>, alpha<span class='op'>=</span><span class='fl'>0.3</span>, 
+  materials<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span><span class='op'>(</span><span class='st'>"VL"</span>, <span class='va'>MBL.surf</span><span class='op'>$</span><span class='va'>RegionList</span>, value <span class='op'>=</span> <span class='cn'>TRUE</span>, invert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -247,7 +248,7 @@ engine (default: <code>FALSE</code>)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

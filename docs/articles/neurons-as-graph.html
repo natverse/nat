@@ -107,13 +107,14 @@
 
       
 
-      </header><script src="neurons-as-graph_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="neurons-as-graph_files/header-attrs-2.5/header-attrs.js"></script><link href="neurons-as-graph_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="neurons-as-graph_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Working with individual neurons as graph structures</h1>
                         <h4 class="author">Gregory Jefferis</h4>
             
-            <h4 class="date">2020-09-12</h4>
+            <h4 class="date">2020-11-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/natverse/nat/blob/master/vignettes/neurons-as-graph.Rmd"><code>vignettes/neurons-as-graph.Rmd</code></a></small>
       <div class="hidden name"><code>neurons-as-graph.Rmd</code></div>
@@ -148,19 +149,23 @@
 <ul>
 <li>have gaps because a neuron was edited</li>
 <li>are not in the same order as the vertices</li>
-<li>have some other significance e.g. are globally unique across all neurons in a database and therefore have large values (which may be challenging for R to to represent give its maxint of 2^31 - 1=2.147483610^{9})</li>
+<li>have some other significance e.g. are globally unique across all neurons in a database and therefore have large values (which may be challenging for R to to represent give its maxint of 2^31 - 1=2.1474836^{9})</li>
 </ul>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">nat</span>)
-<span class="no">n</span><span class="kw">=</span><span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]]
-<span class="fu"><a href="../reference/summary.neuron.html">summary</a></span>(<span class="no">n</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/natverse/nat">nat</a></span><span class="op">)</span>
+<span class="va">n</span><span class="op">=</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="fu"><a href="../reference/summary.neuronlist.html">summary</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
 <pre><code>##   root nodes segments branchpoints endpoints cable.length
 ## 1    1   180       33           16        18     297.1763</code></pre>
 <p>We can extract the points as follows:</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/rootpoints.html">rootpoints</a></span>(<span class="no">n</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rootpoints.html">rootpoints</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/rootpoints.html">branchpoints</a></span>(<span class="no">n</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rootpoints.html">branchpoints</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1]  34  48  51  75  78  95  98  99 108 109 115 119 135 143 160 169</code></pre>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span>(<span class="no">n</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1]   1  42  59  62  80  85  96 100 102 112 117 121 134 148 154 165 172 180</code></pre>
 <p>Segments are unbranched connected sequences of nodes that terminate in a branch point or end point.</p>
 </div>
@@ -172,22 +177,24 @@
 <h3 class="hasAnchor">
 <a href="#strahler-order" class="anchor"></a>Strahler Order</h3>
 <p>The branching structure of a neuron is commonly summarised by calculating the <a href="https://en.wikipedia.org/wiki/Strahler_number">Strahler Order</a>.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="no">n</span><span class="kw">=</span><span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]]
-<span class="no">so</span><span class="kw">=</span><span class="fu"><a href="../reference/strahler_order.html">strahler_order</a></span>(<span class="no">n</span>)
-<span class="no">orders</span><span class="kw">=</span><span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">so</span>$<span class="no">points</span>)
-<span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="no">orders</span>) {
-  <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="fu"><a href="../reference/subset.html">subset</a></span>(<span class="no">n</span>, <span class="no">so</span>$<span class="no">points</span><span class="kw">==</span><span class="no">i</span>), <span class="kw">col</span><span class="kw">=</span><span class="no">i</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="no">i</span><span class="kw">!=</span><span class="fl">1</span>, <span class="kw">boundingbox</span> <span class="kw">=</span> <span class="fu"><a href="../reference/boundingbox.html">boundingbox</a></span>(<span class="no">n</span>))
-}</pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n</span><span class="op">=</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">so</span><span class="op">=</span><span class="fu"><a href="../reference/strahler_order.html">strahler_order</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+<span class="va">orders</span><span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">so</span><span class="op">$</span><span class="va">points</span><span class="op">)</span>
+<span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">orders</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/subset.html">subset</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">so</span><span class="op">$</span><span class="va">points</span><span class="op">==</span><span class="va">i</span><span class="op">)</span>, col<span class="op">=</span><span class="va">i</span>, add <span class="op">=</span> <span class="va">i</span><span class="op">!=</span><span class="fl">1</span>, boundingbox <span class="op">=</span> <span class="fu"><a href="../reference/boundingbox.html">boundingbox</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-3-1.png" width="576"> Note the use of multiple calls to <code>plot.neuron</code> using the <code>add=TRUE</code> argument for all but the first plot. Note also the use of the <code>boundingbox</code> argument/function in order to ensure that the plot is set up with appropriate axes for the whole neuron even if only part of it is plotted in the first call to <code>plot</code>.</p>
 </div>
 <div id="spine" class="section level3">
 <h3 class="hasAnchor">
 <a href="#spine" class="anchor"></a>Spine</h3>
 <p>You can find the longest path across a neuron using the spine function.</p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">n</span><span class="kw">=</span><span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]]
-<span class="no">sp</span><span class="kw">=</span><span class="fu"><a href="../reference/spine.html">spine</a></span>(<span class="no">n</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">n</span>, <span class="kw">col</span><span class="kw">=</span><span class="st">'grey'</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">sp</span>, <span class="kw">add</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">col</span><span class="kw">=</span><span class="st">'blue'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n</span><span class="op">=</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">sp</span><span class="op">=</span><span class="fu"><a href="../reference/spine.html">spine</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">n</span>, col<span class="op">=</span><span class="st">'grey'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sp</span>, add<span class="op">=</span><span class="cn">T</span>, col<span class="op">=</span><span class="st">'blue'</span><span class="op">)</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p><code>spine</code> has a variety of options that you can use to control the results.</p>
 </div>
@@ -195,34 +202,41 @@
 <h3 class="hasAnchor">
 <a href="#segment-graph" class="anchor"></a>Segment graph</h3>
 <p>You can use the <code>segmentgraph</code> function to make a simplified representation of the branching structure of the neuron. In this object (which has class <code>igraph</code> associated with the powerful <code>igraph</code> package) each unbranched segment in the original neuron (which might have contained many vertices) is collapsed to a single edge joining the branch points (which are retained).</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">sg</span><span class="kw">=</span><span class="fu"><a href="../reference/segmentgraph.html">segmentgraph</a></span>(<span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]])
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">sg</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sg</span><span class="op">=</span><span class="fu"><a href="../reference/segmentgraph.html">segmentgraph</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
 <p>It can be useful to plot the graph with a tree layout:</p>
-<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">sg</span>, <span class="kw">layout</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="no"><a href="https://rdrr.io/pkg/igraph/man/layout_as_tree.html">layout_as_tree</a></span>, <span class="kw">edge.arrow.size</span><span class="kw">=</span><span class="fl">.3</span>, <span class="kw">vertex.size</span><span class="kw">=</span><span class="fl">15</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sg</span>, layout<span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/igraph/man/layout_as_tree.html">layout_as_tree</a></span>, edge.arrow.size<span class="op">=</span><span class="fl">.3</span>, vertex.size<span class="op">=</span><span class="fl">15</span><span class="op">)</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-6-1.png" width="576"></p>
 <p>Note that the root of the neuron is placed at the top of the plot (point number 1 in the graph above) and that successive branching orders and leaves are placed on levels further down the plot. Note also that the labels on the plot correspond to the identifiers of the points in the original neuron (aka the <code>PointNo</code> field, see <a href="#neurons-as-graphs">first section</a>).</p>
 <p>If you need to work with the original identifiers of the points in the <code>segmentgraph</code> object, they are stored as <code>igraph</code> node attributes. You can access them like this:</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">sg</span>)$<span class="no">label</span></pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span><span class="op">$</span><span class="va">label</span></code></pre></div>
 <pre><code>##  [1]   1  34  42  48  51  59  62  75  78  80  85  95  96  98  99 100 102 108 109
 ## [20] 112 115 117 119 121 134 135 143 148 154 160 165 169 172 180</code></pre>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">sg</span>)$<span class="no">vid</span></pre></body></html></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span><span class="op">$</span><span class="va">vid</span></code></pre></div>
 <pre><code>##  [1]   1  34  42  48  51  59  62  75  78  80  85  95  96  98  99 100 102 108 109
 ## [20] 112 115 117 119 121 134 135 143 148 154 160 165 169 172 180</code></pre>
 <p><code>label</code> encodes the <code>PointNo</code> column and <code>vid</code> the raw integer index of the point in the node array. If and only if the <code>PointNo</code> identifier is a sequentially increasing integer starting at 1, then these will be identical. The SWC format is a little vague about whether they should indeed be the same, but is normally understood to imply it. However there are many SWC files in the wild that violate this assumption.</p>
 <p>You can also use the <code><a href="../reference/rootpoints.html">endpoints()</a></code> and <code><a href="../reference/rootpoints.html">rootpoints()</a></code> functions with the <code>segmentgraph</code> objects as well as any function that expects an <code>igraph</code> object. We can use this to find the branchpoints upstream of all end points using the <code><a href="https://rdrr.io/pkg/igraph/man/adjacent_vertices.html">igraph::adjacent_vertices()</a></code> function. We use <code>mode="all"</code> to handle the situation where the root node is also an end point (i.e. a leaf node).</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span>(<span class="no">sg</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1]  1  3  6  7 10 11 13 16 17 20 22 24 25 28 29 31 33 34</code></pre>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">ups</span><span class="kw">=</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/adjacent_vertices.html">adjacent_vertices</a></span>(<span class="no">sg</span>, <span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span>(<span class="no">sg</span>), <span class="kw">mode</span><span class="kw">=</span><span class="st">'all'</span>))
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ups</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/adjacent_vertices.html">adjacent_vertices</a></span><span class="op">(</span><span class="va">sg</span>, <span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span>, mode<span class="op">=</span><span class="st">'all'</span><span class="op">)</span><span class="op">)</span>
 <span class="co"># this maps the segmentgraph node indices back to indices for the neuron</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">sg</span>)$<span class="no">vid</span>[<span class="no">ups</span>]</pre></body></html></div>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span><span class="op">$</span><span class="va">vid</span><span class="op">[</span><span class="va">ups</span><span class="op">]</span></code></pre></div>
 <pre><code>##  [1]  34  34  51  51  78  78  95  99  99 109 115 119 119 143 143 160 169 169</code></pre>
 <p>Here we plot those <em>terminal</em> branchpoints in red while internal branches are displayed in blue.</p>
-<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">n</span>, <span class="kw">WithNodes</span> <span class="kw">=</span> <span class="no">F</span>)
-<span class="no">terminal_branches</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">sg</span>)$<span class="no">vid</span>[<span class="no">ups</span>]
-<span class="no">other_branches</span><span class="kw">=</span><span class="fu"><a href="../reference/setdiff.html">setdiff</a></span>(<span class="fu"><a href="../reference/rootpoints.html">branchpoints</a></span>(<span class="no">n</span>), <span class="no">terminal_branches</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span>(<span class="fu"><a href="../reference/xyzmatrix.html">xyzmatrix</a></span>(<span class="no">n</span>)[<span class="no">terminal_branches</span>,<span class="fl">1</span>:<span class="fl">2</span>], <span class="kw">col</span><span class="kw">=</span><span class="st">'red'</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span>(<span class="fu"><a href="../reference/xyzmatrix.html">xyzmatrix</a></span>(<span class="no">n</span>)[<span class="no">other_branches</span>,<span class="fl">1</span>:<span class="fl">2</span>], <span class="kw">col</span><span class="kw">=</span><span class="st">'blue'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">n</span>, WithNodes <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<span class="va">terminal_branches</span><span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">sg</span><span class="op">)</span><span class="op">$</span><span class="va">vid</span><span class="op">[</span><span class="va">ups</span><span class="op">]</span>
+<span class="va">other_branches</span><span class="op">=</span><span class="fu"><a href="../reference/setdiff.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="../reference/rootpoints.html">branchpoints</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>, <span class="va">terminal_branches</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="fu"><a href="../reference/xyzmatrix.html">xyzmatrix</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">[</span><span class="va">terminal_branches</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, col<span class="op">=</span><span class="st">'red'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="fu"><a href="../reference/xyzmatrix.html">xyzmatrix</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">[</span><span class="va">other_branches</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, col<span class="op">=</span><span class="st">'blue'</span><span class="op">)</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-9-1.png" width="480"></p>
 </div>
 </div>
@@ -230,13 +244,15 @@
 <h2 class="hasAnchor">
 <a href="#ngraph-objects" class="anchor"></a>ngraph objects</h2>
 <p>The <strong>nat</strong> package provides a bridge for neurons to the rich cross-platform <strong>igraph</strong> library. We provide a class <a href="https://natverse.github.io/nat/reference/ngraph.html"><code>ngraph</code></a> that is a thin wrapper for the <code>igraph</code> class. This looks after things that we might need to know about a neuron (like the 3D coordinates of each node) while still giving access to all of the graph functions in the igraph package.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">g</span><span class="kw">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span>(<span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]])
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span>(<span class="no">g</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span><span class="op">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "ngraph" "igraph"</code></pre>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">g</span></pre></body></html></div>
-<pre><code>## IGRAPH 3e89b1e DN-- 180 179 -- 
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span></code></pre></div>
+<pre><code>## IGRAPH 61a29a8 DN-- 180 179 -- 
 ## + attr: name (v/n), X (v/n), Y (v/n), Z (v/n), diam (v/n)
-## + edges from 3e89b1e (vertex names):
+## + edges from 61a29a8 (vertex names):
 ##  [1]  1-&gt; 2  2-&gt; 3  3-&gt; 4  4-&gt; 5  5-&gt; 6  6-&gt; 7  7-&gt; 8  8-&gt; 9  9-&gt;10 10-&gt;11
 ## [11] 11-&gt;12 12-&gt;13 13-&gt;14 14-&gt;15 15-&gt;16 16-&gt;17 17-&gt;18 18-&gt;19 19-&gt;20 20-&gt;21
 ## [21] 21-&gt;22 22-&gt;23 23-&gt;24 24-&gt;25 25-&gt;26 26-&gt;27 27-&gt;28 28-&gt;29 29-&gt;30 30-&gt;31
@@ -247,53 +263,62 @@
 ## [71] 71-&gt;72 72-&gt;73 73-&gt;74 74-&gt;75 75-&gt;76 76-&gt;77 77-&gt;78 78-&gt;79 79-&gt;80 78-&gt;81
 ## + ... omitted several edges</code></pre>
 <p>You can use functions such as</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/diameter.html">diameter</a></span>(<span class="no">g</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/diameter.html">diameter</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 89</code></pre>
 <p>to find the length of the longest path across the neuron. This is defined in terms of the number of intervening nodes. You can also make a graph in which the edge weights are the euclidean distance between the connected 3D nodes:</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">gw</span><span class="kw">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span>(<span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="kw">weights</span><span class="kw">=</span><span class="fl">TRUE</span>)
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/diameter.html">diameter</a></span>(<span class="no">gw</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">gw</span><span class="op">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, weights<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/diameter.html">diameter</a></span><span class="op">(</span><span class="va">gw</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 186.0859</code></pre>
 <p>This gives you the longest path length (geodesic) across the graph in units of µm in this case.</p>
-<p>Note that although you can do <code><a href="https://rdrr.io/pkg/igraph/man">library(igraph)</a></code>, it adds a lot of functions to the search path, some of which have name clashes, so I often just use the package name (<code>igraph::</code>) prepended to the function that I want to call.</p>
+<p>Note that although you can do <code><a href="https://igraph.org">library(igraph)</a></code>, it adds a lot of functions to the search path, some of which have name clashes, so I often just use the package name (<code>igraph::</code>) prepended to the function that I want to call.</p>
 <div id="walking-along-ngraph-objects" class="section level3">
 <h3 class="hasAnchor">
 <a href="#walking-along-ngraph-objects" class="anchor"></a>Walking along ngraph objects</h3>
 <p>You can use the graph representation of neurons e.g. to find the path between nodes.</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">g</span><span class="kw">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span>(<span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="kw">weights</span><span class="kw">=</span><span class="fl">TRUE</span>)
-<span class="no">eg</span><span class="kw">=</span><span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span>(<span class="no">g</span>)
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">g</span><span class="op">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, weights<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">eg</span><span class="op">=</span><span class="fu"><a href="../reference/rootpoints.html">endpoints</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>
 
-<span class="no">p</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span>(<span class="no">g</span>, <span class="kw">from</span><span class="kw">=</span><span class="fl">1</span>, <span class="kw">to</span><span class="kw">=</span><span class="fl">180</span>)
-<span class="no">p</span>$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]]</pre></body></html></div>
-<pre><code>## + 90/180 vertices, named, from e8f3034:
+<span class="va">p</span><span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span><span class="op">(</span><span class="va">g</span>, from<span class="op">=</span><span class="fl">1</span>, to<span class="op">=</span><span class="fl">180</span><span class="op">)</span>
+<span class="va">p</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## + 90/180 vertices, named, from 8f29bbd:
 ##  [1] 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19 
 ## [20] 20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  43  44  45  46 
 ## [39] 47  48  63  64  65  66  67  68  69  70  71  72  73  74  75  86  87  88  89 
 ## [58] 90  91  92  93  94  95  97  98  103 104 105 106 107 108 135 155 156 157 158
 ## [77] 159 160 166 167 168 169 173 174 175 176 177 178 179 180</code></pre>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># fails</span>
-<span class="no">p2</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span>(<span class="no">g</span>, <span class="kw">from</span><span class="kw">=</span><span class="fl">180</span>, <span class="kw">to</span><span class="kw">=</span><span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># fails</span>
+<span class="va">p2</span><span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span><span class="op">(</span><span class="va">g</span>, from<span class="op">=</span><span class="fl">180</span>, to<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in igraph::shortest_paths(g, from = 180, to = 1): At
 ## structural_properties.c:4597 :Couldn't reach some vertices</code></pre>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">p2</span>$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]]</pre></body></html></div>
-<pre><code>## + 1/180 vertex, named, from e8f3034:
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p2</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## + 1/180 vertex, named, from 8f29bbd:
 ## [1] 1</code></pre>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="co"># mode all will find the path irrespective of direction of links, which are</span>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># mode all will find the path irrespective of direction of links, which are</span>
 <span class="co"># directed from the soma</span>
-<span class="no">p3</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span>(<span class="no">g</span>, <span class="kw">from</span><span class="kw">=</span><span class="fl">180</span>, <span class="kw">to</span><span class="kw">=</span><span class="fl">1</span>, <span class="kw">mode</span> <span class="kw">=</span> <span class="st">'all'</span>)
-<span class="no">p3</span>$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]]</pre></body></html></div>
-<pre><code>## + 90/180 vertices, named, from e8f3034:
+<span class="va">p3</span><span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span><span class="op">(</span><span class="va">g</span>, from<span class="op">=</span><span class="fl">180</span>, to<span class="op">=</span><span class="fl">1</span>, mode <span class="op">=</span> <span class="st">'all'</span><span class="op">)</span>
+<span class="va">p3</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## + 90/180 vertices, named, from 8f29bbd:
 ##  [1] 180 179 178 177 176 175 174 173 169 168 167 166 160 159 158 157 156 155 135
 ## [20] 108 107 106 105 104 103 98  97  95  94  93  92  91  90  89  88  87  86  75 
 ## [39] 74  73  72  71  70  69  68  67  66  65  64  63  48  47  46  45  44  43  34 
 ## [58] 33  32  31  30  29  28  27  26  25  24  23  22  21  20  19  18  17  16  15 
 ## [77] 14  13  12  11  10  9   8   7   6   5   4   3   2   1</code></pre>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(<span class="no">p</span>$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]], <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span>(<span class="no">p3</span>$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]]))</pre></body></html></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="va">p</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">p3</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="co"># just the distances - by default uses mode=all</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span>(<span class="no">g</span>, <span class="kw">v</span><span class="kw">=</span><span class="fl">1</span>, <span class="kw">to</span><span class="kw">=</span><span class="fl">180</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># just the distances - by default uses mode=all</span>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span><span class="op">(</span><span class="va">g</span>, v<span class="op">=</span><span class="fl">1</span>, to<span class="op">=</span><span class="fl">180</span><span class="op">)</span></code></pre></div>
 <pre><code>##        180
 ## 1 186.0859</code></pre>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span>(<span class="no">g</span>, <span class="kw">v</span><span class="kw">=</span><span class="fl">180</span>, <span class="kw">to</span><span class="kw">=</span><span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span><span class="op">(</span><span class="va">g</span>, v<span class="op">=</span><span class="fl">180</span>, to<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>##            1
 ## 180 186.0859</code></pre>
 </div>
@@ -301,28 +326,32 @@
 <h3 class="hasAnchor">
 <a href="#node-identifiers-and-indices" class="anchor"></a>Node identifiers and indices</h3>
 <p>Note that in the previous code block, nodes are identified by their index (i.e. an integer starting at 1). As already discussed, some neurons have an arbitrary numeric identifier for each node (this can be a large integer from a database table e.g. for CATMAID neurons). You access this identifier in all of the above calls by quoting it. For example:</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="co"># using raw indices</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span>(<span class="no">g</span>, <span class="kw">v</span><span class="kw">=</span><span class="fl">180</span>, <span class="kw">to</span><span class="kw">=</span><span class="fl">1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># using raw indices</span>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span><span class="op">(</span><span class="va">g</span>, v<span class="op">=</span><span class="fl">180</span>, to<span class="op">=</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>##            1
 ## 180 186.0859</code></pre>
-<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="co"># using node identifiers</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span>(<span class="no">g</span>, <span class="kw">v</span><span class="kw">=</span><span class="st">'180'</span>, <span class="kw">to</span><span class="kw">=</span><span class="st">'1'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># using node identifiers</span>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">distances</a></span><span class="op">(</span><span class="va">g</span>, v<span class="op">=</span><span class="st">'180'</span>, to<span class="op">=</span><span class="st">'1'</span><span class="op">)</span></code></pre></div>
 <pre><code>##            1
 ## 180 186.0859</code></pre>
-<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span>(<span class="no">g</span>, <span class="kw">from</span><span class="kw">=</span><span class="st">'1'</span>, <span class="kw">to</span><span class="kw">=</span><span class="st">'180'</span>)$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]]</pre></body></html></div>
-<pre><code>## + 90/180 vertices, named, from e8f3034:
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span><span class="op">(</span><span class="va">g</span>, from<span class="op">=</span><span class="st">'1'</span>, to<span class="op">=</span><span class="st">'180'</span><span class="op">)</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## + 90/180 vertices, named, from 8f29bbd:
 ##  [1] 1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19 
 ## [20] 20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  43  44  45  46 
 ## [39] 47  48  63  64  65  66  67  68  69  70  71  72  73  74  75  86  87  88  89 
 ## [58] 90  91  92  93  94  95  97  98  103 104 105 106 107 108 135 155 156 157 158
 ## [77] 159 160 166 167 168 169 173 174 175 176 177 178 179 180</code></pre>
 <p>In this instance, the results are identical since the node identifiers are the same as the raw indices. If we manipulate the node identifiers to add 1000 to each</p>
-<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="co"># make a copy of `ngraph` object and add 1000 to each identifier</span>
-<span class="no">g2</span><span class="kw">=</span><span class="no">g</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">g2</span>)$<span class="no">name</span> <span class="kw">&lt;-</span> <span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">g2</span>)$<span class="no">name</span>+<span class="fl">1000</span>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># make a copy of `ngraph` object and add 1000 to each identifier</span>
+<span class="va">g2</span><span class="op">=</span><span class="va">g</span>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span><span class="op">$</span><span class="va">name</span> <span class="op">&lt;-</span> <span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span><span class="op">$</span><span class="va">name</span><span class="op">+</span><span class="fl">1000</span>
 <span class="co"># make a neuron with thoose identifiers to see what happened to its structure:</span>
-<span class="no">n2</span><span class="kw">=</span><span class="fu"><a href="../reference/neuron.html">as.neuron</a></span>(<span class="no">g2</span>)
-<span class="fu"><a href="../reference/neuronlist-dataframe-methods.html">head</a></span>(<span class="no">n2</span>$<span class="no">d</span>)</pre></body></html></div>
+<span class="va">n2</span><span class="op">=</span><span class="fu"><a href="../reference/neuron.html">as.neuron</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span>
+<span class="fu"><a href="../reference/neuronlist-dataframe-methods.html">head</a></span><span class="op">(</span><span class="va">n2</span><span class="op">$</span><span class="va">d</span><span class="op">)</span></code></pre></div>
 <pre><code>##   PointNo Label        X        Y        Z    W Parent
 ## 1    1001     2 186.8660 132.7093 88.20393 1.01     -1
 ## 2    1002     2 187.3355 131.1558 90.59680 1.27   1001
@@ -331,9 +360,10 @@
 ## 5    1005     2 188.2875 128.7542 97.45621 1.27   1004
 ## 6    1006     2 188.2733 127.9567 99.16801 1.27   1005</code></pre>
 <p>then find path by identifier:</p>
-<div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="no">p2</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span>(<span class="no">g2</span>, <span class="kw">from</span><span class="kw">=</span><span class="st">'1001'</span>, <span class="kw">to</span><span class="kw">=</span><span class="st">'1180'</span>)$<span class="no">vpath</span><span class="kw">[[</span><span class="fl">1</span>]]
-<span class="no">p2</span></pre></body></html></div>
-<pre><code>## + 90/180 vertices, named, from e8f3034:
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">p2</span><span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/distances.html">shortest_paths</a></span><span class="op">(</span><span class="va">g2</span>, from<span class="op">=</span><span class="st">'1001'</span>, to<span class="op">=</span><span class="st">'1180'</span><span class="op">)</span><span class="op">$</span><span class="va">vpath</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">p2</span></code></pre></div>
+<pre><code>## + 90/180 vertices, named, from 8f29bbd:
 ##  [1] 1001 1002 1003 1004 1005 1006 1007 1008 1009 1010 1011 1012 1013 1014 1015
 ## [16] 1016 1017 1018 1019 1020 1021 1022 1023 1024 1025 1026 1027 1028 1029 1030
 ## [31] 1031 1032 1033 1034 1043 1044 1045 1046 1047 1048 1063 1064 1065 1066 1067
@@ -341,13 +371,15 @@
 ## [61] 1093 1094 1095 1097 1098 1103 1104 1105 1106 1107 1108 1135 1155 1156 1157
 ## [76] 1158 1159 1160 1166 1167 1168 1169 1173 1174 1175 1176 1177 1178 1179 1180</code></pre>
 <p>Note that when the path is printed it shows the node identifiers. But when using the path, it may be necessary to convert to integers. This results in raw indices again.</p>
-<div class="sourceCode" id="cb54"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span>(<span class="no">p2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1]   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19
 ## [20]  20  21  22  23  24  25  26  27  28  29  30  31  32  33  34  43  44  45  46
 ## [39]  47  48  63  64  65  66  67  68  69  70  71  72  73  74  75  86  87  88  89
 ## [58]  90  91  92  93  94  95  97  98 103 104 105 106 107 108 135 155 156 157 158
 ## [77] 159 160 166 167 168 169 173 174 175 176 177 178 179 180</code></pre>
-<div class="sourceCode" id="cb56"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">p2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">p2</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1] "1001" "1002" "1003" "1004" "1005" "1006" "1007" "1008" "1009" "1010"
 ## [11] "1011" "1012" "1013" "1014" "1015" "1016" "1017" "1018" "1019" "1020"
 ## [21] "1021" "1022" "1023" "1024" "1025" "1026" "1027" "1028" "1029" "1030"
@@ -362,11 +394,12 @@
 <h3 class="hasAnchor">
 <a href="#downstream-nodes" class="anchor"></a>Downstream nodes</h3>
 <p>You can also ask for nodes upstream or downstream of a given starting node. For example the neurons in the <code>Cell07PNs</code> set have a tag called <code>AxonLHEP</code> that defines the entry point of the axon into the lateral horn neuropil of the fly brain. Here we defined</p>
-<div class="sourceCode" id="cb58"><html><body><pre class="r"><span class="no">n</span><span class="kw">=</span><span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]]
-<span class="no">g</span><span class="kw">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span>(<span class="no">n</span>)
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n</span><span class="op">=</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="va">g</span><span class="op">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
 <span class="co"># find the nodes distal to this point</span>
 <span class="co"># nb you must set unreachable=F if you only want to get downstream nodes</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/dfs.html">dfs</a></span>(<span class="no">g</span>, <span class="kw">neimode</span><span class="kw">=</span><span class="st">'out'</span>, <span class="kw">unreachable</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">root</span><span class="kw">=</span><span class="no">n</span>$<span class="no">AxonLHEP</span>)</pre></body></html></div>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/dfs.html">dfs</a></span><span class="op">(</span><span class="va">g</span>, neimode<span class="op">=</span><span class="st">'out'</span>, unreachable <span class="op">=</span> <span class="cn">FALSE</span>, root<span class="op">=</span><span class="va">n</span><span class="op">$</span><span class="va">AxonLHEP</span><span class="op">)</span></code></pre></div>
 <pre><code>## $root
 ## [1] 71
 ## 
@@ -374,7 +407,7 @@
 ## [1] "out"
 ## 
 ## $order
-## + 180/180 vertices, named, from 55d862a:
+## + 180/180 vertices, named, from 94af627:
 ##   [1] 72   73   74   75   76   77   78   79   80   81   82   83   84   85   86  
 ##  [16] 87   88   89   90   91   92   93   94   95   96   97   98   99   100  101 
 ##  [31] 102  103  104  105  106  107  108  109  110  111  112  113  114  115  116 
@@ -395,8 +428,9 @@
 ## 
 ## $dist
 ## NULL</code></pre>
-<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="co"># the proximal nodes back to the soma (including any branches)</span>
-<span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/dfs.html">dfs</a></span>(<span class="no">g</span>, <span class="kw">neimode</span><span class="kw">=</span><span class="st">'in'</span>, <span class="kw">unreachable</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">root</span><span class="kw">=</span><span class="no">n</span>$<span class="no">AxonLHEP</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># the proximal nodes back to the soma (including any branches)</span>
+<span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/dfs.html">dfs</a></span><span class="op">(</span><span class="va">g</span>, neimode<span class="op">=</span><span class="st">'in'</span>, unreachable <span class="op">=</span> <span class="cn">FALSE</span>, root<span class="op">=</span><span class="va">n</span><span class="op">$</span><span class="va">AxonLHEP</span><span class="op">)</span></code></pre></div>
 <pre><code>## $root
 ## [1] 71
 ## 
@@ -404,7 +438,7 @@
 ## [1] "in"
 ## 
 ## $order
-## + 180/180 vertices, named, from 55d862a:
+## + 180/180 vertices, named, from 94af627:
 ##   [1] 72   71   70   69   68   67   66   65   64   63   48   47   46   45   44  
 ##  [16] 43   34   33   32   31   30   29   28   27   26   25   24   23   22   21  
 ##  [31] 20   19   18   17   16   15   14   13   12   11   10   9    8    7    6   
@@ -427,14 +461,15 @@
 ## NULL</code></pre>
 <p>Note that <code>dfs</code> (depth first search) provides a good way to visit all the nodes of the neuron</p>
 <p>Let’s use this to make a function that prunes neurons downstream of this axon entry point:</p>
-<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="no">prune_from_lhep</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">n</span>, <span class="no">...</span>) {
-  <span class="no">g</span><span class="kw">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span>(<span class="no">n</span>)
-  <span class="no">downstream_indices</span><span class="kw">=</span><span class="kw pkg">igraph</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/dfs.html">dfs</a></span>(<span class="no">g</span>, <span class="kw">root</span> <span class="kw">=</span> <span class="no">n</span>$<span class="no">AxonLHEP</span>, <span class="kw">unreachable</span> <span class="kw">=</span> <span class="fl">FALSE</span>)$<span class="no">order</span>
-  <span class="fu"><a href="../reference/prune_vertices.html">prune_vertices</a></span>(<span class="no">n</span>, <span class="kw">verticestoprune</span> <span class="kw">=</span> <span class="no">downstream_indices</span>, <span class="kw">invert</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-}
-<span class="no">pruned</span><span class="kw">=</span><span class="fu"><a href="../reference/nlapply.html">nlapply</a></span>(<span class="no">Cell07PNs</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="no">prune_from_lhep</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">Cell07PNs</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="kw">col</span><span class="kw">=</span><span class="st">'grey'</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">pruned</span>, <span class="kw">lwd</span><span class="kw">=</span><span class="fl">2</span>, <span class="kw">add</span> <span class="kw">=</span> <span class="no">T</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prune_from_lhep</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">g</span><span class="op">=</span><span class="fu"><a href="../reference/ngraph.html">as.ngraph</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>
+  <span class="va">downstream_indices</span><span class="op">=</span><span class="fu">igraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/dfs.html">dfs</a></span><span class="op">(</span><span class="va">g</span>, root <span class="op">=</span> <span class="va">n</span><span class="op">$</span><span class="va">AxonLHEP</span>, unreachable <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">order</span>
+  <span class="fu"><a href="../reference/prune_vertices.html">prune_vertices</a></span><span class="op">(</span><span class="va">n</span>, verticestoprune <span class="op">=</span> <span class="va">downstream_indices</span>, invert <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="op">}</span>
+<span class="va">pruned</span><span class="op">=</span><span class="fu"><a href="../reference/nlapply.html">nlapply</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="va">prune_from_lhep</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, col<span class="op">=</span><span class="st">'grey'</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">pruned</span>, lwd<span class="op">=</span><span class="fl">2</span>, add <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-19-1.png" width="576"></p>
 <p>The pruned neurons show up in red, green, and blue in the above plot.</p>
 </div>
@@ -442,8 +477,9 @@
 <h3 class="hasAnchor">
 <a href="#distal-nodes" class="anchor"></a>Distal nodes</h3>
 <p>As of nat v1.10.0 there is a <code><a href="../reference/distal_to.html">distal_to()</a></code> function to provide a simpler access to nodes defined by graph position.</p>
-<div class="sourceCode" id="cb63"><html><body><pre class="r"><span class="no">n</span><span class="kw">=</span><span class="no">Cell07PNs</span><span class="kw">[[</span><span class="fl">1</span>]]
-<span class="fu"><a href="../reference/distal_to.html">distal_to</a></span>(<span class="no">n</span>, <span class="kw">node.idx</span> <span class="kw">=</span> <span class="no">n</span>$<span class="no">AxonLHEP</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n</span><span class="op">=</span><span class="va">Cell07PNs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
+<span class="fu"><a href="../reference/distal_to.html">distal_to</a></span><span class="op">(</span><span class="va">n</span>, node.idx <span class="op">=</span> <span class="va">n</span><span class="op">$</span><span class="va">AxonLHEP</span><span class="op">)</span></code></pre></div>
 <pre><code>##   [1]  72  73  74  75  76  77  78  79  80  81  82  83  84  85  86  87  88  89
 ##  [19]  90  91  92  93  94  95  96  97  98  99 100 101 102 103 104 105 106 107
 ##  [37] 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125
@@ -452,22 +488,25 @@
 ##  [91] 162 163 164 165 166 167 168 169 170 171 172 173 174 175 176 177 178 179
 ## [109] 180</code></pre>
 <p>One can find the complement (i.e. all the nodes that are not in the distal set) by comparing with the indices of all vertices.</p>
-<div class="sourceCode" id="cb65"><html><body><pre class="r"><span class="fu"><a href="../reference/setdiff.html">setdiff</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span>(<span class="fu"><a href="../reference/nvertices.html">nvertices</a></span>(<span class="no">n</span>)), <span class="fu"><a href="../reference/distal_to.html">distal_to</a></span>(<span class="no">n</span>, <span class="kw">node.idx</span> <span class="kw">=</span> <span class="no">n</span>$<span class="no">AxonLHEP</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/setdiff.html">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="../reference/nvertices.html">nvertices</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="../reference/distal_to.html">distal_to</a></span><span class="op">(</span><span class="va">n</span>, node.idx <span class="op">=</span> <span class="va">n</span><span class="op">$</span><span class="va">AxonLHEP</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 ## [26] 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
 ## [51] 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71</code></pre>
 <p><code><a href="../reference/distal_to.html">distal_to()</a></code> allows you to write a slightly simpler version of the function above:</p>
-<div class="sourceCode" id="cb67"><html><body><pre class="r"><span class="no">prune_from_lhep2</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">n</span>, <span class="no">...</span>) {
-  <span class="no">downstream_indices</span><span class="kw">=</span><span class="fu"><a href="../reference/distal_to.html">distal_to</a></span>(<span class="no">n</span>, <span class="kw">node.idx</span> <span class="kw">=</span> <span class="no">n</span>$<span class="no">AxonLHEP</span>)
-  <span class="fu"><a href="../reference/prune_vertices.html">prune_vertices</a></span>(<span class="no">n</span>, <span class="kw">verticestoprune</span> <span class="kw">=</span> <span class="no">downstream_indices</span>, <span class="kw">invert</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
-}
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">prune_from_lhep2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">downstream_indices</span><span class="op">=</span><span class="fu"><a href="../reference/distal_to.html">distal_to</a></span><span class="op">(</span><span class="va">n</span>, node.idx <span class="op">=</span> <span class="va">n</span><span class="op">$</span><span class="va">AxonLHEP</span><span class="op">)</span>
+  <span class="fu"><a href="../reference/prune_vertices.html">prune_vertices</a></span><span class="op">(</span><span class="va">n</span>, verticestoprune <span class="op">=</span> <span class="va">downstream_indices</span>, invert <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="op">}</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span>(<span class="fu"><a href="../reference/nlapply.html">nlapply</a></span>(<span class="no">Cell07PNs</span>[<span class="fl">1</span>:<span class="fl">3</span>], <span class="no">prune_from_lhep2</span>), <span class="no">pruned</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/all.equal.html">all.equal</a></span><span class="op">(</span><span class="fu"><a href="../reference/nlapply.html">nlapply</a></span><span class="op">(</span><span class="va">Cell07PNs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, <span class="va">prune_from_lhep2</span><span class="op">)</span>, <span class="va">pruned</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>Notice that <code><a href="../reference/distal_to.html">distal_to()</a></code> will help with the situation where you need to find nodes using their identifiers rather than indices. For example tags in neurons loaded from the CATMAID reconstruction tool are defined by ids not indices.</p>
-<div class="sourceCode" id="cb69"><html><body><pre class="r"><span class="no">tokeep</span><span class="kw">=</span><span class="fu"><a href="../reference/distal_to.html">distal_to</a></span>(<span class="no">dl1neuron</span>, <span class="kw">node.pointno</span> <span class="kw">=</span> <span class="no">dl1neuron</span>$<span class="no">tags</span>$<span class="no">SCHLEGEL_LH</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">dl1neuron</span>, <span class="kw">WithNodes</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">soma</span><span class="kw">=</span><span class="fl">2000</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="fu"><a href="../reference/prune_vertices.html">prune_vertices</a></span>(<span class="no">dl1neuron</span>, <span class="no">tokeep</span>, <span class="kw">invert</span> <span class="kw">=</span> <span class="no">T</span>), <span class="kw">add</span><span class="kw">=</span><span class="no">T</span>, <span class="kw">WithNodes</span> <span class="kw">=</span> <span class="no">F</span>, <span class="kw">col</span><span class="kw">=</span><span class="st">'red'</span>, <span class="kw">lwd</span><span class="kw">=</span><span class="fl">2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tokeep</span><span class="op">=</span><span class="fu"><a href="../reference/distal_to.html">distal_to</a></span><span class="op">(</span><span class="va">dl1neuron</span>, node.pointno <span class="op">=</span> <span class="va">dl1neuron</span><span class="op">$</span><span class="va">tags</span><span class="op">$</span><span class="va">SCHLEGEL_LH</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">dl1neuron</span>, WithNodes <span class="op">=</span> <span class="cn">F</span>, soma<span class="op">=</span><span class="fl">2000</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/prune_vertices.html">prune_vertices</a></span><span class="op">(</span><span class="va">dl1neuron</span>, <span class="va">tokeep</span>, invert <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, add<span class="op">=</span><span class="cn">T</span>, WithNodes <span class="op">=</span> <span class="cn">F</span>, col<span class="op">=</span><span class="st">'red'</span>, lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="neurons-as-graph_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 </div>
 </div>
@@ -488,7 +527,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

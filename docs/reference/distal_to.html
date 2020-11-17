@@ -163,13 +163,13 @@ first search starting from the given node." />
 first search starting from the given node.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>distal_to</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>node.idx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>node.pointno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>root.idx</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>root.pointno</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)</pre>
+    <pre class="usage"><span class='fu'>distal_to</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  node.idx <span class='op'>=</span> <span class='cn'>NULL</span>,
+  node.pointno <span class='op'>=</span> <span class='cn'>NULL</span>,
+  root.idx <span class='op'>=</span> <span class='cn'>NULL</span>,
+  root.pointno <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -210,9 +210,11 @@ selection. You will rarely need to change this from the default value. See
 <span class='co'>## subset to part of neuron distal to a tag "SCHLEGEL_LH"</span>
 <span class='co'># nb distal_to can accept either the PointNo vertex id or raw index as a</span>
 <span class='co'># pivot point</span>
-<span class='no'>dl1.lh</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>dl1neuron</span>, <span class='fu'>distal_to</span>(<span class='no'>dl1neuron</span>,
-  <span class='kw'>node.pointno</span> <span class='kw'>=</span> <span class='no'>dl1neuron</span>$<span class='no'>tags</span>$<span class='no'>SCHLEGEL_LH</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>dl1neuron</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>dl1.lh</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='distal_to-1.png' alt='' width='700' height='433' /></div><div class='input'># }
+<span class='va'>dl1.lh</span><span class='op'>=</span><span class='fu'><a href='subset.html'>subset</a></span><span class='op'>(</span><span class='va'>dl1neuron</span>, <span class='fu'>distal_to</span><span class='op'>(</span><span class='va'>dl1neuron</span>,
+  node.pointno <span class='op'>=</span> <span class='va'>dl1neuron</span><span class='op'>$</span><span class='va'>tags</span><span class='op'>$</span><span class='va'>SCHLEGEL_LH</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dl1neuron</span>,col<span class='op'>=</span><span class='st'>'blue'</span>, WithNodes <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>dl1.lh</span>, col<span class='op'>=</span><span class='st'>'red'</span>, WithNodes <span class='op'>=</span> <span class='cn'>FALSE</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='distal_to-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -229,7 +231,7 @@ selection. You will rarely need to change this from the default value. See
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

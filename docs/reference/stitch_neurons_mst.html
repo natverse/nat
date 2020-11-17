@@ -161,7 +161,7 @@
     <p>Stitch multiple fragments into single neuron using minimum spanning tree</p>
     </div>
 
-    <pre class="usage"><span class='fu'>stitch_neurons_mst</span>(<span class='no'>x</span>, <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>Inf</span>, <span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>10L</span>)</pre>
+    <pre class="usage"><span class='fu'>stitch_neurons_mst</span><span class='op'>(</span><span class='va'>x</span>, threshold <span class='op'>=</span> <span class='cn'>Inf</span>, k <span class='op'>=</span> <span class='fl'>10L</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,38 +203,45 @@ different clusters.</p></td>
 
     <div class='dont-index'><p><code><a href='simplify_neuron.html'>simplify_neuron</a></code>, <code><a href='spine.html'>spine</a></code>,
   <code><a href='ngraph.html'>ngraph</a></code>, <code>igraph::<a href='https://rdrr.io/pkg/igraph/man/mst.html'>mst</a></code></p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Sridhar Jagannathan <a href='mailto:j.sridharrajan@gmail.com'>j.sridharrajan@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='st'>'ECA34L'</span>]]
+    <pre class="examples"><div class='input'><span class='va'>n</span><span class='op'>=</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='st'>'ECA34L'</span><span class='op'>]</span><span class='op'>]</span>
 <span class='co'># find the tree with the 10 most important branches</span>
-<span class='no'>n_main</span><span class='kw'>=</span><span class='fu'><a href='simplify_neuron.html'>simplify_neuron</a></span>(<span class='no'>n</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='va'>n_main</span><span class='op'>=</span><span class='fu'><a href='simplify_neuron.html'>simplify_neuron</a></span><span class='op'>(</span><span class='va'>n</span>, n <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 <span class='co'># and the complement</span>
-<span class='no'>n_branches</span><span class='kw'>=</span><span class='fu'><a href='simplify_neuron.html'>simplify_neuron</a></span>(<span class='no'>n</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='va'>n_branches</span><span class='op'>=</span><span class='fu'><a href='simplify_neuron.html'>simplify_neuron</a></span><span class='op'>(</span><span class='va'>n</span>, n <span class='op'>=</span> <span class='fl'>10</span>, invert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># plot the inputs</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>n_main</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>n_branches</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='stitch_neurons_mst-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>n_main</span>, col<span class='op'>=</span><span class='st'>'red'</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>n_branches</span>, col<span class='op'>=</span><span class='st'>'blue'</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='stitch_neurons_mst-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># join the two fragments back together again</span>
 <span class='co'># first make a neuronlist containing the two fragments</span>
-<span class='no'>nl</span><span class='kw'>=</span><span class='fu'><a href='neuronlist.html'>neuronlist</a></span>(<span class='no'>n_main</span>, <span class='no'>n_branches</span>)
+<span class='va'>nl</span><span class='op'>=</span><span class='fu'><a href='neuronlist.html'>neuronlist</a></span><span class='op'>(</span><span class='va'>n_main</span>, <span class='va'>n_branches</span><span class='op'>)</span>
 <span class='co'># and stitch those</span>
-<span class='no'>n_stitched</span><span class='kw'>=</span><span class='fu'>stitch_neurons_mst</span>(<span class='no'>nl</span>)
+<span class='va'>n_stitched</span><span class='op'>=</span><span class='fu'>stitch_neurons_mst</span><span class='op'>(</span><span class='va'>nl</span><span class='op'>)</span>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># look at the neurons in 3D - they appear identical in this case</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'cyan'</span>, <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>n_stitched</span>, <span class='kw'>alpha</span><span class='kw'>=</span><span class='fl'>.5</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)
-}
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>n</span>, alpha<span class='op'>=</span><span class='fl'>.5</span>, col<span class='op'>=</span><span class='st'>'cyan'</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>n_stitched</span>, alpha<span class='op'>=</span><span class='fl'>.5</span>, col<span class='op'>=</span><span class='st'>'red'</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'>## second example neuron containing multiple sub trees</span>
-<span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='st'>'ECA34L'</span>]]
+<span class='va'>n</span><span class='op'>=</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='st'>'ECA34L'</span><span class='op'>]</span><span class='op'>]</span>
 <span class='co'># remove a single vertex, breaking the neuron in two</span>
 <span class='co'># note that the root (purple node) has moved </span>
-<span class='no'>np</span><span class='kw'>=</span><span class='fu'><a href='prune_vertices.html'>prune_vertices</a></span>(<span class='no'>n</span>, <span class='fl'>105</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>np</span>)</div><div class='img'><img src='stitch_neurons_mst-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>np</span><span class='op'>=</span><span class='fu'><a href='prune_vertices.html'>prune_vertices</a></span><span class='op'>(</span><span class='va'>n</span>, <span class='fl'>105</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>np</span><span class='op'>)</span>
+</div><div class='img'><img src='stitch_neurons_mst-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># now stitch the broken neuron back together again</span>
-<span class='no'>nph</span><span class='kw'>=</span><span class='fu'>stitch_neurons_mst</span>(<span class='no'>np</span>)
+<span class='va'>nph</span><span class='op'>=</span><span class='fu'>stitch_neurons_mst</span><span class='op'>(</span><span class='va'>np</span><span class='op'>)</span>
 <span class='co'># note that the root remains the same as the input neuron (np)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>nph</span>)</div><div class='img'><img src='stitch_neurons_mst-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>nph</span><span class='op'>)</span>
+</div><div class='img'><img src='stitch_neurons_mst-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -250,7 +257,7 @@ different clusters.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

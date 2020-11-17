@@ -177,39 +177,39 @@ be required for expert use; in almost all circumstances, you should use only
   supported in future.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warn"</span>, <span class='st'>"none"</span>, <span class='st'>"drop"</span>, <span class='st'>"error"</span>), <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, na.action <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"warn"</span>, <span class='st'>"none"</span>, <span class='st'>"drop"</span>, <span class='st'>"error"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for list</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, FallBackToAffine <span class='op'>=</span> <span class='cn'>TRUE</span>, na.action <span class='op'>=</span> <span class='st'>"error"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for shape3d</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, FallBackToAffine <span class='op'>=</span> <span class='cn'>TRUE</span>, na.action <span class='op'>=</span> <span class='st'>"error"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>na.action</span> <span class='kw'>=</span> <span class='st'>"error"</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, FallBackToAffine <span class='op'>=</span> <span class='cn'>TRUE</span>, na.action <span class='op'>=</span> <span class='st'>"error"</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, subset <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for dotprops</span>
-<span class='fu'>xform</span>(<span class='no'>x</span>, <span class='no'>reg</span>, <span class='kw'>FallBackToAffine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>reg</span>, FallBackToAffine <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>xform</span>(
-  <span class='no'>x</span>,
-  <span class='no'>reg</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>VectoriseRegistrations</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>TransformDFCoords</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'>xform</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>reg</span>,
+  subset <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  OmitFailures <span class='op'>=</span> <span class='cn'>NA</span>,
+  VectoriseRegistrations <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  TransformDFCoords <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -325,28 +325,29 @@ as well.</p></td>
     <div class='dont-index'><p><code><a href='xformpoints.html'>xformpoints</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>kc1</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-<span class='no'>kc1.default</span><span class='kw'>=</span><span class='fu'>xform</span>(<span class='no'>kc1</span>,<span class='kw'>function</span>(<span class='no'>x</span>,<span class='no'>...</span>) <span class='no'>x</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>kc1</span>,<span class='no'>kc1.default</span>)))
-<span class='no'>kc1.5</span><span class='kw'>=</span><span class='fu'>xform</span>(<span class='no'>kc1</span>,<span class='kw'>function</span>(<span class='no'>x</span>,<span class='no'>...</span>) <span class='no'>x</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>kc1.5</span>,<span class='no'>kc1.default</span>)))
-<span class='no'>kc1.20</span><span class='kw'>=</span><span class='fu'>xform</span>(<span class='no'>kc1</span>,<span class='kw'>function</span>(<span class='no'>x</span>,<span class='no'>...</span>) <span class='no'>x</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>20</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span>(!<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>kc1</span>,<span class='no'>kc1.20</span>)))
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>kc1</span><span class='op'>=</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>kc1.default</span><span class='op'>=</span><span class='fu'>xform</span><span class='op'>(</span><span class='va'>kc1</span>,<span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>...</span><span class='op'>)</span> <span class='va'>x</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>kc1</span>,<span class='va'>kc1.default</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>kc1.5</span><span class='op'>=</span><span class='fu'>xform</span><span class='op'>(</span><span class='va'>kc1</span>,<span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>...</span><span class='op'>)</span> <span class='va'>x</span>, k<span class='op'>=</span><span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>kc1.5</span>,<span class='va'>kc1.default</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>kc1.20</span><span class='op'>=</span><span class='fu'>xform</span><span class='op'>(</span><span class='va'>kc1</span>,<span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>...</span><span class='op'>)</span> <span class='va'>x</span>, k<span class='op'>=</span><span class='fl'>20</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>kc1</span>,<span class='va'>kc1.20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># apply two registrations converting sample-&gt;IS2-&gt;JFRC2</span>
-<span class='no'>reg_seq</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"IS2_sample.list"</span>, <span class='st'>"JFRC2_IS2.list"</span>)
-<span class='fu'>xform</span>(<span class='no'>kc1</span>, <span class='no'>reg_seq</span>)
+<span class='va'>reg_seq</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"IS2_sample.list"</span>, <span class='st'>"JFRC2_IS2.list"</span><span class='op'>)</span>
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>kc1</span>, <span class='va'>reg_seq</span><span class='op'>)</span>
 <span class='co'># apply two registrations, swapping the direction of the second one</span>
 <span class='co'># i.e. sample -&gt; IS2 -&gt; FCWB</span>
-<span class='no'>reg_seq</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"IS2_sample.list"</span>, <span class='st'>"IS2_FCWB.list"</span>), <span class='kw'>swap</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>FALSE</span>, <span class='fl'>TRUE</span>))
-<span class='fu'>xform</span>(<span class='no'>kc1</span>, <span class='no'>reg_seq</span>)
-}
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='va'>reg_seq</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/structure.html'>structure</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"IS2_sample.list"</span>, <span class='st'>"IS2_FCWB.list"</span><span class='op'>)</span>, swap<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>FALSE</span>, <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>xform</span><span class='op'>(</span><span class='va'>kc1</span>, <span class='va'>reg_seq</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># apply reg1 to Cell07PNs[[1]], reg2 to Cell07PNs[[2]] etc</span>
-<span class='no'>regs</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>reg1</span>, <span class='no'>reg2</span>, <span class='no'>reg3</span>)
-<span class='no'>nx</span><span class='kw'>=</span><span class='fu'>xform</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>reg</span><span class='kw'>=</span><span class='no'>regs</span>, <span class='kw'>VectoriseRegistrations</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='va'>regs</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>reg1</span>, <span class='va'>reg2</span>, <span class='va'>reg3</span><span class='op'>)</span>
+<span class='va'>nx</span><span class='op'>=</span><span class='fu'>xform</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, reg<span class='op'>=</span><span class='va'>regs</span>, VectoriseRegistrations<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -362,7 +363,7 @@ as well.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

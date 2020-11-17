@@ -162,18 +162,18 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>color</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>gridlines</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>plotengine</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.plotengine"</span>)
-)</pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  scalevecs <span class='op'>=</span> <span class='fl'>1</span>,
+  alpharange <span class='op'>=</span> <span class='cn'>NULL</span>,
+  color <span class='op'>=</span> <span class='st'>"black"</span>,
+  PlotPoints <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  PlotVectors <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  UseAlpha <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>,
+  gridlines <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plotengine <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"nat.plotengine"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -245,14 +245,16 @@ engine (default: <code>FALSE</code>)</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>open3d</span>()</div><div class='output co'>#&gt; glX 
-#&gt;   6 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]])
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>,<span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>2</span>]],<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>,<span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>)
-<span class='co'># }</span></div></pre>
+<span class='fu'>open3d</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; glX 
+#&gt;   6 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
+<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'red'</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'green'</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -268,7 +270,7 @@ engine (default: <code>FALSE</code>)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

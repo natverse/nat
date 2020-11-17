@@ -161,10 +161,10 @@
     <p>Convert an object to a nat hxsurf object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.hxsurf</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as.hxsurf</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mesh3d</span>
-<span class='fu'>as.hxsurf</span>(<span class='no'>x</span>, <span class='kw'>region</span> <span class='kw'>=</span> <span class='st'>"Interior"</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as.hxsurf</span><span class='op'>(</span><span class='va'>x</span>, region <span class='op'>=</span> <span class='st'>"Interior"</span>, col <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,11 +211,12 @@ no colour.)</p></td>
 <code><a href='write.hxsurf.html'>write.hxsurf</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>tet</span><span class='kw'>=</span><span class='fu'>tetrahedron3d</span>(<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
-<span class='no'>teth</span><span class='kw'>=</span><span class='fu'>as.hxsurf</span>(<span class='no'>tet</span>)
+    <pre class="examples"><div class='input'><span class='va'>tet</span><span class='op'>=</span><span class='fu'>tetrahedron3d</span><span class='op'>(</span>col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
+<span class='va'>teth</span><span class='op'>=</span><span class='fu'>as.hxsurf</span><span class='op'>(</span><span class='va'>tet</span><span class='op'>)</span>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>teth</span>)
-<span class='co'># }</span></div></pre>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>teth</span><span class='op'>)</span>
+<span class='co'># }</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -231,7 +232,7 @@ no colour.)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

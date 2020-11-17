@@ -167,17 +167,17 @@ expression</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for neuronlist</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>colpal</span> <span class='kw'>=</span> <span class='no'>rainbow</span>,
-  <span class='kw'>add</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>SUBSTITUTE</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  subset <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  colpal <span class='op'>=</span> <span class='va'>rainbow</span>,
+  add <span class='op'>=</span> <span class='cn'>NULL</span>,
+  boundingbox <span class='op'>=</span> <span class='cn'>NULL</span>,
+  soma <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>,
+  SUBSTITUTE <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -251,11 +251,15 @@ use only, when calling from another function.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># plot 4 cells</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>4</span>])</div><div class='img'><img src='plot.neuronlist-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># modify some default plot arguments</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>4</span>], <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>140</span>,<span class='fl'>75</span>), <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'First 4 neurons'</span>)</div><div class='img'><img src='plot.neuronlist-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># plot one class of neurons in red and all the others in grey</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>, <span class='kw'>colpal</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>DA1</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='st'>'grey'</span>), <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.neuronlist-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># subset operation</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span>, <span class='kw'>subset</span><span class='kw'>=</span><span class='no'>Glomerulus</span><span class='kw'>%in%</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"DA1"</span>, <span class='st'>"DP1m"</span>), <span class='kw'>col</span><span class='kw'>=</span><span class='no'>Glomerulus</span>,
-  <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>140</span>,<span class='fl'>75</span>), <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='img'><img src='plot.neuronlist-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuronlist-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># modify some default plot arguments</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>140</span>,<span class='fl'>75</span><span class='op'>)</span>, main<span class='op'>=</span><span class='st'>'First 4 neurons'</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuronlist-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># plot one class of neurons in red and all the others in grey</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span>, col<span class='op'>=</span><span class='va'>Glomerulus</span>, colpal<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>DA1<span class='op'>=</span><span class='st'>'red'</span>, <span class='st'>'grey'</span><span class='op'>)</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuronlist-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># subset operation</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span>, subset<span class='op'>=</span><span class='va'>Glomerulus</span><span class='op'>%in%</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"DA1"</span>, <span class='st'>"DP1m"</span><span class='op'>)</span>, col<span class='op'>=</span><span class='va'>Glomerulus</span>,
+  ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>140</span>,<span class='fl'>75</span><span class='op'>)</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuronlist-4.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -271,7 +275,7 @@ use only, when calling from another function.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

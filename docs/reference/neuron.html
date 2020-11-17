@@ -179,35 +179,35 @@ as.neuron.default will add class &quot;neuron&quot; to a neuron-like
   object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>neuron</span>(
-  <span class='no'>d</span>,
-  <span class='kw'>NumPoints</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>d</span>),
-  <span class='no'>StartPoint</span>,
-  <span class='kw'>BranchPoints</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span>(),
-  <span class='no'>EndPoints</span>,
-  <span class='no'>SegList</span>,
-  <span class='kw'>SubTrees</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>InputFileName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>NeuronName</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>MD5</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>neuron</span><span class='op'>(</span>
+  <span class='va'>d</span>,
+  NumPoints <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>,
+  <span class='va'>StartPoint</span>,
+  BranchPoints <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>integer</a></span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='va'>EndPoints</span>,
+  <span class='va'>SegList</span>,
+  SubTrees <span class='op'>=</span> <span class='cn'>NULL</span>,
+  InputFileName <span class='op'>=</span> <span class='cn'>NULL</span>,
+  NeuronName <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>,
+  MD5 <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
 
-<span class='fu'>is.neuron</span>(<span class='no'>x</span>, <span class='kw'>Strict</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>is.neuron</span><span class='op'>(</span><span class='va'>x</span>, Strict <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 
-<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for ngraph</span>
-<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='kw'>vertexData</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+<span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>x</span>, vertexData <span class='op'>=</span> <span class='cn'>NULL</span>, origin <span class='op'>=</span> <span class='cn'>NULL</span>, Verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for igraph</span>
-<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>as.neuron</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -316,7 +316,7 @@ subtree, not the whole neuron.</p>
 <p><code>graph.dfs, <a href='seglist.html'>as.seglist</a></code></p>
 <p>Other neuron: 
 <code><a href='ngraph.html'>ngraph</a>()</code>,
-<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='plot.dotprops.html'>plot.dotprops</a>()</code>,
 <code><a href='potential_synapses.html'>potential_synapses</a>()</code>,
 <code><a href='prune.html'>prune</a>()</code>,
 <code><a href='resample.html'>resample</a>()</code>,
@@ -328,12 +328,14 @@ subtree, not the whole neuron.</p>
     <pre class="examples"><div class='input'><span class='co'>## See help for functions listed in See Also for more detailed examples</span>
 <span class='co'>## Basic properties</span>
 <span class='co'># a sample neuron </span>
-<span class='no'>n</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+<span class='va'>n</span> <span class='op'>=</span> <span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
 
 <span class='co'># summarise it</span>
-<span class='no'>n</span></div><div class='output co'>#&gt; 'neuron' with 180 vertices in 1 tree</div><div class='input'>
+<span class='va'>n</span>
+</div><div class='output co'>#&gt; 'neuron' with 180 vertices in 1 tree</div><div class='input'>
 <span class='co'># inspect its internal structure</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>n</span>)</div><div class='output co'>#&gt; List of 24
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; List of 24
 #&gt;  $ CellType     : chr "DA1"
 #&gt;  $ NeuronName   : chr "EBH11R"
 #&gt;  $ InputFileName: 'AsIs' chr "/GD/projects/PN2/TransformedTraces/DA1/EBH11R.tasc"
@@ -421,14 +423,16 @@ subtree, not the whole neuron.</p>
 #&gt;  $ NumMBBranches: num 2
 #&gt;  $ AxonLHEP     : num 72
 #&gt;  - attr(*, "class")= chr [1:2] "neuron" "list"</div><div class='input'><span class='co'># summary of 3D points</span>
-<span class='fu'><a href='summary.neuron.html'>summary</a></span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>n</span>))</div><div class='output co'>#&gt;        X               Y                Z        
+<span class='fu'><a href='summary.neuronlist.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        X               Y                Z        
 #&gt;  Min.   :186.9   Min.   : 90.36   Min.   : 88.2  
 #&gt;  1st Qu.:225.6   1st Qu.: 97.56   1st Qu.:103.4  
 #&gt;  Median :258.4   Median :102.70   Median :112.9  
 #&gt;  Mean   :249.4   Mean   :104.03   Mean   :120.9  
 #&gt;  3rd Qu.:277.7   3rd Qu.:109.04   3rd Qu.:139.0  
 #&gt;  Max.   :289.5   Max.   :132.71   Max.   :157.3  </div><div class='input'><span class='co'># identify 3d location of endpoints</span>
-<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>n</span>)[<span class='fu'><a href='rootpoints.html'>endpoints</a></span>(<span class='no'>n</span>),]</div><div class='output co'>#&gt;            X         Y         Z
+<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='rootpoints.html'>endpoints</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>,<span class='op'>]</span>
+</div><div class='output co'>#&gt;            X         Y         Z
 #&gt; 1   186.8660 132.70932  88.20393
 #&gt; 42  224.7067 109.86362 153.58749
 #&gt; 59  229.6343  92.30637 157.29700
@@ -449,8 +453,10 @@ subtree, not the whole neuron.</p>
 #&gt; 180 289.5364 111.96014 109.18281</div><div class='input'>
 <span class='co'>## Other methods</span>
 <span class='co'># plot</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>n</span>)</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span>(<span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>'neuron'</span>)</div><div class='output co'>#&gt;  [1] all.equal          as.neuron          as.ngraph          as.seglist        
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># all methods for neuron objects</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>'neuron'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1] all.equal          as.neuron          as.ngraph          as.seglist        
 #&gt;  [5] branchpoints       dotprops           endpoints          intersect_plane   
 #&gt;  [9] ndigest            nvertices          Ops                plot              
 #&gt; [13] plot3d             potential_synapses print              prune_in_volume   
@@ -461,22 +467,29 @@ subtree, not the whole neuron.</p>
 #&gt; see '?methods' for accessing help and source code</div><div class='input'>
 <span class='co'>## Neurons as graphs </span>
 <span class='co'># convert to graph and find longest paths by number of nodes</span>
-<span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span>(<span class='no'>ng</span>))</div><div class='img'><img src='neuron-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># ... or in distances  microns</span>
-<span class='no'>ngw</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>n</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span>(<span class='no'>ngw</span>))</div><div class='img'><img src='neuron-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='va'>ng</span><span class='op'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span><span class='op'>(</span><span class='va'>ng</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># ... or in distances  microns</span>
+<span class='va'>ngw</span><span class='op'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span><span class='op'>(</span><span class='va'>n</span>, weights<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/distances.html'>distances</a></span><span class='op'>(</span><span class='va'>ngw</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># converting back and forth between neurons and graphs</span>
-<span class='no'>g</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
-<span class='no'>gstem</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/subgraph.html'>induced.subgraph</a></span>(<span class='no'>g</span>, <span class='fl'>1</span>:<span class='fl'>10</span>)
+<span class='va'>g</span><span class='op'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>gstem</span><span class='op'>=</span><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/subgraph.html'>induced.subgraph</a></span><span class='op'>(</span><span class='va'>g</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
 <span class='co'># this is fine</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>gstem</span>)</div><div class='img'><img src='neuron-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem</span>))</div><div class='img'><img src='neuron-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>gstem</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>gstem</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># but if you had an undirected graph </span>
-<span class='no'>ug</span><span class='kw'>=</span><span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/as.directed.html'>as.undirected</a></span>(<span class='no'>gstem</span>)
+<span class='va'>ug</span><span class='op'>=</span><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/as.directed.html'>as.undirected</a></span><span class='op'>(</span><span class='va'>gstem</span><span class='op'>)</span>
 <span class='co'># you get a warning because there is no explicit origin for the graph</span>
-<span class='fu'>as.neuron</span>(<span class='no'>ug</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: No valid origin found! Using first endpoint as origin</span></div><div class='output co'>#&gt; 'neuron' with 10 vertices in 1 tree</div><div class='input'>
+<span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>ug</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: No valid origin found! Using first endpoint as origin</span></div><div class='output co'>#&gt; 'neuron' with 10 vertices in 1 tree</div><div class='input'>
 <span class='co'># If you need finer control of the conversion process </span>
-<span class='no'>gstem2</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>ug</span>, <span class='kw'>root</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>gstem2</span>)</div><div class='img'><img src='neuron-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='fu'>as.neuron</span>(<span class='no'>gstem2</span>))</div><div class='img'><img src='neuron-7.png' alt='' width='700' height='433' /></div></pre>
+<span class='va'>gstem2</span><span class='op'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span><span class='op'>(</span><span class='va'>ug</span>, root <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>gstem2</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-6.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='fu'>as.neuron</span><span class='op'>(</span><span class='va'>gstem2</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='img'><img src='neuron-7.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -492,7 +505,7 @@ subtree, not the whole neuron.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

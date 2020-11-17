@@ -161,14 +161,14 @@
     <p>Find neurons within a 3D selection box (usually drawn in rgl window)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>find.neuron</span>(
-  <span class='kw'>sel3dfun</span> <span class='kw'>=</span> <span class='fu'>select3d</span>(),
-  <span class='kw'>indices</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>db</span>),
-  <span class='kw'>db</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"nat.default.neuronlist"</span>),
-  <span class='kw'>threshold</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"names"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"neuronlist"</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>find.neuron</span><span class='op'>(</span>
+  sel3dfun <span class='op'>=</span> <span class='fu'>select3d</span><span class='op'>(</span><span class='op'>)</span>,
+  indices <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>db</span><span class='op'>)</span>,
+  db <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"nat.default.neuronlist"</span><span class='op'>)</span>,
+  threshold <span class='op'>=</span> <span class='fl'>0</span>,
+  invert <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  rval <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"names"</span>, <span class='st'>"data.frame"</span>, <span class='st'>"neuronlist"</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -215,18 +215,19 @@ the neuronlist. Defaults to <code><a href='https://rdrr.io/r/base/options.html'>
     <div class='dont-index'><p><code>select3d, <a href='find.soma.html'>find.soma</a>, <a href='subset.neuronlist.html'>subset.neuronlist</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>kcs20</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>
 <span class='co'># draw a 3D selection e.g. around tip of vertical lobe when ready</span>
-<span class='fu'>find.neuron</span>(<span class='kw'>db</span><span class='kw'>=</span><span class='no'>kcs20</span>)
+<span class='fu'>find.neuron</span><span class='op'>(</span>db<span class='op'>=</span><span class='va'>kcs20</span><span class='op'>)</span>
 <span class='co'># would return 9 neurons</span>
 <span class='co'># make a standalone selection function</span>
-<span class='no'>vertical_lobe</span><span class='kw'>=</span><span class='fu'>select3d</span>()
-<span class='fu'>find.neuron</span>(<span class='no'>vertical_lobe</span>, <span class='kw'>db</span><span class='kw'>=</span><span class='no'>kcs20</span>)
+<span class='va'>vertical_lobe</span><span class='op'>=</span><span class='fu'>select3d</span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'>find.neuron</span><span class='op'>(</span><span class='va'>vertical_lobe</span>, db<span class='op'>=</span><span class='va'>kcs20</span><span class='op'>)</span>
 <span class='co'># use base::Negate function to invert the selection function </span>
 <span class='co'># i.e. choose neurons that do not overlap the selection region</span>
-<span class='fu'>find.neuron</span>(<span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='no'>vertical_lobe</span>), <span class='kw'>db</span><span class='kw'>=</span><span class='no'>kcs20</span>)
-}</div></pre>
+<span class='fu'>find.neuron</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span><span class='op'>(</span><span class='va'>vertical_lobe</span><span class='op'>)</span>, db<span class='op'>=</span><span class='va'>kcs20</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -242,7 +243,7 @@ the neuronlist. Defaults to <code><a href='https://rdrr.io/r/base/options.html'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

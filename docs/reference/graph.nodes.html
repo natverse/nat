@@ -161,12 +161,12 @@
     <p>Return root, end, or branchpoints of an igraph object</p>
     </div>
 
-    <pre class="usage"><span class='fu'>graph.nodes</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"root"</span>, <span class='st'>"end"</span>, <span class='st'>"branch"</span>),
-  <span class='kw'>original.ids</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-  <span class='kw'>exclude.isolated</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>graph.nodes</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"root"</span>, <span class='st'>"end"</span>, <span class='st'>"branch"</span><span class='op'>)</span>,
+  original.ids <span class='op'>=</span> <span class='st'>"name"</span>,
+  exclude.isolated <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -204,12 +204,14 @@ available). Set to FALSE when this is not desired.</p></td>
     <div class='dont-index'><p><code><a href='rootpoints.html'>rootpoints</a></code>, <code><a href='ngraph.html'>ngraph</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>ng</span><span class='kw'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])
+    <pre class="examples"><div class='input'><span class='va'>ng</span><span class='op'>=</span><span class='fu'><a href='ngraph.html'>as.ngraph</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'># set some arbitrary vertex identifiers</span>
-<span class='kw pkg'>igraph</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/vertex_attr.html'>vertex_attr</a></span>(<span class='no'>ng</span>, <span class='st'>'name'</span>) <span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span>(<span class='fl'>500</span>, <span class='fu'><a href='nvertices.html'>nvertices</a></span>(<span class='no'>ng</span>))
+<span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/vertex_attr.html'>vertex_attr</a></span><span class='op'>(</span><span class='va'>ng</span>, <span class='st'>'name'</span><span class='op'>)</span> <span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='fl'>500</span>, <span class='fu'><a href='nvertices.html'>nvertices</a></span><span class='op'>(</span><span class='va'>ng</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># return those identifiers</span>
-<span class='fu'>graph.nodes</span>(<span class='no'>ng</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'end'</span>)</div><div class='output co'>#&gt;  [1]  63 266 264 364 258  12 241  97 288 361 309 171 456  85 322 256  49 434</div><div class='input'><span class='co'># ... or raw vertex indices</span>
-<span class='fu'>graph.nodes</span>(<span class='no'>ng</span>,<span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>'end'</span>, <span class='kw'>original.ids</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt;  [1]   1  42  59  62  80  85  96 100 102 112 117 121 134 148 154 165 172 180</div></pre>
+<span class='fu'>graph.nodes</span><span class='op'>(</span><span class='va'>ng</span>, type <span class='op'>=</span> <span class='st'>'end'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1]  63 266 264 364 258  12 241  97 288 361 309 171 456  85 322 256  49 434</div><div class='input'><span class='co'># ... or raw vertex indices</span>
+<span class='fu'>graph.nodes</span><span class='op'>(</span><span class='va'>ng</span>,type <span class='op'>=</span> <span class='st'>'end'</span>, original.ids <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;  [1]   1  42  59  62  80  85  96 100 102 112 117 121 134 148 154 165 172 180</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -225,7 +227,7 @@ available). Set to FALSE when this is not desired.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

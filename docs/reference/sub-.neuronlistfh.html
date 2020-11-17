@@ -210,13 +210,15 @@ for the [ get method, empty. See details and the help for
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># make a test neuronlistfh backed by a temporary folder on disk</span>
-<span class='no'>tf</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='st'>'kcs20fh'</span>)
-<span class='no'>kcs20fh</span><span class='kw'>&lt;-</span><span class='fu'><a href='neuronlistfh.html'>as.neuronlistfh</a></span>(<span class='no'>kcs20</span>, <span class='kw'>dbdir</span><span class='kw'>=</span><span class='no'>tf</span>)
+<span class='va'>tf</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span><span class='st'>'kcs20fh'</span><span class='op'>)</span>
+<span class='va'>kcs20fh</span><span class='op'>&lt;-</span><span class='fu'><a href='neuronlistfh.html'>as.neuronlistfh</a></span><span class='op'>(</span><span class='va'>kcs20</span>, dbdir<span class='op'>=</span><span class='va'>tf</span><span class='op'>)</span>
 
 <span class='co'># get first neurons as an in memory neuronlist</span>
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; [1] "neuronlist" "list"      </div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>kcs20fh</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "neuronlist" "list"      </div><div class='input'>
 <span class='co'># extract attached data.frame</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>kcs20fh</span>[,])</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  14 variables:
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>kcs20fh</span><span class='op'>[</span>,<span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	20 obs. of  14 variables:
 #&gt;  $ gene_name: chr  "FruMARCM-M001205_seg002" "GadMARCM-F000122_seg001" "GadMARCM-F000050_seg001" "GadMARCM-F000142_seg002" ...
 #&gt;  $ Name     : chr  "fru-M-500112" "Gad1-F-900005" "Gad1-F-100010" "Gad1-F-300043" ...
 #&gt;  $ idid     : num  1024 10616 8399 10647 9758 ...
@@ -231,15 +233,18 @@ for the [ get method, empty. See details and the help for
 #&gt;  $ cluster  : int  9 70 57 71 64 44 16 61 52 12 ...
 #&gt;  $ idx      : int  156 1519 1132 1535 1331 795 268 1265 898 190 ...
 #&gt;  $ type     : Factor w/ 3 levels "ab","apbp","gamma": 3 3 1 2 1 1 1 2 2 1 ...</div><div class='input'><span class='co'># or part of the data.frame</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt; 'data.frame':	2 obs. of  3 variables:
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span><span class='op'>(</span><span class='va'>kcs20fh</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; 'data.frame':	2 obs. of  3 variables:
 #&gt;  $ gene_name: chr  "FruMARCM-M001205_seg002" "GadMARCM-F000122_seg001"
 #&gt;  $ Name     : chr  "fru-M-500112" "Gad1-F-900005"
 #&gt;  $ idid     : num  1024 10616</div><div class='input'>
 <span class='co'># data.frame assignment (this one changes nothing)</span>
-<span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='st'>'gene_name'</span>] <span class='kw'>&lt;-</span> <span class='no'>kcs20fh</span>[<span class='fl'>1</span>:<span class='fl'>2</span>,<span class='st'>'gene_name'</span>]
+<span class='va'>kcs20fh</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='st'>'gene_name'</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>kcs20fh</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>2</span>,<span class='st'>'gene_name'</span><span class='op'>]</span>
 
 <span class='co'># clean up</span>
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>tf</span>, <span class='kw'>recursive</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>tf</span>, recursive<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -255,7 +260,7 @@ for the [ get method, empty. See details and the help for
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

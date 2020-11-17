@@ -161,16 +161,16 @@
     <p>Find the number of vertices in an object (or each element of a neuronlist)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>nvertices</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>nvertices</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>nvertices</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>nvertices</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>nvertices</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>nvertices</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for shapelist3d</span>
-<span class='fu'>nvertices</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>nvertices</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -191,7 +191,9 @@
   neuronlist)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>nvertices</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='output co'>#&gt; [1] 180</div><div class='input'><span class='fu'>nvertices</span>(<span class='no'>kcs20</span>)</div><div class='output co'>#&gt; FruMARCM-M001205_seg002 GadMARCM-F000122_seg001 GadMARCM-F000050_seg001 
+    <pre class="examples"><div class='input'><span class='fu'>nvertices</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 180</div><div class='input'><span class='fu'>nvertices</span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; FruMARCM-M001205_seg002 GadMARCM-F000122_seg001 GadMARCM-F000050_seg001 
 #&gt;                     284                     297                     374 
 #&gt; GadMARCM-F000142_seg002 FruMARCM-F000270_seg001 FruMARCM-F001115_seg002 
 #&gt;                     355                     369                     401 
@@ -220,7 +222,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

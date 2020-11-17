@@ -161,31 +161,31 @@
     <p>Functions for Sholl analysis of neuronal skeletons</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sholl_analysis</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)),
-  <span class='kw'>starting.radius</span> <span class='kw'>=</span> <span class='no'>radius.step</span>,
-  <span class='kw'>ending.radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>radius.step</span> <span class='kw'>=</span> <span class='no'>ending.radius</span>/<span class='fl'>100</span>
-)
+    <pre class="usage"><span class='fu'>sholl_analysis</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
+  starting.radius <span class='op'>=</span> <span class='va'>radius.step</span>,
+  ending.radius <span class='op'>=</span> <span class='fl'>1000</span>,
+  radius.step <span class='op'>=</span> <span class='va'>ending.radius</span><span class='op'>/</span><span class='fl'>100</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>sholl_analysis</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)),
-  <span class='kw'>starting.radius</span> <span class='kw'>=</span> <span class='no'>radius.step</span>,
-  <span class='kw'>ending.radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>radius.step</span> <span class='kw'>=</span> <span class='no'>ending.radius</span>/<span class='fl'>100</span>
-)
+<span class='fu'>sholl_analysis</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
+  starting.radius <span class='op'>=</span> <span class='va'>radius.step</span>,
+  ending.radius <span class='op'>=</span> <span class='fl'>1000</span>,
+  radius.step <span class='op'>=</span> <span class='va'>ending.radius</span><span class='op'>/</span><span class='fl'>100</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>sholl_analysis</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>)),
-  <span class='kw'>starting.radius</span> <span class='kw'>=</span> <span class='no'>radius.step</span>,
-  <span class='kw'>ending.radius</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>radius.step</span> <span class='kw'>=</span> <span class='no'>ending.radius</span>/<span class='fl'>100</span>
-)</pre>
+<span class='fu'>sholl_analysis</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span>,
+  starting.radius <span class='op'>=</span> <span class='va'>radius.step</span>,
+  ending.radius <span class='op'>=</span> <span class='fl'>1000</span>,
+  radius.step <span class='op'>=</span> <span class='va'>ending.radius</span><span class='op'>/</span><span class='fl'>100</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,12 +217,13 @@
     <p>a data.frame of spheres radii and the number of dendritic intersections at each radius</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> 
 <span class='co'># Calculate how much some neurons overlap with one another</span>
 <span class='co'>## Example requires the package nat.flybrains</span>
-<span class='no'>Cell07PNs_sholl</span> <span class='kw'>=</span> <span class='fu'>sholl_analysis</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span>, <span class='kw'>radius.step</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>ending.radius</span> <span class='kw'>=</span> <span class='fl'>100</span>)
-<span class='fu'><a href='neuronlist-dataframe-methods.html'>head</a></span>(<span class='no'>Cell07PNs_sholl</span><span class='kw'>[[</span><span class='fl'>1</span>]])
-}</div></pre>
+<span class='va'>Cell07PNs_sholl</span> <span class='op'>=</span> <span class='fu'>sholl_analysis</span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Cell07PNs</span>, radius.step <span class='op'>=</span> <span class='fl'>1</span>, ending.radius <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
+<span class='fu'><a href='neuronlist-dataframe-methods.html'>head</a></span><span class='op'>(</span><span class='va'>Cell07PNs_sholl</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span> 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -238,7 +239,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -161,13 +161,13 @@
     <p>Convert a suitable object to an im3d object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>as.im3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>as.im3d</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for im3d</span>
-<span class='fu'>as.im3d</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>as.im3d</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>as.im3d</span>(<span class='no'>x</span>, <span class='no'>voxdims</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BoundingBox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>as.im3d</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>voxdims</span>, origin <span class='op'>=</span> <span class='cn'>NULL</span>, BoundingBox <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -208,7 +208,7 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
   an im3d object in the <code>voxdims</code> argument This will completely specify 
   the dims, voxdims, origin etc. Any value passed to those parameters will be
   ignored. This can be useful for producing a new im3d to match a target 
-  image on disk or a <code><a href='https://rdrr.io/pkg/nat.templatebrains/man/templatebrain.html'>nat.templatebrains::templatebrain</a></code> object. See
+  image on disk or a <code><a href='http://natverse.org/nat.templatebrains/reference/templatebrain.html'>nat.templatebrains::templatebrain</a></code> object. See
   examples.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -231,21 +231,22 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## convert a list of neurons into an image volume</span>
-<span class='no'>im</span><span class='kw'>=</span><span class='fu'>as.im3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='kw'>voxdims</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='kw'>BoundingBox</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>250</span>, <span class='fl'>410</span>, <span class='fl'>0</span>, <span class='fl'>130</span>, <span class='fl'>0</span>, <span class='fl'>120</span>))
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='im3d-io.html'>write.im3d</a></span>(<span class='no'>im</span>, <span class='st'>'kc20volume.nrrd'</span>)
+<span class='va'>im</span><span class='op'>=</span><span class='fu'>as.im3d</span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>, voxdims<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, 
+  BoundingBox<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>250</span>, <span class='fl'>410</span>, <span class='fl'>0</span>, <span class='fl'>130</span>, <span class='fl'>0</span>, <span class='fl'>120</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='im3d-io.html'>write.im3d</a></span><span class='op'>(</span><span class='va'>im</span>, <span class='st'>'kc20volume.nrrd'</span><span class='op'>)</span>
 
 <span class='co'>## use image dimensions of an image on disk</span>
 <span class='co'># nb note use of ReadData = FALSE so that we just fetch the dimensions of</span>
 <span class='co'># the target image</span>
-<span class='no'>diskim</span><span class='kw'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span>(<span class='st'>"/path/to/my/image.nrrd"</span>, <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>im</span><span class='kw'>=</span><span class='fu'>as.im3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='no'>diskim</span>)
+<span class='va'>diskim</span><span class='op'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span><span class='op'>(</span><span class='st'>"/path/to/my/image.nrrd"</span>, ReadData <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>im</span><span class='op'>=</span><span class='fu'>as.im3d</span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>, <span class='va'>diskim</span><span class='op'>)</span>
 
 <span class='co'>## use image dimensions of JFRC2 template brain to define the image space</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>nat.flybrains</span>)
-<span class='no'>im</span><span class='kw'>=</span><span class='fu'>as.im3d</span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>kcs20</span>), <span class='no'>JFRC2</span>)
-}</div></pre>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/natverse/nat.flybrains'>nat.flybrains</a></span><span class='op'>)</span>
+<span class='va'>im</span><span class='op'>=</span><span class='fu'>as.im3d</span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>)</span>, <span class='va'>JFRC2</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -261,7 +262,7 @@ of <code><a href='boundingbox.html'>boundingbox</a></code>'s help for the distin
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

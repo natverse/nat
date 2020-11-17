@@ -161,14 +161,14 @@
     <p>Calculate image statistics for a nrrd or other CMTK compatible file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cmtk.statistics</span>(
-  <span class='no'>f</span>,
-  <span class='no'>mask</span>,
-  <span class='kw'>imagetype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"greyscale"</span>, <span class='st'>"label"</span>),
-  <span class='kw'>masktype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"label"</span>, <span class='st'>"binary"</span>),
-  <span class='no'>...</span>,
-  <span class='kw'>Verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>cmtk.statistics</span><span class='op'>(</span>
+  <span class='va'>f</span>,
+  <span class='va'>mask</span>,
+  imagetype <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"greyscale"</span>, <span class='st'>"label"</span><span class='op'>)</span>,
+  masktype <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"label"</span>, <span class='st'>"binary"</span><span class='op'>)</span>,
+  <span class='va'>...</span>,
+  Verbose <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -239,10 +239,11 @@ update checks. Sets command line <code>--verbose</code> option.</p></td>
   always be named Entropy in the returned dataframe.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>cmtk.statistics</span>(<span class='st'>'someneuron.nrrd'</span>, <span class='kw'>mask</span><span class='kw'>=</span><span class='st'>'neuropilregionmask.nrrd'</span>)
-<span class='fu'>cmtk.statistics</span>(<span class='st'>'somelabelfield.nrrd'</span>, <span class='kw'>imagetype</span><span class='kw'>=</span><span class='st'>'label'</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>cmtk.statistics</span><span class='op'>(</span><span class='st'>'someneuron.nrrd'</span>, mask<span class='op'>=</span><span class='st'>'neuropilregionmask.nrrd'</span><span class='op'>)</span>
+<span class='fu'>cmtk.statistics</span><span class='op'>(</span><span class='st'>'somelabelfield.nrrd'</span>, imagetype<span class='op'>=</span><span class='st'>'label'</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -258,7 +259,7 @@ update checks. Sets command line <code>--verbose</code> option.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -161,15 +161,15 @@
     <p>Read/Write calibrated 3D blocks of image data</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read.im3d</span>(
-  <span class='no'>file</span>,
-  <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>SimplifyAttributes</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>ReadByteAsRaw</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+    <pre class="usage"><span class='fu'>read.im3d</span><span class='op'>(</span>
+  <span class='va'>file</span>,
+  ReadData <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  SimplifyAttributes <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  ReadByteAsRaw <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
-<span class='fu'>write.im3d</span>(<span class='no'>x</span>, <span class='no'>file</span>, <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>write.im3d</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>file</span>, format <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,7 +224,7 @@ file extension. See <code><a href='fileformats.html'>getformatwriter</a></code> 
   image axes (which are assumed to be orthogonal).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='read.nrrd.html'>read.nrrd</a>, <a href='amiramesh-io.html'>read.amiramesh</a></code></p>
+    <div class='dont-index'><p><code><a href='read.nrrd.html'>read.nrrd</a>, <a href='read.amiramesh.html'>read.amiramesh</a></code></p>
 <p><code><a href='write.nrrd.html'>write.nrrd</a></code>, <code><a href='fileformats.html'>getformatwriter</a></code></p>
 <p>Other im3d: 
 <code><a href='as.im3d.html'>as.im3d</a>()</code>,
@@ -242,10 +242,11 @@ file extension. See <code><a href='fileformats.html'>getformatwriter</a></code> 
 <code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># read attributes of vaa3d raw file</span>
-<span class='fu'>read.im3d</span>(<span class='st'>"L1DS1_crop_straight.raw"</span>, <span class='kw'>ReadData</span> <span class='kw'>=</span> <span class='no'>F</span>, <span class='kw'>chan</span><span class='kw'>=</span><span class='fl'>2</span>)
-}</div></pre>
+<span class='fu'>read.im3d</span><span class='op'>(</span><span class='st'>"L1DS1_crop_straight.raw"</span>, ReadData <span class='op'>=</span> <span class='cn'>F</span>, chan<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -261,7 +262,7 @@ file extension. See <code><a href='fileformats.html'>getformatwriter</a></code> 
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -167,54 +167,60 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
   or x, y, z.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='kw'>y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='cn'>NULL</span>, z <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for shapelist3d</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for dotprops</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for hxsurf</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for igraph</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mesh3d</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for dotprops</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for hxsurf</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for igraph</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for shape3d</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span>
 
 <span class='co'># S3 method for shapelist3d</span>
-<span class='fu'>xyzmatrix</span>(<span class='no'>x</span>) <span class='kw'>&lt;-</span> <span class='no'>value</span></pre>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>value</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -243,27 +249,54 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
 <p>For <code>xyzmatrix&lt;-</code>: Original object with modified coords</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Note that <code>xyzmatrix</code> can extract or set 3D coordinates in a 
+    <p>Note that <code>xyzmatrix</code> can extract or set 3D coordinates in a
   <code>matrix</code> or <code>data.frame</code> that <b>either</b> has exactly 3 columns
-  <b>or</b> has 3 columns named X,Y,Z or x,y,z.</p>
+  <b>or</b> has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
+  columns are character vectors, they will be correctly converted to numeric
+  (with a warning for any NA values).</p>
+<p><code>xyzmatrix</code> can also both get and set 3D coordinates from a character
+  vector (including a single data frame column) in which each string encodes
+  all 3 coordinates e.g. <code>"-1, 4, 10"</code>. It should handle a range of
+  separators such as spaces, tabs, commas, semicolons and ignore extraneous
+  characters such as brackets. Note that data are rounded by
+  <code><a href='https://rdrr.io/r/base/zapsmall.html'>zapsmall</a></code> in the replacement version to try to avoid cases
+  where rounding errors result in long strings of digits to the right of the
+  decimal place.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>xyzmatrix</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># see all available methods for different classes</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span>(<span class='st'>'xyzmatrix'</span>)</div><div class='output co'>#&gt; [1] xyzmatrix.default*     xyzmatrix.dotprops*    xyzmatrix.hxsurf*     
-#&gt; [4] xyzmatrix.igraph*      xyzmatrix.mesh3d*      xyzmatrix.neuron*     
-#&gt; [7] xyzmatrix.neuronlist*  xyzmatrix.shapelist3d*
+<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span><span class='op'>(</span><span class='st'>'xyzmatrix'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] xyzmatrix.character*   xyzmatrix.default*     xyzmatrix.dotprops*   
+#&gt; [4] xyzmatrix.hxsurf*      xyzmatrix.igraph*      xyzmatrix.mesh3d*     
+#&gt; [7] xyzmatrix.neuron*      xyzmatrix.neuronlist*  xyzmatrix.shapelist3d*
 #&gt; see '?methods' for accessing help and source code</div><div class='input'><span class='co'># ... and for the assignment method</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span>(<span class='st'>'xyzmatrix&lt;-'</span>)</div><div class='output co'>#&gt; [1] xyzmatrix&lt;-.default*     xyzmatrix&lt;-.dotprops*    xyzmatrix&lt;-.hxsurf*     
-#&gt; [4] xyzmatrix&lt;-.igraph*      xyzmatrix&lt;-.neuron*      xyzmatrix&lt;-.neuronlist* 
-#&gt; [7] xyzmatrix&lt;-.shape3d*     xyzmatrix&lt;-.shapelist3d*
-#&gt; see '?methods' for accessing help and source code</div><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-<span class='fu'>xyzmatrix</span>(<span class='no'>n</span>)<span class='kw'>&lt;-</span><span class='fu'>xyzmatrix</span>(<span class='no'>n</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='fu'>xyzmatrix</span>(<span class='no'>n</span>),<span class='fu'>xyzmatrix</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))
-))</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span><span class='op'>(</span><span class='st'>'xyzmatrix&lt;-'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] xyzmatrix&lt;-.character*   xyzmatrix&lt;-.default*     xyzmatrix&lt;-.dotprops*   
+#&gt; [4] xyzmatrix&lt;-.hxsurf*      xyzmatrix&lt;-.igraph*      xyzmatrix&lt;-.neuron*     
+#&gt; [7] xyzmatrix&lt;-.neuronlist*  xyzmatrix&lt;-.shape3d*     xyzmatrix&lt;-.shapelist3d*
+#&gt; see '?methods' for accessing help and source code</div><div class='input'>
+<span class='co'># basic usage</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       X Y Z
+#&gt; [1,] -1 2 3</div><div class='input'>
+<span class='co'># character vector - useful e.g. when encoded in 1 column of a table </span>
+<span class='va'>str123</span><span class='op'>=</span><span class='st'>"(-1,+2,3)"</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>str123</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       X Y Z
+#&gt; [1,] -1 2 3</div><div class='input'><span class='co'># replace</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>str123</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>str123</span><span class='op'>)</span><span class='op'>/</span><span class='fl'>3</span>
+<span class='va'>str123</span>
+</div><div class='output co'>#&gt; [1] "(-0.333333,0.666667,1)"</div><div class='input'><span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>str123</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>str123</span><span class='op'>)</span><span class='op'>*</span><span class='fl'>3</span>
+<span class='va'>str123</span>
+</div><div class='output co'>#&gt; [1] "(-0.999999,2,3)"</div><div class='input'><span class='va'>n</span><span class='op'>=</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>&lt;-</span><span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>,<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>)</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -279,7 +312,7 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

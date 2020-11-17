@@ -243,7 +243,7 @@
 <p>Additional changes:</p>
 <ul>
 <li>Support for CMTK deformation fields</li>
-<li>Always pass on … for reglists in <code><a href="../reference/xform.html">xform()</a></code> and friends. This ensures that <code><a href="https://rdrr.io/pkg/nat.templatebrains/man/xform_brain.html">nat.templatebrains::xform_brain</a></code> can fall back to an affine registration when a non-rigid registration fails (<a href='https://github.com/natverse/nat/issues/365'>#365</a>)</li>
+<li>Always pass on … for reglists in <code><a href="../reference/xform.html">xform()</a></code> and friends. This ensures that <code><a href="http://natverse.org/nat.templatebrains/reference/xform_brain.html">nat.templatebrains::xform_brain</a></code> can fall back to an affine registration when a non-rigid registration fails (<a href='https://github.com/natverse/nat/issues/365'>#365</a>)</li>
 <li>Fix thinko in re-ordering vertex ids for SWC files (<a href='https://github.com/natverse/nat/issues/366'>#366</a>)</li>
 <li>Add <code><a href="../reference/makeboundingbox.html">makeboundingbox()</a></code> for constructing a boundingbox explicitly rather than from an object. This allows <code><a href="../reference/boundingbox.html">boundingbox()</a></code> to work for matrices of 3D points (<a href='https://github.com/natverse/nat/issues/222'>#222</a>)</li>
 <li>Export <code><a href="../reference/read.nrrd.html">nrrd.datafiles()</a></code> + nrrd doc fixes (<a href='https://github.com/natverse/nat/issues/316'>#316</a>)</li>
@@ -251,7 +251,7 @@
 <li>Fix <code><a href="../reference/nview3d.html">nview3d()</a></code> “oblique_right”</li>
 <li>Pass … on to spheres3d to plot somata with alpha transparency (<a href='https://github.com/natverse/nat/issues/370'>#370</a>)</li>
 <li>
-<code><a href="../reference/get-set-neuronlist-data.frame.html">as.data.frame.neuronlist()</a></code> makes autonames when none present (<a href='https://github.com/natverse/nat/issues/371'>#371</a>)</li>
+<code><a href="../reference/as.data.frame.neuronlist.html">as.data.frame.neuronlist()</a></code> makes autonames when none present (<a href='https://github.com/natverse/nat/issues/371'>#371</a>)</li>
 <li>Check that <code><a href="../reference/ngraph.html">ngraph()</a></code> edgelist references valid vertices to avoid segfaults in igraph library (<a href='https://github.com/natverse/nat/issues/363'>#363</a>)</li>
 <li>Fix bug in constructing <code><a href="../reference/im3d.html">im3d()</a></code> with image bounds (<a href='https://github.com/natverse/nat/issues/205'>#205</a>)</li>
 <li>Allow dotprops objects to be plotted in 2D (<a href='https://github.com/natverse/nat/issues/112'>#112</a>)</li>
@@ -1113,7 +1113,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

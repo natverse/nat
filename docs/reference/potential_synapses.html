@@ -161,33 +161,33 @@
     <p>This implements the method of Stepanyants and Chklovskii</p>
     </div>
 
-    <pre class="usage"><span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>potential_synapses</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>s</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>potential_synapses</span>(<span class='no'>a</span>, <span class='no'>b</span>, <span class='no'>s</span>, <span class='no'>...</span>)
+<span class='fu'>potential_synapses</span><span class='op'>(</span><span class='va'>a</span>, <span class='va'>b</span>, <span class='va'>s</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>potential_synapses</span>(
-  <span class='no'>a</span>,
-  <span class='no'>b</span>,
-  <span class='no'>s</span>,
-  <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>s</span>,
-  <span class='no'>bounds</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>),
-  <span class='no'>...</span>
-)
+<span class='fu'>potential_synapses</span><span class='op'>(</span>
+  <span class='va'>a</span>,
+  <span class='va'>b</span>,
+  <span class='va'>s</span>,
+  sigma <span class='op'>=</span> <span class='va'>s</span>,
+  <span class='va'>bounds</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"direct"</span>, <span class='st'>"approx"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for dotprops</span>
-<span class='fu'>potential_synapses</span>(
-  <span class='no'>a</span>,
-  <span class='no'>b</span>,
-  <span class='no'>s</span>,
-  <span class='kw'>sigma</span> <span class='kw'>=</span> <span class='no'>s</span>,
-  <span class='kw'>seglength</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>bounds</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"direct"</span>, <span class='st'>"approx"</span>),
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'>potential_synapses</span><span class='op'>(</span>
+  <span class='va'>a</span>,
+  <span class='va'>b</span>,
+  <span class='va'>s</span>,
+  sigma <span class='op'>=</span> <span class='va'>s</span>,
+  seglength <span class='op'>=</span> <span class='fl'>1</span>,
+  bounds <span class='op'>=</span> <span class='cn'>NULL</span>,
+  method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"direct"</span>, <span class='st'>"approx"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -241,7 +241,7 @@
     <div class='dont-index'><p>Other neuron: 
 <code><a href='neuron.html'>neuron</a>()</code>,
 <code><a href='ngraph.html'>ngraph</a>()</code>,
-<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='plot.dotprops.html'>plot.dotprops</a>()</code>,
 <code><a href='prune.html'>prune</a>()</code>,
 <code><a href='resample.html'>resample</a>()</code>,
 <code><a href='rootpoints.html'>rootpoints</a>()</code>,
@@ -249,17 +249,19 @@
 <code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)</div><div class='output co'>#&gt;        EBH11R
+    <pre class="examples"><div class='input'><span class='fu'>potential_synapses</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, s<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        EBH11R
 #&gt; EBH11R    902
 #&gt; EBH20L    219
-#&gt; EBH20R    192</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+#&gt; EBH20R    192</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># if you have many neurons to calculate you should get a progress bar </span>
-<span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>)
+<span class='fu'>potential_synapses</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>, <span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>]</span>, s<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 
 <span class='co'># you can also use parallel execution, here over 7 cores</span>
 <span class='co'># doMC::registerDoMC(7)</span>
-<span class='fu'>potential_synapses</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>10</span>], <span class='no'>Cell07PNs</span>[<span class='fl'>11</span>:<span class='fl'>20</span>], <span class='kw'>s</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>.parallel</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='fu'>potential_synapses</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>, <span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>11</span><span class='op'>:</span><span class='fl'>20</span><span class='op'>]</span>, s<span class='op'>=</span><span class='fl'>2</span>, .parallel<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -275,7 +277,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

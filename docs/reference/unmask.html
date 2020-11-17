@@ -161,13 +161,13 @@
     <p>Make im3d image array containing values at locations defined by a mask</p>
     </div>
 
-    <pre class="usage"><span class='fu'>unmask</span>(
-  <span class='no'>x</span>,
-  <span class='no'>mask</span>,
-  <span class='kw'>default</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>attributes.</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/attributes.html'>attributes</a></span>(<span class='no'>mask</span>),
-  <span class='kw'>copyAttributes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>unmask</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>mask</span>,
+  default <span class='op'>=</span> <span class='cn'>NA</span>,
+  attributes. <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_attr_names.html'>attributes</a></span><span class='op'>(</span><span class='va'>mask</span><span class='op'>)</span>,
+  copyAttributes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,17 +226,18 @@ from the mask to the returned object. default: <code>TRUE</code></p></td>
 <code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># read in a mask</span>
-<span class='no'>LHMask</span><span class='kw'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'tests/testthat/testdata/nrrd/LHMask.nrrd'</span>, <span class='kw'>package</span><span class='kw'>=</span><span class='st'>'nat'</span>))
+<span class='va'>LHMask</span><span class='op'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'tests/testthat/testdata/nrrd/LHMask.nrrd'</span>, package<span class='op'>=</span><span class='st'>'nat'</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># pick out all the non zero values</span>
-<span class='no'>inmask</span><span class='kw'>=</span><span class='no'>LHMask</span>[<span class='no'>LHMask</span><span class='kw'>!=</span><span class='fl'>0</span>]
+<span class='va'>inmask</span><span class='op'>=</span><span class='va'>LHMask</span><span class='op'>[</span><span class='va'>LHMask</span><span class='op'>!=</span><span class='fl'>0</span><span class='op'>]</span>
 <span class='co'># fill the non-zero elements of the mask with a vector that iterates over the</span>
 <span class='co'># values 0:9</span>
-<span class='no'>stripes</span><span class='kw'>=</span><span class='fu'>unmask</span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='no'>inmask</span>)<span class='kw'>%%</span><span class='fl'>10</span>, <span class='no'>LHMask</span>)
+<span class='va'>stripes</span><span class='op'>=</span><span class='fu'>unmask</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='va'>inmask</span><span class='op'>)</span><span class='op'>%%</span><span class='fl'>10</span>, <span class='va'>LHMask</span><span class='op'>)</span>
 <span class='co'># make an image from one slice of that result array</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>(<span class='fu'><a href='imslice.html'>imslice</a></span>(<span class='no'>stripes</span>,<span class='fl'>11</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='imslice.html'>imslice</a></span><span class='op'>(</span><span class='va'>stripes</span>,<span class='fl'>11</span><span class='op'>)</span>, asp<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -252,7 +253,7 @@ from the mask to the returned object. default: <code>TRUE</code></p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

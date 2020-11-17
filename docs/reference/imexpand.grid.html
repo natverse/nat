@@ -161,7 +161,7 @@
     <p>Convert locations of im3d voxel grid into XYZ coordinates</p>
     </div>
 
-    <pre class="usage"><span class='fu'>imexpand.grid</span>(<span class='no'>d</span>)</pre>
+    <pre class="usage"><span class='fu'>imexpand.grid</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,8 +194,9 @@
 <code><a href='voxdims.html'>voxdims</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>d</span><span class='kw'>=</span><span class='fu'><a href='im3d.html'>im3d</a></span>(,<span class='kw'>dim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span>),<span class='kw'>origin</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span>),<span class='kw'>voxdims</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span>))
-<span class='fu'>imexpand.grid</span>(<span class='no'>d</span>)</div><div class='output co'>#&gt;       [,1] [,2] [,3]
+    <pre class="examples"><div class='input'><span class='va'>d</span><span class='op'>=</span><span class='fu'><a href='im3d.html'>im3d</a></span><span class='op'>(</span>,dim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>,<span class='fl'>3</span>,<span class='fl'>2</span><span class='op'>)</span>,origin<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>20</span>,<span class='fl'>30</span><span class='op'>)</span>,voxdims<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>imexpand.grid</span><span class='op'>(</span><span class='va'>d</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;       [,1] [,2] [,3]
 #&gt;  [1,]   10   20   30
 #&gt;  [2,]   11   20   30
 #&gt;  [3,]   10   22   30
@@ -223,7 +224,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

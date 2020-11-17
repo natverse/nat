@@ -161,7 +161,7 @@
     <p>Find the coefficients of the plane equation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plane_coefficients</span>(<span class='no'>p</span>, <span class='no'>n</span>)</pre>
+    <pre class="usage"><span class='fu'>plane_coefficients</span><span class='op'>(</span><span class='va'>p</span>, <span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,11 +193,12 @@
     <pre class="examples"><div class='input'>
 <span class='co'># Mushroom Body Entry Point - plane perpendicular to axon tract as </span>
 <span class='co'># projection neurons enter mushroom body calyx</span>
-<span class='no'>mbe</span><span class='kw'>=</span><span class='fu'>plane_coefficients</span>(<span class='kw'>p</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>207</span>, <span class='fl'>102</span>, <span class='fl'>142</span>), <span class='kw'>n</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>.6</span>,-<span class='fl'>0.1</span>,<span class='fl'>0.3</span>))
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>Cell07PNs</span>)
-<span class='fu'>planes3d</span>(<span class='no'>mbe</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>d</span><span class='kw'>=</span><span class='no'>mbe</span>[<span class='fl'>4</span>])
-}</div></pre>
+<span class='va'>mbe</span><span class='op'>=</span><span class='fu'>plane_coefficients</span><span class='op'>(</span>p<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>207</span>, <span class='fl'>102</span>, <span class='fl'>142</span><span class='op'>)</span>, n<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>.6</span>,<span class='op'>-</span><span class='fl'>0.1</span>,<span class='fl'>0.3</span><span class='op'>)</span><span class='op'>)</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>)</span>
+<span class='fu'>planes3d</span><span class='op'>(</span><span class='va'>mbe</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, d<span class='op'>=</span><span class='va'>mbe</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -213,7 +214,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

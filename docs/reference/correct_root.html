@@ -165,7 +165,7 @@
   neuron.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>correct_root</span>(<span class='no'>someneuronlist</span>, <span class='kw'>brain</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>correct_root</span><span class='op'>(</span><span class='va'>someneuronlist</span>, brain <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,11 +187,12 @@ using plot3d)</p></td>
     <p>a matrix of 3D points</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## NB these neurons actually have their somata chopped off</span>
-<span class='no'>correctedsomas</span> <span class='kw'>=</span> <span class='fu'>correct_root</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>correctedsomas</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='va'>correctedsomas</span> <span class='op'>=</span> <span class='fu'>correct_root</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>correctedsomas</span>, soma<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -207,7 +208,7 @@ using plot3d)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

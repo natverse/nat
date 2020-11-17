@@ -165,23 +165,23 @@ mirror.character handles images on disk" />
 <p><code>mirror.character</code> handles images on disk</p>
     </div>
 
-    <pre class="usage"><span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>mirror</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for character</span>
-<span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='no'>output</span>, <span class='kw'>mirrorAxisSize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>target</span> <span class='kw'>=</span> <span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>mirror</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>output</span>, mirrorAxisSize <span class='op'>=</span> <span class='cn'>NULL</span>, target <span class='op'>=</span> <span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>mirror</span>(
-  <span class='no'>x</span>,
-  <span class='no'>mirrorAxisSize</span>,
-  <span class='kw'>mirrorAxis</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span>),
-  <span class='kw'>warpfile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>transform</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"warp"</span>, <span class='st'>"affine"</span>, <span class='st'>"flip"</span>),
-  <span class='no'>...</span>
-)
+<span class='fu'>mirror</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>mirrorAxisSize</span>,
+  mirrorAxis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"Z"</span><span class='op'>)</span>,
+  warpfile <span class='op'>=</span> <span class='cn'>NULL</span>,
+  transform <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"warp"</span>, <span class='st'>"affine"</span>, <span class='st'>"flip"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>mirror</span>(<span class='no'>x</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>mirror</span><span class='op'>(</span><span class='va'>x</span>, subset <span class='op'>=</span> <span class='cn'>NULL</span>, OmitFailures <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -267,34 +267,36 @@ details.</p></td>
 <p><code><a href='nlapply.html'>nlapply</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='nopen3d.html'>nopen3d</a></span>()</div><div class='output co'>#&gt; glX 
-#&gt;   3 </div><div class='input'><span class='no'>x</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-<span class='no'>mx</span><span class='kw'>=</span><span class='fu'>mirror</span>(<span class='no'>x</span>,<span class='fl'>168</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='nopen3d.html'>nopen3d</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; glX 
+#&gt;   3 </div><div class='input'><span class='va'>x</span><span class='op'>=</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>mx</span><span class='op'>=</span><span class='fu'>mirror</span><span class='op'>(</span><span class='va'>x</span>,<span class='fl'>168</span><span class='op'>)</span>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>x</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>mx</span>,<span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>x</span>,col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>mx</span>,col<span class='op'>=</span><span class='st'>'green'</span><span class='op'>)</span>
 <span class='co'># }</span>
 
 <span class='co'># also works with dotprops objects</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='no'>y</span><span class='kw'>=</span><span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-<span class='no'>my</span><span class='kw'>=</span><span class='fu'>mirror</span>(<span class='no'>y</span>,<span class='kw'>mirrorAxisSize</span><span class='kw'>=</span><span class='fl'>564.2532</span>,<span class='kw'>transform</span><span class='kw'>=</span><span class='st'>'flip'</span>)
+<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>y</span><span class='op'>=</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>my</span><span class='op'>=</span><span class='fu'>mirror</span><span class='op'>(</span><span class='va'>y</span>,mirrorAxisSize<span class='op'>=</span><span class='fl'>564.2532</span>,transform<span class='op'>=</span><span class='st'>'flip'</span><span class='op'>)</span>
 <span class='co'># \donttest{</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>y</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>my</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>)
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>y</span>, col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>my</span>, col<span class='op'>=</span><span class='st'>'green'</span><span class='op'>)</span>
 <span class='co'># }</span>
 
-<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Example with an image</span>
 <span class='co'># note that we must specify an output image (obviously) but that as a</span>
 <span class='co'># convenience mirror calculates the mirrorAxisSize for us</span>
-<span class='fu'>mirror</span>(<span class='st'>'myimage.nrrd'</span>, <span class='kw'>output</span><span class='kw'>=</span><span class='st'>'myimage-mirrored.nrrd'</span>,
-  <span class='kw'>warpfile</span><span class='kw'>=</span><span class='st'>'myimage_mirror.list'</span>)
+<span class='fu'>mirror</span><span class='op'>(</span><span class='st'>'myimage.nrrd'</span>, output<span class='op'>=</span><span class='st'>'myimage-mirrored.nrrd'</span>, 
+  warpfile<span class='op'>=</span><span class='st'>'myimage_mirror.list'</span><span class='op'>)</span>
 
 <span class='co'># Simple flip along a different axis</span>
-<span class='fu'>mirror</span>(<span class='st'>'myimage.nrrd'</span>, <span class='kw'>output</span><span class='kw'>=</span><span class='st'>'myimage-flipped.nrrd'</span>, <span class='kw'>mirrorAxis</span><span class='kw'>=</span><span class='st'>"Y"</span>,
-  <span class='kw'>transform</span><span class='kw'>=</span><span class='st'>'flip'</span>)
-}</div></pre>
+<span class='fu'>mirror</span><span class='op'>(</span><span class='st'>'myimage.nrrd'</span>, output<span class='op'>=</span><span class='st'>'myimage-flipped.nrrd'</span>, mirrorAxis<span class='op'>=</span><span class='st'>"Y"</span>, 
+  transform<span class='op'>=</span><span class='st'>'flip'</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -310,7 +312,7 @@ details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

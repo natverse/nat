@@ -171,28 +171,28 @@ getformatwriter gets the function to write a file" />
 <p><code>getformatwriter</code> gets the function to write a file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fileformats</span>(
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>read</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>write</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rval</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"names"</span>, <span class='st'>"info"</span>, <span class='st'>"all"</span>)
-)
+    <pre class="usage"><span class='fu'>fileformats</span><span class='op'>(</span>
+  format <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ext <span class='op'>=</span> <span class='cn'>NULL</span>,
+  read <span class='op'>=</span> <span class='cn'>NULL</span>,
+  write <span class='op'>=</span> <span class='cn'>NULL</span>,
+  class <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rval <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"names"</span>, <span class='st'>"info"</span>, <span class='st'>"all"</span><span class='op'>)</span>
+<span class='op'>)</span>
 
-<span class='fu'>registerformat</span>(
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ext</span> <span class='kw'>=</span> <span class='no'>format</span>,
-  <span class='kw'>read</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>write</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>magic</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>magiclen</span> <span class='kw'>=</span> <span class='fl'>NA_integer_</span>,
-  <span class='kw'>class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+<span class='fu'>registerformat</span><span class='op'>(</span>
+  format <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ext <span class='op'>=</span> <span class='va'>format</span>,
+  read <span class='op'>=</span> <span class='cn'>NULL</span>,
+  write <span class='op'>=</span> <span class='cn'>NULL</span>,
+  magic <span class='op'>=</span> <span class='cn'>NULL</span>,
+  magiclen <span class='op'>=</span> <span class='cn'>NA_integer_</span>,
+  class <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>getformatreader</span>(<span class='no'>file</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>getformatreader</span><span class='op'>(</span><span class='va'>file</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>getformatwriter</span>(<span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>ext</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>class</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>getformatwriter</span><span class='op'>(</span>format <span class='op'>=</span> <span class='cn'>NULL</span>, file <span class='op'>=</span> <span class='cn'>NULL</span>, ext <span class='op'>=</span> <span class='cn'>NULL</span>, class <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -280,7 +280,8 @@ from file header to determine file's type.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># information about the currently registered file formats</span>
-<span class='fu'>fileformats</span>(<span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'info'</span>)</div><div class='output co'>#&gt;            format     class            ext  read write magic
+<span class='fu'>fileformats</span><span class='op'>(</span>rval<span class='op'>=</span><span class='st'>'info'</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;            format     class            ext  read write magic
 #&gt; 1  amiralandmarks landmarks .landmarkAscii  TRUE  TRUE  TRUE
 #&gt; 2  amiralandmarks landmarks   .landmarkBin  TRUE  TRUE  TRUE
 #&gt; 3  amiralandmarks landmarks            .am  TRUE  TRUE  TRUE
@@ -307,14 +308,15 @@ from file header to determine file's type.</p></td>
 #&gt; 24          swcng    ngraph           .swc  TRUE FALSE FALSE
 #&gt; 25       vaa3draw      im3d           .v3d  TRUE FALSE  TRUE
 #&gt; 26       vaa3draw      im3d        .v3draw  TRUE FALSE  TRUE
-#&gt; 27            vtk    neuron           .vtk FALSE  TRUE FALSE</div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>registerformat</span>(<span class='st'>"swc"</span>,<span class='kw'>read</span><span class='kw'>=</span><span class='no'>read.swc</span>,<span class='kw'>write</span><span class='kw'>=</span><span class='no'>read.swc</span>,<span class='kw'>magic</span><span class='kw'>=</span><span class='no'>is.swc</span>,<span class='kw'>magiclen</span><span class='kw'>=</span><span class='fl'>10</span>,
-  <span class='kw'>class</span><span class='kw'>=</span><span class='st'>'neuron'</span>)
-}
-<span class='no'>swc</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>'.swc'</span>)
-<span class='fu'><a href='write.neuron.html'>write.neuron</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>swc</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span>(<span class='fu'>getformatreader</span>(<span class='no'>swc</span>)$<span class='no'>format</span><span class='kw'>==</span><span class='st'>'swc'</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='no'>swc</span>)</div></pre>
+#&gt; 27            vtk    neuron           .vtk FALSE  TRUE FALSE</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>registerformat</span><span class='op'>(</span><span class='st'>"swc"</span>,read<span class='op'>=</span><span class='va'>read.swc</span>,write<span class='op'>=</span><span class='va'>read.swc</span>,magic<span class='op'>=</span><span class='va'>is.swc</span>,magiclen<span class='op'>=</span><span class='fl'>10</span>,
+  class<span class='op'>=</span><span class='st'>'neuron'</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>swc</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext <span class='op'>=</span> <span class='st'>'.swc'</span><span class='op'>)</span>
+<span class='fu'><a href='write.neuron.html'>write.neuron</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>swc</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/stopifnot.html'>stopifnot</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Logic.html'>isTRUE</a></span><span class='op'>(</span><span class='fu'>getformatreader</span><span class='op'>(</span><span class='va'>swc</span><span class='op'>)</span><span class='op'>$</span><span class='va'>format</span><span class='op'>==</span><span class='st'>'swc'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>swc</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -330,7 +332,7 @@ from file header to determine file's type.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

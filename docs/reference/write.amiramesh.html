@@ -161,14 +161,14 @@
     <p>Write a 3D data object to an AmiraMesh format file</p>
     </div>
 
-    <pre class="usage"><span class='fu'>write.amiramesh</span>(
-  <span class='no'>x</span>,
-  <span class='no'>file</span>,
-  <span class='kw'>enc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"binary"</span>, <span class='st'>"raw"</span>, <span class='st'>"text"</span>, <span class='st'>"hxzip"</span>),
-  <span class='kw'>dtype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"float"</span>, <span class='st'>"byte"</span>, <span class='st'>"short"</span>, <span class='st'>"ushort"</span>, <span class='st'>"int"</span>, <span class='st'>"double"</span>),
-  <span class='kw'>endian</span> <span class='kw'>=</span> <span class='no'>.Platform</span>$<span class='no'>endian</span>,
-  <span class='kw'>WriteNrrdHeader</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>write.amiramesh</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>file</span>,
+  enc <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"binary"</span>, <span class='st'>"raw"</span>, <span class='st'>"text"</span>, <span class='st'>"hxzip"</span><span class='op'>)</span>,
+  dtype <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"float"</span>, <span class='st'>"byte"</span>, <span class='st'>"short"</span>, <span class='st'>"ushort"</span>, <span class='st'>"int"</span>, <span class='st'>"double"</span><span class='op'>)</span>,
+  endian <span class='op'>=</span> <span class='va'>.Platform</span><span class='op'>$</span><span class='va'>endian</span>,
+  WriteNrrdHeader <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,14 +211,15 @@ details.</p></td>
   of the detached NRRD format in the help for <code><a href='write.nrrd.html'>write.nrrd</a></code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/Platform.html'>.Platform</a>, <a href='amiramesh-io.html'>read.amiramesh</a>, <a href='write.nrrd.html'>write.nrrd</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/Platform.html'>.Platform</a>, <a href='read.amiramesh.html'>read.amiramesh</a>, <a href='write.nrrd.html'>write.nrrd</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>d</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>1000</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>10</span>, <span class='fl'>10</span>))
-<span class='no'>tf</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span><span class='kw'>=</span><span class='st'>'.am'</span>)
-<span class='fu'>write.amiramesh</span>(<span class='fu'><a href='im3d.html'>im3d</a></span>(<span class='no'>d</span>, <span class='kw'>voxdims</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.5</span>,<span class='fl'>0.5</span>,<span class='fl'>1</span>)), <span class='kw'>file</span><span class='kw'>=</span><span class='no'>tf</span>, <span class='kw'>WriteNrrdHeader</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='no'>d2</span><span class='kw'>=</span><span class='fu'><a href='read.nrrd.html'>read.nrrd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span>(<span class='no'>tf</span>, <span class='kw'>sep</span><span class='kw'>=</span><span class='st'>''</span>, <span class='st'>'.nhdr'</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='no'>d</span>, <span class='no'>d2</span>, <span class='kw'>tol</span><span class='kw'>=</span><span class='fl'>1e-6</span>)</div><div class='output co'>#&gt; [1] "Attributes: &lt; Length mismatch: comparison on first 1 components &gt;"</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>d</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/array.html'>array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1000</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>tf</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span><span class='op'>(</span>fileext<span class='op'>=</span><span class='st'>'.am'</span><span class='op'>)</span>
+<span class='fu'>write.amiramesh</span><span class='op'>(</span><span class='fu'><a href='im3d.html'>im3d</a></span><span class='op'>(</span><span class='va'>d</span>, voxdims<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.5</span>,<span class='fl'>0.5</span>,<span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>, file<span class='op'>=</span><span class='va'>tf</span>, WriteNrrdHeader<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>d2</span><span class='op'>=</span><span class='fu'><a href='read.nrrd.html'>read.nrrd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='va'>tf</span>, sep<span class='op'>=</span><span class='st'>''</span>, <span class='st'>'.nhdr'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='va'>d</span>, <span class='va'>d2</span>, tol<span class='op'>=</span><span class='fl'>1e-6</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "Attributes: &lt; Length mismatch: comparison on first 1 components &gt;"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -234,7 +235,7 @@ details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

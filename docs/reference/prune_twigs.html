@@ -161,13 +161,13 @@
     <p><code>prune_twigs</code> will prune twigs less than a certain path length from a neuron</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prune_twigs</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>prune_twigs</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>prune_twigs</span>(<span class='no'>x</span>, <span class='no'>twig_length</span>, <span class='no'>...</span>)
+<span class='fu'>prune_twigs</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>twig_length</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuronlist</span>
-<span class='fu'>prune_twigs</span>(<span class='no'>x</span>, <span class='no'>twig_length</span>, <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>prune_twigs</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>twig_length</span>, OmitFailures <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,12 +194,17 @@ details.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Gregory Jefferis <a href='mailto:jefferis@gmail.com'>jefferis@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Prune twigs up to 5 microns long</span>
-<span class='no'>pt5</span><span class='kw'>=</span><span class='fu'>prune_twigs</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>twig_length</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='va'>pt5</span><span class='op'>=</span><span class='fu'>prune_twigs</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, twig_length <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 <span class='co'># compare original (coloured) and pruned (black) neurons</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>xlim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>240</span>,<span class='fl'>300</span>), <span class='kw'>ylim</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>120</span>, <span class='fl'>90</span>))</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>pt5</span>, <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'black'</span>)</div><div class='img'><img src='prune_twigs-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, xlim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>240</span>,<span class='fl'>300</span><span class='op'>)</span>, ylim<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>120</span>, <span class='fl'>90</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>pt5</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span>, add<span class='op'>=</span><span class='cn'>TRUE</span>, lwd<span class='op'>=</span><span class='fl'>2</span>, col<span class='op'>=</span><span class='st'>'black'</span><span class='op'>)</span>
+</div><div class='img'><img src='prune_twigs-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -215,7 +220,7 @@ details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

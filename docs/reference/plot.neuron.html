@@ -166,50 +166,50 @@ plot.neuron plots a 2D projection of a neuron" />
     </div>
 
     <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>scalevecs</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>alpharange</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>PlotPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>PlotVectors</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>UseAlpha</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  scalevecs <span class='op'>=</span> <span class='fl'>1</span>,
+  alpharange <span class='op'>=</span> <span class='cn'>NULL</span>,
+  col <span class='op'>=</span> <span class='st'>"black"</span>,
+  PlotPoints <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  PlotVectors <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  UseAlpha <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  asp <span class='op'>=</span> <span class='fl'>1</span>,
+  add <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  tck <span class='op'>=</span> <span class='cn'>NA</span>,
+  boundingbox <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xlim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  soma <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(
-  <span class='no'>x</span>,
-  <span class='kw'>WithLine</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>WithNodes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>WithAllPoints</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>WithText</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>PlotSubTrees</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>soma</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>PlotAxes</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span>),
-  <span class='kw'>axes</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>asp</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>main</span> <span class='kw'>=</span> <span class='no'>x</span>$<span class='no'>NeuronName</span>,
-  <span class='kw'>sub</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>AxisDirections</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, -<span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='kw'>add</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>PointAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>tck</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='st'>"lwd"</span>),
-  <span class='kw'>boundingbox</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  WithLine <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  WithNodes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  WithAllPoints <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  WithText <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  PlotSubTrees <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  soma <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  PlotAxes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"XY"</span>, <span class='st'>"YZ"</span>, <span class='st'>"XZ"</span>, <span class='st'>"ZY"</span><span class='op'>)</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  asp <span class='op'>=</span> <span class='fl'>1</span>,
+  main <span class='op'>=</span> <span class='va'>x</span><span class='op'>$</span><span class='va'>NeuronName</span>,
+  sub <span class='op'>=</span> <span class='cn'>NULL</span>,
+  xlim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  ylim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  AxisDirections <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>,
+  add <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  col <span class='op'>=</span> <span class='cn'>NULL</span>,
+  PointAlpha <span class='op'>=</span> <span class='fl'>1</span>,
+  tck <span class='op'>=</span> <span class='cn'>NA</span>,
+  lwd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='st'>"lwd"</span><span class='op'>)</span>,
+  boundingbox <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -374,14 +374,23 @@ consistent with the latter.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)</div><div class='input'><span class='co'># NB soma ignored</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>kcs20</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>kcs20</span>[<span class='fl'>1</span>], <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Draw first example neuron</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='input'><span class='co'># Overlay second example neuron</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>2</span>]], <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Clear the current plot and draw the third neuron from a different view</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>3</span>]], <span class='kw'>PlotAxes</span><span class='kw'>=</span><span class='st'>"YZ"</span>)</div><div class='img'><img src='plot.neuron-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Just plot the end points for the fourth example neuron</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>)</div><div class='input'><span class='co'># Plot with soma (of default radius)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot.neuron-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Plot with soma of defined radius</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>4</span>]], <span class='kw'>WithNodes</span><span class='kw'>=</span><span class='fl'>FALSE</span>, <span class='kw'>soma</span><span class='kw'>=</span><span class='fl'>1.25</span>)</div><div class='img'><img src='plot.neuron-5.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
+</div><div class='input'><span class='co'># NB soma ignored</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, col<span class='op'>=</span><span class='st'>'red'</span>, soma<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, col<span class='op'>=</span><span class='st'>'red'</span>, soma<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuron-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Draw first example neuron</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='input'><span class='co'># Overlay second example neuron</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuron-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Clear the current plot and draw the third neuron from a different view</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span>, PlotAxes<span class='op'>=</span><span class='st'>"YZ"</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuron-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Just plot the end points for the fourth example neuron</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='input'><span class='co'># Plot with soma (of default radius)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span>, soma<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuron-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># Plot with soma of defined radius</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span>, WithNodes<span class='op'>=</span><span class='cn'>FALSE</span>, soma<span class='op'>=</span><span class='fl'>1.25</span><span class='op'>)</span>
+</div><div class='img'><img src='plot.neuron-5.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -397,7 +406,7 @@ consistent with the latter.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

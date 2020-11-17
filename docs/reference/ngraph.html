@@ -177,24 +177,24 @@ as.ngraph.neuron construct ngraph from a neuron" />
 <p><code>as.ngraph.neuron</code> construct ngraph from a neuron</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ngraph</span>(
-  <span class='no'>el</span>,
-  <span class='no'>vertexnames</span>,
-  <span class='kw'>xyz</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>diam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>vertex.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>graph.attributes</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
-)
+    <pre class="usage"><span class='fu'>ngraph</span><span class='op'>(</span>
+  <span class='va'>el</span>,
+  <span class='va'>vertexnames</span>,
+  xyz <span class='op'>=</span> <span class='cn'>NULL</span>,
+  diam <span class='op'>=</span> <span class='cn'>NULL</span>,
+  directed <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  weights <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  vertex.attributes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  graph.attributes <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span>
 
-<span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>as.ngraph</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)
+<span class='fu'>as.ngraph</span><span class='op'>(</span><span class='va'>x</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>as.ngraph</span>(<span class='no'>x</span>, <span class='kw'>directed</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"swc"</span>, <span class='st'>"seglist"</span>), <span class='no'>...</span>)</pre>
+<span class='fu'>as.ngraph</span><span class='op'>(</span><span class='va'>x</span>, directed <span class='op'>=</span> <span class='cn'>TRUE</span>, method <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"swc"</span>, <span class='st'>"seglist"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -294,7 +294,7 @@ neuronal connectivity to generate graph.</p></td>
   neuron, <code><a href='plot3d.ngraph.html'>plot3d.ngraph</a></code></p>
 <p>Other neuron: 
 <code><a href='neuron.html'>neuron</a>()</code>,
-<code><a href='plot.neuron.html'>plot.dotprops</a>()</code>,
+<code><a href='plot.dotprops.html'>plot.dotprops</a>()</code>,
 <code><a href='potential_synapses.html'>potential_synapses</a>()</code>,
 <code><a href='prune.html'>prune</a>()</code>,
 <code><a href='resample.html'>resample</a>()</code>,
@@ -303,9 +303,10 @@ neuronal connectivity to generate graph.</p></td>
 <code><a href='subset.neuron.html'>subset.neuron</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]
-<span class='no'>g</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>n</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>igraph</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='va'>n</span><span class='op'>=</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>g</span><span class='op'>=</span><span class='fu'>as.ngraph</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://igraph.org'>igraph</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘igraph’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:nat’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    union</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
@@ -315,18 +316,21 @@ neuronal connectivity to generate graph.</p></td>
 #&gt; <span class='message'>    decompose, spectrum</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    union</span></div><div class='input'><span class='co'># check that vertex attributes of graph match X position</span>
-<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span>(<span class='no'>g</span>)$<span class='no'>X</span>, <span class='no'>n</span>$<span class='no'>d</span>$<span class='no'>X</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/base/all.equal.html'>all.equal</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>g</span><span class='op'>)</span><span class='op'>$</span><span class='va'>X</span>, <span class='va'>n</span><span class='op'>$</span><span class='va'>d</span><span class='op'>$</span><span class='va'>X</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># Use 3D segment lengths as edge length of graph</span>
-<span class='no'>gw</span><span class='kw'>=</span><span class='fu'>as.ngraph</span>(<span class='no'>n</span>, <span class='kw'>weights</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+<span class='va'>gw</span><span class='op'>=</span><span class='fu'>as.ngraph</span><span class='op'>(</span><span class='va'>n</span>, weights<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='co'># find longest path across graph</span>
-<span class='no'>d</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/diameter.html'>get.diameter</a></span>(<span class='no'>gw</span>)
+<span class='va'>d</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/diameter.html'>get.diameter</a></span><span class='op'>(</span><span class='va'>gw</span><span class='op'>)</span>
 <span class='co'># make a new neuron using the longest path</span>
-<span class='no'>gw_spine</span><span class='kw'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/igraph/man/subgraph.html'>induced.subgraph</a></span>(<span class='no'>gw</span>, <span class='no'>d</span>))
+<span class='va'>gw_spine</span><span class='op'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/subgraph.html'>induced.subgraph</a></span><span class='op'>(</span><span class='va'>gw</span>, <span class='va'>d</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># make a new neuron containing all nodes except those in longest path</span>
-<span class='no'>gw_antispine</span><span class='kw'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/igraph/man/delete_vertices.html'>delete.vertices</a></span>(<span class='no'>gw</span>, <span class='no'>d</span>))
+<span class='va'>gw_antispine</span><span class='op'>=</span><span class='fu'><a href='neuron.html'>as.neuron</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/delete_vertices.html'>delete.vertices</a></span><span class='op'>(</span><span class='va'>gw</span>, <span class='va'>d</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># note use of bounding box of original neuron to set plot axes</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>gw_spine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>, <span class='kw'>boundingbox</span><span class='kw'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span>(<span class='no'>n</span>))</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>gw_antispine</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='ngraph-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>gw_spine</span>, col<span class='op'>=</span><span class='st'>'red'</span>, boundingbox<span class='op'>=</span><span class='fu'><a href='boundingbox.html'>boundingbox</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>gw_antispine</span>, col<span class='op'>=</span><span class='st'>'blue'</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='ngraph-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -342,7 +346,7 @@ neuronal connectivity to generate graph.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

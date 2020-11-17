@@ -161,17 +161,17 @@
     <p>Read one or more neurons from file to a neuronlist in memory</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read.neurons</span>(
-  <span class='no'>paths</span>,
-  <span class='kw'>pattern</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>neuronnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>format</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>nl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>df</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>OmitFailures</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>SortOnUpdate</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>read.neurons</span><span class='op'>(</span>
+  <span class='va'>paths</span>,
+  pattern <span class='op'>=</span> <span class='cn'>NULL</span>,
+  neuronnames <span class='op'>=</span> <span class='cn'>NULL</span>,
+  format <span class='op'>=</span> <span class='cn'>NULL</span>,
+  nl <span class='op'>=</span> <span class='cn'>NULL</span>,
+  df <span class='op'>=</span> <span class='cn'>NULL</span>,
+  OmitFailures <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  SortOnUpdate <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -252,7 +252,7 @@ sorted so that neurons are ordered according to the value of the
     <div class='dont-index'><p><code><a href='read.neuron.html'>read.neuron</a></code>, <code><a href='write.neurons.html'>write.neurons</a></code>,
   <code><a href='fileformats.html'>fileformats</a></code></p>
 <p>Other neuronlist: 
-<code><a href='neuronlist-arithmetic.html'>*.neuronlist</a>()</code>,
+<code><a href='*.neuronlist.html'>*.neuronlist</a>()</code>,
 <code><a href='is.neuronlist.html'>is.neuronlist</a>()</code>,
 <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
 <code><a href='neuronlistfh.html'>neuronlistfh</a>()</code>,
@@ -261,28 +261,29 @@ sorted so that neurons are ordered according to the value of the
 <code><a href='write.neurons.html'>write.neurons</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## Read C. elegans neurons from OpenWorm github repository</span>
-<span class='no'>vds</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"VD"</span>, <span class='fl'>1</span>:<span class='fl'>13</span>)
-<span class='no'>vdurls</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"https://raw.githubusercontent.com/openworm/CElegansNeuroML/"</span>,
-  <span class='st'>"103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/"</span>,<span class='no'>vds</span>,
-  <span class='st'>".morph.xml"</span>)
-<span class='no'>vdnl</span><span class='kw'>=</span><span class='fu'>read.neurons</span>(<span class='no'>vdurls</span>, <span class='kw'>neuronnames</span><span class='kw'>=</span><span class='no'>vds</span>)
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>vdnl</span>)
+<span class='va'>vds</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"VD"</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>13</span><span class='op'>)</span>
+<span class='va'>vdurls</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span><span class='op'>(</span><span class='st'>"https://raw.githubusercontent.com/openworm/CElegansNeuroML/"</span>,
+  <span class='st'>"103d500e066125688aa7ac5eac7e9b2bb4490561/CElegans/generatedNeuroML/"</span>,<span class='va'>vds</span>,
+  <span class='st'>".morph.xml"</span><span class='op'>)</span>
+<span class='va'>vdnl</span><span class='op'>=</span><span class='fu'>read.neurons</span><span class='op'>(</span><span class='va'>vdurls</span>, neuronnames<span class='op'>=</span><span class='va'>vds</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>vdnl</span><span class='op'>)</span>
 
 <span class='co'>## The same, but this time add some metadata to neuronlist</span>
 <span class='co'># fetch table of worm neurons from wormbase</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>rvest</span>)
-<span class='no'>nlurl</span><span class='kw'>=</span><span class='st'>"http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"</span>
-<span class='no'>wormneurons</span> <span class='kw'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span>(<span class='fu'>read_html</span>(<span class='no'>nlurl</span>), <span class='kw'>fill</span><span class='kw'>=</span><span class='fl'>TRUE</span>)<span class='kw'>[[</span><span class='fl'>4</span>]]
-<span class='no'>vddf</span><span class='kw'>=</span><span class='fu'><a href='subset.html'>subset</a></span>(<span class='no'>wormneurons</span>, <span class='no'>Neuron</span><span class='kw'>%in%</span><span class='no'>vds</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>vddf</span>)<span class='kw'>=</span><span class='no'>vddf</span>$<span class='no'>Neuron</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://rvest.tidyverse.org/'>rvest</a></span><span class='op'>)</span>
+<span class='va'>nlurl</span><span class='op'>=</span><span class='st'>"http://wormatlas.org/neurons/Individual%20Neurons/Neuronframeset.html"</span>
+<span class='va'>wormneurons</span> <span class='op'>=</span> <span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='fu'>read_html</span><span class='op'>(</span><span class='va'>nlurl</span><span class='op'>)</span>, fill<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span>
+<span class='va'>vddf</span><span class='op'>=</span><span class='fu'><a href='subset.html'>subset</a></span><span class='op'>(</span><span class='va'>wormneurons</span>, <span class='va'>Neuron</span><span class='op'>%in%</span><span class='va'>vds</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>vddf</span><span class='op'>)</span><span class='op'>=</span><span class='va'>vddf</span><span class='op'>$</span><span class='va'>Neuron</span>
 <span class='co'># attach metadata to neuronlist</span>
-<span class='no'>vdnl</span><span class='kw'>=</span><span class='fu'>read.neurons</span>(<span class='no'>vdurls</span>, <span class='kw'>neuronnames</span><span class='kw'>=</span><span class='no'>vds</span>, <span class='kw'>df</span><span class='kw'>=</span><span class='no'>vddf</span>)
+<span class='va'>vdnl</span><span class='op'>=</span><span class='fu'>read.neurons</span><span class='op'>(</span><span class='va'>vdurls</span>, neuronnames<span class='op'>=</span><span class='va'>vds</span>, df<span class='op'>=</span><span class='va'>vddf</span><span class='op'>)</span>
 <span class='co'># use metadata to plot a subset of neurons</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span>()
-<span class='fu'><a href='plot3d.html'>plot3d</a></span>(<span class='no'>vdnl</span>, <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span>(<span class='st'>"P[1-6].app"</span>, <span class='no'>Lineage</span>))
-}</div></pre>
+<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>vdnl</span>, <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"P[1-6].app"</span>, <span class='va'>Lineage</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -298,7 +299,7 @@ sorted so that neurons are ordered according to the value of the
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

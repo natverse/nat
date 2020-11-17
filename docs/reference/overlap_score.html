@@ -167,7 +167,7 @@ The sum of this score is added to the final output matrix. The score is calculat
 and delta is the expected distance in um that is considered 'close'. It is recommended that the user resamples neurons before use, using <code><a href='resample.html'>resample</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>overlap_score</span>(<span class='no'>outputneurons</span>, <span class='no'>inputneurons</span>, <span class='kw'>delta</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>overlap_score</span><span class='op'>(</span><span class='va'>outputneurons</span>, <span class='va'>inputneurons</span>, delta <span class='op'>=</span> <span class='fl'>1</span>, progress <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,14 +198,15 @@ and delta is the expected distance in um that is considered 'close'. It is recom
     <div class='dont-index'><p><code><a href='potential_synapses.html'>potential_synapses</a></code>, <code><a href='resample.html'>resample</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span> 
 <span class='co'># Calculate how much some neurons overlap with one another</span>
 <span class='co'>## Example requires the package nat.flybrains</span>
-<span class='no'>Cell07PNs_overlap</span> <span class='kw'>=</span> <span class='fu'>overlap_score</span>(<span class='kw'>outputneurons</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span>, <span class='kw'>inputneurons</span> <span class='kw'>=</span> <span class='no'>Cell07PNs</span>)
+<span class='va'>Cell07PNs_overlap</span> <span class='op'>=</span> <span class='fu'>overlap_score</span><span class='op'>(</span>outputneurons <span class='op'>=</span> <span class='va'>Cell07PNs</span>, inputneurons <span class='op'>=</span> <span class='va'>Cell07PNs</span><span class='op'>)</span>
 
 <span class='co'>## Plot the results</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/heatmap.html'>heatmap</a></span>(<span class='no'>Cell07PNs_overlap</span>)
-}</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/heatmap.html'>heatmap</a></span><span class='op'>(</span><span class='va'>Cell07PNs_overlap</span><span class='op'>)</span>
+<span class='op'>}</span> 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -221,7 +222,7 @@ and delta is the expected distance in um that is considered 'close'. It is recom
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

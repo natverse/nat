@@ -161,17 +161,17 @@
     <p>Make a scalebar to accompany an image.im3d plot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>imscalebar</span>(
-  <span class='no'>levels</span>,
-  <span class='no'>col</span>,
-  <span class='kw'>nlevels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>horizontal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lab</span> <span class='kw'>=</span> <span class='st'>"Density"</span>,
-  <span class='kw'>mar</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span>) + <span class='fl'>0.1</span>,
-  <span class='kw'>border</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>imscalebar</span><span class='op'>(</span>
+  <span class='va'>levels</span>,
+  <span class='va'>col</span>,
+  nlevels <span class='op'>=</span> <span class='cn'>NULL</span>,
+  zlim <span class='op'>=</span> <span class='cn'>NULL</span>,
+  horizontal <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  lab <span class='op'>=</span> <span class='st'>"Density"</span>,
+  mar <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>0.1</span>,
+  border <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -221,14 +221,15 @@ TRUE)</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='no'>LHMask</span><span class='kw'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>'tests/testthat/testdata/nrrd/LHMask.nrrd'</span>,<span class='kw'>package</span><span class='kw'>=</span><span class='st'>'nat'</span>))
-<span class='no'>op</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>no.readonly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/layout.html'>layout</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>ncol</span> <span class='kw'>=</span> <span class='fl'>2L</span>), <span class='kw'>widths</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>0.2</span>))
-<span class='no'>rval</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span>(<span class='fu'><a href='imslice.html'>imslice</a></span>(<span class='no'>LHMask</span>,<span class='fl'>10</span>), <span class='kw'>asp</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-<span class='fu'>imscalebar</span>(<span class='no'>rval</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='no'>op</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='va'>LHMask</span><span class='op'>=</span><span class='fu'><a href='im3d-io.html'>read.im3d</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'tests/testthat/testdata/nrrd/LHMask.nrrd'</span>,package<span class='op'>=</span><span class='st'>'nat'</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>op</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>no.readonly <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/layout.html'>layout</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, ncol <span class='op'>=</span> <span class='fl'>2L</span><span class='op'>)</span>, widths <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>rval</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/graphics/image.html'>image</a></span><span class='op'>(</span><span class='fu'><a href='imslice.html'>imslice</a></span><span class='op'>(</span><span class='va'>LHMask</span>,<span class='fl'>10</span><span class='op'>)</span>, asp<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>imscalebar</span><span class='op'>(</span><span class='va'>rval</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span><span class='va'>op</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -244,7 +245,7 @@ TRUE)</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

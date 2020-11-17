@@ -171,10 +171,10 @@ xformpoints.tpsreg enables xform and
   object.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tpsreg</span>(<span class='no'>sample</span>, <span class='no'>reference</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>tpsreg</span><span class='op'>(</span><span class='va'>sample</span>, <span class='va'>reference</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for tpsreg</span>
-<span class='fu'><a href='xformpoints.html'>xformpoints</a></span>(<span class='no'>reg</span>, <span class='no'>points</span>, <span class='kw'>swap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='xformpoints.html'>xformpoints</a></span><span class='op'>(</span><span class='va'>reg</span>, <span class='va'>points</span>, swap <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -218,41 +218,42 @@ reference (desired target after transformation) spaces. See details.</p></td>
     <div class='dont-index'><p><code><a href='reglist.html'>reglist</a></code>, <code><a href='read.landmarks.html'>read.landmarks</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'>## A full worked example of using landmarks based registration to construct</span>
 <span class='co'>## a mirroring registration from one side of the brain to the other.</span>
 
 <span class='co'># read in set of landmarks defined in FAFB CATMAID</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>'catmaid'</span>)
-<span class='no'>emlandmarks</span><span class='kw'>=</span><span class='kw pkg'>catmaid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/catmaid/man/read.neuron.catmaid.html'>read.neurons.catmaid</a></span>(<span class='st'>'annotation:^GJLandmark'</span>)
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://github.com/jefferis/rcatmaid'>'catmaid'</a></span><span class='op'>)</span>
+<span class='va'>emlandmarks</span><span class='op'>=</span><span class='fu'>catmaid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/catmaid/man/read.neuron.catmaid.html'>read.neurons.catmaid</a></span><span class='op'>(</span><span class='st'>'annotation:^GJLandmark'</span><span class='op'>)</span>
 
 <span class='co'># Match up L and R pairs</span>
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>'stringr'</span>)
-<span class='no'>emlandmarks</span>[,<span class='st'>'side'</span>]<span class='kw'>=</span><span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_match.html'>str_match</a></span>(<span class='no'>emlandmarks</span>[,<span class='st'>'name'</span>], <span class='st'>"([LR]) Landmark"</span>)[,<span class='fl'>2</span>]
-<span class='no'>emlandmarks</span>[,<span class='st'>'shortname'</span>]<span class='kw'>=</span><span class='kw pkg'>stringr</span><span class='kw ns'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_match.html'>str_match</a></span>(<span class='no'>emlandmarks</span>[,<span class='st'>'name'</span>], <span class='st'>"(.*)([LR]) Landmark.*"</span>)[,<span class='fl'>2</span>]
-<span class='no'>emlandmarks</span>[,<span class='st'>'shortname'</span>]<span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span>(<span class='st'>"[_ ]+$"</span>, <span class='st'>""</span>, <span class='no'>emlandmarks</span>[,<span class='st'>'shortname'</span>])
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='http://stringr.tidyverse.org'>'stringr'</a></span><span class='op'>)</span>
+<span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='st'>'side'</span><span class='op'>]</span><span class='op'>=</span><span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_match.html'>str_match</a></span><span class='op'>(</span><span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='st'>'name'</span><span class='op'>]</span>, <span class='st'>"([LR]) Landmark"</span><span class='op'>)</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='st'>'shortname'</span><span class='op'>]</span><span class='op'>=</span><span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_match.html'>str_match</a></span><span class='op'>(</span><span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='st'>'name'</span><span class='op'>]</span>, <span class='st'>"(.*)([LR]) Landmark.*"</span><span class='op'>)</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>
+<span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='st'>'shortname'</span><span class='op'>]</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span><span class='op'>(</span><span class='st'>"[_ ]+$"</span>, <span class='st'>""</span>, <span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='st'>'shortname'</span><span class='op'>]</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='st'>'dplyr'</span>)
-<span class='no'>lmpairs</span><span class='kw'>=</span><span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span>(
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>emlandmarks</span>[,], <span class='no'>side</span><span class='kw'>==</span><span class='st'>"L"</span>),
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>emlandmarks</span>[,], <span class='no'>side</span><span class='kw'>==</span><span class='st'>"R"</span>),
-  <span class='kw'>by</span><span class='kw'>=</span><span class='st'>'shortname'</span>, <span class='kw'>suffix</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>".L"</span>,<span class='st'>".R"</span>))
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='st'><a href='https://dplyr.tidyverse.org'>'dplyr'</a></span><span class='op'>)</span>
+<span class='va'>lmpairs</span><span class='op'>=</span><span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span>
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='op'>]</span>, <span class='va'>side</span><span class='op'>==</span><span class='st'>"L"</span><span class='op'>)</span>,
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>emlandmarks</span><span class='op'>[</span>,<span class='op'>]</span>, <span class='va'>side</span><span class='op'>==</span><span class='st'>"R"</span><span class='op'>)</span>,
+  by<span class='op'>=</span><span class='st'>'shortname'</span>, suffix<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>".L"</span>,<span class='st'>".R"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># find mean xyz position of each landmark (they are drawn as a little cross)</span>
-<span class='no'>lmxyz</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>emlandmarks</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span>(<span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span>(<span class='no'>x</span>))))
+<span class='va'>lmxyz</span><span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span><span class='op'>(</span><span class='va'>emlandmarks</span>, <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/colSums.html'>colMeans</a></span><span class='op'>(</span><span class='fu'><a href='xyzmatrix.html'>xyzmatrix</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># construct thin plate splines registration (here mapping the right side neurons to left side)</span>
-<span class='no'>mirror_reg</span><span class='kw'>=</span><span class='fu'>tpsreg</span>(
-  <span class='no'>lmxyz</span>[<span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>lmpairs</span>$<span class='no'>skid.R</span>),],
-  <span class='no'>lmxyz</span>[<span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span>(<span class='no'>lmpairs</span>$<span class='no'>skid.L</span>),]
-)
+<span class='va'>mirror_reg</span><span class='op'>=</span><span class='fu'>tpsreg</span><span class='op'>(</span>
+  <span class='va'>lmxyz</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>lmpairs</span><span class='op'>$</span><span class='va'>skid.R</span><span class='op'>)</span>,<span class='op'>]</span>,
+  <span class='va'>lmxyz</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>lmpairs</span><span class='op'>$</span><span class='va'>skid.L</span><span class='op'>)</span>,<span class='op'>]</span>
+<span class='op'>)</span>
 <span class='co'># map RHS DA2 PNs onto left and compare with LHS neurons</span>
-<span class='no'>da2pns.R</span><span class='kw'>=</span><span class='kw pkg'>catmaid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/catmaid/man/read.neuron.catmaid.html'>read.neurons.catmaid</a></span>(<span class='st'>'glomerulus DA2 right'</span>)
-<span class='no'>da2pns.L</span><span class='kw'>=</span><span class='kw pkg'>catmaid</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/catmaid/man/read.neuron.catmaid.html'>read.neurons.catmaid</a></span>(<span class='st'>'glomerulus DA2 left'</span>)
+<span class='va'>da2pns.R</span><span class='op'>=</span><span class='fu'>catmaid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/catmaid/man/read.neuron.catmaid.html'>read.neurons.catmaid</a></span><span class='op'>(</span><span class='st'>'glomerulus DA2 right'</span><span class='op'>)</span>
+<span class='va'>da2pns.L</span><span class='op'>=</span><span class='fu'>catmaid</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/catmaid/man/read.neuron.catmaid.html'>read.neurons.catmaid</a></span><span class='op'>(</span><span class='st'>'glomerulus DA2 left'</span><span class='op'>)</span>
 
-<span class='no'>da2pns.R.L</span><span class='kw'>=</span><span class='fu'><a href='xform.html'>xform</a></span>(<span class='no'>da2pns.R</span>, <span class='kw'>reg</span> <span class='kw'>=</span> <span class='no'>mirror_reg</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>da2pns.L</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'red'</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>da2pns.R.L</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'blue'</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
-}</div></pre>
+<span class='va'>da2pns.R.L</span><span class='op'>=</span><span class='fu'><a href='xform.html'>xform</a></span><span class='op'>(</span><span class='va'>da2pns.R</span>, reg <span class='op'>=</span> <span class='va'>mirror_reg</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>da2pns.L</span>, col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>da2pns.R.L</span>, col<span class='op'>=</span><span class='st'>'blue'</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -268,7 +269,7 @@ reference (desired target after transformation) spaces. See details.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

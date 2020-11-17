@@ -163,7 +163,7 @@
   interactively, using an rgl window</p>
     </div>
 
-    <pre class="usage"><span class='fu'>select_points</span>(<span class='no'>points</span>, <span class='kw'>clear_plot_on_exit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>select_points</span><span class='op'>(</span><span class='va'>points</span>, clear_plot_on_exit <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,10 +188,11 @@ selection has been completed.</p></td>
     <div class='dont-index'><p><code><a href='prune_online.html'>prune_online</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Select points from 3 olfactory projection neurons</span>
-<span class='no'>selected_points</span> <span class='kw'>=</span> <span class='fu'>select_points</span>(<span class='no'>Cell07PNs</span>[<span class='fl'>1</span>:<span class='fl'>3</span>])
-}</div></pre>
+<span class='va'>selected_points</span> <span class='op'>=</span> <span class='fu'>select_points</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -207,7 +208,7 @@ selection has been completed.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

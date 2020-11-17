@@ -163,9 +163,9 @@ prune_edges removes edges (and any unreferenced vertices)" />
 <p><code>prune_edges</code> removes edges (and any unreferenced vertices)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>prune_vertices</span>(<span class='no'>x</span>, <span class='no'>verticestoprune</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>prune_vertices</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>verticestoprune</span>, invert <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>prune_edges</span>(<span class='no'>x</span>, <span class='no'>edges</span>, <span class='kw'>invert</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>prune_edges</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>edges</span>, invert <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -227,21 +227,24 @@ of <code>igraph::<a href='https://rdrr.io/pkg/igraph/man/E.html'>E</a></code>.</
   <code><a href='prune.html'>prune.neuron</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>n</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='fl'>1</span>:<span class='fl'>25</span>)
+    <pre class="examples"><div class='input'><span class='va'>n</span><span class='op'>=</span><span class='fu'>prune_vertices</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span><span class='op'>)</span>
 <span class='co'># original neuron</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]])</div><div class='input'><span class='co'># with pruned neuron superimposed</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>n</span>, <span class='kw'>col</span><span class='kw'>=</span><span class='st'>'green'</span>, <span class='kw'>lwd</span><span class='kw'>=</span><span class='fl'>3</span>, <span class='kw'>add</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='prune_vertices-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='input'><span class='co'># with pruned neuron superimposed</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>n</span>, col<span class='op'>=</span><span class='st'>'green'</span>, lwd<span class='op'>=</span><span class='fl'>3</span>, add<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='img'><img src='prune_vertices-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># use the PointNo field (= the original id from an SWC file)</span>
-<span class='no'>n2</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>n</span>, <span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span>(<span class='fl'>26</span>:<span class='fl'>30</span>, <span class='no'>n</span>$<span class='no'>d</span>$<span class='no'>PointNo</span>))
-<span class='no'>y</span><span class='kw'>=</span><span class='fu'>prune_edges</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>edges</span><span class='kw'>=</span><span class='fl'>1</span>:<span class='fl'>25</span>)
+<span class='va'>n2</span><span class='op'>=</span><span class='fu'>prune_vertices</span><span class='op'>(</span><span class='va'>n</span>, <span class='fu'><a href='https://rdrr.io/r/base/match.html'>match</a></span><span class='op'>(</span><span class='fl'>26</span><span class='op'>:</span><span class='fl'>30</span>, <span class='va'>n</span><span class='op'>$</span><span class='va'>d</span><span class='op'>$</span><span class='va'>PointNo</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>y</span><span class='op'>=</span><span class='fu'>prune_edges</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, edges<span class='op'>=</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>25</span><span class='op'>)</span>
 
 <span class='co'># remove the spine of a neuron</span>
-<span class='no'>spine_ids</span><span class='kw'>=</span><span class='fu'><a href='spine.html'>spine</a></span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>rval</span><span class='kw'>=</span><span class='st'>'ids'</span>)
-<span class='no'>pruned</span><span class='kw'>=</span><span class='fu'>prune_edges</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>spine_ids</span>)
+<span class='va'>spine_ids</span><span class='op'>=</span><span class='fu'><a href='spine.html'>spine</a></span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, rval<span class='op'>=</span><span class='st'>'ids'</span><span class='op'>)</span>
+<span class='va'>pruned</span><span class='op'>=</span><span class='fu'>prune_edges</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>spine_ids</span><span class='op'>)</span>
 
 <span class='co'># NB this is subtly different from this, which removes vertices along the</span>
 <span class='co'># spine *even* if they are part of an edge that is outside the spine.</span>
-<span class='no'>pruned2</span><span class='kw'>=</span><span class='fu'>prune_vertices</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='no'>spine_ids</span>)</div></pre>
+<span class='va'>pruned2</span><span class='op'>=</span><span class='fu'>prune_vertices</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, <span class='va'>spine_ids</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -257,7 +260,7 @@ of <code>igraph::<a href='https://rdrr.io/pkg/igraph/man/E.html'>E</a></code>.</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

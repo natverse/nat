@@ -161,7 +161,7 @@
     <p>Calculate length of all segments in neuron</p>
     </div>
 
-    <pre class="usage"><span class='fu'>seglengths</span>(<span class='no'>x</span>, <span class='kw'>all</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>flatten</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>seglengths</span><span class='op'>(</span><span class='va'>x</span>, all <span class='op'>=</span> <span class='cn'>FALSE</span>, flatten <span class='op'>=</span> <span class='cn'>TRUE</span>, sumsegment <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,9 +203,11 @@ individual edge in the segment.</p></td>
     <div class='dont-index'><p><code><a href='seglist.html'>as.seglist.neuron</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='summary.neuron.html'>summary</a></span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]]))</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-#&gt;  0.6273  2.1631  4.4999  9.0053  9.8379 84.1981 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span>(<span class='fu'>seglengths</span>(<span class='no'>Cell07PNs</span><span class='kw'>[[</span><span class='fl'>1</span>]], <span class='kw'>sumsegment</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)),
-  <span class='kw'>br</span><span class='kw'>=</span><span class='fl'>20</span>, <span class='kw'>main</span><span class='kw'>=</span><span class='st'>'histogram of edge lengths'</span>, <span class='kw'>xlab</span><span class='kw'>=</span><span class='st'>'edge lengths /microns'</span>)</div><div class='img'><img src='seglengths-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='summary.neuronlist.html'>summary</a></span><span class='op'>(</span><span class='fu'>seglengths</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#&gt;  0.6273  2.1631  4.4999  9.0053  9.8379 84.1981 </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/unlist.html'>unlist</a></span><span class='op'>(</span><span class='fu'>seglengths</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, sumsegment <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>,
+  br<span class='op'>=</span><span class='fl'>20</span>, main<span class='op'>=</span><span class='st'>'histogram of edge lengths'</span>, xlab<span class='op'>=</span><span class='st'>'edge lengths /microns'</span><span class='op'>)</span>
+</div><div class='img'><img src='seglengths-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -221,7 +223,7 @@ individual edge in the segment.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
