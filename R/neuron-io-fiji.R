@@ -1,4 +1,4 @@
-read.fijixml<-function(f, ..., Verbose=FALSE){
+read.fijixml<-function(f, components=c("path", "fill"), ..., Verbose=FALSE){
   if(!file.exists(f)) 
     stop("File: ", f, "does not exist!")
   doc=try(XML::xmlParse(f, ...))
@@ -9,41 +9,97 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
   
   l<-list()
   stopifnot(names(r)[1:2]==c("samplespacing","imagesize"))	
-  attr(l,"samplespacing")<-r['samplespacing'][[1]]
-  attr(l,"imagesize")<-r['imagesize'][[1]]
+  attr(l,"samplespacing")<-XML::xmlAttrs(r['samplespacing'][[1]])
+  attr(l,"imagesize")<-XML::xmlAttrs(r['imagesize'][[1]])
   
   tracings=r[-c(1:2)]
   if(length(tracings)==0) stop("No tracings in this file")
   if(Verbose) cat("There are",length(tracings),"tracings in this file\n")	
   
-  for(i in 1:length(tracings)){
-    l[[i]]=XML::xmlSApply(tracings[[i]],function(x) as.numeric(XML::xmlAttrs(x)[c("xd","yd","zd")]))
-    l[[i]]=t(l[[i]])
-    rownames(l[[i]])<-NULL
-    colnames(l[[i]])<-c("X","Y","Z")
+  fetch_attrs <- function(x, attrs) {
+    res=XML::xmlSApply(tracings[[i]],function(x) as.numeric(XML::xmlAttrs(x)[attrs]))
+    res=t(res)
+    rownames(res)<-NULL
+    # use names of attrs if present as colnames of output
+    colnames(res) <- if(!is.null(names(attrs))) names(attrs) else attrs
     pathAttributes=XML::xmlAttrs(tracings[[i]])
-    attr(l[[i]],'pathAttributes')=pathAttributes
+    attr(res,'pathAttributes')=pathAttributes
+    res
+  }
+  
+  for(i in 1:length(tracings)){
+    nti=names(tracings)[i]
+    if(isFALSE(nti %in% components))
+      next
+    # we will store the result in the next empty slot in the list
+    lidx=length(l)+1
+    if(isTRUE(nti=='path')) {
+      l[[lidx]]=fetch_attrs(tracings[[i]], c(X="xd",Y="yd",Z="zd"))
+    } else if(isTRUE(nti=='fill')) {
+      l[[lidx]]=fetch_attrs(tracings[[i]], c(id="id", X="x",Y="y",Z="z", d="distance"))
+    } else {
+      warning("Ignoring unrecognised traces file component: ", nti)
+    }
+    
     # set the list item name to the tracing id 
     # (a number, but not necessarily from a perfect 0 indexed sequence)
-    names(l)[i]=pathAttributes['id']
+    names(l)[lidx]=attr(l[[lidx]],'pathAttributes')['id']
   }
   l
 }
 
 #' Read a neuron saved by Fiji's Simple Neurite Tracer Plugin
-#' 
+#'
 #' @param f Path to a file
 #' @param ... Additional arguments passed to \code{\link[XML]{xmlParse}}.
-#' @param simplify Whether to return a single neuron as a \code{neuron} object 
+#' @param simplify Whether to return a single neuron as a \code{neuron} object
 #'   rather than a \code{neuronlist} of length 1.
+#' @param components Which components to read in (path or fill). Only paths are
+#'   properly supported at present (see details).
 #' @param Verbose Whether to print status messages during parsing.
-#' @details This is an XML based format so parsing it depends on installation of
-#'   the suggested XML package.
-#' @references \url{http://fiji.sc/Simple_Neurite_Tracer} 
+#' @details simple neurite tracer .traces files are an XML based format so
+#'   parsing it depends on installation of the suggested XML package.
+#'
+#'   They can contain both paths (skeleton lines) and fill information (saved as
+#'   XYZ coordinates of voxels inside the object). The latter cannot currently
+#'   be handled very well by \code{\link{read.neuron}}. If you wish to access
+#'   them you will probably need to use the private \code{read.fijixml} function
+#'   to do so (see examples).
+#'
+#'   Your best best if you want to produce a fully 3D object with "width"
+#'   information would be to generate a 3D mesh using Fiji's 3D viewer. You can
+#'   do this by selecting the object in the viewer and the choosing \code{File
+#'   ... Export Surface ... Wavefront} \emph{while the 3D viewer window is
+#'   active}. The resultant obj file can then be read in by
+#'   \code{\link{read.neurons}}. You could use this mesh to find radius
+#'   information for a skeleton by shooting rays from skeleton to mesh to
+#'   estimate the radius.
+#'
+#' @references \url{http://fiji.sc/Simple_Neurite_Tracer}
 #'   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
 #' @export
-read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
-  l=read.fijixml(f, ..., Verbose=Verbose)
+#'
+#' @examples
+#' \dontrun{
+#' n=read.neuron.fiji("my.traces")
+#' plot3d(n)
+#' fill=read.neuron.fiji("my.traces", components='fill')
+#' points3d(fill, col='grey')
+#' }
+read.neuron.fiji<-function(f, ..., simplify=TRUE, 
+                           components=c("path", "fill"),
+                           Verbose=FALSE){
+  components=match.arg(components, several.ok = FALSE)
+  
+  l=read.fijixml(f, ..., components=components, Verbose=Verbose)
+  if(components=='fill') {
+    voxdims=as.numeric(attr(l, 'samplespacing')[1:3])
+    for(i in seq_along(l)) {
+      xyzmatrix(l[[i]])=scale(xyzmatrix(l[[i]]), scale = 1/voxdims, center = F)
+    }
+    return(l)
+  }
+  
   dflist=as.list(rep(NA,length(l)))
   MasterPath=seq(l)
   pointOffsets=rep(0,length(l))
