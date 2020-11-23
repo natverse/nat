@@ -65,7 +65,7 @@ jobs:
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
       - name: Install xvfb
-      - run: sudo apt-get install xvfb
+        run: sudo apt-get install xvfb
 
       - name: Install dependencies
         run: |
