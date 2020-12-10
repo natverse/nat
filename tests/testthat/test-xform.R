@@ -213,6 +213,29 @@ test_that("can extract xyz coords of a character vector",{
   coordstr2=paste("(", paste(mx2[,1], mx2[,2], mx2[,3], sep=", "), ")")
   expect_equivalent(xyzmatrix(coordstr) <- mx*-3, xyzmatrix(coordstr2))
   expect_equal(coordstr, coordstr2)
+  
+  xyzmatrix(coordstrna) <- mxna*-3
+  expect_equivalent(xyzmatrix(coordstrna), mxna*-3)
+  
+  # now let's actually change some of the replacement values
+  rep=mxna*-3
+  rep[9,]=rep[1,]
+  xyzmatrix(coordstrna) <- rep
+  expect_equivalent(xyzmatrix(coordstrna), rep)
+  # make sure we infer correct pattern
+  expect_equal(coordstrna[9], coordstrna[1])
+  
+  # replace with more values than were there previously
+  rep[11,]=c(4,5,6)
+  expect_warning(xyzmatrix(coordstrna) <- rep)
+  expect_equivalent(xyzmatrix(coordstrna), rep)
+  # the next time there should no longer be any mismatches
+  expect_silent(xyzmatrix(coordstrna) <- rep)
+  
+  # empty target
+  empty_target=rep("", length(coordstrna))
+  expect_silent(xyzmatrix(empty_target) <- rep)
+  expect_equal(xyzmatrix(empty_target), xyzmatrix(rep))
 })
 
 
