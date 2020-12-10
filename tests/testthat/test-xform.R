@@ -201,6 +201,10 @@ test_that("can extract xyz coords of a character vector",{
   coordstr=paste("(", paste(mx[,1], mx[,2], mx[,3], sep=", "), ")")
   expect_equal(xyzmatrix(mx), xyzmatrix(coordstr))
   
+  coordstrna=c(coordstr, "c(NA,NA,NA)", "rhubarb", "1e-3 2")
+  mxna=rbind(mx, matrix(NA, ncol=3, nrow=2), cbind(1e-3, 2, NA))
+  expect_equal(xyzmatrix(mxna), xyzmatrix(coordstrna))
+  
   tricky=c(1e-1, 1E+3, -1.01)
   expect_equal(xyzmatrix("1e-1, 1E+3, -1.01"), 
                xyzmatrix(matrix(tricky, ncol=3)))

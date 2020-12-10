@@ -295,8 +295,13 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 xyzmatrix.character<-function(x, ...) {
   cc=gsub("[^0-9.\\+eE-]+"," ", x)
   cc=trimws(cc)
-  mat=read.table(text = cc)
-  xyzmatrix(mat)
+  # lines with no input (or bad input should be treated as NA)
+  cc[!nzchar(cc)]="NA NA NA"
+  mat=read.table(text = cc, fill = TRUE)
+  res=xyzmatrix(mat)
+  # check we got as many rows as inputs
+  stopifnot(isTRUE(nrow(res)==length(x)))
+  res
 }
 
 
