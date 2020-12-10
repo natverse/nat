@@ -17,12 +17,7 @@ wire3d(
 
 \method{wire3d}{hxsurf}(x, Regions = NULL, ...)
 
-\method{wire3d}{mesh3d}(
-  x,
-  override = TRUE,
-  meshColor = c("vertices", "edges", "faces", "legacy"),
-  ...
-)
+\method{wire3d}{mesh3d}(x, ..., front = "lines", back = "lines")
 
 \method{wire3d}{shapelist3d}(x, override = TRUE, ...)
 }
@@ -43,10 +38,11 @@ engine (default: \code{FALSE})
 Default plots all. Seed \code{\link{as.mesh3d}} for details of how the
 argument is handled.}
 
-\item{override}{should the parameters specified here override those stored in the object?}
+\item{front}{Material properties for rendering.}
 
-\item{meshColor}{how should colours be interpreted?  See details 
-  below}
+\item{back}{Material properties for rendering.}
+
+\item{override}{should the parameters specified here override those stored in the object?}
 }
 \description{
 This function directs the wireframe plot based on the plotengine backend selected.
