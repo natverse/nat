@@ -1,3 +1,9 @@
+# nat (development version)
+
+* xyzmatrix can now get and set character columns containing coordinates in forms like (1, 6, 3)
+* also a bug fix for the same 
+
+
 # nat 1.10.2
 
 This release brings support for reading, plotting and writing 3D surface meshes
