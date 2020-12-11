@@ -258,6 +258,8 @@ xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 #'   columns are character vectors, they will be correctly converted to numeric
 #'   (with a warning for any NA values).
 #'
+#' @section Getting and setting from character vectors:
+#'
 #'   \code{xyzmatrix} can also both get and set 3D coordinates from a character
 #'   vector (including a single data frame column) in which each string encodes
 #'   all 3 coordinates e.g. \code{"-1, 4, 10"}. It should handle a range of
@@ -266,6 +268,24 @@ xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 #'   \code{\link{zapsmall}} in the replacement version to try to avoid cases
 #'   where rounding errors result in long strings of digits to the right of the
 #'   decimal place.
+#'
+#'   Replacement into character vectors introduces a number of corner cases when
+#'   there are not exactly 3 numbers to replace in the target vector. We handle
+#'   them as follows: \itemize{
+#'
+#'   \item 0 values in target, >0 in replacement: use a default pattern
+#'
+#'   \item 1-2 values in target, same number of "good" values in replacement:
+#'   insert those replacement value
+#'
+#'   \item 1-2 values in target, different number of values in replacement: use
+#'   default pattern, give a \code{warning}
+#'
+#'   }
+#'
+#'   The default pattern will be the first entry in \code{x} with 3 numbers.
+#'   Should there not be such a value, then the pattern will be \code{"x, y,
+#'   z"}.
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
@@ -295,8 +315,13 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 xyzmatrix.character<-function(x, ...) {
   cc=gsub("[^0-9.\\+eE-]+"," ", x)
   cc=trimws(cc)
-  mat=read.table(text = cc)
-  xyzmatrix(mat)
+  # lines with no input (or bad input should be treated as NA)
+  cc[!nzchar(cc)]="NA NA NA"
+  mat=read.table(text = cc, fill = TRUE)
+  res=xyzmatrix(mat)
+  # check we got as many rows as inputs
+  stopifnot(isTRUE(nrow(res)==length(x)))
+  res
 }
 
 
@@ -390,13 +415,38 @@ xyzmatrix.mesh3d<-function(x, ...){
   stopifnot(ncol(value)==3)
   stopifnot(nrow(value)==1 || nrow(value)==length(x))
   if(any(grepl("%g", x, fixed=T)))
-    stop("Sorry I cannot handle input character vectors containing %f")
+    stop("Sorry I cannot handle input character vectors containing %g")
     
   # turn input values into a format string
   fmtstr=gsub("[0-9.\\+eE-]+","%g", x)
   value <- zapsmall(value)
   # remove any negative zeros ...
   value[value==0]=0
+  
+  nfmts=stringr::str_count(fmtstr, stringr::fixed("%g"))
+  if(any(nfmts!=3L)) {
+    # define a default format based on target data
+    default_patt=if(!any(nfmts==3)) "%g, %g, %g" else fmtstr[nfmts==3][1]
+    # check that how many finite replacement values we have been given
+    ngood=3L-rowSums(is.na(value))
+    
+    # if we have 0 formats but >0 good vals in a line, use default pattern
+    fmtstr[nfmts==0 & ngood>0]=default_patt
+    
+    # when we have neither 0 or 3 values to replace
+    funny_lines=nfmts>0 & nfmts!=3
+    if(any(funny_lines)) {
+      # lines where number of (good) replacement values does not match target
+      bad_lines = nfmts[funny_lines]!=ngood[funny_lines]
+      if(any(bad_lines)) {
+        # put the default pattern there
+        fmtstr[funny_lines][bad_lines]=default_patt
+        warning(sum(bad_lines), 
+                " rows of the target did not have a matching number of items in replacement value")
+      }
+    }
+  }
+  
   sprintf(fmtstr, value[,1], value[,2], value[,3])
 }
 

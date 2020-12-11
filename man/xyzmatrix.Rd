@@ -87,6 +87,9 @@ Note that \code{xyzmatrix} can extract or set 3D coordinates in a
   \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
   columns are character vectors, they will be correctly converted to numeric
   (with a warning for any NA values).
+}
+\section{Getting and setting from character vectors}{
+
 
   \code{xyzmatrix} can also both get and set 3D coordinates from a character
   vector (including a single data frame column) in which each string encodes
@@ -96,7 +99,26 @@ Note that \code{xyzmatrix} can extract or set 3D coordinates in a
   \code{\link{zapsmall}} in the replacement version to try to avoid cases
   where rounding errors result in long strings of digits to the right of the
   decimal place.
+
+  Replacement into character vectors introduces a number of corner cases when
+  there are not exactly 3 numbers to replace in the target vector. We handle
+  them as follows: \itemize{
+
+  \item 0 values in target, >0 in replacement: use a default pattern
+
+  \item 1-2 values in target, same number of "good" values in replacement:
+  insert those replacement value
+
+  \item 1-2 values in target, different number of values in replacement: use
+  default pattern, give a \code{warning}
+
+  }
+
+  The default pattern will be the first entry in \code{x} with 3 numbers.
+  Should there not be such a value, then the pattern will be \code{"x, y,
+  z"}.
 }
+
 \examples{
 # see all available methods for different classes
 methods('xyzmatrix')
