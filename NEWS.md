@@ -1,8 +1,13 @@
 # nat (development version)
 
-* xyzmatrix can now get and set character columns containing coordinates in forms like (1, 6, 3)
-* also a bug fix for the same 
+Some new features and bug fixes. Thanks to @PostPreAndCleft and @artxz for reports.
 
+* xyzmatrix can now get and set character columns containing coordinates in forms like "(1, 6, 3)" or "1 6 3" (#449)
+* also a bug fix for the same (#451)
+* Improve reading of Simple Neurite Tracer fills (#448)
+* Fix bug `pan3d()` not found (#447)
+* Added support for multi material binary Amira surface files while fixing
+  "Bad triangle numbers" error in `read.hxsurf()` (#445)
 
 # nat 1.10.2
 
