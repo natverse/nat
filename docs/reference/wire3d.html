@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.2.9000</span>
       </span>
     </div>
 
@@ -173,12 +173,7 @@
 <span class='fu'>wire3d</span><span class='op'>(</span><span class='va'>x</span>, Regions <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for mesh3d</span>
-<span class='fu'>wire3d</span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  override <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  meshColor <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"vertices"</span>, <span class='st'>"edges"</span>, <span class='st'>"faces"</span>, <span class='st'>"legacy"</span><span class='op'>)</span>,
-  <span class='va'>...</span>
-<span class='op'>)</span>
+<span class='fu'>wire3d</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, front <span class='op'>=</span> <span class='st'>"lines"</span>, back <span class='op'>=</span> <span class='st'>"lines"</span><span class='op'>)</span>
 
 <span class='co'># S3 method for shapelist3d</span>
 <span class='fu'>wire3d</span><span class='op'>(</span><span class='va'>x</span>, override <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
@@ -215,13 +210,16 @@ Default plots all. Seed <code><a href='as.mesh3d.html'>as.mesh3d</a></code> for 
 argument is handled.</p></td>
     </tr>
     <tr>
-      <th>override</th>
-      <td><p>should the parameters specified here override those stored in the object?</p></td>
+      <th>front</th>
+      <td><p>Material properties for rendering.</p></td>
     </tr>
     <tr>
-      <th>meshColor</th>
-      <td><p>how should colours be interpreted?  See details 
-  below</p></td>
+      <th>back</th>
+      <td><p>Material properties for rendering.</p></td>
+    </tr>
+    <tr>
+      <th>override</th>
+      <td><p>should the parameters specified here override those stored in the object?</p></td>
     </tr>
     </table>
 

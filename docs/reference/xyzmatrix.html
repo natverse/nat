@@ -83,7 +83,7 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">nat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.10.2.9000</span>
       </span>
     </div>
 
@@ -254,6 +254,11 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
   <b>or</b> has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
   columns are character vectors, they will be correctly converted to numeric
   (with a warning for any NA values).</p>
+    <h2 class="hasAnchor" id="getting-and-setting-from-character-vectors"><a class="anchor" href="#getting-and-setting-from-character-vectors"></a>Getting and setting from character vectors</h2>
+
+    
+
+
 <p><code>xyzmatrix</code> can also both get and set 3D coordinates from a character
   vector (including a single data frame column) in which each string encodes
   all 3 coordinates e.g. <code>"-1, 4, 10"</code>. It should handle a range of
@@ -262,6 +267,19 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
   <code><a href='https://rdrr.io/r/base/zapsmall.html'>zapsmall</a></code> in the replacement version to try to avoid cases
   where rounding errors result in long strings of digits to the right of the
   decimal place.</p>
+<p>Replacement into character vectors introduces a number of corner cases when
+  there are not exactly 3 numbers to replace in the target vector. We handle
+  them as follows:</p><ul>
+<li><p>0 values in target, &gt;0 in replacement: use a default pattern</p></li>
+<li><p>1-2 values in target, same number of "good" values in replacement:
+  insert those replacement value</p></li>
+<li><p>1-2 values in target, different number of values in replacement: use
+  default pattern, give a <code>warning</code></p></li>
+</ul>
+
+<p>The default pattern will be the first entry in <code>x</code> with 3 numbers.
+  Should there not be such a value, then the pattern will be <code>"x, y,
+  z"</code>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>xyzmatrix</code></p></div>
