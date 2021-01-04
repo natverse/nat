@@ -895,7 +895,7 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
   if(!is.null(zip_file)) {
     owd=setwd(dir)
     on.exit(setwd(owd))
-    zip(zip_file, files=dir(dir, recursive = TRUE))
+    zip(zip_file, files=dir)
     unlink(dir, recursive=TRUE)
     written<-zip_file
   }
