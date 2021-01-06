@@ -210,6 +210,12 @@ dimnames.neuronlist<-function(x) {
 #' stopifnot(all.equal(kcs20[1:2],c(kcs20[1],kcs20[2])))
 c.neuronlist<-function(..., recursive = FALSE){
   args=list(...)
+  new.df=merge_nl_dataframes(args)
+  as.neuronlist(NextMethod(args), df = new.df)
+}
+
+# private function to merge neuronlist dataframes called by c.neuronlist(fh)
+merge_nl_dataframes <- function(args) {
   if(!all(sapply(args, inherits, "neuronlist")))
     stop("method only applicable to multiple neuronlist objects")
   
@@ -229,8 +235,7 @@ c.neuronlist<-function(..., recursive = FALSE){
   # rbind.fill doesn't seem to look after rownames
   if(!is.null(new.df))
     rownames(new.df)=neuron_names
-
-  as.neuronlist(NextMethod(args), df = new.df)
+  new.df
 }
 
 #' Get or set the attached data.frame of a neuronlist
