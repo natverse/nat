@@ -17,6 +17,25 @@
 #'   They will usually read them using \code{read.neuronlistfh} and sometimes
 #'   create them by using \code{as.neuronlistfh} on a \code{neuronlist} object.
 #'
+#' @section Modifying neuronlistfh objects: There is very basic support for
+#'   modifying neuronlistfh objects using the \code{[[} operator. There are two
+#'   modes depending on the nature of the index in the assignment operation
+#'   \code{nlfh[[index]]<-neuron}: \itemize{
+#'
+#'   \item numeric index \emph{for replacement of items only}
+#'
+#'   \item character index \emph{for replacement \bold{or} addition of items}
+#'
+#'   }
+#'
+#'   This distinction is because there must be a character key provided to name
+#'   the neuron when a new one is being added, whereas an existing element can
+#'   be referenced by position (i.e. the numeric index). Unfortunately the end
+#'   user is responsible for manully modifying the attached data.frame when new
+#'   neurons are added. Doing \code{nlfh[[index]]<-neuron} will do the
+#'   equivalent of \code{attr(nlfh, 'df')[i, ]=NA} i.e. add a row containing NA
+#'   values.
+#'
 #' @section Implementation details: neuronlistfh objects are a hybrid between
 #'   regular \code{neuronlist} objects that organise data and metadata for
 #'   collections of neurons and a backing \code{filehash} object. Instead of
@@ -270,6 +289,30 @@ as.neuronlist.neuronlistfh<-function(l, ...){
       stop(e)
     })
   })
+}
+
+#' @export
+"[[<-.neuronlistfh" <- function (x, i, j, ..., value) {
+  hash=digest(value)
+  append=FALSE
+  if(is.numeric(i)) {
+    if(i<1 || i > length(x))
+      stop("i must be between 1 and ", length(x), "To append using a string index.")
+  } else {
+    if(!is.character(i)) stop("i must be a numeric or character index!")
+    append = !(i %in% names(x))
+  }
+  attr(x, "keyfilemap")[i]=hash
+  filehash::dbInsert(attr(x, 'db'), hash, value)
+  # add another row to dataframe
+  if(append){
+    # x is a dummy logical vector, key thing is that this sets the name of x[i]
+    x[i]=FALSE
+    attr(x, 'df')[i, ]=NA
+  } else {
+    # nothing to do
+  }
+  x
 }
 
 #' @export

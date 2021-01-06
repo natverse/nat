@@ -86,6 +86,27 @@ a \code{neuronlistfh} object which is a character \code{vector} with
 \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
   to one backed by a filehash object with an on disk representation
 }
+\section{Modifying neuronlistfh objects}{
+ There is very basic support for
+  modifying neuronlistfh objects using the \code{[[} operator. There are two
+  modes depending on the nature of the index in the assignment operation
+  \code{nlfh[[index]]<-neuron}: \itemize{
+
+  \item numeric index \emph{for replacement of items only}
+
+  \item character index \emph{for replacement \bold{or} addition of items}
+
+  }
+
+  This distinction is because there must be a character key provided to name
+  the neuron when a new one is being added, whereas an existing element can
+  be referenced by position (i.e. the numeric index). Unfortunately the end
+  user is responsible for manully modifying the attached data.frame when new
+  neurons are added. Doing \code{nlfh[[index]]<-neuron} will do the
+  equivalent of \code{attr(nlfh, 'df')[i, ]=NA} i.e. add a row containing NA
+  values.
+}
+
 \section{Implementation details}{
  neuronlistfh objects are a hybrid between
   regular \code{neuronlist} objects that organise data and metadata for
