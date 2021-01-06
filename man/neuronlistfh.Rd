@@ -5,6 +5,7 @@
 \alias{is.neuronlistfh}
 \alias{as.neuronlistfh}
 \alias{as.neuronlistfh.neuronlist}
+\alias{c.neuronlistfh}
 \title{neuronlistfh - List of neurons loaded on demand from disk or remote website}
 \usage{
 neuronlistfh(db, df, keyfilemap, hashmap = 1000L)
@@ -22,6 +23,8 @@ as.neuronlistfh(x, df, ...)
   WriteObjects = c("yes", "no", "missing"),
   ...
 )
+
+\method{c}{neuronlistfh}(..., recursive = FALSE)
 }
 \arguments{
 \item{db}{a \code{filehash} object that manages an on disk database of neuron
@@ -57,6 +60,8 @@ each neuron.}
 
 \item{WriteObjects}{Whether to write objects to disk. Missing implies that 
 existing objects will not be overwritten. Default \code{"yes"}.}
+
+\item{recursive}{currently ignored}
 }
 \value{
 a \code{neuronlistfh} object which is a character \code{vector} with
@@ -85,12 +90,25 @@ a \code{neuronlistfh} object which is a character \code{vector} with
 
 \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
   to one backed by a filehash object with an on disk representation
+
+\code{c.neuronlistfh} adds additional neurons from one or more
+  neuronlist objects to a \code{neuronlistfh} object.
 }
 \section{Modifying neuronlistfh objects}{
- There is very basic support for
-  modifying neuronlistfh objects using the \code{[[} operator. There are two
-  modes depending on the nature of the index in the assignment operation
-  \code{nlfh[[index]]<-neuron}: \itemize{
+ The recommended way to do this is by
+  using the \code{c.neuronlistfh} method to append one or more neuronlists to
+  a neuronlistfh object. This ensures that the attached metadata for each
+  data.frame is handled properly. Use as \code{nlfh <- c(nlfh, nl2)}. If you
+  want to combine two \code{neuronlistfh} objects, it may make sense to
+  choose the bigger one as the first-listed argument to which additional
+  neurons are appended.
+
+  There is also low-level and quite basic support for modifying neuronlistfh
+  objects using the \code{[[} operator. There are two modes depending on the
+  nature of the index in the assignment operation
+  \code{nlfh[[index]]<-neuron}:
+
+  \itemize{
 
   \item numeric index \emph{for replacement of items only}
 
@@ -176,7 +194,7 @@ a \code{neuronlistfh} object which is a character \code{vector} with
 
   Finally the DB1 backend keeps the data in a single monolithic file on disk.
   This may work better when there are many small neurons (think >10,000 files
-  occupying only a few GB) on NFS network file systems or Google Driver,
+  occupying only a few GB) on NFS network file systems or Google Drive,
   neither of which are keen on having many files especially in the same
   folder. It does not allow updates from a remote location. See
   \code{\link{filehashDB1-class}} for more details.
@@ -195,6 +213,12 @@ kcnl=read.neuronlistfh('http://jefferislab.org/si/nblast/flycircuit/kcs20.rds',
 # this will automatically download the neurons from the web the first time
 # it is run
 plot3d(kcnl)
+
+kcfh <- as.neuronlistfh(kcs20[1:18])
+# add more neurons
+kcfh <- c(kcfh, kcs20[19], kcs20[20])
+# convert back to regular (in memory) neuronlist
+all.equal(as.neuronlist(kcfh), kcs20)
 }
 \dontrun{
 # create neuronlistfh object backed by filehash with one file per neuron

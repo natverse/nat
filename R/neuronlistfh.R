@@ -17,10 +17,20 @@
 #'   They will usually read them using \code{read.neuronlistfh} and sometimes
 #'   create them by using \code{as.neuronlistfh} on a \code{neuronlist} object.
 #'
-#' @section Modifying neuronlistfh objects: There is very basic support for
-#'   modifying neuronlistfh objects using the \code{[[} operator. There are two
-#'   modes depending on the nature of the index in the assignment operation
-#'   \code{nlfh[[index]]<-neuron}: \itemize{
+#' @section Modifying neuronlistfh objects: The recommended way to do this is by
+#'   using the \code{c.neuronlistfh} method to append one or more neuronlists to
+#'   a neuronlistfh object. This ensures that the attached metadata for each
+#'   data.frame is handled properly. Use as \code{nlfh <- c(nlfh, nl2)}. If you
+#'   want to combine two \code{neuronlistfh} objects, it may make sense to
+#'   choose the bigger one as the first-listed argument to which additional
+#'   neurons are appended.
+#'
+#'   There is also low-level and quite basic support for modifying neuronlistfh
+#'   objects using the \code{[[} operator. There are two modes depending on the
+#'   nature of the index in the assignment operation
+#'   \code{nlfh[[index]]<-neuron}:
+#'
+#'   \itemize{
 #'
 #'   \item numeric index \emph{for replacement of items only}
 #'
@@ -104,7 +114,7 @@
 #'
 #'   Finally the DB1 backend keeps the data in a single monolithic file on disk.
 #'   This may work better when there are many small neurons (think >10,000 files
-#'   occupying only a few GB) on NFS network file systems or Google Driver,
+#'   occupying only a few GB) on NFS network file systems or Google Drive,
 #'   neither of which are keen on having many files especially in the same
 #'   folder. It does not allow updates from a remote location. See
 #'   \code{\link{filehashDB1-class}} for more details.
@@ -125,6 +135,12 @@
 #' # this will automatically download the neurons from the web the first time
 #' # it is run
 #' plot3d(kcnl)
+#' 
+#' kcfh <- as.neuronlistfh(kcs20[1:18])
+#' # add more neurons
+#' kcfh <- c(kcfh, kcs20[19], kcs20[20])
+#' # convert back to regular (in memory) neuronlist
+#' all.equal(as.neuronlist(kcfh), kcs20)
 #' }
 #' @export
 #' @param db a \code{filehash} object that manages an on disk database of neuron
@@ -314,6 +330,28 @@ as.neuronlist.neuronlistfh<-function(l, ...){
   }
   x
 }
+
+#' @export
+#' @rdname neuronlistfh
+#' @description \code{c.neuronlistfh} adds additional neurons from one or more
+#'   neuronlist objects to a \code{neuronlistfh} object.
+#' @param recursive currently ignored
+c.neuronlistfh<-function(..., recursive = FALSE){
+  args=list(...)
+  # making df also does some safety checks, so do this first
+  new.df=merge_nl_dataframes(args)
+  x=args[[1]]
+  for(nl in args[-1]) {
+    for(nn in names(nl)) {
+      # insert neurons one at a time
+      x[[nn]]=nl[[nn]]
+    }
+  }
+  # NB permute the merged data frame to ensure that it matches
+  data.frame(x)=new.df[names(x),,drop=FALSE]
+  x
+}
+
 
 #' @export
 as.list.neuronlistfh<-function(x, ...) x

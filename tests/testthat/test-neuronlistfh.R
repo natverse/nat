@@ -85,6 +85,10 @@ test_that("we can load a previously created on disk neuronlistfh representation"
   # fix the last row of the attached metadata
   nl[20,]=kcs20[20,]
   expect_equal(nl, kcs20)
+  
+  kcs18 <- as.neuronlistfh(kcs20[1:18], dbdir=file.path(fhpath, 'kcs18'), dbClass='DB1')
+  expect_is(kc20fh <- c(kcs18, kcs20[19], kcs20[20]), 'neuronlistfh')
+  expect_equal(as.neuronlist(kc20fh), kcs20)
 })
 
 test_that("we can create a neuronlistfh with a hashmap",{
