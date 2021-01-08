@@ -528,17 +528,32 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
   obj<-readRDS(file)
   
   # fix path to filehash in object that we have read from disk just to be safe
-  dbdir=attr(obj, 'db')@dir
-  if(!isTRUE(file.info(dbdir)$isdir)){
-    dbdir2 <- file.path(dirname(file),'data')
-    if(!isTRUE(file.info(dbdir2)$isdir))
-      stop("Unable to locate data directory at: ", dbdir, ' or: ', dbdir2)
-    attr(obj, 'db')@dir <- dbdir2
+  db <- attr(obj, 'db')
+  if(inherits(db, 'filehashDB1')) {
+    datafile=db@datafile
+    if(!file.exists(datafile)) {
+      # look right next door
+      datafile2=file.path(dirname(file), basename(datafile))
+      if(!file.exists(datafile2))
+        stop("Unable to locate data file ", basename(datafile), "in dirs: ", 
+             dirname(datafile), ' or: ', dirname(datafile2))
+      attr(obj, 'db')@datafile <- datafile2
+    }
+    
+  } else {
+    dbdir=db@dir
+    if(!isTRUE(file.info(dbdir)$isdir)){
+      dbdir2 <- file.path(dirname(file),'data')
+      if(!isTRUE(file.info(dbdir2)$isdir))
+        stop("Unable to locate data directory at: ", dbdir, ' or: ', dbdir2)
+      attr(obj, 'db')@dir <- dbdir2
+    }
   }
   
   attr(obj, 'file') <- file
   obj
 }
+
 
 #' Write out a neuronlistfh object to an RDS file
 #' 
@@ -567,8 +582,14 @@ read.neuronlistfh <- function(file, localdir=NULL, update=FALSE, ...) {
 #' @export
 write.neuronlistfh<-function(x, file=attr(x,'file'), overwrite=FALSE, ...){
   if(is.null(file)) {
-    dbdir=attr(x, 'db')@dir
-    file=file.path(dirname(dbdir), paste0(as.character(substitute(x)),'.rds'))
+    db=attr(x, 'db')
+    file <- if(inherits(db, "filehashRDS") || inherits(db, "filehashRDS2")) {
+      dbdir=db@dir
+      file.path(dirname(dbdir), paste0(as.character(substitute(x)),'.rds'))
+    } else if(inherits(db, "filehashDB1")) {
+      datafile=db@datafile
+      file.path(paste0(datafile, '.rds'))
+    } else stop("Unsupported neuronlistfh backend: ", class(db))
   }
   # check that we can write to this location
   dir_exists=file.exists(dirname(file))
