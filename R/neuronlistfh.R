@@ -218,18 +218,28 @@ is.neuronlistfh<-function(nl) {
 #' # in a new session
 #' read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
 #' plot3d(subset(kcs20fh, type=='gamma'))
+#' 
+#' # using the DB1 backing store (a single file on disk for all objects)
+#' kcs20fh=as.neuronlistfh(kcs20, dbdir='/path/to/my/kcdb/kcs20fh')
+#' # store metadata on disk
+#' write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcs20fh.rds')
+#' # read in again in a new session. You will need these two files
+#' # kcs20fh kcs20fh.rds
+#' kcs20fh2 <- read.neuronlistfh("/path/to/my/kcdb/kcs20fh.rds")
 #' }
 as.neuronlistfh<-function(x, df, ...)
   UseMethod("as.neuronlistfh")
 
-#' @param dbdir The path to the underlying \code{filehash} database on disk. By
-#'   convention this should be a path whose final element is 'data'
+#' @param dbdir The path to the underlying \code{filehash} database on disk. For
+#'   RDS formats, by convention this should be a path whose final element is
+#'   'data' which will be turnned into a directory. For DB1 format it specifies
+#'   a single file to which objects will be written.
 #' @param dbClass The \code{filehash} database class. Defaults to \code{RDS}.
-#' @param remote The url pointing to a remote repository containing files for 
+#' @param remote The url pointing to a remote repository containing files for
 #'   each neuron.
-#' @param WriteObjects Whether to write objects to disk. Missing implies that 
+#' @param WriteObjects Whether to write objects to disk. Missing implies that
 #'   existing objects will not be overwritten. Default \code{"yes"}.
-#' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
+#' @description \code{as.neuronlistfh.neuronlist} converts a regular neuronlist
 #'   to one backed by a filehash object with an on disk representation
 #' @export
 #' @importFrom digest digest
@@ -247,6 +257,15 @@ as.neuronlistfh.neuronlist<-function(x, df=attr(x,'df'), dbdir=NULL,
     stop("Must always write objects when dbClass!='RDS'")
   if(dbClass!='RDS' && !is.null(remote))
     stop("remote download only implemented for RDS class at the moment")
+  
+  if(dbClass == "DB1") {
+    if(file.exists(dbdir) && isTRUE(file.info(dbdir)$isdir))
+      stop("For DB1 format, dbdir must specify the single file containing data!")
+  } else {
+    if(file.exists(dbdir) && !isTRUE(file.info(dbdir)$isdir))
+      stop("For RDS formats, dbdir must specify a folder to which data will be written!")
+  }
+  
   # md5 by default. Should we use something else?
   keyfilemap=sapply(x,digest)
   names(x)=keyfilemap

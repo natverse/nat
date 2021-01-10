@@ -50,15 +50,17 @@ details).}
 \item{...}{Additional arguments for methods, eventually passed to
 \code{neuronlistfh()} constructor.}
 
-\item{dbdir}{The path to the underlying \code{filehash} database on disk. By
-convention this should be a path whose final element is 'data'}
+\item{dbdir}{The path to the underlying \code{filehash} database on disk. For
+RDS formats, by convention this should be a path whose final element is
+'data' which will be turnned into a directory. For DB1 format it specifies
+a single file to which objects will be written.}
 
 \item{dbClass}{The \code{filehash} database class. Defaults to \code{RDS}.}
 
-\item{remote}{The url pointing to a remote repository containing files for 
+\item{remote}{The url pointing to a remote repository containing files for
 each neuron.}
 
-\item{WriteObjects}{Whether to write objects to disk. Missing implies that 
+\item{WriteObjects}{Whether to write objects to disk. Missing implies that
 existing objects will not be overwritten. Default \code{"yes"}.}
 
 \item{recursive}{currently ignored}
@@ -88,7 +90,7 @@ a \code{neuronlistfh} object which is a character \code{vector} with
 \code{as.neuronlistfh} generic function to convert an object to 
   neuronlistfh
 
-\code{as.neuronlistfh.neuronlist} converts a regular neuronlist 
+\code{as.neuronlistfh.neuronlist} converts a regular neuronlist
   to one backed by a filehash object with an on disk representation
 
 \code{c.neuronlistfh} adds additional neurons from one or more
@@ -232,6 +234,14 @@ write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcdb.rds')
 # in a new session
 read.neuronlistfh("/path/to/my/kcdb/kcdb.rds")
 plot3d(subset(kcs20fh, type=='gamma'))
+
+# using the DB1 backing store (a single file on disk for all objects)
+kcs20fh=as.neuronlistfh(kcs20, dbdir='/path/to/my/kcdb/kcs20fh')
+# store metadata on disk
+write.neuronlistfh(kcs20fh, file='/path/to/my/kcdb/kcs20fh.rds')
+# read in again in a new session. You will need these two files
+# kcs20fh kcs20fh.rds
+kcs20fh2 <- read.neuronlistfh("/path/to/my/kcdb/kcs20fh.rds")
 }
 }
 \seealso{

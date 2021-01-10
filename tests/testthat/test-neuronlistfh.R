@@ -83,6 +83,10 @@ test_that("we can load a previously created on disk neuronlistfh representation"
   kcs20.db1.resave=read.neuronlistfh(path)
   all.equal(as.neuronlist(kcs20.db1),as.neuronlist(kcs20.db1.resave))
   
+  expect_error(as.neuronlistfh(kcs20[1:19], 
+                               dbdir=file.path(fhpath, 'data'), 
+                               dbClass='DB1'))
+  
   kcs19 <- as.neuronlistfh(kcs20[1:19], dbdir=file.path(fhpath, 'kcs19'), dbClass='DB1')
   expect_silent(kcs19[[names(kcs20)[20]]] <- kcs20[[20]])
   expect_is(kcs19, 'neuronlistfh')
