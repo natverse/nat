@@ -709,10 +709,7 @@ pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 #' @rdname pointsinside
 pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 
                                                     'mesh3d', 'consistent_logical')) {
-  if(!requireNamespace('Rvcg', quietly = TRUE))
-    stop("Please install suggested library Rvcg to use pointsinside")
   rval=match.arg(rval)
-  
   if(rval=='logical') {
     # use optimised contains_points approach
     return(contains_points(surf, x, ...))
@@ -722,6 +719,9 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance',
       stop("Only logical return values are currently possible ",
            "with boundingbox objects!")
   }
+  
+  if(!requireNamespace('Rvcg', quietly = TRUE))
+    stop("Please install suggested library Rvcg to use pointsinside")
   
   if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
