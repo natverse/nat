@@ -895,7 +895,9 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
   if(!is.null(zip_file)) {
     owd=setwd(dir)
     on.exit(setwd(owd))
-    zip(zip_file, 
+    # rds is already compressed so just store
+    zipflags=ifelse(format=="rds", "-qr0X", "-qr9X")
+    zip(zip_file, flags = zipflags, 
         files=if(getRversion()<"3.6.0") dir else dir(dir, recursive = TRUE))
     unlink(dir, recursive=TRUE)
     written<-zip_file
