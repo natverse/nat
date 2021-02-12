@@ -35,7 +35,8 @@ Imports:
     yaml,
     progress,
     checkmate,
-    stringr
+    stringr,
+    pbapply
 Suggests:
     spelling,
     Rvcg (>= 0.17),
