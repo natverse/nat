@@ -36,7 +36,8 @@ Imports:
     progress,
     checkmate,
     stringr,
-    pbapply
+    pbapply,
+    zip
 Suggests:
     spelling,
     Rvcg (>= 0.17),
@@ -84,6 +85,7 @@ Collate:
     'neuronlist_interactive_3d.R'
     'neuronlist_sets.R'
     'neuronlistfh.R'
+    'neuronlistz.R'
     'ngraph.R'
     'nrrd-io.R'
     'pop3d.R'
