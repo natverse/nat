@@ -854,6 +854,8 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     # ... and use that to construct absolute path to output zip
     zip_file=file.path(zip_dir, basename(zip_file))
     dir <- file.path(tempfile("user_neurons"))
+    # we will be writing to an empty temp dir, so skip the file.exists check
+    Force=TRUE
   } else {
     zip_file=NULL
   }
