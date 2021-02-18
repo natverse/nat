@@ -30,6 +30,19 @@ test_that("we can query fileformats",{
                'hxlineset')
 })
 
+test_that("we can use optional brotli format", {
+  expect_is(fw<-getformatwriter(file='test.rdsb', class='neuron'),'list')
+  expect_equal(fw$ext,'.rdsb')
+  expect_equal(fw$read, readBrotli)
+  expect_equal(fw$write, saveBrotli)
+  skip_if_not_installed('brotli')
+  tf <- tempfile(fileext = ".zip")
+  tf2 <- tempfile(fileext = ".zip")
+  write.neurons(kcs20, dir = tf, format='rdsb')
+  write.neurons(kcs20, dir = tf2, format='rds')
+  expect_equal(read.neurons(tf), read.neurons(tf2))
+})
+
 test_that("we can set new fileformats",{
   expect_error(registerformat('rhubarb'), 'provide.*read or write')
   # returns null on success

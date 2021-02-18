@@ -50,7 +50,8 @@ Suggests:
     alphashape3d,
     Morpho,
     plotly,
-    readobj
+    readobj,
+    brotli,
 License: GPL-3
 LazyData: yes
 Collate:

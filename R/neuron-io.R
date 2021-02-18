@@ -660,7 +660,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
-    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds"))
+    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds", "rdsb"))
     if(is.null(file)) {
       file=basename(attr(n,"file"))
       if(is.null(file))
@@ -717,7 +717,8 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
   }
   
   # OK all fine, so let's write
-  match.fun(fw$write)(n, file=file, ...)
+  FUN=match.fun(fw$write)
+  FUN(n, file=file, ...)
   invisible(file)
 }
 
