@@ -14,6 +14,7 @@ update_igraph <- FALSE
     class='neuron', magic=is.fijitraces, magiclen=5L)
   registerformat('rds', read=readRDS, write=saveRDS, class='neuron')
   registerformat('rdsb', read=readBrotli, write=saveBrotli, class='neuron')
+  registerformat('qs', read=readqs, write=saveqs, class='neuron')
   registerformat('hxskel', ext='.am', read=read.neuron.hxskel, 
                  write=write.neuron.hxskel, magic=is.hxskel,
                  class='neuron', magiclen=14L)

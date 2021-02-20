@@ -52,6 +52,7 @@ Suggests:
     plotly,
     readobj,
     brotli,
+    qs
 License: GPL-3
 LazyData: yes
 Collate:
