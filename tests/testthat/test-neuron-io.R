@@ -43,6 +43,20 @@ test_that("we can use optional brotli format", {
   expect_equal(read.neurons(tf), read.neurons(tf2))
 })
 
+test_that("we can use optional qs format", {
+  expect_is(fw<-getformatwriter(file='test.qs', class='neuron'),'list')
+  expect_equal(fw$ext,'.qs')
+  expect_equal(fw$read, readqs)
+  expect_equal(fw$write, saveqs)
+  skip_if_not_installed('qs')
+  tf <- tempfile(fileext = ".zip")
+  tf2 <- tempfile(fileext = ".zip")
+  write.neurons(Cell07PNs[1:5], dir = tf, format='qs', include.data.frame = T)
+  expect_equal(read.neurons(tf), Cell07PNs[1:5])
+  expect_equal(read.neurons(tf, nl = Cell07PNs[6:10]), Cell07PNs[c(6:10,1:5)])
+})
+
+
 test_that("we can set new fileformats",{
   expect_error(registerformat('rhubarb'), 'provide.*read or write')
   # returns null on success
@@ -205,7 +219,7 @@ test_that("we can write multiple neurons to a zip archive", {
   dir.create(td<-tempfile())
   owd=setwd(td)
   zip_file <- "test.zip"
-  on.exit(unlink(zip_file))
+  on.exit(unlink(td, recursive = TRUE))
   file.create(zip_file)
   expect_error(write.neurons(Cell07PNs[1:5], zip_file, format="swc"), 
                'already exists')
@@ -215,6 +229,10 @@ test_that("we can write multiple neurons to a zip archive", {
   # fix names and compare
   names(zip_neurons)=sub("\\.swc","",names(zip_neurons))
   expect_equivalent(Cell07PNs[1:5], zip_neurons[names(Cell07PNs)[1:5]])
+  
+  zip_file2 <- "test2.zip"
+  write.neurons(Cell07PNs[1:5], zip_file2, format="rds", include.data.frame = T)
+  expect_equal(read.neurons(zip_file2), Cell07PNs[1:5])
   setwd(owd)
 })
 
