@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-neuronlistz <- function(inzip, patt=NULL, df=NULL, readmode=1L, readcores=1L, ...) {
+neuronlistz <- function(inzip, patt=NULL, df=NULL, options=list(readmode=1L, readcores=1L, multiread=1L), ...) {
   stopifnot(requireNamespace("zip", quietly = TRUE))
   inzip=path.expand(inzip)
   zl=zip::zip_list(inzip)
@@ -32,7 +32,7 @@ neuronlistz <- function(inzip, patt=NULL, df=NULL, readmode=1L, readcores=1L, ..
   }
   attr(nlf,'db')=inzip
   attr(nlf,'df')=df
-  attr(nlf,'options')=list(readcores=readcores, readmode=readmode)
+  attr(nlf,'options')=options
   class(nlf)=c('neuronlistz','neuronlist',class(nlf))
   nlf
 }
@@ -46,14 +46,24 @@ read_rds_from_zip1 <- function(zipfile, p) {
 }
 
 read_rds_from_zip2 <- function(zipfile, p) {
-  con <- unz(zipfile, p, open = 'rb')
-  con2 <- gzcon(con)
+  con <- gzcon(unz(zipfile, p))
   on.exit({close(con2)})
-  # on.exit({close(con2);close(con)})
   n=readRDS(con2)
-  # read.neuron(p, ...)
   n
 }
+
+expand_rds_to_temp <- function(zipfile, p, td=tempfile()) {
+  zip::unzip(zipfile, p, exdir = td)
+  ff=file.path(td, p)
+  ff
+}
+
+read_rds_from_tfs <- function(f) {
+  on.exit(unlink(f))
+  n=readRDS(f)
+  n
+}
+
 
 #' @export
 "[[.neuronlistz"<-function(x,i,...){
@@ -62,9 +72,8 @@ read_rds_from_zip2 <- function(zipfile, p) {
     stop("No matching neuron: ", i)
   } else {
     zipfile=attr(x, 'db')
-    FUN=switch(attr(x, 'options')$readmode, 
-           `1`=read_rds_from_zip1, `2`=read_rds_from_zip2)
-    n=FUN(zipfile, p)
+    readmode=attr(x, 'options')$readmode
+    n=if(readmode==1) read_rds_from_zip1(zipfile, p) else read_rds_from_zip2(zipfile, p)
     n
   }
 }
@@ -75,9 +84,9 @@ read_rds_from_zip2 <- function(zipfile, p) {
   if(nargs()>2) {
     return(NextMethod())
   }
-  if(is.numeric(i) && !is.integer(i))
+  if(is.factor(i))
     i=as.character(i)
-  else if(!is.character(i))
+  if(!is.character(i))
     i=names(x)[i]
   ichecked = intersect(i, names(x))
   nmissing = length(i) -length(ichecked)
@@ -85,9 +94,41 @@ read_rds_from_zip2 <- function(zipfile, p) {
     warning("Dropping ", nmissing, " neurons that cannot be found!")
   
   cores=attr(x, "options")$readcores
-  l <- if(cores>1) {
-    requireNamespace('pbapply')
-    pbapply::pbsapply(ichecked, function(n) x[[n]], simplify = F, USE.NAMES = T, cl=cores)
+  multiread=attr(x, "options")$multiread
+  readmode=attr(x, "options")$readcores
+  l <- if(cores>1 && length(ichecked)>10) {
+    if(multiread==1) {
+      pbapply::pbsapply(ichecked, function(n) x[[n]], simplify = F, USE.NAMES = T, cl=cores)
+    } else if(multiread==2) {
+      td=tempfile()
+      on.exit(unlink(td, recursive = T))
+      ff=expand_rds_to_temp(attr(x, 'db'), attr(x,'keyfilemap')[ichecked])
+      names(ff)=ichecked
+      # pbapply::pbsapply(ff, read_rds_from_tfs, simplify = F, USE.NAMES = T, cl=cores)
+      l=sapply(ff, read_rds_from_tfs, simplify = F, USE.NAMES = T)
+    } else if(multiread==3) {
+      doMC::registerDoMC(cores=cores)
+      td=tempfile()
+      on.exit(unlink(td, recursive = T))
+      ff=expand_rds_to_temp(attr(x, 'db'), attr(x,'keyfilemap')[ichecked])
+      names(ff)=ichecked
+      l=nlapply(ff, read_rds_from_tfs, .parallel=T)
+    } else if(multiread==4) {
+      td=tempfile()
+      on.exit(unlink(td, recursive = T))
+      ff=expand_rds_to_temp(attr(x, 'db'), attr(x,'keyfilemap')[ichecked])
+      l=pbmcapply::pbmclapply(ff, read_rds_from_tfs, mc.cores = cores)
+      names(l)=ichecked
+      l
+    } else if(multiread==5) {
+      td=tempfile()
+      on.exit(unlink(td, recursive = T))
+      ff=expand_rds_to_temp(attr(x, 'db'), attr(x,'keyfilemap')[ichecked])
+      names(ff)=ichecked
+      l=nlapply(ff, read_rds_from_tfs)
+      names(l)=ichecked
+      l
+    } 
   } else sapply(ichecked, function(n) x[[n]], simplify = F, USE.NAMES = T)
   
   new=as.neuronlist(l, df=attr(x, 'df')[ichecked, , drop=FALSE])
