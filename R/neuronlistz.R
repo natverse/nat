@@ -9,16 +9,23 @@
 #' @export
 #'
 #' @examples
-neuronlistz <- function(inzip, patt=NULL, df=NULL, options=list(readmode=1L, readcores=1L, multiread=1L), ...) {
+neuronlistz <- function(inzip, patt=NULL, df=NULL, ...) {
   stopifnot(requireNamespace("zip", quietly = TRUE))
   inzip=path.expand(inzip)
   zl=zip::zip_list(inzip)
   ff=zl$filename
+  
   keyfilemap <- if(!is.null(patt)) {
     if(is.character(patt)) ff[grepl(patt, ff)]
     else if(is.function(patt)) ff[patt(ff)]
     else stop("Cannot understand patt argument!")
   } else ff
+  
+  exts=unique(tools::file_ext(keyfilemap))
+  known_exts = c("rds", "qs", "rdsb")
+  if(!all(exts %in% known_exts))
+    stop("Unrecognised extensions in zipfile:", 
+         paste(setdiff(exts, known_exts), collapse = ", "))
   
   names(keyfilemap)=tools::file_path_sans_ext(basename(keyfilemap))
   if(any(duplicated(names(keyfilemap))))
@@ -42,13 +49,6 @@ read_rds_from_zip1 <- function(zipfile, p) {
   on.exit(unlink(td, recursive = TRUE))
   zip::unzip(zipfile, p, exdir = td)
   n=readRDS(file.path(td, p))
-  n
-}
-
-read_rds_from_zip2 <- function(zipfile, p) {
-  con <- gzcon(unz(zipfile, p))
-  on.exit({close(con2)})
-  n=readRDS(con2)
   n
 }
 
