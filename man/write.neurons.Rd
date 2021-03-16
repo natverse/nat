@@ -11,6 +11,7 @@ write.neurons(
   subdir = NULL,
   INDICES = names(nl),
   files = NULL,
+  include.data.frame = FALSE,
   Force = FALSE,
   cl = NULL,
   ...
@@ -35,6 +36,9 @@ neuronlist to write.}
 
 \item{files}{Character vector or expression specifying output filenames. See
 examples and \code{\link{write.neuron}} for details.}
+
+\item{include.data.frame}{Whether to include the metadata when writing a zip
+file (it will be called \code{"write.neurons.dataframe.rds"}).}
 
 \item{Force}{Whether to overwrite an existing file}
 
