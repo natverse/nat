@@ -14,4 +14,7 @@ test_that("neuronlistz works", {
   
   nz2 <- neuronlistz(tf2, patt = "EBH.*")
   expect_equal(rownames(nz2[,]), c("EBH11R", "EBH20L", "EBH20R"))
+  expect_equal(nz2[[1]], nz2["EBH11R"][[1]])
+  expect_warning(nz2["rhubarb"], regexp = "Dropping")
+  expect_equal(nz2[,], nz[names(nz2),])
 })
