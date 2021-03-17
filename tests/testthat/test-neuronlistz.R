@@ -11,4 +11,7 @@ test_that("neuronlistz works", {
   write.neurons(Cell07PNs[1:5], tf2, format='qs', include.data.frame = T)
   nz <- neuronlistz(tf2)
   expect_equal(nz[1:5], Cell07PNs[1:5])
+  
+  nz2 <- neuronlistz(tf2, patt = "EBH.*")
+  expect_equal(rownames(nz2[,]), c("EBH11R", "EBH20L", "EBH20R"))
 })

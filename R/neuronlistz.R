@@ -64,9 +64,8 @@ neuronlistz <- function(zip, patt=NULL, df=NULL, ...) {
     rownames(df)=df[['id']]
   }
   attr(nlf,'db')=zip
-  attr(nlf,'df')=df
-  attr(nlf,'options')=options
   class(nlf)=c('neuronlistz','neuronlist',class(nlf))
+  data.frame(nlf)=df
   nlf
 }
 
@@ -112,5 +111,5 @@ read_from_zip <- function(zipfile, p, multi=FALSE, neuron=TRUE) {
   l <- read_from_zip(zipfile, p, multi = T)
   
   new=as.neuronlist(l, df=attr(x, 'df')[ichecked, , drop=FALSE])
-  copy_nl_attributes(new, x, ignoremore=c("keyfilemap", "db", "options"))
+  copy_nl_attributes(new, x, ignoremore=c("keyfilemap", "db"))
 }
