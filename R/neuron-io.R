@@ -210,17 +210,20 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
   if(length(paths)==1 && isTRUE(file.info(paths)$isdir))
     paths=dir(paths,pattern=pattern,full.names=TRUE)
   
-  if(is.function(neuronnames))
-    nn=neuronnames(paths)
-  else
-    nn=neuronnames
+  nn <- if(is.function(neuronnames)) neuronnames(paths) else neuronnames
   duplicateNames=nn[duplicated(nn)]
   if(length(duplicateNames)) {
     stop("Neurons cannot have duplicate names: ",
-         paste(duplicateNames,collapse=" "))
+         paste(duplicateNames, collapse=" "))
   }
   all_names=nn
   names(paths)=nn
+  dfin <- NULL
+  if("write.neurons.dataframe" %in% nn) {
+    nn=setdiff(nn, "write.neurons.dataframe")
+    dff <- paths["write.neurons.dataframe"]
+    dfin <- readRDS(dff)
+  }
   # Handle updates of an existing neuronlist
   if(!is.null(nl)) {
     if(!is.neuronlist(nl)) stop("nl must be a neuronlist")
@@ -241,7 +244,20 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
     message("There are ",length(modified_neurons)," modified neurons",
             " and ",length(new_neurons),' new neurons')
     paths=paths[nn]
-  } else nl=neuronlist()
+    
+    if(!is.null(dfin)) {
+      # only fiddle with the data.frame if there was one in the zip file
+      df=as.data.frame(nl)
+      df[nn,]=dfin[nn,]
+    }
+  } else {
+    if(!is.null(dfin)) {
+      df=dfin
+      # reorder to match incoming data.frame
+      nn=intersect(rownames(df), nn)
+    }
+    nl=neuronlist()
+  }
   # Actually read in the neurons, making sure that warnings/errors are thrown
   # immediately so that we can tell which neuron generated them
   ow=options(warn=1)
@@ -252,7 +268,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
                                    total = length(paths),
                                    show_after=2)
   
-  for(n in names(paths)){
+  for(n in nn){
     if(interactive())
       pb$tick()
     f=unname(paths[n])
@@ -273,6 +289,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
     }
     nl[[n]]=x
   }
+  
   if(SortOnUpdate) {
     names_missing_from_all_names=setdiff(names(nl),all_names)
     if(length(names_missing_from_all_names)){
@@ -660,7 +677,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
                        Force=FALSE, MakeDir=TRUE, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
-    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds"))
+    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds", "rdsb", "qs"))
     if(is.null(file)) {
       file=basename(attr(n,"file"))
       if(is.null(file))
@@ -717,7 +734,8 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
   }
   
   # OK all fine, so let's write
-  match.fun(fw$write)(n, file=file, ...)
+  FUN=match.fun(fw$write)
+  FUN(n, file=file, ...)
   invisible(file)
 }
 
@@ -770,20 +788,29 @@ write.dotprops.swc<-function(x, file, ...) {
 
 
 #' Write neurons from a neuronlist object to individual files, or a zip archive
-#' 
-#' @details See \code{\link{write.neuron}} for details of how to specify the 
-#'   file format/extension/name of the output files and how to establish what 
+#'
+#' @details See \code{\link{write.neuron}} for details of how to specify the
+#'   file format/extension/name of the output files and how to establish what
 #'   output file formats are available. A zip archive of files can be written by
-#'   specifying a value of \code{dir} that ends in \code{.zip}.
+#'   specifying a value of \code{dir} that ends in \code{.zip}. When rds files
+#'   (R's binary data representation, which is compressed by default) are stored
+#'   inside a zip file the are not further compressed (zip option 0).
+#'
 #' @param nl neuronlist object
 #' @param dir directory to write neurons, or path to zip archive (see Details).
 #' @inheritParams write.neuron
-#' @param subdir String naming field in neuron that specifies a subdirectory OR 
+#' @param subdir String naming field in neuron that specifies a subdirectory OR
 #'   expression to evaluate in the context of neuronlist's df attribute
-#' @param INDICES Character vector of the names of a subset of neurons in 
+#' @param INDICES Character vector of the names of a subset of neurons in
 #'   neuronlist to write.
-#' @param files Character vector or expression specifying output filenames. See 
+#' @param files Character vector or expression specifying output filenames. See
 #'   examples and \code{\link{write.neuron}} for details.
+#' @param include.data.frame Whether to include the metadata when writing a zip
+#'   file (it will be called \code{"write.neurons.dataframe.rds"}).
+#' @param cl Either the integer number of cores to use for parallel writes (2 or
+#'   3 seem useful) or a \code{cluster} object created by
+#'   \code{\link{makeCluster}}. See the \code{cl} argument of
+#'   \code{\link[pbapply]{pbsapply}} for details.
 #' @param ... Additional arguments passed to \code{\link{write.neuron}}
 #' @inheritParams write.neuron
 #' @return the path to the output file(s), absolute when this is a zip file.
@@ -800,17 +827,21 @@ write.dotprops.swc<-function(x, file, ...) {
 #' write.neurons(Cell07PNs, dir="testwn", format='swc', normalise.ids=TRUE)
 #' # write some neurons in swc format and zip them up
 #' write.neurons(Cell07PNs, dir="testwn.zip", format='swc')
-#' 
+#'
+#' # write some neurons in R's native RDS format using 3 cores for
+#' # parallel writes and then zip them up (storing rather than compressing)
+#' write.neurons(Cell07PNs, dir="testwn.zip", format='rds', cl=3)
+#'
 #' # write some neurons in Amira hxlineset format
 #' write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
-#' 
+#'
 #' # write some neuron meshes in Stanford ply format (the default for meshes)
 #' write.neurons(myneurons, dir="testwn")
 #' # specify the format to avoid a warning. Write to a zip file.
 #' write.neurons(myneurons, dir="testmeshes.zip", format='ply')
 #' # Wavefront obj format
 #' write.neurons(myneurons, dir="testwn", format='obj')
-#' 
+#'
 #' # organise new files in directory hierarchy by glomerulus and Scored.By field
 #' write.neurons(Cell07PNs,dir="testwn",
 #'   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
@@ -828,8 +859,10 @@ write.dotprops.swc<-function(x, file, ...) {
 #' write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 #'   subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 #' }
-write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl), 
-                        files=NULL, Force=FALSE, ...){
+write.neurons<-function(nl, dir, format=NULL, subdir=NULL, 
+                        INDICES=names(nl), files=NULL, 
+                        include.data.frame=FALSE,
+                        Force=FALSE, cl=NULL, ...){
   if(grepl("\\.zip", dir)) {
     zip_file=dir
     # check if file exists (and we want to overwrite)
@@ -843,6 +876,13 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     # ... and use that to construct absolute path to output zip
     zip_file=file.path(zip_dir, basename(zip_file))
     dir <- file.path(tempfile("user_neurons"))
+    # we will be writing to an empty temp dir, so skip the file.exists check
+    Force=TRUE
+    #
+    if(isTRUE(include.data.frame)) {
+      if(any(names(nl) %in% "write.neurons.dataframe"))
+        stop("Cannot write a neuronlist object with a neuron named 'write.neurons.dataframe' when include.data.frame=TRUE")
+    }
   } else {
     zip_file=NULL
   }
@@ -868,8 +908,8 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
                                      clear = FALSE,
                                      total = length(INDICES),
                                      show_after=2)
-  
-  for(nn in INDICES){
+  NINDICES=stats::setNames(nm = INDICES)
+  written=pbapply::pbsapply(NINDICES, cl = cl, ..., FUN=function(nn, ...) {
     n=nl[[nn]]
     thisdir=dir
     if(is.null(subdirs)){
@@ -888,14 +928,20 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
       if(!is.neuron(n) || is.null(n$InputFileName))
         file=nn
     }
-    if(interactive())
-      pb$tick()
-    written[nn]=write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, ...)
-  }
+    write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, ...)
+  })
+  
   if(!is.null(zip_file)) {
     owd=setwd(dir)
     on.exit(setwd(owd))
-    zip(zip_file, 
+    if(isTRUE(include.data.frame)) {
+      f='write.neurons.dataframe.rds'
+      saveRDS(as.data.frame(nl)[NINDICES,,drop=FALSE], f)
+      files=c(files, f)
+    }
+    # rds is already compressed so just store
+    zipflags=ifelse(format%in%c("rds", "rdsb", "qs"), "-qr0X", "-qr9X")
+    zip(zip_file, flags = zipflags, 
         files=if(getRversion()<"3.6.0") dir else dir(dir, recursive = TRUE))
     unlink(dir, recursive=TRUE)
     written<-zip_file
