@@ -88,7 +88,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -135,7 +135,7 @@
 </li>
 <li>
   <a href="https://github.com/natverse/nat">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -168,7 +168,9 @@
   subdir <span class='op'>=</span> <span class='cn'>NULL</span>,
   INDICES <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>nl</span><span class='op'>)</span>,
   files <span class='op'>=</span> <span class='cn'>NULL</span>,
+  include.data.frame <span class='op'>=</span> <span class='cn'>FALSE</span>,
   Force <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  cl <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -193,22 +195,34 @@ meshes.</p></td>
     </tr>
     <tr>
       <th>subdir</th>
-      <td><p>String naming field in neuron that specifies a subdirectory OR 
+      <td><p>String naming field in neuron that specifies a subdirectory OR
 expression to evaluate in the context of neuronlist's df attribute</p></td>
     </tr>
     <tr>
       <th>INDICES</th>
-      <td><p>Character vector of the names of a subset of neurons in 
+      <td><p>Character vector of the names of a subset of neurons in
 neuronlist to write.</p></td>
     </tr>
     <tr>
       <th>files</th>
-      <td><p>Character vector or expression specifying output filenames. See 
+      <td><p>Character vector or expression specifying output filenames. See
 examples and <code><a href='write.neuron.html'>write.neuron</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>include.data.frame</th>
+      <td><p>Whether to include the metadata when writing a zip
+file (it will be called <code>"write.neurons.dataframe.rds"</code>).</p></td>
     </tr>
     <tr>
       <th>Force</th>
       <td><p>Whether to overwrite an existing file</p></td>
+    </tr>
+    <tr>
+      <th>cl</th>
+      <td><p>Either the integer number of cores to use for parallel writes (2 or
+3 seem useful) or a <code>cluster</code> object created by
+<code>makeCluster</code>. See the <code>cl</code> argument of
+<code><a href='https://rdrr.io/pkg/pbapply/man/pbapply.html'>pbsapply</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -221,10 +235,12 @@ examples and <code><a href='write.neuron.html'>write.neuron</a></code> for detai
     <p>the path to the output file(s), absolute when this is a zip file.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>See <code><a href='write.neuron.html'>write.neuron</a></code> for details of how to specify the 
-  file format/extension/name of the output files and how to establish what 
+    <p>See <code><a href='write.neuron.html'>write.neuron</a></code> for details of how to specify the
+  file format/extension/name of the output files and how to establish what
   output file formats are available. A zip archive of files can be written by
-  specifying a value of <code>dir</code> that ends in <code>.zip</code>.</p>
+  specifying a value of <code>dir</code> that ends in <code>.zip</code>. When rds files
+  (R's binary data representation, which is compressed by default) are stored
+  inside a zip file the are not further compressed (zip option 0).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='write.neuron.html'>write.neuron</a></code>, <code><a href='read.neurons.html'>read.neurons</a></code>,
@@ -234,6 +250,7 @@ examples and <code><a href='write.neuron.html'>write.neuron</a></code> for detai
 <code><a href='is.neuronlist.html'>is.neuronlist</a>()</code>,
 <code><a href='neuronlist-dataframe-methods.html'>neuronlist-dataframe-methods</a></code>,
 <code><a href='neuronlistfh.html'>neuronlistfh</a>()</code>,
+<code><a href='neuronlistz.html'>neuronlistz</a>()</code>,
 <code><a href='neuronlist.html'>neuronlist</a>()</code>,
 <code><a href='nlapply.html'>nlapply</a>()</code>,
 <code><a href='read.neurons.html'>read.neurons</a>()</code></p></div>
@@ -249,6 +266,10 @@ examples and <code><a href='write.neuron.html'>write.neuron</a></code> for detai
 <span class='fu'>write.neurons</span><span class='op'>(</span><span class='va'>Cell07PNs</span>, dir<span class='op'>=</span><span class='st'>"testwn"</span>, format<span class='op'>=</span><span class='st'>'swc'</span>, normalise.ids<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='co'># write some neurons in swc format and zip them up</span>
 <span class='fu'>write.neurons</span><span class='op'>(</span><span class='va'>Cell07PNs</span>, dir<span class='op'>=</span><span class='st'>"testwn.zip"</span>, format<span class='op'>=</span><span class='st'>'swc'</span><span class='op'>)</span>
+
+<span class='co'># write some neurons in R's native RDS format using 3 cores for</span>
+<span class='co'># parallel writes and then zip them up (storing rather than compressing)</span>
+<span class='fu'>write.neurons</span><span class='op'>(</span><span class='va'>Cell07PNs</span>, dir<span class='op'>=</span><span class='st'>"testwn.zip"</span>, format<span class='op'>=</span><span class='st'>'rds'</span>, cl<span class='op'>=</span><span class='fl'>3</span><span class='op'>)</span>
 
 <span class='co'># write some neurons in Amira hxlineset format</span>
 <span class='fu'>write.neurons</span><span class='op'>(</span><span class='va'>Cell07PNs</span>, dir<span class='op'>=</span><span class='st'>"testwn"</span>, format<span class='op'>=</span><span class='st'>'hxlineset'</span><span class='op'>)</span>

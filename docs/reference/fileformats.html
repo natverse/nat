@@ -93,7 +93,7 @@ getformatwriter gets the function to write a file" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -140,7 +140,7 @@ getformatwriter gets the function to write a file" />
 </li>
 <li>
   <a href="https://github.com/natverse/nat">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -303,12 +303,14 @@ from file header to determine file's type.</p></td>
 #&gt; 19     neuron.ply    neuron           .ply  TRUE  TRUE  TRUE
 #&gt; 20           nrrd      im3d          .nrrd  TRUE  TRUE  TRUE
 #&gt; 21           nrrd      im3d          .nhdr  TRUE  TRUE  TRUE
-#&gt; 22            rds    neuron           .rds  TRUE  TRUE FALSE
-#&gt; 23            swc    neuron           .swc  TRUE  TRUE FALSE
-#&gt; 24          swcng    ngraph           .swc  TRUE FALSE FALSE
-#&gt; 25       vaa3draw      im3d           .v3d  TRUE FALSE  TRUE
-#&gt; 26       vaa3draw      im3d        .v3draw  TRUE FALSE  TRUE
-#&gt; 27            vtk    neuron           .vtk FALSE  TRUE FALSE</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+#&gt; 22             qs    neuron            .qs  TRUE  TRUE FALSE
+#&gt; 23            rds    neuron           .rds  TRUE  TRUE FALSE
+#&gt; 24           rdsb    neuron          .rdsb  TRUE  TRUE FALSE
+#&gt; 25            swc    neuron           .swc  TRUE  TRUE FALSE
+#&gt; 26          swcng    ngraph           .swc  TRUE FALSE FALSE
+#&gt; 27       vaa3draw      im3d           .v3d  TRUE FALSE  TRUE
+#&gt; 28       vaa3draw      im3d        .v3draw  TRUE FALSE  TRUE
+#&gt; 29            vtk    neuron           .vtk FALSE  TRUE FALSE</div><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='fu'>registerformat</span><span class='op'>(</span><span class='st'>"swc"</span>,read<span class='op'>=</span><span class='va'>read.swc</span>,write<span class='op'>=</span><span class='va'>read.swc</span>,magic<span class='op'>=</span><span class='va'>is.swc</span>,magiclen<span class='op'>=</span><span class='fl'>10</span>,
   class<span class='op'>=</span><span class='st'>'neuron'</span><span class='op'>)</span>
 <span class='op'>}</span>
