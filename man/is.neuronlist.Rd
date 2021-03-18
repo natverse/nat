@@ -24,6 +24,7 @@ Other neuronlist:
 \code{\link{*.neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
+\code{\link{neuronlistz}()},
 \code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},

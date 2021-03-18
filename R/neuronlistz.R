@@ -14,6 +14,7 @@
 #'   \code{neuronlistz}
 #' @seealso \code{\link{neuronlist}}, \code{\link{neuronlistfh}},
 #'   \code{\link{write.neurons}}
+#' @family neuronlist
 #' @export
 #'
 #' @examples

@@ -116,6 +116,7 @@ Other neuronlist:
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
 \code{\link{neuronlistfh}()},
+\code{\link{neuronlistz}()},
 \code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},

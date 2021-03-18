@@ -107,6 +107,7 @@ Other neuronlist:
 \code{\link{is.neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
+\code{\link{neuronlistz}()},
 \code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{write.neurons}()}
