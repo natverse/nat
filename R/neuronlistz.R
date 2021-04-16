@@ -114,3 +114,7 @@ read_from_zip <- function(zipfile, p, multi=FALSE, neuron=TRUE) {
   new=as.neuronlist(l, df=attr(x, 'df')[ichecked, , drop=FALSE])
   copy_nl_attributes(new, x, ignoremore=c("keyfilemap", "db"))
 }
+
+# this is needed to make lapply behave properly
+#' @export
+as.list.neuronlistz<-function(x, ...) x
