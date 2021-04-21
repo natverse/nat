@@ -14,7 +14,8 @@ neuronlistz(zip, patt = NULL, df = NULL, ...)
 
 \item{patt}{Optional regex pattern or function to specify a subset of files.}
 
-\item{df}{A data.frame of metadata that will be attached to the}
+\item{df}{A \code{data.frame} of metadata that will be attached to the
+\code{neuronlistz} and will define the order of the objects inside it.}
 
 \item{...}{Additional arguments currently ignored}
 
