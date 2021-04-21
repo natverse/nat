@@ -14,6 +14,7 @@ test_that("neuronlistz works", {
   
   expect_equal(nvertices(nz), nvertices(Cell07PNs[1:5]))
   expect_equal(nz[1:5], Cell07PNs[1:5])
+  expect_equal(nz *1, Cell07PNs[1:5])
   
   nz2 <- neuronlistz(tf2, patt = "EBH.*")
   expect_equal(rownames(nz2[,]), c("EBH11R", "EBH20L", "EBH20R"))

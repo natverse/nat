@@ -477,7 +477,8 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
   } else if(.progress=='traditional') {
     .progress = ifelse(length(X)>=10 && interactive(), "text", "none")
   } 
-  cl=if(is.neuronlist(X) && !is.neuronlistfh(X)) class(X) 
+  cl=if(is.neuronlist(X) && !inherits(X, c('neuronlistfh','neuronlistz')))
+    class(X) 
   else c("neuronlist", 'list')
   
   if(!is.null(subset)){
