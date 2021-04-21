@@ -70,6 +70,17 @@ neuronlistz <- function(zip, patt=NULL, df=NULL, ...) {
   nlf
 }
 
+#' @description \code{as.neuronlist.neuronlistz} converts a \code{neuronlistz}
+#'   to a regular (in memory) \code{\link{neuronlist}}
+#' @export
+#' @inheritParams as.neuronlist
+#' @rdname neuronlistz
+as.neuronlist.neuronlistz<-function(l, ...){
+  # get the overloaded subscripting operator to do the work
+  l[names(l)]
+}
+
+
 read_from_zip <- function(zipfile, p, multi=FALSE, neuron=TRUE) {
   td <- tempfile()
   on.exit(unlink(td, recursive = TRUE))
