@@ -7,7 +7,8 @@
 #'
 #' @param zip Path to the zip file
 #' @param patt Optional regex pattern or function to specify a subset of files.
-#' @param df A data.frame of metadata that will be attached to the
+#' @param df A \code{data.frame} of metadata that will be attached to the
+#'   \code{neuronlistz} and will define the order of the objects inside it.
 #' @param ... Additional arguments currently ignored
 #'
 #' @return A \code{\link{neuronlist}} object with additional class
@@ -40,6 +41,7 @@ neuronlistz <- function(zip, patt=NULL, df=NULL, ...) {
     ff=setdiff(ff, dff)
     if(is.null(df))
       df <- read_from_zip(zip, dff, neuron=FALSE)
+    
   }
   
   keyfilemap <- if(!is.null(patt)) {
@@ -57,18 +59,33 @@ neuronlistz <- function(zip, patt=NULL, df=NULL, ...) {
   names(keyfilemap)=tools::file_path_sans_ext(basename(keyfilemap))
   if(any(duplicated(names(keyfilemap))))
     stop("keyfilemap must have unique names as elements!")
-  
-  nlf=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
-  attr(nlf,'keyfilemap')=keyfilemap
-  if(is.null(df)) {
+  if(!is.null(df) && all(names(keyfilemap) %in% rownames(df))) {
+    # reorder neurons to match supplied data.frame
+    keyfilemap=keyfilemap[intersect(rownames(df), names(keyfilemap))]
+  } else {
+    # make a default data.frame
     df=data.frame(id=names(keyfilemap), stringsAsFactors = FALSE)
     rownames(df)=df[['id']]
   }
+  
+  nlf=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
+  attr(nlf,'keyfilemap')=keyfilemap
   attr(nlf,'db')=zip
   class(nlf)=c('neuronlistz','neuronlist',class(nlf))
   data.frame(nlf)=df
   nlf
 }
+
+#' @description \code{as.neuronlist.neuronlistz} converts a \code{neuronlistz}
+#'   to a regular (in memory) \code{\link{neuronlist}}
+#' @export
+#' @inheritParams as.neuronlist
+#' @rdname neuronlistz
+as.neuronlist.neuronlistz<-function(l, ...){
+  # get the overloaded subscripting operator to do the work
+  l[names(l)]
+}
+
 
 read_from_zip <- function(zipfile, p, multi=FALSE, neuron=TRUE) {
   td <- tempfile()

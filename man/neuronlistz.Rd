@@ -2,25 +2,32 @@
 % Please edit documentation in R/neuronlistz.R
 \name{neuronlistz}
 \alias{neuronlistz}
+\alias{as.neuronlist.neuronlistz}
 \title{A neuronlist object that will read neurons from a zip file on demand}
 \usage{
 neuronlistz(zip, patt = NULL, df = NULL, ...)
+
+\method{as.neuronlist}{neuronlistz}(l, ...)
 }
 \arguments{
 \item{zip}{Path to the zip file}
 
 \item{patt}{Optional regex pattern or function to specify a subset of files.}
 
-\item{df}{A data.frame of metadata that will be attached to the}
+\item{df}{A \code{data.frame} of metadata that will be attached to the
+\code{neuronlistz} and will define the order of the objects inside it.}
 
 \item{...}{Additional arguments currently ignored}
+
+\item{l}{An existing list or a single neuron to start a list}
 }
 \value{
 A \code{\link{neuronlist}} object with additional class
   \code{neuronlistz}
 }
 \description{
-A neuronlist object that will read neurons from a zip file on demand
+\code{as.neuronlist.neuronlistz} converts a \code{neuronlistz}
+  to a regular (in memory) \code{\link{neuronlist}}
 }
 \details{
 \code{\link{neuronlistz}} is designed to wrap zip files containing
