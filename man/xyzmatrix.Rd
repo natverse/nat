@@ -3,6 +3,7 @@
 \name{xyzmatrix}
 \alias{xyzmatrix}
 \alias{xyzmatrix.default}
+\alias{xyzmatrix.list}
 \alias{xyzmatrix.character}
 \alias{xyzmatrix.neuron}
 \alias{xyzmatrix.neuronlist}
@@ -25,6 +26,8 @@
 xyzmatrix(x, ...)
 
 \method{xyzmatrix}{default}(x, y = NULL, z = NULL, ...)
+
+\method{xyzmatrix}{list}(x, empty2na = TRUE, ...)
 
 \method{xyzmatrix}{character}(x, ...)
 
@@ -67,6 +70,9 @@ xyzmatrix(x) <- value
 
 \item{y, z}{separate y and z coordinates}
 
+\item{empty2na}{Whether or not to convert empty elements (\code{NULL} or
+\code{list()}) into NAs. Default \code{TRUE}.}
+
 \item{value}{Nx3 matrix specifying new xyz coords}
 }
 \value{
@@ -76,6 +82,8 @@ For \code{xyzmatrix<-}: Original object with modified coords
 }
 \description{
 \code{xyzmatrix} gets coordinates from objects containing 3D vertex data
+
+\code{xyzmatrix.list} will parse a list of 3
 
 \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
   object and can also handle matrix like objects with columns named X, Y, Z

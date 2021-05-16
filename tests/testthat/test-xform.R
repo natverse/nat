@@ -178,6 +178,13 @@ test_that("can extract xyz coords from a matrix and other objects",{
   # make sure we get a warning if we have non-numeric input
   dfc$X[1]="a"
   expect_warning(xyzmatrix(dfc))
+  
+  l=list(1:3, list(), NULL, 4:6, 2:4, 3:5, list())
+  df=data.frame(id=seq_along(l))
+  df$position=l
+  baseline=matrix(c(1:3, rep(NA, 6), 4:6, 2:4, 3:5, NA, NA, NA),
+                  byrow = T, ncol = 3)
+  expect_equal(xyzmatrix(df$position), xyzmatrix(baseline))
 })
 
 test_that("can replace xyz coords of a matrix",{
