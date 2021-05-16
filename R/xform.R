@@ -316,6 +316,10 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 #'   \code{list()}) into NAs. Default \code{TRUE}.
 #' @description \code{xyzmatrix.list} will parse a list of 3
 xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
+  # special case, neuron without a class
+  if(is.neuron(x,Strict=FALSE))
+    return(xyzmatrix(x$d[,c("X","Y","Z")]))
+  
   lengths=sapply(x, length)
   if(empty2na) {
     if(!all(lengths %in% c(0,3)))
