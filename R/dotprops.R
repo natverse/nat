@@ -9,7 +9,8 @@ is.dotprops<-function(x) inherits(x,"dotprops")
 as.dotprops<-function(x, ...){
   if(is.null(x)) return (NULL)
   if(!is.dotprops(x)) class(x)=c("dotprops",class(x))
-  if(is.null(colnames(x$points))) colnames(x$points) <-c("X","Y","Z") 
+  if("topo" %in% names(x)) class(x)=c("topo.dotprops",class(x))
+  if(is.null(colnames(x$points))) colnames(x$points) <-c("X","Y","Z")
   x
 }
 
@@ -153,12 +154,48 @@ dotprops.neuronlist<-function(x, ..., OmitFailures=NA) {
 #' @export
 #' @param resample When finite, a new length to which all segmented edges will
 #'   be resampled. See \code{\link{resample.neuron}}.
+#' @param topo flag that says whether or not to add topological features
+#' (inverted Strahler's Order and distance from soma)
 #' @rdname dotprops
-dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
+dotprops.neuron<-function(x, Labels=NULL, resample=NA, topo=FALSE, ...) {
   if(is.finite(resample)) x=resample(x, stepsize = resample)
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
-  dotprops(xyzmatrix(x), Labels=Labels, ...)
+  topo_features <- NULL
+  if (isTRUE(topo)) topo_features <- add_topo_features(x)
+  dotprops(xyzmatrix(x), Labels=Labels, topo_features=topo_features, ...)
+}
+
+#' Add topological features
+#'
+#' @param nrn neuron object with soma
+#'
+#' @return
+#' @examples
+#' add_topo_features(Cell07PNs[[1]])
+add_topo_features <- function(nrn) {
+  topovec <- list()
+  topovec$distance <- get_distance_to_soma(nrn)
+  so <- strahler_order(nrn)
+  # normalizing so the main branch is always 0
+  topovec$rso <- abs(so$points-max(so$points))
+  topovec
+}
+
+#' Get distance from soma
+#' 
+#' Assigns to each node a distance from cell body.
+#'
+#' @param nrn neuron object with soma
+#'
+#' @return vector with distances from soma
+#' @importFrom igraph distances
+#' @examples
+#' add_topo_features(Cell07PNs[[1]])
+get_distance_to_soma <- function(nrn) {
+  gw <- as.ngraph(nrn, weights=TRUE)
+  dst <- distances(gw, v = rootpoints(nrn))
+  as.numeric(dst)
 }
 
 #' @export
@@ -170,6 +207,7 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #'   behaviour for different classes of input object, \code{TRUE} always uses 
 #'   labels when an incoming object has them and \code{FALSE} never uses labels.
 #' @param na.rm Whether to remove \code{NA} points (default FALSE)
+#' @param topo_features topological features of each dotprop
 #' @importFrom nabor knn
 #' @references The dotprops format is essentially identical to that developed 
 #'   in:
@@ -178,7 +216,8 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #'   mutual information approach to automate identification of neuronal clusters
 #'   in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
 #'   \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
-dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
+dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, topo_features=NULL,
+                           ...){
   # store labels from SWC format data if this is a neuron
   x=xyzmatrix(x)
   if(is.null(k)) k=20
@@ -219,6 +258,10 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   rlist=list(points=x,alpha=alpha,vect=vect)
   
   rlist$labels=Labels
+  
+  if (!is.null(topo_features)) {
+    rlist$topo <- topo_features
+  }
   
   attr(rlist,'k')=k
   return(as.dotprops(rlist))

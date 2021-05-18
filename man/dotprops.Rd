@@ -26,9 +26,9 @@ dotprops(x, ...)
 
 \method{dotprops}{neuronlist}(x, ..., OmitFailures = NA)
 
-\method{dotprops}{neuron}(x, Labels = NULL, resample = NA, ...)
+\method{dotprops}{neuron}(x, Labels = NULL, resample = NA, topo = FALSE, ...)
 
-\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, ...)
+\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, topo_features = NULL, ...)
 }
 \arguments{
 \item{x}{Object to be tested/converted}
@@ -54,7 +54,12 @@ labels when an incoming object has them and \code{FALSE} never uses labels.}
 \item{resample}{When finite, a new length to which all segmented edges will
 be resampled. See \code{\link{resample.neuron}}.}
 
+\item{topo}{flag that says whether or not to add topological features
+(inverted Strahler's Order and distance from soma)}
+
 \item{na.rm}{Whether to remove \code{NA} points (default FALSE)}
+
+\item{topo_features}{topological features of each dotprop}
 }
 \description{
 \code{dotprops} makes dotprops representation from raw 3D points
