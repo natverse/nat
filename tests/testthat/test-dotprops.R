@@ -55,6 +55,13 @@ test_that("make a dotprops object from a neuron",{
   expect_is(x<-dotprops(Cell07PNs[[1]], resample=1), 'dotprops')
 })
 
+test_that("make a topo.dotprops object from a neuron",{
+  expect_is(x<-dotprops(Cell07PNs[[1]], k=5, topo=T), 'topo.dotprops')
+  expect_equal(xyzmatrix(x), xyzmatrix(Cell07PNs[[1]]))
+  expect_true("topo" %in% names(x))
+})
+
+
 test_that("subset.dotprops", {
   x=kcs20[[1]]
   expect_equal(subset(x, T), x)
@@ -114,3 +121,22 @@ test_that("math operators",{
                (kcs20[[1]]-colMeans(xyzmatrix(kcs20[[1]])))*0.5)
   
 })
+
+context('dotprops utils')
+
+test_that("get_topo_features",{
+  pn1 = Cell07PNs[[1]]
+  res = get_topo_features(pn1)
+  expect_type(res, "list")
+  expect_true("distance" %in% names(res))
+  expect_true("rso" %in% names(res))
+  expect_true(any(0 == res$rso))
+})
+
+test_that("get_topo_features",{
+  pn1 = Cell07PNs[[1]]
+  res = get_distance_to_soma(pn1)
+  expect_equal(res[rootpoints(pn1)], 0)
+  expect_true(all(res[-rootpoints(pn1)] > 0))
+})
+
