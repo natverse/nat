@@ -9,7 +9,7 @@ is.dotprops<-function(x) inherits(x,"dotprops")
 as.dotprops<-function(x, ...){
   if(is.null(x)) return (NULL)
   if(!is.dotprops(x)) class(x)=c("dotprops",class(x))
-  if("topo" %in% names(x)) class(x)=c("topo.dotprops",class(x))
+  if("topo" %in% names(x)) class(x) = union("topo.dotprops", class(x))
   if(is.null(colnames(x$points))) colnames(x$points) <-c("X","Y","Z")
   x
 }
@@ -162,21 +162,23 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, topo=FALSE, ...) {
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
   topo_features <- NULL
-  if (isTRUE(topo)) topo_features <- add_topo_features(x)
+  if (isTRUE(topo)) topo_features <- get_topo_features(x)
   dotprops(xyzmatrix(x), Labels=Labels, topo_features=topo_features, ...)
 }
 
-#' Add topological features
+#' Get topological features per each node
 #'
-#' @param nrn neuron object with soma
+#' @param n neuron object with soma
 #'
-#' @return
+#' @return list with distance and Reversed Strahler order features per node.
+#' @rdname dotprops-topo
+#' @export
 #' @examples
-#' add_topo_features(Cell07PNs[[1]])
-add_topo_features <- function(nrn) {
+#' get_topo_features(Cell07PNs[[1]])
+get_topo_features <- function(n) {
   topovec <- list()
-  topovec$distance <- get_distance_to_soma(nrn)
-  so <- strahler_order(nrn)
+  topovec$distance <- get_distance_to_soma(n)
+  so <- strahler_order(n)
   # normalizing so the main branch is always 0
   topovec$rso <- abs(so$points-max(so$points))
   topovec
@@ -186,15 +188,18 @@ add_topo_features <- function(nrn) {
 #' 
 #' Assigns to each node a distance from cell body.
 #'
-#' @param nrn neuron object with soma
+#' @param n neuron object with soma
 #'
 #' @return vector with distances from soma
 #' @importFrom igraph distances
+#' @rdname dotprops-topo
+#' @export
+#' @seealso \code{\link{dotprops}}, \code{\link{ngraph}}
 #' @examples
-#' add_topo_features(Cell07PNs[[1]])
-get_distance_to_soma <- function(nrn) {
-  gw <- as.ngraph(nrn, weights=TRUE)
-  dst <- distances(gw, v = rootpoints(nrn))
+#' get_distance_to_soma(Cell07PNs[[1]])
+get_distance_to_soma <- function(n) {
+  gw <- as.ngraph(n, weights=TRUE)
+  dst <- distances(gw, v = rootpoints(n))
   as.numeric(dst)
 }
 
