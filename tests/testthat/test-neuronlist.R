@@ -108,11 +108,16 @@ test_that("nlapply can omit failures",{
   # this time with subset and omit failures
   expect_equal(length(dotprops(kcs3, k=5, subset=1:2, OmitFailures=TRUE)), 3)
   expect_equal(length(dotprops(kcs3, k=5, subset=c(1,3), OmitFailures=TRUE)), 2)
+  
+  expect_output(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=T))
+  expect_silent(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=F))
+  expect_error(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=NA))
 })
 
 test_that("nmapply with identity function returns its arguments",{
   kcs3=kcs20[1:3]
   expect_equal(nmapply(function(x) x, kcs3), kcs3)
+  expect_silent(nmapply(function(x) x, kcs3, .progress=F))
 })
 
 test_that("nmapply can vectorise more than one argument",{

@@ -52,7 +52,7 @@ details).}
 
 \item{dbdir}{The path to the underlying \code{filehash} database on disk. For
 RDS formats, by convention this should be a path whose final element is
-'data' which will be turnned into a directory. For DB1 format it specifies
+'data' which will be turned into a directory. For DB1 format it specifies
 a single file to which objects will be written.}
 
 \item{dbClass}{The \code{filehash} database class. Defaults to \code{RDS}.}
@@ -121,7 +121,7 @@ a \code{neuronlistfh} object which is a character \code{vector} with
   This distinction is because there must be a character key provided to name
   the neuron when a new one is being added, whereas an existing element can
   be referenced by position (i.e. the numeric index). Unfortunately the end
-  user is responsible for manully modifying the attached data.frame when new
+  user is responsible for manually modifying the attached data.frame when new
   neurons are added. Doing \code{nlfh[[index]]<-neuron} will do the
   equivalent of \code{attr(nlfh, 'df')[i, ]=NA} i.e. add a row containing NA
   values.
@@ -257,6 +257,7 @@ Other neuronlist:
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistz}()},
 \code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},

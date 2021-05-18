@@ -384,8 +384,9 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   Progress bar section for details) The default value of \code{"auto"} shows
 #'   a progress bar in interactive use after 2s. The default value can be
 #'   overridden for the current session by setting the value of
-#'   \code{options(nat.progressbar)} (see examples).
-#'
+#'   \code{options(nat.progressbar)} (see examples). Values of \code{T} and
+#'   \code{F} are aliases for 'text' and 'none', respectively.
+#'   
 #' @section Progress bar: There are currently two supported approaches to
 #'   defining progress bars for \code{nlapply}. The default (when
 #'   \code{progress="auto"}) now uses a progress bar built using
@@ -472,12 +473,18 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' }
 nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, 
                    .progress=getOption('nat.progress', default='auto')){
-  if(.progress=='auto') {
+  if(isTRUE(.progress=='auto')) {
     .progress = ifelse(interactive(), "natprogress", "none")
-  } else if(.progress=='traditional') {
+  } else if(isTRUE(.progress=='traditional')) {
     .progress = ifelse(length(X)>=10 && interactive(), "text", "none")
-  } 
-  cl=if(is.neuronlist(X) && !is.neuronlistfh(X)) class(X) 
+  } else if(isTRUE(.progress)) {
+    .progress <- 'text'
+  } else if(isFALSE(.progress)) {
+    .progress <- 'none'
+  }
+  checkmate::assert_character(.progress, any.missing = F, len = 1L)
+  cl=if(is.neuronlist(X) && !inherits(X, c('neuronlistfh','neuronlistz')))
+    class(X) 
   else c("neuronlist", 'list')
   
   if(!is.null(subset)){
@@ -546,7 +553,14 @@ nmapply<-function(FUN, X, ..., MoreArgs = NULL, SIMPLIFY = FALSE,
   }
   FUN2=FUN
   
-  if(.progress=='auto') .progress=ifelse(interactive(), 'text', 'none')
+  if(isTRUE(.progress=='auto')) {
+    .progress = ifelse(interactive(), "text", "none")
+  } else if(isTRUE(.progress)) {
+    .progress <- 'text'
+  } else if(isFALSE(.progress)) {
+    .progress <- 'none'
+  }
+  checkmate::assert_character(.progress, any.missing = F, len = 1L)
   
   if(.progress!='none'){
     p <- progress_natprogress()

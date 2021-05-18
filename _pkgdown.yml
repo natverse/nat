@@ -114,6 +114,7 @@ reference:
       - neuronlist
       - read.neurons
       - write.neurons
+      - neuronlistz
       - nlapply
       - plot.neuronlist
       - plot3d.neuronlist

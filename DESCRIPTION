@@ -35,7 +35,9 @@ Imports:
     yaml,
     progress,
     checkmate,
-    stringr
+    stringr,
+    pbapply,
+    zip
 Suggests:
     spelling,
     Rvcg (>= 0.17),
@@ -48,13 +50,16 @@ Suggests:
     alphashape3d,
     Morpho,
     plotly,
-    readobj
+    readobj,
+    brotli,
+    qs
 License: GPL-3
 LazyData: yes
 Collate:
     'alphashape3d.R'
     'amiralandmarks-io.R'
     'amiramesh-io.R'
+    'brotli.R'
     'cmtk-reformat.R'
     'cmtk.R'
     'cmtk_geometry.R'
@@ -83,10 +88,12 @@ Collate:
     'neuronlist_interactive_3d.R'
     'neuronlist_sets.R'
     'neuronlistfh.R'
+    'neuronlistz.R'
     'ngraph.R'
     'nrrd-io.R'
     'pop3d.R'
     'potential_synapses.R'
+    'qs.R'
     'reglist.R'
     'seglist.R'
     'summary.R'
