@@ -49,7 +49,8 @@ details.}
 Progress bar section for details) The default value of \code{"auto"} shows
 a progress bar in interactive use after 2s. The default value can be
 overridden for the current session by setting the value of
-\code{options(nat.progressbar)} (see examples).}
+\code{options(nat.progressbar)} (see examples). Values of \code{T} and
+\code{F} are aliases for 'text' and 'none', respectively.}
 
 \item{MoreArgs}{a list of other arguments to \code{FUN}.}
 

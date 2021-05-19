@@ -312,6 +312,30 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 
 #' @export
 #' @rdname xyzmatrix
+#' @param empty2na Whether or not to convert empty elements (\code{NULL} or
+#'   \code{list()}) into NAs. Default \code{TRUE}.
+#' @description \code{xyzmatrix.list} will parse a list of 3
+xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
+  # special case, neuron without a class
+  if(is.neuron(x,Strict=FALSE))
+    return(xyzmatrix(x$d[,c("X","Y","Z")]))
+  
+  lengths=sapply(x, length)
+  if(empty2na) {
+    if(!all(lengths %in% c(0,3)))
+      stop("xyzmatrix accepts lists where each element has 0 or 3 numbers!")
+   x[lengths==0]=list(rep(NA, 3))
+  } else {
+    if(any(lengths!=3))
+      stop("xyzmatrix accepts lists where each element has 3 numbers!")
+  }
+  
+  mat=matrix(unlist(x, use.names = F), ncol=3, byrow = TRUE)
+  xyzmatrix(mat)
+}
+
+#' @export
+#' @rdname xyzmatrix
 xyzmatrix.character<-function(x, ...) {
   cc=gsub("[^0-9.\\+eE-]+"," ", x)
   cc=trimws(cc)
