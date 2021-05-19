@@ -9,7 +9,7 @@ is.dotprops<-function(x) inherits(x,"dotprops")
 as.dotprops<-function(x, ...){
   if(is.null(x)) return (NULL)
   if(!is.dotprops(x)) class(x)=c("dotprops",class(x))
-  if("topo.dotprops" %in% names(x)) class(x) = union("topo.dotprops", class(x))
+  if("topo" %in% names(x)) class(x) = union("topo.dotprops", class(x))
   if(is.null(colnames(x$points))) colnames(x$points) <-c("X","Y","Z")
   x
 }
