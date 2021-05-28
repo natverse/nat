@@ -44,6 +44,8 @@ A \code{data.frame} summarising the tree properties of the neuron
   
   \item{cable.length}
   
+  \item{n.trees}
+  
   }
 }
 \description{
