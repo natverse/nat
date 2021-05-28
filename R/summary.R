@@ -39,7 +39,7 @@ summary.neuronlist<-function(object, ..., include.attached.dataframe=FALSE) {
 #'   
 #'   \item{cable.length}
 #'   
-#'   \item{n.trees}
+#'   \item{nTrees}
 #'   
 #'   }
 #' @export
@@ -53,7 +53,7 @@ summary.neuron<-function(object, ...) {
              branchpoints=length(object$BranchPoints),
              endpoints=length(object$EndPoints),
              cable.length=total_cable(object),
-             n.trees=ifelse("nTrees" %in% names(object), object$nTrees, 1))
+             nTrees=ifelse("nTrees" %in% names(object), object$nTrees, 1))
 }
 
 #' @export
