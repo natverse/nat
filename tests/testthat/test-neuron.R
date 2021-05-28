@@ -359,6 +359,17 @@ test_that("prune twigs of a neuron", {
   
   #simple test comparing the number of edges after pruning.
   expect_lt(pruned_neuron$NumSegs,n$NumSegs)
+})
+
+test_that("rerooting of neurons", {
+  n = Cell07PNs[[1]]
+  # test rerooting by idx
+  r_n = reroot(n, 5)
+  expect_equal(r_n$StartPoint, 5)
   
-  
+  # test rerooting by point
+  idx <- 141
+  pnt <- as.numeric(n$d[idx,c("X","Y","Z")])
+  r_n = reroot(n, point=pnt)
+  expect_true(all(r_n$d[r_n$StartPoint,c("X","Y","Z")]-pnt == 0))
 })

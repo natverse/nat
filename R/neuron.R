@@ -1620,3 +1620,37 @@ prune_twigs.neuron <- function(x, twig_length, ...) {
   # now we can basically prune everything not in that set
   prune_vertices(ng, verts_to_keep, invert=TRUE, ...)
 }
+
+#' @description \code{reroot} change soma of a neuron
+#' @export
+#' @rdname reroot
+reroot <- function(x, ...) UseMethod('reroot')
+
+#' Reroot neuron
+#' 
+#' Change soma node to specific index or a node closes to a specific point.
+#'
+#' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
+#' @param idx index of a node of new soma
+#' @param point numeric with X,Y,Z coordinates
+#' 
+#' @details If both \code{idx} and \code{point} are NULL it returns identity.
+#'
+#' @return neuron with a new soma position
+#' @export
+#' @rdname reroot
+#' @examples
+#' newCell07PN <- reroot(Cell07PNs[[2]], 5)
+#' newCell07PN$StartPoint # 5
+reroot.neuron <- function(x, idx=NULL, point=NULL) {
+  if (is.null(idx) && is.null(point)) return(x)
+  if (!is.null(idx)) {
+    nx <- as.neuron(as.ngraph(x), origin = idx)
+  } else {
+    if (!(is.numeric(point) && length(point) == 3))
+      stop("Wrong point format, see docs!")
+    nidx <- which.min((x$d$X-point[[1]])^2+(x$d$Y-point[[2]])^2+(x$d$Z-point[[3]])^2)
+    nx <- as.neuron(as.ngraph(x), origin = nidx)
+  }
+  nx
+}

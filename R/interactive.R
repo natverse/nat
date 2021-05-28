@@ -83,7 +83,7 @@ correct_root <- function(someneuronlist, brain = NULL){
       if (length(selected.pointno)!=1){
         message("You must select exactly one end point. Try again!")
       } else{
-        corrected = as.neuron(as.ngraph(w), origin = selected.pointno)
+        corrected = reroot(w, selected.pointno)
         rgl::plot3d(corrected, soma = T, col = "blue")
         progress = tolower(readline(prompt="Good enough? [y/n] "))=="y"
       }
