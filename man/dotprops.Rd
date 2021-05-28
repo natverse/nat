@@ -55,11 +55,11 @@ labels when an incoming object has them and \code{FALSE} never uses labels.}
 be resampled. See \code{\link{resample.neuron}}.}
 
 \item{topo}{flag that says whether or not to add topological features
-(inverted Strahler's Order and distance from soma)}
+(reversed Strahler Order and distance from soma)}
 
 \item{na.rm}{Whether to remove \code{NA} points (default FALSE)}
 
-\item{topo_features}{topological features of each dotprop}
+\item{topo_features}{topological features of each dotprops}
 }
 \description{
 \code{dotprops} makes dotprops representation from raw 3D points
