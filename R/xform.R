@@ -114,6 +114,10 @@ xform.shape3d<-xform.list
 
 #' @export
 #' @rdname xform
+xform.mesh3d<-xform.list
+
+#' @export
+#' @rdname xform
 xform.neuron<-xform.list
 
 #' @export
@@ -511,6 +515,11 @@ xyzmatrix.mesh3d<-function(x, ...){
   x$vb=t(cbind(unname(value), 1))
   x
 }
+
+#' @export
+#' @rdname xyzmatrix
+`xyzmatrix<-.mesh3d`<-`xyzmatrix<-.shape3d`
+
 
 #' @export
 #' @rdname xyzmatrix

@@ -6,6 +6,7 @@
 \alias{xform.character}
 \alias{xform.list}
 \alias{xform.shape3d}
+\alias{xform.mesh3d}
 \alias{xform.neuron}
 \alias{xform.data.frame}
 \alias{xform.dotprops}
@@ -21,6 +22,8 @@ xform(x, reg, ...)
 \method{xform}{list}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
 
 \method{xform}{shape3d}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
+
+\method{xform}{mesh3d}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
 
 \method{xform}{neuron}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
 

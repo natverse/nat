@@ -19,6 +19,7 @@
 \alias{xyzmatrix<-.hxsurf}
 \alias{xyzmatrix<-.igraph}
 \alias{xyzmatrix<-.shape3d}
+\alias{xyzmatrix<-.mesh3d}
 \alias{xyzmatrix<-.neuronlist}
 \alias{xyzmatrix<-.shapelist3d}
 \title{Get and assign coordinates for classes containing 3D vertex data}
@@ -58,6 +59,8 @@ xyzmatrix(x) <- value
 \method{xyzmatrix}{igraph}(x) <- value
 
 \method{xyzmatrix}{shape3d}(x) <- value
+
+\method{xyzmatrix}{mesh3d}(x) <- value
 
 \method{xyzmatrix}{neuronlist}(x) <- value
 
