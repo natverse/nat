@@ -10,6 +10,7 @@ Some new features and bug fixes. Thanks to @PostPreAndCleft and @artxz for repor
   "Bad triangle numbers" error in `read.hxsurf()` (#445)
 * Add `xform()` and `xyzmatrix<-()` methods for `mesh3d` objects
 * Don't clean `mesh3d` objects read from ply files by default
+* `summary.neuron` now prints number of subtrees (#462, @dokato)
 
 # nat 1.10.2
 
