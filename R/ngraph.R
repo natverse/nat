@@ -394,6 +394,9 @@ strahler_order<-function(x){
   roots=rootpoints(s, original.ids=FALSE)
   if(length(roots)>1)
     stop("strahler_order not yet defined for multiple subtrees")
+  # quick win for simplified neurons
+  if (summary(branchpoints)$branchpoints == 0)
+    return(rep(1, summary(nn)$nodes))
   
   b=graph.bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
   
