@@ -8,6 +8,7 @@ Some new features and bug fixes. Thanks to @PostPreAndCleft and @artxz for repor
 * Fix bug `pan3d()` not found (#447)
 * Added support for multi material binary Amira surface files while fixing
   "Bad triangle numbers" error in `read.hxsurf()` (#445)
+* `reroot` function for a neuron and neuronlist added
 
 # nat 1.10.2
 

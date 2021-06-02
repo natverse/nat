@@ -1632,7 +1632,7 @@ reroot <- function(x, ...) UseMethod('reroot')
 #'
 #' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
 #' @param idx index of a node of new soma
-#' @param point numeric with X,Y,Z coordinates
+#' @param point numeric with X,Y,Z coordinates (data.frame for neuronlist)
 #' 
 #' @details If both \code{idx} and \code{point} are NULL it returns identity.
 #'
@@ -1645,12 +1645,36 @@ reroot <- function(x, ...) UseMethod('reroot')
 reroot.neuron <- function(x, idx=NULL, point=NULL) {
   if (is.null(idx) && is.null(point)) return(x)
   if (!is.null(idx)) {
-    nx <- as.neuron(as.ngraph(x), origin = idx)
+    nx <- as.neuron(as.ngraph(x), origin = x$d$PointNo[idx])
   } else {
     if (!(is.numeric(point) && length(point) == 3))
       stop("Wrong point format, see docs!")
     nidx <- which.min((x$d$X-point[[1]])^2+(x$d$Y-point[[2]])^2+(x$d$Z-point[[3]])^2)
-    nx <- as.neuron(as.ngraph(x), origin = nidx)
+    nid <- x$d$PointNo[nidx]
+    nx <- as.neuron(as.ngraph(x), origin = nid)
   }
   nx
+}
+
+#' @export
+#' @rdname resample
+reroot.neuronlist<-function(x, idx=NULL, point=NULL){
+  if (is.null(idx) && is.null(point)) return(x)
+  if (!is.null(idx)) {
+    if (length(idx) == 1)
+      res <- nlapply(x, reroot, idx=idx)
+    else if (length(idx) == length(x))
+      res <- nmapply(reroot, x, idx=idx)
+    else
+      stop("Number of indices must be one, or equal to the number of neurons.")
+  }
+  if (!is.null(point)) {
+    if (is.numeric(point) || (is.data.frame(point) && length(point) == 1))
+      res <- nlapply(x, reroot, point=point)
+    else if (is.data.frame(point) && length(point) == length(x))
+      res <- nmapply(reroot, x, point=as.data.frame(t(point)))
+    else
+      stop("Number of points must be one, or equal to the number of neurons.")
+  }
+  res
 }

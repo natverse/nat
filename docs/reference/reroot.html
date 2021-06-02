@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>3D plots of dotprops objects using rgl package — plot3d.dotprops • nat</title>
+<title>Reroot neuron — reroot • nat</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,9 @@
 
 
 
-<meta property="og:title" content="3D plots of dotprops objects using rgl package — plot3d.dotprops" />
-<meta property="og:description" content="3D plots of dotprops objects using rgl package" />
+<meta property="og:title" content="Reroot neuron — reroot" />
+<meta property="og:description" content="reroot change soma of a neuron
+Change soma node to specific index or a node closes to a specific point." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -152,109 +153,49 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>3D plots of dotprops objects using rgl package</h1>
-    <small class="dont-index">Source: <a href='https://github.com/natverse/nat/blob/master/R/dotprops.R'><code>R/dotprops.R</code></a></small>
-    <div class="hidden name"><code>plot3d.dotprops.Rd</code></div>
+    <h1>Reroot neuron</h1>
+    <small class="dont-index">Source: <a href='https://github.com/natverse/nat/blob/master/R/neuron.R'><code>R/neuron.R</code></a></small>
+    <div class="hidden name"><code>reroot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>3D plots of dotprops objects using rgl package</p>
+    <p><code>reroot</code> change soma of a neuron</p>
+<p>Change soma node to specific index or a node closes to a specific point.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  scalevecs <span class='op'>=</span> <span class='fl'>1</span>,
-  alpharange <span class='op'>=</span> <span class='cn'>NULL</span>,
-  color <span class='op'>=</span> <span class='st'>"black"</span>,
-  PlotPoints <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  PlotVectors <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  UseAlpha <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>,
-  gridlines <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  plotengine <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"nat.plotengine"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>reroot</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for neuron</span>
+<span class='fu'>reroot</span><span class='op'>(</span><span class='va'>x</span>, idx <span class='op'>=</span> <span class='cn'>NULL</span>, point <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A dotprops object</p></td>
+      <td><p>A <code><a href='neuron.html'>neuron</a></code> or <code><a href='neuronlist.html'>neuronlist</a></code> object</p></td>
     </tr>
     <tr>
-      <th>scalevecs</th>
-      <td><p>Factor by which to scale unit vectors (numeric, default: 
-1.0)</p></td>
+      <th>idx</th>
+      <td><p>index of a node of new soma</p></td>
     </tr>
     <tr>
-      <th>alpharange</th>
-      <td><p>Restrict plotting to points with <code>alpha</code> values in 
-this range to plot (default: null =&gt; all points). See 
-<code><a href='dotprops.html'>dotprops</a></code> for definition of <code>alpha</code>.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Character or numeric vector specifying colours for 
-points/vectors. See details.</p></td>
-    </tr>
-    <tr>
-      <th>PlotPoints, PlotVectors</th>
-      <td><p>Whether to plot points and/or tangent vectors 
-(logical, default: tangent vectors only)</p></td>
-    </tr>
-    <tr>
-      <th>UseAlpha</th>
-      <td><p>Whether to scale tangent vector length by the value of 
-<code>alpha</code></p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments passed to <code>points3d</code> and/or 
-<code>segments3d</code></p></td>
-    </tr>
-    <tr>
-      <th>gridlines</th>
-      <td><p>Whether to display gridlines when using plotly as the backend plotting
-engine (default: <code>FALSE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or
-'plotly'.</p></td>
+      <th>point</th>
+      <td><p>numeric with X,Y,Z coordinates</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>invisible list of results of rgl plotting commands</p>
+    <p>neuron with a new soma position</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Tangent vectors are plotted by <code>segments3d</code> and centred on the
-  relevant point. Points are plotted by <code>points3d</code>.</p>  
-<p><code>color</code> will be recycled by <code>points3d</code> and <code>segments3d</code>. 
-  However in the special case that <code>color</code> has length equal to the 
-  number of points in <code>x</code>, then it will be duplicated before being 
-  passed to <code>segments3d</code> so that the result is that each vector is 
-  coloured uniformly according to <code>color</code> (since segments3d expects 2
-  colours for each line segment, blending them if they are different).</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='dotprops.html'>dotprops</a>, <a href='https://dmurdoch.github.io/rgl/dev/reference/plot3d.html'>plot3d</a>, <a href='https://dmurdoch.github.io/rgl/dev/reference/3dobjects.html'>points3d</a>, 
-  <a href='https://dmurdoch.github.io/rgl/dev/reference/3dobjects.html'>segments3d</a></code></p></div>
+    <p>If both <code>idx</code> and <code>point</code> are NULL it returns identity.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>open3d</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; glX 
-#&gt;   6 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'red'</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'green'</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='va'>newCell07PN</span> <span class='op'>&lt;-</span> <span class='fu'>reroot</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>, <span class='fl'>5</span><span class='op'>)</span>
+<span class='va'>newCell07PN</span><span class='op'>$</span><span class='va'>StartPoint</span> <span class='co'># 5</span>
+</div><div class='output co'>#&gt; [1] 5</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

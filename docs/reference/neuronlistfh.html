@@ -261,7 +261,7 @@ details).</p></td>
       <th>dbdir</th>
       <td><p>The path to the underlying <code>filehash</code> database on disk. For
 RDS formats, by convention this should be a path whose final element is
-'data' which will be turnned into a directory. For DB1 format it specifies
+'data' which will be turned into a directory. For DB1 format it specifies
 a single file to which objects will be written.</p></td>
     </tr>
     <tr>
@@ -310,7 +310,7 @@ existing objects will not be overwritten. Default <code>"yes"</code>.</p></td>
 <p>This distinction is because there must be a character key provided to name
   the neuron when a new one is being added, whereas an existing element can
   be referenced by position (i.e. the numeric index). Unfortunately the end
-  user is responsible for manully modifying the attached data.frame when new
+  user is responsible for manually modifying the attached data.frame when new
   neurons are added. Doing <code>nlfh[[index]]&lt;-neuron</code> will do the
   equivalent of <code>attr(nlfh, 'df')[i, ]=NA</code> i.e. add a row containing NA
   values.</p>

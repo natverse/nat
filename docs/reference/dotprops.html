@@ -206,10 +206,10 @@ dotprops.neuronlist will run for every object in the
 <span class='fu'>dotprops</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span>, OmitFailures <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span>
 
 <span class='co'># S3 method for neuron</span>
-<span class='fu'>dotprops</span><span class='op'>(</span><span class='va'>x</span>, Labels <span class='op'>=</span> <span class='cn'>NULL</span>, resample <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='fu'>dotprops</span><span class='op'>(</span><span class='va'>x</span>, Labels <span class='op'>=</span> <span class='cn'>NULL</span>, resample <span class='op'>=</span> <span class='cn'>NA</span>, topo <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for default</span>
-<span class='fu'>dotprops</span><span class='op'>(</span><span class='va'>x</span>, k <span class='op'>=</span> <span class='cn'>NULL</span>, Labels <span class='op'>=</span> <span class='cn'>NULL</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'>dotprops</span><span class='op'>(</span><span class='va'>x</span>, k <span class='op'>=</span> <span class='cn'>NULL</span>, Labels <span class='op'>=</span> <span class='cn'>NULL</span>, na.rm <span class='op'>=</span> <span class='cn'>FALSE</span>, topo_features <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -252,8 +252,17 @@ labels when an incoming object has them and <code>FALSE</code> never uses labels
 be resampled. See <code><a href='resample.html'>resample.neuron</a></code>.</p></td>
     </tr>
     <tr>
+      <th>topo</th>
+      <td><p>flag that says whether or not to add topological features
+(inverted Strahler's Order and distance from soma)</p></td>
+    </tr>
+    <tr>
       <th>na.rm</th>
       <td><p>Whether to remove <code>NA</code> points (default FALSE)</p></td>
+    </tr>
+    <tr>
+      <th>topo_features</th>
+      <td><p>topological features of each dotprop</p></td>
     </tr>
     </table>
 

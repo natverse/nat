@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>3D plots of dotprops objects using rgl package — plot3d.dotprops • nat</title>
+<title>Get topological features per each node — get_topo_features • nat</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="3D plots of dotprops objects using rgl package — plot3d.dotprops" />
-<meta property="og:description" content="3D plots of dotprops objects using rgl package" />
+<meta property="og:title" content="Get topological features per each node — get_topo_features" />
+<meta property="og:description" content="Assigns to each node a distance from cell body." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -152,109 +152,107 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>3D plots of dotprops objects using rgl package</h1>
+    <h1>Get topological features per each node</h1>
     <small class="dont-index">Source: <a href='https://github.com/natverse/nat/blob/master/R/dotprops.R'><code>R/dotprops.R</code></a></small>
-    <div class="hidden name"><code>plot3d.dotprops.Rd</code></div>
+    <div class="hidden name"><code>dotprops-topo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>3D plots of dotprops objects using rgl package</p>
+    <p>Assigns to each node a distance from cell body.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for dotprops</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span>
-  <span class='va'>x</span>,
-  scalevecs <span class='op'>=</span> <span class='fl'>1</span>,
-  alpharange <span class='op'>=</span> <span class='cn'>NULL</span>,
-  color <span class='op'>=</span> <span class='st'>"black"</span>,
-  PlotPoints <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  PlotVectors <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  UseAlpha <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  <span class='va'>...</span>,
-  gridlines <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  plotengine <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span><span class='op'>(</span><span class='st'>"nat.plotengine"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_topo_features</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span>
+
+<span class='fu'>get_distance_to_soma</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>A dotprops object</p></td>
-    </tr>
-    <tr>
-      <th>scalevecs</th>
-      <td><p>Factor by which to scale unit vectors (numeric, default: 
-1.0)</p></td>
-    </tr>
-    <tr>
-      <th>alpharange</th>
-      <td><p>Restrict plotting to points with <code>alpha</code> values in 
-this range to plot (default: null =&gt; all points). See 
-<code><a href='dotprops.html'>dotprops</a></code> for definition of <code>alpha</code>.</p></td>
-    </tr>
-    <tr>
-      <th>color</th>
-      <td><p>Character or numeric vector specifying colours for 
-points/vectors. See details.</p></td>
-    </tr>
-    <tr>
-      <th>PlotPoints, PlotVectors</th>
-      <td><p>Whether to plot points and/or tangent vectors 
-(logical, default: tangent vectors only)</p></td>
-    </tr>
-    <tr>
-      <th>UseAlpha</th>
-      <td><p>Whether to scale tangent vector length by the value of 
-<code>alpha</code></p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional arguments passed to <code>points3d</code> and/or 
-<code>segments3d</code></p></td>
-    </tr>
-    <tr>
-      <th>gridlines</th>
-      <td><p>Whether to display gridlines when using plotly as the backend plotting
-engine (default: <code>FALSE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>plotengine</th>
-      <td><p>the plotting backend engine to use either 'rgl' or
-'plotly'.</p></td>
+      <th>n</th>
+      <td><p>neuron object with soma</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>invisible list of results of rgl plotting commands</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Tangent vectors are plotted by <code>segments3d</code> and centred on the
-  relevant point. Points are plotted by <code>points3d</code>.</p>  
-<p><code>color</code> will be recycled by <code>points3d</code> and <code>segments3d</code>. 
-  However in the special case that <code>color</code> has length equal to the 
-  number of points in <code>x</code>, then it will be duplicated before being 
-  passed to <code>segments3d</code> so that the result is that each vector is 
-  coloured uniformly according to <code>color</code> (since segments3d expects 2
-  colours for each line segment, blending them if they are different).</p>
+    <p>list with distance and Reversed Strahler order features per node.</p>
+<p>vector with distances from soma</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='dotprops.html'>dotprops</a>, <a href='https://dmurdoch.github.io/rgl/dev/reference/plot3d.html'>plot3d</a>, <a href='https://dmurdoch.github.io/rgl/dev/reference/3dobjects.html'>points3d</a>, 
-  <a href='https://dmurdoch.github.io/rgl/dev/reference/3dobjects.html'>segments3d</a></code></p></div>
+    <div class='dont-index'><p><code><a href='dotprops.html'>dotprops</a></code>, <code><a href='ngraph.html'>ngraph</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'>open3d</span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; glX 
-#&gt;   6 </div><div class='input'><span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'red'</span><span class='op'>)</span>
-<span class='fu'><a href='nclear3d.html'>nclear3d</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'red'</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='fu'><a href='plot3d.html'>plot3d</a></span><span class='op'>(</span><span class='va'>kcs20</span><span class='op'>[[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>]</span>,col<span class='op'>=</span><span class='st'>'green'</span>,lwd<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='co'># }</span>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>get_topo_features</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $distance
+#&gt;   [1]   0.000000   2.891293   5.703212   7.723529  10.314772  12.203266
+#&gt;   [7]  14.613359  16.836603  18.522564  21.691392  24.088312  26.019016
+#&gt;  [13]  28.017067  30.812738  33.730963  37.287632  40.035391  43.014518
+#&gt;  [19]  46.913639  48.974197  51.765066  54.348195  56.346939  58.879558
+#&gt;  [25]  60.813022  63.894453  67.438223  70.995234  74.843541  77.504566
+#&gt;  [31]  79.784778  81.510994  83.049232  84.198101  85.705318  87.548086
+#&gt;  [37]  89.142351  90.314442  91.953660  93.378772  95.232832  97.874426
+#&gt;  [43]  85.713709  87.253311  89.419181  90.432009  92.473193  94.035976
+#&gt;  [49]  95.606273  97.375491  98.535834  99.195186 100.232652 101.237106
+#&gt;  [55] 105.239372 106.165457 107.005080 109.377553 110.340120  99.136544
+#&gt;  [61] 100.090064 100.875547  96.617044  98.002667 100.116655 101.569852
+#&gt;  [67] 104.017738 105.073912 106.459371 108.090653 111.057838 113.756003
+#&gt;  [73] 114.938956 116.333316 118.383879 119.326207 120.333314 121.402024
+#&gt;  [79] 121.939041 122.872372 122.140038 123.044352 124.396046 125.413416
+#&gt;  [85] 125.856894 119.892363 121.440277 123.221099 125.000460 127.333104
+#&gt;  [91] 129.047171 130.896452 134.654689 136.962823 141.589070 143.105171
+#&gt;  [97] 144.353221 146.760090 148.923239 149.550540 152.579000 152.873903
+#&gt; [103] 151.712116 155.154894 157.770555 160.517514 161.676557 163.330378
+#&gt; [109] 165.404046 166.330489 167.712941 168.814914 167.301730 168.467964
+#&gt; [115] 169.947808 171.004423 171.890998 171.029425 172.974349 173.628966
+#&gt; [121] 174.499355 173.794180 174.784306 175.915157 176.982712 178.000973
+#&gt; [127] 179.231757 180.618743 181.983596 182.726752 183.777074 184.355191
+#&gt; [133] 185.177770 185.775106 164.484244 166.126191 167.551499 168.764320
+#&gt; [139] 169.766696 170.825411 172.238196 173.250560 175.399201 176.685745
+#&gt; [145] 177.958924 179.671852 181.392164 182.260234 177.508785 178.726600
+#&gt; [151] 179.660677 180.936156 182.307256 183.045772 166.310862 167.554380
+#&gt; [157] 169.307693 170.621393 171.870419 172.529211 173.672155 174.998924
+#&gt; [163] 176.168109 176.905346 177.395288 173.449288 174.459197 175.670626
+#&gt; [169] 176.264856 177.016410 177.777626 178.222027 177.010832 178.424873
+#&gt; [175] 179.662183 180.861082 182.080677 183.656900 184.527619 186.085904
+#&gt; 
+#&gt; $rso
+#&gt;   [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2 2 2
+#&gt;  [38] 2 2 2 2 2 0 0 0 0 0 0 1 1 1 2 2 2 2 2 2 2 2 2 2 2 0 0 0 0 0 0 0 0 0 0 0 0
+#&gt;  [75] 0 1 1 1 2 2 2 2 2 2 2 0 0 0 0 0 0 0 0 0 0 2 0 0 1 2 2 2 0 0 0 0 0 0 1 2 2
+#&gt; [112] 2 1 1 1 2 2 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 0 1 1 1 1 1 1 1 1 2 2 2 2 2
+#&gt; [149] 2 2 2 2 2 2 1 1 1 1 1 1 2 2 2 2 2 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+#&gt; </div><div class='input'><span class='fu'>get_distance_to_soma</span><span class='op'>(</span><span class='va'>Cell07PNs</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   [1]   0.000000   2.891293   5.703212   7.723529  10.314772  12.203266
+#&gt;   [7]  14.613359  16.836603  18.522564  21.691392  24.088312  26.019016
+#&gt;  [13]  28.017067  30.812738  33.730963  37.287632  40.035391  43.014518
+#&gt;  [19]  46.913639  48.974197  51.765066  54.348195  56.346939  58.879558
+#&gt;  [25]  60.813022  63.894453  67.438223  70.995234  74.843541  77.504566
+#&gt;  [31]  79.784778  81.510994  83.049232  84.198101  85.705318  87.548086
+#&gt;  [37]  89.142351  90.314442  91.953660  93.378772  95.232832  97.874426
+#&gt;  [43]  85.713709  87.253311  89.419181  90.432009  92.473193  94.035976
+#&gt;  [49]  95.606273  97.375491  98.535834  99.195186 100.232652 101.237106
+#&gt;  [55] 105.239372 106.165457 107.005080 109.377553 110.340120  99.136544
+#&gt;  [61] 100.090064 100.875547  96.617044  98.002667 100.116655 101.569852
+#&gt;  [67] 104.017738 105.073912 106.459371 108.090653 111.057838 113.756003
+#&gt;  [73] 114.938956 116.333316 118.383879 119.326207 120.333314 121.402024
+#&gt;  [79] 121.939041 122.872372 122.140038 123.044352 124.396046 125.413416
+#&gt;  [85] 125.856894 119.892363 121.440277 123.221099 125.000460 127.333104
+#&gt;  [91] 129.047171 130.896452 134.654689 136.962823 141.589070 143.105171
+#&gt;  [97] 144.353221 146.760090 148.923239 149.550540 152.579000 152.873903
+#&gt; [103] 151.712116 155.154894 157.770555 160.517514 161.676557 163.330378
+#&gt; [109] 165.404046 166.330489 167.712941 168.814914 167.301730 168.467964
+#&gt; [115] 169.947808 171.004423 171.890998 171.029425 172.974349 173.628966
+#&gt; [121] 174.499355 173.794180 174.784306 175.915157 176.982712 178.000973
+#&gt; [127] 179.231757 180.618743 181.983596 182.726752 183.777074 184.355191
+#&gt; [133] 185.177770 185.775106 164.484244 166.126191 167.551499 168.764320
+#&gt; [139] 169.766696 170.825411 172.238196 173.250560 175.399201 176.685745
+#&gt; [145] 177.958924 179.671852 181.392164 182.260234 177.508785 178.726600
+#&gt; [151] 179.660677 180.936156 182.307256 183.045772 166.310862 167.554380
+#&gt; [157] 169.307693 170.621393 171.870419 172.529211 173.672155 174.998924
+#&gt; [163] 176.168109 176.905346 177.395288 173.449288 174.459197 175.670626
+#&gt; [169] 176.264856 177.016410 177.777626 178.222027 177.010832 178.424873
+#&gt; [175] 179.662183 180.861082 182.080677 183.656900 184.527619 186.085904</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

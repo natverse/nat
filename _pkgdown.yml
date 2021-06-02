@@ -84,6 +84,7 @@ reference:
     - seglengths
     - smooth_neuron
     - normalise_swc
+    - reroot
   - title: Neurons (as graphs)
     desc: Functions for working with the graph structure of neurons
     contents:

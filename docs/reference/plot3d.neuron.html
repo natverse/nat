@@ -229,8 +229,8 @@ soma. Either a logical value or a numeric indicating the radius (default
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to <code><a href='https://rdrr.io/pkg/rgl/man/3dobjects.html'>lines3d</a></code> (and
-<code><a href='https://rdrr.io/pkg/rgl/man/spheres.html'>spheres3d</a></code> if somata are being plotted).</p></td>
+      <td><p>Additional arguments passed to <code><a href='https://dmurdoch.github.io/rgl/dev/reference/3dobjects.html'>lines3d</a></code> (and
+<code><a href='https://dmurdoch.github.io/rgl/dev/reference/spheres.html'>spheres3d</a></code> if somata are being plotted).</p></td>
     </tr>
     <tr>
       <th>gridlines</th>
@@ -248,14 +248,14 @@ engine (default: <code>FALSE</code>)</p></td>
 
     <p>list of rgl plotting ids (invisibly) separated into <code>lines</code>,
   <code>points</code>, <code>texts</code> according to plot element. See
-  <code>rgl::<a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>plot3d</a></code> for details.</p>
+  <code>rgl::<a href='https://dmurdoch.github.io/rgl/dev/reference/plot3d.html'>plot3d</a></code> for details.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Note that when <code>WithText=TRUE</code>, the numeric identifiers plotted
   are <em>raw indices</em> into the <code>x$d</code> array of the <code>neuron</code>,
   <em>not</em> the values of the <code>PointNo</code> column.</p>
-<p>Note that <code>...</code> is passed to both <code><a href='https://rdrr.io/pkg/rgl/man/3dobjects.html'>lines3d</a></code> and
-  <code><a href='https://rdrr.io/pkg/rgl/man/spheres.html'>spheres3d</a></code> (if somata are being plotted). Not all
+<p>Note that <code>...</code> is passed to both <code><a href='https://dmurdoch.github.io/rgl/dev/reference/3dobjects.html'>lines3d</a></code> and
+  <code><a href='https://dmurdoch.github.io/rgl/dev/reference/spheres.html'>spheres3d</a></code> (if somata are being plotted). Not all
   <code>...</code> elements are necessarily relevant to both of these drawing
   calls. Furthermore plotting a large number of somata with transparency
   (i.e. <code>alpha &lt; 1</code> ) can quickly result in very slow rgl draw and
@@ -264,7 +264,7 @@ engine (default: <code>FALSE</code>)</p></td>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='plot3d.neuronlist.html'>plot3d.neuronlist</a></code>, <code><a href='plot3d.dotprops.html'>plot3d.dotprops</a></code>,
-  <code>nat::<a href='plot3d.html'>plot3d</a></code>, <code>rgl::<a href='https://rdrr.io/pkg/rgl/man/plot3d.html'>plot3d</a></code></p></div>
+  <code>nat::<a href='plot3d.html'>plot3d</a></code>, <code>rgl::<a href='https://dmurdoch.github.io/rgl/dev/reference/plot3d.html'>plot3d</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># A new plot would have been opened if required</span>

@@ -48,6 +48,7 @@
 
 <meta property="og:title" content="Get and assign coordinates for classes containing 3D vertex data — xyzmatrix" />
 <meta property="og:description" content="xyzmatrix gets coordinates from objects containing 3D vertex data
+xyzmatrix.list will parse a list of 3
 xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
   object and can also handle matrix like objects with columns named X, Y, Z
   or x, y, z." />
@@ -162,6 +163,7 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
 
     <div class="ref-description">
     <p><code>xyzmatrix</code> gets coordinates from objects containing 3D vertex data</p>
+<p><code>xyzmatrix.list</code> will parse a list of 3</p>
 <p><code>xyzmatrix&lt;-</code> assigns xyz elements of neuron or dotprops
   object and can also handle matrix like objects with columns named X, Y, Z
   or x, y, z.</p>
@@ -171,6 +173,9 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
 
 <span class='co'># S3 method for default</span>
 <span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, y <span class='op'>=</span> <span class='cn'>NULL</span>, z <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for list</span>
+<span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, empty2na <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for character</span>
 <span class='fu'>xyzmatrix</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
@@ -238,6 +243,11 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
       <td><p>separate y and z coordinates</p></td>
     </tr>
     <tr>
+      <th>empty2na</th>
+      <td><p>Whether or not to convert empty elements (<code>NULL</code> or
+<code><a href='https://rdrr.io/r/base/list.html'>list()</a></code>) into NAs. Default <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
       <th>value</th>
       <td><p>Nx3 matrix specifying new xyz coords</p></td>
     </tr>
@@ -287,9 +297,10 @@ xyzmatrix&amp;lt;- assigns xyz elements of neuron or dotprops
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># see all available methods for different classes</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span><span class='op'>(</span><span class='st'>'xyzmatrix'</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] xyzmatrix.character*   xyzmatrix.default*     xyzmatrix.dotprops*   
-#&gt; [4] xyzmatrix.hxsurf*      xyzmatrix.igraph*      xyzmatrix.mesh3d*     
-#&gt; [7] xyzmatrix.neuron*      xyzmatrix.neuronlist*  xyzmatrix.shapelist3d*
+</div><div class='output co'>#&gt;  [1] xyzmatrix.character*   xyzmatrix.default*     xyzmatrix.dotprops*   
+#&gt;  [4] xyzmatrix.hxsurf*      xyzmatrix.igraph*      xyzmatrix.list*       
+#&gt;  [7] xyzmatrix.mesh3d*      xyzmatrix.neuron*      xyzmatrix.neuronlist* 
+#&gt; [10] xyzmatrix.shapelist3d*
 #&gt; see '?methods' for accessing help and source code</div><div class='input'><span class='co'># ... and for the assignment method</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span><span class='op'>(</span><span class='st'>'xyzmatrix&lt;-'</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] xyzmatrix&lt;-.character*   xyzmatrix&lt;-.default*     xyzmatrix&lt;-.dotprops*   
