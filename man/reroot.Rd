@@ -7,14 +7,17 @@
 \usage{
 reroot(x, ...)
 
-\method{reroot}{neuron}(x, idx = NULL, point = NULL)
+\method{reroot}{neuron}(x, idx = NULL, point = NULL, pointno = NULL)
 }
 \arguments{
 \item{x}{A \code{\link{neuron}} or \code{\link{neuronlist}} object}
 
 \item{idx}{index of a node of new soma}
 
-\item{point}{numeric with X,Y,Z coordinates}
+\item{point}{numeric with X,Y,Z coordinates (data.frame or Nx3 matrix for
+neuronlist)}
+
+\item{pointno}{new root node id}
 }
 \value{
 neuron with a new soma position

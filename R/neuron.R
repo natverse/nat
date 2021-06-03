@@ -86,11 +86,11 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
                  MD5=TRUE){get
   
   coreFieldOrder=c("NumPoints", "StartPoint", "BranchPoints", 
-               "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
+                   "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
   mcl<-as.list(match.call())
   n=c(mcl,list(NumPoints=NumPoints,
-             nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
-             NumSegs=length(SegList)))
+               nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
+               NumSegs=length(SegList)))
   n=n[intersect(coreFieldOrder,names(n))]
   n=lapply(n, eval)
   if(is.null(InputFileName)){
@@ -163,7 +163,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
                         defaultValue=list(PointNo=seq.int(nrow(x)),Label=2L,
                                           X=NA_real_,Y=NA_real_,Z=NA_real_,
                                           W=NA_real_,Parent=NA_integer_)
-                        ){
+){
   cnx=colnames(x)
   ifMissing=match.arg(ifMissing)
   if(ifMissing!='usedefaults') ifMissing=match.fun(ifMissing)
@@ -532,7 +532,7 @@ resample.neuron<-function(x, stepsize, ...) {
   # if(!is.null(d$Label)) d$Label=as.integer(d$Label)
   if(any(is.na(d[,1:3])))
     stop("Unable to resample neurons with NA points")
-
+  
   # fetch all segments and process each segment in turn
   sl=as.seglist(x, all = T, flatten = T)
   npoints=nrow(d)
@@ -560,7 +560,7 @@ resample.neuron<-function(x, stepsize, ...) {
   # same within a segment
   head_idxs=sapply(sl, "[", 1)
   seglabels=x$d$Label[head_idxs]
-
+  
   # in order to avoid re-ordering the segments when as.neuron.ngraph is called
   # we can renumber the raw indices in the seglist (and therefore the vertices)
   # in a strictly ascending sequence based on the seglist
@@ -571,7 +571,7 @@ resample.neuron<-function(x, stepsize, ...) {
   old_ids=unique(usl)
   # reorder vertex information to match this
   d=d[old_ids,]
-
+  
   node_per_seg=sapply(sl, length)
   df=data.frame(id=usl, seg=rep(seq_along(sl), node_per_seg))
   df$newid=match(df$id, old_ids)
@@ -1044,7 +1044,7 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
   longestpath <- as.integer(igraph::shortest_paths(graph = ng, from = pts_start, to = pts_stop)$vpath[[1]])
   path_list=list()
   path_list[[1]] = longestpath
- 
+  
   if(n == 0){
     
   }else{
@@ -1052,7 +1052,7 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
     tempng = ng
     # Step 4: Now keep on adding as many branches as required..
     for (idx in 1:n) {
-          
+      
       tempneuron= prune_edges(tempng, templongpath, invert = FALSE)
       tempng <- as.ngraph(tempneuron, weights = T)
       
@@ -1170,13 +1170,13 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
     if(length(x)==1) return(x[[1]])
     
     for (baseidx in 1:(length(x)-1)){
-        for (targetidx in (baseidx+1):length(x)) {
-            # if there are any repeats in PointNo, augment those in subsequent neuron
-            if(any(x[[baseidx]]$d$PointNo%in%x[[targetidx]]$d$PointNo)){
-                x[[targetidx]]$d$PointNo=x[[targetidx]]$d$PointNo+max(x[[baseidx]]$d$PointNo)
-                x[[targetidx]]$d$Parent=x[[targetidx]]$d$Parent+max(x[[baseidx]]$d$PointNo)
-              }
+      for (targetidx in (baseidx+1):length(x)) {
+        # if there are any repeats in PointNo, augment those in subsequent neuron
+        if(any(x[[baseidx]]$d$PointNo%in%x[[targetidx]]$d$PointNo)){
+          x[[targetidx]]$d$PointNo=x[[targetidx]]$d$PointNo+max(x[[baseidx]]$d$PointNo)
+          x[[targetidx]]$d$Parent=x[[targetidx]]$d$Parent+max(x[[baseidx]]$d$PointNo)
         }
+      }
     }
     #Convert the neuronlist to list of ngraph objects..
     ngraph_list=nlapply(x, FUN = function(x) {as.ngraph(x, weights = T, method = 'seglist')})
@@ -1206,7 +1206,7 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
   #Step 4: Find all the leaf nodes now, these are the potential sites to stitch..
   root_id <- which(names(V(ng)) == master_root)
   leaves = 1:length(V(ng))#actually use all of them including the root
-   
+  
   #Step 5: Create list of edges that will be added (from potential sites..) and compute the distances between them..
   #Now divide them into clusters and compute combinations among them..
   cc_membership <- unique(cc$membership)
@@ -1223,39 +1223,39 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
       leaves_base <- intersect(leaves, which(cc$membership == clusterbaseidx))
       leaves_target <- intersect(leaves, which(cc$membership == clustertargetidx))
       
-       #take the locations of pts in base leaf and target leaf..
-       base_pt=xyz[leaves_base,]
-       target_pt=xyz[leaves_target,]
-       
-       #find the pts nearest in base leaf to the target leaf..
-       minval <- min(k,length(leaves_base),length(leaves_target))
-       if(minval == 1){#For processing point inputs..
-         if(!is.matrix(base_pt)){base_pt = t(base_pt)}
-         if(!is.matrix(target_pt)){target_pt = t(target_pt)}
-       }
-       nnres=nabor::knn(base_pt, target_pt, k=minval) #Get k nearest pts in base_pt
-       
-       
-       sortedvals <- sort(nnres$nn.dists,index.return = T)
-       sortedidx <- arrayInd(sortedvals$ix, dim(nnres$nn.dists))
-       
-       #The first column here is coresponds to 'leaves_target', the second to 'leaves_base'
-       targetpt_idx = sortedidx[1:minval,1]
-       basept_idx_temp = sortedidx[1:minval,2]
+      #take the locations of pts in base leaf and target leaf..
+      base_pt=xyz[leaves_base,]
+      target_pt=xyz[leaves_target,]
       
-       basept_idx = NULL
-       for (bpidx in 1:length(basept_idx_temp)){
-         basept_idx  = c(basept_idx,nnres$nn.idx[targetpt_idx[bpidx],basept_idx_temp[bpidx]])
-       }
-       
-       trunc_base <- leaves_base[basept_idx]
-       trunc_target <- leaves_target[targetpt_idx]
+      #find the pts nearest in base leaf to the target leaf..
+      minval <- min(k,length(leaves_base),length(leaves_target))
+      if(minval == 1){#For processing point inputs..
+        if(!is.matrix(base_pt)){base_pt = t(base_pt)}
+        if(!is.matrix(target_pt)){target_pt = t(target_pt)}
+      }
+      nnres=nabor::knn(base_pt, target_pt, k=minval) #Get k nearest pts in base_pt
       
-       #based on the nearest points in base cluster, but all pts in target cluster..
-       leaves_combo <- expand.grid(trunc_base,leaves_target) 
-       #Only based on actual nearest points in both clusters..
-       #leaves_combo <- cbind(trunc_base,trunc_target) 
-       
+      
+      sortedvals <- sort(nnres$nn.dists,index.return = T)
+      sortedidx <- arrayInd(sortedvals$ix, dim(nnres$nn.dists))
+      
+      #The first column here is coresponds to 'leaves_target', the second to 'leaves_base'
+      targetpt_idx = sortedidx[1:minval,1]
+      basept_idx_temp = sortedidx[1:minval,2]
+      
+      basept_idx = NULL
+      for (bpidx in 1:length(basept_idx_temp)){
+        basept_idx  = c(basept_idx,nnres$nn.idx[targetpt_idx[bpidx],basept_idx_temp[bpidx]])
+      }
+      
+      trunc_base <- leaves_base[basept_idx]
+      trunc_target <- leaves_target[targetpt_idx]
+      
+      #based on the nearest points in base cluster, but all pts in target cluster..
+      leaves_combo <- expand.grid(trunc_base,leaves_target) 
+      #Only based on actual nearest points in both clusters..
+      #leaves_combo <- cbind(trunc_base,trunc_target) 
+      
       
       #leaves_combo <- expand.grid(leaves_base,leaves_target)
       combedge_start <- c(combedge_start,leaves_combo[,1])
@@ -1565,7 +1565,7 @@ prune_twigs.neuron <- function(x, twig_length, ...) {
   
   #Step2: Make a table with rows(branch pts) and columns (leaves), the item entry would be the distance..
   #This will help us identify the leaves (end pts) that are farthest away from the branch pts and eliminate them..
- 
+  
   #Step2a: Compute the leaves and branchpoints..
   leaves=setdiff(endpoints(ng, original.ids=FALSE), root)
   bps=branchpoints(ng, original.ids=FALSE)
@@ -1632,25 +1632,71 @@ reroot <- function(x, ...) UseMethod('reroot')
 #'
 #' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
 #' @param idx index of a node of new soma
-#' @param point numeric with X,Y,Z coordinates
+#' @param point numeric with X,Y,Z coordinates (data.frame or Nx3 matrix for
+#' neuronlist)
+#' @param pointno new root node id
 #' 
 #' @details If both \code{idx} and \code{point} are NULL it returns identity.
-#'
+#'   
 #' @return neuron with a new soma position
 #' @export
 #' @rdname reroot
 #' @examples
 #' newCell07PN <- reroot(Cell07PNs[[2]], 5)
 #' newCell07PN$StartPoint # 5
-reroot.neuron <- function(x, idx=NULL, point=NULL) {
-  if (is.null(idx) && is.null(point)) return(x)
+reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL) {
+  args <- sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))
+  if (args == 0)
+    stop("One argument (idx, point, pointno) must be specified.")
+  if (args > 1)
+    stop("Ambiguous parameters setting. Pick one from: idx, point, pointno.")
   if (!is.null(idx)) {
-    nx <- as.neuron(as.ngraph(x), origin = idx)
-  } else {
-    if (!(is.numeric(point) && length(point) == 3))
+    nid <- x$d$PointNo[idx]
+  } else if (!is.null(pointno)) {
+    if(any(is.na(match(pointno, x$d$PointNo))))
+      stop("One or more invalid pointno. Should match entries in x$d$PointNo!")
+    nid <- pointno
+  }
+  else {
+    if ((is.matrix(point) && nrow(point) != 3) || !(is.numeric(point) && length(point) == 3))
       stop("Wrong point format, see docs!")
     nidx <- which.min((x$d$X-point[[1]])^2+(x$d$Y-point[[2]])^2+(x$d$Z-point[[3]])^2)
-    nx <- as.neuron(as.ngraph(x), origin = nidx)
+    nid <- x$d$PointNo[nidx]
   }
-  nx
+  as.neuron(as.ngraph(x), origin = nid)
+}
+
+#' @export
+#' @rdname resample
+reroot.neuronlist<-function(x, idx=NULL, point=NULL, pointno=NULL){
+  if (is.null(idx) && is.null(point) && is.null(pointno))
+    stop("One argument (idx, point, pointno) must be specified.")
+  if (!is.null(idx)) {
+    if (length(idx) == 1)
+      res <- nlapply(x, reroot, idx=idx)
+    else if (length(idx) == length(x))
+      res <- nmapply(reroot, x, idx=idx)
+    else
+      stop("Number of indices must be 1, or equal to the number of neurons.")
+  }
+  if (!is.null(pointno)) {
+    if (length(pointno) == 1)
+      res <- nlapply(x, reroot, pointno=pointno)
+    else if (length(pointno) == length(x))
+      res <- nmapply(reroot, x, pointno=pointno)
+    else
+      stop("Number of point ids must be 1, or equal to the number of neurons.")
+  }
+  if (!is.null(point)) {
+    if (is.vector(point) || (is.data.frame(point) && nrow(point) == 1))
+      res <- nlapply(x, reroot, point=point)
+    else {
+      stopifnot(
+        "Number of points must be 1, or equal to the number of neurons."=nrow(points) == length(x)
+      )
+      point <- as.data.frame(t(point))
+      res <- nmapply(reroot, x, point=point)
+    }
+  }
+  res
 }
