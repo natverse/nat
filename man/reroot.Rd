@@ -5,7 +5,7 @@
 \alias{reroot.neuron}
 \title{Reroot neuron}
 \usage{
-reroot(x, ...)
+reroot(x, idx = NULL, point = NULL, pointno = NULL)
 
 \method{reroot}{neuron}(x, idx = NULL, point = NULL, pointno = NULL)
 }

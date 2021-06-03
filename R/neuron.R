@@ -1624,7 +1624,7 @@ prune_twigs.neuron <- function(x, twig_length, ...) {
 #' @description \code{reroot} change soma of a neuron
 #' @export
 #' @rdname reroot
-reroot <- function(x, ...) UseMethod('reroot')
+reroot <- function(x, idx=NULL, point=NULL, pointno=NULL) UseMethod('reroot')
 
 #' Reroot neuron
 #' 
