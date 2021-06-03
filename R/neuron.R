@@ -1646,11 +1646,8 @@ reroot <- function(x, ...) UseMethod('reroot')
 #' newCell07PN <- reroot(Cell07PNs[[2]], 5)
 #' newCell07PN$StartPoint # 5
 reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL, ...) {
-  args <- sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))
-  if (args == 0)
-    stop("One argument (idx, point, pointno) must be specified.")
-  if (args > 1)
-    stop("Ambiguous parameters setting. Pick one from: idx, point, pointno.")
+  if (sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))!=1)
+    stop("Exactly one argument (idx, point, pointno) must be specified.")
   if (!is.null(idx)) {
     nid <- x$d$PointNo[idx]
   } else if (!is.null(pointno)) {
@@ -1670,8 +1667,8 @@ reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL, ...) {
 #' @export
 #' @rdname reroot
 reroot.neuronlist<-function(x, idx=NULL, point=NULL, pointno=NULL, ...){
-  if (is.null(idx) && is.null(point) && is.null(pointno))
-    stop("One argument (idx, point, pointno) must be specified.")
+  if (sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))!=1)
+    stop("Exactly one argument (idx, point, pointno) must be specified.")
   if (!is.null(idx)) {
     if (length(idx) == 1)
       res <- nlapply(x, reroot, idx=idx)

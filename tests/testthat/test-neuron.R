@@ -363,6 +363,8 @@ test_that("prune twigs of a neuron", {
 
 test_that("rerooting of neurons", {
   n = Cell07PNs[[1]]
+  # args check works correctly
+  expect_error(reroot(n), "Exactly one argument")
   # test rerooting by idx
   r_n = reroot(n, 5)
   expect_equal(r_n$StartPoint, 5)
@@ -380,6 +382,9 @@ test_that("rerooting of neurons", {
 
 test_that("rerooting neuronlist", {
   pns<-Cell07PNs[1:3]
+  # args check works correctly
+  expect_error(reroot(pns, idx = 3, pointno = 4), "Exactly one argument")
+  
   # test rerooting by idx
   rpns=reroot.neuronlist(pns, idx=c(1,2,3))
   expect_equal(rpns[[2]]$StartPoint, 2)
