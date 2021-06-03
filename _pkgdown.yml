@@ -100,6 +100,7 @@ reference:
     - stitch_neuron
     - stitch_neurons
     - stitch_neurons_mst
+    - reroot
   - title: Skeletonised Neurons (dotprops aka vector cloud)
     desc: Functions for working with skeletonised neurons consisting of 
       unconnected vectors rather than a fully connected tree.
