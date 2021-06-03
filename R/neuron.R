@@ -1621,33 +1621,59 @@ prune_twigs.neuron <- function(x, twig_length, ...) {
   prune_vertices(ng, verts_to_keep, invert=TRUE, ...)
 }
 
-#' @description \code{reroot} change soma of a neuron
 #' @param ... Additional arguments passed to methods
 #' @export
 #' @rdname reroot
 reroot <- function(x, ...) UseMethod('reroot')
 
-#' Reroot neuron
-#' 
-#' Change soma node to specific index or a node closes to a specific point.
+#' Reroot neurons
+#'
+#' Change the root node of a neuron (typically denoting the soma) to a new node
+#' specified by a node index, identifier or an XYZ position.
+#'
+#' @details All neurons in the natverse have a root point, which is used for
+#'   during many operations on the branching structure of the neuron. This will
+#'   often correspond to the soma of a neuron, but the soma is not always
+#'   present and sometimes its position may be unknown. For example some
+#'   connectomics datasets will have a certain position on a neuron marked as
+#'   \code{to soma} when the soma is not present in the reconstruction but it is
+#'   known to which branch it is attached.
+#'
+#'   The root point of a neuron is stored in the \code{StartPoint} field of the
+#'   neuron (see Examples) and can also be accessed using the
+#'   \code{\link{rootpoints}} function. For further details, please consult the
+#'   \href{http://natverse.org/nat/articles/neurons-as-graph.html}{Neurons as
+#'   graph structures} vignette. As an extension to the original nat
+#'   specification, the point identifier (not point index) of the anatomical
+#'   soma can be stored in the \code{tags$soma} field of the neuron
+#'
+#'   The node index refers is a number between 1 and N, the number of points in
+#'   the neuron. It provides an index into the point array. The node id is an
+#'   arbitrary identifier which may sometime be the same as the index, but may
+#'   be e.g. a 64 bit integer that uniquely identifies nodes across all neurons
+#'   in a database. Node ids can be retained after neurons are pruned even if
+#'   the indices for each point change. For further details, again see the
+#'   vignette mentioned above.
 #'
 #' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
-#' @param idx index of a node of new soma
-#' @param point numeric with X,Y,Z coordinates (data.frame or Nx3 matrix for
-#' neuronlist)
-#' @param pointno new root node id
-#' 
-#' @details If both \code{idx} and \code{point} are NULL it returns identity.
-#'   
-#' @return neuron with a new soma position
+#' @param idx index of the node for the new root (between 1 and the number of
+#'   nodes in the neuron).
+#' @param pointno new root node identifier (i.e. the \code{PointNo} column in
+#'   the point array of the neuron, see details).
+#' @param point 3-vector with X,Y,Z coordinates (data.frame or Nx3 matrix for
+#'   neuronlist)
+#'
+#' @return neuron with a new root position (unless \code{idx}, \code{pointno},
+#'   and \code{point} are all \code{NULL}, when the original neuron is
+#'   returned).
 #' @export
 #' @rdname reroot
 #' @examples
 #' newCell07PN <- reroot(Cell07PNs[[2]], 5)
 #' newCell07PN$StartPoint # 5
-reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL, ...) {
+reroot.neuron <- function(x, idx=NULL, pointno=NULL, point=NULL, ...) {
   if (sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))!=1)
-    stop("Exactly one argument (idx, point, pointno) must be specified.")
+    stop("Exactly one argument (idx, pointno, point) must be specified.")
   if (!is.null(idx)) {
     nid <- x$d$PointNo[idx]
   } else if (!is.null(pointno)) {
@@ -1666,7 +1692,7 @@ reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL, ...) {
 
 #' @export
 #' @rdname reroot
-reroot.neuronlist<-function(x, idx=NULL, point=NULL, pointno=NULL, ...){
+reroot.neuronlist<-function(x, idx=NULL, pointno=NULL, point=NULL, ...){
   if (sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))!=1)
     stop("Exactly one argument (idx, point, pointno) must be specified.")
   if (!is.null(idx)) {
