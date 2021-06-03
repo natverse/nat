@@ -3,14 +3,19 @@
 \name{reroot}
 \alias{reroot}
 \alias{reroot.neuron}
+\alias{reroot.neuronlist}
 \title{Reroot neuron}
 \usage{
 reroot(x, ...)
 
 \method{reroot}{neuron}(x, idx = NULL, point = NULL, pointno = NULL, ...)
+
+\method{reroot}{neuronlist}(x, idx = NULL, point = NULL, pointno = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link{neuron}} or \code{\link{neuronlist}} object}
+
+\item{...}{Additional arguments passed to methods}
 
 \item{idx}{index of a node of new soma}
 

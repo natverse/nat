@@ -1622,6 +1622,7 @@ prune_twigs.neuron <- function(x, twig_length, ...) {
 }
 
 #' @description \code{reroot} change soma of a neuron
+#' @param ... Additional arguments passed to methods
 #' @export
 #' @rdname reroot
 reroot <- function(x, ...) UseMethod('reroot')
@@ -1667,7 +1668,7 @@ reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL, ...) {
 }
 
 #' @export
-#' @rdname resample
+#' @rdname reroot
 reroot.neuronlist<-function(x, idx=NULL, point=NULL, pointno=NULL, ...){
   if (is.null(idx) && is.null(point) && is.null(pointno))
     stop("One argument (idx, point, pointno) must be specified.")
