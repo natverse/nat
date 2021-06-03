@@ -1,12 +1,15 @@
 # internal function
 # read a mesh representing a neuron and return a mesh3d object
-read.neuron.mesh <- function(x, ...) {
+read.neuron.mesh <- function(x, updateNormals=FALSE, clean=FALSE, ...) {
   ext=tools::file_ext(x)
   
   if(ext=="ply") {
     if(!requireNamespace('Rvcg', quietly = TRUE))
       stop("Please install suggested library Rvcg to read .ply files!")
-    Rvcg::vcgPlyRead(x, updateNormals=F, ...)
+    m=Rvcg::vcgPlyRead(x, updateNormals=updateNormals, clean=clean, ...)
+    if(!inherits(m, 'shape3d'))
+      class(m)=union(class(m), 'shape3d')
+    m
   } else if(ext=="obj") {
     if(!requireNamespace('readobj', quietly = TRUE))
       stop("Please install suggested library readobj to read .obj files!")

@@ -155,7 +155,7 @@ dotprops.neuronlist<-function(x, ..., OmitFailures=NA) {
 #' @param resample When finite, a new length to which all segmented edges will
 #'   be resampled. See \code{\link{resample.neuron}}.
 #' @param topo flag that says whether or not to add topological features
-#' (inverted Strahler's Order and distance from soma)
+#' (reversed Strahler Order and distance from soma)
 #' @rdname dotprops
 dotprops.neuron<-function(x, Labels=NULL, resample=NA, topo=FALSE, ...) {
   if(is.finite(resample)) x=resample(x, stepsize = resample)
@@ -212,7 +212,7 @@ get_distance_to_soma <- function(n) {
 #'   behaviour for different classes of input object, \code{TRUE} always uses 
 #'   labels when an incoming object has them and \code{FALSE} never uses labels.
 #' @param na.rm Whether to remove \code{NA} points (default FALSE)
-#' @param topo_features topological features of each dotprop
+#' @param topo_features topological features of each dotprops
 #' @importFrom nabor knn
 #' @references The dotprops format is essentially identical to that developed 
 #'   in:
