@@ -5,9 +5,9 @@
 \alias{reroot.neuron}
 \title{Reroot neuron}
 \usage{
-reroot(x, idx = NULL, point = NULL, pointno = NULL)
+reroot(x, ...)
 
-\method{reroot}{neuron}(x, idx = NULL, point = NULL, pointno = NULL)
+\method{reroot}{neuron}(x, idx = NULL, point = NULL, pointno = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link{neuron}} or \code{\link{neuronlist}} object}

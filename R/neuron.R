@@ -1624,7 +1624,7 @@ prune_twigs.neuron <- function(x, twig_length, ...) {
 #' @description \code{reroot} change soma of a neuron
 #' @export
 #' @rdname reroot
-reroot <- function(x, idx=NULL, point=NULL, pointno=NULL) UseMethod('reroot')
+reroot <- function(x, ...) UseMethod('reroot')
 
 #' Reroot neuron
 #' 
@@ -1644,7 +1644,7 @@ reroot <- function(x, idx=NULL, point=NULL, pointno=NULL) UseMethod('reroot')
 #' @examples
 #' newCell07PN <- reroot(Cell07PNs[[2]], 5)
 #' newCell07PN$StartPoint # 5
-reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL) {
+reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL, ...) {
   args <- sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))
   if (args == 0)
     stop("One argument (idx, point, pointno) must be specified.")
@@ -1668,7 +1668,7 @@ reroot.neuron <- function(x, idx=NULL, point=NULL, pointno=NULL) {
 
 #' @export
 #' @rdname resample
-reroot.neuronlist<-function(x, idx=NULL, point=NULL, pointno=NULL){
+reroot.neuronlist<-function(x, idx=NULL, point=NULL, pointno=NULL, ...){
   if (is.null(idx) && is.null(point) && is.null(pointno))
     stop("One argument (idx, point, pointno) must be specified.")
   if (!is.null(idx)) {
