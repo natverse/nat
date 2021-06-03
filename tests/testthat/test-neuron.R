@@ -373,15 +373,3 @@ test_that("rerooting of neurons", {
   r_n = reroot(n, point=pnt)
   expect_true(all(r_n$d[r_n$StartPoint,c("X","Y","Z")]-pnt == 0))
 })
-
-test_that("rerooting neuronlist", {
-  pns<-Cell07PNs[1:3]
-  # test rerooting by idx
-  rpns=reroot.neuronlist(pns, idx=c(1,2,3))
-  expect_equal(rpns[[2]]$StartPoint, 2)
-  
-  # test rerooting by point
-  points=pns[[1]]$d[12:14,c("X","Y","Z")]
-  rpns=reroot.neuronlist(pns, point = points)
-  expect_equal(rpns[[1]]$StartPoint, 12)
-})
