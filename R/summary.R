@@ -139,3 +139,18 @@ print.neuronlist <- function(x, ...) {
       format(object.size(x), units='auto', standard="SI"), 
       "]", "\n", sep="")
 }
+
+#' @export
+print.neuronlistz <- function(x, ...) {
+  firstclass <- function(x) class(x)[[1]]
+
+  cat("'",firstclass(x),"'", " containing ", length(x),
+      " neurons ",
+      ifelse(length(x)==1, "object", "objects"), " ", sep=""
+  )
+  nc=ncol(as.data.frame(x))
+  cat("and 'data.frame' with",nc,'vars ')
+  cat("[",
+      format(object.size(x), units='auto', standard="SI"),
+      "]", "\n", sep="")
+}
