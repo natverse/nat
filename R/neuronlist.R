@@ -298,9 +298,9 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
   nn=names(x)
   if (all(rownames(value) == as.character(1:nrow(value)))) {
     warning("Generic rownames detected, using first column for matching rows.")
-    matching_rows=intersect(nn, value[,1])
-  } else
-    matching_rows=intersect(nn, rownames(value))
+    rownames(value) <- value[,1]
+  }
+  matching_rows=intersect(nn, rownames(value))
   if(length(matching_rows)){
     missing_rows=setdiff(nn, matching_rows)
     if(length(missing_rows))
