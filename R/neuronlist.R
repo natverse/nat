@@ -296,11 +296,13 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
     return(x)
   }
   nn=names(x)
-  if (all(rownames(value) == as.character(1:nrow(value)))) {
+  matching_rows=intersect(nn, rownames(value))
+  if (length(matching_rows)!=length(nn) &
+          all(rownames(value) == as.character(1:nrow(value)))) {
     warning("Generic rownames detected, using first column for matching rows.")
     rownames(value) <- value[,1]
+    matching_rows=intersect(nn, rownames(value))
   }
-  matching_rows=intersect(nn, rownames(value))
   if(length(matching_rows)){
     missing_rows=setdiff(nn, matching_rows)
     if(length(missing_rows))
