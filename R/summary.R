@@ -149,8 +149,11 @@ print.neuronlistz <- function(x, ...) {
       ifelse(length(x)==1, "object", "objects"), " ", sep=""
   )
   nc=ncol(as.data.frame(x))
-  cat("and 'data.frame' with",nc,'vars ')
-  cat("[",
-      format(object.size(x), units='auto', standard="SI"),
-      "]", "\n", sep="")
+  cat("and 'data.frame' with",nc,'vars.\n')
+  f_path=attr(x, "db")
+  f_size=format(structure(file.info(f_path)$size, class='object_size'),
+                units='auto',standard="SI")
+  cat("Neurons loaded on demand from '", f_path, "' [", f_size, "].",
+      " Currently in memory: ", format(object.size(x), units='auto', standard="SI"),
+      ".\n", sep="")
 }
