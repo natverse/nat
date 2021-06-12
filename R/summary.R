@@ -149,9 +149,9 @@ print.neuronlistz <- function(x, ...) {
       ifelse(length(x)==1, "object", "objects"), " ", sep=""
   )
   nc=ncol(as.data.frame(x))
-  cat("and 'data.frame' with",nc,'vars [',
+  cat("and 'data.frame' with ",nc,' vars [',
       format(object.size(x), units='auto', standard="SI")
-      , 'in RAM].\n')
+      , ' in RAM].\n', sep="")
   f_path=attr(x, "db")
   f_size=format(structure(file.info(f_path)$size, class='object_size'),
                 units='auto',standard="SI")
