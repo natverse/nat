@@ -8,6 +8,8 @@ test_that("neuronlistz works", {
   expect_true(is.neuronlist(nz <- neuronlistz(tf)))
   expect_equal(nz[1:5], Cell07PNs[1:5])
   
+  expect_output(print(nz), 'Loaded on demand.*on disk')
+  
   tf2=tempfile(fileext = '.zip')
   on.exit(unlink(tf2), add = T)
   skip_if_not_installed('qs')
