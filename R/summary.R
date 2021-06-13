@@ -139,3 +139,22 @@ print.neuronlist <- function(x, ...) {
       format(object.size(x), units='auto', standard="SI"), 
       "]", "\n", sep="")
 }
+
+#' @export
+print.neuronlistz <- function(x, ...) {
+  firstclass <- function(x) class(x)[[1]]
+
+  cat("'",firstclass(x),"'", " containing ", length(x),
+      " neurons ",
+      ifelse(length(x)==1, "object", "objects"), " ", sep=""
+  )
+  nc=ncol(as.data.frame(x))
+  cat("and 'data.frame' with ",nc,' vars [',
+      format(object.size(x), units='auto', standard="SI")
+      , ' in RAM].\n', sep="")
+  f_path=attr(x, "db")
+  f_size=format(structure(file.info(f_path)$size, class='object_size'),
+                units='auto',standard="SI")
+  cat("Loaded on demand from '", normalizePath(f_path), "' [",
+      f_size, " on disk].\n", sep="")
+}
