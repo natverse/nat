@@ -852,6 +852,7 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #'   neurons that have <=n branch points.
 #' @author Gregory Jefferis \email{jefferis@gmail.com}
 #' @export
+#' @importFrom matrixStats colMins
 #' @seealso \code{\link[nat]{spine}}
 #' @examples
 #' \donttest{
@@ -944,7 +945,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
       # currently selected nodes
       # Step 7b: Now choose the shortest path to all the leaf nodes from the available 
       # branch nodes.. 
-      additional_length = apply(dd[bps_available, , drop=FALSE], 2, min, na.rm = T)
+      additional_length = colMins(dd[bps_available, , drop=FALSE], na.rm = T)
       # remove any infinite values
       additional_length[!is.finite(additional_length)] = 0
       
