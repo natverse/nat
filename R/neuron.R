@@ -888,7 +888,8 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #' 
 simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   #Step 1a:Get the number of branch points in the neuron.. 
-  nbps=length(branchpoints(x))
+  bps = branchpoints(x, original.ids=FALSE)
+  nbps=length(bps)
   #Step 1b:Compare with the actual branch points requested.. 
   if (nbps <= n)
     return(x)
@@ -904,9 +905,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   
   # Step 3a: Compute all the leaf nodes..
   leaves=setdiff(endpoints(ng, original.ids=FALSE), rootpoints(ng, original.ids=FALSE))
-  # Step 3b: Compute all the branch nodes..
-  bps=branchpoints(ng, original.ids=FALSE)
-  # Step 3c: Compute the distance from all the branch nodes to the leaf nodes let's call 
+  # Step 3b: Compute the distance from all the branch nodes to the leaf nodes let's call 
   # it distance table.. Rows are branch nodes and Columns are leaf nodes..
   dd=igraph::distances(ng, v=bps, to=leaves, mode = 'out')
   
@@ -930,7 +929,9 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
       start = rootpoints(ng, original.ids=FALSE)
       
       # Step 4b: Find out the leaf node which is farthest
-      furthest_leaf_idx = which.max(apply(dd, 2, robust_max))
+      furthest_leaf_idx = which.max(
+        igraph::distances(ng, v=start, to=leaves, mode = 'out')
+      )
       
     } else {
       # Step 7a: Find out the leaf node which is farthest Select only the branch nodes 
