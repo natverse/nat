@@ -1038,12 +1038,11 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
   
   
   # Step 3: Compute the longest path..
-  pts_pair <- igraph::farthest_vertices(ng, directed=T)
   node_ids <- igraph::vertex_attr(ng, 'name')
-  pts_start <- which(igraph::vertex_attr(ng, 'name')[pts_pair$vertices[1]]  == node_ids)
-  pts_stop <-  which(igraph::vertex_attr(ng, 'name')[pts_pair$vertices[2]]  == node_ids)
-  
-  longestpath <- as.integer(igraph::shortest_paths(graph = ng, from = pts_start, to = pts_stop)$vpath[[1]])
+  start = rootpoints(ng, original.ids=FALSE)
+  leaves=setdiff(endpoints(ng, original.ids=FALSE), rootpoints(ng, original.ids=FALSE))
+  dists=igraph::distances(ng, v=start, to=leaves, mode = 'out')
+  longestpath=leafpath(ng, from=start, to=leaves[which.max(dists)])
   path_list=list()
   path_list[[1]] = longestpath
   
