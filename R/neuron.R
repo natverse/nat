@@ -957,7 +957,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
 }
 
 leafpath <- function(ng, from, to) {
-  res=igraph::get.shortest.paths(ng,from = from,to = to,mode = "out")
+  res=igraph::get.shortest.paths(ng,from = from,to = to,mode = "out", weights=NA)
   as.integer(res$vpath[[1]])
 }
 
