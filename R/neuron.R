@@ -906,11 +906,8 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   
   # Step 3a: Compute all the leaf nodes..
   leaves=setdiff(endpoints(ng, original.ids=FALSE), rootpoints(ng, original.ids=FALSE))
-  # Step 3b: Compute the distance from all the branch nodes to the leaf nodes let's call 
-  # it distance table.. Rows are branch nodes and Columns are leaf nodes..
-  dd=igraph::distances(ng, v=bps, to=leaves, mode = 'out')
-  
-  # Step 3d: Compute the decendant paths for all the branch nodes (to get the possibilities
+
+  # Step 3b: Compute the descendant paths for all the branch nodes (to get the possibilities
   #           of different paths from a particular branch point)..
   bpdesccount=igraph::ego_size(ng, order = 1, nodes = bps, mode='out', mindist = 1)
   
@@ -925,44 +922,28 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   # added.
   for (i in 0:n) {
     if (i == 0) {
-      # Step 4a: Compute the spine, so for that compute the farthest leaf node 
-      # with the distance table..
+      # Step 4a: Find path to farthest leaf from root
       start = rootpoints(ng, original.ids=FALSE)
-      
-      # Step 4b: Find out the leaf node which is farthest
-      furthest_leaf_idx = which.max(
-        igraph::distances(ng, v=start, to=leaves, mode = 'out')
-      )
-      
+      dists=igraph::distances(ng, v=start, to=leaves, mode = 'out')
+      path=leafpath(ng, from=start, to=leaves[which.max(dists)])
     } else {
-      # Step 7a: Find out the leaf node which is farthest Select only the branch nodes 
-      # that are currently in our selected spine
-      # Also, choose only those who still have some unused descendent paths..
+      # Step 7a: Find farthest leaf node from branch points that have
+      # already been selected restricting to those that still have
+      # unused descendent paths..
       bps_available = bpsused > 0 & bpsused < bpdesccount
-      
-      # find the length we could add for each leaf
-      # nb this will be the smallest value that can be added to
-      # currently selected nodes
-      # Step 7b: Now choose the shortest path to all the leaf nodes from the available 
-      # branch nodes.. 
-      additional_length = colMins(dd[bps_available, , drop=FALSE], na.rm = T)
-      # remove any infinite values
-      additional_length[!is.finite(additional_length)] = 0
-      
-      # Step 7c: Now choose the leaf nodes that is the farthest of distance among all the 
-      # shortest path to the leaf nodes.. 
-      furthest_leaf_idx = which.max(additional_length)
-      start_idx = which.min(dd[bps_available, furthest_leaf_idx])
-      # Step 7d: Get the vertex index in the original graph
-      start = bps[which(bps_available)[start_idx]]
+      # find distances from those bps to all leaves
+      dd=igraph::distances(ng, bps[bps_available], to = leaves, mode = 'out')
+      dd[!is.finite(dd)]=0
+      leafdists=matrixStats::colMaxs(dd)
+      # FIXME check if dist was 0 => no valid path
+      farthest_leaf_idx=which.max(leafdists)
+      farthest_leaf=leaves[farthest_leaf_idx]
+      startingbp=bps[bps_available][which.max(dd[,farthest_leaf_idx])]
+      # could improve by dropping leaves we've used
+      path=leafpath(ng, from=startingbp, to=farthest_leaf)
     }
-    # Step 5 or 8: Avoid the choosen leaf from distance computations in next iteration
-    furthest_leaf = leaves[furthest_leaf_idx]
-    # strike off selected leaf
-    dd[, furthest_leaf_idx] = Inf
-    
-    # Step 6 or 9: Find the path to that chosen leaf from the start point..
-    path = leafpath(ng, start, furthest_leaf)
+    # Step 5 or 8: Avoid the chosen leaf from distance computations in next iteration
+    igraph::E(ng,path=path)$weight=Inf
     lp_verts[[i+1]]=path
     # add one to count of any bps used
     bpsused[bps %in% path] = bpsused[bps %in% path] + 1
