@@ -1055,8 +1055,7 @@ simplify_neuron2 <- function(x, n=1, invert=FALSE, ...) {
     # Step 4: Now keep on adding as many branches as required..
     for (idx in 1:n) {
       
-      tempneuron= prune_edges(tempng, templongpath, invert = FALSE)
-      tempng <- as.ngraph(tempneuron, weights = T)
+      tempng = prune_edges_ng(tempng, templongpath, invert = FALSE)
       
       pts_pair <- igraph::farthest_vertices(tempng, directed=T)
       
