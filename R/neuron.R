@@ -906,53 +906,60 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
   
   # Step 3a: Compute all the leaf nodes..
   leaves=setdiff(endpoints(ng, original.ids=FALSE), rootpoints(ng, original.ids=FALSE))
-
-  # Step 3b: Compute the descendant paths for all the branch nodes (to get the possibilities
-  #           of different paths from a particular branch point)..
+  start = rootpoints(ng, original.ids=FALSE)
+  # Step 3b: Compute downstream paths for all the branch nodes
   bpdesccount=igraph::ego_size(ng, order = 1, nodes = bps, mode='out', mindist = 1)
-  
   names(bpdesccount)=bps
   bpsused=rep(0L, length(bps))
   names(bpsused)=bps
   lp_verts=list()
   
-  # The approach is to find the longest tree (lets call it spine) from the root to the 
-  # farthest leaf node first..
-  # Then additional branches are added to the spine such that they are longest that can be
-  # added.
+  # Find the longest tree (aka spine) from the root to the farthest leaf node
+  # Then add the longest possible additional branch at each iteration
   for (i in 0:n) {
     if (i == 0) {
-      # Step 4a: Find path to farthest leaf from root
-      start = rootpoints(ng, original.ids=FALSE)
+      # Step 4: Find path to farthest leaf from root
       dists=igraph::distances(ng, v=start, to=leaves, mode = 'out')
       path=leafpath(ng, from=start, to=leaves[which.max(dists)])
     } else {
-      # Step 7a: Find farthest leaf node from branch points that have
-      # already been selected restricting to those that still have
-      # unused descendent paths..
+      # Step 5: find farthest leaf from root (with some edges set to 0)
+      dists=igraph::distances(ng, v=start, to=leaves, mode = 'out')
+      maxidx=which.max(dists)
+      if(dists[maxidx]==0) {
+        warning("unable to find a new path at step:", i)
+        break
+      }
+      farthest_leaf=leaves[maxidx]
+      # now search backwards from the farthest leaf to the bps in the spine
+      # restricting to those that still have unused downstream paths.
       bps_available = bpsused > 0 & bpsused < bpdesccount
-      # find distances from those bps to all leaves
-      dd=igraph::distances(ng, bps[bps_available], to = leaves, mode = 'out')
-      dd[!is.finite(dd)]=0
-      leafdists=matrixStats::colMaxs(dd)
-      # FIXME check if dist was 0 => no valid path
-      farthest_leaf_idx=which.max(leafdists)
-      farthest_leaf=leaves[farthest_leaf_idx]
-      startingbp=bps[bps_available][which.max(dd[,farthest_leaf_idx])]
-      # could improve by dropping leaves we've used
-      path=leafpath(ng, from=startingbp, to=farthest_leaf)
+      # there will be warnings because most branch points will not be reachable
+      # from the selected leaf
+      res=suppressWarnings(
+        igraph::get.shortest.paths(ng, from = farthest_leaf, 
+                                   to = bps[bps_available], 
+                                   mode = "in", weights = NA))
+      pathlengths=sapply(res$vpath, length)
+      pathlengths[pathlengths==0]=NA
+      chosen_path=which.min(pathlengths)
+      if(length(chosen_path)==0) {
+        warning("unable to find a path back to spine at step:", i)
+        break
+      }
+      path=rev(res$vpath[[chosen_path]])
     }
-    # Step 5 or 8: Avoid the chosen leaf from distance computations in next iteration
-    igraph::E(ng,path=path)$weight=Inf
+    # set edge weights on path to 0 so that these edges no longer contribute to 
+    # the distance to the leaves in subsequent iterations
+    igraph::E(ng, path=path)$weight=0
     lp_verts[[i+1]]=path
     # add one to count of any bps used
     bpsused[bps %in% path] = bpsused[bps %in% path] + 1
   }
   
-  # Step 10: Find the edgelist from the path(start to farthest leaf)..
+  # Step 10: Find the edgelist for the tree defined by the list of paths
   el=EdgeListFromSegList(lp_verts)
   
-  # Step 11: Prune the edgelist and choose to retain the pruned one (based on the invert flag)..
+  # Step 11: Prune the original neuron, optionally retaining the inverse
   prune_edges(ng, el, invert = !invert)
 }
 
