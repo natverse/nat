@@ -315,13 +315,11 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' library(igraph)
 #' plot(sg, edge.arrow.size=.4, vertex.size=10)
 segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE, 
-                       include.xyz=FALSE, reverse.edges=FALSE){
-  g=graph.empty()
+                       include.xyz=FALSE, reverse.edges=FALSE) {
   pointnos=x$d$PointNo
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
-  topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
   # just get head and tail of each segment
-  simple_sts=lapply(sts,topntail)
+  simple_sts=topntail_list(sts)
   all_nodes=sort(unique(unlist(simple_sts)))
   # make empty graph with appropriate nodes
   g=graph.empty(n=length(all_nodes))
@@ -396,8 +394,8 @@ strahler_order<-function(x){
     stop("strahler_order not yet defined for multiple subtrees")
   # quick win for single branch neurons
   if (length(x$BranchPoints) == 0)
-    return(list(points=rep(1, nrow(x$d)),
-                segments=rep(1, length(x$SegList))))
+    return(list(points=rep(1L, nrow(x$d)),
+                segments=rep(1L, length(x$SegList))))
   
   b=graph.bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
   
@@ -409,7 +407,7 @@ strahler_order<-function(x){
   # visit nodes in reverse order of bfs traversal
   # this ensures that we always visit children before parents
   for(i in rev(b$order)) {
-    children=setdiff(n[[i]], i)
+    children=base::setdiff(n[[i]], i)
     if(length(children)==0L) {
       # terminal node
       so_red_nodes[i]=1L
@@ -435,8 +433,7 @@ strahler_order<-function(x){
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
   so_segs=integer(length(sts))
   svids=V(s)$vid
-  topntail<-function(x) x[c(1L,length(x))]
-  segendmat=sapply(sts, topntail)
+  segendmat=topntail(sts)
   idxs=apply(segendmat, 1, match, svids)
   for(i in seq_along(sts)){
     segends=segendmat[,i]
@@ -445,7 +442,7 @@ strahler_order<-function(x){
     so_this_seg=min(so_segends)
     so_segs[i]=so_this_seg
     
-    internal=setdiff(sts[[i]], segends)
+    internal=base::setdiff(sts[[i]], segends)
     if(length(internal)) {
       so_orig_nodes[internal]=so_this_seg
     }
@@ -590,6 +587,9 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
 # @return A 2 column matrix, \code{cbind(starts,ends)}
 # @export
 EdgeListFromSegList<-function(SegList){
+  if(requireNamespace('natcpp', quietly = TRUE)) {
+    return(natcpp::c_EdgeListFromSegList(SegList))
+  }
   lsl=sapply(SegList,length)
   sl=SegList[lsl>1]
   lsl=lsl[lsl>1]

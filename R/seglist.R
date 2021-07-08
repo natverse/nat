@@ -30,6 +30,25 @@ as.seglist.list<-function(x, ...) {
   x
 }
 
+topntail <- function(x) {
+  if(requireNamespace('natcpp', quietly=TRUE)) {
+    return(natcpp::c_topntail(x))
+  }
+  topntailseg<-function(x) x[c(1,length(x))]
+  # just get head and tail of each segment
+  sapply(x,topntailseg)
+}
+
+topntail_list <- function(x) {
+  if(requireNamespace('natcpp', quietly=TRUE)) {
+    return(natcpp::c_topntail_list(x))
+  }
+  topntailseg<-function(x) if(length(x)==1) x else x[c(1,length(x))]
+  # just get head and tail of each segment
+  lapply(x,topntailseg)
+}
+
+
 #' @description \code{as.seglist.neuron} will extract the seglist from a neuron,
 #'   optionally extracting all subtrees (\code{all=TRUE}) and (in this case) 
 #'   flattening the list into a single hierarchy when \code{flatten=TRUE}.
