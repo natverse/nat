@@ -276,18 +276,12 @@ test_that("as.data.frame.neuronlist behaves", {
   data.frame(kcs20nodf)<-df[rev(1:nrow(df)), ]
   expect_equal(as.data.frame(kcs20nodf), as.data.frame(kcs20))
   rownames(df)=letters[1:nrow(df)]
-  expect_warning(data.frame(kcs20nodf)<-df, 'rownames mismatch')
+  expect_warning(data.frame(kcs20nodf)<-df, 'Matching neurons by first column')
   rownames(df)=NULL
-  data.frame(kcs20nodf)<-df
+  expect_warning(data.frame(kcs20nodf)<-df)
   expect_equal(kcs20nodf[,], kcs20[,])
-  
-  # in case of generic row numbering assigns by first column and throws warning
-  kcs20nodf=kcs20
-  data.frame(kcs20nodf)=NULL
-  df=attr(kcs20, 'df')
-  rownames(df) <- as.character(1:length(kcs20))
-  expect_warning(data.frame(kcs20nodf) <- df, "Generic rownames detected")
   expect_equal(rownames(kcs20[,]), rownames(kcs20nodf[,]))
+  
 })
 
 context("neuronlist: [")
