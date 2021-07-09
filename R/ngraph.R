@@ -590,6 +590,9 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
 # @return A 2 column matrix, \code{cbind(starts,ends)}
 # @export
 EdgeListFromSegList<-function(SegList){
+  if(requireNamespace('natcpp', quietly = TRUE)) {
+    return(natcpp::c_EdgeListFromSegList(SegList))
+  }
   lsl=sapply(SegList,length)
   sl=SegList[lsl>1]
   lsl=lsl[lsl>1]
