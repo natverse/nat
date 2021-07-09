@@ -74,6 +74,10 @@ summary.mesh3d <- function(object, ...) {
 }
 
 total_cable <- function(x) {
+  if(requireNamespace('natcpp', quietly = TRUE)) {
+    sl=as.seglist(x, all = T, flatten = T)
+    return(natcpp::c_total_cable(sl, x$d$X, x$d$Y, x$d$Z))
+  }
   diffs <- x$d[,c("X","Y","Z")]-x$d[match(x$d$Parent, x$d$PointNo),c("X","Y","Z")]
   sum(sqrt(rowSums(diffs*diffs)), na.rm = T)
 }
