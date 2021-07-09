@@ -24,7 +24,7 @@ jobs:
       matrix:
         config:
           - {os: windows-latest, r: 'release', rglusenull: "true"}
-          #- {os: macOS-latest, r: 'release', rglusenull: "true"}
+          - {os: macOS-latest, r: 'release', rglusenull: "true"}
           #- {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
           #- {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest"}
 
@@ -64,7 +64,7 @@ jobs:
           sudo -s eval "$sysreqs"
 
       - name: Build CMTK
-        if: runner.os == 'Windows'
+        if: runner.os != 'Windows'
         run: sh ./build-cmtk.sh
 
       - name: Install dependencies
