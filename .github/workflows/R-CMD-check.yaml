@@ -85,4 +85,4 @@ jobs:
         if: matrix.config.os == 'ubuntu-20.04'
         env:
           COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
-        run: Rscript -e 'covr::coveralls()'
+        run: Rscript -e 'covr::coveralls(service_name="drone")'
