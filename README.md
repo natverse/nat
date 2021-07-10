@@ -5,7 +5,7 @@
 [![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
 [![Build status](https://github.com/natverse/nat/workflows/R-CMD-check/badge.svg)](https://github.com/natverse/nat/actions)
-[![Coverage Status](https://coveralls.io/repos/natverse/nat/badge.svg?branch=master)](https://coveralls.io/r/natverse/nat?branch=master)
+[![Coverage Status](https://codecov.io/gh/natverse/nat/branch/master/graph/badge.svg)](https://codecov.io/gh/natverse/nat)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.github.io/nat/reference/)
 [![Downloads](http://cranlogs.r-pkg.org/badges/nat?color=brightgreen)](http://www.r-pkg.org/pkg/nat)
 <!-- badges: end -->
