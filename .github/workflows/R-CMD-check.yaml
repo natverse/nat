@@ -84,4 +84,6 @@ jobs:
       - name: Test coverage
         if: matrix.config.os == 'ubuntu-20.04'
         run: Rscript -e 'covr::coveralls()'
+        env:
+          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}
 
