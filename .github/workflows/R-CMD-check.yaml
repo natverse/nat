@@ -61,9 +61,6 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
-      - name: Install Covr
-        run: Rscript -e "remotes::install_github('r-lib/covr')"
-
       - name: Build CMTK
         run: sh ./build-cmtk.sh
 
