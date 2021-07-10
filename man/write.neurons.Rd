@@ -12,6 +12,7 @@ write.neurons(
   INDICES = names(nl),
   files = NULL,
   include.data.frame = FALSE,
+  metadata = FALSE,
   Force = FALSE,
   cl = NULL,
   ...
@@ -39,6 +40,11 @@ examples and \code{\link{write.neuron}} for details.}
 
 \item{include.data.frame}{Whether to include the metadata when writing a zip
 file (it will be called \code{"write.neurons.dataframe.rds"}).}
+
+\item{metadata}{Whether to encode some metadata in the header file (curently
+only supported for SWC format). Either a data.frame or \code{TRUE} to
+indicate that the attached data.frame should be written. Default
+\code{FALSE}.}
 
 \item{Force}{Whether to overwrite an existing file}
 
