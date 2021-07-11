@@ -75,8 +75,7 @@ read.fijixml<-function(f, components=c("path", "fill"), ..., Verbose=FALSE){
 #'   information for a skeleton by shooting rays from skeleton to mesh to
 #'   estimate the radius.
 #'
-#' @references \url{http://fiji.sc/Simple_Neurite_Tracer}
-#'   \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
+#' @references \url{ https://imagej.net/plugins/simple-neurite-tracer/}
 #' @export
 #'
 #' @examples
@@ -180,7 +179,7 @@ is.fijitraces<-function(f, bytes=NULL){
 }
 
 # Read a file is in the Fiji landmarks format (XML)
-# See http://fiji.sc/Name_Landmarks_and_Register
+# See https://imagej.net/plugins/name-landmarks-and-register
 read.landmarks.fiji<-function(f, ...){
   if(!file.exists(f))
     stop("File: ", f, "does not exist!")

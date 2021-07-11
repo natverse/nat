@@ -79,7 +79,6 @@ NULL
 #' for pruning and simplification strategies.
 #'
 #' @format A \code{neuron} object with additional class \code{catmaidneuron}
-#' @source \url{http://www.diamondse.info/}
 #' @seealso \code{\link{Cell07PNs}}
 "dl1neuron"
 
