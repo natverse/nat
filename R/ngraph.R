@@ -435,7 +435,7 @@ strahler_order<-function(x){
   so_segs=integer(length(sts))
   svids=V(s)$vid
   segendmat=topntail(sts)
-  idxs=apply(segendmat, 1, match, svids)
+  idxs=matrix(match(segendmat,svids), ncol=2, byrow = T)
   for(i in seq_along(sts)){
     segends=segendmat[,i]
     so_segends=so_red_nodes[idxs[i,]]
