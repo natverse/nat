@@ -74,7 +74,7 @@ potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2, .parallel=TRUE)
 \references{
 Neurogeometry and potential synaptic connectivity. Stepanyants A,
   Chklovskii DB. Trends Neurosci. 2005 Jul;28(7):387-94. 
-  \url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
+  \doi{10.1016/j.tins.2005.05.006}
 }
 \seealso{
 Other neuron: 

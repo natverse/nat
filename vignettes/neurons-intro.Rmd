@@ -58,7 +58,7 @@ We will look at two key classes that **nat** defines for handling 3D structures 
 ### Sample Data
 As an example we're going to look at a data set of olfactory projection neurons originally 
 published as Supplemental Information to accompany 
-[Jefferis, Potter et al, Cell (2007)](http://dx.doi.org/10.1016/j.cell.2007.01.040).
+[Jefferis, Potter et al, Cell (2007)](https://doi.org/10.1016/j.cell.2007.01.040).
 A subset of the original data are distributed as a sample data object with the
 **nat** package, which we can load like so.
 

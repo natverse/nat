@@ -46,7 +46,7 @@
 #'   Obermayer, K. (2004). New methods for the computer-assisted 3-D
 #'   reconstruction of neurons from confocal image stacks. Neuroimage 4,
 #'   1283--98.
-#'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
+#'   \doi{10.1016/j.neuroimage.2004.06.047}
 #'
 #' @examples
 #' \dontrun{

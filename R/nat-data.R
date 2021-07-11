@@ -15,11 +15,11 @@
 #' T., Maurer C.R.J., and Luo L. (2007). Comprehensive maps of Drosophila higher
 #' olfactory centers: spatially segregated fruit and pheromone representation. 
 #' Cell 128 (6), 1187--1203. 
-#' \href{http://dx.doi.org/10.1016/j.cell.2007.01.040}{doi:10.1016/j.cell.2007.01.040}
+#' \doi{10.1016/j.cell.2007.01.040}
 #' 
 #' Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E. 
 #' (2010). Sexual dimorphism in the fly brain. Curr Biol 20 (18), 1589--601. 
-#' \href{http://dx.doi.org/10.1016/j.cub.2010.07.045}{doi:10.1016/j.cub.2010.07.045}
+#' \doi{10.1016/j.cub.2010.07.045}
 NULL
 
 #' List of 20 Kenyon Cells from Chiang et al 2011 converted to dotprops objects
