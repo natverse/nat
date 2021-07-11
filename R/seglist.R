@@ -32,7 +32,7 @@ as.seglist.list<-function(x, ...) {
 
 # Private function returns a 2xN matrix of results
 topntail <- function(x) {
-  if(requireNamespace('natcpp', quietly=TRUE)) {
+  if(use_natcpp()) {
     return(natcpp::c_topntail(x))
   }
   topntailseg<-function(x) x[c(1,length(x))]
@@ -42,7 +42,7 @@ topntail <- function(x) {
 
 # Private function returns a list of segments
 topntail_list <- function(x) {
-  if(requireNamespace('natcpp', quietly=TRUE)) {
+  if(use_natcpp()) {
     return(natcpp::c_topntail_list(x))
   }
   topntailseg<-function(x) if(length(x)==1) x else x[c(1,length(x))]

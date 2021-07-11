@@ -484,7 +484,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 seglengths=function(x, all=FALSE, flatten=TRUE, sumsegment=TRUE){
   # convert to numeric matrix without row names
   sts<-as.seglist(x, all=all, flatten=flatten)
-  if(isTRUE(sumsegment) && requireNamespace('natcpp', quietly = TRUE)) {
+  if(isTRUE(sumsegment) && use_natcpp()) {
     # prefer c implementation
     if(isFALSE(all) || isTRUE(flatten)) {
       res=natcpp::c_seglengths(sts, x$d$X, x$d$Y, x$d$Z)

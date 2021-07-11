@@ -74,7 +74,7 @@ summary.mesh3d <- function(object, ...) {
 }
 
 total_cable <- function(x) {
-  if(requireNamespace('natcpp', quietly = TRUE)) {
+  if(use_natcpp()) {
     sl=as.seglist(x, all = T, flatten = T)
     return(natcpp::c_total_cable(sl, x$d$X, x$d$Y, x$d$Z))
   }

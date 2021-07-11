@@ -587,7 +587,7 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
 # @return A 2 column matrix, \code{cbind(starts,ends)}
 # @export
 EdgeListFromSegList<-function(SegList){
-  if(requireNamespace('natcpp', quietly = TRUE)) {
+  if(use_natcpp()) {
     return(natcpp::c_EdgeListFromSegList(SegList))
   }
   lsl=sapply(SegList,length)
