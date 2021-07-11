@@ -31,7 +31,7 @@ in some cases (see [WebGL vignette](https://cran.r-project.org/package=rgl/vigne
 
 You can use the **Plotly** library as an alternative to **rgl** for 3D display.
 This is based on the commercially developed but open source 
-[plotly.js](https://plot.ly/javascript/) java script library.
+[plotly.js](https://plotly.com/javascript/) java script library.
 It is targeted at the web and particularly useful for interactive html documents.
 For html output, it seems to me more efficient for medium numbers of neurons
 (10s-100s) than **rgl**'s WebGL support. 
@@ -61,7 +61,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Plotly
-Plotly can do a whole range of plots. See https://plot.ly/r/ for examples. The
+Plotly can do a whole range of plots. See https://plotly.com/r/ for examples. The
 standard approach looks like this:
 
 ```{r, eval=FALSE}
@@ -98,7 +98,7 @@ nclear3d()
 plot3d(Cell07PNs[1:3])
 ```
 
-You can set the figure size by specifying [chunk options](https://yihui.name/knitr/options/#plots) like so
+You can set the figure size by specifying [chunk options](https://yihui.org/knitr/options/) like so
 
 ```
 {r, fig.width=6, fig.height=4}
