@@ -31,7 +31,7 @@ pre-requisite for most functionality is a recent version of R (>=3.1.0 recommend
 you use RStudio or R from the terminal, you must have a copy of XQuartz, the X11
 window manager, installed. This is no longer a default install since Mac OS X 
 10.8. You need to install XQuartz, before installing the nat package. Logout and login for the installation to take effect. You can get it from 
-https://xquartz.macosforge.org/landing/. This page is also linked from the 
+https://www.xquartz.org/. This page is also linked from the 
 [Download R for (Mac) OS X](https://cran.r-project.org/bin/macosx/) page.
 
 If you want to apply non-rigid registrations calculated by the 
@@ -87,13 +87,13 @@ do not already have it.
 **nat** is self sufficient for core functionality, but the transformation of 3D
 data using Computational Morphometry Toolkit (CMTK) registrations depends on an
 external installation of that toolkit. CMTK binaries can be downloaded for
-Windows, Linux and Mac at <http://www.nitrc.org/projects/cmtk/>. Source code is 
+Windows, Linux and Mac at <https://www.nitrc.org/projects/cmtk/>. Source code is 
 available from the same site or an unofficial mirror repository at 
 <https://github.com/jefferis/cmtk>. We have extensive experience of using CMTK
 under Linux (where we compile from source) and Mac (where we compile or use the
-MacOSX-10.6-x86_64.dmg binary installers). We have also used 
+MacOSX-10.6-x86_64.dmg binary installers). In the past we have also used 
 [neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
-Travis continuous integration setup (see the project's [.travis.yml](https://github.com/natverse/nat/blob/master/.travis.yml) file).
+Travis continuous integration setup (see the project's [.travis.yml](https://github.com/natverse/nat/blob/a155984fa0cc6ea226c021ab5278e48007426219/.travis.yml) file).
 
 ## CMTK+nat on Windows
 

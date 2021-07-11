@@ -7,9 +7,6 @@
 \format{
 A \code{neuron} object with additional class \code{catmaidneuron}
 }
-\source{
-\url{http://www.diamondse.info/}
-}
 \usage{
 dl1neuron
 }

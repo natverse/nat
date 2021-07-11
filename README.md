@@ -1,13 +1,13 @@
 # nat: NeuroAnatomy Toolbox <img src="man/figures/natverse_logo.svg" align="right" height="139" /><img src="man/figures/logo.svg" align="right" height="139" /> 
 <!-- badges: start -->
-[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
+[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.org/)
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
 [![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
 [![Build status](https://github.com/natverse/nat/workflows/R-CMD-check/badge.svg)](https://github.com/natverse/nat/actions)
 [![Coverage Status](https://codecov.io/gh/natverse/nat/branch/master/graph/badge.svg)](https://codecov.io/gh/natverse/nat)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.github.io/nat/reference/)
-[![Downloads](http://cranlogs.r-pkg.org/badges/nat?color=brightgreen)](http://www.r-pkg.org/pkg/nat)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.org//nat/reference/)
+[![Downloads](http://cranlogs.r-pkg.org/badges/nat?color=brightgreen)](https://www.r-pkg.org:443/pkg/nat)
 <!-- badges: end -->
 
 An R package for the (3D) visualisation and analysis of biological image data, especially tracings of
@@ -65,19 +65,19 @@ devtools::install_github("natverse/nat")
 
 To get an idea of what **nat** can do:
 
-* Skim through the Articles listed at https://natverse.github.io/nat/
-* Take a look at the [R Markdown](http://rmarkdown.rstudio.com/) reports used 
+* Skim through the Articles listed at https://natverse.org//nat/
+* Take a look at the [R Markdown](https://rmarkdown.rstudio.com/) reports used 
   to generate the [figures for our NBLAST paper](http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/).
 
 When you're ready to learn more:
 
-* Read the [overview package documentation](https://natverse.github.io/nat/reference/nat-package.html)
+* Read the [overview package documentation](https://natverse.org//nat/reference/nat-package.html)
   (`?nat` in R)
-* Read the [Introduction to neurons](https://natverse.github.io/nat/articles/neurons-intro.html) article
-* Check out the thematically organised [function reference documentation](https://natverse.github.io/nat/reference/). 
+* Read the [Introduction to neurons](https://natverse.org//nat/articles/neurons-intro.html) article
+* Check out the thematically organised [function reference documentation](https://natverse.org//nat/reference/). 
   * Most help pages include examples.
 * Try out sample code:
-  - [nat.examples](https://github.com/jefferis/nat.examples) has detailed 
+  - [nat.examples](https://github.com/natverse/nat.examples) has detailed 
     examples for data sets from a range of model organisms and techniques
   - [frulhns](https://github.com/jefferis/frulhns) analysis of sexually dimorphic circuits
   - [NBLAST figures](https://github.com/jefferislab/NBLAST_figures/)
@@ -85,7 +85,7 @@ When you're ready to learn more:
 ## Help
 If you want some help using **nat**:
 
-* For installation issues, see the [Installation vignette](https://natverse.github.io/nat/articles/Installation.html)
+* For installation issues, see the [Installation vignette](https://natverse.org//nat/articles/Installation.html)
 * Contact [nat-user](https://groups.google.com/forum/#!forum/nat-user) Google group - 
   we normally respond promptly and you will also be helping future users.
 

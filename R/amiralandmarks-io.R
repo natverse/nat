@@ -65,7 +65,7 @@ write.landmarks.amira<-function(x, file){
 #'   \item CMTK (format name \code{cmtklandmarks})
 #'
 #'   \item Fiji (format name \code{fijilandmarks}) see
-#'   \url{http://fiji.sc/Name_Landmarks_and_Register} }
+#'   \url{https://imagej.net/plugins/name-landmarks-and-register} }
 #'
 #'   See examples section for how to produce a listing of all currently
 #'   available formats with \code{fileformats}.
