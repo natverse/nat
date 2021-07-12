@@ -733,19 +733,26 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     stop("Unable to write to file ",file)
   }
   
-  if(!is.null(metadata)) {
-    if(!is.character(metadata)){
-      if(is.data.frame(metadata))
-        metadata=as.list(metadata)
-      metadata=jsonlite::toJSON(metadata, auto_unbox = TRUE)
-    }
-    if(length(metadata)>1)
-      metadata=paste(metadata, collapse = ' ')
-  }
-  
   # OK all fine, so let's write
   FUN=match.fun(fw$write)
-  FUN(n, file=file, metadata=metadata, ...)
+
+  write_metadata=FALSE
+  if(!is.null(metadata)) {
+    if(!isTRUE("metadata" %in% names(formals(FUN))))
+      warning("neuron writing function does not accept metadata")
+    else {
+      write_metadata=TRUE
+      if(!is.character(metadata)){
+        if(is.data.frame(metadata))
+          metadata=as.list(metadata)
+        metadata=jsonlite::toJSON(metadata, auto_unbox = TRUE)
+      }
+      if(length(metadata)>1)
+        metadata=paste(metadata, collapse = ' ')
+    }
+  }
+  if(isTRUE(write_metadata)) FUN(n, file=file, metadata=metadata, ...)
+  else FUN(n, file=file, ...)
   invisible(file)
 }
 
