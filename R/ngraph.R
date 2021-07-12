@@ -561,6 +561,11 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
 #' pruned2=prune_vertices(Cell07PNs[[1]], spine_ids)
 prune_edges<-function(x, edges, invert=FALSE, ...) {
   g=as.ngraph(x)
+  dg=prune_edges_ng(g, edges, invert = invert)
+  as.neuron(as.ngraph(dg), ...)
+}
+
+prune_edges_ng <- function(g, edges, invert=FALSE) {
   if(!inherits(edges, "igraph.es")){
     if(!is.numeric(edges))
       stop("I can't understand the edges you have given me!")
@@ -578,7 +583,6 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
   
   # remove unreferenced vertices
   dg=igraph::delete.vertices(dg, which(igraph::degree(dg, mode='all')==0))
-  as.neuron(as.ngraph(dg), ...)
 }
 
 # Construct EdgeList matrix with start and end points from SegList
