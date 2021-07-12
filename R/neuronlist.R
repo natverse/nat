@@ -297,6 +297,14 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
   }
   nn=names(x)
   matching_rows=intersect(nn, rownames(value))
+  if (length(matching_rows)!=length(nn) && any(nn %in% value[,1])) {
+    matching_rows_fc=intersect(nn, value[,1])
+    if (length(matching_rows)<length(matching_rows_fc)){
+      warning("Matching neurons by first column.")
+      matching_rows=matching_rows_fc
+      rownames(value) <- value[,1]
+    }
+  }
   if(length(matching_rows)){
     missing_rows=setdiff(nn, matching_rows)
     if(length(missing_rows))
@@ -313,7 +321,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
         warning("Assuming new data.frame correctly ordered in spite of rownames mismatch!")
       }
       rownames(value) <- matching_rows <- nn
-    } else stop("data.frame rownames do not match neuron names.")
+    } else stop("data.frame rownames (or first column) do not match neuron names.")
   }
   if(!isTRUE(all.equal(rownames(value), matching_rows))) {
     # we need to reorder the rows and/or subset the incoming data.frame
