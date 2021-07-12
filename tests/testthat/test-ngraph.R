@@ -185,6 +185,14 @@ test_that("we can find the segmentgraph of a neuron",{
   # and with segment ids included
   expect_is(sgs<-segmentgraph(testn, segids = TRUE), 'igraph')
   expect_equal(E(sgs)$segid, 1:3)
+  
+  # test segmentgraph without natcpp (if we were using it)
+  skip_if_not(use_natcpp())
+  op <- options('nat.use_natcpp'=FALSE)
+  on.exit(options(op))
+  
+  expect_true(graph.isomorphic(segmentgraph(testn), sg))
+  expect_true(graph.isomorphic(segmentgraph(testn, reverse.edges = TRUE), sgr))
 })
 
 
