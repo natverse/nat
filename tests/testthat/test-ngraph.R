@@ -204,7 +204,7 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
 
 test_that("Strahler order", {
   n = as.neuron(testd)
-  expect_equal(strahler_order(n), list(points = c(2L, 2L, 
+  expect_equal(son <- strahler_order(n), list(points = c(2L, 2L, 
     2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
   
   ns=structure(list(NumPoints = 3L, StartPoint = 1L, BranchPoints = integer(0), 
@@ -219,6 +219,11 @@ test_that("Strahler order", {
     "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
     "SegList", "d"), class = c("neuron", "list"))
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
+  
+  skip_if_not(use_natcpp())
+  op <- options('nat.use_natcpp'=FALSE)
+  on.exit(options(op))
+  expect_equal(strahler_order(n), son)
 })
 
 
