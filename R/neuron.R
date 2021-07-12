@@ -484,15 +484,25 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 seglengths=function(x, all=FALSE, flatten=TRUE, sumsegment=TRUE){
   # convert to numeric matrix without row names
   sts<-as.seglist(x, all=all, flatten=flatten)
+  if(isTRUE(sumsegment) && use_natcpp()) {
+    # prefer c implementation
+    if(isFALSE(all) || isTRUE(flatten)) {
+      res=natcpp::c_seglengths(sts, x$d$X, x$d$Y, x$d$Z)
+    } else {
+      # sts should be a list of lists of vectors
+      res=lapply(sts, natcpp::c_seglengths, x$d$X, x$d$Y, x$d$Z)
+    }
+    return(res)
+  }
   d=data.matrix(x$d[, c("X", "Y", "Z")])
   if(all && !flatten) {
-    lapply(sts, function(st) sapply(st, 
-                                    function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
+    lapply(sts, 
+           function(st) sapply(st, function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
                                     simplify=sumsegment, USE.NAMES = FALSE ))
   } else sapply(sts, function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
                 simplify=sumsegment, USE.NAMES = FALSE)
 }
-
+  
 # Calculate length of single segment in neuron
 seglength=function(ThisSeg, sum=TRUE){
   #ThisSeg is an array of x,y and z data points

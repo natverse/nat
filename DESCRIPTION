@@ -54,6 +54,8 @@ Suggests:
     readobj,
     brotli,
     qs
+Enhances:
+    natcpp
 License: GPL-3
 LazyData: yes
 Collate:
