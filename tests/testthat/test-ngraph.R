@@ -230,7 +230,7 @@ test_that("Strahler order", {
 
 test_that("plot3d.ngraph works",{
   nclear3d()
-  plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes')
+  expect_silent(plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes'))
 })
 
 context("distal_to")
