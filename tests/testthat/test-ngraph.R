@@ -219,6 +219,7 @@ test_that("Strahler order", {
     "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
     "SegList", "d"), class = c("neuron", "list"))
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
+  expect_equal(strahler_order(ns), list(points = c(1L, 1L, 1L), segments = 1L))
   
   skip_if_not(use_natcpp())
   op <- options('nat.use_natcpp'=FALSE)
