@@ -16,3 +16,10 @@ nat_progress <- function (x, max = 100, message = NULL) {
   if (x == max)
     cat('\n')
 }
+
+# to check if we should use natcpp
+# always=TRUE => use if installed even if option says otherwise
+use_natcpp <- function(always=FALSE) {
+  opcheck <- isTRUE(always) || !isFALSE(getOption('nat.use_natcpp'))
+  opcheck && requireNamespace('natcpp', quietly = TRUE)
+}

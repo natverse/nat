@@ -185,6 +185,14 @@ test_that("we can find the segmentgraph of a neuron",{
   # and with segment ids included
   expect_is(sgs<-segmentgraph(testn, segids = TRUE), 'igraph')
   expect_equal(E(sgs)$segid, 1:3)
+  
+  # test segmentgraph without natcpp (if we were using it)
+  skip_if_not(use_natcpp())
+  op <- options('nat.use_natcpp'=FALSE)
+  on.exit(options(op))
+  
+  expect_true(graph.isomorphic(segmentgraph(testn), sg))
+  expect_true(graph.isomorphic(segmentgraph(testn, reverse.edges = TRUE), sgr))
 })
 
 
@@ -196,7 +204,7 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
 
 test_that("Strahler order", {
   n = as.neuron(testd)
-  expect_equal(strahler_order(n), list(points = c(2L, 2L, 
+  expect_equal(son <- strahler_order(n), list(points = c(2L, 2L, 
     2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
   
   ns=structure(list(NumPoints = 3L, StartPoint = 1L, BranchPoints = integer(0), 
@@ -211,12 +219,18 @@ test_that("Strahler order", {
     "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
     "SegList", "d"), class = c("neuron", "list"))
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
+  expect_equal(strahler_order(ns), list(points = c(1L, 1L, 1L), segments = 1L))
+  
+  skip_if_not(use_natcpp())
+  op <- options('nat.use_natcpp'=FALSE)
+  on.exit(options(op))
+  expect_equal(strahler_order(n), son)
 })
 
 
 test_that("plot3d.ngraph works",{
   nclear3d()
-  plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes')
+  expect_silent(plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes'))
 })
 
 context("distal_to")

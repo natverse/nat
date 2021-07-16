@@ -56,6 +56,5 @@ points3d(fill, col='grey')
 }
 }
 \references{
-\url{http://fiji.sc/Simple_Neurite_Tracer}
-  \url{http://fiji.sc/Simple_Neurite_Tracer:_.traces_File_Format}
+\url{ https://imagej.net/plugins/simple-neurite-tracer/}
 }

@@ -13,3 +13,4 @@ travisbuildchildren.sh
 ^spare$
 ^pkgdown$
 ^\.github$
+^depends.Rds$

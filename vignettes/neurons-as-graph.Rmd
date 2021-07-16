@@ -15,7 +15,7 @@ Neurons can helpfully be treated as graphs (branching trees) in which nodes conn
 define the morphology of the neuron. The **nat** package provides a number of
 built-in functions that allow you to analyse the branching structure of graphs
 
-https://natverse.github.io/nat/reference/index.html#section-neurons-as-graphs-
+https://natverse.org/nat/reference/index.html
 
 or use aspects of the branching structure to manipulate graphs. Examples of
 such functions include the `strahler_order` function which calculates the 
@@ -27,7 +27,7 @@ More sophisticated analysis and manipulations can be carried out by converting
 
 ## Neurons as Graphs
 A neuron will typically be a graph in the form of a binary tree. We follow 
-the convention of the Matlab [trees toolbox](http://www.treestoolbox.org/) by 
+the convention of the Matlab [trees toolbox](https://www.treestoolbox.org/) by 
 Hermann Cuntz and colleagues in treating the root (typically the soma) as the 
 origin of the graph and then having directed edges leaving the root.
 
@@ -170,7 +170,7 @@ points(xyzmatrix(n)[other_branches,1:2], col='blue')
 ## ngraph objects
 
 The **nat** package provides a bridge for neurons to the rich cross-platform **igraph** library. We provide a class
-[`ngraph`](https://natverse.github.io/nat/reference/ngraph.html)
+[`ngraph`](https://natverse.org/nat/reference/ngraph.html)
 that is a thin wrapper for the `igraph` class. This looks after things 
 that we might need to know about a neuron (like the 3D coordinates of each node)
 while still giving access to all of the graph functions in the igraph package.
