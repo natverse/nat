@@ -862,7 +862,6 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
 #'   neurons that have <=n branch points.
 #' @author Gregory Jefferis \email{jefferis@gmail.com}
 #' @export
-#' @importFrom matrixStats colMins
 #' @seealso \code{\link[nat]{spine}}
 #' @examples
 #' \donttest{

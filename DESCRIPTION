@@ -38,8 +38,7 @@ Imports:
     checkmate,
     stringr,
     pbapply,
-    zip,
-    matrixStats
+    zip
 Suggests:
     spelling,
     Rvcg (>= 0.17),
