@@ -279,7 +279,6 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=basename, format=NULL,
 #' @details if a \code{format} argument is passed to \code{fileformats} it will
 #'   be matched wigth partial string matching and iif a unique match exists that
 #'   will be returned.
-#' @inheritParams registerformat
 #' @param rval Character vector choosing what kind of return value 
 #'   \code{fileformats} will give.
 #' @return \itemize{
