@@ -56,7 +56,7 @@ from file header to determine file's type.}
   according to the value of rval.
   
   \item \code{getformatreader} returns a list. The reader can be accessed 
-  with \code{$read} and the format can be acessed by \code{$format}.
+  with \code{$read} and the format can be accessed by \code{$format}.
   
   \item \code{getformatwriter} returns a list. The writer can be accessed 
   with \code{$write}.}
@@ -74,7 +74,7 @@ from file header to determine file's type.}
 }
 \details{
 if a \code{format} argument is passed to \code{fileformats} it will
-  be matched wigth partial string matching and iif a unique match exists that
+  be matched with partial string matching and if a unique match exists that
   will be returned.
 
 \code{getformatreader} starts by reading a set number of bytes from 
