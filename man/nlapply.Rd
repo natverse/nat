@@ -54,9 +54,8 @@ examples).}
     result to a vector, matrix or higher dimensional array; see
     the \code{simplify} argument of \code{\link[base]{sapply}}.}
 
-\item{USE.NAMES}{logical; use names if the first \dots argument has
-    names, or if it is a character vector, use that character vector as
-    the names.}
+\item{USE.NAMES}{logical; use the names of the first \dots argument, or
+    if that is an unnamed character vector, use that vector as the names.}
 }
 \value{
 A neuronlist
