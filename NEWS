@@ -1,3 +1,9 @@
+nat 1.8.17
+==========
+
+* Suggest webshot2 to cope with changes in rgl's snapshot behaviour (at the request of BDR for CRAN)
+* Fix URLs
+
 nat 1.8.16
 ==========
 
