@@ -7,7 +7,7 @@ Authors@R: c(
     role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0587-9355")),
     person("James", "Manton", role = c("aut"), comment = c(ORCID = "0000-0001-9260-3156"))
     )
-URL: https://github.com/natverse/nat, http://natverse.org/
+URL: https://github.com/natverse/nat, https://natverse.org/
 BugReports: https://github.com/natverse/nat/issues
 Description: NeuroAnatomy Toolbox (nat) enables analysis and visualisation of 3D
     biological image data, especially traced neurons. Reads and writes 3D images

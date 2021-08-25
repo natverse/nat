@@ -61,7 +61,7 @@ Presently the supported formats are \itemize{
   
   \item CMTK
   
-  \item Fiji (see \url{https://imagej.net/Name_Landmarks_and_Register}) }
+  \item Fiji (see \url{https://imagej.net/plugins/name-landmarks-and-register}) }
   
   See examples section for how to produce a listing of all currently 
   available formats with \code{fileformats}.

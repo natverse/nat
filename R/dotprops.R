@@ -140,21 +140,21 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #' @method dotprops default
 #' @export
 #' @rdname dotprops
-#' @param k Number of nearest neighbours to use for tangent vector calculation 
+#' @param k Number of nearest neighbours to use for tangent vector calculation
 #'   (set to k=20 when passed NULL)
-#' @param Labels Vector of labels for each point e.g. identifying axon vs 
+#' @param Labels Vector of labels for each point e.g. identifying axon vs
 #'   dendrite. The default value \code{NULL} will produce class-specific default
-#'   behaviour for different classes of input object, \code{TRUE} always uses 
+#'   behaviour for different classes of input object, \code{TRUE} always uses
 #'   labels when an incoming object has them and \code{FALSE} never uses labels.
 #' @param na.rm Whether to remove \code{NA} points (default FALSE)
 #' @importFrom nabor knn
-#' @references The dotprops format is essentially identical to that developed 
+#' @references The dotprops format is essentially identical to that developed
 #'   in:
-#'   
-#'   Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A 
+#'
+#'   Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A
 #'   mutual information approach to automate identification of neuronal clusters
 #'   in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
-#'   \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
+#'   \doi{10.3389/fninf.2012.00021}
 dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   # store labels from SWC format data if this is a neuron
   x=xyzmatrix(x)

@@ -92,8 +92,9 @@ available from the same site or an unofficial mirror repository at
 <https://github.com/jefferis/cmtk>. We have extensive experience of using CMTK
 under Linux (where we compile from source) and Mac (where we compile or use the
 MacOSX-10.6-x86_64.dmg binary installers). We have also used 
-[neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of the
-Travis continuous integration setup (see the project's [.travis.yml](https://github.com/natverse/nat/blob/master/.travis.yml) file).
+[neurodebian](http://neuro.debian.net/pkgs/cmtk.html) to install as part of
+our (now retired) Travis continuous integration setup (see the project's
+[.travis.yml](https://github.com/natverse/nat/blob/d2ecca2d533abbd0dc2047b8919008af67b56789/.travis.yml) file).
 
 ## CMTK+nat on Windows
 

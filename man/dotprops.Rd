@@ -35,7 +35,7 @@ dotprops(x, ...)
 
 \item{...}{Additional arguments passed to methods}
 
-\item{k}{Number of nearest neighbours to use for tangent vector calculation 
+\item{k}{Number of nearest neighbours to use for tangent vector calculation
 (set to k=20 when passed NULL)}
 
 \item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an 
@@ -43,9 +43,9 @@ error. The default value (\code{NA}) will result in nlapply stopping with
 an error message the moment there is an eror. For other values, see 
 details.}
 
-\item{Labels}{Vector of labels for each point e.g. identifying axon vs 
+\item{Labels}{Vector of labels for each point e.g. identifying axon vs
 dendrite. The default value \code{NULL} will produce class-specific default
-behaviour for different classes of input object, \code{TRUE} always uses 
+behaviour for different classes of input object, \code{TRUE} always uses
 labels when an incoming object has them and \code{FALSE} never uses labels.}
 
 \item{resample}{When finite, a new length to which all segmented edges will
@@ -71,13 +71,13 @@ be resampled. See \code{\link{resample.neuron}}.}
   original value of \code{k} is reused).
 }
 \references{
-The dotprops format is essentially identical to that developed 
+The dotprops format is essentially identical to that developed
   in:
-  
-  Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A 
+
+  Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A
   mutual information approach to automate identification of neuronal clusters
   in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
-  \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
+  \doi{10.3389/fninf.2012.00021}
 }
 \seealso{
 \code{\link{nlapply}}
