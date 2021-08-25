@@ -12,3 +12,4 @@ travisbuildchildren.sh
 ^\.httr-oauth$
 ^spare$
 ^CRAN-RELEASE$
+^.github$
