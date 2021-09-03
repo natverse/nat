@@ -39,6 +39,7 @@ Suggests:
     XML,
     knitr,
     rmarkdown,
+    markdown,
     MASS,
     alphashape3d,
     webshot2
