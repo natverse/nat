@@ -11,20 +11,19 @@ This is a maintenance release to fix an issue noted by BDR in several packages (
 
 0 errors | 0 warnings | 2 notes
 
-https://win-builder.r-project.org/PW5v13v9Nu13/00check.log
+https://win-builder.r-project.org/j3MBn25qp2tH/00check.log
 
 ### NOTEs
 
-Besides the standard:
-
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: 'Gregory Jefferis <jefferis@gmail.com>'
-
-the only other note refers to the drat repository discussed above:
 
 Suggests or Enhances not in mainstream repositories:
   webshot2
 Availability using Additional_repositories specification:
   webshot2   yes   https://dmurdoch.github.io/drat
+
+* checking package dependencies ... NOTE
+Package suggested but not available for checking: 'webshot2'
   
-this appears to be acceptable, since the [rgl package](https://cran.r-project.org/package=rgl) and multiple reverse dependencies on CRAN (e.g. https://cran.r-project.org/package=mgcViz) have successfully used this approach.
+this use of a drat repository appears to be acceptable, since the [rgl package](https://cran.r-project.org/package=rgl) and multiple reverse dependencies on CRAN (e.g. https://cran.r-project.org/package=mgcViz) have successfully used this approach.
