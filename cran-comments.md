@@ -1,7 +1,6 @@
 # nat 1.8.16
 
-This is a maintenance release to fix an issue noted by BRD in several pasckages (including BIGL RRphylo Rpolyhedra bcROCsurface drugCombo gMOIP hyperoverlap matlib mgcViz nat) that resulted from changes in 
-behaviour of the rgl package. This now defaults to using the off-CRAN webshot2 package to generate snapshots/interactive 3D scenes. The changes now suggest webshot2 and list a drat repository by Duncan Murdoch to provide it.
+This is a maintenance release to fix an issue noted by BDR in several packages (including BIGL RRphylo Rpolyhedra bcROCsurface drugCombo gMOIP hyperoverlap matlib mgcViz nat) that resulted from changes in behaviour of the rgl package. This now defaults to using the off-CRAN webshot2 package to generate snapshots/interactive 3D scenes. The changes to nat now suggest webshot2 and list an external drat repository by Duncan Murdoch to provide it. This strategy was recommended by Duncan Murdoch and is currently used for the rgl package itself.
 
 ## Test environments
 
