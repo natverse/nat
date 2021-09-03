@@ -38,6 +38,9 @@ library(nat)
 rgl::setupKnitr()
 library(knitr)
 opts_chunk$set(fig.width=5)
+# to avoid issues on CRAN when webshot2/rmarkdown unavailable
+use_rgl=requireNamespace('webshot2', quietly=TRUE) && requireNamespace('rmarkdown', quietly=TRUE) &&
+  rmarkdown::pandoc_available()
 ```
 
 ## Neurons and Neuronlists
@@ -409,7 +412,7 @@ based on the [rgl package](https://cran.r-project.org/package=rgl). It is
 actually possible to embed fully interactive 3d figures in [rmarkdown](https://rmarkdown.rstudio.com/) reports
 like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
 
-```{r, webgl=TRUE}
+```{r, webgl=use_rgl}
 clear3d()
 plot3d(Cell07PNs[[1]], col='red')
 # set a grey background so it's easier to see extent of the webgl canvas
@@ -423,7 +426,7 @@ we will not use it further here. For now let's show a plot in which we
 both select a subset of neurons and colour them according to their glomerulus
 of origin.
 
-```{r, rgl=TRUE, fig.width=6}
+```{r, rgl=use_rgl, fig.width=6}
 # 3d plot of neurons from olfactory glomeruli beginning with a D
 # coloured by glomerulus
 rval=plot3d(Cell07PNs, subset=grepl("^D", Glomerulus), col=Glomerulus,
