@@ -11,7 +11,7 @@ This is a maintenance release to fix an issue noted by BDR in several packages (
 
 0 errors | 0 warnings | 2 notes
 
-https://win-builder.r-project.org/j3MBn25qp2tH/00check.log
+https://win-builder.r-project.org/zJ9xyW87zpjG
 
 ### NOTEs
 
