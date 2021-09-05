@@ -1,3 +1,8 @@
+nat 1.8.18
+==========
+
+* Fix errors in `neurons-intro` vignette when pandoc is missing
+
 nat 1.8.17
 ==========
 
