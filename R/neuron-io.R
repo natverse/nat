@@ -674,7 +674,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
-                       Force=FALSE, MakeDir=TRUE, ...){
+                       Force=FALSE, MakeDir=TRUE, metadata=NULL, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
     format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds", "rdsb", "qs"))
@@ -735,12 +735,29 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
   
   # OK all fine, so let's write
   FUN=match.fun(fw$write)
-  FUN(n, file=file, ...)
+
+  write_metadata=FALSE
+  if(!is.null(metadata)) {
+    if(!isTRUE("metadata" %in% names(formals(FUN))))
+      warning("neuron writing function does not accept metadata")
+    else {
+      write_metadata=TRUE
+      if(!is.character(metadata)){
+        if(is.data.frame(metadata))
+          metadata=as.list(metadata)
+        metadata=jsonlite::toJSON(metadata, auto_unbox = TRUE)
+      }
+      if(length(metadata)>1)
+        metadata=paste(metadata, collapse = ' ')
+    }
+  }
+  if(isTRUE(write_metadata)) FUN(n, file=file, metadata=metadata, ...)
+  else FUN(n, file=file, ...)
   invisible(file)
 }
 
 # write neuron to SWC file
-write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
+write.neuron.swc<-function(x, file, normalise.ids=NA, metadata=NULL, ...){
   if(is.dotprops(x)) {
     return(write.dotprops.swc(x, file, ...))
   }
@@ -772,7 +789,12 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
   writeLines(c("# SWC format file",
                "# based on specifications at http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html"),
              con=file)
-  cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)  
+  cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)
+  if(!is.null(metadata)) {
+    # read like so 
+    # jsonlite::fromJSON(substr(j,8,nchar(j)), bigint_as_char=TRUE)
+    cat(paste0("# Meta: ", metadata, "\n"), file=file, append=TRUE)
+  }
   cat("#", colnames(df), "\n", file=file, append=TRUE)
   write.table(df, file, col.names=F, row.names=F, append=TRUE, ...)
 }
@@ -805,6 +827,10 @@ write.dotprops.swc<-function(x, file, ...) {
 #'   neuronlist to write.
 #' @param files Character vector or expression specifying output filenames. See
 #'   examples and \code{\link{write.neuron}} for details.
+#' @param metadata Whether to encode some metadata in the header file (curently
+#'   only supported for SWC format). Either a data.frame or \code{TRUE} to
+#'   indicate that the attached data.frame should be written. Default
+#'   \code{FALSE}.
 #' @param include.data.frame Whether to include the metadata when writing a zip
 #'   file (it will be called \code{"write.neurons.dataframe.rds"}).
 #' @param cl Either the integer number of cores to use for parallel writes (2 or
@@ -862,6 +888,7 @@ write.dotprops.swc<-function(x, file, ...) {
 write.neurons<-function(nl, dir, format=NULL, subdir=NULL, 
                         INDICES=names(nl), files=NULL, 
                         include.data.frame=FALSE,
+                        metadata=FALSE,
                         Force=FALSE, cl=NULL, ...){
   if(grepl("\\.zip", dir)) {
     zip_file=dir
@@ -888,6 +915,7 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
   }
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
+  
   # Construct subdirectory structure based on variables in attached data.frame
   ee=substitute(subdir)
   subdirs=NULL
@@ -903,13 +931,22 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
     if(is.null(names(files))) names(files)=INDICES
   }
   written=structure(rep("",length(INDICES)), .Names = INDICES)
+  
+  if(isTRUE(metadata)) metadata=df
+  else if(isFALSE(metadata)) metadata=NULL
+  if(!is.null(metadata)) {
+    checkmate::assert_data_frame(metadata, nrows = length(INDICES))
+    # turn the data.frame into a list with one entry for each neuron
+    # metadata=lapply(seq_len(nrow(metadata)), function(i) as.list(metadata[i,]))
+  }
+  
   if(interactive())
     pb <- progress::progress_bar$new(format = "  writing :current/:total [:bar]  eta: :eta",
                                      clear = FALSE,
                                      total = length(INDICES),
                                      show_after=2)
   NINDICES=stats::setNames(nm = INDICES)
-  written=pbapply::pbsapply(NINDICES, cl = cl, ..., FUN=function(nn, ...) {
+  written=pbapply::pbsapply(NINDICES, cl = cl, metadata=metadata, ..., FUN=function(nn, metadata=NULL, ...) {
     n=nl[[nn]]
     thisdir=dir
     if(is.null(subdirs)){
@@ -928,7 +965,10 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
       if(!is.neuron(n) || is.null(n$InputFileName))
         file=nn
     }
-    write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, ...)
+    metadatarow <- if(!is.null(metadata)) {
+      metadata[match(nn, NINDICES), ]
+    } else NULL
+    write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, metadata=metadatarow, ...)
   })
   
   if(!is.null(zip_file)) {
