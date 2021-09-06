@@ -58,7 +58,7 @@ We will look at two key classes that **nat** defines for handling 3D structures 
 ### Sample Data
 As an example we're going to look at a data set of olfactory projection neurons originally 
 published as Supplemental Information to accompany 
-[Jefferis, Potter et al, Cell (2007)](http://dx.doi.org/10.1016/j.cell.2007.01.040).
+[Jefferis, Potter et al, Cell (2007)](https://doi.org/10.1016/j.cell.2007.01.040).
 A subset of the original data are distributed as a sample data object with the
 **nat** package, which we can load like so.
 
@@ -66,7 +66,7 @@ A subset of the original data are distributed as a sample data object with the
 data("Cell07PNs")
 ```
 
-For more information about these data see [Cell07PNs](https://natverse.github.io/nat/reference/Cell07PNs.html).
+For more information about these data see [Cell07PNs](https://natverse.org/nat/reference/Cell07PNs.html).
 
 This `Cell07PNs` object has two classes `neuronlist` and the base class `list`
 
@@ -173,7 +173,7 @@ Note that if you write `?plot` you will get the documentation for the basic
 `plot` function supplied with R.
 
 It is also good idea to look at 
-[nat's function reference page](https://natverse.github.io/nat/reference/index.html)
+[nat's function reference page](https://natverse.org/nat/reference/index.html)
 which groups available functions into categories that often reflect the class
 of object they can work on.
 
@@ -213,7 +213,7 @@ summary(n1)
 summary(n1.lh)
 ```
 
-See [nat's function reference page](https://natverse.github.io/nat/reference/index.html)
+See [nat's function reference page](https://natverse.org/nat/reference/index.html)
 for additional functions for working with neurons.
 
 ## Neuronlists
@@ -424,9 +424,9 @@ plot(Cell07PNs, subset=Glomerulus=="DA1", add=TRUE)
 So far we have only used 2D plots in this document, but especially for 
 interactive analysis and exploration, it is much more helpful to have 
 3D plots that can be rotated, zoomed etc. **nat** provides numerous functions 
-for [3D plots](https://natverse.github.io/nat/reference/index.html#section--d-plotting-of-objects)
+for [3D plots](https://natverse.org/nat/reference/index.html#section--d-plotting-of-objects)
 based on the [rgl package](https://cran.r-project.org/package=rgl). It is 
-actually possible to embed fully interactive 3d figures in [rmarkdown](http://rmarkdown.rstudio.com/) reports
+actually possible to embed fully interactive 3d figures in [rmarkdown](https://rmarkdown.rstudio.com/) reports
 like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
 
 ```{r}
@@ -522,7 +522,7 @@ with a chance level of about 25% for these 4 classes.
 
 We hope this tutorial will provide you with a good foundation for further use of
 the **nat** and related packages. Please visit the main 
-[nat README](https://natverse.github.io/nat/index.html) for
+[nat README](https://natverse.org/nat/index.html) for
 suggestions of resources to learn more and solve problems. You may also
 find that some time spent reading Hadley Wickham's [Advanced R](http://adv-r.had.co.nz/) 
 is a worthwhile investment. I recommend the first 7 chapters 

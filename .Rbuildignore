@@ -12,3 +12,5 @@ travisbuildchildren.sh
 ^\.httr-oauth$
 ^spare$
 ^pkgdown$
+^\.github$
+^depends.Rds$

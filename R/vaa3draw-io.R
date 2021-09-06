@@ -3,7 +3,7 @@
 #' Check if a file is in the raw image format used by Hanchuan Peng's Vaa3D
 #' 
 #' @description See \url{http://www.vaa3d.org/} and
-#'   \url{https://svn.janelia.org/penglab/projects/vaa3d/trunk/imagej_io/v3draw_io_imagej/raw_reader.java}
+#'   \url{https://github.com/fiji/Vaa3d_Reader/blob/master/src/main/java/org/janelia/vaa3d/reader/V3dRawImageStream.java}
 #'   
 #' @details Note that multiple files can be checked when a character vector of 
 #'   length > 1 is provided, but only one file can be checked when a raw byte 

@@ -170,6 +170,11 @@ neuroanatomical data, especially representations of neurons.
   possible values. When unset is equivalent to special value \code{'auto'}.
   To suppress altogether, use \code{nat.progress="none"}.}
 
+  \item{\code{nat.use_natcpp}}{ Whether or not to use the
+  \href{https://natverse.org/natcpp/}{natcpp} package (if available) to
+  accelerate some basic neuron processing functions. Set to \code{FALSE} if
+  you don't want this to happen.}
+
   }
 
   In addition there is one read-only option: \itemize{
