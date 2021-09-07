@@ -760,15 +760,15 @@ contains_points.ashape3d<-function(obj, points,  ...) {
   alphashape3d::inashape3d(obj, points=xyzmatrix(points), ...)
 }
 
-#' Concatenate two HyperSurface objects
-#'
-#' @param x hxsurf
-#' @param y another hxsurf
-#' @return new hxsurf
-#' @examples
-#' h1 = as.hxsurf(icosahedron3d(), 'a')
-#' h2 = as.hxsurf(tetrahedron3d()+1, 'b')
-#' h3=c(h1, h2)
+# Concatenate two HyperSurface objects
+#
+# @param x hxsurf
+# @param y another hxsurf
+# @return new hxsurf
+# @examples
+# h1 = as.hxsurf(icosahedron3d(), 'a')
+# h2 = as.hxsurf(tetrahedron3d()+1, 'b')
+# h3=c(h1, h2)
 concat_hxsurfs <- function(x, y) {
   nx <- x
   nx$Vertices <- rbind(x$Vertices, y$Vertices)
