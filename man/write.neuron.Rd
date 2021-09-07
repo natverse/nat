@@ -12,6 +12,7 @@ write.neuron(
   ext = NULL,
   Force = FALSE,
   MakeDir = TRUE,
+  metadata = NULL,
   ...
 )
 }
