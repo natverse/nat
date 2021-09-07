@@ -158,7 +158,7 @@ test_that("we can xform hxsurf object", {
 test_that("we can add two hxsurf objects", {
   h1 = as.hxsurf(icosahedron3d(), "a")
   h2 = as.hxsurf(tetrahedron3d(), "b")
-  h3 = h1 + h2
+  h3 = c(h1, h2)
   expect_equal(h3$RegionList, c("a", "b"))
   expect_true("b" %in% names(h3$Regions))
   expect_equal(length(h3$RegionColourList), 2)

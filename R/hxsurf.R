@@ -770,8 +770,8 @@ contains_points.ashape3d<-function(obj, points,  ...) {
 #' @examples
 #' h1 = as.hxsurf(icosahedron3d(), 'a')
 #' h2 = as.hxsurf(tetrahedron3d(), 'b')
-#' h3=h1+h2
-`+.hxsurf` <- function(x, y) {
+#' h3=c(h1, h2)
+`c.hxsurf` <- function(x, y) {
   nx <- x
   nx$Vertices <- rbind(x$Vertices, y$Vertices)
   nx$Vertices[,4] <- 1:length(nx$Vertices[,4])
