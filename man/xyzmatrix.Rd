@@ -14,6 +14,7 @@
 \alias{xyzmatrix.mesh3d}
 \alias{xyzmatrix<-}
 \alias{xyzmatrix<-.character}
+\alias{xyzmatrix2str}
 \alias{xyzmatrix<-.neuron}
 \alias{xyzmatrix<-.dotprops}
 \alias{xyzmatrix<-.hxsurf}
@@ -50,6 +51,8 @@ xyzmatrix(x) <- value
 
 \method{xyzmatrix}{character}(x) <- value
 
+xyzmatrix2str(x, format = "\%g, \%g, \%g")
+
 \method{xyzmatrix}{neuron}(x) <- value
 
 \method{xyzmatrix}{dotprops}(x) <- value
@@ -77,6 +80,9 @@ xyzmatrix(x) <- value
 \code{list()}) into NAs. Default \code{TRUE}.}
 
 \item{value}{Nx3 matrix specifying new xyz coords}
+
+\item{format}{A \code{\link{sprintf}} compatible format string. The default
+will give comma separated values.}
 }
 \value{
 For \code{xyzmatrix}: Nx3 matrix containing 3D coordinates
@@ -152,6 +158,11 @@ xyzmatrix(n)<-xyzmatrix(n)
 stopifnot(isTRUE(
   all.equal(xyzmatrix(n),xyzmatrix(Cell07PNs[[1]]))
 ))
+xyzmatrix2str(kcs20[[1]])[1:3]
+xyzmatrix2str(kcs20[[1]], format="(\%g;\%g;\%g)")[1:3]
+# if you want to process the xyz locations (hear rounded to nearest nm)
+# you must extract them from complex objects yourself
+xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="\%d,\%d,\%d")[1:3]
 }
 \seealso{
 \code{\link{xyzmatrix}}

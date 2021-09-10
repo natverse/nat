@@ -479,6 +479,21 @@ xyzmatrix.mesh3d<-function(x, ...){
   sprintf(fmtstr, value[,1], value[,2], value[,3])
 }
 
+#' @rdname xyzmatrix
+#' @export
+#' @param format A \code{\link{sprintf}} compatible format string. The default
+#'   will give comma separated values.
+#' @examples
+#' xyzmatrix2str(kcs20[[1]])[1:3]
+#' xyzmatrix2str(kcs20[[1]], format="(%g;%g;%g)")[1:3]
+#' # if you want to process the xyz locations (hear rounded to nearest nm)
+#' # you must extract them from complex objects yourself
+#' xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="%d,%d,%d")[1:3]
+xyzmatrix2str <- function(x, format="%g, %g, %g") {
+  xyz=xyzmatrix(x)
+  sprintf(format, xyz[,1], xyz[,2], xyz[,3])
+}
+
 #' @export
 #' @rdname xyzmatrix
 `xyzmatrix<-.neuron`<-function(x, value){
