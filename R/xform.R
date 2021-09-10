@@ -324,13 +324,14 @@ xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
   if(is.neuron(x,Strict=FALSE))
     return(xyzmatrix(x$d[,c("X","Y","Z")]))
   
-  lengths=sapply(x, length)
+  lens=lengths(x)
   if(empty2na) {
-    if(!all(lengths %in% c(0,3)))
+    if(!all(lens %in% c(0,3)))
       stop("xyzmatrix accepts lists where each element has 0 or 3 numbers!")
-   x[lengths==0]=list(rep(NA, 3))
+    if(any(lens==0))
+      x[lens==0]=list(rep(NA, 3))
   } else {
-    if(any(lengths!=3))
+    if(any(lens!=3))
       stop("xyzmatrix accepts lists where each element has 3 numbers!")
   }
   

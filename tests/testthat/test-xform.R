@@ -185,6 +185,85 @@ test_that("can extract xyz coords from a matrix and other objects",{
   baseline=matrix(c(1:3, rep(NA, 6), 4:6, 2:4, 3:5, NA, NA, NA),
                   byrow = T, ncol = 3)
   expect_equal(xyzmatrix(df$position), xyzmatrix(baseline))
+  
+  arrowdf <- structure(
+    list(
+      id = c(
+        7393349L,
+        7416439L,
+        7415038L,
+        7415013L,
+        7415848L,
+        7415851L,
+        7415718L,
+        7415838L,
+        7415441L,
+        4282686L
+      ),
+      pt_position = structure(
+        list(
+          c(709888L, 227744L, 57160L),
+          c(710592L, 263392L, 129800L),
+          c(722528L, 234656L, 77000L),
+          c(722912L, 244032L, 65200L),
+          c(721984L, 229792L, 119560L),
+          c(722432L, 239520L, 98440L),
+          c(720000L, 263360L, 115520L),
+          c(722144L, 244224L, 110320L),
+          c(715264L, 262720L,
+            109880L),
+          c(508896L, 63808L, 119080L)
+        ),
+        ptype = integer(0),
+        class = c("arrow_list",
+                  "vctrs_list_of", "vctrs_vctr", "list")
+      )
+    ),
+    row.names = c(NA,-10L),
+    class = c("tbl_df", "tbl", "data.frame")
+  )
+  baseline = structure(
+    c(
+      709888L,
+      710592L,
+      722528L,
+      722912L,
+      721984L,
+      722432L,
+      720000L,
+      722144L,
+      715264L,
+      508896L,
+      227744L,
+      263392L,
+      234656L,
+      244032L,
+      229792L,
+      239520L,
+      263360L,
+      244224L,
+      262720L,
+      63808L,
+      57160L,
+      129800L,
+      77000L,
+      65200L,
+      119560L,
+      98440L,
+      115520L,
+      110320L,
+      109880L,
+      119080L
+    ),
+    .Dim = c(10L, 3L),
+    .Dimnames = list(NULL,
+                     c("X", "Y", "Z"))
+  )
+  expect_equal(
+    xyzmatrix(arrowdf$pt_position),
+    baseline,
+    tolerance = 1e-6
+  )
 })
 
 test_that("can replace xyz coords of a matrix",{
