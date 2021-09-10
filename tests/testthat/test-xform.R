@@ -215,8 +215,7 @@ test_that("can extract xyz coords from a matrix and other objects",{
           c(508896L, 63808L, 119080L)
         ),
         ptype = integer(0),
-        class = c("arrow_list",
-                  "vctrs_list_of", "vctrs_vctr", "list")
+        class = c("list")
       )
     ),
     row.names = c(NA,-10L),
