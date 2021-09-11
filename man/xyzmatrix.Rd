@@ -92,11 +92,15 @@ For \code{xyzmatrix<-}: Original object with modified coords
 \description{
 \code{xyzmatrix} gets coordinates from objects containing 3D vertex data
 
-\code{xyzmatrix.list} will parse a list of 3
+\code{xyzmatrix.list} will parse a list containing triplets of 3
+  numeric values.
 
 \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
   object and can also handle matrix like objects with columns named X, Y, Z
   or x, y, z.
+
+\code{xyzmatrix2str} will convert the XYZ locations associated
+  with an object to a character vector (by default comma separated).
 }
 \details{
 Note that \code{xyzmatrix} can extract or set 3D coordinates in a
@@ -158,9 +162,9 @@ xyzmatrix(n)<-xyzmatrix(n)
 stopifnot(isTRUE(
   all.equal(xyzmatrix(n),xyzmatrix(Cell07PNs[[1]]))
 ))
-xyzmatrix2str(kcs20[[1]])[1:3]
-xyzmatrix2str(kcs20[[1]], format="(\%g;\%g;\%g)")[1:3]
-# if you want to process the xyz locations (hear rounded to nearest nm)
+head(xyzmatrix2str(kcs20[[1]]))
+head(xyzmatrix2str(kcs20[[1]], format="(\%g;\%g;\%g)"))
+# if you want to process the xyz locations (here rounded to nearest nm)
 # you must extract them from complex objects yourself
 xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="\%d,\%d,\%d")[1:3]
 }

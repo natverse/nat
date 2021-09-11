@@ -318,7 +318,8 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
 #' @rdname xyzmatrix
 #' @param empty2na Whether or not to convert empty elements (\code{NULL} or
 #'   \code{list()}) into NAs. Default \code{TRUE}.
-#' @description \code{xyzmatrix.list} will parse a list of 3
+#' @description \code{xyzmatrix.list} will parse a list containing triplets of 3
+#'   numeric values.
 xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
   # special case, neuron without a class
   if(is.neuron(x,Strict=FALSE))
@@ -481,12 +482,14 @@ xyzmatrix.mesh3d<-function(x, ...){
 
 #' @rdname xyzmatrix
 #' @export
+#' @description  \code{xyzmatrix2str} will convert the XYZ locations associated
+#'   with an object to a character vector (by default comma separated).
 #' @param format A \code{\link{sprintf}} compatible format string. The default
 #'   will give comma separated values.
 #' @examples
-#' xyzmatrix2str(kcs20[[1]])[1:3]
-#' xyzmatrix2str(kcs20[[1]], format="(%g;%g;%g)")[1:3]
-#' # if you want to process the xyz locations (hear rounded to nearest nm)
+#' head(xyzmatrix2str(kcs20[[1]]))
+#' head(xyzmatrix2str(kcs20[[1]], format="(%g;%g;%g)"))
+#' # if you want to process the xyz locations (here rounded to nearest nm)
 #' # you must extract them from complex objects yourself
 #' xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="%d,%d,%d")[1:3]
 xyzmatrix2str <- function(x, format="%g, %g, %g") {
