@@ -759,3 +759,48 @@ contains_points.hxsurf<-contains_points.mesh3d
 contains_points.ashape3d<-function(obj, points,  ...) {
   alphashape3d::inashape3d(obj, points=xyzmatrix(points), ...)
 }
+
+# Concatenate two HyperSurface objects
+#
+# @param x hxsurf
+# @param y another hxsurf
+# @return new hxsurf
+# @examples
+# h1 = as.hxsurf(icosahedron3d(), 'a')
+# h2 = as.hxsurf(tetrahedron3d()+1, 'b')
+# h3=c(h1, h2)
+concat_hxsurfs <- function(x, y) {
+  nx <- x
+  nx$Vertices <- rbind(x$Vertices, y$Vertices)
+  nx$Vertices[,4] <- 1:length(nx$Vertices[,4])
+  for (reg in y$RegionList) {
+    nx$Regions[[reg]] <- nrow(x$Vertices) + y$Regions[[reg]]
+  }
+  nx$RegionList <- c(x$RegionList, y$RegionList)
+  nx$RegionColourList <- c(x$RegionColourList, y$RegionColourList)
+  nx
+}
+
+#' Concatenate HyperSurface objects
+#'
+#' @param ... multiple hxsurf objects
+#' @return new hxsurf
+#' @export
+#' @rdname hxsurf-ops
+#' @examples
+#' h1 = as.hxsurf(icosahedron3d(), 'a')
+#' h2 = as.hxsurf(tetrahedron3d()+1, 'b')
+#' h3 = as.hxsurf(icosahedron3d()+3, 'c')
+#' hc = c(h1, h2, h3)
+`c.hxsurf` <- function(...) {
+  items <- list(...)
+  if (length(items) == 1) {
+    return(items[[1]])
+  } else {
+    hxs <- items[[1]]
+    for (i in 2:length(items)) {
+      hxs <- concat_hxsurfs(hxs, items[[i]])
+    }
+    hxs
+  }
+}

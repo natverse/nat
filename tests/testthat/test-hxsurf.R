@@ -155,6 +155,15 @@ test_that("we can xform hxsurf object", {
   expect_equal(mirror(mirror(surf,mirrorAxisSize=100),mirrorAxisSize=100),surf)
 })
 
+test_that("we can add two hxsurf objects", {
+  h1 = as.hxsurf(icosahedron3d(), "a")
+  h2 = as.hxsurf(tetrahedron3d(), "b")
+  h3 = c(h1, h2)
+  expect_equal(h3$RegionList, c("a", "b"))
+  expect_true("b" %in% names(h3$Regions))
+  expect_equal(length(h3$RegionColourList), 2)
+})
+
 if(!is.null(cmtk.bindir())){
 test_that("we can xform hxsurf object using registration", {
   reg="testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list"
