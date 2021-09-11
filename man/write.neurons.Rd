@@ -41,7 +41,7 @@ examples and \code{\link{write.neuron}} for details.}
 \item{include.data.frame}{Whether to include the metadata when writing a zip
 file (it will be called \code{"write.neurons.dataframe.rds"}).}
 
-\item{metadata}{Whether to encode some metadata in the header file (curently
+\item{metadata}{Whether to encode some metadata in the header file (currently
 only supported for SWC format). Either a data.frame or \code{TRUE} to
 indicate that the attached data.frame should be written. Default
 \code{FALSE}.}

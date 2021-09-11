@@ -827,7 +827,7 @@ write.dotprops.swc<-function(x, file, ...) {
 #'   neuronlist to write.
 #' @param files Character vector or expression specifying output filenames. See
 #'   examples and \code{\link{write.neuron}} for details.
-#' @param metadata Whether to encode some metadata in the header file (curently
+#' @param metadata Whether to encode some metadata in the header file (currently
 #'   only supported for SWC format). Either a data.frame or \code{TRUE} to
 #'   indicate that the attached data.frame should be written. Default
 #'   \code{FALSE}.
