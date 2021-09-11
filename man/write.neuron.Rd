@@ -39,6 +39,11 @@ or added e.g. if the desired file name does not have an extension.}
 
 \item{MakeDir}{Whether to create directory implied by \code{file} argument.}
 
+\item{metadata}{Whether to encode some metadata in the header file (currently
+only supported for SWC format). Either a data.frame or \code{TRUE} to
+indicate that the attached data.frame should be written. Default
+\code{FALSE}.}
+
 \item{...}{Additional arguments passed to selected writer function}
 }
 \value{

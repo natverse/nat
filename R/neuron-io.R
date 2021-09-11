@@ -650,6 +650,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #'   or added e.g. if the desired file name does not have an extension.
 #' @param Force Whether to overwrite an existing file
 #' @param MakeDir Whether to create directory implied by \code{file} argument.
+#' @inheritParams write.neurons
 #' @param ... Additional arguments passed to selected writer function
 #' @return return value
 #' @export

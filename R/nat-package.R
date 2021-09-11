@@ -135,7 +135,8 @@
 #'   \code{\link{cmtk.bindir}}}
 #'
 #'   \item{\code{nat.default.neuronlist}}{ A character string naming a
-#'   neuronlist to use with the \code{\link{plot3d.character}} method}
+#'   \code{\link{neuronlist}} to use with the \code{\link{plot3d.character}}
+#'   method}
 #'
 #'   \item{\code{nat.plotengine}}{ A character string naming a plotengine to use
 #'   either 'rgl' or 'plotly'}. rgl is the default if unset, see \code{3D
