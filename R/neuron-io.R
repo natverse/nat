@@ -743,6 +743,8 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     else {
       write_metadata=TRUE
       if(!is.character(metadata)){
+        if(!requireNamespace('jsonlite', quietly = TRUE))
+          stop("Please install the jsonlite package to write metadata!")
         if(is.data.frame(metadata))
           metadata=as.list(metadata)
         metadata=jsonlite::toJSON(metadata, auto_unbox = TRUE)

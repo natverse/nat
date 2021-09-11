@@ -53,7 +53,8 @@ Suggests:
     plotly,
     readobj,
     brotli,
-    qs
+    qs,
+    jsonlite
 Enhances:
     natcpp
 License: GPL-3
