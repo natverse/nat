@@ -255,14 +255,22 @@ xyzmatrix.mesh3d<-function(x, ...){
 #'   with an object to a character vector (by default comma separated).
 #' @param format A \code{\link{sprintf}} compatible format string. The default
 #'   will give comma separated values.
+#' @param sep A character vector specifying a separator string. Overrides
+#'   \code{format} when present. The default value of \code{format} is
+#'   equivalent to \code{sep=","}.
 #' @examples
 #' head(xyzmatrix2str(kcs20[[1]]))
 #' head(xyzmatrix2str(kcs20[[1]], format="(%g;%g;%g)"))
 #' # if you want to process the xyz locations (here rounded to nearest nm)
 #' # you must extract them from complex objects yourself
 #' xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="%d,%d,%d")[1:3]
-xyzmatrix2str <- function(x, format="%g,%g,%g") {
+xyzmatrix2str <- function(x, format="%g,%g,%g", sep=NULL) {
   xyz=xyzmatrix(x)
+  if(!is.null(sep)) {
+    if(!checkmate::test_character(sep, len = 1))
+      stop("If specified, sep must be a character vector of length 1")
+    format=paste0("%g", sep, "%g", sep, "%g")
+  }
   sprintf(format, xyz[,1], xyz[,2], xyz[,3])
 }
 

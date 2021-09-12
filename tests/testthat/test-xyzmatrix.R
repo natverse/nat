@@ -169,6 +169,17 @@ test_that("can extract xyz coords of a character vector",{
   expect_equal(xyzmatrix(empty_target), xyzmatrix(rep))
 })
 
+test_that("can generate character representation of XYZ coords", {
+  m=matrix(1:6, ncol=3, byrow = T)
+  expect_equal(xyzmatrix2str(m),
+               c("1,2,3", "4,5,6"))
+  expect_equal(xyzmatrix2str(m), xyzmatrix2str(m, sep=","))
+  expect_equal(xyzmatrix2str(m, sep=", "), 
+               c("1, 2, 3", "4, 5, 6"))
+  expect_error(xyzmatrix2str(m, sep=0))
+  expect_equal(xyzmatrix2str(m, format="(%g;%g;%g)"), 
+               c("(1;2;3)", "(4;5;6)"))
+})
 
 test_that("can replace xyz coords of a data.frame",{
   # we just need to handle some edge cases with 0 row data here
