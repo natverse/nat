@@ -261,7 +261,7 @@ xyzmatrix.mesh3d<-function(x, ...){
 #' # if you want to process the xyz locations (here rounded to nearest nm)
 #' # you must extract them from complex objects yourself
 #' xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="%d,%d,%d")[1:3]
-xyzmatrix2str <- function(x, format="%g, %g, %g") {
+xyzmatrix2str <- function(x, format="%g,%g,%g") {
   xyz=xyzmatrix(x)
   sprintf(format, xyz[,1], xyz[,2], xyz[,3])
 }
