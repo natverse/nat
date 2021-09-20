@@ -1,6 +1,6 @@
-# nat (development version)
+# 1.10.3
 
-Some new features and bug fixes. Thanks to @PostPreAndCleft and @artxz for reports.
+Some new features, speed-ups and bug fixes including from @dokato and @jonmarty. Thanks to @PostPreAndCleft and @artxz for bug reports.
 
 * xyzmatrix can now get and set character columns containing coordinates in forms like "(1, 6, 3)" or "1 6 3" (#449)
 * also a bug fix for the same (#451)
@@ -12,6 +12,20 @@ Some new features and bug fixes. Thanks to @PostPreAndCleft and @artxz for repor
 * Add `xform()` and `xyzmatrix<-()` methods for `mesh3d` objects
 * Don't clean `mesh3d` objects read from ply files by default
 * `summary.neuron` now prints number of subtrees (#462, @dokato)
+* fixes in xyzmatrix.list (#484)
+* new `c.hxsurf()` method (#482, @dokato
+* Teach `write.neuron()` and `write.neurons()` to put metadata in SWC header 
+* switch to GitHub actions
+* speed-ups for `simplify_neuron()` in part through new
+  [natcpp])(https://cran.r-project.org/package=natcpp) package (#472,#473,#474)
+* Fix Strahler order fails on a simplified neuron with no branches (#464 @dokato)
+* add function for rerooting neuron `reroot.neuron()` and `reroot.neuronlist()` (#463, @dokato)
+* New `neuronlistz()` fast access to neuronlists stored as zip files (#456)
+* print method for `neuronlistz()` (#468, #466 @dokato)
+* pointsinside: defer check for Rvcg until committed to use it (#455,454)
+* Zip command line character limit error fix (#452 @jonmarty)
+
+https://github.com/natverse/nat/issues?q=closed%3A2020-09-11..2021-09-20+
 
 # nat 1.10.2
 
