@@ -95,6 +95,7 @@ reference:
     - spine
     - strahler_order
     - prune_strahler
+    - get_topo_features
     - prune_twigs
     - simplify_neuron
     - stitch_neuron
@@ -147,6 +148,7 @@ reference:
       - plot3d.hxsurf
       - subset.hxsurf
       - as.hxsurf
+      - c.hxsurf
       - as.mesh3d
       - pointsinside
   - title: 3D Plotting of Objects
