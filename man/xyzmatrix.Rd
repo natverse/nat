@@ -15,6 +15,7 @@
 \alias{xyzmatrix<-}
 \alias{xyzmatrix<-.character}
 \alias{xyzmatrix2str}
+\alias{xyzmatrix2list}
 \alias{xyzmatrix<-.neuron}
 \alias{xyzmatrix<-.dotprops}
 \alias{xyzmatrix<-.hxsurf}
@@ -52,6 +53,8 @@ xyzmatrix(x) <- value
 \method{xyzmatrix}{character}(x) <- value
 
 xyzmatrix2str(x, format = "\%g,\%g,\%g", sep = NULL)
+
+xyzmatrix2list(x)
 
 \method{xyzmatrix}{neuron}(x) <- value
 
@@ -105,6 +108,10 @@ For \code{xyzmatrix<-}: Original object with modified coords
 
 \code{xyzmatrix2str} will convert the XYZ locations associated
   with an object to a character vector (by default comma separated).
+
+\code{xyzmatrix2list} will convert the Nx3 matrix of XYZ
+  locations associated with an object to a list of length N with each element
+  a vector of length 3.
 }
 \details{
 Note that \code{xyzmatrix} can extract or set 3D coordinates in a
@@ -171,6 +178,7 @@ head(xyzmatrix2str(kcs20[[1]], format="(\%g;\%g;\%g)"))
 # if you want to process the xyz locations (here rounded to nearest nm)
 # you must extract them from complex objects yourself
 xyzmatrix2str(round(xyzmatrix(kcs20[[1]])*1000), format="\%d,\%d,\%d")[1:3]
+xyzmatrix2list(kcs20[[1]])[1:2]
 }
 \seealso{
 \code{\link{xyzmatrix}}
