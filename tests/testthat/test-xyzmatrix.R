@@ -112,6 +112,10 @@ test_that("can extract xyz coords from a matrix and other objects",{
     baseline,
     tolerance = 1e-6
   )
+  
+  xyzmatrix(arrowdf$pt_position) <- xyzmatrix(arrowdf$pt_position)+1
+  expect_equal(xyzmatrix(arrowdf$pt_position), 
+               baseline+1, tolerance = 1e-6)
 })
 
 test_that("can replace xyz coords of a matrix",{
@@ -190,6 +194,17 @@ test_that("can replace xyz coords of a data.frame",{
   expect_equal(df, df2)
   # nb generates both error and warning
   expect_warning(expect_error(xyzmatrix(df) <- 1:3))
+})
+
+
+test_that("can get/replace xyz coords in a list",{
+  xyzm <- xyzmatrix(kcs20)
+  df <- data.frame(a=1:sum(nvertices(kcs20)))
+  expect_true(is.list(xyzml <- xyzmatrix2list(kcs20)))
+  expect_true(all(lengths(xyzml)==3L))
+  df$pos=xyzmatrix2list(kcs20)
+  xyzmatrix(df$pos)=xyzmatrix(df$pos)+1
+  expect_equal(xyzmatrix(df$pos), xyzmatrix(kcs20+1))
 })
 
 

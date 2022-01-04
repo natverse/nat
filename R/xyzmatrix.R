@@ -187,6 +187,13 @@ xyzmatrix.mesh3d<-function(x, ...){
 `xyzmatrix<-`<-function(x, value) UseMethod("xyzmatrix<-")
 
 #' @export
+`xyzmatrix<-.list`<-function(x, value) {
+  if(!isTRUE(nrow(value)==length(x)))
+    stop("target list and new value have incompatible sizes")
+  xyzmatrix2list(value)
+}
+
+#' @export
 `xyzmatrix<-.default`<-function(x, value){
   # count number of elements in matrices/data.frames and vectors
   nelems <- function(y) {
@@ -272,6 +279,20 @@ xyzmatrix2str <- function(x, format="%g,%g,%g", sep=NULL) {
     format=paste0("%g", sep, "%g", sep, "%g")
   }
   sprintf(format, xyz[,1], xyz[,2], xyz[,3])
+}
+
+
+#' @rdname xyzmatrix
+#' @export
+#' @description  \code{xyzmatrix2list} will convert the Nx3 matrix of XYZ
+#'   locations associated with an object to a list of length N with each element
+#'   a vector of length 3.
+#' @examples
+#' xyzmatrix2list(kcs20[[1]])[1:2]
+xyzmatrix2list <- function(x) {
+  xyz <- unname(xyzmatrix(x))
+  ll=lapply(1:nrow(xyz), function(i) xyz[i,])
+  ll
 }
 
 #' @export
