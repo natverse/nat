@@ -1,3 +1,10 @@
+# 1.10.4
+
+* `xyzmatrix<-` can now set list columns containing coordinates in forms like
+  `list(c(1,2,3), c(4,5,6)) (#485)
+* a new function `xyzmatrix2list()` is added to achieve this output format
+  directly
+
 # 1.10.3
 
 Some new features, speed-ups and bug fixes including from @dokato and @jonmarty. Thanks to @PostPreAndCleft and @artxz for bug reports.
@@ -12,7 +19,7 @@ Some new features, speed-ups and bug fixes including from @dokato and @jonmarty.
 * Add `xform()` and `xyzmatrix<-()` methods for `mesh3d` objects
 * Don't clean `mesh3d` objects read from ply files by default
 * `summary.neuron` now prints number of subtrees (#462, @dokato)
-* fixes in xyzmatrix.list (#484)
+* fixes in `xyzmatrix.list()` (#484)
 * new `c.hxsurf()` method (#482, @dokato
 * Teach `write.neuron()` and `write.neurons()` to put metadata in SWC header 
 * switch to GitHub actions
