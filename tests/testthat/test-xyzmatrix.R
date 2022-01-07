@@ -1,4 +1,8 @@
 test_that("can extract xyz coords from a matrix and other objects",{
+  # special case of 3-vector
+  expect_equal(xyzmatrix(1:3), xyzmatrix(1,2,3))
+  expect_error(xyzmatrix(1:4))
+  
   mx=matrix(1:24,ncol=3)
   expect_equivalent(xyzmatrix(mx),mx)
   colnames(mx)=c("X","Y","Z")
