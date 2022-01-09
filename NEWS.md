@@ -4,6 +4,8 @@
   `list(c(1,2,3), c(4,5,6)) (#485)
 * a new function `xyzmatrix2list()` is added to achieve this output format
   directly
+* `xyzmatrix()` can now extract coordinates from a 3-vector like `c(1,3,5)` 
+  (#486)
 
 # 1.10.3
 
