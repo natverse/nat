@@ -118,7 +118,10 @@ Note that \code{xyzmatrix} can extract or set 3D coordinates in a
   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
   \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
   columns are character vectors, they will be correctly converted to numeric
-  (with a warning for any NA values).
+  (with a warning for any NA values). As of Jan 2021 if \code{x} is a numeric
+  vector containing exactly 3 numbers it will be parsed as a 1x3 matrix.
+  Support has also been added for setting a list containing 3-vectors in each
+  element.
 }
 \section{Getting and setting from character vectors}{
 

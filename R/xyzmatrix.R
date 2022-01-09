@@ -29,7 +29,10 @@ xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
 #'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
 #'   \bold{or} has 3 columns named X,Y,Z or x,y,z. As of Nov 2020, if these
 #'   columns are character vectors, they will be correctly converted to numeric
-#'   (with a warning for any NA values).
+#'   (with a warning for any NA values). As of Jan 2021 if \code{x} is a numeric
+#'   vector containing exactly 3 numbers it will be parsed as a 1x3 matrix.
+#'   Support has also been added for setting a list containing 3-vectors in each
+#'   element.
 #'
 #' @section Getting and setting from character vectors:
 #'
@@ -73,8 +76,13 @@ xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
       if(!any(is.na(matched_cols))) x=x[, matched_cols, drop=FALSE]
       else stop("Ambiguous column names. Unable to retrieve XYZ data")
     } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
+  } else if(is.numeric(x) && length(x)==3) {
+    x=matrix(x, ncol=3)
   }
+  
   mx=as.matrix(x)
+  if(ncol(mx)!=3)
+    stop("Cannot make an Nx3 coordinate matrix")
   if(mode(mx)=='character'){
     tryCatch(mode(mx) <- 'numeric', 
              warning=function(w, ...) warning("xyzmatrix: ", w, call. = F))
