@@ -122,12 +122,11 @@
       </header><div class="row">
   <div class="contents col-md-9">
 <div class="section level1">
-<div class="page-header"><h1 id="nat-neuroanatomy-toolbox-">nat: NeuroAnatomy Toolbox <img src="reference/figures/natverse_logo.svg" align="right" height="139"><img src="reference/figures/logo.svg" align="right" height="139"><a class="anchor" aria-label="anchor" href="#nat-neuroanatomy-toolbox-"></a>
+<div class="page-header"><h1 id="nat-neuroanatomy-toolbox">nat: NeuroAnatomy Toolbox<a class="anchor" aria-label="anchor" href="#nat-neuroanatomy-toolbox"></a>
 </h1></div>
-<!-- badges: start -->
-
+<p><img src="reference/figures/logo.svg" align="right" width="120px"><img src="reference/figures/hex-natverse_logo.png" align="right" width="120px"><!-- badges: start --><a href="https://natverse.org/" class="external-link"><img src="https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6" alt="natverse"></a> <a href="http://dx.doi.org/10.5281/zenodo.10171" class="external-link"><img src="https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg" alt="DOI"></a> <a href="https://github.com/natverse/nat/releases/latest" class="external-link"><img src="https://img.shields.io/github/release/natverse/nat.svg" alt="Release Version"></a> <a href="https://cran.r-project.org/package=nat" class="external-link"><img src="http://www.r-pkg.org/badges/version/nat" alt="CRAN_Status_Badge"></a> <a href="https://github.com/natverse/nat/actions" class="external-link"><img src="https://github.com/natverse/nat/workflows/R-CMD-check/badge.svg" alt="Build status"></a> <a href="https://codecov.io/gh/natverse/nat" class="external-link"><img src="https://codecov.io/gh/natverse/nat/branch/master/graph/badge.svg" alt="Coverage Status"></a> <a href="https://natverse.org//nat/reference/" class="external-link"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a> <a href="https://www.r-pkg.org:443/pkg/nat" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/nat?color=brightgreen" alt="Downloads"></a> <!-- badges: end --></p>
 <p>An R package for the (3D) visualisation and analysis of biological image data, especially tracings of single neurons. <strong>nat</strong> is the core package of a wider suite of neuroanatomy tools introduced at <a href="http://natverse.github.io" class="external-link uri">http://natverse.github.io</a>. <strong>nat</strong> (and its <a href="https://github.com/jefferis/AnalysisSuite" class="external-link">ancestors</a>) have been used in a number of papers from our group including:</p>
-<p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040" class="external-link"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045" class="external-link"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428" class="external-link"><img src="https://media.nature.com/full/nature-assets/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg" title="Food and Pheromone Integration" alt="Nature 2011"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025" class="external-link"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a> <a href="http://dx.doi.org/10.1016/j.neuron.2016.06.012" class="external-link"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/P1Clustering_200_sq_crop-215x215.jpg" title="NBLAST" alt="Neuron 2016"></a></p>
+<p><a href="http://dx.doi.org/10.1016/j.cell.2007.01.040" class="external-link"><img src="http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif" title="Olfactory Projection Neuron Mapping" alt="Cell 2007 Cover"></a> <a href="http://dx.doi.org/10.1016/j.cub.2010.07.045" class="external-link"><img src="http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif" title="fruitless Circuit Mapping" alt="CB 2010 Cover"></a> <a href="http://dx.doi.org/10.1038/nature10428" class="external-link"><img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fnature10428/MediaObjects/41586_2011_Article_BFnature10428_Fig4_HTML.jpg" alt="Food and Pheromone Integration" style="height: 200px;"></a> <a href="http://dx.doi.org/10.1016/j.cell.2013.11.025" class="external-link"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"></a> <a href="http://dx.doi.org/10.1016/j.neuron.2016.06.012" class="external-link"><img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/P1Clustering_200_sq_crop-215x215.jpg" title="NBLAST" alt="Neuron 2016"></a></p>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
@@ -141,7 +140,7 @@
 <span class="co"># plot some test data (?kcs20 for details)</span>
 <span class="co"># Drosophila Kenyon cells processed from raw data at http://flycircuit.tw</span>
 <span class="fu"><a href="reference/neuronlist-dataframe-methods.html">head</a></span><span class="op">(</span><span class="va">kcs20</span><span class="op">)</span>
-<span class="fu"><a href="https://dmurdoch.github.io/rgl/dev/reference/open3d.html" class="external-link">open3d</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">open3d</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">kcs20</span>, col<span class="op">=</span><span class="va">type</span><span class="op">)</span>
 <span class="co"># get help</span>
 <span class="op">?</span><span class="va">nat</span></code></pre></div>
@@ -248,19 +247,7 @@
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://natverse.org/" class="external-link"><img src="https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6" alt="natverse"></a></li>
-<li><a href="http://dx.doi.org/10.5281/zenodo.10171" class="external-link"><img src="https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg" alt="DOI"></a></li>
-<li><a href="https://github.com/natverse/nat/releases/latest" class="external-link"><img src="https://img.shields.io/github/release/natverse/nat.svg" alt="Release Version"></a></li>
-<li><a href="https://cran.r-project.org/package=nat" class="external-link"><img src="http://www.r-pkg.org/badges/version/nat" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://github.com/natverse/nat/actions" class="external-link"><img src="https://github.com/natverse/nat/workflows/R-CMD-check/badge.svg" alt="Build status"></a></li>
-<li><a href="https://codecov.io/gh/natverse/nat" class="external-link"><img src="https://codecov.io/gh/natverse/nat/branch/master/graph/badge.svg" alt="Coverage Status"></a></li>
-<li><a href="https://natverse.org//nat/reference/" class="external-link"><img src="https://img.shields.io/badge/docs-100%25-brightgreen.svg" alt="Docs"></a></li>
-<li><a href="https://www.r-pkg.org:443/pkg/nat" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/nat?color=brightgreen" alt="Downloads"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>

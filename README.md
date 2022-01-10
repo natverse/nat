@@ -1,4 +1,6 @@
-# nat: NeuroAnatomy Toolbox <img src="man/figures/natverse_logo.svg" align="right" height="139" /><img src="man/figures/logo.svg" align="right" height="139" /> 
+# nat: NeuroAnatomy Toolbox 
+<img src="man/figures/logo.svg" align="right" width="120px" />
+<img src="man/figures/hex-natverse_logo.png" align="right" width="120px" />
 <!-- badges: start -->
 [![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.org/)
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
@@ -17,7 +19,7 @@ have been used in a number of papers from our group including:
 
 [![Cell 2007 Cover](http://www.cell.com/cms/attachment/602399/4753939/cov200h.gif "Olfactory Projection Neuron Mapping")](http://dx.doi.org/10.1016/j.cell.2007.01.040)
 [![CB 2010 Cover](http://www.cell.com/cms/attachment/612001/4900537/cov200h.gif "fruitless Circuit Mapping")](http://dx.doi.org/10.1016/j.cub.2010.07.045)
-[![Nature 2011](https://media.nature.com/full/nature-assets/nature/journal/v478/n7368/carousel/nature10428-f4.2.jpg "Food and Pheromone Integration")](http://dx.doi.org/10.1038/nature10428)
+[<img src="https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fnature10428/MediaObjects/41586_2011_Article_BFnature10428_Fig4_HTML.jpg" alt="Food and Pheromone Integration" style="height: 200px;"/>](http://dx.doi.org/10.1038/nature10428)
 [<img src="http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/Switch-altered_jefferis.jpg" alt="Cell 2013 Abstract" style="height: 200px;"/>](http://dx.doi.org/10.1016/j.cell.2013.11.025)
 [![Neuron 2016](http://www2.mrc-lmb.cam.ac.uk/wordpress/wp-content/uploads/P1Clustering_200_sq_crop-215x215.jpg "NBLAST")](http://dx.doi.org/10.1016/j.neuron.2016.06.012)
 
