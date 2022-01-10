@@ -26,7 +26,7 @@ Some new features, speed-ups and bug fixes including from @dokato and @jonmarty.
 * Teach `write.neuron()` and `write.neurons()` to put metadata in SWC header 
 * switch to GitHub actions
 * speed-ups for `simplify_neuron()` in part through new
-  [natcpp])(https://cran.r-project.org/package=natcpp) package (#472,#473,#474)
+  [natcpp](https://cran.r-project.org/package=natcpp) package (#472,#473,#474)
 * Fix Strahler order fails on a simplified neuron with no branches (#464 @dokato)
 * add function for rerooting neuron `reroot.neuron()` and `reroot.neuronlist()` (#463, @dokato)
 * New `neuronlistz()` fast access to neuronlists stored as zip files (#456)
