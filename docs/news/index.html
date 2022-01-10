@@ -85,6 +85,42 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="1.10.4" id="nat-1104">nat 1.10.4<a class="anchor" aria-label="anchor" href="#nat-1104"></a></h2>
+<ul><li>
+<code>xyzmatrix&lt;-</code> can now set list columns containing coordinates in forms like `list(c(1,2,3), c(4,5,6)) (<a href="https://github.com/natverse/nat/issues/485" class="external-link">#485</a>)</li>
+<li>a new function <code><a href="../reference/xyzmatrix.html">xyzmatrix2list()</a></code> is added to achieve this output format directly</li>
+<li>
+<code><a href="../reference/xyzmatrix.html">xyzmatrix()</a></code> can now extract coordinates from a 3-vector like <code>c(1,3,5)</code> (<a href="https://github.com/natverse/nat/issues/486" class="external-link">#486</a>)</li>
+</ul><p><a href="https://github.com/natverse/nat/compare/v1.10.3" class="external-link uri">https://github.com/natverse/nat/compare/v1.10.3</a>…v1.10.4</p>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.10.3" id="nat-1103">nat 1.10.3<a class="anchor" aria-label="anchor" href="#nat-1103"></a></h2>
+<p>Some new features, speed-ups and bug fixes including from <a href="https://github.com/dokato" class="external-link">@dokato</a> and <a href="https://github.com/jonmarty" class="external-link">@jonmarty</a>. Thanks to <a href="https://github.com/PostPreAndCleft" class="external-link">@PostPreAndCleft</a> and <a href="https://github.com/artxz" class="external-link">@artxz</a> for bug reports.</p>
+<ul><li>xyzmatrix can now get and set character columns containing coordinates in forms like “(1, 6, 3)” or “1 6 3” (<a href="https://github.com/natverse/nat/issues/449" class="external-link">#449</a>)</li>
+<li>also a bug fix for the same (<a href="https://github.com/natverse/nat/issues/451" class="external-link">#451</a>)</li>
+<li>Improve reading of Simple Neurite Tracer fills (<a href="https://github.com/natverse/nat/issues/448" class="external-link">#448</a>)</li>
+<li>Fix bug <code><a href="../reference/pan3d.html">pan3d()</a></code> not found (<a href="https://github.com/natverse/nat/issues/447" class="external-link">#447</a>)</li>
+<li>Added support for multi material binary Amira surface files while fixing “Bad triangle numbers” error in <code><a href="../reference/read.hxsurf.html">read.hxsurf()</a></code> (<a href="https://github.com/natverse/nat/issues/445" class="external-link">#445</a>)</li>
+<li>
+<code>reroot</code> function added with support for neuronlist (<a href="https://github.com/natverse/nat/issues/463" class="external-link">#463</a>, <a href="https://github.com/dokato" class="external-link">@dokato</a>).</li>
+<li>Add <code><a href="../reference/xform.html">xform()</a></code> and <code>xyzmatrix&lt;-()</code> methods for <code>mesh3d</code> objects</li>
+<li>Don’t clean <code>mesh3d</code> objects read from ply files by default</li>
+<li>
+<code>summary.neuron</code> now prints number of subtrees (<a href="https://github.com/natverse/nat/issues/462" class="external-link">#462</a>, <a href="https://github.com/dokato" class="external-link">@dokato</a>)</li>
+<li>fixes in <code><a href="../reference/xyzmatrix.html">xyzmatrix.list()</a></code> (<a href="https://github.com/natverse/nat/issues/484" class="external-link">#484</a>)</li>
+<li>new <code><a href="../reference/hxsurf-ops.html">c.hxsurf()</a></code> method (<a href="https://github.com/natverse/nat/issues/482" class="external-link">#482</a>, <a href="https://github.com/dokato" class="external-link">@dokato</a></li>
+<li>Teach <code><a href="../reference/write.neuron.html">write.neuron()</a></code> and <code><a href="../reference/write.neurons.html">write.neurons()</a></code> to put metadata in SWC header</li>
+<li>switch to GitHub actions</li>
+<li>speed-ups for <code><a href="../reference/simplify_neuron.html">simplify_neuron()</a></code> in part through new <a href="https://cran.r-project.org/package=natcpp" class="external-link">natcpp</a> package (<a href="https://github.com/natverse/nat/issues/472" class="external-link">#472</a>,#473,#474)</li>
+<li>Fix Strahler order fails on a simplified neuron with no branches (<a href="https://github.com/natverse/nat/issues/464" class="external-link">#464</a> <a href="https://github.com/dokato" class="external-link">@dokato</a>)</li>
+<li>add function for rerooting neuron <code><a href="../reference/reroot.html">reroot.neuron()</a></code> and <code><a href="../reference/reroot.html">reroot.neuronlist()</a></code> (<a href="https://github.com/natverse/nat/issues/463" class="external-link">#463</a>, <a href="https://github.com/dokato" class="external-link">@dokato</a>)</li>
+<li>New <code><a href="../reference/neuronlistz.html">neuronlistz()</a></code> fast access to neuronlists stored as zip files (<a href="https://github.com/natverse/nat/issues/456" class="external-link">#456</a>)</li>
+<li>print method for <code><a href="../reference/neuronlistz.html">neuronlistz()</a></code> (<a href="https://github.com/natverse/nat/issues/468" class="external-link">#468</a>, <a href="https://github.com/natverse/nat/issues/466" class="external-link">#466</a> <a href="https://github.com/dokato" class="external-link">@dokato</a>)</li>
+<li>pointsinside: defer check for Rvcg until committed to use it (<a href="https://github.com/natverse/nat/issues/455" class="external-link">#455</a>,454)</li>
+<li>Zip command line character limit error fix (<a href="https://github.com/natverse/nat/issues/452" class="external-link">#452</a> <a href="https://github.com/jonmarty" class="external-link">@jonmarty</a>)</li>
+</ul><p><a href="https://github.com/natverse/nat/issues?q=closed%3A2020-09-11" class="external-link uri">https://github.com/natverse/nat/issues?q=closed%3A2020-09-11</a>..2021-09-20+</p>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.10.2" id="nat-1102">nat 1.10.2<a class="anchor" aria-label="anchor" href="#nat-1102"></a></h2>
 <p>This release brings support for reading, plotting and writing 3D surface meshes of neurons into line with the skeleton support. It also includes an essential fix requested by CRAN.</p>
 <p><a href="https://github.com/natverse/nat/issues?q=closed%3A2020-02-23" class="external-link uri">https://github.com/natverse/nat/issues?q=closed%3A2020-02-23</a>..2020-09-11+</p>

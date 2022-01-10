@@ -1,4 +1,4 @@
-# 1.10.4
+# nat 1.10.4
 
 * `xyzmatrix<-` can now set list columns containing coordinates in forms like
   `list(c(1,2,3), c(4,5,6)) (#485)
@@ -7,7 +7,9 @@
 * `xyzmatrix()` can now extract coordinates from a 3-vector like `c(1,3,5)` 
   (#486)
 
-# 1.10.3
+https://github.com/natverse/nat/compare/v1.10.3...v1.10.4
+
+# nat 1.10.3
 
 Some new features, speed-ups and bug fixes including from @dokato and @jonmarty. Thanks to @PostPreAndCleft and @artxz for bug reports.
 
