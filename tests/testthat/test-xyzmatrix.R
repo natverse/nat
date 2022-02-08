@@ -209,6 +209,15 @@ test_that("can get/replace xyz coords in a list",{
   df$pos=xyzmatrix2list(kcs20)
   xyzmatrix(df$pos)=xyzmatrix(df$pos)+1
   expect_equal(xyzmatrix(df$pos), xyzmatrix(kcs20+1))
+  
+  xyzml[[1]]=rep(NA,3)
+  xyzml[[2]]=list()
+  xyzml[[3]]=list()
+  baseline=rbind(matrix(ncol=3,nrow=3), xyzmatrix(xyzml[4:6]))
+  expect_equal(xyzmatrix(xyzml[1:6]), baseline)
+  expect_error(xyzmatrix(xyzml[1:6], empty2na = F))
+  xyzml[[1]]=rep(NA,2)
+  expect_error(xyzmatrix(xyzml[1:6]))
 })
 
 

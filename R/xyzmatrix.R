@@ -103,17 +103,19 @@ xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
     return(xyzmatrix(x$d[,c("X","Y","Z")]))
   
   lens=lengths(x)
-  if(empty2na) {
-    if(!all(lens %in% c(0,3)))
-      stop("xyzmatrix accepts lists where each element has 0 or 3 numbers!")
-    if(any(lens==0))
-      x[lens==0]=list(rep(NA, 3))
-  } else {
+  if(!empty2na) {
     if(any(lens!=3))
       stop("xyzmatrix accepts lists where each element has 3 numbers!")
+  } else {
+    if(!all(lens %in% c(0,3)))
+      stop("xyzmatrix accepts lists where each element has 0 or 3 numbers!")
   }
-  
   mat=matrix(unlist(x, use.names = F), ncol=3, byrow = TRUE)
+  if(any(lens==0)) {
+      mat2=matrix(nrow=length(x), ncol=3)
+      mat2[lens!=0,]=mat
+      mat=mat2
+  }
   xyzmatrix(mat)
 }
 
