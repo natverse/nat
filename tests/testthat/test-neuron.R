@@ -318,6 +318,9 @@ test_that("Stitch a neuron that has been fragmented", {
                  "Multiple origins found! Using first origin.")
   expect_equal(sample_whole$NumPoints, sample_main$NumPoints + sample_branches$NumPoints)
   
+  expect_null(stitch_neurons(neuronlist()))
+  expect_s3_class(stitch_neurons(as.neuronlist(sample_fragment[[1]])), "neuron")
+
   expect_warning(sample_whole <- stitch_neurons(sample_fragment), 
                  "Multiple origins found! Using first origin.")
   expect_equal(sample_whole$NumPoints,sample_fragment[[1]]$NumPoints + sample_fragment[[2]]$NumPoints )

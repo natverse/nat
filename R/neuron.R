@@ -1314,7 +1314,8 @@ closest_ends<-function(a, b){
 stitch_neurons <- function(x, prefer_soma=TRUE, sort=TRUE, warndist=1000) {
   #Step1: Check if it is neuronlist
   if(!is.neuronlist(x)) stop("x must be a neuronlist object!")
-  if(length(x)<=1) return(x)
+  if(length(x)==0) return(NULL)
+  if(length(x)==1) return(x[[1]]) # as function promises to return a neuron
   
   #Step2a: Check if there is a soma tag associated (this will be considered as base or master neuron)
   if(prefer_soma) {
