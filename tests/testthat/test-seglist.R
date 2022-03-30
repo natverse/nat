@@ -16,8 +16,8 @@ test_that("convert graph to seglist",{
   expect_error(as.seglist(1:10))
   
   # empty graph
-  expect_null(as.seglist(igraph::graph.empty()))
-  expect_warning(sl<-as.seglist(igraph::graph.empty(), Verbose = T))
+  expect_null(as.seglist(igraph::make_empty_graph()))
+  expect_warning(sl<-as.seglist(igraph::make_empty_graph(), Verbose = T))
   
   # simple linear graph with different vids
   g=graph(c(1, 2, 2, 3))
