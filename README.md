@@ -1,6 +1,8 @@
 # nat: NeuroAnatomy Toolbox 
+
 <img src="man/figures/logo.svg" align="right" width="120px" />
 <img src="man/figures/hex-natverse_logo.png" align="right" width="120px" />
+
 <!-- badges: start -->
 [![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.org/)
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
