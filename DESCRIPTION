@@ -5,7 +5,8 @@ Version: 1.8.18
 Authors@R: c(
     person("Gregory","Jefferis", email="jefferis@gmail.com", 
     role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0587-9355")),
-    person("James", "Manton", role = c("aut"), comment = c(ORCID = "0000-0001-9260-3156"))
+    person("James", "Manton", role = c("aut"), comment = c(ORCID = "0000-0001-9260-3156")),
+    person("Dominik", "Krzeminski", role = c("ctb"), comment = c(ORCID = "0000-0003-4568-0583"))
     )
 URL: https://github.com/natverse/nat, https://natverse.org/
 BugReports: https://github.com/natverse/nat/issues
