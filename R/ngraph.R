@@ -277,7 +277,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
-#' @importFrom igraph graph.empty add.edges E
+#' @importFrom igraph make_empty_graph add.edges E
 #' @export
 #' @examples 
 #' sg=segmentgraph(Cell07PNs[[1]])
@@ -286,7 +286,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' plot(sg, edge.arrow.size=.4, vertex.size=10)
 segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE, 
                        include.xyz=FALSE, reverse.edges=FALSE){
-  g=graph.empty()
+  g=make_empty_graph()
   pointnos=x$d$PointNo
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
   topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
@@ -294,7 +294,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
   simple_sts=lapply(sts,topntail)
   all_nodes=sort(unique(unlist(simple_sts)))
   # make empty graph with approriate nodes
-  g=graph.empty(n=length(all_nodes))
+  g=make_empty_graph(n=length(all_nodes))
   # store external pointnos
   igraph::V(g)$label=pointnos[all_nodes]
   # store original vertex ids

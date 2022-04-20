@@ -77,11 +77,11 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle degenerate cases
-  if(!is.connected(x)) stop("Graph is not fully connected!")
   if(vcount(x)==0) {
     if(Verbose) warning("Empty graph! Seglist not defined")
     return(NULL)
   }
+  if(!is.connected(x)) stop("Graph is not fully connected!")
   if(is.directed(x) && !igraph::is.dag(x)){
     stop("Graph has cycles!")
   }
