@@ -783,7 +783,7 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, metadata=NULL, ...){
   
   if(normalise.ids) {
     g=as.ngraph(x)
-    r=igraph::dfs(g, root=x$StartPoint, neimode = 'all')
+    r=igraph::dfs(g, root=x$StartPoint, mode = 'all')
     new_order=as.integer(r$order)
     df=df[new_order,]
     df$Parent=match(df$Parent, df$PointNo, nomatch = -1L)
