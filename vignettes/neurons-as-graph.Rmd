@@ -281,9 +281,9 @@ n=Cell07PNs[[1]]
 g=as.ngraph(n)
 # find the nodes distal to this point
 # nb you must set unreachable=F if you only want to get downstream nodes
-igraph::dfs(g, neimode='out', unreachable = FALSE, root=n$AxonLHEP)
+igraph::dfs(g, mode='out', unreachable = FALSE, root=n$AxonLHEP)
 # the proximal nodes back to the soma (including any branches)
-igraph::dfs(g, neimode='in', unreachable = FALSE, root=n$AxonLHEP)
+igraph::dfs(g, mode='in', unreachable = FALSE, root=n$AxonLHEP)
 ```
 
 Note that `dfs` (depth first search) provides a good way to visit all the nodes
