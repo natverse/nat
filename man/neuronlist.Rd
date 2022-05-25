@@ -34,8 +34,14 @@ nl=neuronlist()
 # slice an existing neuronlist with regular indexing
 kcs5=kcs20[1:5]
 
+# simple summary of neuronlist contents
+Cell07PNs
+# subset to make a smaller neuronlist
+Cell07PNs[1:3]
 # extract a single neuron from a neuronlist
 n1=Cell07PNs[[1]]
+n1
+
 
 # list all methods for neuronlist objects
 methods(class='neuronlist')
@@ -45,10 +51,14 @@ methods(class='neuronlist')
   \code{\link{neuronlist-dataframe-methods}}, \code{\link{neuron}}, 
   \code{\link{dotprops}}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlistfh}}, \code{\link{nlapply}},
-  \code{\link{read.neurons}}, \code{\link{write.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistfh}()},
+\code{\link{neuronlistz}()},
+\code{\link{nlapply}()},
+\code{\link{read.neurons}()},
+\code{\link{write.neurons}()}
 }
 \concept{neuronlist}

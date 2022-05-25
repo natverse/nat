@@ -38,6 +38,7 @@ library(nat)
 rgl::setupKnitr()
 library(knitr)
 opts_chunk$set(fig.width=5)
+options(nat.plotengine = 'plotly')
 ```
 
 ## Neurons and Neuronlists
@@ -57,7 +58,7 @@ We will look at two key classes that **nat** defines for handling 3D structures 
 ### Sample Data
 As an example we're going to look at a data set of olfactory projection neurons originally 
 published as Supplemental Information to accompany 
-[Jefferis, Potter et al, Cell (2007)](http://dx.doi.org/10.1016/j.cell.2007.01.040).
+[Jefferis, Potter et al, Cell (2007)](https://doi.org/10.1016/j.cell.2007.01.040).
 A subset of the original data are distributed as a sample data object with the
 **nat** package, which we can load like so.
 
@@ -65,7 +66,7 @@ A subset of the original data are distributed as a sample data object with the
 data("Cell07PNs")
 ```
 
-For more information about these data see [Cell07PNs](https://natverse.github.io/nat/reference/Cell07PNs.html).
+For more information about these data see [Cell07PNs](https://natverse.org/nat/reference/Cell07PNs.html).
 
 This `Cell07PNs` object has two classes `neuronlist` and the base class `list`
 
@@ -144,7 +145,7 @@ tailored to a particular class are called *methods*. Methods can be provided for
 pre-existing functions supplied with base R as well as new user-written functions.
 The system is quite simple. If a function `foo` is defined as a *generic* function
 then you can define new functions called `foo.bar` that will be called when
-you write `foo(x)` and `x` has class `bar.
+you write `foo(x)` and `x` has class `bar`.
 
 We already used one such method without comment, `plot.neuron`. There is a base
 R function called `plot`. nat defines a new function called `plot.neuron`, which
@@ -172,7 +173,7 @@ Note that if you write `?plot` you will get the documentation for the basic
 `plot` function supplied with R.
 
 It is also good idea to look at 
-[nat's function reference page](https://natverse.github.io/nat/reference/index.html)
+[nat's function reference page](https://natverse.org/nat/reference/index.html)
 which groups available functions into categories that often reflect the class
 of object they can work on.
 
@@ -212,7 +213,7 @@ summary(n1)
 summary(n1.lh)
 ```
 
-See [nat's function reference page](https://natverse.github.io/nat/reference/index.html)
+See [nat's function reference page](https://natverse.org/nat/reference/index.html)
 for additional functions for working with neurons.
 
 ## Neuronlists
@@ -244,6 +245,25 @@ elements in the original list, while the double bracket operator extracts the
 object at the given position. So in the figure `x[1]` is a `neuronlist` object
 of length 1, whereas `x[[1]]` is the `neuron` object at the first position in 
 the list.
+
+You can see this distinction by comparing the action of the `[` and `[[` 
+operators on the sample dataset we used earlier.
+
+
+The original `neuronlist`
+```{r}
+Cell07PNs
+```
+
+A length 1 `neuronlist`
+```{r}
+Cell07PNs[1]
+```
+
+The first element, a `neuron`.
+```{r}
+Cell07PNs[[1]]
+```
 
 ### Worked Examples
 
@@ -404,16 +424,14 @@ plot(Cell07PNs, subset=Glomerulus=="DA1", add=TRUE)
 So far we have only used 2D plots in this document, but especially for 
 interactive analysis and exploration, it is much more helpful to have 
 3D plots that can be rotated, zoomed etc. **nat** provides numerous functions 
-for [3D plots](https://natverse.github.io/nat/reference/index.html#section--d-plotting-of-objects)
+for [3D plots](https://natverse.org/nat/reference/index.html#section--d-plotting-of-objects)
 based on the [rgl package](https://cran.r-project.org/package=rgl). It is 
-actually possible to embed fully interactive 3d figures in [rmarkdown](http://rmarkdown.rstudio.com/) reports
+actually possible to embed fully interactive 3d figures in [rmarkdown](https://rmarkdown.rstudio.com/) reports
 like this one by setting the [webgl chunk option](https://CRAN.R-project.org/package=rgl/vignettes/WebGL.html).
 
-```{r, webgl=TRUE}
-clear3d()
+```{r}
+nclear3d()
 plot3d(Cell07PNs[[1]], col='red')
-# set a grey background so it's easier to see extent of the webgl canvas
-bg3d(col='lightgrey')
 ```
 
 You should be able to rotate (click and drag) and zoom (mouse wheel) this figure.
@@ -423,11 +441,12 @@ we will not use it further here. For now let's show a plot in which we
 both select a subset of neurons and colour them according to their glomerulus
 of origin.
 
-```{r, rgl=TRUE, fig.width=6}
+```{r, fig.width=6}
 # 3d plot of neurons from olfactory glomeruli beginning with a D
 # coloured by glomerulus
 rval=plot3d(Cell07PNs, subset=grepl("^D", Glomerulus), col=Glomerulus,
   lwd=2, WithNodes=FALSE)
+rval
 ```
 
 ```{r plot3d-legend, fig.width=3, fig.height=3}
@@ -503,7 +522,7 @@ with a chance level of about 25% for these 4 classes.
 
 We hope this tutorial will provide you with a good foundation for further use of
 the **nat** and related packages. Please visit the main 
-[nat README](https://natverse.github.io/nat/index.html) for
+[nat README](https://natverse.org/nat/index.html) for
 suggestions of resources to learn more and solve problems. You may also
 find that some time spent reading Hadley Wickham's [Advanced R](http://adv-r.had.co.nz/) 
 is a worthwhile investment. I recommend the first 7 chapters 

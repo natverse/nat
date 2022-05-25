@@ -1,51 +1,57 @@
 #' Read Amira surface (aka HxSurface or HyperSurface) files into hxsurf object
-#' 
-#' @details Note that when \code{RegionChoice="both"} or 
-#'   \code{RegionChoice=c("Inner", "Outer")} both polygons in inner and outer 
-#'   regions will be added to named regions. To understand the significance of 
-#'   this, consider two adjacent regions, A and B, with a shared surface. For 
-#'   the polygons in both A and B, Amira will have a patch with (say) 
-#'   InnerRegion A and OuterRegion B. This avoids duplication in the file. 
-#'   However, it might be convenient to add these polygons to both regions when 
-#'   we read them into R, so that regions A and B in our R object are both 
-#'   closed surfaces. To achieve this when \code{RegionChoice="both"}, 
-#'   \code{read.hxsurf} adds these polygons to region B (as well as region A) 
+#'
+#' @details Note that when \code{RegionChoice="both"} or
+#'   \code{RegionChoice=c("Inner", "Outer")} both polygons in inner and outer
+#'   regions will be added to named regions. To understand the significance of
+#'   this, consider two adjacent regions, A and B, with a shared surface. For
+#'   the polygons in both A and B, Amira will have a patch with (say)
+#'   InnerRegion A and OuterRegion B. This avoids duplication in the file.
+#'   However, it might be convenient to add these polygons to both regions when
+#'   we read them into R, so that regions A and B in our R object are both
+#'   closed surfaces. To achieve this when \code{RegionChoice="both"},
+#'   \code{read.hxsurf} adds these polygons to region B (as well as region A)
 #'   but swaps the order of the vertices defining the polygon to ensure that the
 #'   surface directionality is correct.
-#'   
-#'   As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more 
+#'
+#'   As a rule of thumb, stick with \code{RegionChoice="both"}. If you get more
 #'   regions than you wanted, then try switching to \code{RegionChoice="Inner"}
 #'   or \code{RegionChoice="Outer"}.
-#'   
+#'
+#'   Note that the support for reading Amira's binary mesh format (HxSurface
+#'   binary) is less mature and in particular only a few multi region mesh files
+#'   have been tested. Finally there is no support to read meshes from the newer
+#'   "Amira Binary Surface format" although such files can be read into a list
+#'   using the \code{read.amiramesh} function.
+#'
 #' @param filename Character vector defining path to file
-#' @param RegionNames Character vector specifying which regions should be read 
+#' @param RegionNames Character vector specifying which regions should be read
 #'   from file. Default value of \code{NULL} => all regions.
-#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or 
-#'   \emph{both} (default), should define the material of the patch. See 
+#' @param RegionChoice Whether the \emph{Inner} or \emph{Outer} material, or
+#'   \emph{both} (default), should define the material of the patch. See
 #'   details.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
 #' @return A list with S3 class hxsurf with elements \itemize{
-#'   
+#'
 #'   \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
-#'   
-#'   \item{Regions}{ A list with 3 column data.frames specifying triplets of 
-#'   vertices for each region (with reference to \code{PointNo} column in 
+#'
+#'   \item{Regions}{ A list with 3 column data.frames specifying triplets of
+#'   vertices for each region (with reference to \code{PointNo} column in
 #'   \code{Vertices} element)}
-#'   
-#'   \item{RegionList}{ Character vector of region names (should match names of 
+#'
+#'   \item{RegionList}{ Character vector of region names (should match names of
 #'   \code{Regions} element)}
-#'   
+#'
 #'   \item{RegionColourList}{ Character vector specifying default colour to plot
 #'   each region in R's \code{\link{rgb}} format}
-#'   
+#'
 #'   }
 #' @export
 #' @seealso \code{\link{plot3d.hxsurf}, \link{rgb}}
 #' @aliases hxsurf
 #' @family amira
 #' @family hxsurf
-#' @examples 
+#' @examples
 #' \dontrun{
 #' read.hxsurf("my.surf", RegionChoice="both")
 #' }
@@ -54,7 +60,23 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   # Check for header confirming file type
   firstLine=readLines(filename,n=1)
   if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+ascii",firstLine,ignore.case=T,perl=T))){
-    stop(filename," does not appear to be an Amira HyperSurface ASCII file!")
+    if(!any(grep("#\\s+hypersurface\\s+[0-9.]+\\s+binary",firstLine,ignore.case=T,perl=T))){
+      stop(filename," does not appear to be an Amira HyperSurface file!")
+    }
+    res = tryCatch(
+      read.hxsurf.bin(
+        filename = filename,
+        FallbackRegionCol = FallbackRegionCol,
+        Verbose = Verbose
+      ),
+      error = function(e)
+        stop(
+          "Support for reading binary Amira HyperSurface is still limited.\n",
+          "See https://github.com/natverse/nat/issues/429. Detailed error message",
+          as.character(e)
+        )
+    )
+    return(res)
   }
   initialcaps<-function(x) {substr(x,1,1)=toupper(substr(x,1,1)); x}
   RegionChoice=match.arg(initialcaps(RegionChoice), c("Inner", "Outer", "Both"), 
@@ -162,6 +184,123 @@ read.hxsurf<-function(filename,RegionNames=NULL,RegionChoice="both",
   return(d)
 }
 
+read.hxsurf.bin <- function(filename, return.raw=FALSE, FallbackRegionCol='grey', Verbose=FALSE) {
+  con=file(filename, open='rb')
+  on.exit(close(con))
+  vertex_regex='^Vertices \\d+$'
+  
+  # read header
+  h <- character()
+  line <- readLines(con, n=1)
+  while(!isTRUE(grepl(vertex_regex, line))) {
+    h=c(h, line)
+    line <- readLines(con, n=1)
+  }
+  
+  params=.ParseAmirameshParameters(h)
+  materials=names(params$Parameters$Materials)
+
+  # read data blocks
+  data_regex='^\\s*(\\w+)\\s+(\\d+)$'
+  
+  parse_data_line <- function(line) {
+    tryCatch({
+      res=stringr::str_match(line, data_regex)
+      n=suppressWarnings(as.integer(res[,3]))
+      checkmate::assert_int(n)
+      label=checkmate::assert_character(res[,2])
+      names(n)=label
+      n
+    }, error=function(e) {NA_integer_})
+  }
+  
+  data <- list(header=h, params=params)
+  
+  curpatch=NA_integer_
+  while(TRUE) {
+    if(length(line)<1) break
+    if(is.finite(curpatch)) {
+      if(length(data[['PatchInfo']])<curpatch)
+        data[['PatchInfo']][[curpatch]]=line
+      else 
+        data[['PatchInfo']][[curpatch]]=c(data[['PatchInfo']][[curpatch]], line)
+    } else {
+      data[['header']]=c(data[["header"]], line)
+    }
+    # is this a closing bracket at the end of a section
+    firstchar=substr(trimws(line), 1, 1)
+    if(isTRUE(firstchar=='}') && is.finite(curpatch)) curpatch=curpatch+1
+    
+    n=parse_data_line(line)
+    if(is.na(n) || n==0) {
+      line <- readLines(con, 1)
+      next
+    }
+    label=names(n)
+    if(label=='Vertices') {
+      chunk=readBin(con, what='numeric', n=n*3, size=4, endian = 'big')
+      data[['Vertices']]=matrix(chunk, ncol=3, byrow = T)
+    } else if (label=='Triangles') {
+      npatches=length(data[['Patches']])
+      chunk=readBin(con, what='integer', n=n*3, size=4, endian = 'big')
+      data[['Patches']][[npatches+1]]=matrix(chunk, ncol=3, byrow = T)
+    } else if(label=='Patches') {
+      curpatch=1
+      if(is.null(data[['Patches']])) data[['Patches']]=list()
+      if(is.null(data[['PatchInfo']])) data[['PatchInfo']]=list()
+    } else {
+      stop("Error parsing binary hxsurf file!")
+    }
+    
+    line <- readLines(con, 1)
+  }
+  if(return.raw)
+    data
+  else parse.hxsurf.bin(data, FallbackRegionCol=FallbackRegionCol, Verbose=Verbose)
+}
+
+# FIXME: Ideally this would be harmonised with the code for read.hxsurf to 
+# avoid duplication
+parse.hxsurf.bin <- function(data, FallbackRegionCol, Verbose) {
+  materials=data$params$Parameters$Materials
+  d=list()
+  d[['Vertices']]=as.data.frame(xyzmatrix(data$Vertices))
+  d[['Vertices']][,'PointNo']=seq_len(nrow(d[['Vertices']]))
+  
+  d$Regions=list()
+  for(p in seq_along(data$Patches)) {
+    thispatch=as.data.frame(data$Patches[[p]])
+    pi=.ParseAmirameshParameters(data$PatchInfo[[p]])
+    RegionName <- pi$InnerRegion
+    
+    if(RegionName%in%names(d$Regions)){
+      # add to the old patch
+      if(Verbose) cat("Adding to patch name",RegionName,"\n")
+      d[['Regions']][[RegionName]]=rbind(d[['Regions']][[RegionName]],thispatch)
+    } else {
+      # new patch
+      if(Verbose) cat("Making new patch name",RegionName,"\n")
+      d[['Regions']][[RegionName]]=thispatch
+    }
+  }
+  
+  d$RegionList=names(d$Regions)
+  
+  d$RegionColourList <- vector(length=length(d$RegionList))
+  for(regionName in d$RegionList) {
+    rgbValues <-  materials[[regionName]][['Color']]
+    if(isTRUE(length(rgbValues)==3)) {
+      color <- rgb(rgbValues[[1]], rgbValues[[2]], rgbValues[[3]])
+    } else {
+      color <- FallbackRegionCol
+    } 
+    d$RegionColourList[which(d$RegionList == regionName)] <- color
+  }
+  class(d) <- c('hxsurf',class(d))
+  return(d)
+}
+
+
 #' Write Amira surface (aka HxSurface or HyperSurface) into .surf file.
 #' 
 #' @param surf hxsurf object to write to file.
@@ -219,9 +358,9 @@ write.hxsurf <- function(surf, filename) {
 #'   function that will be called with the number of materials to plot. When
 #'   \code{NULL} (default) will use material colours defined in Amira (if
 #'   available), or \code{rainbow} otherwise.
-#' @param ... Additional arguments passed to
+#' @param ... Additional arguments passed to \code{triangles3d}
+#' @inheritParams plot3d.neuronlist
 #' @export
-#' @method plot3d hxsurf
 #' @seealso \code{\link{read.hxsurf}}
 #' @family hxsurf
 #' @examples 
@@ -230,18 +369,27 @@ write.hxsurf <- function(surf, filename) {
 #' 
 #' \donttest{
 #' # plot only vertical lobe
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, materials="VL", alpha=0.3)
 #' 
 #' # everything except vertical lobe
-#' clear3d()
+#' nclear3d()
 #' plot3d(MBL.surf, alpha=0.3, 
 #'   materials=grep("VL", MBL.surf$RegionList, value = TRUE, invert = TRUE))
 #' }
-plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
-  # skip so that the scene is updated only once per hxsurf object
-  skip <- par3d(skipRedraw = TRUE)
-  on.exit(par3d(skip))
+plot3d.hxsurf<-function(x, materials=NULL, col=NULL, gridlines = FALSE, ...,
+                        plotengine = getOption('nat.plotengine')){
+  plotengine <- check_plotengine(plotengine)
+  if (plotengine == 'rgl'){
+    # skip so that the scene is updated only once per hxsurf object
+    skip <- par3d(skipRedraw = TRUE)
+    on.exit(par3d(skip))
+  } 
+  if (plotengine == 'plotly') {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
   
   materials=subset(x, subset = materials, rval='names')
   
@@ -255,13 +403,40 @@ plot3d.hxsurf<-function(x, materials=NULL, col=NULL, ...){
   if(length(col)==1 && length(materials)>1) col=rep(col,length(materials))
   names(col)=materials
   rlist=list()
-  for(mat in materials){
+  for(mat in materials) {
     # get order triangle vertices
     tri=as.integer(t(x$Regions[[mat]]))
-    rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
-                             x[['Vertices']]$Z[tri],col=col[mat],...)
+    if (plotengine == 'rgl'){
+      rlist[[mat]]=triangles3d(x[['Vertices']]$X[tri],x[['Vertices']]$Y[tri],
+                               x[['Vertices']]$Z[tri],col=col[mat], ...)
+    } else {
+      tmpx <- as.mesh3d.hxsurf(x, Regions = mat)
+      psh <- psh %>% 
+        plotly::add_trace(x = tmpx$vb[1,], 
+                          y = tmpx$vb[2,], 
+                          z = tmpx$vb[3,],
+                          i = tmpx$it[1,]-1, 
+                          j = tmpx$it[2,]-1, 
+                          k = tmpx$it[3,]-1,
+                          type = "mesh3d", opacity = opacity,
+                          hovertext=mat,
+                          hoverinfo="x+y+z+text",
+                          facecolor = rep(col[mat],
+                                          length(tmpx$it[1,])))
+    }
   }
-  invisible(rlist)
+  if (plotengine == 'rgl'){
+      invisible(rlist)
+  } else {
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
+  }
 }
 
 #' Convert an object to an rgl mesh3d
@@ -370,7 +545,6 @@ as.hxsurf.mesh3d <- function(x, region="Interior", col=NULL, ...) {
 #'   the matching regions
 #' @param ... Additional parameters (currently ignored)
 #' @return subsetted hxsurf object
-#' @method subset hxsurf
 #' @export
 #' @family hxsurf
 #' @examples
@@ -381,8 +555,8 @@ as.hxsurf.mesh3d <- function(x, region="Interior", col=NULL, ...) {
 #' plot3d(kcs20)
 #' 
 #' # there is also a shortcut for this
-#' clear3d()
-#' plot3d(MBL.surf, "VL", alpha=0.3)
+#' nclear3d()
+#' plot3d(MBL.surf, subset = "VL", alpha=0.3)
 #' }
 subset.hxsurf<-function(x, subset=NULL, drop=TRUE, rval=c("hxsurf","names"), ...){
   rval=match.arg(rval)
@@ -535,10 +709,7 @@ pointsinside<-function(x, surf, ...) UseMethod('pointsinside')
 #' @rdname pointsinside
 pointsinside.default<-function(x, surf, ..., rval=c('logical','distance', 
                                                     'mesh3d', 'consistent_logical')) {
-  if(!requireNamespace('Rvcg', quietly = TRUE))
-    stop("Please install suggested library Rvcg to use pointsinside")
   rval=match.arg(rval)
-  
   if(rval=='logical') {
     # use optimised contains_points approach
     return(contains_points(surf, x, ...))
@@ -548,6 +719,9 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance',
       stop("Only logical return values are currently possible ",
            "with boundingbox objects!")
   }
+  
+  if(!requireNamespace('Rvcg', quietly = TRUE))
+    stop("Please install suggested library Rvcg to use pointsinside")
   
   if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
@@ -584,4 +758,49 @@ contains_points.hxsurf<-contains_points.mesh3d
 
 contains_points.ashape3d<-function(obj, points,  ...) {
   alphashape3d::inashape3d(obj, points=xyzmatrix(points), ...)
+}
+
+# Concatenate two HyperSurface objects
+#
+# @param x hxsurf
+# @param y another hxsurf
+# @return new hxsurf
+# @examples
+# h1 = as.hxsurf(icosahedron3d(), 'a')
+# h2 = as.hxsurf(tetrahedron3d()+1, 'b')
+# h3=c(h1, h2)
+concat_hxsurfs <- function(x, y) {
+  nx <- x
+  nx$Vertices <- rbind(x$Vertices, y$Vertices)
+  nx$Vertices[,4] <- 1:length(nx$Vertices[,4])
+  for (reg in y$RegionList) {
+    nx$Regions[[reg]] <- nrow(x$Vertices) + y$Regions[[reg]]
+  }
+  nx$RegionList <- c(x$RegionList, y$RegionList)
+  nx$RegionColourList <- c(x$RegionColourList, y$RegionColourList)
+  nx
+}
+
+#' Concatenate HyperSurface objects
+#'
+#' @param ... multiple hxsurf objects
+#' @return new hxsurf
+#' @export
+#' @rdname hxsurf-ops
+#' @examples
+#' h1 = as.hxsurf(icosahedron3d(), 'a')
+#' h2 = as.hxsurf(tetrahedron3d()+1, 'b')
+#' h3 = as.hxsurf(icosahedron3d()+3, 'c')
+#' hc = c(h1, h2, h3)
+`c.hxsurf` <- function(...) {
+  items <- list(...)
+  if (length(items) == 1) {
+    return(items[[1]])
+  } else {
+    hxs <- items[[1]]
+    for (i in 2:length(items)) {
+      hxs <- concat_hxsurfs(hxs, items[[i]])
+    }
+    hxs
+  }
 }

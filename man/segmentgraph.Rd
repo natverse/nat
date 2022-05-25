@@ -4,9 +4,14 @@
 \alias{segmentgraph}
 \title{Return a simplified segment graph for a neuron}
 \usage{
-segmentgraph(x, weights = TRUE, segids = FALSE,
-  exclude.isolated = FALSE, include.xyz = FALSE,
-  reverse.edges = FALSE)
+segmentgraph(
+  x,
+  weights = TRUE,
+  segids = FALSE,
+  exclude.isolated = FALSE,
+  include.xyz = FALSE,
+  reverse.edges = FALSE
+)
 }
 \arguments{
 \item{x}{neuron}

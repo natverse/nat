@@ -17,7 +17,6 @@ xformpoints<-function(reg, points, ...) {
 #' @details If a list of transformations is passed in, these transformations are
 #' performed in sequence order, such that \code{xformpoints(c(a,b,c), x) ==
 #' xformpoints(c, (xformpoints(b, xformpoints(a, x))))}
-#' @method xformpoints character
 #' @export
 #' @rdname xformpoints
 xformpoints.character<-function(reg, points, ...){
@@ -37,7 +36,6 @@ xformpoints.character<-function(reg, points, ...){
   xformpoints(reg, points, ...)
 }
 
-#' @method xformpoints cmtkreg
 #' @details Note that the direction of CMTK registrations can be the source of
 #'   much confusion. This is because CMTK defines the \emph{forward} direction
 #'   as the transform required to reformat an image in \emph{sample} (floating)
@@ -61,7 +59,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
                               direction=NULL,
                               FallBackToAffine=FALSE, ...){
   if(is.list(reg)){
-    # we've been given an in memory list specifying registation parameters
+    # we've been given an in memory list specifying registration parameters
     # we need to write this out to a temporary file
     regfile=as.cmtkreg(tempfile(fileext=".list"))
     on.exit(unlink(regfile,recursive=TRUE))
@@ -84,7 +82,7 @@ xformpoints.cmtkreg<-function(reg, points, transformtype=c('warp','affine'),
   if(length(reg)>1){
     # need to recycle manually
     if(length(direction)==1) direction=rep(direction, length(reg))
-    if(!cmtk.version(minimum = '3.2.2')){
+    if(isFALSE(cmtk.version(minimum = '3.2.2'))){
     # there is a bug in applying compound registrations in CMTK<=3.2.1
     # see https://github.com/jefferis/cmtk/commit/209168d892d8980e47
       for(i in seq_along(reg)) {
@@ -174,7 +172,6 @@ xformpoints.reglist<-function(reg, points, ...){
   }
 }
 
-#' @method xformpoints default
 #' @export
 #' @rdname xformpoints
 xformpoints.default<-function(reg, points, ...){

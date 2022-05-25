@@ -1,12 +1,52 @@
 # tests for cmtk command line tools
 
-if(is.null(cmtk.bindir())){
-  message("skipping cmtk command line tool tests since CMTK is not installed")
-} else {
-
 context("cmtk command line tools")
 
-test_that("cmtk.bindir",{
+test_that("cmtk.bindir works when CMTK is in the path",{
+  # We're going to set up some fake directories to look like
+  # different kinds of CMTK installation
+  
+  td <- tempfile(pattern = 'nat-cmtk-test')
+  makeexecfile <- function(p) {
+    fullp <- file.path(td, p)
+    dir.create(dirname(fullp), recursive = TRUE, showWarnings = FALSE)
+    file.create(fullp)
+    Sys.chmod(fullp, mode = "777")
+    # to ensure no funny business when temp path is not canonical
+    normalizePath(fullp)
+  }
+  
+  op=options(nat.cmtk.bindir=NULL)
+  on.exit(options(op))
+
+  bindir=dirname(makeexecfile("bin/cmtk"))
+  path=Sys.getenv('PATH')
+  Sys.setenv('PATH'=paste0(bindir,":",path))
+  on.exit(Sys.setenv('PATH'=path), add = TRUE)
+  
+  on.exit(unlink(td, recursive = TRUE), add=TRUE)
+  gregxform=makeexecfile('bin/gregxform')
+  expect_equal(normalizePath(cmtk.bindir(check = TRUE)), bindir)
+  
+  # Now check that things fail if we can't find CMTK tools based on wrapper
+  unlink(gregxform)
+  # make sure it doesn't look anywhere else for this test as there
+  # may be another valid...
+  expect_error(cmtk.bindir(check = TRUE, extradirs = NULL))
+  # ok now put tool in the correct relative location
+  bindir2=dirname(makeexecfile('lib/cmtk/bin/gregxform'))
+  expect_equal(normalizePath(cmtk.bindir(check = TRUE)), bindir2)
+  
+  # shouldn't be necessary but ...
+  # op=options(nat.cmtk.bindir=NULL)
+})
+
+
+if(is.null(cmtk.bindir())){
+  message("skipping full cmtk command line tool tests since CMTK is not installed")
+} else {
+
+test_that("cmtk.bindir works on this machine",{
   # nb this gets called in plenty of cases, we just need to check the case where
   # is actually looking for the path.
   op=options(nat.cmtk.bindir=NULL)

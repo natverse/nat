@@ -1,6 +1,100 @@
-# nat (development version)
+# nat 1.10.4
+
+* `xyzmatrix<-` can now set list columns containing coordinates in forms like
+  `list(c(1,2,3), c(4,5,6)) (#485)
+* a new function `xyzmatrix2list()` is added to achieve this output format
+  directly
+* `xyzmatrix()` can now extract coordinates from a 3-vector like `c(1,3,5)` 
+  (#486)
+
+https://github.com/natverse/nat/compare/v1.10.3...v1.10.4
+
+# nat 1.10.3
+
+Some new features, speed-ups and bug fixes including from @dokato and @jonmarty. Thanks to @PostPreAndCleft and @artxz for bug reports.
+
+* xyzmatrix can now get and set character columns containing coordinates in forms like "(1, 6, 3)" or "1 6 3" (#449)
+* also a bug fix for the same (#451)
+* Improve reading of Simple Neurite Tracer fills (#448)
+* Fix bug `pan3d()` not found (#447)
+* Added support for multi material binary Amira surface files while fixing
+  "Bad triangle numbers" error in `read.hxsurf()` (#445)
+* `reroot` function added with support for neuronlist (#463, @dokato).
+* Add `xform()` and `xyzmatrix<-()` methods for `mesh3d` objects
+* Don't clean `mesh3d` objects read from ply files by default
+* `summary.neuron` now prints number of subtrees (#462, @dokato)
+* fixes in `xyzmatrix.list()` (#484)
+* new `c.hxsurf()` method (#482, @dokato
+* Teach `write.neuron()` and `write.neurons()` to put metadata in SWC header 
+* switch to GitHub actions
+* speed-ups for `simplify_neuron()` in part through new
+  [natcpp](https://cran.r-project.org/package=natcpp) package (#472,#473,#474)
+* Fix Strahler order fails on a simplified neuron with no branches (#464 @dokato)
+* add function for rerooting neuron `reroot.neuron()` and `reroot.neuronlist()` (#463, @dokato)
+* New `neuronlistz()` fast access to neuronlists stored as zip files (#456)
+* print method for `neuronlistz()` (#468, #466 @dokato)
+* pointsinside: defer check for Rvcg until committed to use it (#455,454)
+* Zip command line character limit error fix (#452 @jonmarty)
+
+https://github.com/natverse/nat/issues?q=closed%3A2020-09-11..2021-09-20+
+
+# nat 1.10.2
+
+This release brings support for reading, plotting and writing 3D surface meshes
+of neurons into line with the skeleton support. It also includes an essential
+fix requested by CRAN.
+
+https://github.com/natverse/nat/issues?q=closed%3A2020-02-23..2020-09-11+
+
+* Fix test failure on R-devel (R 4.1) for `c.neuronlist` (#444)
+* Add `print.neuron()`, `print.neuronlist()`,`print.dotprops()` methods #443
+* Better support for reading / plotting neuron meshes (#441, #442)
+* Bug in `xyzmatrix()` for 0 row data.frames (#433)
+* Updated parameter for toggling grid lines in plotly (#432)
+* Add support for Amira hxsurf binary format to `read.hxsurf()` (#431)
+* improve error message for `cmtk.version()` (#430)
+* Remaining items to move from elmr (#428)
+* Turn off grid lines when using plotly engine (#427)
+* Move features to nat from other packages (#423)
+* Add support for thin plate spine transformations via `tpsreg()` (#289)
+
+# nat 1.10.1
+
+We are bumping a whole version point because of a large number of new functions.
+Note that 1.10.0 was never formally released.
+
+* Add functions from elmr package including 
+  pruning: `prune_twigs()`, `simplify_neuron()`, 
+  stitching neuron fragments: `stitch_neuron()`, `stitch_neurons()`, `stitch_neurons_mst()`, 
+  thin plate splines registration: `tpsreg()`
+  (#423 by @SridharJagannathan)
+* Add large collection of morphometry functions (#404 by @alexanderbates)
+* Add collection of pruning functions (#403 by @alexanderbates)
+* remove `overlap()` which duplicates `overlap_score()` (#426)
+* Revamp `pointsinside()` (#353)
+* Use progress package for auto progress bars (#275)
+* Implement 3d-wireframe plot in plotly (#421 by @SridharJagannathan)
+* Teach dotprops.character to handle multiple input files (#420)
+* Add `xyzmatrix.shapelist3d()` method (#419)
+* `xyzmatrix.mesh3d()` should have colnames XYZ (#418)
+* Teach `write.neuron()` to set label column of soma when writing SWCs (#415)
+* Setting fig size missing in vignette plotly.Rmd (#417 by @mmc46)
+* Fix as.seglist.igraph is slow #425
+* Neuron: fix use of "ties" parameter in `approx()` call bug (#416)
+* Fix scroll to zoom does not work using `nopen3d()` (#413)
+
+# nat 1.9.2
 
 * switch to https://github.com/natverse/nat
+* Support for plotly graphics engine (#409, #410)
+* Teach dotprops.character to handle multiple input files (#420)
+* Fix bug in nmapply with progress (#412)
+* Fix warning in resample.neuron when there are identical points (#405)
+* Fix fig size missing in vignette plotly.Rmd (#417)
+* Add `xyzmatrix()`, `xyzmatrix<-()` and`nvertices()` methods for `shapelist3d`
+  thereby enabling these rgl objects containing multiple meshes to be 
+  transformed. Currently most relevant when fetching neuroglancer meshes (#419).
+* `xyzmatrix.mesh3d()` now has colnames XYZ for consistency (#418)
 
 # nat 1.9.1
 

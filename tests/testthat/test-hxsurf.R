@@ -18,13 +18,25 @@ test_that("we can read hxsurf object", {
   m=data.frame(name = regions, id = 1:19, col = cols, row.names=regions, 
                stringsAsFactors = FALSE)
   expect_equal(materials(surf), m)
+  
+  options(nat.plotengine='rgl')
   open3d()
   plot3d(surf,col='red',alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,alpha=0.2)
-  clear3d()
+  nclear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
   rgl.close()
+  
+  #For plotly..
+  options(nat.plotengine='plotly')
+  openplotlyscene()
+  plot3d(surf,col='red',alpha=0.2)
+  nclear3d()
+  plot3d(surf,opacity=0.2)
+  nclear3d()
+  plot3d(surf,col=rainbow,alpha=0.2)
+  nclear3d()
 })
 
 test_that("we fail for bad surface files", {
@@ -36,11 +48,12 @@ test_that("we fail for bad surface files", {
                "does not appear to be an Amira HyperSurface")
 })
 
-test_that("we can use fallback colour for surfaces", {
+test_that("we can use fallback colour for surfaces& binary reading", {
   tet.hxsurf=read.hxsurf("testdata/amira/tetrahedron.surf")
   tet.hxsurf2=read.hxsurf("testdata/amira/tetrahedron_nocol.surf",
                           FallbackRegionCol = '#FF0000')
   expect_equal(tet.hxsurf2, tet.hxsurf)
+  expect_equal(read.hxsurf("testdata/amira/tetrahedron-bin.surf"), tet.hxsurf)
 })
 
 test_that("we can cope with Color line preceding id", {
@@ -113,6 +126,12 @@ test_that("we can convert boundingbox to rgl::mesh3d",{
   expect_equal(as.mesh3d(bb), rgl::cube3d())
 })
 
+test_that("we can convert use xyzmatrix on shapelist3d object",{
+  m=as.mesh3d(MBL.surf)
+  expect_equal(xyzmatrix(shapelist3d(m, plot=F)),
+               xyzmatrix(m))
+})
+
 test_that("we can convert ashape3d to rgl::mesh3d",{
   skip_if_not_installed('alphashape3d')
   kcs20.a=alphashape3d::ashape3d(xyzmatrix(kcs20), alpha = 10)
@@ -122,7 +141,6 @@ test_that("we can convert ashape3d to rgl::mesh3d",{
   # also shows that we can use the alphashape directly in pointsinside
   expect_true(all(pointsinside(kcs20, kcs20.a)))
 })
-
 
 test_that("we can save and re-read hxsurf object", {
   surffile <- tempfile()
@@ -135,6 +153,15 @@ test_that("we can save and re-read hxsurf object", {
 test_that("we can xform hxsurf object", {
   #' tests both mirror, xform and xyzmatrix methods all in one go
   expect_equal(mirror(mirror(surf,mirrorAxisSize=100),mirrorAxisSize=100),surf)
+})
+
+test_that("we can add two hxsurf objects", {
+  h1 = as.hxsurf(icosahedron3d(), "a")
+  h2 = as.hxsurf(tetrahedron3d(), "b")
+  h3 = c(h1, h2)
+  expect_equal(h3$RegionList, c("a", "b"))
+  expect_true("b" %in% names(h3$Regions))
+  expect_equal(length(h3$RegionColourList), 2)
 })
 
 if(!is.null(cmtk.bindir())){

@@ -69,6 +69,35 @@ test_that("we can load a previously created on disk neuronlistfh representation"
   attr(kcs20fh2,'file')=NULL
   expect_equal(kcs20fh,kcs20fh2)
   expect_equal(as.neuronlist(kcs20fh),as.neuronlist(kcs20fh2))
+  
+  # DB1 format
+  kcs20.db1 <- as.neuronlistfh(kcs20, dbdir=file.path(fhpath, 'db1'), dbClass='DB1')
+  expect_equal(kcs20.db1[[1]], kcs20[[1]])
+  expect_equal(as.neuronlist(kcs20.db1), kcs20)
+  # make sure we can replace an element (identically in this case)
+  expect_silent(kcs20.db1[[1]] <- kcs20[[1]])
+  expect_equal(as.neuronlist(kcs20.db1), kcs20)
+  
+  # save to a new location 
+  path <- write.neuronlistfh(kcs20.db1)
+  kcs20.db1.resave=read.neuronlistfh(path)
+  all.equal(as.neuronlist(kcs20.db1),as.neuronlist(kcs20.db1.resave))
+  
+  expect_error(as.neuronlistfh(kcs20[1:19], 
+                               dbdir=file.path(fhpath, 'data'), 
+                               dbClass='DB1'))
+  
+  kcs19 <- as.neuronlistfh(kcs20[1:19], dbdir=file.path(fhpath, 'kcs19'), dbClass='DB1')
+  expect_silent(kcs19[[names(kcs20)[20]]] <- kcs20[[20]])
+  expect_is(kcs19, 'neuronlistfh')
+  expect_equivalent(nl <- as.neuronlist(kcs19), kcs20)
+  # fix the last row of the attached metadata
+  nl[20,]=kcs20[20,]
+  expect_equal(nl, kcs20)
+  
+  kcs18 <- as.neuronlistfh(kcs20[1:18], dbdir=file.path(fhpath, 'kcs18'), dbClass='DB1')
+  expect_is(kc20fh <- c(kcs18, kcs20[19], kcs20[20]), 'neuronlistfh')
+  expect_equal(as.neuronlist(kc20fh), kcs20)
 })
 
 test_that("we can create a neuronlistfh with a hashmap",{

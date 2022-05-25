@@ -56,6 +56,12 @@ test_that("(is.)cmtkreg works ok for files", {
 
 test_that("we can plot a CMTK registration",{
   skip_on_cran()
+  op <- options(nat.plotengine='rgl')
+  on.exit(options(op))
   plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'))
-  clear3d()
+  nclear3d()
+  
+  options(nat.plotengine='plotly')
+  plot3d(cmtkreg('testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/'))
+  nclear3d()
 })

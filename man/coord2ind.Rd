@@ -3,12 +3,21 @@
 \name{coord2ind}
 \alias{coord2ind}
 \alias{coord2ind.default}
-\title{Find 1D indices into a 3D image given spatial coordinates}
+\title{Find 1D or 3D voxel indices into a 3D image given spatial coordinates}
 \usage{
 coord2ind(coords, ...)
 
-\method{coord2ind}{default}(coords, imdims, voxdims = NULL,
-  origin = NULL, aperm, Clamp = FALSE, CheckRanges = !Clamp, ...)
+\method{coord2ind}{default}(
+  coords,
+  imdims,
+  voxdims = NULL,
+  origin = NULL,
+  linear.indices = TRUE,
+  aperm = NULL,
+  Clamp = FALSE,
+  CheckRanges = !Clamp,
+  ...
+)
 }
 \arguments{
 \item{coords}{spatial coordinates of image voxels.}
@@ -22,14 +31,18 @@ coord2ind(coords, ...)
 
 \item{origin}{the origin of the 3D image.}
 
+\item{linear.indices}{Whether or not to convert the voxel indices into a 
+linear 1D form (the default) or to keep as 3D indices.}
+
 \item{aperm}{permutation order for axes.}
 
-\item{Clamp}{???}
+\item{Clamp}{Whether or not to map out of range coordinates to the nearest 
+in range index (default \code{FALSE})}
 
 \item{CheckRanges}{whether to check if coordinates are out of range.}
 }
 \description{
-Find 1D indices into a 3D image given spatial coordinates
+Find 1D or 3D voxel indices into a 3D image given spatial coordinates
 }
 \details{
 \code{coord2ind} is designed to cope with any user-defined class for

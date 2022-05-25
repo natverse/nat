@@ -4,8 +4,19 @@
 \alias{write.neurons}
 \title{Write neurons from a neuronlist object to individual files, or a zip archive}
 \usage{
-write.neurons(nl, dir, format = NULL, subdir = NULL,
-  INDICES = names(nl), files = NULL, Force = FALSE, ...)
+write.neurons(
+  nl,
+  dir,
+  format = NULL,
+  subdir = NULL,
+  INDICES = names(nl),
+  files = NULL,
+  include.data.frame = FALSE,
+  metadata = FALSE,
+  Force = FALSE,
+  cl = NULL,
+  ...
+)
 }
 \arguments{
 \item{nl}{neuronlist object}
@@ -13,19 +24,34 @@ write.neurons(nl, dir, format = NULL, subdir = NULL,
 \item{dir}{directory to write neurons, or path to zip archive (see Details).}
 
 \item{format}{Unique abbreviation of one of the registered file formats for
-neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
-the filename and the ext parameter, then it defaults to 'swc'}
+neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
+(neuron meshes). If no format can be extracted from the filename or the
+\code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
+meshes.}
 
-\item{subdir}{String naming field in neuron that specifies a subdirectory OR 
+\item{subdir}{String naming field in neuron that specifies a subdirectory OR
 expression to evaluate in the context of neuronlist's df attribute}
 
-\item{INDICES}{Character vector of the names of a subset of neurons in 
+\item{INDICES}{Character vector of the names of a subset of neurons in
 neuronlist to write.}
 
-\item{files}{Character vector or expression specifying output filenames. See 
+\item{files}{Character vector or expression specifying output filenames. See
 examples and \code{\link{write.neuron}} for details.}
 
+\item{include.data.frame}{Whether to include the metadata when writing a zip
+file (it will be called \code{"write.neurons.dataframe.rds"}).}
+
+\item{metadata}{Whether to encode some metadata in the header file (currently
+only supported for SWC format). Either a data.frame or \code{TRUE} to
+indicate that the attached data.frame should be written. Default
+\code{FALSE}.}
+
 \item{Force}{Whether to overwrite an existing file}
+
+\item{cl}{Either the integer number of cores to use for parallel writes (2 or
+3 seem useful) or a \code{cluster} object created by
+\code{\link{makeCluster}}. See the \code{cl} argument of
+\code{\link[pbapply]{pbsapply}} for details.}
 
 \item{...}{Additional arguments passed to \code{\link{write.neuron}}}
 }
@@ -36,10 +62,12 @@ the path to the output file(s), absolute when this is a zip file.
 Write neurons from a neuronlist object to individual files, or a zip archive
 }
 \details{
-See \code{\link{write.neuron}} for details of how to specify the 
-  file format/extension/name of the output files and how to establish what 
+See \code{\link{write.neuron}} for details of how to specify the
+  file format/extension/name of the output files and how to establish what
   output file formats are available. A zip archive of files can be written by
-  specifying a value of \code{dir} that ends in \code{.zip}.
+  specifying a value of \code{dir} that ends in \code{.zip}. When rds files
+  (R's binary data representation, which is compressed by default) are stored
+  inside a zip file the are not further compressed (zip option 0).
 }
 \examples{
 \dontrun{
@@ -47,9 +75,22 @@ See \code{\link{write.neuron}} for details of how to specify the
 write.neurons(Cell07PNs, dir="testwn", format='swc')
 # write some neurons in swc format for picky software
 write.neurons(Cell07PNs, dir="testwn", format='swc', normalise.ids=TRUE)
+# write some neurons in swc format and zip them up
+write.neurons(Cell07PNs, dir="testwn.zip", format='swc')
+
+# write some neurons in R's native RDS format using 3 cores for
+# parallel writes and then zip them up (storing rather than compressing)
+write.neurons(Cell07PNs, dir="testwn.zip", format='rds', cl=3)
 
 # write some neurons in Amira hxlineset format
 write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
+
+# write some neuron meshes in Stanford ply format (the default for meshes)
+write.neurons(myneurons, dir="testwn")
+# specify the format to avoid a warning. Write to a zip file.
+write.neurons(myneurons, dir="testmeshes.zip", format='ply')
+# Wavefront obj format
+write.neurons(myneurons, dir="testwn", format='obj')
 
 # organise new files in directory hierarchy by glomerulus and Scored.By field
 write.neurons(Cell07PNs,dir="testwn",
@@ -73,11 +114,15 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 \code{\link{write.neuron}}, \code{\link{read.neurons}},
   \code{\link{fileformats}}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
-  \code{\link{nlapply}}, \code{\link{read.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistfh}()},
+\code{\link{neuronlistz}()},
+\code{\link{neuronlist}()},
+\code{\link{nlapply}()},
+\code{\link{read.neurons}()}
 }
 \author{
 jefferis

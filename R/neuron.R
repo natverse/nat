@@ -40,6 +40,10 @@
 #' ## Basic properties
 #' # a sample neuron 
 #' n = Cell07PNs[[1]]
+#' 
+#' # summarise it
+#' n
+#' 
 #' # inspect its internal structure
 #' str(n)
 #' # summary of 3D points
@@ -82,11 +86,11 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
                  MD5=TRUE){get
   
   coreFieldOrder=c("NumPoints", "StartPoint", "BranchPoints", 
-               "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
+                   "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
   mcl<-as.list(match.call())
   n=c(mcl,list(NumPoints=NumPoints,
-             nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
-             NumSegs=length(SegList)))
+               nTrees=ifelse(is.null(SubTrees),1,length(SubTrees)),
+               NumSegs=length(SegList)))
   n=n[intersect(coreFieldOrder,names(n))]
   n=lapply(n, eval)
   if(is.null(InputFileName)){
@@ -119,7 +123,7 @@ neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPo
 #' @rdname neuron
 is.neuron<-function(x,Strict=FALSE) {
   inherits(x,"neuron") ||
-    (!Strict && is.list(x) && !is.null(x[["SegList"]]))
+    (!Strict && is.list(x) && "SegList" %in% names(x))
 }
 
 #' @description \code{as.neuron} will convert a suitable object to a neuron
@@ -159,7 +163,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
                         defaultValue=list(PointNo=seq.int(nrow(x)),Label=2L,
                                           X=NA_real_,Y=NA_real_,Z=NA_real_,
                                           W=NA_real_,Parent=NA_integer_)
-                        ){
+){
   cnx=colnames(x)
   ifMissing=match.arg(ifMissing)
   if(ifMissing!='usedefaults') ifMissing=match.fun(ifMissing)
@@ -202,7 +206,6 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #'   (NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList, 
 #'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
 #' @export
-#' @method as.neuron ngraph
 #' @importFrom igraph V V<- vcount decompose.graph
 #' @rdname neuron
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
@@ -391,7 +394,6 @@ Ops.neuron <- function(e1, e2=NULL) {
 #' @param center 3-vector to subtract from x,y,z coords
 #' @param scale 3-vector used to divide x,y,z coords
 #' @return neuron with scaled coordinates
-#' @method scale neuron
 #' @export
 #' @seealso \code{\link{scale.default}}, \code{\link{Ops.neuron}}
 #' @aliases scale
@@ -415,7 +417,6 @@ scale.neuron<-function(x, center=TRUE, scale=TRUE){
 #' @param CheckSharedFieldsOnly Logical whether to check shared fields only 
 #'   (default: FALSE)
 #' @param ... additional arguments passed to \code{all.equal}
-#' @method all.equal neuron
 #' @export
 #' @seealso \code{\link[base]{all.equal}}
 #' @examples
@@ -483,15 +484,25 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 seglengths=function(x, all=FALSE, flatten=TRUE, sumsegment=TRUE){
   # convert to numeric matrix without row names
   sts<-as.seglist(x, all=all, flatten=flatten)
+  if(isTRUE(sumsegment) && use_natcpp()) {
+    # prefer c implementation
+    if(isFALSE(all) || isTRUE(flatten)) {
+      res=natcpp::c_seglengths(sts, x$d$X, x$d$Y, x$d$Z)
+    } else {
+      # sts should be a list of lists of vectors
+      res=lapply(sts, natcpp::c_seglengths, x$d$X, x$d$Y, x$d$Z)
+    }
+    return(res)
+  }
   d=data.matrix(x$d[, c("X", "Y", "Z")])
   if(all && !flatten) {
-    lapply(sts, function(st) sapply(st, 
-                                    function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
+    lapply(sts, 
+           function(st) sapply(st, function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
                                     simplify=sumsegment, USE.NAMES = FALSE ))
   } else sapply(sts, function(s) seglength(d[s, , drop=FALSE], sum=sumsegment),
                 simplify=sumsegment, USE.NAMES = FALSE)
 }
-
+  
 # Calculate length of single segment in neuron
 seglength=function(ThisSeg, sum=TRUE){
   #ThisSeg is an array of x,y and z data points
@@ -531,7 +542,7 @@ resample.neuron<-function(x, stepsize, ...) {
   # if(!is.null(d$Label)) d$Label=as.integer(d$Label)
   if(any(is.na(d[,1:3])))
     stop("Unable to resample neurons with NA points")
-
+  
   # fetch all segments and process each segment in turn
   sl=as.seglist(x, all = T, flatten = T)
   npoints=nrow(d)
@@ -559,7 +570,7 @@ resample.neuron<-function(x, stepsize, ...) {
   # same within a segment
   head_idxs=sapply(sl, "[", 1)
   seglabels=x$d$Label[head_idxs]
-
+  
   # in order to avoid re-ordering the segments when as.neuron.ngraph is called
   # we can renumber the raw indices in the seglist (and therefore the vertices)
   # in a strictly ascending sequence based on the seglist
@@ -570,7 +581,7 @@ resample.neuron<-function(x, stepsize, ...) {
   old_ids=unique(usl)
   # reorder vertex information to match this
   d=d[old_ids,]
-
+  
   node_per_seg=sapply(sl, length)
   df=data.frame(id=usl, seg=rep(seq_along(sl), node_per_seg))
   df$newid=match(df$id, old_ids)
@@ -630,7 +641,7 @@ resample_segment<-function(d, stepsize, ...) {
     } else {
       approx(cumlength, d[,n], internalPoints, 
              method = ifelse(is.double(d[,n]), "linear", "constant"),
-             ties=list("ordered", mean))$y
+             ties="ordered")$y
     }
   }
   dnew
@@ -710,44 +721,50 @@ smooth_segment_spline <- function(xyz, ...) {
 }
 
 #' Subset neuron by keeping only vertices that match given conditions
-#' 
-#' @details \code{subset} defines which vertices of the neuron to keep and is 
+#'
+#' @details \code{subset} defines which vertices of the neuron to keep and is
 #'   one of \itemize{
-#'   
-#'   \item logical or numeric indices, in which case these are simply used to 
+#'
+#'   \item logical or numeric indices, in which case these are simply used to
 #'   index the vertices in the order of the data.frame \code{x$d}. Note that any
 #'   NA values are ignored.
-#'   
-#'   \item a function (which is called with the 3D points array and returns T/F 
+#'
+#'   \item a function (which is called with the 3D points array and returns T/F
 #'   vector)
-#'   
-#'   \item an expression evaluated in the context of the \code{x$d} data.frame 
-#'   containing the SWC specification of the points and connectivity of the 
-#'   neuron. This can therefore refer e.g. to the X,Y,Z location of vertices in 
+#'
+#'   \item an expression evaluated in the context of the \code{x$d} data.frame
+#'   containing the SWC specification of the points and connectivity of the
+#'   neuron. This can therefore refer e.g. to the X,Y,Z location of vertices in
 #'   the neuron.
-#'   
+#'
 #'   }
+#'
+#'   Note that due to its use of
+#'   \href{http://adv-r.had.co.nz/Computing-on-the-language.html}{non-standard
+#'   evaluation} \code{subset.neuron}, which is convenient interactive use but
+#'   can be fragile when used inside other functions. If you run into trouble it
+#'   is recommended to use the underlying \code{\link{prune_vertices}} function.
 #' @param x A neuron object
-#' @param subset A subset of points defined by indices, an expression, or a 
+#' @param subset A subset of points defined by indices, an expression, or a
 #'   function (see Details)
-#' @param invert Whether to invert the subset criteria - a convenience when 
+#' @param invert Whether to invert the subset criteria - a convenience when
 #'   selecting by function or indices.
 #' @param ... Additional parameters (passed on to \code{\link{prune_vertices}})
 #' @return subsetted neuron
 #' @export
-#' @seealso \code{\link{prune.neuron}}, \code{\link{prune_vertices}}, 
+#' @seealso \code{\link{prune.neuron}}, \code{\link{prune_vertices}},
 #'   \code{\link{subset.dotprops}}
 #' @examples
 #' n=Cell07PNs[[1]]
 #' # keep vertices if their X location is > 2000
 #' n1=subset(n, X>200)
-#' # diameter of neurite >1 
+#' # diameter of neurite >1
 #' n2=subset(n, W>1)
 #' # first 50 nodes
 #' n3=subset(n, 1:50)
 #' # everything but first 50 nodes
 #' n4=subset(n, 1:50, invert=TRUE)
-#' 
+#'
 #' ## subset neuron by graph structure
 #' # first plot neuron and show the point that we will use to divide the neuron
 #' n=Cell07PNs[[1]]
@@ -755,21 +772,21 @@ smooth_segment_spline <- function(xyz, ...) {
 #' # this neuron has a tag defining a point at which the neuron enters a brain
 #' # region (AxonLHEP = Axon Lateral Horn Entry Point)
 #' points(t(xyzmatrix(n)[n$AxonLHEP, 1:2]), pch=19, cex=2.5)
-#' 
+#'
 #' # now find the points downstream (distal) of that with respect to the root
 #' ng=as.ngraph(n)
-#' # use a depth first search 
-#' distal_points=igraph::graph.dfs(ng, root=n$AxonLHEP, unreachable=FALSE, 
-#'   neimode='out')$order
+#' # use a depth first search
+#' distal_points=igraph::graph.dfs(ng, root=n$AxonLHEP, unreachable=FALSE,
+#'   mode='out')$order
 #' distal_tree=subset(n, distal_points)
 #' plot(distal_tree, add=TRUE, col='red', lwd=2)
-#' 
+#'
 #' # Find proximal tree as well
 #' # nb this does not include the AxonLHEP itself as defined here
 #' proximal_points=setdiff(igraph::V(ng), distal_points)
 #' proximal_tree=subset(n, proximal_points)
 #' plot(proximal_tree, add=TRUE, col='blue', lwd=2)
-#' 
+#'
 #' \dontrun{
 #' ## subset using interactively defined spatial regions
 #' plot3d(n)
@@ -784,16 +801,16 @@ smooth_segment_spline <- function(xyz, ...) {
 #' n4.not=subset(n,Negate(s3d))
 #' # vertices with x position > 100 and inside the selector function
 #' n6=subset(n,X>100 & s3d(X,Y,Z))
-#' 
+#'
 #' ## subset each neuron object in a whole neuronlist
 #' n10=Cell07PNs[1:10]
 #' plot3d(n10, lwd=0.5, col='grey')
 #' n10.crop = nlapply(n10, subset, X>250)
 #' plot3d(n10.crop, col='red')
-#' 
+#'
 #' ## subset a neuron using a surface
 #' library(nat.flybrains)
-#' # extract left lateral horn surface and convert to mesh3d 
+#' # extract left lateral horn surface and convert to mesh3d
 #' lh=as.mesh3d(subset(IS2NP.surf, "LH_L"))
 #' # subset neuron with this surface
 #' x=subset(Cell07PNs[[1]], function(x) pointsinside(x, lh))
@@ -820,4 +837,781 @@ subset.neuron<-function(x, subset, invert=FALSE, ...){
   } else stop("Subset must evaluate to a logical or numeric index")
   # nb !invert since prune_vertices drops vertices whereas subset.neuron keeps vertices
   prune_vertices(x, r, invert=!invert, ...)
+}
+
+
+#' Simplify a neuron to the longest tree with n branch points
+#'
+#' @details If the neuron already contains fewer than or exactly the requested
+#'   number of branches, then the original neuron is returned. The approach is
+#'   to build up the new neuron starting from the longest tree including no
+#'   branches all the way up to the longest tree containing n branches. The
+#'   distance calculations are only carried out once so it should be reasonably
+#'   efficient. Nevertheless at each iteration, the longest path from the tree
+#'   so far to the newly selected leaf is calculated and it is likely that this
+#'   step could be avoided. Furthermore for large values of n, pruning excess
+#'   branches rather than building would presumably be more efficient.
+#'
+#' @param x A \code{\link[nat]{neuron}} to simplify
+#' @param n Required number of branch points (default=1, minimum 0)
+#' @param invert Whether to keep the simplified backbone (when
+#'   \code{invert=FALSE}, the default) or its inverse.
+#' @param ... Additional arguments (currently ignored)
+#'
+#' @return The simplified \code{neuron} or the untouched original neuron for
+#'   neurons that have <=n branch points.
+#' @author Gregory Jefferis \email{jefferis@gmail.com}
+#' @export
+#' @seealso \code{\link[nat]{spine}}
+#' @examples
+#' \donttest{
+#' n=Cell07PNs[['ECA34L']]
+#' n.simp=simplify_neuron(n)
+#' n.simp4=simplify_neuron(n, n=4)
+#' 
+#' plot(n, col='green', WithNodes = FALSE)
+#' plot(n.simp, col='red', add = TRUE)
+#' plot(n.simp4, col='blue', add = TRUE)
+#'
+#' # calculate the inverse as well
+#' n.simp4.inv=simplify_neuron(n, n=4, invert=TRUE)
+#' plot(n.simp4, col='blue')
+#' plot(n.simp4.inv, col='red', add = TRUE)
+#' }
+#' 
+#' # 3D plots
+#' \dontrun{
+#' nclear3d()
+#' plot3d(n.simp, col='red', add = TRUE)
+#' plot3d(n.simp4, col='blue', add = TRUE)
+#' plot3d(n, col='green', WithNodes = FALSE)
+#' }
+#' 
+#' # or with plotly where transparency works
+#' \dontrun{
+#' op <- options(nat.plotengine = 'plotly')
+#' nclear3d()
+#' plot3d(n.simp, col='red', alpha = 0.5, add = TRUE)
+#' plot3d(n.simp4, col='blue', alpha = 0.5, add = TRUE)
+#' plot3d(n, col='green', alpha = 0.5, WithNodes = FALSE)
+#' }
+#' 
+simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
+  #Step 1a:Get the number of branch points in the neuron.. 
+  bps = branchpoints(x, original.ids=FALSE)
+  nbps=length(bps)
+  #Step 1b:Compare with the actual branch points requested.. 
+  if (nbps <= n)
+    return(x)
+  if (n < 0)
+    stop("Must request >=0 branch points!")
+  
+  #Step 2:Convert to ngraph object.. 
+  ng = as.ngraph(x, weights = T)
+  
+  if (!igraph::is_dag(ng)) {
+    stop("I can't simplify neurons with cycles!")
+  }
+  
+  # Step 3a: Compute all the leaf nodes..
+  leaves=setdiff(endpoints(ng, original.ids=FALSE), rootpoints(ng, original.ids=FALSE))
+  start = rootpoints(ng, original.ids=FALSE)
+  # Step 3b: Compute downstream paths for all the branch nodes
+  bpdesccount=igraph::ego_size(ng, order = 1, nodes = bps, mode='out', mindist = 1)
+  names(bpdesccount)=bps
+  bpsused=rep(0L, length(bps))
+  names(bpsused)=bps
+  lp_verts=list()
+  
+  # Find the longest tree (aka spine) from the root to the farthest leaf node
+  # Then add the longest possible additional branch at each iteration
+  for (i in 0:n) {
+    if (i == 0) {
+      # Step 4: Find path to farthest leaf from root
+      dists=igraph::distances(ng, v=start, to=leaves, mode = 'out')
+      path=leafpath(ng, from=start, to=leaves[which.max(dists)])
+    } else {
+      # Step 5: find farthest leaf from root (with some edges set to 0)
+      dists=igraph::distances(ng, v=start, to=leaves, mode = 'out')
+      maxidx=which.max(dists)
+      if(dists[maxidx]==0) {
+        warning("unable to find a new path at step:", i)
+        break
+      }
+      farthest_leaf=leaves[maxidx]
+      # now search backwards from the farthest leaf to the bps in the spine
+      # restricting to those that still have unused downstream paths.
+      bps_available = bpsused > 0 & bpsused < bpdesccount
+      # there will be warnings because most branch points will not be reachable
+      # from the selected leaf
+      res=suppressWarnings(
+        igraph::get.shortest.paths(ng, from = farthest_leaf, 
+                                   to = bps[bps_available], 
+                                   mode = "in", weights = NA))
+      pathlengths=sapply(res$vpath, length)
+      pathlengths[pathlengths==0]=NA
+      chosen_path=which.min(pathlengths)
+      if(length(chosen_path)==0) {
+        warning("unable to find a path back to spine at step:", i)
+        break
+      }
+      path=rev(res$vpath[[chosen_path]])
+    }
+    # set edge weights on path to 0 so that these edges no longer contribute to 
+    # the distance to the leaves in subsequent iterations
+    igraph::E(ng, path=path)$weight=0
+    lp_verts[[i+1]]=path
+    # add one to count of any bps used
+    bpsused[bps %in% path] = bpsused[bps %in% path] + 1
+  }
+  
+  # Step 10: Find the edgelist for the tree defined by the list of paths
+  el=EdgeListFromSegList(lp_verts)
+  
+  # Step 11: Prune the original neuron, optionally retaining the inverse
+  prune_edges(ng, el, invert = !invert)
+}
+
+leafpath <- function(ng, from, to) {
+  res=igraph::get.shortest.paths(ng,from = from,to = to,mode = "out", weights=NA)
+  as.integer(res$vpath[[1]])
+}
+
+robust_max=function(x) {
+  x=x[is.finite(x)]
+  if(length(x)) max(x) else {
+    warning("Some points in neuron cannot be reached! Multiple trees?")
+    -Inf
+  }
+}
+
+
+#' Stitch multiple fragments into single neuron using minimum spanning tree
+#'
+#' @details The neurons are joined using the minimum spanning tree i.e. the tree
+#'   that minimises the sum of edge weights (here, the Euclidean distance). The
+#'   neuron is rooted in the largest cluster; if this cluster contained the
+#'   original root of the neuron, then this should be retained.
+#'
+#'   Note that when a threshold length is used, it must be specified in the same
+#'   units (microns, nm etc) as the neuron being stitched.
+#'
+#'   If you wish to process a neuronlist containing multiple neurons each of
+#'   which must have all their subtrees stitched then you must use
+#'   \code{\link{nlapply}} to process the list iteratively.
+#' @param x Fragments that could be a \code{\link{neuronlist}} containing
+#'   multiple neurons or a single neuron with multiple unconnected subtrees.
+#' @param threshold The threshold distance above which new vertices will not be
+#'   connected (default=\code{Inf} disables this feature). This parameter
+#'   prevents the merging of vertices that are so far away from the main neuron
+#'   that they are likely to be spurious.
+#' @param k The number of nearest neighbours to consider when trying to merge
+#'   different clusters.
+#' @return A single \code{neuron} object containing all input fragments.
+#' @author Sridhar Jagannathan \email{j.sridharrajan@gmail.com}
+#' @seealso \code{\link{simplify_neuron}}, \code{\link{spine}},
+#'   \code{\link{ngraph}}, \code{igraph::\link[igraph]{mst}}
+#' @export
+#' @examples
+#' n=Cell07PNs[['ECA34L']]
+#' # find the tree with the 10 most important branches
+#' n_main=simplify_neuron(n, n = 10)
+#' # and the complement
+#' n_branches=simplify_neuron(n, n = 10, invert = TRUE)
+#'
+#' # plot the inputs
+#' plot(n_main, col='red', WithNodes=FALSE)
+#' plot(n_branches, col='blue', add=TRUE, WithNodes=FALSE)
+#'
+#' # join the two fragments back together again
+#' # first make a neuronlist containing the two fragments
+#' nl=neuronlist(n_main, n_branches)
+#' # and stitch those
+#' n_stitched=stitch_neurons_mst(nl)
+#' 
+#' \dontrun{
+#' # look at the neurons in 3D - they appear identical in this case
+#' plot3d(n, alpha=.5, col='cyan', WithNodes=FALSE)
+#' plot3d(n_stitched, alpha=.5, col='red', WithNodes=FALSE)
+#' }
+#' 
+#' ## second example neuron containing multiple sub trees
+#' n=Cell07PNs[['ECA34L']]
+#' # remove a single vertex, breaking the neuron in two
+#' # note that the root (purple node) has moved 
+#' np=prune_vertices(n, 105)
+#' plot(np)
+#' 
+#' # now stitch the broken neuron back together again
+#' nph=stitch_neurons_mst(np)
+#' # note that the root remains the same as the input neuron (np)
+#' plot(nph)
+stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
+  #Step 1: First check if the input is fragmented and then proceed further..
+  if(is.neuron(x)){
+    if(x$nTrees == 1){
+      return(x)
+    }
+  }
+  
+  #Step 2: Check input and convert to ngraph object..
+  if(is.neuronlist(x)){
+    if(length(x)==0) return(NULL)
+    if(length(x)==1) return(x[[1]])
+    
+    for (baseidx in 1:(length(x)-1)){
+      for (targetidx in (baseidx+1):length(x)) {
+        # if there are any repeats in PointNo, augment those in subsequent neuron
+        if(any(x[[baseidx]]$d$PointNo%in%x[[targetidx]]$d$PointNo)){
+          x[[targetidx]]$d$PointNo=x[[targetidx]]$d$PointNo+max(x[[baseidx]]$d$PointNo)
+          x[[targetidx]]$d$Parent=x[[targetidx]]$d$Parent+max(x[[baseidx]]$d$PointNo)
+        }
+      }
+    }
+    #Convert the neuronlist to list of ngraph objects..
+    ngraph_list=nlapply(x, FUN = function(x) {as.ngraph(x, weights = T, method = 'seglist')})
+    
+    #Make a single ngraph object..
+    ng=as.ngraph(igraph::disjoint_union(ngraph_list))
+    
+  } else if(is.neuron(x)) {
+    ng = as.ngraph(x, weights = T)
+  } else {
+    stop("x must be a neuronlist or a neuron object!")
+  }
+  
+  #make a copy of the master graph now..
+  masterng <- ng
+  
+  #Step 3a: Find the rootnode of the largest cluster, this will be the rootnode of the stitched neuron..
+  cc=igraph::components(ng)
+  sorted=order(cc$csize, decreasing = T)
+  root_points <- rootpoints(ng, original.ids = FALSE)
+  master_root <- names(which(cc$membership[root_points] == sorted[1]))
+  
+  #Step 3b: Set the weights of existing edges to zero, so they are not affected by
+  #any operations done below..
+  igraph::E(ng)$weight = 0
+  
+  #Step 4: Find all the leaf nodes now, these are the potential sites to stitch..
+  root_id <- which(names(V(ng)) == master_root)
+  leaves = 1:length(V(ng))#actually use all of them including the root
+  
+  #Step 5: Create list of edges that will be added (from potential sites..) and compute the distances between them..
+  #Now divide them into clusters and compute combinations among them..
+  cc_membership <- unique(cc$membership)
+  combedge_start <- NULL
+  combedge_stop <- NULL
+  
+  xyz <- xyzmatrix(x) #for using with knn..
+  
+  ccsort=order(cc$csize, decreasing = TRUE)
+  for (i in 1:(length(cc_membership)-1)){
+    for (j in (i+1):length(cc_membership)) {
+      clusterbaseidx=ccsort[i]
+      clustertargetidx=ccsort[j]
+      leaves_base <- intersect(leaves, which(cc$membership == clusterbaseidx))
+      leaves_target <- intersect(leaves, which(cc$membership == clustertargetidx))
+      
+      #take the locations of pts in base leaf and target leaf..
+      base_pt=xyz[leaves_base,]
+      target_pt=xyz[leaves_target,]
+      
+      #find the pts nearest in base leaf to the target leaf..
+      minval <- min(k,length(leaves_base),length(leaves_target))
+      if(minval == 1){#For processing point inputs..
+        if(!is.matrix(base_pt)){base_pt = t(base_pt)}
+        if(!is.matrix(target_pt)){target_pt = t(target_pt)}
+      }
+      nnres=nabor::knn(base_pt, target_pt, k=minval) #Get k nearest pts in base_pt
+      
+      
+      sortedvals <- sort(nnres$nn.dists,index.return = T)
+      sortedidx <- arrayInd(sortedvals$ix, dim(nnres$nn.dists))
+      
+      #The first column here is coresponds to 'leaves_target', the second to 'leaves_base'
+      targetpt_idx = sortedidx[1:minval,1]
+      basept_idx_temp = sortedidx[1:minval,2]
+      
+      basept_idx = NULL
+      for (bpidx in 1:length(basept_idx_temp)){
+        basept_idx  = c(basept_idx,nnres$nn.idx[targetpt_idx[bpidx],basept_idx_temp[bpidx]])
+      }
+      
+      trunc_base <- leaves_base[basept_idx]
+      trunc_target <- leaves_target[targetpt_idx]
+      
+      #based on the nearest points in base cluster, but all pts in target cluster..
+      leaves_combo <- expand.grid(trunc_base,leaves_target) 
+      #Only based on actual nearest points in both clusters..
+      #leaves_combo <- cbind(trunc_base,trunc_target) 
+      
+      
+      #leaves_combo <- expand.grid(leaves_base,leaves_target)
+      combedge_start <- c(combedge_start,leaves_combo[,1])
+      combedge_stop <- c(combedge_stop,leaves_combo[,2])
+    }
+    
+  }
+  
+  #edge_list <- utils::combn(leaves,m =2)
+  edge_list <- rbind(combedge_start,combedge_stop)
+  
+  
+  starts<-edge_list[1,]
+  stops<-edge_list[2,]
+  
+  # nb drop = FALSE to ensure that we always have a matrix
+  vecs=xyz[stops, , drop=FALSE] - xyz[starts, , drop=FALSE]
+  weights=sqrt(rowSums(vecs*vecs))
+  
+  #Step 6: Add those edges and create a new graph..
+  mod_graph <- igraph::add_edges(ng,edge_list,"weight"= weights)
+  
+  #Step 7: Find the minimum spanning tree of the new graph..
+  mst <- igraph::minimum.spanning.tree(mod_graph)
+  
+  #Step 8: Find the new edges added by the mst..
+  new_edges <- igraph::difference(igraph::E(mst),igraph::E(masterng))
+  
+  newedge_list <- igraph::as_ids(new_edges)
+  
+  rawel <- igraph::ends(mst,new_edges)
+  weight_attr <- igraph::edge_attr(graph = mst, 'weight', index = new_edges)
+  nodenames <- names(igraph::V(masterng))
+  
+  #Step 9: Now add the new edges in the master graph vertex by vertex..
+  stitchedng <- masterng
+  for (idx in 1:nrow(rawel)) {
+    vertex_ids <- match(rawel[idx, ], nodenames)
+    if (isTRUE(is.finite(threshold))){
+      #Choose only those edges that are below a certain threshold..
+      if(weight_attr[idx]<=threshold){
+        stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+                                        "weight" = weight_attr[idx])
+      }else{
+        warning(paste0("Could not connect two vertices as edge length", 
+                       round(weight_attr[idx],digits = 2), " is above threshold"))
+      }
+    } else {
+      stitchedng <- igraph::add_edges(stitchedng, c(vertex_ids[[1]], vertex_ids[[2]]), 
+                                      "weight" = weight_attr[idx])
+    }
+  }
+  
+  #Step 10: Now keep only vertices that are connected to the master root and cross verify the same..
+  cc_stitched=igraph::components(stitchedng)
+  stitchedroot_id <- which(names(V(stitchedng)) == master_root)
+  verticestoprune <- which(cc_stitched$membership != cc_stitched$membership[stitchedroot_id])
+  sorted=order(cc_stitched$csize, decreasing = T)
+  if(sorted[1] != cc_stitched$membership[stitchedroot_id]){
+    warning("The root node doesn't belong to the largest fragment")
+  }
+  
+  stitchedng=igraph::delete.vertices(stitchedng, verticestoprune)
+  
+  #Step 11: Set the root of the stitched graph now..
+  stitchedneuron <- as.neuron(stitchedng, origin = master_root)
+  if(stitchedneuron$nTrees!= 1){
+    stop('The neuron being returned has multiple fragments')}
+  stitchedneuron
+}
+
+
+#' Stitch two neurons together at their closest endpoint
+#'
+#' @param a,b Neurons to join together
+#' @details This function joins two neurons at their nearest point (only one).
+#'   Let's say you have two neurons a and b. a and b will be joined at one point that are closest to each other.
+#'   However, when say there are multiple points at a and b which are closer and could be joined, 
+#'   then do not use this function, use the function \code{\link{stitch_neurons_mst}}, 
+#'   which is slower but will merge at multiple points.
+#'   Note that for CATMAID neurons the neuron with the soma tag will be
+#'   treated as the first (master neuron). Furthermore in this case the PointNo
+#'   (aka node id) should already be unique. Otherwise it will be adjusted to
+#'   ensure this.
+#' @author Gregory Jefferis \email{jefferis@gmail.com} 
+#' @export
+#' @seealso \code{\link{stitch_neurons}}
+#' @examples
+#' \donttest{
+#' dl1_main=simplify_neuron(dl1neuron, n = 1, invert = FALSE)
+#' dl1_branches=simplify_neuron(dl1neuron, n = 1, invert = TRUE)
+#' dl1_whole = stitch_neuron(dl1_main,dl1_branches)
+#' }
+stitch_neuron<-function(a, b){
+  
+  #Step1: if there are any repeats in PointNo, augment those in second neuron
+  if(any(a$d$PointNo%in%b$d$PointNo)){
+    b$d$PointNo=b$d$PointNo+max(a$d$PointNo)
+    b$d$Parent=b$d$Parent+max(a$d$PointNo)
+  }
+  
+  #Step2: Convert them to ngraph objects and make a single graph(that can have multiple subtrees)
+  ag=as.ngraph(a, weights = T, method = 'seglist')
+  bg=as.ngraph(b, weights = T, method = 'seglist')
+  abg=as.ngraph(igraph::disjoint_union(ag, bg))
+  
+  
+  #Step3: find closest node (or endpoint?) in each neuron and join those
+  ce=closest_ends(a, b) #b neuron is the query neuron let's say has 3 pts and a neuron has 230 pts, then we 
+  #end up with a 230x3 matrix and find out the closest point in b neuron 
+  a_pointno=a$d$PointNo[ce$a_idx]
+  b_pointno=b$d$PointNo[ce$b_idx]
+  # older versions of nat use label for nodes, newer use name
+  node_label=intersect(c("name","label"),
+                       igraph::list.vertex.attributes(ag))[1]
+  if(all(is.na(node_label))) stop("Graph nodes are not labelled!")
+  abg=abg+igraph::edge(which(igraph::vertex_attr(abg, node_label)==a_pointno),
+                       which(igraph::vertex_attr(abg, node_label)==b_pointno))
+  
+  #Step4: Convert them back to neuron..
+  as.neuron(as.ngraph(abg))
+}
+
+# Find raw vertex ids and distance for closest end points of two neurons
+closest_ends<-function(a, b){
+  epa=endpoints(a)
+  epb=endpoints(b)
+  axyz=a$d[epa,c("X","Y","Z")]
+  bxyz=b$d[epb,c("X","Y","Z")]
+  nnres=nabor::knn(axyz, bxyz, k=1)
+  b_idx=which.min(nnres$nn.dists)
+  a_idx=nnres$nn.idx[b_idx,1]
+  return(list(a_idx=epa[a_idx], b_idx=epb[b_idx], dist=min(nnres$nn.dists)))
+}
+
+
+#' Stitch multiple fragments into single neuron using nearest endpoints
+#'
+#' @details Neurons will be ordered by default such the largest (by node count)
+#'   neuron with a soma tag is the \code{master} neuron - i.e. the one
+#'   containing the root node. Fragments are joined recursively in this sort
+#'   order each time simply picking the closest fragment to the current
+#'   \emph{master}. Closest is here defined by the distance between nearest
+#'   endpoints.
+#' @param x A neuronlist containing fragments of a single neuron
+#' @param prefer_soma When TRUE (the default) the fragment tagged as the soma
+#'   will be used as the master neuron.
+#' @param sort When TRUE (the default) the fragments will be sorted by the
+#'   number of nodes they contain before stitching.
+#' @param warndist If distance is greater than this value, create a warning.
+#' @return A single \code{neuron} object containing all input fragments.
+#' @importFrom igraph E set_edge_attr
+#' @seealso \code{\link{stitch_neuron}}
+#' @author Gregory Jefferis \email{jefferis@gmail.com} 
+#' @export
+#' @examples
+#' \dontrun{
+#' dl1_main=simplify_neuron(dl1neuron, n = 1, invert = FALSE)
+#' dl1_branches=simplify_neuron(dl1neuron, n = 1, invert = TRUE)
+#' dl1_branches1=simplify_neuron(dl1_branches, n = 1, invert = FALSE)
+#' dl1_branches2=simplify_neuron(dl1_branches, n = 1, invert = TRUE)
+#' dl1_fragment <- list(dl1_main,dl1_branches1,dl1_branches2)
+#' dl1_fragment <- as.neuronlist(dl1_fragment)
+#' dl1_whole = stitch_neurons(dl1_fragment)
+#' }
+stitch_neurons <- function(x, prefer_soma=TRUE, sort=TRUE, warndist=1000) {
+  #Step1: Check if it is neuronlist
+  if(!is.neuronlist(x)) stop("x must be a neuronlist object!")
+  if(length(x)==0) return(NULL)
+  if(length(x)==1) return(x[[1]]) # as function promises to return a neuron
+  
+  #Step2a: Check if there is a soma tag associated (this will be considered as base or master neuron)
+  if(prefer_soma) {
+    svec=sapply(x, has_soma)
+  } else {
+    svec=rep(0,length(x))
+  }
+  
+  #Step2b: If sort is enabled then you sort by number of nodes, so that the neuron with the largest number of nodes
+  #becomes the base or master neuron
+  if(sort){
+    nnodes=sapply(x, function(n) nrow(n$d))
+    eps=1/(max(nnodes)+1)
+    svec=(eps+svec)*nnodes  #just normalising here such that the highest one gets 1 and others are weighted by it..
+  }
+  
+  #Step3: Sort the neurons in the list so you can get a base or master neuron (the first element in the vector)
+  if(any(svec>0))
+    x=x[order(svec, decreasing = TRUE)]
+  
+  #Step4: if there are only two neurons, just merge them by their closest points by knn algoirthm
+  if(length(x)==2) return(stitch_neuron(x[[1]], x[[2]]))
+  
+  #Step4a: if there are more than two neurons, just merge them by their closest points by knn algoirthm
+  dists=sapply(x[-1], function(n) closest_ends(x[[1]], n)$dist) #find the closest fragment to the base fragment..
+  mindist=min(dists)
+  if(isTRUE(is.finite(warndist)) && mindist>warndist){
+    warning("Suspicious minimum distance between fragments ( ",mindist, ")!")
+  }
+  chosen=which.min(dists)+1 #find the index of the closest to the base fragment..
+  #Step4b: stitch the base fragment to the closest fragment..
+  x[[1]]=stitch_neuron(x[[1]], x[[chosen]])
+  #Step4c: iteratively do this process by removing the already merged fragment..
+  stitch_neurons(x[-chosen], prefer_soma=FALSE, sort=FALSE)
+}
+
+has_soma<-function(x){
+  !is.null(x$tags$soma)
+}
+
+
+
+#' Return indices of points in a neuron distal to a given node
+#'
+#' @description This function returns a list (containing the order of nodes) travelled using a depth
+#' first search starting from the given node.
+#' @param x A neuron
+#' @param node.idx,node.pointno The id(s) of node(s) from which distal points
+#'   will be selected. \code{node.idx} defines the integer index (counting from
+#'   1) into the neuron's point array whereas \code{node.pointno} matches the
+#'   PointNo column which will be the CATMAID id for a node.
+#' @param root.idx,root.pointno The root node of the neuron for the purpose of
+#'   selection. You will rarely need to change this from the default value. See
+#'   \code{node} argument for the difference between \code{root.idx} and
+#'   \code{root.pointno} forms.
+#' @return Integer 1-based indices into the point array of points that are
+#'   distal to the specified node(s) when traversing the neuron from the root to
+#'   that node. Will be a vector if only one node is specified, otherwise a list is returned
+#' @export
+#' @seealso \code{\link[nat]{subset.neuron}}, \code{\link[nat]{prune}}
+#' @examples
+#' \donttest{
+#' ## Use EM  finished DL1 projection neuron
+#'
+#' ## subset to part of neuron distal to a tag "SCHLEGEL_LH"
+#' # nb distal_to can accept either the PointNo vertex id or raw index as a
+#' # pivot point
+#' dl1.lh=subset(dl1neuron, distal_to(dl1neuron,
+#'   node.pointno = dl1neuron$tags$SCHLEGEL_LH))
+#' plot(dl1neuron,col='blue', WithNodes = FALSE)
+#' plot(dl1.lh, col='red', WithNodes = FALSE, add=TRUE)
+#' }
+distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,
+                      root.pointno=NULL) {
+  #Step1: Check the node.idx and node.pointno argument and map them to node.idx..
+  if(is.null(node.idx)) {
+    if(is.null(node.pointno))
+      stop("At least one of node.idx or node.pointno must be supplied")
+    node.idx=match(node.pointno, x$d$PointNo)
+    if(any(is.na(node.idx)))
+      stop("One or more invalid node.pointno. Should match entries in x$d$PointNo!")
+  }
+  #Step2: Convert the neuron to ngraph object and reroot it if root.idx or root.pointno is given..
+  if(is.null(root.idx) && is.null(root.pointno)) {
+    g=as.ngraph(x)
+  } else {
+    if(!is.null(root.pointno))
+      root.idx=match(root.pointno, x$d$PointNo)
+    if(length(root.idx)>1)
+      stop("A single unique root point must be supplied")
+    # we need to re-root the graph onto the supplied root
+    gorig=as.ngraph(x)
+    g=as.directed.usingroot(gorig, root = root.idx)
+  }
+  
+  #Step3: For each node id, travese the graph from the given node using depth first search and return the visited
+  #nodes..
+  l=sapply(node.idx, dfs_traversal, g, simplify = FALSE)
+  if(length(node.idx)==1) l[[1]] else l
+}
+
+dfs_traversal <- function(x, g) {
+  gdfs=igraph::dfs(g, root = x, unreachable = FALSE)
+  as.integer(gdfs$order)[!is.na(gdfs$order)]
+}
+
+
+#' @description \code{prune_twigs} will prune twigs less than a certain path length from a neuron
+#' @export
+#' @rdname prune_twigs
+prune_twigs<-function(x, ...) UseMethod('prune_twigs')
+
+#' Remove all twigs less than a certain path length from a neuron
+#'
+#' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
+#' @param twig_length Twigs shorter than this will be pruned
+#' @param ... Additional arguments passed to \code{\link{nlapply}},
+#'   \code{\link{prune_vertices}} and eventually \code{\link{as.ngraph}}.
+#'
+#' @author Gregory Jefferis \email{jefferis@gmail.com} 
+#' @export
+#' @rdname prune_twigs
+#' @examples
+#' # Prune twigs up to 5 microns long
+#' pt5=prune_twigs(Cell07PNs[1:3], twig_length = 5)
+#' # compare original (coloured) and pruned (black) neurons
+#' plot(Cell07PNs[1:3], WithNodes=FALSE, lwd=2, xlim=c(240,300), ylim=c(120, 90))
+#' plot(pt5, WithNodes=FALSE, add=TRUE, lwd=2, col='black')
+prune_twigs.neuron <- function(x, twig_length, ...) {
+  #Step1: Convert the neuron to ngraph object..
+  ng = as.ngraph(x, weights = T)
+  if (!igraph::is_dag(ng)) {
+    stop("I can't prune neurons with cycles!")
+  }
+  root <- rootpoints(ng, original.ids=FALSE)
+  if(length(root)!=1)
+    stop("I can't prune neurons with more than 1 root!")
+  
+  #Step2: Make a table with rows(branch pts) and columns (leaves), the item entry would be the distance..
+  #This will help us identify the leaves (end pts) that are farthest away from the branch pts and eliminate them..
+  
+  #Step2a: Compute the leaves and branchpoints..
+  leaves=setdiff(endpoints(ng, original.ids=FALSE), root)
+  bps=branchpoints(ng, original.ids=FALSE)
+  #Step2b: Compute the table where rows(branch points) and columns (leaves)..
+  dd=igraph::distances(ng, v=bps, to=leaves, mode = 'out')
+  
+  
+  #Step3: For each column(leaf) set the bps that are farther than twig_length as -1, if all the bps are farther
+  #then set the particular column as NA..Then each column find the index of the element(which is the bps) 
+  #that is farthest..
+  max_bp_idx <- apply(dd, 2, function(x) {
+    # set values that are too long to signalling length of -1
+    too_long=x>twig_length
+    if(all(too_long)) return(NA_integer_)
+    x[too_long]=-1
+    wm=which.max(x)  #here choose the leaf that has the max length to prune
+    if(is.finite(x[wm]) & x[wm]>0) wm else NA_integer_
+  })
+  
+  #Step4: Now take only leaves that have finite values (which are acceptable eps that have less than the twig_length)
+  # and also compute their corresponding starting pts(which are bps)
+  eps_to_prune <- leaves[is.finite(max_bp_idx)]
+  bps_to_start <- bps[max_bp_idx[is.finite(max_bp_idx)]]
+  
+  #Step5: Now we need a structure that will hold the bps and eps that we want to keep, the easiest approach 
+  #would be to simply remove the eps we don't need by removing path to those eps, but the path may
+  #actually pass through other bps that we want to keep, so we need to isolate those bps we want to keep
+  #and those eps we want to keep
+  #For e.g. we  also want to keep paths up until the branch points proximal to
+  # the twigs that we are pruning - even if we prune all the twigs
+  # downstream of those branch points
+  
+  #Step5a: Find the eps that we want to keep
+  eps_to_keep <- setdiff(leaves, eps_to_prune)
+  
+  #Step5b: Also find the bps that we want to keep and collate them to nodes that we want to keep...
+  nodes_to_keep=c(eps_to_keep, bps_to_start)
+  
+  #Step5c: Now compute the paths from the root to all the nodes that we want to keep..
+  # note that mode = 'o' should be fine(as we have a directed graph from root), but mode 'all' is probably safer
+  res2 <-
+    igraph::shortest_paths(
+      ng,
+      from = root,
+      to = nodes_to_keep,
+      mode = 'all',
+      weights = NA
+    )
+  
+  #Step5d:Now compute the vertices you want to keep and prune the rest of the vertices
+  verts_to_keep=unique(unlist(res2$vpath))
+  # now we can basically prune everything not in that set
+  prune_vertices(ng, verts_to_keep, invert=TRUE, ...)
+}
+
+#' @param ... Additional arguments passed to methods
+#' @export
+#' @rdname reroot
+reroot <- function(x, ...) UseMethod('reroot')
+
+#' Reroot neurons
+#'
+#' Change the root node of a neuron (typically denoting the soma) to a new node
+#' specified by a node index, identifier or an XYZ position.
+#'
+#' @details All neurons in the natverse have a root point, which is used for
+#'   during many operations on the branching structure of the neuron. This will
+#'   often correspond to the soma of a neuron, but the soma is not always
+#'   present and sometimes its position may be unknown. For example some
+#'   connectomics datasets will have a certain position on a neuron marked as
+#'   \code{to soma} when the soma is not present in the reconstruction but it is
+#'   known to which branch it is attached.
+#'
+#'   The root point of a neuron is stored in the \code{StartPoint} field of the
+#'   neuron (see Examples) and can also be accessed using the
+#'   \code{\link{rootpoints}} function. For further details, please consult the
+#'   \href{http://natverse.org/nat/articles/neurons-as-graph.html}{Neurons as
+#'   graph structures} vignette. As an extension to the original nat
+#'   specification, the point identifier (not point index) of the anatomical
+#'   soma can be stored in the \code{tags$soma} field of the neuron
+#'
+#'   The node index refers is a number between 1 and N, the number of points in
+#'   the neuron. It provides an index into the point array. The node id is an
+#'   arbitrary identifier which may sometime be the same as the index, but may
+#'   be e.g. a 64 bit integer that uniquely identifies nodes across all neurons
+#'   in a database. Node ids can be retained after neurons are pruned even if
+#'   the indices for each point change. For further details, again see the
+#'   vignette mentioned above.
+#'
+#' @param x A \code{\link{neuron}} or \code{\link{neuronlist}} object
+#' @param idx index of the node for the new root (between 1 and the number of
+#'   nodes in the neuron).
+#' @param pointno new root node identifier (i.e. the \code{PointNo} column in
+#'   the point array of the neuron, see details).
+#' @param point 3-vector with X,Y,Z coordinates (data.frame or Nx3 matrix for
+#'   neuronlist)
+#'
+#' @return neuron with a new root position (unless \code{idx}, \code{pointno},
+#'   and \code{point} are all \code{NULL}, when the original neuron is
+#'   returned).
+#' @export
+#' @rdname reroot
+#' @examples
+#' newCell07PN <- reroot(Cell07PNs[[2]], 5)
+#' newCell07PN$StartPoint # 5
+reroot.neuron <- function(x, idx=NULL, pointno=NULL, point=NULL, ...) {
+  if (sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))!=1)
+    stop("Exactly one argument (idx, pointno, point) must be specified.")
+  if (!is.null(idx)) {
+    nid <- x$d$PointNo[idx]
+  } else if (!is.null(pointno)) {
+    if(any(is.na(match(pointno, x$d$PointNo))))
+      stop("One or more invalid pointno. Should match entries in x$d$PointNo!")
+    nid <- pointno
+  }
+  else {
+    if ((is.matrix(point) && nrow(point) != 3) || !(is.numeric(point) && length(point) == 3))
+      stop("Wrong point format, see docs!")
+    nidx <- which.min((x$d$X-point[[1]])^2+(x$d$Y-point[[2]])^2+(x$d$Z-point[[3]])^2)
+    nid <- x$d$PointNo[nidx]
+  }
+  as.neuron(as.ngraph(x), origin = nid)
+}
+
+#' @export
+#' @rdname reroot
+reroot.neuronlist<-function(x, idx=NULL, pointno=NULL, point=NULL, ...){
+  if (sum(c(!is.null(idx), !is.null(point), !is.null(pointno)))!=1)
+    stop("Exactly one argument (idx, point, pointno) must be specified.")
+  if (!is.null(idx)) {
+    if (length(idx) == 1)
+      res <- nlapply(x, reroot, idx=idx)
+    else if (length(idx) == length(x))
+      res <- nmapply(reroot, x, idx=idx)
+    else
+      stop("Number of indices must be 1, or equal to the number of neurons.")
+  }
+  if (!is.null(pointno)) {
+    if (length(pointno) == 1)
+      res <- nlapply(x, reroot, pointno=pointno)
+    else if (length(pointno) == length(x))
+      res <- nmapply(reroot, x, pointno=pointno)
+    else
+      stop("Number of point ids must be 1, or equal to the number of neurons.")
+  }
+  if (!is.null(point)) {
+    if (is.vector(point) || (is.data.frame(point) && nrow(point) == 1))
+      res <- nlapply(x, reroot, point=point)
+    else {
+      stopifnot(
+        "Number of points must be 1, or equal to the number of neurons."=nrow(points) == length(x)
+      )
+      point <- as.data.frame(t(point))
+      res <- nmapply(reroot, x, point=point)
+    }
+  }
+  res
 }

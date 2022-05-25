@@ -7,8 +7,15 @@
 \usage{
 read.landmarks(f, ...)
 
-write.landmarks(x, file, format = "amiralandmarks", ext = NULL,
-  Force = FALSE, MakeDir = TRUE, ...)
+write.landmarks(
+  x,
+  file,
+  format = "amiralandmarks",
+  ext = NULL,
+  Force = FALSE,
+  MakeDir = TRUE,
+  ...
+)
 }
 \arguments{
 \item{f}{Path to a file (can also be a URL)}
@@ -55,7 +62,7 @@ Presently the supported formats are \itemize{
   \item CMTK (format name \code{cmtklandmarks})
 
   \item Fiji (format name \code{fijilandmarks}) see
-  \url{http://fiji.sc/Name_Landmarks_and_Register} }
+  \url{https://imagej.net/plugins/name-landmarks-and-register} }
 
   See examples section for how to produce a listing of all currently
   available formats with \code{fileformats}.

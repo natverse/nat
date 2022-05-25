@@ -318,7 +318,6 @@ voxdims.character<-function(x, ...) {
 
 
 #' @export
-#' @method voxdims default
 #' @param dims The number of voxels in each dimension when x is a BoundingBox 
 #'   matrix.
 #' @rdname voxdims
@@ -370,7 +369,6 @@ voxdims.default<-function(x, dims, ...){
 #' boundingbox(Cell07PNs[[1]])
 boundingbox<-function(x, ...) UseMethod("boundingbox")
 
-#' @method boundingbox im3d
 #' @export
 #' @export
 #' @rdname boundingbox
@@ -497,7 +495,6 @@ dim.im3d<-function(x){
 
 #' Method to plot spatially calibrated image arrays
 #' @export
-#' @method image im3d
 #' @param x The im3d object containing the data to be plotted  (\code{NA}s are 
 #'   allowed).
 #' @param zlim the minimum and maximum \code{z} values for which colors should 
@@ -730,7 +727,6 @@ projection<-function(a, projdim='z', projfun=c('integrate','mean','sum'),
 flip<-function(x, ...) UseMethod('flip')
 
 #' @export
-#' @method flip array
 #' @rdname flip
 #' @param flipdim Character vector or 1-indexed integer indicating array 
 #'   dimension along which flip will occur. Characters X, Y, Z map onto 
@@ -839,7 +835,6 @@ imslice<-function(x, slice, slicedim='z', drop=TRUE){
 #' @param CheckSharedAttrsOnly Logical whether to check shared attributes only 
 #'   (default: FALSE)
 #' @param ... additional arguments passed to \code{all.equal}
-#' @method all.equal im3d
 #' @export
 #' @seealso \code{\link{all.equal}}
 all.equal.im3d<-function(target, current, tolerance=1e-6,
@@ -919,7 +914,6 @@ unmask<-function(x, mask, default=NA, attributes.=attributes(mask),
 #' @export
 mask<-function(x, ...) UseMethod("mask")
 
-#' @method mask im3d
 #' @param mask An im3d object, an array or a vector with dimensions compatible 
 #'   with x.
 #' @param levels Optional numeric vector of pixel values or character vector 
@@ -985,7 +979,6 @@ mask.im3d<-function(x, mask, levels=NULL, rval=c("im3d", "values"), invert=FALSE
 #' @export
 threshold<-function(x, ...) UseMethod("threshold")
 
-#' @method threshold im3d
 #' @param threshold Either a numeric value that pixels must \strong{exceed} in 
 #'   order to be included in the mask \emph{or} a \code{logical} vector defining
 #'   foreground pixels.
@@ -1211,7 +1204,6 @@ materials<-function(x, ...) UseMethod("materials")
 
 #' @export
 #' @rdname materials
-#' @method materials default
 materials.default<-function(x, ...) {
   attr(x,'materials')
 }
@@ -1223,7 +1215,6 @@ materials.default<-function(x, ...) {
 #'   key-value pairs according to some ad hoc convention.
 #' @export
 #' @rdname materials
-#' @method materials character
 materials.character<-function(x, ...) {
   i=read.im3d(x, ..., ReadData = FALSE)
   materials(i)
@@ -1233,7 +1224,6 @@ materials.character<-function(x, ...) {
 #'   hxsurf object
 #' @export
 #' @rdname materials
-#' @method materials hxsurf
 #' @family hxsurf
 materials.hxsurf<-function(x, ...) {
   m=data.frame(name=names(x$Regions),id=seq_along(x$Regions),

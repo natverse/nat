@@ -1,49 +1,53 @@
 #' Read a single neuron from a file
-#' 
-#' @details This function will handle \code{neuron} and \code{dotprops} objects 
-#'   saved in R .rds or .rda format by default. Additional file formats can be 
+#'
+#' @details This function will handle \code{neuron} and \code{dotprops} objects
+#'   saved in R .rds or .rda format by default. Additional file formats can be
 #'   registered using \code{fileformats}.
-#'   
-#'   At the moment the following formats are supported using file readers 
+#'
+#'   At the moment the following formats are supported using file readers
 #'   already included with the nat package: \itemize{
-#'   
-#'   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also 
-#'   return an \code{\link{ngraph}} object containing the neuron structure in a 
-#'   (permissive) general graph format that also contains the 3D positions for 
+#'
+#'   \item \bold{swc} See \code{\link{read.neuron.swc}}. SWC files can also
+#'   return an \code{\link{ngraph}} object containing the neuron structure in a
+#'   (permissive) general graph format that also contains the 3D positions for
 #'   each vertex.
-#'   
+#'
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
-#'   
+#'
 #'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
-#'   used by the \href{http://fiji.sc/Simple_Neurite_Tracer}{Simple Neurite 
+#'   used by the \href{ https://imagej.net/plugins/simple-neurite-tracer/}{Simple Neurite
 #'   Tracer} plugin of Fiji/ImageJ.
-#'   
-#'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira. 
-#'   \code{hxlineset} is the generic one, \code{hxskel} is used by the 
+#'
+#'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira.
+#'   \code{hxlineset} is the generic one, \code{hxskel} is used by the
 #'   hxskeletonize extension of Schmitt and Evers (see refs).
-#'   
-#'   \item \bold{rda,rds} Native R cross-platform binary formats (see 
-#'   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single 
+#'
+#'   \item \bold{rda,rds} Native R cross-platform binary formats (see
+#'   \code{\link{load}, \link{readRDS}}). Note that RDS only contains a single
 #'   unnamed neuron, whereas rda contains one or more named neurons.
-#'   
+#'
+#'   \item \bold{obj,ply} 3D Mesh formats encoding surface models of neurons.
+#'   These depend on the suggested package \code{\link[Rvcg]{Rvcg}} (for 'ply'
+#'   format) and \code{\link[readobj]{readobj}} (for Wavefront 'obj' format).
+#'
 #'   }
 #' @export
-#' @param f Path to file. This can be a URL, in which case the file is 
+#' @param f Path to file. This can be a URL, in which case the file is
 #'   downloaded to a temporary location before reading.
-#' @param format The file format of the neuron. When \code{format=NULL}, the 
-#'   default, \code{read.neuron} will infer the file format from the extension 
+#' @param format The file format of the neuron. When \code{format=NULL}, the
+#'   default, \code{read.neuron} will infer the file format from the extension
 #'   or file header (aka magic) using the \code{fileformats} registry.
-#' @param class The class of the returned object - presently either 
+#' @param class The class of the returned object - presently either
 #'   \code{"neuron"} or \code{"ngraph"}
 #' @param ... additional arguments passed to format-specific readers
 #' @seealso \code{\link{write.neuron}}, \code{\link{read.neurons}},
 #'   \code{\link{fileformats}}
-#' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and 
-#'   Obermayer, K. (2004). New methods for the computer-assisted 3-D 
-#'   reconstruction of neurons from confocal image stacks. Neuroimage 4, 
-#'   1283--98. 
-#'   \href{http://dx.doi.org/10.1016/j.neuroimage.2004.06.047}{doi:10.1016/j.neuroimage.2004.06.047}
-#'   
+#' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
+#'   Obermayer, K. (2004). New methods for the computer-assisted 3-D
+#'   reconstruction of neurons from confocal image stacks. Neuroimage 4,
+#'   1283--98.
+#'   \doi{10.1016/j.neuroimage.2004.06.047}
+#'
 #' @examples
 #' \dontrun{
 #' # note that we override the default NeuronName field
@@ -98,7 +102,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' Read one or more neurons from file to a neuronlist in memory
 #' 
 #' @details This function will cope with the same set of file formats offered by
-#'   \code{read.neuron}.
+#'   \code{\link{read.neuron}}.
 #'   
 #'   If the \code{paths} argument specifies a (single) directory then all files 
 #'   in that directory will be read unless an optional regex pattern is also 
@@ -162,7 +166,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
 #' # attach metadata to neuronlist
 #' vdnl=read.neurons(vdurls, neuronnames=vds, df=vddf)
 #' # use metadata to plot a subset of neurons
-#' clear3d()
+#' nclear3d()
 #' plot3d(vdnl, grepl("P[1-6].app", Lineage))
 #' }
 #' @importFrom tools file_path_sans_ext
@@ -206,17 +210,20 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
   if(length(paths)==1 && isTRUE(file.info(paths)$isdir))
     paths=dir(paths,pattern=pattern,full.names=TRUE)
   
-  if(is.function(neuronnames))
-    nn=neuronnames(paths)
-  else
-    nn=neuronnames
+  nn <- if(is.function(neuronnames)) neuronnames(paths) else neuronnames
   duplicateNames=nn[duplicated(nn)]
   if(length(duplicateNames)) {
     stop("Neurons cannot have duplicate names: ",
-         paste(duplicateNames,collapse=" "))
+         paste(duplicateNames, collapse=" "))
   }
   all_names=nn
   names(paths)=nn
+  dfin <- NULL
+  if("write.neurons.dataframe" %in% nn) {
+    nn=setdiff(nn, "write.neurons.dataframe")
+    dff <- paths["write.neurons.dataframe"]
+    dfin <- readRDS(dff)
+  }
   # Handle updates of an existing neuronlist
   if(!is.null(nl)) {
     if(!is.neuronlist(nl)) stop("nl must be a neuronlist")
@@ -237,12 +244,33 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
     message("There are ",length(modified_neurons)," modified neurons",
             " and ",length(new_neurons),' new neurons')
     paths=paths[nn]
-  } else nl=neuronlist()
+    
+    if(!is.null(dfin)) {
+      # only fiddle with the data.frame if there was one in the zip file
+      df=as.data.frame(nl)
+      df[nn,]=dfin[nn,]
+    }
+  } else {
+    if(!is.null(dfin)) {
+      df=dfin
+      # reorder to match incoming data.frame
+      nn=intersect(rownames(df), nn)
+    }
+    nl=neuronlist()
+  }
   # Actually read in the neurons, making sure that warnings/errors are thrown
   # immediately so that we can tell which neuron generated them
   ow=options(warn=1)
   on.exit(options(ow), add = TRUE)
-  for(n in names(paths)){
+  if(interactive())
+    pb <- progress::progress_bar$new(format = "  reading :current/:total [:bar]  eta: :eta",
+                                   clear = FALSE,
+                                   total = length(paths),
+                                   show_after=2)
+  
+  for(n in nn){
+    if(interactive())
+      pb$tick()
     f=unname(paths[n])
     x=withCallingHandlers(try(read.neuron(f, format=format, ...), silent=TRUE),
                           warning = function(w) message("While reading file: ",f),
@@ -261,6 +289,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
     }
     nl[[n]]=x
   }
+  
   if(SortOnUpdate) {
     names_missing_from_all_names=setdiff(names(nl),all_names)
     if(length(names_missing_from_all_names)){
@@ -290,7 +319,6 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
 #' @details if a \code{format} argument is passed to \code{fileformats} it will
 #'   be matched with partial string matching and iif a unique match exists that
 #'   will be returned.
-#' @inheritParams registerformat
 #' @param rval Character vector choosing what kind of return value 
 #'   \code{fileformats} will give.
 #' @return \itemize{
@@ -492,22 +520,30 @@ getformatwriter<-function(format=NULL, file=NULL, ext=NULL, class=NULL){
 }
 
 #' Read a neuron in swc file format
-#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully 
-#'   parsed \code{\link{neuron}} representation.
-#' @details These functions will accept SWC neurons with multiple trees and 
+#' @description \code{read.neuron.swc} reads an SWC file on disk into a fully
+#'   parsed \code{\link{neuron}} representation. However we normally recommend
+#'   using \code{\link[=read.neuron]{read.neuron(s)}} since those functions cope
+#'   with any file type.
+#' @details These functions will accept SWC neurons with multiple trees and
 #'   arbitrary point index order. However only \code{read.ngraph.swc} will
 #'   accept SWC files with cycles.
-#'   
-#'   These functions would normally be called from \code{read.neuron(s)} rather 
-#'   than used directly.
-#' @section SWC Format: According to 
-#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html} SWC file format has a
-#'   radius not a diameter specification
+#'
+#'   These functions would normally be called from
+#'   \code{\link[=read.neuron]{read.neuron(s)}} rather than used directly. The
+#'   only benefit of using \code{read.neuron.swc} is to avoid a very small
+#'   overhead in identifying the SWC file type. Note that only
+#'   \code{\link{read.neurons}} can read many files in one command to construct
+#'   a \code{\link{neuronlist}} object.
+#'
+#' @section SWC Format: According to
+#'   \url{http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html}
+#'    SWC file format has a radius not a diameter specification
 #' @param f path to file
-#' @param ... Additional arguments. \code{read.neuron.swc} passes these to 
-#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}. 
+#' @param ... Additional arguments. \code{read.neuron.swc} passes these to
+#'   \code{\link{as.neuron}} and then on to \code{\link{neuron}}.
 #'   \code{read.neuron.swc} passes them to \code{\link{ngraph}}.
-#' @seealso \code{\link{is.swc}}
+#' @seealso \code{\link{is.swc}}, \code{\link{read.neuron}}
+#' @export
 read.neuron.swc<-function(f, ...){
   d=read.swc(f)
   # multiply by 2 to get diam which is what I work with internally
@@ -579,7 +615,7 @@ is.swc<-function(f, TrustSuffix=TRUE) {
   all(sapply(first_line[c("X", "Y", "Z", "W")], is.numeric))
 }
 
-#' Write out a neuron in any of the file formats we know about
+#' Write out a neuron skeleton or mesh in any of the file formats we know about
 #'
 #' If file is not specified the neuron's InputFileName field will be checked
 #' (for a dotprops object it will be the \code{'file'} attribute). If this is
@@ -597,20 +633,24 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #'   \code{normalise.ids=NA} will normalise \code{PointNo} vertex ids only when
 #'   a vertex is connected (by the \code{Parent} field) to a vertex that had not
 #'   yet been defined. Many readers make the assumption that this is true. When
-#'   \code{normalise.ids=F} the vertex ids will not be touched.
+#'   \code{normalise.ids=FALSE} the vertex ids will not be touched.
 #'
 #' @param n A neuron
 #' @param file Path to output file
-#' @param dir Path to directory (this will replace dirname(file) if specified)
+#' @param dir Path to directory (this will replace \code{dirname(file)} if
+#'   specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
-#'   the filename and the ext parameter, then it defaults to 'swc'
+#'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
+#'   (neuron meshes). If no format can be extracted from the filename or the
+#'   \code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
+#'   meshes.
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
 #'   or added e.g. if the desired file name does not have an extension.
 #' @param Force Whether to overwrite an existing file
 #' @param MakeDir Whether to create directory implied by \code{file} argument.
+#' @inheritParams write.neurons
 #' @param ... Additional arguments passed to selected writer function
 #' @return return value
 #' @export
@@ -620,12 +660,14 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' # show the currently registered file formats that we can write
 #' fileformats(class='neuron', write=TRUE)
 #' \dontrun{
-#' # write out "myneuron.swc" in SWC format
+#' # write neuron to "myneuron.swc" in SWC format
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
-#' # write out "myneuron.swc" in SWC format, normalising the integer ids that
-#' # label every node (this is required by some SWC readers e.g. Fiji)
+#' # write in SWC format, normalising the integer ids that label every node
+#' # (this is required by some SWC readers e.g. Fiji)
 #' write.neuron(Cell07PNs[[1]], file='myneuron.swc', normalise.ids=TRUE)
-#'
+#' # write out "myneuron.swc" in SWC format withour the final extension
+#' write.neuron(Cell07PNs[[1]], file='myneuron.swc')
+
 #' # write out "myneuron.amiramesh" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
 #'
@@ -633,10 +675,10 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
-                       Force=FALSE, MakeDir=TRUE, ...){
+                       Force=FALSE, MakeDir=TRUE, metadata=NULL, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
-    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds"))
+    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds", "rdsb", "qs"))
     if(is.null(file)) {
       file=basename(attr(n,"file"))
       if(is.null(file))
@@ -655,13 +697,18 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
     if(!(length(ext) && is.na(ext)))
       file=tools::file_path_sans_ext(file)
   }
-  
+  if(!is.null(format)) {
+    # TODO - one day it should be possible to have one file format associated 
+    # with different R classes
+    if(format=='obj') format='neuron.obj'
+    else if(format=='ply') format='neuron.ply'
+  }
   fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
   if(inherits(fw, 'try-error')) {
     if(is.null(format)){
-      format='swc'
+      format <- if(inherits(n, 'mesh3d')) 'neuron.ply' else 'swc'
       fw=getformatwriter(format=format, file=file, ext=ext, class='neuron')
-      warning('write.neuron: using default format="swc"')
+      warning('write.neuron: using default format="',format,'"')
     } else {
       # rethrow the error
       stop(fw)
@@ -688,12 +735,32 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
   }
   
   # OK all fine, so let's write
-  match.fun(fw$write)(n, file=file, ...)
+  FUN=match.fun(fw$write)
+
+  write_metadata=FALSE
+  if(!is.null(metadata)) {
+    if(!isTRUE("metadata" %in% names(formals(FUN))))
+      warning("neuron writing function does not accept metadata")
+    else {
+      write_metadata=TRUE
+      if(!is.character(metadata)){
+        if(!requireNamespace('jsonlite', quietly = TRUE))
+          stop("Please install the jsonlite package to write metadata!")
+        if(is.data.frame(metadata))
+          metadata=as.list(metadata)
+        metadata=jsonlite::toJSON(metadata, auto_unbox = TRUE)
+      }
+      if(length(metadata)>1)
+        metadata=paste(metadata, collapse = ' ')
+    }
+  }
+  if(isTRUE(write_metadata)) FUN(n, file=file, metadata=metadata, ...)
+  else FUN(n, file=file, ...)
   invisible(file)
 }
 
 # write neuron to SWC file
-write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
+write.neuron.swc<-function(x, file, normalise.ids=NA, metadata=NULL, ...){
   if(is.dotprops(x)) {
     return(write.dotprops.swc(x, file, ...))
   }
@@ -716,7 +783,7 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
   
   if(normalise.ids) {
     g=as.ngraph(x)
-    r=igraph::dfs(g, root=x$StartPoint, neimode = 'all')
+    r=igraph::dfs(g, root=x$StartPoint, mode = 'all')
     new_order=as.integer(r$order)
     df=df[new_order,]
     df$Parent=match(df$Parent, df$PointNo, nomatch = -1L)
@@ -725,7 +792,12 @@ write.neuron.swc<-function(x, file, normalise.ids=NA, ...){
   writeLines(c("# SWC format file",
                "# based on specifications at http://www.neuronland.org/NLMorphologyConverter/MorphologyFormats/SWC/Spec.html"),
              con=file)
-  cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)  
+  cat("# Created by nat::write.neuron.swc\n", file=file, append=TRUE)
+  if(!is.null(metadata)) {
+    # read like so 
+    # jsonlite::fromJSON(substr(j,8,nchar(j)), bigint_as_char=TRUE)
+    cat(paste0("# Meta: ", metadata, "\n"), file=file, append=TRUE)
+  }
   cat("#", colnames(df), "\n", file=file, append=TRUE)
   write.table(df, file, col.names=F, row.names=F, append=TRUE, ...)
 }
@@ -741,20 +813,33 @@ write.dotprops.swc<-function(x, file, ...) {
 
 
 #' Write neurons from a neuronlist object to individual files, or a zip archive
-#' 
-#' @details See \code{\link{write.neuron}} for details of how to specify the 
-#'   file format/extension/name of the output files and how to establish what 
+#'
+#' @details See \code{\link{write.neuron}} for details of how to specify the
+#'   file format/extension/name of the output files and how to establish what
 #'   output file formats are available. A zip archive of files can be written by
-#'   specifying a value of \code{dir} that ends in \code{.zip}.
+#'   specifying a value of \code{dir} that ends in \code{.zip}. When rds files
+#'   (R's binary data representation, which is compressed by default) are stored
+#'   inside a zip file the are not further compressed (zip option 0).
+#'
 #' @param nl neuronlist object
 #' @param dir directory to write neurons, or path to zip archive (see Details).
 #' @inheritParams write.neuron
-#' @param subdir String naming field in neuron that specifies a subdirectory OR 
+#' @param subdir String naming field in neuron that specifies a subdirectory OR
 #'   expression to evaluate in the context of neuronlist's df attribute
-#' @param INDICES Character vector of the names of a subset of neurons in 
+#' @param INDICES Character vector of the names of a subset of neurons in
 #'   neuronlist to write.
-#' @param files Character vector or expression specifying output filenames. See 
+#' @param files Character vector or expression specifying output filenames. See
 #'   examples and \code{\link{write.neuron}} for details.
+#' @param metadata Whether to encode some metadata in the header file (currently
+#'   only supported for SWC format). Either a data.frame or \code{TRUE} to
+#'   indicate that the attached data.frame should be written. Default
+#'   \code{FALSE}.
+#' @param include.data.frame Whether to include the metadata when writing a zip
+#'   file (it will be called \code{"write.neurons.dataframe.rds"}).
+#' @param cl Either the integer number of cores to use for parallel writes (2 or
+#'   3 seem useful) or a \code{cluster} object created by
+#'   \code{\link{makeCluster}}. See the \code{cl} argument of
+#'   \code{\link[pbapply]{pbsapply}} for details.
 #' @param ... Additional arguments passed to \code{\link{write.neuron}}
 #' @inheritParams write.neuron
 #' @return the path to the output file(s), absolute when this is a zip file.
@@ -769,10 +854,23 @@ write.dotprops.swc<-function(x, file, ...) {
 #' write.neurons(Cell07PNs, dir="testwn", format='swc')
 #' # write some neurons in swc format for picky software
 #' write.neurons(Cell07PNs, dir="testwn", format='swc', normalise.ids=TRUE)
-#' 
+#' # write some neurons in swc format and zip them up
+#' write.neurons(Cell07PNs, dir="testwn.zip", format='swc')
+#'
+#' # write some neurons in R's native RDS format using 3 cores for
+#' # parallel writes and then zip them up (storing rather than compressing)
+#' write.neurons(Cell07PNs, dir="testwn.zip", format='rds', cl=3)
+#'
 #' # write some neurons in Amira hxlineset format
 #' write.neurons(Cell07PNs, dir="testwn", format='hxlineset')
-#' 
+#'
+#' # write some neuron meshes in Stanford ply format (the default for meshes)
+#' write.neurons(myneurons, dir="testwn")
+#' # specify the format to avoid a warning. Write to a zip file.
+#' write.neurons(myneurons, dir="testmeshes.zip", format='ply')
+#' # Wavefront obj format
+#' write.neurons(myneurons, dir="testwn", format='obj')
+#'
 #' # organise new files in directory hierarchy by glomerulus and Scored.By field
 #' write.neurons(Cell07PNs,dir="testwn",
 #'   subdir=file.path(Glomerulus,Scored.By),format='hxlineset')
@@ -790,8 +888,11 @@ write.dotprops.swc<-function(x, file, ...) {
 #' write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 #'   subdir=Glomerulus, files=paste0(ID,'.am'), format='hxlineset')
 #' }
-write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl), 
-                        files=NULL, Force=FALSE, ...){
+write.neurons<-function(nl, dir, format=NULL, subdir=NULL, 
+                        INDICES=names(nl), files=NULL, 
+                        include.data.frame=FALSE,
+                        metadata=FALSE,
+                        Force=FALSE, cl=NULL, ...){
   if(grepl("\\.zip", dir)) {
     zip_file=dir
     # check if file exists (and we want to overwrite)
@@ -805,11 +906,19 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     # ... and use that to construct absolute path to output zip
     zip_file=file.path(zip_dir, basename(zip_file))
     dir <- file.path(tempfile("user_neurons"))
+    # we will be writing to an empty temp dir, so skip the file.exists check
+    Force=TRUE
+    #
+    if(isTRUE(include.data.frame)) {
+      if(any(names(nl) %in% "write.neurons.dataframe"))
+        stop("Cannot write a neuronlist object with a neuron named 'write.neurons.dataframe' when include.data.frame=TRUE")
+    }
   } else {
     zip_file=NULL
   }
   if(!file.exists(dir)) dir.create(dir)
   df=attr(nl,'df')
+  
   # Construct subdirectory structure based on variables in attached data.frame
   ee=substitute(subdir)
   subdirs=NULL
@@ -825,7 +934,22 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
     if(is.null(names(files))) names(files)=INDICES
   }
   written=structure(rep("",length(INDICES)), .Names = INDICES)
-  for(nn in INDICES){
+  
+  if(isTRUE(metadata)) metadata=df
+  else if(isFALSE(metadata)) metadata=NULL
+  if(!is.null(metadata)) {
+    checkmate::assert_data_frame(metadata, nrows = length(INDICES))
+    # turn the data.frame into a list with one entry for each neuron
+    # metadata=lapply(seq_len(nrow(metadata)), function(i) as.list(metadata[i,]))
+  }
+  
+  if(interactive())
+    pb <- progress::progress_bar$new(format = "  writing :current/:total [:bar]  eta: :eta",
+                                     clear = FALSE,
+                                     total = length(INDICES),
+                                     show_after=2)
+  NINDICES=stats::setNames(nm = INDICES)
+  written=pbapply::pbsapply(NINDICES, cl = cl, metadata=metadata, ..., FUN=function(nn, metadata=NULL, ...) {
     n=nl[[nn]]
     thisdir=dir
     if(is.null(subdirs)){
@@ -837,12 +961,31 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL, INDICES=names(nl),
       thisdir=subdirs[nn]
     }
     if(!file.exists(thisdir)) dir.create(thisdir, recursive=TRUE)
-    written[nn]=write.neuron(n, dir=thisdir, file = files[nn], format=format, Force=Force, ...)
-  }
+    file=files[nn]
+    if(!isTRUE(nchar(file)>0)){
+      # the filename was not specified explicitly and we can't figure it out
+      # from field inside the neuron, so set to name of object in neuronlist
+      if(!is.neuron(n) || is.null(n$InputFileName))
+        file=nn
+    }
+    metadatarow <- if(!is.null(metadata)) {
+      metadata[match(nn, NINDICES), ]
+    } else NULL
+    write.neuron(n, dir=thisdir, file = file, format=format, Force=Force, metadata=metadatarow, ...)
+  })
+  
   if(!is.null(zip_file)) {
     owd=setwd(dir)
     on.exit(setwd(owd))
-    zip(zip_file, files=dir(dir, recursive = TRUE))
+    if(isTRUE(include.data.frame)) {
+      f='write.neurons.dataframe.rds'
+      saveRDS(as.data.frame(nl)[NINDICES,,drop=FALSE], f)
+      files=c(files, f)
+    }
+    # rds is already compressed so just store
+    zipflags=ifelse(format%in%c("rds", "rdsb", "qs"), "-qr0X", "-qr9X")
+    zip(zip_file, flags = zipflags, 
+        files=if(getRversion()<"3.6.0") dir else dir(dir, recursive = TRUE))
     unlink(dir, recursive=TRUE)
     written<-zip_file
   }

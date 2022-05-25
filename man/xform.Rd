@@ -6,6 +6,7 @@
 \alias{xform.character}
 \alias{xform.list}
 \alias{xform.shape3d}
+\alias{xform.mesh3d}
 \alias{xform.neuron}
 \alias{xform.data.frame}
 \alias{xform.dotprops}
@@ -14,27 +15,31 @@
 \usage{
 xform(x, reg, ...)
 
-\method{xform}{default}(x, reg, na.action = c("warn", "none", "drop",
-  "error"), ...)
+\method{xform}{default}(x, reg, na.action = c("warn", "none", "drop", "error"), ...)
 
 \method{xform}{character}(x, reg, ...)
 
-\method{xform}{list}(x, reg, FallBackToAffine = TRUE,
-  na.action = "error", ...)
+\method{xform}{list}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
 
-\method{xform}{shape3d}(x, reg, FallBackToAffine = TRUE,
-  na.action = "error", ...)
+\method{xform}{shape3d}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
 
-\method{xform}{neuron}(x, reg, FallBackToAffine = TRUE,
-  na.action = "error", ...)
+\method{xform}{mesh3d}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
+
+\method{xform}{neuron}(x, reg, FallBackToAffine = TRUE, na.action = "error", ...)
 
 \method{xform}{data.frame}(x, reg, subset = NULL, ...)
 
 \method{xform}{dotprops}(x, reg, FallBackToAffine = TRUE, ...)
 
-\method{xform}{neuronlist}(x, reg, subset = NULL, ...,
-  OmitFailures = NA, VectoriseRegistrations = FALSE,
-  TransformDFCoords = TRUE)
+\method{xform}{neuronlist}(
+  x,
+  reg,
+  subset = NULL,
+  ...,
+  OmitFailures = NA,
+  VectoriseRegistrations = FALSE,
+  TransformDFCoords = TRUE
+)
 }
 \arguments{
 \item{x}{an object to transform}
@@ -54,9 +59,9 @@ warping transformation fails.}
 \item{subset}{For \code{xform.neuronlist} indices (character/logical/integer)
 that specify a subset of the members of \code{x} to be transformed.}
 
-\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an 
-error. The default value (\code{NA}) will result in nlapply stopping with 
-an error message the moment there is an error. For other values, see 
+\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
+error. The default value (\code{NA}) will result in nlapply stopping with
+an error message the moment there is an error. For other values, see
 details.}
 
 \item{VectoriseRegistrations}{When \code{FALSE}, the default, each element of

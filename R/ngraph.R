@@ -57,7 +57,7 @@
 #' @family neuron
 #' @seealso \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
 #'   \code{\link{subset.neuron}} for example of graph-based manipulation of a
-#'   neuron.
+#'   neuron, \code{\link{plot3d.ngraph}}
 #' @export
 #' @importFrom igraph V<-
 #' @examples
@@ -132,7 +132,6 @@ as.ngraph.ngraph<-function(x, ...) x
 
 #' @description \code{as.ngraph.dataframe} construct ngraph from a data.frame 
 #'   containing SWC format data
-#' @method as.ngraph data.frame
 #' @export
 #' @rdname ngraph
 as.ngraph.data.frame<-function(x, directed=TRUE, ...){
@@ -143,7 +142,6 @@ as.ngraph.data.frame<-function(x, directed=TRUE, ...){
 #' @description \code{as.ngraph.neuron} construct ngraph from a neuron
 #' @rdname ngraph
 #' @export
-#' @method as.ngraph neuron
 #' @param method Whether to use the swc data (x$d) or the seglist to define 
 #'   neuronal connectivity to generate graph.
 #' @details Note that the \code{as.ngraph.neuron} method \emph{always} keeps the
@@ -178,7 +176,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   if(!igraph::is.directed(g))
     dg=igraph::as.directed(g, mode='arbitrary')
   else dg=g
-  dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, neimode='all')
+  dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
   el=igraph::get.edgelist(dg)
   
   connected_vertices=which(is.finite(dfs$order))
@@ -309,7 +307,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
-#' @importFrom igraph graph.empty add.edges E
+#' @importFrom igraph make_empty_graph add.edges E
 #' @export
 #' @examples 
 #' sg=segmentgraph(Cell07PNs[[1]])
@@ -317,16 +315,14 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' library(igraph)
 #' plot(sg, edge.arrow.size=.4, vertex.size=10)
 segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE, 
-                       include.xyz=FALSE, reverse.edges=FALSE){
-  g=graph.empty()
+                       include.xyz=FALSE, reverse.edges=FALSE) {
   pointnos=x$d$PointNo
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
-  topntail<-function(x) if(length(x)==1) x else x[c(1,length(x))]
   # just get head and tail of each segment
-  simple_sts=lapply(sts,topntail)
+  simple_sts=topntail_list(sts)
   all_nodes=sort(unique(unlist(simple_sts)))
   # make empty graph with appropriate nodes
-  g=graph.empty(n=length(all_nodes))
+  g=make_empty_graph(n=length(all_nodes))
   # store external pointnos
   igraph::V(g)$label=pointnos[all_nodes]
   # store original vertex ids
@@ -396,8 +392,12 @@ strahler_order<-function(x){
   roots=rootpoints(s, original.ids=FALSE)
   if(length(roots)>1)
     stop("strahler_order not yet defined for multiple subtrees")
+  # quick win for single branch neurons
+  if (length(x$BranchPoints) == 0)
+    return(list(points=rep(1L, nrow(x$d)),
+                segments=rep(1L, length(x$SegList))))
   
-  b=graph.bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
+  b=graph.bfs(s, root=roots, mode = 'out', unreachable=F, father=T)
   
   # find neighbours for each node
   n=neighborhood(s, 1, mode='out')
@@ -407,7 +407,8 @@ strahler_order<-function(x){
   # visit nodes in reverse order of bfs traversal
   # this ensures that we always visit children before parents
   for(i in rev(b$order)) {
-    children=setdiff(n[[i]], i)
+    # faster than setdiff
+    children=n[[i]][match(n[[i]], i, 0L) == 0L]
     if(length(children)==0L) {
       # terminal node
       so_red_nodes[i]=1L
@@ -433,17 +434,15 @@ strahler_order<-function(x){
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
   so_segs=integer(length(sts))
   svids=V(s)$vid
-  topntail<-function(x) x[c(1L,length(x))]
-  segendmat=sapply(sts, topntail)
-  idxs=apply(segendmat, 1, match, svids)
+  segendmat=topntail(sts)
+  idxs=matrix(match(segendmat,svids), ncol=2, byrow = T)
   for(i in seq_along(sts)){
     segends=segendmat[,i]
     so_segends=so_red_nodes[idxs[i,]]
     so_orig_nodes[segends]=so_segends
     so_this_seg=min(so_segends)
     so_segs[i]=so_this_seg
-    
-    internal=setdiff(sts[[i]], segends)
+    internal=sts[[i]][match(sts[[i]], segends, 0L) == 0L]
     if(length(internal)) {
       so_orig_nodes[internal]=so_this_seg
     }
@@ -562,6 +561,11 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
 #' pruned2=prune_vertices(Cell07PNs[[1]], spine_ids)
 prune_edges<-function(x, edges, invert=FALSE, ...) {
   g=as.ngraph(x)
+  dg=prune_edges_ng(g, edges, invert = invert)
+  as.neuron(as.ngraph(dg), ...)
+}
+
+prune_edges_ng <- function(g, edges, invert=FALSE) {
   if(!inherits(edges, "igraph.es")){
     if(!is.numeric(edges))
       stop("I can't understand the edges you have given me!")
@@ -579,7 +583,6 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
   
   # remove unreferenced vertices
   dg=igraph::delete.vertices(dg, which(igraph::degree(dg, mode='all')==0))
-  as.neuron(as.ngraph(dg), ...)
 }
 
 # Construct EdgeList matrix with start and end points from SegList
@@ -588,6 +591,9 @@ prune_edges<-function(x, edges, invert=FALSE, ...) {
 # @return A 2 column matrix, \code{cbind(starts,ends)}
 # @export
 EdgeListFromSegList<-function(SegList){
+  if(use_natcpp()) {
+    return(natcpp::c_EdgeListFromSegList(SegList))
+  }
   lsl=sapply(SegList,length)
   sl=SegList[lsl>1]
   lsl=lsl[lsl>1]
@@ -596,46 +602,54 @@ EdgeListFromSegList<-function(SegList){
   cbind(starts,ends)
 }
 
-#' Prune neuron within a volume
+#' Prune neuron(s) within a volume defined by a 3D mesh
 #'
-#' @details Prune a neuron to be within, or to exclude arbour within, 
-#' a 3D object that can be coecred into the mesh3d data structure
+#' @details Prune a neuron to be within, or to exclude arbour within, a 3D
+#'   object that can be coerced into the mesh3d data structure
 #'
 #' @param x a \code{neuron} object
-#' @param brain The \code{\link[nat]{hxsurf}} object containing the neuropil of
-#'   interest, e.g. \code{\link[nat.flybrains]{FCWBNP.surf}}. Can also be any other \code{\link[nat]{hxsurf}}
-#'   or \code{\link[rgl]{mesh3d}} object, or any object coercible into \code{\link[rgl]{mesh3d}}
-#'   by \code{\link[rgl]{as.mesh3d}}
-#' @param neuropil Character vector specifying the neuropil, which must be queryable from brain$RegionList. 
-#' If NULL (default), then the full object given as \code{brain} will be used for the pruning
-#' @param invert Logical when \code{TRUE} indicates that points inside the mesh are kept.
-#' @param ... Additional arguments for methods (eventually passed to prune.default)
-#'   surface should be pruned.
+#' @param surf An \code{\link{hxsurf}} or \code{\link[rgl]{mesh3d}} object, or
+#'   any object coercible into \code{\link[rgl]{mesh3d}} by
+#'   \code{\link{as.mesh3d}}.
+#' @param neuropil Character vector specifying a subset of the \code{surf}
+#'   object. This is only relevant when \code{surf} is of class
+#'   \code{\link{hxsurf}}. If NULL (default), then the full object given as
+#'   \code{surf} will be used for the pruning.
+#' @param invert Logical when \code{TRUE} indicates that points inside the mesh
+#'   are kept.
+#' @param ... Additional arguments for methods (eventually passed to
+#'   \code{\link{prune_vertices}}) surface should be pruned.
 #' @inherit prune seealso
 #' @examples
-#' \dontrun{ 
-#' ## Interactively choose which bit of the neuron you wish to keep
+#' \dontrun{
 #' ### Example requires the package nat.flybrains
-#' LH_arbour = prune_in_volume(x = Cell07PNs, brain = 
-#' nat.flybrains::IS2NP.surf, neuropil = "LH_L", OmitFailures = TRUE)
-#' } 
+#' LH_arbour = prune_in_volume(x = Cell07PNs, surf = nat.flybrains::IS2NP.surf,
+#'   neuropil = "LH_L", OmitFailures = TRUE)
+#' }
+#' @return A pruned neuron/neuronlist object
+#' @seealso \code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
+#'   \code{\link{prune.neuron}}, \code{\link{prune}}
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume <-function(x, brain, neuropil = NULL, invert = TRUE, ...) UseMethod("prune_in_volume")
+prune_in_volume <-function(x, surf, neuropil = NULL, invert = TRUE, ...) 
+  UseMethod("prune_in_volume")
+
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume.neuron <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
+prune_in_volume.neuron <- function(x, surf, neuropil = NULL, invert = TRUE, ...) {
   if(is.null(neuropil)){
-    mesh = rgl::as.mesh3d(brain)
-  }else{
-    mesh = rgl::as.mesh3d(subset(brain, neuropil))
+    mesh = as.mesh3d(surf)
+  } else {
+    stopifnot(inherits(surf, "hxsurf"))
+    mesh = as.mesh3d(subset(surf, neuropil))
   }
-  v = which(pointsinside(xyzmatrix(x),surf = mesh)>0)
-  neuron = prune_vertices(x,verticestoprune=v,invert=invert, ...)
+  v = which(pointsinside(xyzmatrix(x), surf = mesh))
+  neuron = prune_vertices(x, verticestoprune=v, invert=invert, ...)
   neuron
 }
+
 #' @export
 #' @rdname prune_in_volume
-prune_in_volume.neuronlist <- function(x, brain, neuropil = NULL, invert = TRUE, ...){
-  nlapply(x,prune_in_volume.neuron, brain = brain, neuropil = neuropil, invert = invert, ...)
+prune_in_volume.neuronlist <- function(x, surf, neuropil = NULL, invert = TRUE, ...){
+  nlapply(x, prune_in_volume.neuron, surf = surf, neuropil = neuropil, invert = invert, ...)
 }

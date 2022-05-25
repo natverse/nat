@@ -4,13 +4,15 @@
 \alias{summary.neuronlist}
 \alias{summary}
 \alias{summary.neuron}
+\alias{summary.mesh3d}
 \alias{summary.dotprops}
 \title{Summary statistics for neurons (e.g. cable length, number of nodes)}
 \usage{
-\method{summary}{neuronlist}(object, ...,
-  include.attached.dataframe = FALSE)
+\method{summary}{neuronlist}(object, ..., include.attached.dataframe = FALSE)
 
 \method{summary}{neuron}(object, ...)
+
+\method{summary}{mesh3d}(object, ...)
 
 \method{summary}{dotprops}(object, veclength = 1, ...)
 }
@@ -42,6 +44,8 @@ A \code{data.frame} summarising the tree properties of the neuron
   
   \item{cable.length}
   
+  \item{nTrees}
+  
   }
 }
 \description{
@@ -49,6 +53,10 @@ A \code{data.frame} summarising the tree properties of the neuron
   neurons in a neuronlist object
 
 \code{summary.neuron} computes statistics for individual neurons
+
+\code{summary.mesh3d} computes statistics including face numbers
+  and surface area for meshes. See \code{\link[Rvcg]{vcgArea}} for details of
+  area calculation.
 
 \code{summary.dotprops} computes statistics for individual
   neurons in dotprops format. Note the \code{veclength} argument.
@@ -67,5 +75,5 @@ summary(kcs20[[1]])
 summary(kcs20[[1]], veclength=1.2)
 }
 \seealso{
-\code{\link{seglengths}}
+\code{\link{seglengths}}, \code{\link[Rvcg]{vcgArea}}
 }

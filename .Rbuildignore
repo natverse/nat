@@ -11,3 +11,6 @@ travisbuildchildren.sh
 ^vignettes/.*pdf$
 ^\.httr-oauth$
 ^spare$
+^pkgdown$
+^\.github$
+^depends.Rds$

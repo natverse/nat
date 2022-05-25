@@ -30,13 +30,33 @@ as.seglist.list<-function(x, ...) {
   x
 }
 
+# Private function returns a 2xN matrix of results
+topntail <- function(x) {
+  if(use_natcpp()) {
+    return(natcpp::c_topntail(x))
+  }
+  topntailseg<-function(x) x[c(1,length(x))]
+  # just get head and tail of each segment
+  sapply(x,topntailseg)
+}
+
+# Private function returns a list of segments
+topntail_list <- function(x) {
+  if(use_natcpp()) {
+    return(natcpp::c_topntail_list(x))
+  }
+  topntailseg<-function(x) if(length(x)==1) x else x[c(1,length(x))]
+  # just get head and tail of each segment
+  lapply(x,topntailseg)
+}
+
+
 #' @description \code{as.seglist.neuron} will extract the seglist from a neuron,
 #'   optionally extracting all subtrees (\code{all=TRUE}) and (in this case) 
 #'   flattening the list into a single hierarchy when \code{flatten=TRUE}.
 #'   n.b. when \code{all=TRUE} but \code{flatten=FALSE} the result will
 #'   \emph{always} be a list of \code{seglist} objects (even if the neuron has
 #'   only one subtree i.e. is fully connected).
-#' @method as.seglist neuron
 #' @export
 #' @param all Whether to include segments from all subtrees
 #' @param flatten When \code{all=TRUE} flatten the lists of lists into a 
@@ -72,16 +92,15 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @return a \code{list} with one entry for each unbranched segment.
 #' @seealso \code{\link{ngraph},\link{igraph}}
 #' @export
-#' @method as.seglist igraph
 #' @importFrom igraph is.directed is.connected graph.dfs degree
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle degenerate cases
-  if(!is.connected(x)) stop("Graph is not fully connected!")
   if(vcount(x)==0) {
     if(Verbose) warning("Empty graph! Seglist not defined")
     return(NULL)
   }
+  if(!is.connected(x)) stop("Graph is not fully connected!")
   if(is.directed(x) && !igraph::is.dag(x)){
     stop("Graph has cycles!")
   }
@@ -121,7 +140,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   }
   
   # Now do a depth first search to ensure that ordering is correct
-  dfs=graph.dfs(x, root=origin, father=TRUE, neimode='all')
+  dfs=graph.dfs(x, root=origin, father=TRUE, mode='all')
   # cache orders for speed: dfs$order[i] is slooooow in igraph>=1.0
   orders=as.integer(dfs$order)
   ncount=degree(x)
@@ -130,7 +149,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # _original_ vertex ids specified by "vid" attribute of input graph
   curseg=vids[orders[1]]
   if(length(ncount)==1) stop("Unexpected singleton point found!")
-  sl=seglist()
+  sl=list()
   # we have more than 1 point in graph and some work to do!
   fathers=as.integer(dfs$father)
   for(i in seq.int(from=2,to=length(dfs$order))){
@@ -148,7 +167,9 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
       curseg=integer(0)
     }
   }
-  sl
+  # nb it is *way* faster to operate on a base list object
+  # and then turn it into a seglist when done.
+  as.seglist(sl)
 }
 
 #' Recalculate Neurons's SWCData using SegList and point information

@@ -2,24 +2,30 @@
 % Please edit documentation in R/interactive.R
 \name{select_points}
 \alias{select_points}
-\title{Select 3D points in space}
+\title{Interactively select 3D points in space}
 \usage{
-select_points(points, plot3d = NULL)
+select_points(points, clear_plot_on_exit = FALSE)
 }
 \arguments{
-\item{points}{a mxn matrix}
+\item{points}{a matrix of 3D points to plot (or an object for which
+\code{\link{xyzmatrix}} can extract 3D points).}
 
-\item{plot3d}{an object to pass to the rgl::plot3d function, for context}
+\item{clear_plot_on_exit}{Whether to remove points from the rgl scene when
+selection has been completed.}
 }
 \value{
-A mxn matrix
+A matrix describing selected 3D points
 }
 \description{
-Select and deselect 3D points in space interactively. Black = selected, red = deselected
+Plot a set of 3D points in space and select a subset of them
+  interactively, using an rgl window
 }
 \examples{
-\dontrun{ 
-# Make a model based off of fly olfactory projection neuron arbours
-chosen = select_points(xyzmatrix(Cell07PNs))
-} 
+\dontrun{
+# Select points from 3 olfactory projection neurons
+selected_points = select_points(Cell07PNs[1:3])
+}
+}
+\seealso{
+\code{\link{prune_online}}
 }

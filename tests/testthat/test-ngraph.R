@@ -185,6 +185,14 @@ test_that("we can find the segmentgraph of a neuron",{
   # and with segment ids included
   expect_is(sgs<-segmentgraph(testn, segids = TRUE), 'igraph')
   expect_equal(E(sgs)$segid, 1:3)
+  
+  # test segmentgraph without natcpp (if we were using it)
+  skip_if_not(use_natcpp())
+  op <- options('nat.use_natcpp'=FALSE)
+  on.exit(options(op))
+  
+  expect_true(graph.isomorphic(segmentgraph(testn), sg))
+  expect_true(graph.isomorphic(segmentgraph(testn, reverse.edges = TRUE), sgr))
 })
 
 
@@ -196,7 +204,7 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
 
 test_that("Strahler order", {
   n = as.neuron(testd)
-  expect_equal(strahler_order(n), list(points = c(2L, 2L, 
+  expect_equal(son <- strahler_order(n), list(points = c(2L, 2L, 
     2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
   
   ns=structure(list(NumPoints = 3L, StartPoint = 1L, BranchPoints = integer(0), 
@@ -211,5 +219,42 @@ test_that("Strahler order", {
     "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
     "SegList", "d"), class = c("neuron", "list"))
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)
+  expect_equal(strahler_order(ns), list(points = c(1L, 1L, 1L), segments = 1L))
+  
+  skip_if_not(use_natcpp())
+  op <- options('nat.use_natcpp'=FALSE)
+  on.exit(options(op))
+  expect_equal(strahler_order(n), son)
 })
+
+
+test_that("plot3d.ngraph works",{
+  nclear3d()
+  expect_silent(plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes'))
+})
+
+context("distal_to")
+
+test_that("distal_to works", {
+  x=dl1neuron
+  lhep=x$tags[['SCHLEGEL_LH']]
+  lhep.idx=match(lhep, x$d$PointNo)
+  expect_equal(dtlhep <- distal_to(x, node.pointno = lhep),
+               distal_to(x, node.idx = lhep.idx))
+  
+  # manually work out
+  matching_seg_id=which(sapply(x$SegList, function(x) any(lhep.idx %in% x)))
+  matching_seg=x$SegList[[matching_seg_id]]
+  
+  matching_part = matching_seg[seq.int(from = which(matching_seg == lhep.idx),
+                                       to = length(matching_seg))]
+  
+  expect_equal(matching_part, dtlhep[1:length(matching_part)],
+               label = 'Initial part of distal_to returns correct indices')
+  
+  # check that if we specify the soma things still work
+  expect_equal(distal_to(x, node.pointno = lhep, root.idx = x$StartPoint), dtlhep)
+  expect_equal(distal_to(x, node.pointno = lhep, root.pointno = x$tags$soma), dtlhep)
+})
+
 

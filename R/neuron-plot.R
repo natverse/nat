@@ -1,7 +1,6 @@
-#' Plot neurons in 3D using rgl library
+#' Plot neurons in 3D using rgl library or plotly module
 #'
 #' @export
-#' @method plot3d neuron
 #' @param x A neuron to plot
 #' @param WithLine Whether to plot lines for all segments in neuron
 #' @param NeuronNames Logical indicating whether to label the neuron in the plot
@@ -20,11 +19,15 @@
 #'   \code{FALSE}). When \code{soma=TRUE} the radius is hard coded to 2.
 #' @param ... Additional arguments passed to \code{\link[rgl]{lines3d}} (and
 #'   \code{\link[rgl]{spheres3d}} if somata are being plotted).
+#' @inheritParams plot3d.neuronlist
+#'
 #' @return list of rgl plotting ids (invisibly) separated into \code{lines},
 #'   \code{points}, \code{texts} according to plot element. See
 #'   \code{rgl::\link[rgl]{plot3d}} for details.
+#'
 #' @seealso \code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}},
 #'   \code{nat::\link[nat]{plot3d}}, \code{rgl::\link[rgl]{plot3d}}
+#'
 #' @details Note that when \code{WithText=TRUE}, the numeric identifiers plotted
 #'   are \emph{raw indices} into the \code{x$d} array of the \code{neuron},
 #'   \emph{not} the values of the \code{PointNo} column.
@@ -34,8 +37,9 @@
 #'   \code{...} elements are necessarily relevant to both of these drawing
 #'   calls. Furthermore plotting a large number of somata with transparency
 #'   (i.e. \code{alpha < 1} ) can quickly result in very slow rgl draw and
-#'   refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when using
-#'   \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
+#'   refresh speeds; you will likely want to set \code{skipRedraw=FALSE} when
+#'   using \code{\link{plot3d.neuronlist}} to plot a collection of neurons.
+#'
 #' @examples
 #' # A new plot would have been opened if required
 #' open3d()
@@ -43,24 +47,35 @@
 #' plot3d(Cell07PNs[[2]],col='green')
 #' \donttest{
 #' # clear the current plot
-#' clear3d()
+#' nclear3d()
 #' plot3d(Cell07PNs[[2]],col='blue',add=FALSE)
 #' # plot the number of all nodes
-#' clear3d()
+#' nclear3d()
 #' plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 #' # include cell bodies
 #' plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 #' plot3d(Cell07PNs[5], col='red', soma=3)
-#' rgl.close()
 #' }
-plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
-                        WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE,
-                        add=TRUE, col=NULL, soma=FALSE, ...){
+plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE, 
+                        WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE, 
+                        add=TRUE, col=NULL, soma=FALSE, ...,
+                        gridlines = FALSE,
+                        plotengine = getOption('nat.plotengine')){
+  plotengine <- check_plotengine(plotengine)
   if (!add)
-    clear3d()
+    nclear3d(plotengine = plotengine)
+  
+  if(plotengine == 'plotly') {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
+    
   # skip so that the scene is updated only once per neuron
-  skip <- par3d(skipRedraw = TRUE)
-  on.exit(par3d(skip))
+  if(plotengine == 'rgl') {
+    skip <- par3d(skipRedraw = TRUE)
+    on.exit(par3d(skip))
+  }
   
   # Check colour setting col may not be properly set
   if(is.null(col)){
@@ -71,7 +86,7 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
       Ids<-do.call(c,sapply(x$SegList,function(s) {c(x$d[s,'Label'],NA)},simplify=FALSE))
       col=Material[as.character(Ids),'col']
     } 
-    else col='green'
+    else col='#39ff14' #bright green colour
     # otherwise just plot in default colour
   }
   if(is.function(col)) col=col(1)
@@ -88,16 +103,54 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
       SimplePoints=setdiff(seq.int(length.out = nrow(x$d)), NodesOnly)
       AllPoints=c(NodesOnly, SimplePoints)
       NodeCols=c(NodeCols, rep(col, length(SimplePoints)))
-      rglreturnlist[["points"]]=points3d(x$d[AllPoints, 
+      if (plotengine == 'rgl'){
+        rglreturnlist[["points"]]=points3d(x$d[AllPoints, 
                                              c("X","Y","Z")], color=NodeCols, size=3)
-      if(WithText) # text labels for nodes
+      } else{
+       plotdata <- x$d[AllPoints, c("X","Y","Z")]
+       psh <- psh %>% 
+         plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+         hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+         opacity = opacity, marker=list(color = NodeCols, size = 3))
+      }
+      if(WithText){ 
+        # text labels for nodes 
+        if (plotengine == 'rgl'){
         rglreturnlist[["texts"]]=texts3d(x$d[AllPoints, c("X","Y","Z")],
                                          texts=AllPoints, color=NodeCols, adj=c(0,0.5))
+        } else{
+        plotdata <- x$d[AllPoints, c("X","Y","Z")] 
+        psh <- psh %>% 
+          plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+          hoverinfo = "none", type = 'scatter3d', mode = 'text', 
+          opacity = opacity, text = AllPoints, textfont = list(color = NodeCols))
+        }
+      }
     } else {
       if(!WithLine) NodeCols=col
-      rglreturnlist[["points"]]=points3d(x$d[NodesOnly,c("X","Y","Z")],color=NodeCols,size=3)
-      if(WithText) # text labels for nodes
-        rglreturnlist[["texts"]]=texts3d(x$d[NodesOnly,c("X","Y","Z")],texts=NodesOnly,color=NodeCols,adj=c(0,0.5))
+      if (plotengine == 'rgl'){
+          rglreturnlist[["points"]]=points3d(x$d[NodesOnly,c("X","Y","Z")],
+                                             color=NodeCols,size=3)
+      } else {
+        plotdata <- x$d[NodesOnly,c("X","Y","Z")]
+        psh <- psh %>% 
+          plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+          hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+          opacity = opacity, marker=list(color = NodeCols, size = 3))
+      }
+      if(WithText) {
+        # text labels for nodes
+        if (plotengine == 'rgl'){
+        rglreturnlist[["texts"]]=texts3d(x$d[NodesOnly,c("X","Y","Z")],texts=NodesOnly,
+                                         color=NodeCols,adj=c(0,0.5))
+        } else{
+          plotdata <- x$d[NodesOnly, c("X","Y","Z")] 
+          psh <- psh %>% 
+            plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+            hoverinfo = "none", type = 'scatter3d', mode = 'text', 
+            opacity = opacity, text = NodesOnly, textfont = list(color = NodeCols))
+        }
+      }
     }
   }
   
@@ -108,13 +161,30 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
   # NAs are used to break line segments
   if(WithLine){
     xyzl<-do.call(rbind,sapply(x$SegList,function(s) {rbind(d[s,],NA)},simplify=FALSE))
-    rglreturnlist[["lines"]]=lines3d(xyzl,col=col,...)
+    if (plotengine == 'rgl'){
+      rglreturnlist[["lines"]]=lines3d(xyzl,col=col,...)
+    } else{
+      plotdata <- as.data.frame(xyzl)
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+                          hovertext=x$NeuronName,
+          hoverinfo = "text", type = 'scatter3d', mode = 'lines',
+          opacity = opacity, line=list(color = col, size = 1))
+    }
   }
   
   if(is.logical(NeuronNames) && NeuronNames) NeuronNames=x$NeuronName
   if(!is.logical(NeuronNames)){
     StartPoint=ifelse(is.null(x$StartPoint),1,x$StartPoint)
-    rglreturnlist[["texts"]]=texts3d(d[StartPoint,],texts=NeuronNames,col=col)
+    if (plotengine == 'rgl'){
+      rglreturnlist[["texts"]]=texts3d(d[StartPoint,],texts=NeuronNames,col=col)
+    } else {
+      plotdata <- x$d[StartPoint,]
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+          hoverinfo = "none", type = 'scatter3d', mode = 'text', 
+          opacity = opacity, text = NeuronNames, textfont = list(color = col))
+    }
   }
   
   somarad=2
@@ -125,10 +195,34 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
   
   if(soma && !is.null(x$StartPoint)){
     somapos=x$d[x$StartPoint,c("X", "Y", "Z")]
-    rglreturnlist[['soma']] <- spheres3d(somapos, radius = somarad, col = col, ...)
+    if (plotengine == 'rgl'){
+        rglreturnlist[['soma']] <- spheres3d(somapos, radius = somarad, col = col, ...)
+    } else {
+      plotdata <- somapos
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z,
+          type = 'scatter3d', mode = 'markers',
+          hoverinfo = "text", hovertext=x$NeuronName,
+          opacity = opacity, marker=list(symbol = 'circle', 
+                                         sizemode = 'diameter',
+                                         color = col), 
+        sizes = somarad)
+    }
   }
   
-  invisible(rglreturnlist)
+  if (plotengine == 'rgl'){
+    invisible(rglreturnlist)
+  } else{
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
+  }
 }
 
 #' plot3d methods for different nat objects
@@ -151,20 +245,30 @@ plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
 NULL
 
 #' Open customised rgl window
-#' 
-#' Pan with right button (Ctrl+click), zoom with middle (Alt/Meta+click) button.
-#' Defaults to a white background and orthogonal projection (FOV=0)
-#' 
-#' Note that sometimes (parts of) objects seem to disappear after panning and
-#' zooming. See help for \code{\link{pan3d}}.
+#'
+#' @details Pan with right button (Ctrl+click), zoom with middle
+#'   (Alt/Meta+click) button. On a Mac trackpad, pan with two fingers
+#'   left-right, zoom with two fingers in-out. Defaults to a white background
+#'   and orthogonal projection (FOV=0)
+#'
+#'   Note that sometimes (parts of) objects seem to disappear after panning and
+#'   zooming. See help for \code{\link{pan3d}}.
+#'
+#'   \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
+#'   different models for how to handle the active plot. \code{nopen3d} and
+#'   \code{\link{nclear3d}} allow you to treat them more similarly. Use them
+#'   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
+#'   could she be able to run with both \bold{plotly} or \bold{rgl} as the
+#'   \code{plotengine}.
+#'
 #' @param bgcol background colour
 #' @param FOV field of view
 #' @param ... additional options passed to open3d
 #' @return current rgl device
 #' @export
-#' @seealso \code{\link{open3d},\link{pan3d}}
+#' @seealso \code{\link{open3d},\link{pan3d}}, \code{\link{nclear3d}}
 nopen3d<- function(bgcol='white', FOV=0, ...){
-  res=open3d(mouseMode=c("trackball","user","zoom"), FOV=FOV, ...)
+  res=open3d(mouseMode=c("trackball", "user", "zoom", "pull"), FOV=FOV, ...)
   bg3d(col=bgcol)
   pan3d(2)
   res
@@ -227,6 +331,7 @@ nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral",
 #' @param button Integer from 1 to 3 indicating mouse button
 #' @seealso \code{\link{rgl.setMouseCallbacks}}
 #' @author Duncan Murdoch
+#' @export
 #' @examples
 #' \dontrun{
 #'  open3d()
@@ -417,12 +522,16 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 
 
 #' Plot a bounding box in 3D
-#' 
+#'
 #' @param x the \code{\link{boundingbox}} object to plot.
+#' @param col The colour of the bounding box lines (default 'black')
 #' @param ... additional arguments to pass to \code{\link[rgl]{segments3d}}.
-#' @return A list of RGL object IDs.
-#'   
-#' @method plot3d boundingbox
+#' @inheritParams plot3d.neuronlist
+#'
+#' @return A list of rgl object IDs (as returned by
+#'   \code{\link[rgl]{segments3d}}) \bold{or} a
+#'   \code{\link[plotly:plot_ly]{plotly}} object.
+#'
 #' @export
 #' @seealso \code{\link{boundingbox}}
 #' @examples
@@ -434,16 +543,18 @@ plot.neuron <- function(x, WithLine=TRUE, WithNodes=TRUE, WithAllPoints=FALSE,
 #' plot3d(kcs20)
 #' # ... with their bounding box
 #' plot3d(boundingbox(kcs20))
-#' 
+#'
 #' plot3d(kcs20)
 #' # plot bounding box (in matching colours) for each neuron
-#' # NB makes use of nlapply/neuronlist in slightly unsusual context - 
+#' # NB makes use of nlapply/neuronlist in slightly unsusual context -
 #' # plot3d.neuronlist can cope with lists containing anything with
 #' # a valid plot3d method.
 #' plot3d(nlapply(kcs20,boundingbox))
 #' }
 #' 
-plot3d.boundingbox <- function(x, ...) {
+plot3d.boundingbox <- function(x, col='black', 
+                               gridlines = FALSE, plotengine = getOption('nat.plotengine'), ...) {
+  plotengine <- check_plotengine(plotengine)
   pts <- matrix(c(
   c(x[1, 1], x[1, 2], x[1, 3]),
   c(x[1, 1], x[1, 2], x[2, 3]),
@@ -454,5 +565,140 @@ plot3d.boundingbox <- function(x, ...) {
   c(x[2, 1], x[2, 2], x[1, 3]),
   c(x[2, 1], x[2, 2], x[2, 3])
   ), ncol=3, byrow=TRUE)
-  segments3d(pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ], ...)
+  cuboid=pts[c(1:8, 1, 3, 5, 7, 2, 4, 1, 5, 2, 6, 3, 7, 4, 8, 6, 8), ]
+  
+  if (plotengine == 'rgl'){
+    segments3d(cuboid, col=col, ...)
+  } else {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+    width <- if("lwd" %in% names(params)) params$lwd else 1
+    
+    # reshape to 6 cols x 12 rows (i.e. edges)
+    cuboid6=matrix(t(cuboid), ncol=6, byrow = T)
+    # add 3 more columns with NAs and then reinterleave
+    cuboidna=matrix(t(cbind(cuboid6, NA, NA, NA)), 
+                    ncol=3, byrow = T,
+                    dimnames = list(NULL, c("X","Y","Z")))
+    psh <- psh %>% 
+      plotly::add_trace(
+        data = as.data.frame(cuboidna), 
+        x = ~X, y = ~Y , z = ~Z, 
+        hoverinfo = "none", type = 'scatter3d', mode = 'lines',
+        opacity = opacity, line=list(color = col, width = width))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    .plotly3d$plotlyscenehandle <- psh
+    psh
+  }
+}
+
+#' Clear the rgl or plotly 3D scene
+#'
+#' @details \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
+#'   quite different models for how to handle the active plot. \code{nclear3d}
+#'   and \code{\link{nopen3d}} allow you to treat them more similarly. Use them
+#'   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
+#'   could she be able to run with both \bold{plotly} or \bold{rgl} as the
+#'   \code{plotengine}.
+#' @inheritParams plot3d.neuronlist
+#' @param ... Additional arguments passed to
+#'   \code{\link[rgl:clear3d]{rgl::clear3d}}
+#' @export
+#' @seealso \code{\link[rgl:clear3d]{rgl::clear3d}}, \code{\link[nat]{plot3d}},
+#'   \code{\link[nat]{plot3d.neuronlist}}, \code{\link[nat]{nopen3d}}
+#' @examples
+#'
+#' \donttest{
+#' nclear3d()
+#' plot3d(Cell07PNs[[1]])
+#' }
+nclear3d <- function(...,plotengine = getOption('nat.plotengine')) {
+  plotengine <- check_plotengine(plotengine)
+  if(plotengine=='plotly') {
+    if (exists("plotlyscenehandle", envir = .plotly3d))
+      rm("plotlyscenehandle", envir = .plotly3d)
+  } else {
+    clear3d(...)
+  }
+}
+
+openplotlyscene <- function(){
+  if (!exists("plotlyscenehandle", envir = .plotly3d))
+    .plotly3d$plotlyscenehandle = plotly::plot_ly() %>% 
+      plotly::layout(scene=list(aspectmode='data'))
+  plotlyreturnlist = list()
+  plotlyreturnlist$plotlyscenehandle = .plotly3d$plotlyscenehandle
+  return(invisible(plotlyreturnlist))
+}
+
+check_plotengine <- function(plotengine) {
+  if(is.null(plotengine))
+    return('rgl')
+  tryCatch(match.arg(plotengine, c("rgl", "plotly")),
+           error=function(e) 
+             stop('plotengine must be set to: "rgl" or "plotly" not',
+                  '"', plotengine, '"',
+                  "\nSee ?plot3d.neuronlist for details.", call.=FALSE))
+}
+
+#' Plot 3d representation of neuron (ngraph) with directed edges
+#'
+#' @param x A \code{\link{ngraph}} object
+#' @param type They type of arrows (lines by default, see \code{\link{arrow3d}}
+#'   for details).
+#' @param soma radius of soma (or \code{FALSE} to suppress plotting)
+#' @param labels Whether to label nodes/all points with their raw index (not
+#'   id)
+#' @param ... Additional arguments passed to \code{\link{arrow3d}}
+#'
+#' @export
+#'
+#' @importFrom igraph as_edgelist V
+#' @importFrom rgl arrow3d par3d spheres3d text3d points3d pop3d
+#' @examples
+#' plot3d(as.ngraph(Cell07PNs[[1]]), labels='nodes')
+plot3d.ngraph <- function(x, type='lines', soma=1, 
+                          labels=c('none', "nodes","all"), ...) {
+  labels=match.arg(labels)
+  el=igraph::as_edgelist(x, names=F)
+  xyz=xyzmatrix(x)
+  
+  draw_edge <- function(edge, ...) {
+    e1=edge[1]
+    e2=edge[2]
+    if(e1 == e2) return()
+    p1=xyz[e1,]
+    p2=xyz[e2,]
+    if(any(is.na(c(p1,p2))) || all(p1==p2)) {
+      message("Bad edge: ", edge)
+      return()
+    }
+    # cat(edge,"\n")
+    arrow3d(xyz[edge[1],], xyz[edge[2],], type=type, ...)
+  }
+  # add points at each vertex so that scene dimensions
+  # are correctly set for arrows
+  pp=points3d(xyz, size=1)
+  op=par3d(skipRedraw=T)
+  on.exit(par3d(op))
+  on.exit(pop3d(id=pp), add = TRUE, after = TRUE)
+  apply(el, 1, draw_edge, ...)
+  rp=rootpoints(x)
+  if(isTRUE(all.equal(soma, FALSE))) {
+    # don't plot
+  } else spheres3d(xyz[rp,, drop=F], col='magenta', radius=soma)
+  if(labels!='none') {
+    all_points=igraph::V(x)
+    pointsel <- if(isTRUE(labels=='all')) {
+      all_points
+    } else {
+      unique(c(branchpoints(x), rootpoints(x), endpoints(x)))
+    }
+    text3d(xyz[pointsel,],texts = pointsel)
+  }
 }

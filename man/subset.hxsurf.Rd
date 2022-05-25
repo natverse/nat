@@ -4,8 +4,7 @@
 \alias{subset.hxsurf}
 \title{Subset hxsurf object to specified regions}
 \usage{
-\method{subset}{hxsurf}(x, subset = NULL, drop = TRUE,
-  rval = c("hxsurf", "names"), ...)
+\method{subset}{hxsurf}(x, subset = NULL, drop = TRUE, rval = c("hxsurf", "names"), ...)
 }
 \arguments{
 \item{x}{A dotprops object}
@@ -35,14 +34,17 @@ plot3d(vertical_lobe, alpha=0.3)
 plot3d(kcs20)
 
 # there is also a shortcut for this
-clear3d()
-plot3d(MBL.surf, "VL", alpha=0.3)
+nclear3d()
+plot3d(MBL.surf, subset = "VL", alpha=0.3)
 }
 }
 \seealso{
-Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{as.mesh3d}}, \code{\link{materials}},
-  \code{\link{plot3d.hxsurf}}, \code{\link{read.hxsurf}},
-  \code{\link{write.hxsurf}}
+Other hxsurf: 
+\code{\link{as.hxsurf}()},
+\code{\link{as.mesh3d}()},
+\code{\link{materials}()},
+\code{\link{plot3d.hxsurf}()},
+\code{\link{read.hxsurf}()},
+\code{\link{write.hxsurf}()}
 }
 \concept{hxsurf}

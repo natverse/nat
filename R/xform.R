@@ -62,7 +62,6 @@ xform<-function(x, reg, ...) UseMethod('xform')
 
 #' @details TODO get this to work for matrices with more than 3 columns by
 #'   working on xyzmatrix definition.
-#' @method xform default
 #' @export
 #' @param na.action How to handle NAs. NB drop may not work for some classes.
 #' @rdname xform
@@ -97,7 +96,6 @@ xform.character<-function(x, reg, ...) {
   xformimage(reg, x, ...)
 }
 
-#' @method xform list
 #' @export
 #' @rdname xform
 #' @param FallBackToAffine Whether to use an affine transform when a cmtk
@@ -113,6 +111,10 @@ xform.list<-function(x, reg, FallBackToAffine=TRUE, na.action='error', ...){
 #' @export
 #' @rdname xform
 xform.shape3d<-xform.list
+
+#' @export
+#' @rdname xform
+xform.mesh3d<-xform.list
 
 #' @export
 #' @rdname xform
@@ -133,7 +135,6 @@ xform.data.frame <- function(x, reg, subset=NULL, ...) {
   x
 }
 
-#' @method xform dotprops
 #' @export
 #' @rdname xform
 #' @details For the \code{xform.dotprops} method, dotprops tangent vectors will 
@@ -166,7 +167,6 @@ xform.dotprops<-function(x, reg, FallBackToAffine=TRUE, ...){
   dotprops(x, ...)
 }
 
-#' @method xform neuronlist
 #' @details With \code{xform.neuronlist}, if you want to apply a different 
 #'   registration to each object in the neuronlist \code{x}, then you should use
 #'   \code{VectoriseRegistrations=TRUE}.
@@ -229,199 +229,6 @@ xform.neuronlist<-function(x, reg, subset=NULL, ..., OmitFailures=NA,
   tx
 }
 
-#' Get and assign coordinates for classes containing 3D vertex data
-#' 
-#' \code{xyzmatrix} gets coordinates from objects containing 3D vertex data
-#' @param x object containing 3D coordinates
-#' @param ... additional arguments passed to methods
-#' @return For \code{xyzmatrix}: Nx3 matrix containing 3D coordinates
-#' @export
-#' @examples 
-#' # see all available methods for different classes
-#' methods('xyzmatrix')
-#' # ... and for the assignment method
-#' methods('xyzmatrix<-')
-xyzmatrix<-function(x, ...) UseMethod("xyzmatrix")
-
-#' @method xyzmatrix default
-#' @param y,z separate y and z coordinates
-#' @details Note that \code{xyzmatrix} can extract or set 3D coordinates in a 
-#'   \code{matrix} or \code{data.frame} that \bold{either} has exactly 3 columns
-#'   \bold{or} has 3 columns named X,Y,Z or x,y,z.
-#' @rdname xyzmatrix
-#' @export
-xyzmatrix.default<-function(x, y=NULL, z=NULL, ...) {
-  xyzn=c("X","Y","Z")
-  if(is.neuron(x,Strict=FALSE)) {
-    x=x$d[,c("X","Y","Z")]
-  } else if(!is.null(z)){
-    x=cbind(x,y,z)
-  } else if(is.data.frame(x) || is.matrix(x)){
-    if(ncol(x)>3){
-      matched_cols=match(xyzn, toupper(colnames(x)))
-      if(!any(is.na(matched_cols))) x=x[, matched_cols, drop=FALSE]
-      else stop("Ambiguous column names. Unable to retrieve XYZ data")
-    } else if(ncol(x)<3) stop("Must have 3 columns of XYZ data")
-  }
-  mx=data.matrix(x)
-  colnames(mx)=xyzn
-  mx
-}
-
-#' @export
-#' @rdname xyzmatrix
-xyzmatrix.neuron<-function(x, ...) data.matrix(x$d[,c("X","Y","Z")])
-
-#' @export
-#' @rdname xyzmatrix
-xyzmatrix.neuronlist<-function(x, ...) {
-  coords=lapply(x, xyzmatrix, ...)
-  do.call(rbind, coords)
-}
-
-#' @export
-#' @rdname xyzmatrix
-xyzmatrix.dotprops<-function(x, ...) x$points
-
-#' @export
-#' @rdname xyzmatrix
-xyzmatrix.hxsurf<-function(x, ...) {
-  # quick function that gives a generic way to extract coords from 
-  # classes that we care about and returns a matrix
-  # nb unlike xyz.coords this returns a matrix (not a list)
-  mx=data.matrix(x$Vertices[,1:3])
-  colnames(mx)=c("X","Y","Z")
-  mx
-}
-
-#' @rdname xyzmatrix
-#' @export
-xyzmatrix.igraph<-function(x, ...){
-  xyz=sapply(c("X","Y","Z"), function(c) igraph::get.vertex.attribute(x, c))
-  if(is.list(xyz) && all(sapply(xyz, is.null)))
-    xyz = NULL
-  xyz
-}
-
-#' @rdname xyzmatrix
-#' @export
-xyzmatrix.mesh3d<-function(x, ...){
-  cbind(x$vb[1, ]/x$vb[4, ], x$vb[2, ]/x$vb[4, ], x$vb[3, ]/x$vb[4, ])
-}
-
-#' @description \code{xyzmatrix<-} assigns xyz elements of neuron or dotprops
-#'   object and can also handle matrix like objects with columns named X, Y, Z
-#'   or x, y, z.
-#' @usage xyzmatrix(x) <- value
-#' @param value Nx3 matrix specifying new xyz coords
-#' @return For \code{xyzmatrix<-}: Original object with modified coords
-#' @export
-#' @seealso \code{\link{xyzmatrix}}
-#' @rdname xyzmatrix
-#' @examples
-#' n=Cell07PNs[[1]]
-#' xyzmatrix(n)<-xyzmatrix(n)
-#' stopifnot(isTRUE(
-#'   all.equal(xyzmatrix(n),xyzmatrix(Cell07PNs[[1]]))
-#' ))
-`xyzmatrix<-`<-function(x, value) UseMethod("xyzmatrix<-")
-
-#' @export
-`xyzmatrix<-.default`<-function(x, value){
-  xyzn=c("X","Y","Z")
-  if(ncol(x)==3) {
-    x[,]=value
-  } else if(!any(is.na(matched_cols<-match(xyzn, toupper(colnames(x)))))) {
-    x[,matched_cols]=value
-  }
-  else stop("Not a neuron or dotprops object or a matrix-like object with XYZ colnames")
-  x
-}
-
-#' @export
-#' @rdname xyzmatrix
-`xyzmatrix<-.neuron`<-function(x, value){
-  x$d[,c("X","Y","Z")]=value
-  x
-}
-
-#' @export
-#' @rdname xyzmatrix
-`xyzmatrix<-.dotprops`<-function(x, value){
-  x$points[,c("X","Y","Z")]=value
-  x
-}
-
-#' @export
-#' @rdname xyzmatrix
-`xyzmatrix<-.hxsurf`<-function(x, value){
-  x$Vertices[,1:3]=value
-  x
-}
-
-#' @export
-#' @rdname xyzmatrix
-`xyzmatrix<-.igraph`<-function(x, value){
-  colnames(value)=c("X","Y","Z")
-  for(col in colnames(value)){
-    x=igraph::set.vertex.attribute(x, col, value=value[,col])
-  }
-  x
-}
-
-#' @export
-#' @rdname xyzmatrix
-`xyzmatrix<-.shape3d`<-function(x, value){
-  x$vb=t(cbind(value, 1))
-  x
-}
-
-#' @export
-#' @rdname xyzmatrix
-`xyzmatrix<-.neuronlist`<-function(x, value){
-  # find number of vertices for each neuron
-  nv=nvertices(x)
-  if (sum(nv) != nrow(value))
-    stop("Mismatch between original and replacement number of vertices!")
-  idxs=rep(seq_along(x), nv)
-  b=by(value, INDICES = idxs, FUN = data.matrix)
-  for(i in seq_along(x)) {
-    xyzmatrix(x[[i]]) <- b[[i]]
-  }
-  x
-}
-
-#' Find the number of vertices in an object (or each element of a neuronlist)
-#' 
-#' @param x An object with 3d vertices (e.g. neuron, surface etc)
-#' @param ... Additional arguments passed to methods (currently ignored)
-#'   
-#' @return an integer number of vertices (or a vector of length equal to a
-#'   neuronlist)
-#' @export
-#' 
-#' @examples
-#' nvertices(Cell07PNs[[1]])
-#' nvertices(kcs20)
-nvertices <- function(x, ...) UseMethod('nvertices')
-
-#' @rdname nvertices
-#' @export
-nvertices.default <- function(x, ...) {
-  nrow(xyzmatrix(x))
-}
-
-#' @export
-nvertices.neuron <- function(x, ...) nrow(x$d)
-
-#' @export
-nvertices.dotprops <- function(x, ...) nrow(x$points)
-
-#' @rdname nvertices
-#' @export
-nvertices.neuronlist <- function(x, ...) {
-  sapply(x, nvertices)
-}
 
 #' Mirror 3D object about a given axis, optionally using a warping registration
 #' 
@@ -464,7 +271,7 @@ nvertices.neuronlist <- function(x, ...) {
 #' }
 #' 
 #' # also works with dotprops objects
-#' clear3d()
+#' nclear3d()
 #' y=kcs20[[1]]
 #' my=mirror(y,mirrorAxisSize=564.2532,transform='flip')
 #' \donttest{
@@ -514,7 +321,6 @@ mirror.character<-function(x, output, mirrorAxisSize=NULL, target=x, ...){
 #'   specifies a non-rigid transformation to correct asymmetries in an image.
 #' @param transform whether to use warp (default) or affine component of 
 #'   registration, or simply flip about midplane of axis.
-#' @method mirror default
 #' @export
 #' @rdname mirror
 mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
@@ -548,7 +354,6 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
   }
 }
 
-#' @method mirror neuronlist
 #' @param subset For \code{mirror.neuronlist} indices
 #'   (character/logical/integer) that specify a subset of the members of
 #'   \code{x} to be transformed.
@@ -558,4 +363,85 @@ mirror.default<-function(x, mirrorAxisSize, mirrorAxis=c("X","Y","Z"),
 #' @seealso \code{\link{nlapply}}
 mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
   NextMethod()
+}
+
+
+
+#' Thin plate spline registrations via xform and friends
+#'
+#' @description \code{tpsreg} creates an object encapsulating a thin plate spine
+#'   transform mapping a paired landmark set.
+#' @param sample,reference Matrices defining the sample (or floating) and
+#'   reference (desired target after transformation) spaces. See details.
+#' @param ... additional arguments passed to \code{\link{xformpoints.tpsreg}}
+#' @details  Note that we use the \bold{nat} convention for naming the
+#'   sample/reference space arguments but these actually clash with the
+#'   nomenclature in the underlying \code{Morpho::\link[Morpho]{tps3d}}
+#'   function. \itemize{
+#'
+#'   \item refmat (Morpho3d) == sample (nat)
+#'
+#'   \item tarmat (Morpho3d) == reference (nat)
+#'
+#'   }
+#' @export
+#' @seealso \code{\link[nat]{reglist}}, \code{\link[nat]{read.landmarks}}
+#' @examples
+#' \dontrun{
+#' ## A full worked example of using landmarks based registration to construct
+#' ## a mirroring registration from one side of the brain to the other.
+#'
+#' # read in set of landmarks defined in FAFB CATMAID
+#' library('catmaid')
+#' emlandmarks=catmaid::read.neurons.catmaid('annotation:^GJLandmark')
+#' 
+#' # Match up L and R pairs
+#' library('stringr')
+#' emlandmarks[,'side']=stringr::str_match(emlandmarks[,'name'], "([LR]) Landmark")[,2]
+#' emlandmarks[,'shortname']=stringr::str_match(emlandmarks[,'name'], "(.*)([LR]) Landmark.*")[,2]
+#' emlandmarks[,'shortname']=sub("[_ ]+$", "", emlandmarks[,'shortname'])
+#' 
+#' library('dplyr')
+#' lmpairs=dplyr::inner_join(
+#'   dplyr::filter(emlandmarks[,], side=="L"),
+#'   dplyr::filter(emlandmarks[,], side=="R"),
+#'   by='shortname', suffix=c(".L",".R"))
+#'
+#' # find mean xyz position of each landmark (they are drawn as a little cross)
+#' lmxyz=t(sapply(emlandmarks, function(x) colMeans(xyzmatrix(x))))
+#' # construct thin plate splines registration (here mapping the right side neurons to left side)
+#' mirror_reg=tpsreg(
+#'   lmxyz[as.character(lmpairs$skid.R),],
+#'   lmxyz[as.character(lmpairs$skid.L),]
+#' )
+#' # map RHS DA2 PNs onto left and compare with LHS neurons
+#' da2pns.R=catmaid::read.neurons.catmaid('glomerulus DA2 right')
+#' da2pns.L=catmaid::read.neurons.catmaid('glomerulus DA2 left')
+#' 
+#' da2pns.R.L=xform(da2pns.R, reg = mirror_reg)
+#' plot(da2pns.L, col='red')
+#' plot(da2pns.R.L, col='blue', add=TRUE)
+#' }
+tpsreg<-function(sample, reference, ...){
+  structure(list(refmat=data.matrix(sample), tarmat=data.matrix(reference), ...),
+            class='tpsreg')
+}
+
+#' @description \code{xformpoints.tpsreg} enables \code{\link[nat]{xform}} and
+#'   friends to transform 3d vertices (or more complex objects containing 3d
+#'   vertices) using a thin plate spline mapping stored in a \code{tpsreg}
+#'   object.
+#' @rdname tpsreg
+#' @param reg The \code{tpsreg} registration object
+#' @param points The 3D points to transform
+#' @param swap Whether to change the direction of registration (default of
+#'   \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise
+#' @export
+xformpoints.tpsreg <- function(reg, points, swap=NULL, ...){
+  if(isTRUE(swap) || isTRUE(attr(reg, 'swap'))) {
+    tmp=reg$refmat
+    reg$refmat=reg$tarmat
+    reg$tarmat=tmp
+  }
+  do.call(Morpho::tps3d, c(list(x=points), reg,  list(...)))
 }

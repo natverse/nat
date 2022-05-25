@@ -18,7 +18,7 @@ as.dotprops(x, ...)
 
 dotprops(x, ...)
 
-\method{dotprops}{character}(x, ...)
+\method{dotprops}{character}(x, pattern = NULL, OmitFailures = NA, ...)
 
 \method{dotprops}{dotprops}(x, k = attr(x, "k"), ...)
 
@@ -26,23 +26,25 @@ dotprops(x, ...)
 
 \method{dotprops}{neuronlist}(x, ..., OmitFailures = NA)
 
-\method{dotprops}{neuron}(x, Labels = NULL, resample = NA, ...)
+\method{dotprops}{neuron}(x, Labels = NULL, resample = NA, topo = FALSE, ...)
 
-\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE,
-  ...)
+\method{dotprops}{default}(x, k = NULL, Labels = NULL, na.rm = FALSE, topo_features = NULL, ...)
 }
 \arguments{
 \item{x}{Object to be tested/converted}
 
 \item{...}{Additional arguments passed to methods}
 
+\item{pattern}{an optional \link[base]{regular expression}.  Only file names
+    which match the regular expression will be returned.}
+
+\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an
+error. The default value (\code{NA}) will result in nlapply stopping with
+an error message the moment there is an error. For other values, see
+details.}
+
 \item{k}{Number of nearest neighbours to use for tangent vector calculation 
 (set to k=20 when passed NULL)}
-
-\item{OmitFailures}{Whether to omit neurons for which \code{FUN} gives an 
-error. The default value (\code{NA}) will result in nlapply stopping with 
-an error message the moment there is an error. For other values, see 
-details.}
 
 \item{Labels}{Vector of labels for each point e.g. identifying axon vs 
 dendrite. The default value \code{NULL} will produce class-specific default
@@ -52,11 +54,23 @@ labels when an incoming object has them and \code{FALSE} never uses labels.}
 \item{resample}{When finite, a new length to which all segmented edges will
 be resampled. See \code{\link{resample.neuron}}.}
 
+\item{topo}{flag that says whether or not to add topological features
+(reversed Strahler Order and distance from soma)}
+
 \item{na.rm}{Whether to remove \code{NA} points (default FALSE)}
+
+\item{topo_features}{topological features of each dotprops}
 }
 \description{
 \code{dotprops} makes dotprops representation from raw 3D points
   (extracting vertices from S3 objects that have them)
+
+\code{dotprops.character} makes dotprops objects from one or
+  more files on disk (typically binary segmentations saved as NRRDs).
+  \code{x} can a vector of paths or be a directory (in which case
+  \code{pattern} can be used to restrict the files to read). The \code{...}
+  argument is passed first to \code{\link{nlapply}} (if there is more than
+  one file) and then to \code{dotprops.default}.
 
 \code{dotprops.dotprops} will default to the original vale of 
   \code{k} and copy over all attributes that are not set by
@@ -71,6 +85,14 @@ be resampled. See \code{\link{resample.neuron}}.}
   it has default value of NA) unless \code{x} is a dotprops object (when the
   original value of \code{k} is reused).
 }
+\examples{
+\dontrun{
+# process a single file on disk
+dp=dotprops.character('~/skeleton-nrrds/file01.nrrd', k=5)
+# process a whole directory of files
+dps=dotprops.character('~/skeleton-nrrds/', OmitFailures=T, k=5)
+}
+}
 \references{
 The dotprops format is essentially identical to that developed 
   in:
@@ -78,7 +100,7 @@ The dotprops format is essentially identical to that developed
   Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A 
   mutual information approach to automate identification of neuronal clusters
   in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
-  \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
+  \doi{10.3389/fninf.2012.00021}
 }
 \seealso{
 \code{\link{nlapply}}

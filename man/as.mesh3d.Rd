@@ -9,8 +9,7 @@
 \usage{
 \method{as.mesh3d}{ashape3d}(x, tri_to_keep = 2L, ...)
 
-\method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL,
-  drop = TRUE, ...)
+\method{as.mesh3d}{hxsurf}(x, Regions = NULL, material = NULL, drop = TRUE, ...)
 
 \method{as.mesh3d}{boundingbox}(x, ...)
 }
@@ -70,7 +69,7 @@ all(pointsinside(kcs20, kcs20.mesh))
 # and show that we can also use the alphashape directly
 all(pointsinside(kcs20, kcs20.a))
 
-clear3d()
+nclear3d()
 wire3d(kcs20.mesh)
 plot3d(kcs20, col=type, lwd=2)
 }
@@ -90,9 +89,12 @@ shade3d(mbb, col='red', alpha=0.3)
 \code{\link[rgl]{as.mesh3d}}, \code{\link[rgl]{tmesh3d}},
   \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
 
-Other hxsurf: \code{\link{as.hxsurf}},
-  \code{\link{materials}}, \code{\link{plot3d.hxsurf}},
-  \code{\link{read.hxsurf}}, \code{\link{subset.hxsurf}},
-  \code{\link{write.hxsurf}}
+Other hxsurf: 
+\code{\link{as.hxsurf}()},
+\code{\link{materials}()},
+\code{\link{plot3d.hxsurf}()},
+\code{\link{read.hxsurf}()},
+\code{\link{subset.hxsurf}()},
+\code{\link{write.hxsurf}()}
 }
 \concept{hxsurf}

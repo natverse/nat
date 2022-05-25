@@ -1,3 +1,5 @@
+toc:
+  depth: 3
 navbar:
   structure:
     left:
@@ -26,6 +28,8 @@ navbar:
         href: articles/neurons-intro.html
       - text: Working with individual neurons as graph structures
         href: articles/neurons-as-graph.html
+      - text: 3D graphics
+        href: articles/plotly.html
       - text: 'NeuroGeometry: Analysing 3D morphology of neurons'
         href: articles/NeuroGeometry.html
     news:
@@ -55,6 +59,7 @@ articles:
   - '`neurons-intro`'
   - '`neurons-as-graph`'
   - '`NeuroGeometry`'
+  - '`plotly`'
 reference:
   - title: Package Help
     desc: Provides an overview of key functions and classes
@@ -70,25 +75,33 @@ reference:
     - subset.neuron
     - prune
     - prune_vertices
+    - prune_in_volume
     - Ops.neuron
     - scale.neuron
     - resample
+    - seglist
+    - seglist2swc
+    - seglengths
     - smooth_neuron
-    - potential_synapses
     - normalise_swc
   - title: Neurons (as graphs)
     desc: Functions for working with the graph structure of neurons
     contents:
     - ngraph
     - graph.nodes
-    - prune_strahler
     - rootpoints
-    - seglengths
-    - seglist
-    - seglist2swc
     - segmentgraph
+    - distal_to
     - spine
     - strahler_order
+    - prune_strahler
+    - get_topo_features
+    - prune_twigs
+    - simplify_neuron
+    - stitch_neuron
+    - stitch_neurons
+    - stitch_neurons_mst
+    - reroot
   - title: Skeletonised Neurons (dotprops aka vector cloud)
     desc: Functions for working with skeletonised neurons consisting of 
       unconnected vectors rather than a fully connected tree.
@@ -103,6 +116,7 @@ reference:
       - neuronlist
       - read.neurons
       - write.neurons
+      - neuronlistz
       - nlapply
       - plot.neuronlist
       - plot3d.neuronlist
@@ -134,34 +148,47 @@ reference:
       - plot3d.hxsurf
       - subset.hxsurf
       - as.hxsurf
+      - c.hxsurf
       - as.mesh3d
       - pointsinside
-  - title: 3D Plotting of objects
-    desc: Functions to help plot neurons and surfaces in 3D and to review and 
-      identify objects by interactive selection.
+  - title: 3D Plotting of Objects
+    desc: Functions to help plot neurons, surfaces and other 3D objects via RGL.
     contents:
       - plot3d
       - nopen3d
+      - nclear3d
       - nview3d
       - npop3d
       - pan3d
-      - find.neuron
-      - find.soma
+      - wire3d
       - nlscan
       - plot3d.boundingbox
       - plot3d.dotprops
       - plot3d.hxsurf
       - plot3d.neuron
       - plot3d.cmtkreg
+      - plot3d.ngraph
+  - title: 3D Interaction with Objects
+    desc: Functions to review, identify, and modify objects by interactive selection in RGL windows.
+    contents:
+      - find.neuron
+      - find.soma
+      - select_points
+      - correct_root
+      - prune_online
+      - make_model
   - title: 3D Geometry
     desc: Functions for analysing 3D geometry of neurons and other objects
     contents:
     - nvertices
     - xyzmatrix
+    - potential_synapses
+    - overlap_score
+    - sholl_analysis
     - plane_coefficients
     - intersect_plane
   - title: Object transformation
-    desc: Generic strategies for transforming 3D objects/images
+    desc: Generic strategies for transforming 3D objects/images and registration
     contents:
     - xform
     - mirror
@@ -169,6 +196,7 @@ reference:
     - xformimage
     - xformpoints
     - simplify_reglist  
+    - tpsreg
   - title: Images (im3d)
     desc: Functions for working with 3d image volumes 
     contents:
@@ -217,6 +245,7 @@ reference:
     contents:
       - Cell07PNs
       - kcs20
+      - dl1neuron
       - MBL.surf
   - title: Generic Functions
     desc: Generic versions of base functions for which we provide specialised 

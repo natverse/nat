@@ -2,21 +2,33 @@
 % Please edit documentation in R/neuron-io.R
 \name{write.neuron}
 \alias{write.neuron}
-\title{Write out a neuron in any of the file formats we know about}
+\title{Write out a neuron skeleton or mesh in any of the file formats we know about}
 \usage{
-write.neuron(n, file = NULL, dir = NULL, format = NULL, ext = NULL,
-  Force = FALSE, MakeDir = TRUE, ...)
+write.neuron(
+  n,
+  file = NULL,
+  dir = NULL,
+  format = NULL,
+  ext = NULL,
+  Force = FALSE,
+  MakeDir = TRUE,
+  metadata = NULL,
+  ...
+)
 }
 \arguments{
 \item{n}{A neuron}
 
 \item{file}{Path to output file}
 
-\item{dir}{Path to directory (this will replace dirname(file) if specified)}
+\item{dir}{Path to directory (this will replace \code{dirname(file)} if
+specified)}
 
 \item{format}{Unique abbreviation of one of the registered file formats for
-neurons including 'swc', 'hxlineset', 'hxskel', if no format can be extracted from
-the filename and the ext parameter, then it defaults to 'swc'}
+neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
+(neuron meshes). If no format can be extracted from the filename or the
+\code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
+meshes.}
 
 \item{ext}{Will replace the default extension for the filetype and should
 include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
@@ -26,6 +38,11 @@ or added e.g. if the desired file name does not have an extension.}
 \item{Force}{Whether to overwrite an existing file}
 
 \item{MakeDir}{Whether to create directory implied by \code{file} argument.}
+
+\item{metadata}{Whether to encode some metadata in the header file (currently
+only supported for SWC format). Either a data.frame or \code{TRUE} to
+indicate that the attached data.frame should be written. Default
+\code{FALSE}.}
 
 \item{...}{Additional arguments passed to selected writer function}
 }
@@ -50,18 +67,19 @@ Note that if \code{file} does not have an extension then the default
   \code{normalise.ids=NA} will normalise \code{PointNo} vertex ids only when
   a vertex is connected (by the \code{Parent} field) to a vertex that had not
   yet been defined. Many readers make the assumption that this is true. When
-  \code{normalise.ids=F} the vertex ids will not be touched.
+  \code{normalise.ids=FALSE} the vertex ids will not be touched.
 }
 \examples{
 # show the currently registered file formats that we can write
 fileformats(class='neuron', write=TRUE)
 \dontrun{
-# write out "myneuron.swc" in SWC format
+# write neuron to "myneuron.swc" in SWC format
 write.neuron(Cell07PNs[[1]], file='myneuron.swc')
-# write out "myneuron.swc" in SWC format, normalising the integer ids that
-# label every node (this is required by some SWC readers e.g. Fiji)
+# write in SWC format, normalising the integer ids that label every node
+# (this is required by some SWC readers e.g. Fiji)
 write.neuron(Cell07PNs[[1]], file='myneuron.swc', normalise.ids=TRUE)
-
+# write out "myneuron.swc" in SWC format withour the final extension
+write.neuron(Cell07PNs[[1]], file='myneuron.swc')
 # write out "myneuron.amiramesh" in Amira hxlineset format
 write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron.amiramesh')
 

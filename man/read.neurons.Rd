@@ -4,9 +4,17 @@
 \alias{read.neurons}
 \title{Read one or more neurons from file to a neuronlist in memory}
 \usage{
-read.neurons(paths, pattern = NULL, neuronnames = NULL,
-  format = NULL, nl = NULL, df = NULL, OmitFailures = TRUE,
-  SortOnUpdate = FALSE, ...)
+read.neurons(
+  paths,
+  pattern = NULL,
+  neuronnames = NULL,
+  format = NULL,
+  nl = NULL,
+  df = NULL,
+  OmitFailures = TRUE,
+  SortOnUpdate = FALSE,
+  ...
+)
 }
 \arguments{
 \item{paths}{Paths to neuron input files \emph{or} a directory containing 
@@ -42,7 +50,7 @@ Read one or more neurons from file to a neuronlist in memory
 }
 \details{
 This function will cope with the same set of file formats offered by
-  \code{read.neuron}.
+  \code{\link{read.neuron}}.
   
   If the \code{paths} argument specifies a (single) directory then all files 
   in that directory will be read unless an optional regex pattern is also 
@@ -86,7 +94,7 @@ rownames(vddf)=vddf$Neuron
 # attach metadata to neuronlist
 vdnl=read.neurons(vdurls, neuronnames=vds, df=vddf)
 # use metadata to plot a subset of neurons
-clear3d()
+nclear3d()
 plot3d(vdnl, grepl("P[1-6].app", Lineage))
 }
 }
@@ -94,10 +102,14 @@ plot3d(vdnl, grepl("P[1-6].app", Lineage))
 \code{\link{read.neuron}}, \code{\link{write.neurons}},
   \code{\link{fileformats}}
 
-Other neuronlist: \code{\link{*.neuronlist}},
-  \code{\link{is.neuronlist}},
-  \code{\link{neuronlist-dataframe-methods}},
-  \code{\link{neuronlistfh}}, \code{\link{neuronlist}},
-  \code{\link{nlapply}}, \code{\link{write.neurons}}
+Other neuronlist: 
+\code{\link{*.neuronlist}()},
+\code{\link{is.neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
+\code{\link{neuronlistfh}()},
+\code{\link{neuronlistz}()},
+\code{\link{neuronlist}()},
+\code{\link{nlapply}()},
+\code{\link{write.neurons}()}
 }
 \concept{neuronlist}

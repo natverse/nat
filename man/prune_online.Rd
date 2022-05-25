@@ -15,21 +15,28 @@ prune_online(x, ...)
 \arguments{
 \item{x}{The object to prune. (e.g. \code{dotprops} object, see details)}
 
-\item{...}{Additional methods passed to \code{rgl::plot3d}}
+\item{...}{Additional methods passed to \code{prune_vertices}}
 }
 \value{
 A pruned neuron/neuronlist object
 }
 \description{
-Remove points from a neuron, keeping the root node intact
+Remove points from a neuron, keeping the root node intact.
+}
+\details{
+The neuron is plotted initially with all nodes selected (and shown
+  with black points). You can interactively select points to remove (they
+  will now be plotted in red). You can also add points back again (they will
+  return to black). When you are finished, press [e] to exit and then indicate
+  that you have finished (yes).
 }
 \examples{
-\dontrun{ 
-## Interactively shoose which bit of the neuron you wish to keep
-pruned.as.you.like.it = prune_online(Cell07PNs)
+\dontrun{
+## Interactively choose which bit of the neuron you wish to keep
+pruned.as.you.like.it = prune_online(Cell07PNs[1:2])
 }
 }
 \seealso{
-\code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}}, 
+\code{\link{as.neuron.ngraph}}, \code{\link{subset.neuron}},
   \code{\link{prune.neuron}}
 }

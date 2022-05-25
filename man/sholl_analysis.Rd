@@ -4,19 +4,31 @@
 \alias{sholl_analysis}
 \alias{sholl_analysis.neuron}
 \alias{sholl_analysis.neuronlist}
-\title{Perform a sholl analysis on neuron skeletons}
+\title{Perform a Sholl analysis on neuron skeletons}
 \usage{
-sholl_analysis(x, start = colMeans(xyzmatrix(x)),
-  starting.radius = radius.step, ending.radius = 1000,
-  radius.step = ending.radius/100)
+sholl_analysis(
+  x,
+  start = colMeans(xyzmatrix(x)),
+  starting.radius = radius.step,
+  ending.radius = 1000,
+  radius.step = ending.radius/100
+)
 
-\method{sholl_analysis}{neuron}(x, start = colMeans(xyzmatrix(x)),
-  starting.radius = radius.step, ending.radius = 1000,
-  radius.step = ending.radius/100)
+\method{sholl_analysis}{neuron}(
+  x,
+  start = colMeans(xyzmatrix(x)),
+  starting.radius = radius.step,
+  ending.radius = 1000,
+  radius.step = ending.radius/100
+)
 
-\method{sholl_analysis}{neuronlist}(x, start = colMeans(xyzmatrix(x)),
-  starting.radius = radius.step, ending.radius = 1000,
-  radius.step = ending.radius/100)
+\method{sholl_analysis}{neuronlist}(
+  x,
+  start = colMeans(xyzmatrix(x)),
+  starting.radius = radius.step,
+  ending.radius = 1000,
+  radius.step = ending.radius/100
+)
 }
 \arguments{
 \item{x}{a neuron or neuronlist object}
@@ -37,10 +49,9 @@ Functions for Sholl analysis of neuronal skeletons
 }
 \examples{
 \dontrun{ 
+# Calculate how much some neurons overlap with one another
+## Example requires the package nat.flybrains
 Cell07PNs_sholl = sholl_analysis(x = Cell07PNs, radius.step = 1, ending.radius = 100)
 head(Cell07PNs_sholl[[1]])
 } 
-}
-\seealso{
-\code{\link{potential_synapses}}, \code{\link{resample}}, \code{\link{overlap}}
 }

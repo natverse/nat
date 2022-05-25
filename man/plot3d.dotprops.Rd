@@ -4,9 +4,18 @@
 \alias{plot3d.dotprops}
 \title{3D plots of dotprops objects using rgl package}
 \usage{
-\method{plot3d}{dotprops}(x, scalevecs = 1, alpharange = NULL,
-  color = "black", PlotPoints = FALSE, PlotVectors = TRUE,
-  UseAlpha = FALSE, ...)
+\method{plot3d}{dotprops}(
+  x,
+  scalevecs = 1,
+  alpharange = NULL,
+  color = "black",
+  PlotPoints = FALSE,
+  PlotVectors = TRUE,
+  UseAlpha = FALSE,
+  ...,
+  gridlines = FALSE,
+  plotengine = getOption("nat.plotengine")
+)
 }
 \arguments{
 \item{x}{A dotprops object}
@@ -29,6 +38,12 @@ points/vectors. See details.}
 
 \item{...}{Additional arguments passed to \code{points3d} and/or 
 \code{segments3d}}
+
+\item{gridlines}{Whether to display gridlines when using plotly as the backend plotting
+engine (default: \code{FALSE})}
+
+\item{plotengine}{the plotting backend engine to use either 'rgl' or
+'plotly'.}
 }
 \value{
 invisible list of results of rgl plotting commands
@@ -51,9 +66,9 @@ Tangent vectors are plotted by \code{segments3d} and centred on the
 \donttest{
 open3d()
 plot3d(kcs20[[1]])
-clear3d()
+nclear3d()
 plot3d(kcs20[[1]],col='red')
-clear3d()
+nclear3d()
 plot3d(kcs20[[1]],col='red',lwd=2)
 plot3d(kcs20[[2]],col='green',lwd=2)
 }

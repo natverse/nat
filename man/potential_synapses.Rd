@@ -11,11 +11,26 @@ potential_synapses(a, b, s, ...)
 
 \method{potential_synapses}{neuronlist}(a, b, s, ...)
 
-\method{potential_synapses}{neuron}(a, b, s, sigma = s, bounds,
-  method = c("direct", "approx"), ...)
+\method{potential_synapses}{neuron}(
+  a,
+  b,
+  s,
+  sigma = s,
+  bounds,
+  method = c("direct", "approx"),
+  ...
+)
 
-\method{potential_synapses}{dotprops}(a, b, s, sigma = s,
-  seglength = 1, bounds = NULL, method = c("direct", "approx"), ...)
+\method{potential_synapses}{dotprops}(
+  a,
+  b,
+  s,
+  sigma = s,
+  seglength = 1,
+  bounds = NULL,
+  method = c("direct", "approx"),
+  ...
+)
 }
 \arguments{
 \item{a, b}{neurons or neuronlists}
@@ -59,12 +74,17 @@ potential_synapses(Cell07PNs[1:10], Cell07PNs[11:20], s=2, .parallel=TRUE)
 \references{
 Neurogeometry and potential synaptic connectivity. Stepanyants A,
   Chklovskii DB. Trends Neurosci. 2005 Jul;28(7):387-94. 
-  \url{http://dx.doi.org/10.1016/j.tins.2005.05.006}
+  \doi{10.1016/j.tins.2005.05.006}
 }
 \seealso{
-Other neuron: \code{\link{neuron}}, \code{\link{ngraph}},
-  \code{\link{plot.dotprops}}, \code{\link{prune}},
-  \code{\link{resample}}, \code{\link{rootpoints}},
-  \code{\link{spine}}, \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{neuron}()},
+\code{\link{ngraph}()},
+\code{\link{plot.dotprops}()},
+\code{\link{prune}()},
+\code{\link{resample}()},
+\code{\link{rootpoints}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

@@ -9,7 +9,8 @@ is.dotprops<-function(x) inherits(x,"dotprops")
 as.dotprops<-function(x, ...){
   if(is.null(x)) return (NULL)
   if(!is.dotprops(x)) class(x)=c("dotprops",class(x))
-  if(is.null(colnames(x$points))) colnames(x$points) <-c("X","Y","Z") 
+  if("topo" %in% names(x)) class(x) = union("topo.dotprops", class(x))
+  if(is.null(colnames(x$points))) colnames(x$points) <-c("X","Y","Z")
   x
 }
 
@@ -70,9 +71,35 @@ scale.dotprops<-function(x, center=TRUE, scale=TRUE){
 #' @rdname dotprops
 dotprops<-function(x, ...) UseMethod('dotprops')
 
+#' @description \code{dotprops.character} makes dotprops objects from one or
+#'   more files on disk (typically binary segmentations saved as NRRDs).
+#'   \code{x} can a vector of paths or be a directory (in which case
+#'   \code{pattern} can be used to restrict the files to read). The \code{...}
+#'   argument is passed first to \code{\link{nlapply}} (if there is more than
+#'   one file) and then to \code{dotprops.default}.
 #' @export
 #' @rdname dotprops
-dotprops.character <- function(x, ...) {
+#' @inheritParams base::list.files
+#' @examples
+#' \dontrun{
+#' # process a single file on disk
+#' dp=dotprops.character('~/skeleton-nrrds/file01.nrrd', k=5)
+#' # process a whole directory of files
+#' dps=dotprops.character('~/skeleton-nrrds/', OmitFailures=T, k=5)
+#' }
+dotprops.character <- function(x, pattern = NULL, OmitFailures = NA, ...) {
+  if(length(x)==1 && isTRUE(file.info(x)$isdir))
+    x=dir(x, full.names = TRUE, pattern = pattern)
+  
+  if(length(x)>1) {
+    # process many files by making a dummy neuronlist
+    df=data.frame(filename=basename(x), stringsAsFactors = FALSE)
+    rownames(df)=tools::file_path_sans_ext(df$filename)
+    nl=as.neuronlist(as.list(x), df = df)
+    res=nlapply(nl, dotprops, OmitFailures = OmitFailures, ...)
+    return(res)
+  }
+  
   fileName <- x
   x <- read.im3d(x)
   l <- dotprops(x, ...)
@@ -86,7 +113,6 @@ dotprops.character <- function(x, ...) {
 #' @description \code{dotprops.dotprops} will default to the original vale of 
 #'   \code{k} and copy over all attributes that are not set by
 #'   \code{dotprops.default}.
-#' @method dotprops dotprops
 #' @export
 #' @export
 #' @rdname dotprops
@@ -118,7 +144,6 @@ dotprops.list<-function(x, ...) {
 #'   neuronlist using \code{\link{nlapply}}. \code{...} arguments will be passed to 
 #'   \code{nlapply} in addition to the named argument \code{OmitFailures}.
 #' @export
-#' @method dotprops neuronlist
 #' @rdname dotprops
 #' @inheritParams nlapply
 #' @seealso \code{\link{nlapply}}
@@ -127,18 +152,57 @@ dotprops.neuronlist<-function(x, ..., OmitFailures=NA) {
 }
 
 #' @export
-#' @method dotprops neuron
 #' @param resample When finite, a new length to which all segmented edges will
 #'   be resampled. See \code{\link{resample.neuron}}.
+#' @param topo flag that says whether or not to add topological features
+#' (reversed Strahler Order and distance from soma)
 #' @rdname dotprops
-dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
+dotprops.neuron<-function(x, Labels=NULL, resample=NA, topo=FALSE, ...) {
   if(is.finite(resample)) x=resample(x, stepsize = resample)
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
-  dotprops(xyzmatrix(x), Labels=Labels, ...)
+  topo_features <- NULL
+  if (isTRUE(topo)) topo_features <- get_topo_features(x)
+  dotprops(xyzmatrix(x), Labels=Labels, topo_features=topo_features, ...)
 }
 
-#' @method dotprops default
+#' Get topological features per each node
+#'
+#' @param n neuron object with soma
+#'
+#' @return list with distance and Reversed Strahler order features per node.
+#' @rdname dotprops-topo
+#' @export
+#' @examples
+#' get_topo_features(Cell07PNs[[1]])
+get_topo_features <- function(n) {
+  topovec <- list()
+  topovec$distance <- get_distance_to_soma(n)
+  so <- strahler_order(n)
+  # normalizing so the main branch is always 0
+  topovec$rso <- abs(so$points-max(so$points))
+  topovec
+}
+
+#' Get distance from soma
+#' 
+#' Assigns to each node a distance from cell body.
+#'
+#' @param n neuron object with soma
+#'
+#' @return vector with distances from soma
+#' @importFrom igraph distances
+#' @rdname dotprops-topo
+#' @export
+#' @seealso \code{\link{dotprops}}, \code{\link{ngraph}}
+#' @examples
+#' get_distance_to_soma(Cell07PNs[[1]])
+get_distance_to_soma <- function(n) {
+  gw <- as.ngraph(n, weights=TRUE)
+  dst <- distances(gw, v = rootpoints(n))
+  as.numeric(dst)
+}
+
 #' @export
 #' @rdname dotprops
 #' @param k Number of nearest neighbours to use for tangent vector calculation 
@@ -148,6 +212,7 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #'   behaviour for different classes of input object, \code{TRUE} always uses 
 #'   labels when an incoming object has them and \code{FALSE} never uses labels.
 #' @param na.rm Whether to remove \code{NA} points (default FALSE)
+#' @param topo_features topological features of each dotprops
 #' @importFrom nabor knn
 #' @references The dotprops format is essentially identical to that developed 
 #'   in:
@@ -155,8 +220,9 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, ...) {
 #'   Masse N.Y., Cachero S., Ostrovsky A., and Jefferis G.S.X.E. (2012). A 
 #'   mutual information approach to automate identification of neuronal clusters
 #'   in \emph{Drosophila} brain images. Frontiers in Neuroinformatics 6 (00021).
-#'   \href{http://dx.doi.org/10.3389/fninf.2012.00021}{doi: 10.3389/fninf.2012.00021}
-dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
+#'   \doi{10.3389/fninf.2012.00021}
+dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, topo_features=NULL,
+                           ...){
   # store labels from SWC format data if this is a neuron
   x=xyzmatrix(x)
   if(is.null(k)) k=20
@@ -198,6 +264,10 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, ...){
   
   rlist$labels=Labels
   
+  if (!is.null(topo_features)) {
+    rlist$topo <- topo_features
+  }
+  
   attr(rlist,'k')=k
   return(as.dotprops(rlist))
 }
@@ -231,7 +301,6 @@ dotprops2swc<-function(x, label=0L, veclength=1, radius=0) {
 #'   using an eigenvector decomposition where the sign of the eigenvector is
 #'   essentially random and subject to small numerical instabilities. Therefore
 #'   it does not usually make sense to check the value of vect exactly.
-#' @method all.equal dotprops
 #' @param target,current dotprops objects to compare
 #' @param check.attributes Whether to check attributes (false by default)
 #' @param absoluteVectors Whether to check only the absolute value of
@@ -285,8 +354,9 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #'   \code{alpha}
 #' @param ... Additional arguments passed to \code{points3d} and/or 
 #'   \code{segments3d}
+#' @inheritParams plot3d.neuronlist
 #' @return invisible list of results of rgl plotting commands
-#' @method plot3d dotprops
+#' 
 #' @export
 #' @seealso \code{\link{dotprops}, \link[rgl]{plot3d}, \link[rgl]{points3d}, 
 #'   \link[rgl]{segments3d}}
@@ -294,20 +364,37 @@ all.equal.dotprops<-function(target, current, check.attributes=FALSE,
 #' \donttest{
 #' open3d()
 #' plot3d(kcs20[[1]])
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20[[1]],col='red')
-#' clear3d()
+#' nclear3d()
 #' plot3d(kcs20[[1]],col='red',lwd=2)
 #' plot3d(kcs20[[2]],col='green',lwd=2)
 #' }
-plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black', 
-                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, ...){
+plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
+                          PlotPoints=FALSE, PlotVectors=TRUE, UseAlpha=FALSE, 
+                          ..., gridlines = FALSE,
+                          plotengine = getOption('nat.plotengine')){
   # rgl's generic plot3d will dispatch on this
   if (!is.null(alpharange))
     x=subset(x,x$alpha<=alpharange[2] & x$alpha>=alpharange[1])
+  plotengine <- check_plotengine(plotengine)
   rlist=list()
+  if (plotengine == 'plotly') {
+    psh <- openplotlyscene()$plotlyscenehandle
+    params=list(...)
+    opacity <- if("alpha" %in% names(params)) params$alpha else 1
+  }
+  
   if(PlotPoints){
-    rlist$points=points3d(x$points, color=color, ...)
+    if (plotengine == 'rgl'){
+      rlist$points=points3d(x$points, color=color, ...)
+    } else {
+      plotdata <- as.data.frame(x$points)
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+        hoverinfo = "none",type = 'scatter3d', mode = 'markers',
+        opacity = opacity, marker=list(color = color, size = 3))
+    }
   }
     
   if(PlotVectors){
@@ -319,9 +406,39 @@ plot3d.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, color='black',
     starts=x$points-halfvect
     stops=x$points+halfvect
     interleaved=matrix(t(cbind(starts,stops)),ncol=3,byrow=T)
-    rlist$segments=segments3d(interleaved, color=color, ...)
+    if (plotengine == 'rgl'){
+        rlist$segments=segments3d(interleaved, color=color, ...)
+    } else {
+      tempdata <- interleaved
+      tempseglist <- list()
+      for (tempidx in seq(1,nrow(tempdata)/2)) {
+        tempseglist[[tempidx]] <- c(1,2)+2*(tempidx-1)
+      }
+      
+      tempdata<-do.call(rbind,sapply(tempseglist,function(s) {rbind(tempdata[s,],NA)},simplify=FALSE))
+      
+      plotdata <- as.data.frame(tempdata)
+      names(plotdata) <- c('X','Y','Z')
+      psh <- psh %>% 
+        plotly::add_trace(data = plotdata, x = ~X, y = ~Y , z = ~Z, 
+        hoverinfo = "none", type = 'scatter3d', mode = 'lines',
+        opacity = opacity, line=list(color = color, width = 4))
+    }
   }
-  invisible(rlist)
+  if (plotengine == 'rgl'){
+    invisible(rlist)
+  } else {
+ 
+    psh <- psh %>% plotly::layout(showlegend = FALSE, scene=list(camera=.plotly3d$camera))
+    if(gridlines == FALSE){
+      psh <- psh %>% plotly::layout(scene = list(xaxis=.plotly3d$xaxis,
+                                                 yaxis=.plotly3d$yaxis,
+                                                 zaxis=.plotly3d$zaxis))
+    }
+    
+    assign("plotlyscenehandle", psh, envir=.plotly3d)
+    psh
+  }
 }
 
 #' @rdname plot.neuron
@@ -391,7 +508,6 @@ plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black',
 #' @param ... Additional parameters (currently ignored)
 #' @inheritParams subset.neuron
 #' @return subsetted dotprops object
-#' @method subset dotprops
 #' @export
 #' @seealso \code{prune.dotprops}, \code{subset.neuron}
 #' @examples
@@ -468,7 +584,7 @@ subset.dotprops<-function(x, subset, invert=FALSE, ...){
 #' @param ... Additional arguments for methods (eventually passed to 
 #'   \code{prune.default})
 #' @seealso \code{\link{prune_strahler}}, \code{\link{spine}},
-#'   \code{\link{prune_vertices}}
+#'   \code{\link{prune_vertices}}, \code{\link{subset.neuron}}
 #' @examples
 #' ## prune single neurons
 #' \donttest{
@@ -508,7 +624,6 @@ prune.neuron<-function(x, target, ...){
 }
 
 #' @export
-#' @method prune dotprops
 #' @rdname prune
 #' @seealso \code{\link{subset.dotprops}}
 prune.dotprops<-function(x, target, ...){
@@ -517,14 +632,12 @@ prune.dotprops<-function(x, target, ...){
 }
 
 #' @export
-#' @method prune neuronlist
 #' @rdname prune
 prune.neuronlist<-function(x, target, ...){
   nlapply(x, prune, target=target, ...)
 }
 
 #' @export
-#' @method prune default
 #' @rdname prune
 #' @param maxdist The threshold distance for keeping points
 #' @param keep Whether to keep points in x that are near or far from the target

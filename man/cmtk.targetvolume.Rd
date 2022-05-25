@@ -39,7 +39,7 @@ if the character vector specifies an AmiraMesh file, it will be
 }
 \examples{
 \dontrun{
-# see https://github.com/jefferislab/nat.flybrains
+# see https://github.com/natverse/nat.flybrains
 library(nat.flybrains)
 cmtk.targetvolume(FCWB)
 }

@@ -7,15 +7,22 @@
 \alias{as.ngraph.neuron}
 \title{ngraph: a graph to encode a neuron's connectivity}
 \usage{
-ngraph(el, vertexnames, xyz = NULL, diam = NULL, directed = TRUE,
-  weights = FALSE, vertex.attributes = NULL, graph.attributes = NULL)
+ngraph(
+  el,
+  vertexnames,
+  xyz = NULL,
+  diam = NULL,
+  directed = TRUE,
+  weights = FALSE,
+  vertex.attributes = NULL,
+  graph.attributes = NULL
+)
 
 as.ngraph(x, ...)
 
 \method{as.ngraph}{data.frame}(x, directed = TRUE, ...)
 
-\method{as.ngraph}{neuron}(x, directed = TRUE, method = c("swc",
-  "seglist"), ...)
+\method{as.ngraph}{neuron}(x, directed = TRUE, method = c("swc", "seglist"), ...)
 }
 \arguments{
 \item{el}{A two column matrix (start, end) defining edges. \code{start} means
@@ -130,12 +137,16 @@ plot(gw_antispine, col='blue', add=TRUE)
 \seealso{
 \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
   \code{\link{subset.neuron}} for example of graph-based manipulation of a
-  neuron.
+  neuron, \code{\link{plot3d.ngraph}}
 
-Other neuron: \code{\link{neuron}},
-  \code{\link{plot.dotprops}},
-  \code{\link{potential_synapses}}, \code{\link{prune}},
-  \code{\link{resample}}, \code{\link{rootpoints}},
-  \code{\link{spine}}, \code{\link{subset.neuron}}
+Other neuron: 
+\code{\link{neuron}()},
+\code{\link{plot.dotprops}()},
+\code{\link{potential_synapses}()},
+\code{\link{prune}()},
+\code{\link{resample}()},
+\code{\link{rootpoints}()},
+\code{\link{spine}()},
+\code{\link{subset.neuron}()}
 }
 \concept{neuron}

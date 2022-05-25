@@ -1,11 +1,12 @@
 #' Cell07PNs: 40 Sample Projection Neurons from Jefferis, Potter et al 2007
-#' 
-#' These R lists (which have additional class neuronlist) contain 40 traced 
-#' olfactory projection neurons from Jefferis, Potter et al 2007 that have been 
+#'
+#' These R lists (which have additional class neuronlist) contain 40 traced
+#' olfactory projection neurons from Jefferis, Potter et al 2007 that have been
 #' transformed onto the IS2 template brain (Cachero, Ostrovsky et al 2010).
 #' @name Cell07PNs
 #' @family nat-data
-#' @seealso \code{\link{head.neuronlist}}, \code{\link{with.neuronlist}}
+#' @seealso \code{\link{head.neuronlist}}, \code{\link{with.neuronlist}},
+#'   \code{\link{dl1neuron}}
 #' @examples
 #' head(Cell07PNs)
 #' table(with(Cell07PNs,Glomerulus))
@@ -14,11 +15,11 @@
 #' T., Maurer C.R.J., and Luo L. (2007). Comprehensive maps of Drosophila higher
 #' olfactory centers: spatially segregated fruit and pheromone representation. 
 #' Cell 128 (6), 1187--1203. 
-#' \href{http://dx.doi.org/10.1016/j.cell.2007.01.040}{doi:10.1016/j.cell.2007.01.040}
+#' \doi{10.1016/j.cell.2007.01.040}
 #' 
 #' Cachero S., Ostrovsky A.D., Yu J.Y., Dickson B.J., and Jefferis G.S.X.E. 
 #' (2010). Sexual dimorphism in the fly brain. Curr Biol 20 (18), 1589--601. 
-#' \href{http://dx.doi.org/10.1016/j.cub.2010.07.045}{doi:10.1016/j.cub.2010.07.045}
+#' \doi{10.1016/j.cub.2010.07.045}
 NULL
 
 #' List of 20 Kenyon Cells from Chiang et al 2011 converted to dotprops objects
@@ -67,6 +68,17 @@ NULL
 #' \dontrun{
 #' ## originally generated as follows
 #' library(nat.flybrains)
-#' MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = T)
+#' MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = TRUE)
 #' }
 NULL
+
+#' Olfactory Projection Neuron reconstructed from EM data
+#'
+#' A DL1 olfactory projection neuron object traced in CATMAID from the FAFB
+#' whole brain EM volume. This has a complex morphology that makes a good test
+#' for pruning and simplification strategies.
+#'
+#' @format A \code{neuron} object with additional class \code{catmaidneuron}
+#' @seealso \code{\link{Cell07PNs}}
+"dl1neuron"
+

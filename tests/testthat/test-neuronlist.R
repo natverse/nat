@@ -23,7 +23,7 @@ test_that("c.neuronlist behaves", {
   expect_equivalent(c(Cell07PNs[1:5], c610.nodf), Cell07PNs[1:10])
   
   expect_equivalent(kcs20[1:6], c(kcs20[1:2], kcs20[3:4], kcs20[5:6]))
-  expect_error(c(Cell07PNs[1:5], NULL))
+  expect_error(c(Cell07PNs[1:5], list()))
   expect_error(c(Cell07PNs[1:5], Cell07PNs[1:5]), "neurons with the same name")
 })
 
@@ -108,11 +108,16 @@ test_that("nlapply can omit failures",{
   # this time with subset and omit failures
   expect_equal(length(dotprops(kcs3, k=5, subset=1:2, OmitFailures=TRUE)), 3)
   expect_equal(length(dotprops(kcs3, k=5, subset=c(1,3), OmitFailures=TRUE)), 2)
+  
+  expect_output(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=T))
+  expect_silent(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=F))
+  expect_error(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=NA))
 })
 
 test_that("nmapply with identity function returns its arguments",{
   kcs3=kcs20[1:3]
   expect_equal(nmapply(function(x) x, kcs3), kcs3)
+  expect_silent(nmapply(function(x) x, kcs3, .progress=F))
 })
 
 test_that("nmapply can vectorise more than one argument",{
@@ -167,15 +172,28 @@ test_that("plot2d neuronlist contents",{
 context("neuronlist: plot3d")
 
 test_that("plot neuronlist contents",{
+  options(nat.plotengine='rgl')
   nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
   op=options(nat.default.neuronlist="Cell07PNs")
   expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
   plot3d(boundingbox(Cell07PNs[c("EBH11R", "EBH20L")]))
+  
+  #For plotly engine..
+  options(nat.plotengine='plotly')
+  nplotted1 <- length(plot3d(c("EBH11R", "EBH20L"), db=Cell07PNs, WithNodes=T))
+  op=options(nat.default.neuronlist="Cell07PNs")
+  expect_equal(length(plot3d(c("EBH11R", "EBH20L"))), nplotted1)
+  plot3d(boundingbox(Cell07PNs[c("EBH11R", "EBH20L")]))
+  
+  
   options(op)
 })
 
 test_that("plot neuronlist without names/data.frame",{
+  options(nat.plotengine='rgl')
   nn=nlapply(1:2, function(x) kcs20[[x]])
+  expect_silent(plot3d(nn))
+  options(nat.plotengine='plotly')
   expect_silent(plot3d(nn))
 })
 
@@ -184,11 +202,18 @@ test_that("plot3d.neuronlist can work with pre-substituted colour expressions",{
     rhubarb='pink'
     plot3d("EBH20L", col=substitute(rhubarb), db=Cell07PNs, ...)
   }
+  
+  options(nat.plotengine='rgl')
   expect_error(f())
   expect_is(f(SUBSTITUTE = FALSE), 'list')
+  
+  options(nat.plotengine='plotly')
+  expect_error(f())
+  expect_is(f(SUBSTITUTE = FALSE), 'plotly')
 })
 
 test_that("basic interactive 3d functionality",{
+  options(nat.plotengine='rgl')
   open3d()
   expect_output(nlscan(names(Cell07PNs)[1:2], db=Cell07PNs, Wait=F), "2 / 2")
   
@@ -251,10 +276,12 @@ test_that("as.data.frame.neuronlist behaves", {
   data.frame(kcs20nodf)<-df[rev(1:nrow(df)), ]
   expect_equal(as.data.frame(kcs20nodf), as.data.frame(kcs20))
   rownames(df)=letters[1:nrow(df)]
-  expect_warning(data.frame(kcs20nodf)<-df, 'rownames mismatch')
+  expect_warning(data.frame(kcs20nodf)<-df, 'Matching neurons by first column')
   rownames(df)=NULL
-  data.frame(kcs20nodf)<-df
+  expect_warning(data.frame(kcs20nodf)<-df)
   expect_equal(kcs20nodf[,], kcs20[,])
+  expect_equal(rownames(kcs20[,]), rownames(kcs20nodf[,]))
+  
 })
 
 context("neuronlist: [")
@@ -298,4 +325,17 @@ test_that("[<-.neuronlist does the right thing",{
   all.equal(kcs13[,'side'], kcs20[1:3,'soma_side'])
   
   expect_null(colnames(kcs13[,]<-NULL))
+})
+
+test_that("prune twigs of a neuronlist", {
+  n = Cell07PNs[1:3]
+  
+  pruned_nl <- prune_twigs(n, twig_length = 5)
+  
+  #simple test comparing the number of edges after pruning.
+  expect_lt(pruned_nl[[1]]$NumSegs,n[[1]]$NumSegs)
+  expect_lt(pruned_nl[[2]]$NumSegs,n[[2]]$NumSegs)
+  expect_lt(pruned_nl[[3]]$NumSegs,n[[3]]$NumSegs)
+  
+  
 })

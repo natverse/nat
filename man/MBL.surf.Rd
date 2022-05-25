@@ -17,13 +17,14 @@ plot3d(MBL.surf, alpha=0.3)
 \dontrun{
 ## originally generated as follows
 library(nat.flybrains)
-MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = T)
+MBL.surf=subset(FCWBNP.surf, "MB.*_L", drop = TRUE)
 }
 }
 \seealso{
 \code{\link{hxsurf}}
 
-Other nat-data: \code{\link{Cell07PNs}},
-  \code{\link{kcs20}}
+Other nat-data: 
+\code{\link{Cell07PNs}},
+\code{\link{kcs20}}
 }
 \concept{nat-data}

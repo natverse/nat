@@ -124,7 +124,7 @@ if(!is.null(cmtk.bindir())){
     bim=boundingbox(read.im3d(img, ReadData = F))
     tf=tempfile(fileext = '.nrrd')
     on.exit(unlink(tf))
-    mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img)
+    mirror(img, warpfile=reglist(diag(4), reg), output=tf, target=img, Verbose=FALSE)
     expect_true(file.exists(tf))
     expect_equal(boundingbox(tf), bim)
   })
@@ -147,59 +147,6 @@ test_that("we can mirror a neuron list", {
   expect_equal(m[6:10],kcs20[6:10])
 })
 
-context('xyzmatrix')
-
-test_that("can extract xyz coords from a matrix and other objects",{
-  mx=matrix(1:24,ncol=3)
-  expect_equivalent(xyzmatrix(mx),mx)
-  colnames(mx)=c("X","Y","Z")
-  expect_equal(xyzmatrix(mx),mx)
-  mx2=mx
-  colnames(mx2)=c("x","y","z")
-  expect_equal(xyzmatrix(mx2),mx)
-  
-  df=data.frame(X=1:4,Y=2:5,Z=3:6,W=1)
-  expect_equal(xyzmatrix(df),data.matrix(df[,1:3]))
-  # check handling of 1 row data.frames / matrices
-  expect_is(xyz<-xyzmatrix(df[1,]), 'matrix')
-  expect_equal(xyzmatrix(data.matrix(df[1,])), xyz)
-  
-  fake_neuron=list(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
-  real_neuron=neuron(SegList=list(1:2, 3:4), d=data.frame(X=1,Y=1,Z=1))
-  xyz1=matrix(1,ncol=3, dimnames = list(NULL, c("X","Y","Z")))
-  expect_equal(xyzmatrix(fake_neuron), xyz1)
-  expect_equal(xyzmatrix(1,1,1), xyz1)
-  expect_equal(xyzmatrix(real_neuron), xyzmatrix(fake_neuron))
-})
-
-test_that("can replace xyz coords of a matrix",{
-  mx=matrix(1:24,ncol=3)
-  colnames(mx)=c("X","Y","Z")
-  mx2=mx
-  colnames(mx2)=c("x","y","z")
-  
-  expect_equivalent(xyzmatrix(mx)<-xyzmatrix(mx2), mx)
-  mx3=cbind(mx, W=1)
-  mx3.saved=mx3
-  expect_is(xyzmatrix(mx3)<-xyzmatrix(mx2), 'matrix')
-  expect_equal(mx3, mx3.saved)
-})
-
-test_that("can extract xyz coords from a neuronlist",{
-  xyz12=rbind(xyzmatrix(kcs20[[1]]),xyzmatrix(kcs20[[2]]))
-  expect_is(xyzmatrix(kcs20[1:2]),'matrix')
-  expect_equal(xyzmatrix(kcs20[1:2]), xyz12)
-  kcs1_5=kcs20[1:5]
-  xyzmatrix(kcs1_5) <- xyzmatrix(kcs1_5)
-  expect_equal(kcs1_5, kcs20[1:5])
-})
-
-test_that("we can count number of vertices", {
-  expect_equal(nvertices(kcs20[[1]]), 284L)
-  expect_equal(nvertices(kcs20), sapply(kcs20, function(x) nrow(x$points)))
-  expect_equal(nvertices(Cell07PNs), sapply(Cell07PNs, function(x) nrow(x$d)))
-})
-
 test_that("we can extract/replace coords and xform shape3d objects",{
   m=as.mesh3d(MBL.surf)
   xyz=xyzmatrix(m)
@@ -207,4 +154,5 @@ test_that("we can extract/replace coords and xform shape3d objects",{
   expect_equal(dim(xyz), c(1068L, 3L))
   # dummy transformation
   expect_equal(xform(m, function(x,...) x), m)
+  expect_equal(xform(shapelist3d(m, plot = F), function(x,...) x)[[1]], m)
 })
