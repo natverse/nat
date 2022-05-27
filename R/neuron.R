@@ -33,6 +33,7 @@
 #' @param NeuronName Character vector containing name of neuron or a function 
 #'   with one argument (the full path) which returns the name. The default
 #'   (\code{NULL}) sets NeuronName to the file name without the file extension.
+#' @param unit a unit
 #' @param MD5 Logical indicating whether to calculate MD5 hash of input
 #' @importFrom tools md5sum
 #' @examples 
@@ -82,8 +83,8 @@
 #' plot(gstem2)
 #' plot(as.neuron(gstem2))
 neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPoints,
-                 SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL, ...,
-                 MD5=TRUE){get
+                 SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL,
+                 unit=NULL, ..., MD5=TRUE){get
   
   coreFieldOrder=c("NumPoints", "StartPoint", "BranchPoints", 
                    "EndPoints", "nTrees", "NumSegs", "SegList", "SubTrees","d" )
@@ -202,6 +203,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #' @param origin Root vertex, matched against names (aka PointNo) when 
 #'   available (see details)
 #' @param Verbose Whether to be verbose (default: FALSE)
+#' @param unit a unit
 #' @return A list with elements: 
 #'   (NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList, 
 #'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
@@ -209,7 +211,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #' @importFrom igraph V V<- vcount decompose.graph
 #' @rdname neuron
 #' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
-as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
+as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, unit=NULL, ...){
   # translate origin into raw vertex id if necessary 
   if(length(origin)){
     vertex_names=igraph::V(x)$name
@@ -263,6 +265,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # TODO refactor this into a separate function e.g. normalise.swc since
   # we need to do something similar in as.neuron.dataframe and seglist2swc etc
   d=data.frame(PointNo=get.vertex.attribute(x,'name'))
+
   if(is.null(vertexData)){
     # get vertex information from graph object
     xyz=xyzmatrix(x)
@@ -290,6 +293,8 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   
   d=seglist2swc(x=subtrees,d=d)
   d=normalise_swc(d)
+  if (!is.null(unit))
+    d=assign_unit(d, unit)
   n=list(d=d,NumPoints=igraph::vcount(masterg),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),
@@ -1614,4 +1619,24 @@ reroot.neuronlist<-function(x, idx=NULL, pointno=NULL, point=NULL, ...){
     }
   }
   res
+}
+
+#' Assigns a unit to the distance matrix
+#'
+#' @param d distance matrix
+#' @param unit a unit
+#'
+#' @importFrom units set_units
+assign_unit <- function(d, unit = NULL) {
+  for (k in c("X", "Y", "Z", "W")) {
+    d[[k]] <- set_units(d[[k]], unit, mode = "standard")
+  }
+  d
+}
+
+# Set unit for a neuron
+#' @export
+set_units.neuron <- function(n, unit = NULL, ...) {
+  n$d <- assign_unit(n$d, unit)
+  n
 }

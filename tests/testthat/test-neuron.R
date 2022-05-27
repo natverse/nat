@@ -396,3 +396,11 @@ test_that("rerooting neuronlist", {
   rpns=reroot.neuronlist(pns, point = points)
   expect_equal(rpns[[1]]$StartPoint, 12)
 })
+
+test_that("set_units neuron", {
+  pn<-Cell07PNs[[1]]
+  pnu<-set_units.neuron(pn, 'um')
+  # units setting works correctly
+  expect_equal(class(pnu$d$X), "units")
+  expect_equal(class(pnu$d$W), "units")
+})
