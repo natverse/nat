@@ -655,7 +655,7 @@ remotesync.default<-function(x, remote=attr(x,'remote'), download.missing=TRUE,
 #' @rdname remotesync
 #' @examples
 #' \dontrun{
-#' kcs20=read.neuronlistfh('http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds')
+#' kcs20=read.neuronlistfh(' https://virtualflybrain.org/data/VFB/nblast/flycircuit/kcs20.rds')
 #' # update object from the web
 #' kcs20=remotesync(kcs20)
 #' # download all neurons with significant innervation of the vertical lobe

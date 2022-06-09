@@ -6,7 +6,7 @@ test_that("we can download a neuronlistfh object with MD5'd objects", {
   localdir <- tempfile()
   dir.create(localdir)
   on.exit(unlink(localdir, recursive=TRUE))
-  kcs20.url="http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds"
+  kcs20.url=" https://virtualflybrain.org/data/VFB/nblast/flycircuit/kcs20.rds"
   kcs20md5 <- read.neuronlistfh(kcs20.url, localdir=localdir, quiet=TRUE)
   # test trying to read in neuronlistfh object which is now available locally
   # before we have downloaded any data objects
@@ -26,7 +26,7 @@ test_that("we can synchronise a neuronlistfh object with its remote", {
   localdir <- tempfile()
   dir.create(localdir)
   on.exit(unlink(localdir, recursive=TRUE))
-  kcs20fh.remote <- read.neuronlistfh("http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds",
+  kcs20fh.remote <- read.neuronlistfh(" https://virtualflybrain.org/data/VFB/nblast/flycircuit/kcs20.rds",
                                       localdir=localdir)
   expect_equal(dim(kcs20fh.remote[[1]]$points), c(284, 3))
   # make a neuronlistfh object from the local data bundled with this package
