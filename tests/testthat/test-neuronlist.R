@@ -334,7 +334,7 @@ test_that("neuronlist includes metadata",{
   out1 = nlapply(kcs13, function(x) x)
   out2 = nlapply(kcs13, function(x) x, withMeta = T)
   expect_true(
-    length(attributes(out1[[2]])$names) < length(attributes(out1[[1]])$names)
+    length(attributes(out1[[2]])$names) < length(attributes(out2[[2]])$names)
   )
   
   # or parts of columns
