@@ -327,6 +327,24 @@ test_that("[<-.neuronlist does the right thing",{
   expect_null(colnames(kcs13[,]<-NULL))
 })
 
+test_that("neuronlist includes metadata",{
+  kcs13=kcs20[1:3]
+  
+  # expect that withMeta output will contain more attributes
+  out1 = nlapply(kcs13, function(x) x)
+  out2 = nlapply(kcs13, function(x) x, withMeta = T)
+  expect_true(
+    length(attributes(out1[[2]])$names) < length(attributes(out1[[1]])$names)
+  )
+  
+  # or parts of columns
+  data.frame(kcs13) <- NULL
+  out3 = nlapply(kcs13, function(x) x, withMeta = T)
+  expect_true(
+    all(names(out1[[1]]) == names(out3[[1]]))
+  )
+})
+
 test_that("prune twigs of a neuronlist", {
   n = Cell07PNs[1:3]
   
