@@ -298,11 +298,13 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
   nn=names(x)
   matching_rows=intersect(nn, rownames(value))
   if (length(matching_rows)!=length(nn) && any(nn %in% value[,1])) {
-    matching_rows_fc=intersect(nn, value[,1])
+    # need to turn them into string
+    candids <- id2char(value[,1])
+    matching_rows_fc=intersect(nn, candids)
     if (length(matching_rows)<length(matching_rows_fc)){
       warning("Matching neurons by first column.")
       matching_rows=matching_rows_fc
-      rownames(value) <- value[,1]
+      rownames(value) <- candids
     }
   }
   if(length(matching_rows)){

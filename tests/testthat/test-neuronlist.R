@@ -282,6 +282,12 @@ test_that("as.data.frame.neuronlist behaves", {
   expect_equal(kcs20nodf[,], kcs20[,])
   expect_equal(rownames(kcs20[,]), rownames(kcs20nodf[,]))
   
+  # numeric id column
+  df$gene_name=1e3+seq_along(kcs20)-1
+  kcs20nodf=kcs20
+  data.frame(kcs20nodf)=NULL
+  names(kcs20nodf)=df$gene_name
+  kcs20nodf[,]=df
 })
 
 context("neuronlist: [")
