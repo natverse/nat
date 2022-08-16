@@ -336,6 +336,11 @@ test_that("prune twigs of a neuronlist", {
   expect_lt(pruned_nl[[1]]$NumSegs,n[[1]]$NumSegs)
   expect_lt(pruned_nl[[2]]$NumSegs,n[[2]]$NumSegs)
   expect_lt(pruned_nl[[3]]$NumSegs,n[[3]]$NumSegs)
-  
-  
+})
+
+
+test_that("id2char works", {
+  expect_equal(id2char(1e5), id2char("100000"))
+  expect_equal(id2char(100000L), "100000")
+  expect_equal(id2char(c(100000L, NA)), c("100000", NA))
 })

@@ -1150,12 +1150,6 @@ id2char <- function(x) {
     # this is the tricky one
     # unfortunately it is slower than bit64::as.integer64
     return(format(x, scientific=F))
-    # seemed like a good idea but didn't go any faster when benchmarked in situ
-    x1=as.character(x)
-    badvals=grepl('+', x1, fixed=T)
-    if(any(badvals))
-      x1[badvals]=format(x[badvals], scientific=F)
-    return(x1)
   }
   warning("unrecognised id class:", paste(class(x), collapse = ','))
   # we don't want to turn logical values into character 
