@@ -287,7 +287,8 @@ test_that("as.data.frame.neuronlist behaves", {
   kcs20nodf=kcs20
   data.frame(kcs20nodf)=NULL
   names(kcs20nodf)=df$gene_name
-  kcs20nodf[,]=df
+  expect_warning(kcs20nodf[,] <- df, 'Matching neurons by first column')
+  expect_equal(rownames(kcs20nodf[,]), as.character(df$gene_name))
 })
 
 context("neuronlist: [")
