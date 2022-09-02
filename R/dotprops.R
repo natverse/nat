@@ -497,14 +497,15 @@ plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black',
 }
 
 #' Subset points in dotprops object that match given conditions
-#' 
+#'
 #' @details \code{subset} defines either logical or numeric indices, in which
-#'   case these are simply applied to the matrices that define the \code{points}, \code{vect} fields of the \code{dotprops} object
-#'   etc OR a function (which is called with the 3D points array and returns T/F.
-#'   OR an expression 
-#'   vector).
+#'   case these are simply applied to the matrices that define the
+#'   \code{points}, \code{vect} fields of the \code{dotprops} object etc OR a
+#'   function (which is called with the 3D points array and returns T/F. OR an
+#'   expression vector).
 #' @param x A dotprops object
-#' @param subset A subset of points defined by indices, an expression or a function (see Details)
+#' @param subset A subset of points defined by indices, an expression or a
+#'   function (see Details)
 #' @param ... Additional parameters (currently ignored)
 #' @inheritParams subset.neuron
 #' @return subsetted dotprops object
@@ -514,23 +515,23 @@ plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black',
 #' ## subset using indices ...
 #' dp=kcs20[[10]]
 #' dp1=subset(dp, 1:50)
-#' 
+#'
 #' # ... or an expression
 #' dp2=subset(dp, alpha>0.7)
 #' front=subset(dp, points[,'Z']<40)
 #' # use a helper function
 #' between=function(x, lower, upper) x>=lower & x<=upper
 #' middle=middle=subset(dp, between(points[,'Z'], 40, 60))
-#' 
+#'
 #' # plot results in 3D
 #' \donttest{
 #' plot3d(front, col='red')
 #' plot3d(middle, col='green')
 #' plot3d(dp, col='blue')
 #' }
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' ## subset using an selection function
 #' s3d=select3d()
 #' dp1=subset(dp, s3d(points))
@@ -543,7 +544,7 @@ plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black',
 #' stopifnot(all.equal(dp1, dp2))
 #' dp2=subset(dp, alpha>0.5 & s3d(pointd))
 #' dp3=subset(dp, 1:10)
-#' 
+#'
 #' ## subset each dotprops object in a whole neuronlist
 #' plot3d(kcs20)
 #' s3d=select3d()
@@ -551,6 +552,23 @@ plot.dotprops<-function(x, scalevecs=1.0, alpharange=NULL, col='black',
 #' clear3d()
 #' plot3d(kcs20.partial, col='red')
 #' plot3d(kcs20, col='grey')
+#' }
+#'
+#' \dontrun{
+#' ## subset dotprops by mesh
+#' #' library(nat.flybrains)
+#' # extract calyx surface and convert to mesh3d
+#' calyx=as.mesh3d(subset(MBL.surf, "MB_CA_L"))
+#' # subset one neuron with this surface
+#' kcs20.2_ca=subset(kcs20[[2]], function(x) pointsinside(x, calyx))
+#' shade3d(calyx, alpha=0.2)
+#' plot3d(kcs20.2_ca, lwd=3, col='black')
+#' 
+#' ## subset neuronlist of dotprops by mesh
+#' peduncle=as.mesh3d(subset(MBL.surf, "MB_PED_L"))
+#' kcs20.ped=nlapply(kcs20, function(x) subset(x, pointsinside(x, peduncle)))
+#' shade3d(peduncle, alpha=.2)
+#' plot3d(kcs20.ped)
 #' }
 subset.dotprops<-function(x, subset, invert=FALSE, ...){
   e <- substitute(subset)

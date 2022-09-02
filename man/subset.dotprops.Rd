@@ -9,7 +9,8 @@
 \arguments{
 \item{x}{A dotprops object}
 
-\item{subset}{A subset of points defined by indices, an expression or a function (see Details)}
+\item{subset}{A subset of points defined by indices, an expression or a
+function (see Details)}
 
 \item{invert}{Whether to invert the subset criteria - a convenience when
 selecting by function or indices.}
@@ -24,10 +25,10 @@ Subset points in dotprops object that match given conditions
 }
 \details{
 \code{subset} defines either logical or numeric indices, in which
-  case these are simply applied to the matrices that define the \code{points}, \code{vect} fields of the \code{dotprops} object
-  etc OR a function (which is called with the 3D points array and returns T/F.
-  OR an expression 
-  vector).
+  case these are simply applied to the matrices that define the
+  \code{points}, \code{vect} fields of the \code{dotprops} object etc OR a
+  function (which is called with the 3D points array and returns T/F. OR an
+  expression vector).
 }
 \examples{
 ## subset using indices ...
@@ -70,6 +71,23 @@ kcs20.partial = nlapply(kcs20, subset, s3d)
 clear3d()
 plot3d(kcs20.partial, col='red')
 plot3d(kcs20, col='grey')
+}
+
+\dontrun{
+## subset dotprops by mesh
+#' library(nat.flybrains)
+# extract calyx surface and convert to mesh3d
+calyx=as.mesh3d(subset(MBL.surf, "MB_CA_L"))
+# subset one neuron with this surface
+kcs20.2_ca=subset(kcs20[[2]], function(x) pointsinside(x, calyx))
+shade3d(calyx, alpha=0.2)
+plot3d(kcs20.2_ca, lwd=3, col='black')
+
+## subset neuronlist of dotprops by mesh
+peduncle=as.mesh3d(subset(MBL.surf, "MB_PED_L"))
+kcs20.ped=nlapply(kcs20, function(x) subset(x, pointsinside(x, peduncle)))
+shade3d(peduncle, alpha=.2)
+plot3d(kcs20.ped)
 }
 }
 \seealso{
