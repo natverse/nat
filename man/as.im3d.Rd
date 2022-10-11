@@ -21,9 +21,6 @@ as.im3d(x, ...)
 object (see details) completely specifying the required space.}
 
 \item{origin}{the location (or centre) of the first voxel}
-
-\item{BoundingBox}{Physical extent of image. See the details section 
-of \code{\link{boundingbox}}'s help for the distinction.}
 }
 \description{
 Convert a suitable object to an im3d object.

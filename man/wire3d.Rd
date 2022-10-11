@@ -38,9 +38,7 @@ engine (default: \code{FALSE})
 Default plots all. Seed \code{\link{as.mesh3d}} for details of how the
 argument is handled.}
 
-\item{front}{Material properties for rendering.}
-
-\item{back}{Material properties for rendering.}
+\item{front, back}{Material properties for rendering.}
 
 \item{override}{should the parameters specified here override those stored in the object?}
 }

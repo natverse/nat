@@ -110,7 +110,7 @@ Collate:
     'xformpoints.R'
     'xyzmatrix.R'
     'zzz.R'
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 Encoding: UTF-8
 VignetteBuilder: knitr
 Language: en-GB

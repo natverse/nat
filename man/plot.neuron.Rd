@@ -61,10 +61,7 @@ this range to plot (default: null => all points). See
 
 \item{col}{the color in which to draw the lines between nodes.}
 
-\item{PlotPoints}{Whether to plot points and/or tangent vectors 
-(logical, default: tangent vectors only)}
-
-\item{PlotVectors}{Whether to plot points and/or tangent vectors 
+\item{PlotPoints, PlotVectors}{Whether to plot points and/or tangent vectors 
 (logical, default: tangent vectors only)}
 
 \item{UseAlpha}{Whether to scale tangent vector length by the value of 
