@@ -6,6 +6,9 @@
 \usage{
 .verify_input_neuron(n)
 }
+\arguments{
+\item{n}{an object}
+}
 \description{
 Checks whether the input is a neuron
 }

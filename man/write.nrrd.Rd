@@ -59,7 +59,7 @@ default) then it will be set to \code{<infilestem.nhdr>}.}
 }
 \section{Detached NRRDs}{
  NRRD files can be written in \emph{detached} format 
-  (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which 
+  (see \url{https://teem.sourceforge.net/nrrd/format.html#detached}) in which 
   a text \bold{nhdr} file is used to described the contents of a separate 
   (usually binary) data file. This means that the nhdr file can be inspected 
   and edited with a text editor, while the datablock can be in a completely 
@@ -113,7 +113,7 @@ default) then it will be set to \code{<infilestem.nhdr>}.}
   and \code{endian} along with the dimensions of the input (\code{x}) will 
   override the corresponding NRRD header fields from any supplied 
   \code{header} argument. See 
-  \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
+  \url{https://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
   fields.
 }
 
