@@ -103,6 +103,7 @@ test_that("we can find the length of the spine of a neuron", {
 })
 
 test_that("we can find the path of the spine of a neuron", {
+  expect_error(strahler_order(list(a=1, b=2)))
   n <- Cell07PNs[[1]]
   expect_is(spine <- spine(n), 'neuron')
   spine.expected <- readRDS('testdata/neuron/testCell07PNs1_spine.rds')
@@ -203,6 +204,7 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
 })
 
 test_that("Strahler order", {
+  expect_error(strahler_order(list(a=1, b=2)))
   n = as.neuron(testd)
   expect_equal(son <- strahler_order(n), list(points = c(2L, 2L, 
     2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
@@ -257,4 +259,8 @@ test_that("distal_to works", {
   expect_equal(distal_to(x, node.pointno = lhep, root.pointno = x$tags$soma), dtlhep)
 })
 
-
+test_that(".verify_input_neuron works", {
+  n = as.neuron(testd)
+  expect_no_error(.verify_input_neuron(n))
+  expect_error(.verify_input_neuron(list(a=1, b=2)))
+})
