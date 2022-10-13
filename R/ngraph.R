@@ -658,8 +658,8 @@ prune_in_volume.neuronlist <- function(x, surf, neuropil = NULL, invert = TRUE, 
   nlapply(x, prune_in_volume.neuron, surf = surf, neuropil = neuropil, invert = invert, ...)
 }
 
-#' Checks whether the input is a neuron
-#' @param n an object
+# Checks whether the input is a neuron
+# @param n an object
 .verify_input_neuron <- function(n) {
   if (!("neuron" %in% class(n))) {
     msg <- "Sorry, this function works only on `neuron` objects."
