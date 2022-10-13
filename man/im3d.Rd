@@ -41,7 +41,7 @@ spatial positions at which the voxels are located. There should always be a
 \code{BoundingBox} attribute which defines the physical extent of the volume 
 in the same manner as the Amira 3D visualisation and analysis software. This 
 corresponds to the \strong{node} centers option in the 
-\href{http://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
+\href{https://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
 }
 \details{
 We follow Amira's convention of setting the bounding box equal to 

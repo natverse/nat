@@ -252,6 +252,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' @family neuron
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
                   rval=c("neuron", "length", "ids")) {
+  .verify_input_neuron(n)
   ng <- as.ngraph(n, weights=SpatialWeights)
   rval=match.arg(rval)
   if(invert && rval=="length") 
@@ -316,6 +317,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' plot(sg, edge.arrow.size=.4, vertex.size=10)
 segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE, 
                        include.xyz=FALSE, reverse.edges=FALSE) {
+  .verify_input_neuron(x)
   pointnos=x$d$PointNo
   sts=as.seglist(x, all=TRUE, flatten = TRUE)
   # just get head and tail of each segment
@@ -387,6 +389,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
 #'   \item segments Vector of integer Strahler orders for each segment in the 
 #'   neuron }
 strahler_order<-function(x){
+  .verify_input_neuron(x)
   s=segmentgraph(x, weights = F)
   
   roots=rootpoints(s, original.ids=FALSE)
@@ -474,6 +477,7 @@ strahler_order<-function(x){
 #' plot(pruned1, lwd=3, col='blue', add=TRUE)
 #' plot(pruned12, lwd=3, col='red', add=TRUE)
 prune_strahler<-function(x, orderstoprune=1:2, ...) {
+  .verify_input_neuron(x)
   tryCatch(
     prune_vertices(x, which(strahler_order(x)$points %in% orderstoprune), ...),
     error = function(c) stop(paste0("No points left after pruning. ",
@@ -652,4 +656,15 @@ prune_in_volume.neuron <- function(x, surf, neuropil = NULL, invert = TRUE, ...)
 #' @rdname prune_in_volume
 prune_in_volume.neuronlist <- function(x, surf, neuropil = NULL, invert = TRUE, ...){
   nlapply(x, prune_in_volume.neuron, surf = surf, neuropil = neuropil, invert = invert, ...)
+}
+
+# Checks whether the input is a neuron
+# @param n an object
+.verify_input_neuron <- function(n) {
+  if (!("neuron" %in% class(n))) {
+    msg <- "Sorry, this function works only on `neuron` objects."
+    if ("neuronlist" %in% class(n))
+      msg <- paste(msg, "Use `nlapply` to iterate over a neuronlist.")
+    stop(msg)
+  }
 }
