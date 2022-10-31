@@ -38,6 +38,7 @@ Imports:
     checkmate,
     stringr,
     pbapply,
+    units,
     zip
 Suggests:
     spelling,

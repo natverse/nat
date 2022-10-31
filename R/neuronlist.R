@@ -1140,3 +1140,9 @@ prune_twigs.neuronlist <- function(x, twig_length, OmitFailures=NA, ...) {
   if(missing(twig_length)) stop("Missing twig_length argument")
   nlapply(x, prune_twigs, twig_length=twig_length, OmitFailures=OmitFailures, ...)
 }
+
+# Set unit for a neuronlist
+#' @export
+set_units.neuronlist <- function(nl, unit = NULL, ...) {
+  nlapply(nl, function(x) set_units.neuron(x, unit = unit))
+}
