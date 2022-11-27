@@ -282,6 +282,13 @@ test_that("as.data.frame.neuronlist behaves", {
   expect_equal(kcs20nodf[,], kcs20[,])
   expect_equal(rownames(kcs20[,]), rownames(kcs20nodf[,]))
   
+  # numeric id column
+  df$gene_name=1e3+seq_along(kcs20)-1
+  kcs20nodf=kcs20
+  data.frame(kcs20nodf)=NULL
+  names(kcs20nodf)=df$gene_name
+  expect_warning(kcs20nodf[,] <- df, 'Matching neurons by first column')
+  expect_equal(rownames(kcs20nodf[,]), as.character(df$gene_name))
 })
 
 context("neuronlist: [")
@@ -336,6 +343,11 @@ test_that("prune twigs of a neuronlist", {
   expect_lt(pruned_nl[[1]]$NumSegs,n[[1]]$NumSegs)
   expect_lt(pruned_nl[[2]]$NumSegs,n[[2]]$NumSegs)
   expect_lt(pruned_nl[[3]]$NumSegs,n[[3]]$NumSegs)
-  
-  
+})
+
+
+test_that("id2char works", {
+  expect_equal(id2char(1e5), id2char("100000"))
+  expect_equal(id2char(100000L), "100000")
+  expect_equal(id2char(c(100000L, NA)), c("100000", NA))
 })

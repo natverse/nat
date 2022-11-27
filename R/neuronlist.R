@@ -298,11 +298,13 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
   nn=names(x)
   matching_rows=intersect(nn, rownames(value))
   if (length(matching_rows)!=length(nn) && any(nn %in% value[,1])) {
-    matching_rows_fc=intersect(nn, value[,1])
+    # need to turn them into string
+    candids <- id2char(value[,1])
+    matching_rows_fc=intersect(nn, candids)
     if (length(matching_rows)<length(matching_rows_fc)){
       warning("Matching neurons by first column.")
       matching_rows=matching_rows_fc
-      rownames(value) <- value[,1]
+      rownames(value) <- candids
     }
   }
   if(length(matching_rows)){
@@ -1139,4 +1141,20 @@ subset.neuronlist<-function(x, subset, filterfun,
 prune_twigs.neuronlist <- function(x, twig_length, OmitFailures=NA, ...) {
   if(missing(twig_length)) stop("Missing twig_length argument")
   nlapply(x, prune_twigs, twig_length=twig_length, OmitFailures=OmitFailures, ...)
+}
+
+# helper function to convert numeric ids to character
+id2char <- function(x) {
+  if(is.character(x)) return(x)
+  if(is.integer(x) || inherits(x, "integer64")) return(as.character(x))
+  # if(is.integer(x)) return(as.character(x))
+  if(is.numeric(x)) {
+    # this is the tricky one
+    # unfortunately it is slower than bit64::as.integer64
+    return(format(x, scientific=F))
+  }
+  warning("unrecognised id class:", paste(class(x), collapse = ','))
+  # we don't want to turn logical values into character 
+  if(is.logical(x)) return(x)
+  as.character(x)
 }
