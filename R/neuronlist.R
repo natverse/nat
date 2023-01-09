@@ -428,7 +428,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' open3d()
 #' plot3d(kcs.reduced,col='red', lwd=2)
 #' plot3d(kcs20,col='grey')
-#' rgl.close()
+#' close3d()
 #'
 #' \dontrun{
 #' # example of using plyr's .inform argument for debugging error conditions
@@ -464,7 +464,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' open3d()
 #' plot3d(kcs20[1:3])
 #' plot3d(xyzflip)
-#' rgl.close()
+#' close3d()
 #' }
 #'
 #' \dontrun{
