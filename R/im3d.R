@@ -1,24 +1,26 @@
 #' Construct an im3d object representing 3D image data, densities etc
-#' 
-#' \code{im3d} objects consist of a data array with attributes defining the 
-#' spatial positions at which the voxels are located. There should always be a 
-#' \code{BoundingBox} attribute which defines the physical extent of the volume 
-#' in the same manner as the Amira 3D visualisation and analysis software. This 
-#' corresponds to the \strong{node} centers option in the 
+#'
+#' \code{im3d} objects consist of a data array with attributes defining the
+#' spatial positions at which the voxels are located. There should always be a
+#' \code{BoundingBox} attribute which defines the physical extent of the volume
+#' in the same manner as the Amira 3D visualisation and analysis software. This
+#' corresponds to the \strong{node} centers option in the
 #' \href{http://teem.sourceforge.net/nrrd/format.html}{NRRD format}.
 #' @param x The object to turn into an im3d
-#' @param dims The dimensions of the image array either as an integer vector 
-#'   \emph{or} as an im3d object, whose attributes will provide defaults for 
-#'   \code{dims, origin, BoundingBox, bounds} arguments. The default 
-#'   (\code{dims=NULL}) will result in \code{dims} being set to \code{x} if 
+#' @param dims The dimensions of the image array either as an integer vector
+#'   \emph{or} as an im3d object, whose attributes will provide defaults for
+#'   \code{dims, origin, BoundingBox, bounds} arguments. The default
+#'   (\code{dims=NULL}) will result in \code{dims} being set to \code{x} if
 #'   \code{x} is an \code{im3d} object or \code{dim(x)} otherwise.
 #' @param voxdims The voxel dimensions
 #' @param origin the location (or centre) of the first voxel
-#' @param BoundingBox,bounds Physical extent of image. See the details section 
-#'   of \code{\link{boundingbox}}'s help for the distinction.
+#' @param bounds Physical extent of image
+#' @param BoundingBox Physical extent of the image. See the details section of
+#'   \code{\link{boundingbox}}'s help for the distinction between
+#'   \code{BoundingBox} and \code{bounds}.
 #' @param ... Additional attributes such as units or materials
 #' @return An array with additional class \code{im3d}
-#' @details We follow Amira's convention of setting the bounding box equal to 
+#' @details We follow Amira's convention of setting the bounding box equal to
 #'   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 #' @export
 #' @family im3d
@@ -110,8 +112,8 @@ as.im3d.im3d <- function(x, ...) x
 #'   ignored. This can be useful for producing a new im3d to match a target 
 #'   image on disk or a \code{nat.templatebrains::templatebrain} object. See
 #'   examples.
-#' @inheritParams im3d
 #' @rdname as.im3d
+#' @inheritParams im3d
 #' @seealso \code{\link{im3d}}, \code{\link{as.im3d}}
 #' @examples
 #' ## convert a list of neurons into an image volume

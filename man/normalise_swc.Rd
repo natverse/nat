@@ -9,8 +9,8 @@ normalise_swc(
   requiredColumns = c("PointNo", "Label", "X", "Y", "Z", "W", "Parent"),
   ifMissing = c("usedefaults", "warning", "stop"),
   includeExtraCols = TRUE,
-  defaultValue = list(PointNo = seq.int(nrow(x)), Label = 2L, X = NA_real_, Y =
-    NA_real_, Z = NA_real_, W = NA_real_, Parent = NA_integer_)
+  defaultValue = list(PointNo = seq.int(nrow(x)), Label = 2L, X = NA_real_, Y = NA_real_,
+    Z = NA_real_, W = NA_real_, Parent = NA_integer_)
 )
 }
 \arguments{
