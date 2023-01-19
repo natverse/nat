@@ -121,7 +121,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   }
   
   # Now do a depth first search to ensure that ordering is correct
-  dfs=graph.dfs(x, root=origin, father=TRUE, neimode='all')
+  dfs=graph.dfs(x, root=origin, father=TRUE, mode='all')
   # cache orders for speed: dfs$order[i] is slooooow in igraph>=1.0
   orders=as.integer(dfs$order)
   ncount=degree(x)

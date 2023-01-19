@@ -64,7 +64,7 @@ points(t(xyzmatrix(n)[n$AxonLHEP, 1:2]), pch=19, cex=2.5)
 ng=as.ngraph(n)
 # use a depth first search 
 distal_points=igraph::graph.dfs(ng, root=n$AxonLHEP, unreachable=FALSE, 
-  neimode='out')$order
+  mode='out')$order
 distal_tree=subset(n, distal_points)
 plot(distal_tree, add=TRUE, col='red', lwd=2)
 

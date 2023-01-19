@@ -154,7 +154,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   if(!igraph::is.directed(g))
     dg=igraph::as.directed(g, mode='arbitrary')
   else dg=g
-  dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, neimode='all')
+  dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
   el=igraph::get.edgelist(dg)
   
   connected_vertices=which(is.finite(dfs$order))
@@ -365,7 +365,7 @@ strahler_order<-function(x){
   if(length(roots)>1)
     stop("strahler_order not yet defined for multiple subtrees")
   
-  b=graph.bfs(s, root=roots, neimode = 'out', unreachable=F, father=T)
+  b=graph.bfs(s, root=roots, mode = 'out', unreachable=F, father=T)
   
   # find neighbours for each node
   n=neighborhood(s, 1, mode='out')
