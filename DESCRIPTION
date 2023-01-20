@@ -44,7 +44,6 @@ Suggests:
     MASS,
     alphashape3d,
     webshot2
-Additional_repositories: https://dmurdoch.github.io/drat
 License: GPL-3
 LazyData: yes
 Collate:
