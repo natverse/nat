@@ -73,7 +73,7 @@ The bounding box is defined as the position of the voxels at the two
   
   Note that there are two competing definitions for the physical extent of an
   image that are discussed e.g. 
-  \url{http://teem.sourceforge.net/nrrd/format.html}. The definition that 
+  \url{https://teem.sourceforge.net/nrrd/format.html}. The definition that 
   makes most sense depends largely on whether you think of a pixel as a 
   little square with some defined area (and therefore a voxel as a cube with 
   some defined volume) \emph{or} you take the view that you can only define 

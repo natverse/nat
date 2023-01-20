@@ -626,7 +626,7 @@ write.amiramesh<-function(x, file, enc=c("binary","raw","text","hxzip"),
   close(fc)
   
   # Write a Nrrd header to accompany the amira file if desired
-  # see http://teem.sourceforge.net/nrrd/
+  # see https://teem.sourceforge.net/nrrd/
   if(WriteNrrdHeader) {
     if(enc=="hxzip") stop("Nrrd cannot handle Amira's HxZip encoding (which is subtly different from gzip)")
     nrrdfile=paste(file,sep=".","nhdr")

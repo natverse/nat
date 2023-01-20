@@ -148,7 +148,7 @@ read.nrrd.header<-function(file, Verbose=FALSE){
         close(tc)
       } else if(fieldname=="datafile"){
         # TODO fix handling of complex datafile specifications
-        # See http://teem.sourceforge.net/nrrd/format.html#detached
+        # See https://teem.sourceforge.net/nrrd/format.html#detached
         if(substring(fieldval,1,4)=="LIST"){
           # we need to keep reading in lines until we hit EOF
           fieldval=c(fieldval,readLines(con))
@@ -297,7 +297,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   calibration fields are added to the header.
 #'   
 #' @section Detached NRRDs: NRRD files can be written in \emph{detached} format 
-#'   (see \url{http://teem.sourceforge.net/nrrd/format.html#detached}) in which 
+#'   (see \url{https://teem.sourceforge.net/nrrd/format.html#detached}) in which 
 #'   a text \bold{nhdr} file is used to described the contents of a separate 
 #'   (usually binary) data file. This means that the nhdr file can be inspected 
 #'   and edited with a text editor, while the datablock can be in a completely 
@@ -346,7 +346,7 @@ nrrd.voxdims<-function(file, ReturnAbsoluteDims=TRUE){
 #'   and \code{endian} along with the dimensions of the input (\code{x}) will 
 #'   override the corresponding NRRD header fields from any supplied 
 #'   \code{header} argument. See 
-#'   \url{http://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
+#'   \url{https://teem.sourceforge.net/nrrd/format.html} for details of the NRRD 
 #'   fields.
 #'   
 #' @param x Data to write as an \code{array}, \code{vector} or 
