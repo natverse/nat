@@ -210,7 +210,7 @@ test_that("basic interactive 3d functionality",{
   expect_equal(find.soma(selfun, db=Cell07PNs, rval='neuronlist'), 
                Cell07PNs[sel_soma])
   
-  rgl.close()
+  close3d()
 })
 
 context("neuronlist: set operations")

@@ -113,7 +113,7 @@ kcs.reduced=nlapply(kcs20,function(x) subset(x,sample(nrow(x$points),50)))
 open3d()
 plot3d(kcs.reduced,col='red', lwd=2)
 plot3d(kcs20,col='grey')
-rgl.close()
+close3d()
 
 \dontrun{
 # example of using plyr's .inform argument for debugging error conditions
@@ -144,7 +144,7 @@ xyzflip=nmapply(mirror, kcs20[1:3], mirrorAxis = c("X","Y","Z"),
 open3d()
 plot3d(kcs20[1:3])
 plot3d(xyzflip)
-rgl.close()
+close3d()
 }
 
 \dontrun{

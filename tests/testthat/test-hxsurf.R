@@ -24,7 +24,7 @@ test_that("we can read hxsurf object", {
   plot3d(surf,alpha=0.2)
   clear3d()
   plot3d(surf,col=rainbow,alpha=0.2)
-  rgl.close()
+  close3d()
 })
 
 test_that("we fail for bad surface files", {
