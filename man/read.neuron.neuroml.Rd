@@ -23,7 +23,7 @@ When the XML file contains only 1 cell \emph{and}
 Read one or more neurons from a NeuroML v1 file
 }
 \references{
-\url{https://neuroml.org/specifications}
+\url{https://neuroml.org/}
 }
 \seealso{
 \code{\link{read.morphml}}

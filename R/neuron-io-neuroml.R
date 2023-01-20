@@ -28,7 +28,7 @@
 #'   \code{XMLDocument} when \code{ReturnXML=TRUE}.
 #' @export
 #' @seealso \code{link[XML]{xmlParse}}, \code{\link{read.neuron.neuroml}}
-#' @references \url{https://neuroml.org/specifications}
+#' @references \url{https://neuroml.org/}
 read.morphml<-function(f, ..., ReturnXML=FALSE){
   # basic parsing of xml doc (using libxml)
   doc=try(XML::xmlParse(f, ...))
@@ -223,7 +223,7 @@ as.ngraph.morphml_cell<-function(x, ...) {
 #' @return When the XML file contains only 1 cell \emph{and} 
 #'   \code{AlwaysReturnNeuronList=FALSE}, a \code{\link{neuron}} object, 
 #'   otherwise a \code{\link{neuronlist}} containing one or more neurons.
-#' @references \url{https://neuroml.org/specifications}
+#' @references \url{https://neuroml.org/}
 #' @export
 #' @seealso \code{\link{read.morphml}}
 read.neuron.neuroml<-function(f, ..., AlwaysReturnNeuronList=FALSE) {
