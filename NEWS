@@ -1,3 +1,8 @@
+nat 1.8.20
+==========
+* replace deprected rgl functions
+* update igraph test for compatability 
+
 nat 1.8.18
 ==========
 
