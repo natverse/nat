@@ -75,7 +75,7 @@ plot3d(Cell07PNs[[2]],col='red',WithText=TRUE,add=FALSE)
 # include cell bodies
 plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 plot3d(Cell07PNs[5], col='red', soma=3)
-rgl.close()
+close3d()
 }
 }
 \seealso{

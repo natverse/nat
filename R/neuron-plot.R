@@ -42,7 +42,7 @@
 #' # include cell bodies
 #' plot3d(Cell07PNs[3:4], col='red', soma=TRUE)
 #' plot3d(Cell07PNs[5], col='red', soma=3)
-#' rgl.close()
+#' close3d()
 #' }
 plot3d.neuron<-function(x, WithLine=TRUE, NeuronNames=FALSE, WithNodes=TRUE,
                         WithAllPoints=FALSE, WithText=FALSE, PlotSubTrees=TRUE,
