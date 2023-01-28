@@ -1,3 +1,9 @@
+nat 1.8.21
+==========
+
+* tweaks to the news file format picked up on cran linux pretest 
+  (but strangely not win-devel etc)
+
 nat 1.8.20
 ==========
 
