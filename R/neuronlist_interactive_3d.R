@@ -194,8 +194,8 @@ nlscan <- function(neurons, db=NULL,
     if(Wait){
       chc <- readline("Return to continue, b to go back, s to select, d [save to disk], t to stop, c to cancel (without returning a selection): ")
       if(chc=="c" || chc=='t'){
-        sapply(pl, rgl.pop, type='shape')
-        sapply(more_rgl_ids, rgl.pop, type='shape')
+        sapply(pl, pop3d, type='shape')
+        sapply(more_rgl_ids, pop3d, type='shape')
         break
       }
       if(chc=="s") {
@@ -211,8 +211,8 @@ nlscan <- function(neurons, db=NULL,
       Sys.sleep(sleep)
       i <- i+1
     }
-    sapply(pl, rgl.pop, type='shape')
-    sapply(more_rgl_ids, rgl.pop, type='shape')
+    sapply(pl, pop3d, type='shape')
+    sapply(more_rgl_ids, pop3d, type='shape')
   }
   if(is.null(chc) || chc=='c') return(NULL)
   if(!is.null(selected_file)) savetodisk(selected, selected_file)
