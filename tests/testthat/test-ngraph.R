@@ -144,9 +144,12 @@ test_that("setting of graph attributes",{
   
   # vertex attributes
   expect_equal(get.vertex.attribute(testg, name = 'X'), testd$X)
-  expect_warning(testg <- as.ngraph(testd, graph.attributes = gatts, 
-                               vertex.attributes=list(X=testd$X[-1])))
-})
+  if(igraph::igraph_version()>=numeric_version("1.3.5.9098"))
+    expect_error(testg <- as.ngraph(testd, graph.attributes = gatts, 
+                                    vertex.attributes=list(X=testd$X[-1])))
+  else
+    expect_warning(testg <- as.ngraph(testd, graph.attributes = gatts, 
+                                      vertex.attributes=list(X=testd$X[-1])))})
 
 test_that("graph weights can be calculated and set",{
   # weights for a neuron with unit length segments
