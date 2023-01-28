@@ -14,3 +14,4 @@ travisbuildchildren.sh
 ^CRAN-RELEASE$
 ^.github$
 ^codecov\.yml$
+^CRAN-SUBMISSION$
