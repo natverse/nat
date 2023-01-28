@@ -5,8 +5,8 @@
 \title{Set the 3D viewpoint of an RGL window using anatomical terms}
 \usage{
 nview3d(
-  viewpoint = c("frontal", "anterior", "dorsal", "ventral", "posterior", "left",
-    "right", "oblique_right", "oblique_left"),
+  viewpoint = c("frontal", "anterior", "dorsal", "ventral", "posterior", "left", "right",
+    "oblique_right", "oblique_left"),
   FOV = 0,
   extramat = NULL,
   ...

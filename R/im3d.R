@@ -105,10 +105,12 @@ as.im3d.im3d <- function(x, ...) x
 #' @export
 #' @param voxdims Numeric vector of length 3 \emph{or} an \code{im3d} compatible
 #'   object (see details) completely specifying the required space.
+#' @param BoundingBox Physical extent of image. See the details section of
+#'   \code{\link{boundingbox}}'s help for more.
 #' @details \code{as.im3d.matrix} can accept any object that can be converted to
-#'   an im3d object in the \code{voxdims} argument This will completely specify 
+#'   an im3d object in the \code{voxdims} argument This will completely specify
 #'   the dims, voxdims, origin etc. Any value passed to those parameters will be
-#'   ignored. This can be useful for producing a new im3d to match a target 
+#'   ignored. This can be useful for producing a new im3d to match a target
 #'   image on disk or a \code{nat.templatebrains::templatebrain} object. See
 #'   examples.
 #' @inheritParams im3d
@@ -116,17 +118,17 @@ as.im3d.im3d <- function(x, ...) x
 #' @seealso \code{\link{im3d}}, \code{\link{as.im3d}}
 #' @examples
 #' ## convert a list of neurons into an image volume
-#' im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
+#' im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1),
 #'   BoundingBox=c(250, 410, 0, 130, 0, 120))
 #' \dontrun{
 #' write.im3d(im, 'kc20volume.nrrd')
-#' 
+#'
 #' ## use image dimensions of an image on disk
 #' # nb note use of ReadData = FALSE so that we just fetch the dimensions of
 #' # the target image
 #' diskim=read.im3d("/path/to/my/image.nrrd", ReadData = FALSE)
 #' im=as.im3d(xyzmatrix(kcs20), diskim)
-#' 
+#'
 #' ## use image dimensions of JFRC2 template brain to define the image space
 #' library(nat.flybrains)
 #' im=as.im3d(xyzmatrix(kcs20), JFRC2)

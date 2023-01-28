@@ -22,8 +22,8 @@ object (see details) completely specifying the required space.}
 
 \item{origin}{the location (or centre) of the first voxel}
 
-\item{BoundingBox}{Physical extent of image. See the details section 
-of \code{\link{boundingbox}}'s help for the distinction.}
+\item{BoundingBox}{Physical extent of image. See the details section of
+\code{\link{boundingbox}}'s help for more.}
 }
 \description{
 Convert a suitable object to an im3d object.
@@ -38,15 +38,15 @@ At present the only interesting method in \code{nat} is
   expectation that other packages may wish to provide suitable methods.
 
 \code{as.im3d.matrix} can accept any object that can be converted to
-  an im3d object in the \code{voxdims} argument This will completely specify 
+  an im3d object in the \code{voxdims} argument This will completely specify
   the dims, voxdims, origin etc. Any value passed to those parameters will be
-  ignored. This can be useful for producing a new im3d to match a target 
+  ignored. This can be useful for producing a new im3d to match a target
   image on disk or a \code{nat.templatebrains::templatebrain} object. See
   examples.
 }
 \examples{
 ## convert a list of neurons into an image volume
-im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1), 
+im=as.im3d(xyzmatrix(kcs20), voxdims=c(1, 1, 1),
   BoundingBox=c(250, 410, 0, 130, 0, 120))
 \dontrun{
 write.im3d(im, 'kc20volume.nrrd')
