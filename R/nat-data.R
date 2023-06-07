@@ -22,25 +22,26 @@
 NULL
 
 #' List of 20 Kenyon Cells from Chiang et al 2011 converted to dotprops objects
-#' 
-#' This R list (which has additional class \code{neuronlist}) contains 20 
-#' skeletonized \emph{Drosophila} Kenyon cells as \code{dotprops} objects. 
-#' Original data is due to Chiang et al. 2011, who have generously shared their 
-#' raw data at \url{http://flycircuit.tw}. Image registration and further 
-#' processing was carried out by Greg Jefferis.
+#'
+#' This R list (which has additional class \code{neuronlist}) contains 20
+#' skeletonized \emph{Drosophila} Kenyon cells as \code{dotprops} objects.
+#' Original data is due to Chiang et al. 2011, who have generously shared their
+#' raw data \doi{10.1016/j.cub.2010.11.056}. Image registration and further
+#' processing was carried out by Greg Jefferis (see
+#' \doi{10.1016/j.neuron.2016.06.012}).
 #' @name kcs20
 #' @family nat-data
-#' @seealso \code{\link{head.neuronlist}}, \code{\link{with.neuronlist}}, 
+#' @seealso \code{\link{head.neuronlist}}, \code{\link{with.neuronlist}},
 #'   \code{\link{plot3d.neuronlist}}, \code{\link{plot3d.dotprops}},
 #'   \code{\link{dotprops}}
 #' @docType data
-#' @references [1] Chiang A.S., Lin C.Y., Chuang C.C., Chang H.M., Hsieh C.H., 
-#'   Yeh C.W., Shih C.T., Wu J.J., Wang G.T., Chen Y.C., Wu C.C., Chen G.Y., 
-#'   Ching Y.T., Lee P.C., Lin C.Y., Lin H.H., Wu C.C., Hsu H.W., Huang Y.A., 
-#'   Chen J.Y., et al. (2011). Three-dimensional reconstruction of brain-wide 
-#'   wiring networks in Drosophila at single-cell resolution. Curr Biol 21 (1), 
+#' @references [1] Chiang A.S., Lin C.Y., Chuang C.C., Chang H.M., Hsieh C.H.,
+#'   Yeh C.W., Shih C.T., Wu J.J., Wang G.T., Chen Y.C., Wu C.C., Chen G.Y.,
+#'   Ching Y.T., Lee P.C., Lin C.Y., Lin H.H., Wu C.C., Hsu H.W., Huang Y.A.,
+#'   Chen J.Y., et al. (2011). Three-dimensional reconstruction of brain-wide
+#'   wiring networks in Drosophila at single-cell resolution. Curr Biol 21 (1),
 #'   1--11.
-#' @examples 
+#' @examples
 #' head(kcs20)
 #' table(with(kcs20, type))
 #' nopen3d()
