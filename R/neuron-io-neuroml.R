@@ -208,8 +208,10 @@ as.data.frame.morphml_cell<-function(x, ...){
   structure(r[in_names], .Names=out_names)
 }
 
+#' @export
 as.neuron.morphml_cell<-function(x, ...) as.neuron(as.data.frame(x, ...))
 
+#' @export
 as.ngraph.morphml_cell<-function(x, ...) {
   as.ngraph(as.data.frame(x), ...)
 }

@@ -34,6 +34,7 @@ cmtk.targetvolume.list<-function(target, ...) {
   cmtk.targetvolume(as.im3d(target))
 }
 
+#' @export
 cmtk.targetvolume.character <- function(target, ...) {
   if (isTRUE(substr(target,1,2) == "--")) {
     # we've already processed this, no action required
