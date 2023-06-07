@@ -1,11 +1,27 @@
-citHeader("To cite nat in publications, please use:")
-
-citEntry(entry = 'article',
-  Title = "{NeuroAnatomy Toolbox v1.5.2}",
-	Author = c(person("Jefferis, Gregory S X E"), person("Manton, James D")),
-	Doi = "10.5281/zenodo.10171",
-  Journal = "ZENODO",
-	Month = "May",
-	Year = "2014",
-	textVersion = "Gregory S X E Jefferis and James D Manton (2014). NeuroAnatomy Toolbox v1.5.2. ZENODO. 10.5281/zenodo.10171"
-)
+citHeader(
+  "If you use nat or other natverse packages, please always cite our natverse",
+  "paper (Bates, Manton et al, eLife 2020).",
+  "This justifies funding for continued development.",
+  "You may need to cite additional publications if you use specific packages",
+  "that implement specialised algorithms or provide datasets for reanalysis.",
+  "Use a command like:",
+  "citation(package=\"nat.nblast\")",
+  "to see if there is a specific citation to use for a given package",
+  "in addition to the general natverse paper.")
+structure(list(structure(list(author = structure(list(list(given = c("Alexander",
+"Shakeel"), family = "Bates", role = NULL, email = NULL, comment = NULL),
+    list(given = c("James", "D."), family = "Manton", role = NULL,
+        email = NULL, comment = NULL), list(given = c("Sridhar",
+    "R."), family = "Jagannathan", role = NULL, email = NULL,
+        comment = NULL), list(given = "Marta", family = "Costa",
+        role = NULL, email = NULL, comment = NULL), list(given = "Philipp",
+        family = "Schlegel", role = NULL, email = NULL, comment = NULL),
+    list(given = "Torsten", family = "Rohlfing", role = NULL,
+        email = NULL, comment = NULL), list(given = c("Gregory",
+    "S.", "X.", "E."), family = "Jefferis", role = NULL, email = NULL,
+        comment = NULL)), class = "person"), journal = "Elife",
+    month = "Apr", title = "The natverse, a versatile toolbox for combining and analysing neuroanatomical data",
+    volume = "9", year = "2020", doi = "10.7554/eLife.53350",
+    url = "https://doi.org/10.7554/eLife.53350"), bibtype = "Article", key = "Bates:2020aa", dateobj = structure(1585699200, class = c("POSIXct",
+"POSIXt"), tzone = "UTC", day.mon = 1L))), class = c("BibEntry",
+"bibentry"))
