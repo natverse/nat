@@ -65,7 +65,7 @@ devtools::install_github("natverse/nat")
 ```
 
 The **nat** package includes extensive unit tests which are run along with R's
-(extremely fastidious) package check routines by the [Travis](http://travis-ci.org/natverse/nat)
+(extremely fastidious) package check routines by the [GitHub Actions(https://github.com/natverse/nat/actions)
 continuous integration server. The master branch is therefore considered very stable
 and may well contain fixes or enhancements over released versions. 
 However, you can install any [release version](https://github.com/natverse/nat/tags)

@@ -98,7 +98,7 @@ potential_synapses.dotprops<-function(a, b, s, sigma=s, seglength=1, bounds=NULL
 PotentialSynapses <- function(a, b, s, sigma, ...) UseMethod("PotentialSynapses")
 
 #' @method PotentialSynapses default
-PotentialSynapses.default <- function(a, b, s=2, sigma=2) {
+PotentialSynapses.default <- function(a, b, s=2, sigma=2, ...) {
   #Compare for matrices of input data rather than neurons
   
   # short circuit if there are no points to check in one list or other!
@@ -149,7 +149,7 @@ PotentialSynapses.default <- function(a, b, s=2, sigma=2) {
 }
 
 #' @method PotentialSynapses dotprops
-PotentialSynapses.dotprops <- function(a, b, s, sigma, seglength) {
+PotentialSynapses.dotprops <- function(a, b, s, sigma, seglength, ...) {
   # short circuit if there are no points to check in one list or other!
   if(nrow(a$points) * nrow(b$points) == 0) return(0)
 
