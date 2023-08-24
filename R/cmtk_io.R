@@ -153,9 +153,9 @@ read.cmtk<-function(con, CheckLabel=TRUE){
 }
 
 #' Write out CMTK registration list to folder
-#' 
+#'
 #' @details Note that transformation in the forward direction (i.e. sample->ref)
-#'   e.g. as calculated from a set of landmarks where set 1 is the sample is 
+#'   e.g. as calculated from a set of landmarks where set 1 is the sample is
 #'   considered an inverse transformation by the IGS software. So in order to
 #'   use such a transformation as an initial affine with the registration
 #'   command the switch --initial-inverse must be used specifying the folder
@@ -167,11 +167,16 @@ read.cmtk<-function(con, CheckLabel=TRUE){
 #'   by default.
 #' @param reglist List specifying CMTK registration parameters
 #' @param foldername Path to registration folder (usually ending in .list)
-#' @param version CMTK version for registration (default 2.4)
+#' @param version CMTK version for registration (default 2.4). Will be converted
+#'   to character vector if not already.
 #' @export
 #' @family cmtk-io
-write.cmtkreg<-function(reglist, foldername, version="2.4"){
-  if(!is.null(attr(reglist, 'version')) && (attr(reglist, 'version') != version)) warning("Specified version (", version, ") is not the same as the version stored in the reglist object (", attr(reglist, 'version'), ").")
+write.cmtkreg<-function(reglist, foldername, version="2.4") {
+  if(!is.character(version))
+    version=as.character(version)
+  if(!is.null(attr(reglist, 'version')) && (attr(reglist, 'version') != version))
+    warning("Specified version (", version, ") is not the same as the version stored in the reglist object (", attr(reglist, 'version'), ").")
+  
   dir.create(foldername, showWarnings=FALSE, recursive=TRUE)
   if(!is.list(reglist)) reglist=cmtkreglist(reglist)
   write.cmtk(reglist,file.path(foldername, "registration"),
