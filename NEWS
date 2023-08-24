@@ -1,3 +1,10 @@
+nat 1.8.23
+==========
+
+* fix bug in handling of numeric versions in . r-devel now refuses to compare a 
+number with a numeric_version 
+* reported by CRAN (Kurt Hornik, who also kindly pointed out the precise error)
+
 nat 1.8.22
 ==========
 
