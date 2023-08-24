@@ -11,14 +11,15 @@ write.cmtkreg(reglist, foldername, version = "2.4")
 
 \item{foldername}{Path to registration folder (usually ending in .list)}
 
-\item{version}{CMTK version for registration (default 2.4)}
+\item{version}{CMTK version for registration (default 2.4). Will be converted
+to character vector if not already.}
 }
 \description{
 Write out CMTK registration list to folder
 }
 \details{
 Note that transformation in the forward direction (i.e. sample->ref)
-  e.g. as calculated from a set of landmarks where set 1 is the sample is 
+  e.g. as calculated from a set of landmarks where set 1 is the sample is
   considered an inverse transformation by the IGS software. So in order to
   use such a transformation as an initial affine with the registration
   command the switch --initial-inverse must be used specifying the folder
