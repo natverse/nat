@@ -56,5 +56,6 @@ points3d(fill, col='grey')
 }
 }
 \references{
-\url{ https://imagej.net/plugins/simple-neurite-tracer/}
+\url{https://imagej.net/plugins/snt/}
+  \url{https://imagej.net/plugins/snt/extending}
 }

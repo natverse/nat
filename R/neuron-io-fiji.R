@@ -75,7 +75,8 @@ read.fijixml<-function(f, components=c("path", "fill"), ..., Verbose=FALSE){
 #'   information for a skeleton by shooting rays from skeleton to mesh to
 #'   estimate the radius.
 #'
-#' @references \url{ https://imagej.net/plugins/simple-neurite-tracer/}
+#' @references \url{https://imagej.net/plugins/snt/}
+#'   \url{https://imagej.net/plugins/snt/extending}
 #' @export
 #'
 #' @examples
