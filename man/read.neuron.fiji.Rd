@@ -24,6 +24,6 @@ This is an XML based format so parsing it depends on installation of
   the suggested XML package.
 }
 \references{
-\url{https://imagej.net/plugins/simple-neurite-tracer/} 
-  \url{https://imagej.net/plugins/snt/traces-file-format}
+\url{https://imagej.net/plugins/snt/} 
+  \url{https://imagej.net/plugins/snt/extending}
 }

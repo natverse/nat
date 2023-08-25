@@ -39,8 +39,8 @@ read.fijixml<-function(f, ..., Verbose=FALSE){
 #' @param Verbose Whether to print status messages during parsing.
 #' @details This is an XML based format so parsing it depends on installation of
 #'   the suggested XML package.
-#' @references \url{https://imagej.net/plugins/simple-neurite-tracer/} 
-#'   \url{https://imagej.net/plugins/snt/traces-file-format}
+#' @references \url{https://imagej.net/plugins/snt/} 
+#'   \url{https://imagej.net/plugins/snt/extending}
 #' @export
 read.neuron.fiji<-function(f, ..., simplify=TRUE, Verbose=FALSE){
   l=read.fijixml(f, ..., Verbose=Verbose)

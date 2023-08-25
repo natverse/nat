@@ -15,8 +15,8 @@
 #'   \item \bold{neuroml} See \code{\link{read.neuron.neuroml}}
 #'
 #'   \item \bold{fijitraces} See \code{\link{read.neuron.fiji}}. The file format
-#'   used by the \href{https://imagej.net/plugins/simple-neurite-tracer/}{Simple Neurite
-#'   Tracer} plugin of Fiji/ImageJ.
+#'   used by the \href{https://imagej.net/plugins/snt/}{SNT} plugin of
+#'   Fiji/ImageJ.
 #'
 #'   \item \bold{hxlineset,hxskel} Two distinct fileformats used by Amira.
 #'   \code{hxlineset} is the generic one, \code{hxskel} is used by the
@@ -41,8 +41,7 @@
 #' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
 #'   Obermayer, K. (2004). New methods for the computer-assisted 3-D
 #'   reconstruction of neurons from confocal image stacks. Neuroimage 4,
-#'   1283--98.
-#'   \doi{10.1016/j.neuroimage.2004.06.047}
+#'   1283--98. \doi{10.1016/j.neuroimage.2004.06.047}
 #'
 #' @examples
 #' \dontrun{
