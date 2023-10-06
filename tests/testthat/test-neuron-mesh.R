@@ -13,6 +13,9 @@ test_that("read/write works", {
   md5.2=tools::md5sum(ff2)
   expect_equal(md5.1, md5.2)
   
+  # error if we try to write one object with write.neurons
+  expect_error(write.neurons(bl[[1]], dir=td, format='ply'))
+  
   expect_is(bl2 <- read.neurons(td, format='ply'), 'neuronlist')
   expect_equal(sbl <- summary(bl), summary(bl2))
   

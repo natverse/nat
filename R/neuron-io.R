@@ -899,7 +899,14 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
                         INDICES=names(nl), files=NULL, 
                         include.data.frame=FALSE,
                         metadata=FALSE,
-                        Force=FALSE, cl=NULL, ...){
+                        Force=FALSE, cl=NULL, ...) {
+  if(!inherits(nl, 'neuronlist')) {
+    # check if this looks like some of the other kinds of object we might 
+    # write by accident
+    single_object_classes <- c("mesh3d", "neuron", "dotprops", "hxsurf")
+    if(any(single_object_classes %in% class(nl)))
+      stop("Please use `write.neuron` to write a single neuron/mesh object!")
+  }
   if(grepl("\\.zip", dir)) {
     zip_file=dir
     # check if file exists (and we want to overwrite)
