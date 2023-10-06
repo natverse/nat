@@ -43,8 +43,16 @@ write.neuron.mesh <- function(x, file, format=c("ply", "obj"), ...) {
   if(!inherits(x, 'mesh3d')) {
     x=tryCatch(as.mesh3d(x), error=function(e) stop("Unable to convert x to mesh3d object! Only neuron meshes can be written in ",format," format!"))
   }
-  if(format=="ply")
+  if(format=="ply") {
+    if(!isTRUE(tools::file_ext(file)=="ply")) {
+      # ply format must end in .ply 
+      origfile=file
+      file=tempfile(fileext = '.ply')
+      on.exit(file.copy(file, origfile, overwrite = T), add = T)
+      on.exit(unlink(file), add = T)
+    }
     Rvcg::vcgPlyWrite(x, filename=file, writeCol = F, writeNormals = F, ...)
+  }
   else if(format=="obj")
     Rvcg::vcgObjWrite(x, filename=file, writeNormals=F, ...)
   else stop("Unknown format")

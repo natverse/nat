@@ -20,6 +20,9 @@ test_that("read/write works", {
   expect_known_value(sbl, file = 'testdata/summary_bl.rds')
   
   expect_error(write.neurons(Cell07PNs[1:3], format = 'ply'))
+  
+  write.neuron(MBL.surf, file=file.path(td, "MBL.surf.ply"), format = 'ply')
+  expect_equal(read.neuron(file.path(td, "MBL.surf.ply")), as.mesh3d(MBL.surf), tolerance = 1e-6)
 })
 
 skip_if_not_installed('readobj')
