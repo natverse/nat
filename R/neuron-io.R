@@ -672,6 +672,14 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #'
 #' # write out "myneuron.am" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
+#' 
+#' # write a mesh in Stanford ply 
+#' write.neuron(MBL.surf, file = 'MBL.surf.ply')
+#' # ... or Wavefront obj format
+#' write.neuron(MBL.surf, file = 'MBL.surf.obj')
+#' # specify the format directly if not evident from file suffix
+#' # not recommended though as will probably just cause trouble when reading
+#' write.neuron(MBL.surf, file = 'MBL.surf', format='obj')
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, metadata=NULL, ...){
