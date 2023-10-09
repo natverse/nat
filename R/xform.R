@@ -436,12 +436,19 @@ tpsreg<-function(sample, reference, ...){
 #' @param points The 3D points to transform
 #' @param swap Whether to change the direction of registration (default of
 #'   \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise
+#' @param FallBackToAffine,na.action Not applicable to this function
 #' @export
-xformpoints.tpsreg <- function(reg, points, swap=NULL, ...){
+xformpoints.tpsreg <- function(reg, points, swap=NULL, threads=1, FallBackToAffine = NULL, na.action = NULL, ...){
   if(isTRUE(swap) || isTRUE(attr(reg, 'swap'))) {
     tmp=reg$refmat
     reg$refmat=reg$tarmat
     reg$tarmat=tmp
   }
-  do.call(Morpho::tps3d, c(list(x=points), reg,  list(...)))
+  coeff <- compute_tps(x = reg$tarmat, y = reg$refmat, threads=threads, ...)
+  Morpho::applyTransform(points, coeff, threads=threads, ...)
 }
+
+compute_tps <- memoise::memoise(function(x,y,threads=1, ...){
+  Morpho::computeTransform(x, y, type = "tps", threads=threads, ...)
+}) 
+
