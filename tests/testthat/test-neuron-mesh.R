@@ -13,6 +13,9 @@ test_that("read/write works", {
   md5.2=tools::md5sum(ff2)
   expect_equal(md5.1, md5.2)
   
+  # error if we try to write one object with write.neurons
+  expect_error(write.neurons(bl[[1]], dir=td, format='ply'))
+  
   expect_is(bl2 <- read.neurons(td, format='ply'), 'neuronlist')
   expect_equal(sbl <- summary(bl), summary(bl2))
   
@@ -20,6 +23,9 @@ test_that("read/write works", {
   expect_known_value(sbl, file = 'testdata/summary_bl.rds')
   
   expect_error(write.neurons(Cell07PNs[1:3], format = 'ply'))
+  
+  write.neuron(MBL.surf, file=file.path(td, "MBL.surf.ply"), format = 'ply')
+  expect_equal(read.neuron(file.path(td, "MBL.surf.ply")), as.mesh3d(MBL.surf), tolerance = 1e-6)
 })
 
 skip_if_not_installed('readobj')

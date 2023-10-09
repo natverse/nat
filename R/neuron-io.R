@@ -672,6 +672,14 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #'
 #' # write out "myneuron.am" in Amira hxlineset format
 #' write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
+#' 
+#' # write a mesh in Stanford ply 
+#' write.neuron(MBL.surf, file = 'MBL.surf.ply')
+#' # ... or Wavefront obj format
+#' write.neuron(MBL.surf, file = 'MBL.surf.obj')
+#' # specify the format directly if not evident from file suffix
+#' # not recommended though as will probably just cause trouble when reading
+#' write.neuron(MBL.surf, file = 'MBL.surf', format='obj')
 #' }
 write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL, 
                        Force=FALSE, MakeDir=TRUE, metadata=NULL, ...){
@@ -891,7 +899,14 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
                         INDICES=names(nl), files=NULL, 
                         include.data.frame=FALSE,
                         metadata=FALSE,
-                        Force=FALSE, cl=NULL, ...){
+                        Force=FALSE, cl=NULL, ...) {
+  if(!inherits(nl, 'neuronlist')) {
+    # check if this looks like some of the other kinds of object we might 
+    # write by accident
+    single_object_classes <- c("mesh3d", "neuron", "dotprops", "hxsurf")
+    if(any(single_object_classes %in% class(nl)))
+      stop("Please use `write.neuron` to write a single neuron/mesh object!")
+  }
   if(grepl("\\.zip", dir)) {
     zip_file=dir
     # check if file exists (and we want to overwrite)
