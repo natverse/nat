@@ -11,7 +11,6 @@ tpsreg(sample, reference, ...)
   reg,
   points,
   swap = NULL,
-  threads = 1,
   FallBackToAffine = NULL,
   na.action = NULL,
   ...
