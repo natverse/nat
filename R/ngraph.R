@@ -50,12 +50,12 @@
 #' @param vertex.attributes,graph.attributes List of named attributes to be
 #'   added to the graph. The elements of \code{vertex.attributes} must be
 #'   vectors whose length is compatible with the number of elements in the
-#'   graph. See \code{\link[igraph]{set.vertex.attribute}} for details.
+#'   graph. See \code{\link[igraph]{set_vertex_attr}} for details.
 #' @return an \code{igraph} object with additional class \code{ngraph}, having a
 #'   vertex for each entry in vertexnames, each vertex having a \code{label}
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
-#' @seealso \code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
+#' @seealso \code{\link{igraph}}, \code{\link[igraph]{set_vertex_attr}},
 #'   \code{\link{subset.neuron}} for example of graph-based manipulation of a
 #'   neuron, \code{\link{plot3d.ngraph}}
 #' @export
@@ -72,9 +72,9 @@
 #' # find longest path across graph
 #' d=get.diameter(gw)
 #' # make a new neuron using the longest path
-#' gw_spine=as.neuron(induced.subgraph(gw, d))
+#' gw_spine=as.neuron(induced_subgraph(gw, d))
 #' # make a new neuron containing all nodes except those in longest path
-#' gw_antispine=as.neuron(delete.vertices(gw, d))
+#' gw_antispine=as.neuron(delete_vertices(gw, d))
 #'
 #' # note use of bounding box of original neuron to set plot axes
 #' plot(gw_spine, col='red', boundingbox=boundingbox(n))
@@ -110,10 +110,10 @@ ngraph<-function(el, vertexnames, xyz=NULL, diam=NULL, directed=TRUE,
   }
   if(!is.null(diam)) igraph::V(g)$diam=diam
   for(n in names(vertex.attributes)){
-    g=igraph::set.vertex.attribute(g, name=n,value=vertex.attributes[[n]])
+    g=igraph::set_vertex_attr(g, name=n,value=vertex.attributes[[n]])
   }
   for(n in names(graph.attributes)){
-    g=igraph::set.graph.attribute(g, name=n,value=graph.attributes[[n]])
+    g=igraph::set_graph_attr(g, name=n,value=graph.attributes[[n]])
   }
   class(g)=c("ngraph", class(g))
   g
@@ -159,10 +159,10 @@ as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
 #' @export
 as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
   if(inherits(x,'ngraph'))
-    if(igraph::is.directed(x)==directed) return(x)
+    if(igraph::is_directed(x)==directed) return(x)
   
-  if(igraph::is.directed(x) && !directed) x=as.undirected(x, ...)
-  else if(!igraph::is.directed(x) && directed) x=as.directed.usingroot(x, root, mode=mode, ...)
+  if(igraph::is_directed(x) && !directed) x=as.undirected(x, ...)
+  else if(!igraph::is_directed(x) && directed) x=as.directed.usingroot(x, root, mode=mode, ...)
   
   if(!inherits(x,'ngraph')){
     class(x)=c("ngraph",class(x))
@@ -173,11 +173,11 @@ as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
 as.directed.usingroot<-function(g, root, mode=c('out','in')){
   mode=match.arg(mode)
   # make a directed graph _keeping any attributes_
-  if(!igraph::is.directed(g))
+  if(!igraph::is_directed(g))
     dg=igraph::as.directed(g, mode='arbitrary')
   else dg=g
-  dfs=igraph::graph.dfs(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
-  el=igraph::get.edgelist(dg)
+  dfs=igraph::dfs(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
+  el=igraph::as_edgelist(dg)
   
   connected_vertices=which(is.finite(dfs$order))
   edges_to_check=which(el[,1]%in%connected_vertices)
@@ -193,8 +193,8 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   if(any(same_dist)) warning(sum(same_dist)," edges connect vertices that are the same distance from the root => cycles.")
   edges_to_flip <- edges_to_check[if(mode=='out') parent_further else parent_closer]
   
-  dg=igraph::delete.edges(dg,edges_to_flip)
-  dg=igraph::add.edges(dg,t(el[edges_to_flip,2:1]))
+  dg=igraph::delete_edges(dg,edges_to_flip)
+  dg=igraph::add_edges(dg,t(el[edges_to_flip,2:1]))
   dg
 }
 
@@ -225,7 +225,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #'
 #'   }
 #' @seealso \code{\link[igraph]{diameter}},
-#'   \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for
+#'   \code{\link[igraph]{distances}}, \code{\link{prune_strahler}} for
 #'   removing lower order branches from a neuron, \code{\link{prune}} for
 #'   removing parts of a neuron by spatial criteria.
 #' @export
@@ -247,7 +247,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' plot3d(antispine, lwd=4, col='red')
 #' }
 #'
-#' @importFrom igraph shortest.paths get.shortest.paths diameter get.diameter
+#' @importFrom igraph distances shortest_paths diameter get.diameter
 #'   delete.vertices
 #' @family neuron
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
@@ -261,7 +261,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
   start <- if(UseStartPoint) n$StartPoint else n$EndPoints
   # Find distances for longest shortest paths from given start point(s) to 
   # all end points
-  lps=shortest.paths(graph = ng, start, to = n$EndPoints, mode = 'all')
+  lps=distances(graph = ng, start, to = n$EndPoints, mode = 'all')
   if(rval=='length') return(max(lps))
   if(!UseStartPoint && length(start)>1 && length(n$EndPoints)>1) {
     # we have a square distance matrix which is symmetric across
@@ -273,7 +273,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
   wmi=arrayInd(which.max(lps), dim(lps))
   from=start[wmi[1]]
   to=n$EndPoints[wmi[2]]
-  longestpath=get.shortest.paths(ng, from = from, to = to, mode = 'all')$vpath[[1]]
+  longestpath=shortest_paths(ng, from = from, to = to, mode = 'all')$vpath[[1]]
   
   if(rval=='ids') {
     if(invert) {
@@ -308,7 +308,7 @@ spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
 #' @return \code{igraph} object containing only nodes of neuron keeping original
 #'   labels (\code{x$d$PointNo} => \code{V(g)$label}) and vertex indices 
 #'   (\code{1:nrow(x$d)} => \code{V(g)$vid)}.
-#' @importFrom igraph make_empty_graph add.edges E
+#' @importFrom igraph make_empty_graph add_edges E
 #' @export
 #' @examples 
 #' sg=segmentgraph(Cell07PNs[[1]])
@@ -344,9 +344,9 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
   }
   if(weights){
     weights=seglengths(x, all=TRUE)
-    g=add.edges(g, elred, weight=weights, segid=segids)
+    g=add_edges(g, elred, weight=weights, segid=segids)
   } else {
-    g=add.edges(g, elred, segid=segids)
+    g=add_edges(g, elred, segid=segids)
   }
   
   if(include.xyz){
@@ -357,7 +357,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
   if(exclude.isolated){
     # remove any points with no neighbours
     isolated_vertices=igraph::V(g)[igraph::degree(g)==0]
-    g=igraph::delete.vertices(graph=g,isolated_vertices)
+    g=igraph::delete_vertices(graph=g,isolated_vertices)
   }
   g
 }
@@ -381,7 +381,7 @@ segmentgraph<-function(x, weights=TRUE, segids=FALSE, exclude.isolated=FALSE,
 #' @seealso \code{\link{prune_strahler}}, a \code{\link{segmentgraph}} (a form
 #'   of \code{\link{ngraph}}) representation is used to calculate the Strahler 
 #'   order.
-#' @importFrom igraph graph.bfs neighborhood V
+#' @importFrom igraph bfs neighborhood V
 #' @return A list containing \itemize{
 #'   
 #'   \item points Vector of integer Strahler orders for each point in the neuron
@@ -400,7 +400,7 @@ strahler_order<-function(x){
     return(list(points=rep(1L, nrow(x$d)),
                 segments=rep(1L, length(x$SegList))))
   
-  b=graph.bfs(s, root=roots, mode = 'out', unreachable=F, father=T)
+  b=bfs(s, root=roots, mode = 'out', unreachable=F, father=T)
   
   # find neighbours for each node
   n=neighborhood(s, 1, mode='out')
@@ -540,8 +540,8 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
     nvertices=nrow(xyzmatrix(x))
     verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
   }
-  dg=igraph::delete.vertices(g, verticestoprune)
-  # delete.vertices will return an igraph
+  dg=igraph::delete_vertices(g, verticestoprune)
+  # delete_vertices will return an igraph
   as.neuron(as.ngraph(dg), ...)
 }
 
@@ -583,10 +583,10 @@ prune_edges_ng <- function(g, edges, invert=FALSE) {
   
   if(invert) edges=setdiff(igraph::E(g), edges)
   
-  dg=igraph::delete.edges(g, edges = edges)
+  dg=igraph::delete_edges(g, edges = edges)
   
   # remove unreferenced vertices
-  dg=igraph::delete.vertices(dg, which(igraph::degree(dg, mode='all')==0))
+  dg=igraph::delete_vertices(dg, which(igraph::degree(dg, mode='all')==0))
 }
 
 # Construct EdgeList matrix with start and end points from SegList
