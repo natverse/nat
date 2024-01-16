@@ -92,7 +92,7 @@ test_that("Thin plate spine registration", {
   landmarks=xyz[sids,] #take some points as landmarks
   landmarkst=scale(xyz[sids,], center = T, scale = rep(1.5, 3)) #now scale the landmarks..
   
-  #compute a transformation with sameple as scaled landmarks and reference as the original landmarks
+  #compute a transformation with sample as scaled landmarks and reference as the original landmarks
   mytps=tpsreg(sample=landmarkst, reference = landmarks)
   
   kcs20.t=xform(kcs20, mytps)
