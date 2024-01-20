@@ -498,11 +498,11 @@ prune_strahler<-function(x, orderstoprune=1:2, ...) {
 prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   g=as.ngraph(x)
   
-  # because igraph.vs sequences are atttached to a specific graph
+  # because igraph.vs sequences are attached to a specific graph
   if(inherits(verticestoprune, "igraph.vs")) 
     verticestoprune=as.integer(verticestoprune)
   if(invert) {
-    nvertices=nrow(xyzmatrix(x))
+    nvertices=igraph::vcount(g)
     verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
   }
   dg=igraph::delete_vertices(g, verticestoprune)
