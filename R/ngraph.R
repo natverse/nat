@@ -504,6 +504,8 @@ prune_vertices<-function(x, verticestoprune, invert=FALSE, ...) {
   if(invert) {
     nvertices=igraph::vcount(g)
     verticestoprune=setdiff(seq_len(nvertices), verticestoprune)
+  } else {
+    verticestoprune=setdiff(verticestoprune, 0)
   }
   dg=igraph::delete_vertices(g, verticestoprune)
   # delete_vertices will return an igraph
