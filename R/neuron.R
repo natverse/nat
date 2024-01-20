@@ -1411,7 +1411,7 @@ distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,
     g=as.directed.usingroot(gorig, root = root.idx)
   }
   
-  #Step3: For each node id, travese the graph from the given node using depth first search and return the visited
+  #Step3: For each node id, traverse the graph from the given node using depth first search and return the visited
   #nodes..
   l=sapply(node.idx, dfs_traversal, g, simplify = FALSE)
   if(length(node.idx)==1) l[[1]] else l
