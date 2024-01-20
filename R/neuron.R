@@ -1419,7 +1419,8 @@ distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,
 
 dfs_traversal <- function(x, g) {
   gdfs=igraph::dfs(g, root = x, unreachable = FALSE)
-  as.integer(gdfs$order)[!is.na(gdfs$order)]
+  # nb igraph 2.0 may change signalling for unreached nodes
+  as.integer(gdfs$order)[!(is.na(gdfs$order) | gdfs$order<1)]
 }
 
 
