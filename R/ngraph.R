@@ -221,8 +221,8 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
 #' plot3d(antispine, lwd=4, col='red')
 #' }
 #'
-#' @importFrom igraph distances shortest_paths diameter get.diameter
-#'   delete.vertices
+#' @importFrom igraph distances shortest_paths diameter get_diameter
+#'   delete_vertices
 #' @family neuron
 spine <- function(n, UseStartPoint=FALSE, SpatialWeights=TRUE, invert=FALSE,
                   rval=c("neuron", "length", "ids")) {
