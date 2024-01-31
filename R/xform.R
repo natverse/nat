@@ -423,6 +423,13 @@ nvertices.neuronlist <- function(x, ...) {
   sapply(x, nvertices)
 }
 
+#' @rdname nvertices
+#' @export
+nvertices.igraph <- function(x, ...) {
+  # as of igraph 2.0 this is numeric
+  as.integer(igraph::vcount(x))
+}
+
 #' Mirror 3D object about a given axis, optionally using a warping registration
 #' 
 #' @description mirroring with a warping registration can be used to account 
