@@ -533,7 +533,7 @@ dim.im3d<-function(x){
 #'   function.
 #' @return A \code{list} with elements:
 #'   
-#'   \itemize{
+#'   \describe{
 #'   
 #'   \item{zlim}{ The z (intensity limits)}
 #'   

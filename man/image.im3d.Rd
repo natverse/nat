@@ -77,7 +77,7 @@ function.}
 \value{
 A \code{list} with elements:
   
-  \itemize{
+  \describe{
   
   \item{zlim}{ The z (intensity limits)}
   

@@ -59,7 +59,7 @@ See the help of \code{\link{system2}} for details.
 \details{
 \code{cmtk.call} processes arguments in ... as follows:
   
-  \itemize{
+  \describe{
   
   \item{argument names}{ will be converted from \code{arg.name} to 
   \code{--arg-name}}
