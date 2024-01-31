@@ -25,7 +25,7 @@
 #'   details.
 #' @param FallbackRegionCol Colour to set regions when no colour is defined
 #' @param Verbose Print status messages during parsing when \code{TRUE}
-#' @return A list with S3 class hxsurf with elements \itemize{
+#' @return A list with S3 class hxsurf with elements \describe{
 #'   
 #'   \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
 #'   

@@ -1007,14 +1007,14 @@ threshold.im3d<-function(x, threshold=0,
 }
 
 #' Return function that finds maximum of its inputs within a clamping range
-#' 
-#' @details Note that by default infinite values in the input vector are 
+#'
+#' @details Note that by default infinite values in the input vector are
 #'   converted to \code{NA}s before the being compared with the clampmax range.
-#' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
+#' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector
 #'   of length 2.
-#' @param replace.infinite The value with which to replace non-finite values 
-#'   \emph{in the input vector}. When code{replace.infinite=FALSE} no action is 
-#'   taken. The default value of \code{NA} will result in e.g. \code{Inf} being 
+#' @param replace.infinite The value with which to replace non-finite values
+#'   \emph{in the input vector}. When \code{replace.infinite=FALSE} no action is
+#'   taken. The default value of \code{NA} will result in e.g. \code{Inf} being
 #'   mapped to \code{NA}.
 #' @return A function with signature \code{f(x, ..., na.rm)}
 #' @export

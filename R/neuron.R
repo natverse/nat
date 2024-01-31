@@ -143,11 +143,11 @@ as.neuron.data.frame<-function(x, ...) {
 #' @param x A data.frame containing neuron morphology data
 #' @param requiredColumns Character vector naming columns we should have
 #' @param ifMissing What to do if \code{x} is missing a required column
-#' @param includeExtraCols Whether to include any extra columns include in 
-#'   code{x}
-#' @param defaultValue A list containing default values to use for any missing 
+#' @param includeExtraCols Whether to include any extra columns included in
+#'   \code{x}
+#' @param defaultValue A list containing default values to use for any missing
 #'   columns
-#' @return A data.frame containing the normalised block of SWC data with 
+#' @return A data.frame containing the normalised block of SWC data with
 #'   standard columns in standard order.
 #' @seealso \code{\link{as.neuron.data.frame}}, \code{\link{seglist2swc}}
 #' @details Note that row.names of the resultant data.frame will be set to NULL

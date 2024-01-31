@@ -28,7 +28,7 @@ details.}
 \item{Verbose}{Print status messages during parsing when \code{TRUE}}
 }
 \value{
-A list with S3 class hxsurf with elements \itemize{
+A list with S3 class hxsurf with elements \describe{
   
   \item{Vertices}{ A data.frame with columns \code{X, Y, Z, PointNo}}
   

@@ -20,14 +20,14 @@ normalise_swc(
 
 \item{ifMissing}{What to do if \code{x} is missing a required column}
 
-\item{includeExtraCols}{Whether to include any extra columns include in 
-code{x}}
+\item{includeExtraCols}{Whether to include any extra columns included in
+\code{x}}
 
-\item{defaultValue}{A list containing default values to use for any missing 
+\item{defaultValue}{A list containing default values to use for any missing
 columns}
 }
 \value{
-A data.frame containing the normalised block of SWC data with 
+A data.frame containing the normalised block of SWC data with
   standard columns in standard order.
 }
 \description{

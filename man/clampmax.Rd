@@ -7,12 +7,12 @@
 clampmax(xmin, xmax, replace.infinite = NA_real_)
 }
 \arguments{
-\item{xmin, xmax}{clamping range. If xmax is missing xmin should be a vector 
+\item{xmin, xmax}{clamping range. If xmax is missing xmin should be a vector
 of length 2.}
 
-\item{replace.infinite}{The value with which to replace non-finite values 
-\emph{in the input vector}. When code{replace.infinite=FALSE} no action is 
-taken. The default value of \code{NA} will result in e.g. \code{Inf} being 
+\item{replace.infinite}{The value with which to replace non-finite values
+\emph{in the input vector}. When \code{replace.infinite=FALSE} no action is
+taken. The default value of \code{NA} will result in e.g. \code{Inf} being
 mapped to \code{NA}.}
 }
 \value{
@@ -22,7 +22,7 @@ A function with signature \code{f(x, ..., na.rm)}
 Return function that finds maximum of its inputs within a clamping range
 }
 \details{
-Note that by default infinite values in the input vector are 
+Note that by default infinite values in the input vector are
   converted to \code{NA}s before the being compared with the clampmax range.
 }
 \examples{
