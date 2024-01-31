@@ -1,8 +1,7 @@
-# nat 1.8.23
+# nat 1.8.24
 
-This submission fixes a bug noted by Kurt Hornik relating to comparison of
-a double value with a numeric_version object. It also updates an external URL
-referenced in the documentation that has recently been moved.
+This submission fixes a test failure noted by Prof Brian Ripley occasioned by
+the recent igraph 2.0 release.
 
 With many thanks,
 
