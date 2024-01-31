@@ -5,7 +5,7 @@
 #' @section Neuron Objects: At present there are 2 main representations of
 #'   neuronal data:
 #'
-#'   \itemize{
+#'   \describe{
 #'
 #'   \item{\code{\link{neuron}}}{ objects contain one or more connected trees
 #'   that make up a neuron}
@@ -126,7 +126,7 @@
 #' @section Package Options: The following options can be set to specify default
 #'   behaviour.
 #'
-#'   \itemize{
+#'   \describe{
 #'
 #'   \item{\code{nat.cmtk.bindir}}{ Location of CMTK binaries. See
 #'   \code{\link{cmtk.bindir}}}

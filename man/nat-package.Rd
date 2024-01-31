@@ -13,7 +13,7 @@ neuroanatomical data, especially representations of neurons.
  At present there are 2 main representations of
   neuronal data:
 
-  \itemize{
+  \describe{
 
   \item{\code{\link{neuron}}}{ objects contain one or more connected trees
   that make up a neuron}
@@ -147,7 +147,7 @@ neuroanatomical data, especially representations of neurons.
  The following options can be set to specify default
   behaviour.
 
-  \itemize{
+  \describe{
 
   \item{\code{nat.cmtk.bindir}}{ Location of CMTK binaries. See
   \code{\link{cmtk.bindir}}}

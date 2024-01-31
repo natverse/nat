@@ -225,7 +225,7 @@ cmtk.version<-function(minimum=NULL){
 #'   
 #' @details  \code{cmtk.call} processes arguments in ... as follows:
 #'   
-#'   \itemize{
+#'   \describe{
 #'   
 #'   \item{argument names}{ will be converted from \code{arg.name} to 
 #'   \code{--arg-name}}

@@ -16,7 +16,7 @@ multiple subtrees (default: \code{FALSE})}
 \code{all=TRUE}}
 
 \item{sumsegment}{Whether to return the length of each segment (when 
-{sumsegment=TRUE}, the default) or a list of vectors of lengths of each
+\code{sumsegment=TRUE}, the default) or a list of vectors of lengths of each
 individual edge in the segment.}
 }
 \value{

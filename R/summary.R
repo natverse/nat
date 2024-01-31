@@ -27,17 +27,17 @@ summary.neuronlist<-function(object, ..., include.attached.dataframe=FALSE) {
 #' @return A \code{data.frame} summarising the tree properties of the neuron 
 #'   with columns \itemize{
 #'   
-#'   \item{root}
+#'   \item root
 #'   
-#'   \item{nodes}
+#'   \item nodes
 #'   
-#'   \item{segments}
+#'   \item segments
 #'   
-#'   \item{branchpoints}
+#'   \item branchpoints
 #'   
-#'   \item{endpoints}
+#'   \item endpoints
 #'   
-#'   \item{cable.length}
+#'   \item cable.length
 #'   
 #'   }
 #' @export

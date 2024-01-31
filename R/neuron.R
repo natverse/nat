@@ -469,7 +469,7 @@ all.equal.neuron<-function(target,current,tolerance=1e-6,check.attributes=FALSE,
 #' @param flatten Whether to flatten the lists of lists into a single list when 
 #'   \code{all=TRUE}
 #' @param sumsegment Whether to return the length of each segment (when 
-#'   {sumsegment=TRUE}, the default) or a list of vectors of lengths of each
+#'   \code{sumsegment=TRUE}, the default) or a list of vectors of lengths of each
 #'   individual edge in the segment.
 #' @details A segment is an ubranched portion of neurite consisting of at least 
 #'   one vertex joined by edges.Only segments in x$SegList will be calculated 
