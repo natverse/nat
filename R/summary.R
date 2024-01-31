@@ -39,7 +39,7 @@ summary.neuronlist<-function(object, ..., include.attached.dataframe=FALSE) {
 #'   
 #'   \item cable.length
 #'   
-#'   \item{nTrees}
+#'   \item nTrees
 #'   
 #'   }
 #' @export

@@ -58,7 +58,7 @@
 #'   neurons e.g. for dynamic report generation using knitr or for users with
 #'   <8Gb RAM or running 32 bit R.
 #'
-#'   neuronlistfh objects include: \ describe{
+#'   neuronlistfh objects include: \describe{
 #'
 #'   \item{\code{attr("keyfilemap")}}{ A named character vector that determines
 #'   the ordering of objects in the neuronlist and translates keys in R to
