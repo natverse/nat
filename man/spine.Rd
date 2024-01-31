@@ -62,9 +62,9 @@ plot3d(antispine, lwd=4, col='red')
 
 }
 \seealso{
-\code{\link[igraph]{diameter}}, 
-  \code{\link[igraph]{shortest.paths}}, \code{\link{prune_strahler}} for 
-  removing lower order branches from a neuron, \code{\link{prune}} for 
+\code{\link[igraph]{diameter}},
+  \code{\link[igraph]{distances}}, \code{\link{prune_strahler}} for
+  removing lower order branches from a neuron, \code{\link{prune}} for
   removing parts of a neuron by spatial criteria.
 
 Other neuron: 

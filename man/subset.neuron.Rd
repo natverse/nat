@@ -62,8 +62,8 @@ points(t(xyzmatrix(n)[n$AxonLHEP, 1:2]), pch=19, cex=2.5)
 
 # now find the points downstream (distal) of that with respect to the root
 ng=as.ngraph(n)
-# use a depth first search 
-distal_points=igraph::graph.dfs(ng, root=n$AxonLHEP, unreachable=FALSE, 
+# use a depth first search
+distal_points=igraph::dfs(ng, root=n$AxonLHEP, unreachable=FALSE,
   mode='out')$order
 distal_tree=subset(n, distal_points)
 plot(distal_tree, add=TRUE, col='red', lwd=2)

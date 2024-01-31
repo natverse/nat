@@ -156,7 +156,7 @@ hist(igraph::distances(ngw))
 
 # converting back and forth between neurons and graphs
 g=as.ngraph(Cell07PNs[[1]])
-gstem=igraph::induced.subgraph(g, 1:10)
+gstem=igraph::induced_subgraph(g, 1:10)
 # this is fine
 plot(gstem)
 plot(as.neuron(gstem))
@@ -174,7 +174,7 @@ plot(as.neuron(gstem2))
 \seealso{
 \code{\link{neuronlist}}
 
-\code{\link{graph.dfs}, \link{as.seglist}}
+\code{\link{dfs}, \link{as.seglist}}
 
 Other neuron: 
 \code{\link{ngraph}()},

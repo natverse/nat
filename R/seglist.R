@@ -73,7 +73,7 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @seealso \code{\link{ngraph},\link{igraph}}
 #' @export
 #' @method as.seglist igraph
-#' @importFrom igraph is.directed is.connected graph.dfs degree
+#' @importFrom igraph is_directed is_connected dfs degree
 #' @rdname seglist
 as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle degenerate cases
@@ -81,8 +81,8 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
     if(Verbose) warning("Empty graph! Seglist not defined")
     return(NULL)
   }
-  if(!is.connected(x)) stop("Graph is not fully connected!")
-  if(is.directed(x) && !igraph::is.dag(x)){
+  if(!is_connected(x)) stop("Graph is not fully connected!")
+  if(is_directed(x) && !igraph::is_dag(x)){
     stop("Graph has cycles!")
   }
   
@@ -104,7 +104,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   # Handle Origin
   if(is.null(origin)){
     # no explicit origin specified, use raw vertex id of graph root
-    if(is.directed(x))
+    if(is_directed(x))
       origin=rootpoints(x, original.ids=FALSE)
   } else {
     # we've been given an origin but it may not be a raw vertex id for this
@@ -121,7 +121,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   }
   
   # Now do a depth first search to ensure that ordering is correct
-  dfs=graph.dfs(x, root=origin, father=TRUE, mode='all')
+  dfs=dfs(x, root=origin, father=TRUE, mode='all')
   # cache orders for speed: dfs$order[i] is slooooow in igraph>=1.0
   orders=as.integer(dfs$order)
   ncount=degree(x)

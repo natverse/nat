@@ -13,7 +13,7 @@ test_that("as.ngraph can convert swc data into an ngraph object",{
   expect_is(g1,'ngraph')
   
   # check we keep ngraph class when modifying ngraph
-  expect_is(set.graph.attribute(g1,'origin',1),'ngraph')
+  expect_is(set_graph_attr(g1,'origin',1),'ngraph')
   
   # same neuron with PointNo 2 greater
   testd2=data.frame(PointNo=3:8,Label=2,
@@ -137,13 +137,13 @@ test_that("setting of graph attributes",{
   gatts=list(name='testneuron',nclass="PN")
   expect_is(testg <- as.ngraph(testd, graph.attributes = gatts, 
                                vertex.attributes=list(X=testd$X)), 'ngraph')
-  expect_equal(get.graph.attribute(testg, name = 'nclass'), gatts$nclass)
-  expect_equal(get.graph.attribute(testg, name = 'name'), gatts$name)
+  expect_equal(graph_attr(testg, name = 'nclass'), gatts$nclass)
+  expect_equal(graph_attr(testg, name = 'name'), gatts$name)
   # null attributes
-  expect_equal(get.graph.attribute(testg, name = 'rhubarb'), gatts$rhubarb)
+  expect_equal(graph_attr(testg, name = 'rhubarb'), gatts$rhubarb)
   
   # vertex attributes
-  expect_equal(get.vertex.attribute(testg, name = 'X'), testd$X)
+  expect_equal(vertex_attr(testg, name = 'X'), testd$X)
   if(igraph::igraph_version()>=numeric_version("1.3.5.9098"))
     expect_error(testg <- as.ngraph(testd, graph.attributes = gatts, 
                                     vertex.attributes=list(X=testd$X[-1])))

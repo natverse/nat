@@ -7,11 +7,11 @@
 #'   available). Set to FALSE when this is not desired.
 #' @param exclude.isolated Do not count isolated vertices as root points 
 #'   (default)
-#' @importFrom igraph V degree get.vertex.attribute
+#' @importFrom igraph V degree vertex_attr
 graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
                       exclude.isolated=TRUE){
   type=match.arg(type)
-  if(type=='root' && !is.directed(x))
+  if(type=='root' && !is_directed(x))
     stop("Cannot establish root points for undirected graph")
   
   # root points are those without incoming edges
@@ -26,7 +26,7 @@ graph.nodes<-function(x, type=c('root','end','branch'), original.ids='label',
   }
   
   if(is.character(original.ids))
-    vertex_names=get.vertex.attribute(x,original.ids,index=vertex_ids)
+    vertex_names=vertex_attr(x,original.ids,index=vertex_ids)
   if(!is.character(original.ids) || is.null(vertex_names))
     as.integer(vertex_ids)
   else
