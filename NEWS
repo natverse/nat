@@ -1,3 +1,11 @@
+nat 1.8.24
+==========
+
+* workaround for a small regression in igraph 2.0.1 dfs function
+* test error reported by CRAN (BDR)
+* replace deprecated igraph functions
+* add nvertices.igraph method
+
 nat 1.8.23
 ==========
 
