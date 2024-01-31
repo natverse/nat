@@ -1,8 +1,28 @@
-# tests for cmtk command line tools
+test_that("cmtk.arg.names works",{
+  expect_equal(cmtk.arg.name('mask'),'--mask')
+  expect_equal(cmtk.arg.name('target.grid'),'--target-grid')
+  expect_equal(cmtk.arg.name('target.offset.pixels'),'--target-offset-pixels')
+})
 
-if(is.null(cmtk.bindir())){
-  message("skipping cmtk command line tool tests since CMTK is not installed")
-} else {
+test_that("cmtk.version works",{
+  op=options(nat.cmtk.bindir="",nat.cmtk.version=NULL)
+  on.exit(options(op))
+  expect_true(is.na(cmtk.version()))
+  expect_true(is.na(cmtk.version('1.1')))
+  
+  # now let's set a meaningful version and test
+  options(nat.cmtk.version='3.2.1')
+  expect_equal(cmtk.version(), numeric_version('3.2.1'))
+  expect_true(cmtk.version('3.2.1'))
+  expect_false(cmtk.version('3.2.2'))
+})
+
+
+# tests for cmtk command line tools
+# CMTK will never be installed on CRAN
+skip_on_cran()
+
+skip_if(is.null(cmtk.bindir()), message = "skipping cmtk command line tool tests since CMTK is not installed")
 
 context("cmtk command line tools")
 
@@ -133,25 +153,4 @@ test_that("cmtk.statistics",{
                             Y = c(34.582751, 33.349924), 
                             Z = c(35.102241, 31.604381))
   expect_equal(cmtk.statistics(lhmaskfile, imagetype = 'label'), baseline_label)
-})
-
-}
-
-test_that("cmtk.arg.names works",{
-  expect_equal(cmtk.arg.name('mask'),'--mask')
-  expect_equal(cmtk.arg.name('target.grid'),'--target-grid')
-  expect_equal(cmtk.arg.name('target.offset.pixels'),'--target-offset-pixels')
-})
-
-test_that("cmtk.version works",{
-  op=options(nat.cmtk.bindir="",nat.cmtk.version=NULL)
-  on.exit(options(op))
-  expect_true(is.na(cmtk.version()))
-  expect_true(is.na(cmtk.version('1.1')))
-  
-  # now let's set a meaningful version and test
-  options(nat.cmtk.version='3.2.1')
-  expect_equal(cmtk.version(), numeric_version('3.2.1'))
-  expect_true(cmtk.version('3.2.1'))
-  expect_false(cmtk.version('3.2.2'))
 })
