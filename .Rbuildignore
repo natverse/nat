@@ -15,3 +15,5 @@ travisbuildchildren.sh
 ^\.github$
 ^depends.Rds$
 ^codecov\.yml$
+^CODE_OF_CONDUCT\.md$
+^CRAN-SUBMISSION$
