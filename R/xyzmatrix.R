@@ -102,7 +102,7 @@ xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
   if(is.neuron(x,Strict=FALSE))
     return(xyzmatrix(x$d[,c("X","Y","Z")]))
   
-  lens=lengths(x)
+  lens=listlengths(x, use.names = F)
   if(!empty2na) {
     if(any(lens!=3))
       stop("xyzmatrix accepts lists where each element has 3 numbers!")
@@ -118,6 +118,16 @@ xyzmatrix.list<-function(x, empty2na=TRUE, ...) {
   }
   xyzmatrix(mat)
 }
+
+# private function - motivated by the case that arrow lists of vectors
+# are extremely slow with base R lengths
+listlengths <- function(x, use.names = FALSE) {
+  if(use_natcpp() & !use.names) {
+    return(natcpp::c_listlengths(x))
+  }
+  lengths(x, use.names = use.names)
+}
+
 
 #' @export
 #' @rdname xyzmatrix
