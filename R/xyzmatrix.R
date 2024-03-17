@@ -177,7 +177,7 @@ xyzmatrix.hxsurf<-function(x, ...) {
 #' @rdname xyzmatrix
 #' @export
 xyzmatrix.igraph<-function(x, ...){
-  xyz=sapply(c("X","Y","Z"), function(c) igraph::get.vertex.attribute(x, c))
+  xyz=sapply(c("X","Y","Z"), function(c) igraph::vertex_attr(x, c))
   if(is.list(xyz) && all(sapply(xyz, is.null)))
     xyz = NULL
   xyz
@@ -341,7 +341,7 @@ xyzmatrix2list <- function(x) {
 `xyzmatrix<-.igraph`<-function(x, value){
   colnames(value)=c("X","Y","Z")
   for(col in colnames(value)){
-    x=igraph::set.vertex.attribute(x, col, value=value[,col])
+    x=igraph::set_vertex_attr(x, col, value=value[,col])
   }
   x
 }
