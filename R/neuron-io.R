@@ -71,11 +71,11 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
   # use ext as backup if format is missing
   ext=if(is.null(format)) 
     tolower(sub(".*\\.([^.]+$)","\\1",basename(f))) else ""
-  if(format=="rds" || ext=='rds')
   if(!is.null(format) && format %in% c("ply", "obj", "ngmesh")) 
     format=paste0("neuron.", format)
+  if(isTRUE(format=="rds") || ext=='rds')
     n=readRDS(f)
-  else if(format=="rda" || ext=='rda'){
+  else if(isTRUE(format=="rda") || ext=='rda'){
     objname=load(f, envir=environment())
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
@@ -185,6 +185,8 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
       on.exit(unlink(paths))
       download.file(url, destfile = paths)
     }
+    # the neurons inside the zip file will not have format zip
+    if(isTRUE(format=='zip')) format=NULL
     neurons_dir <- file.path(tempfile(pattern = "user_neurons"))
     on.exit(unlink(neurons_dir, recursive=TRUE), add = TRUE)
     unzip(paths, exdir=neurons_dir)
