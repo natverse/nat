@@ -72,6 +72,8 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
   ext=if(is.null(format)) 
     tolower(sub(".*\\.([^.]+$)","\\1",basename(f))) else ""
   if(format=="rds" || ext=='rds')
+  if(!is.null(format) && format %in% c("ply", "obj", "ngmesh")) 
+    format=paste0("neuron.", format)
     n=readRDS(f)
   else if(format=="rda" || ext=='rda'){
     objname=load(f, envir=environment())
@@ -728,8 +730,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
   if(!is.null(format)) {
     # TODO - one day it should be possible to have one file format associated 
     # with different R classes
-    if(format=='obj') format='neuron.obj'
-    else if(format=='ply') format='neuron.ply'
+    if(format%in% c('obj', 'ply', 'ngmesh')) format=paste0('neuron.', format)
   }
   fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
   if(inherits(fw, 'try-error')) {
