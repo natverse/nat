@@ -4,7 +4,7 @@ set -e
 if [ ! -d "$HOME/usr/local/bin" ]; then
   mkdir -p $HOME/src && cd $HOME/src
   git clone --depth 50 https://github.com/jefferis/cmtk
-  cd cmtk/core && mkdir build && cd build && cmake .. && make DESTDIR=$HOME/ all install
+  cd cmtk/core && mkdir build && cd build && cmake -DCMTK_USE_DCMTK=OFF .. && make DESTDIR=$HOME/ all install
 else
   echo 'Using cached $HOME/usr/local directory.';
 fi
