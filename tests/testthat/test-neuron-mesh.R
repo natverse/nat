@@ -10,6 +10,11 @@ test_that("read/write works with ngmesh files", {
   expect_is(bl2 <- read.neurons(td3, format = 'ngmesh'), 'neuronlist')
   expect_equal(summary(bl), summary(bl2))
   expect_error(write.neurons(Cell07PNs[1:3], format = 'ngmesh'))
+  
+  expect_silent(write.neuron(MBL.surf, file = file.path(td3, 'MBL'), ext=NA, format = 'ngmesh'))
+  expect_equal(tolerance = 1e-6,
+    read.neuron(file.path(td3, 'MBL'), format='ngmesh'),
+    as.mesh3d(MBL.surf))
 })
 
 

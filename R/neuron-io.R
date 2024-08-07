@@ -68,17 +68,19 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
     writeBin(httr::content(filecontents,type = 'raw'), con = f)
   } else url=NULL
   #if(!file.exists(f)) stop("Unable to read file: ",f)
-  if(is.null(format))
-    format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
-  if(format=="rds")
+  # use ext as backup if format is missing
+  ext=if(is.null(format)) 
+    tolower(sub(".*\\.([^.]+$)","\\1",basename(f))) else ""
+  if(format=="rds" || ext=='rds')
     n=readRDS(f)
-  else if(format=="rda"){
-    objname=load(f,envir=environment())
+  else if(format=="rda" || ext=='rda'){
+    objname=load(f, envir=environment())
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=environment())
   } else {
     class=match.arg(class, choices = c("neuron", "ngraph"))
-    ffs=getformatreader(f, class = class)
+    # note that
+    ffs=getformatreader(f, format=format, class = class)
     if(is.null(ffs)) {
       # as a special test, check to see if this looks like an swc file
       # we don't do this by default since is.swc is a little slow
@@ -423,7 +425,19 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
 #' write.neuron(Cell07PNs[[1]], swc)
 #' stopifnot(isTRUE(getformatreader(swc)$format=='swc'))
 #' unlink(swc)
-getformatreader<-function(file, class=NULL){
+getformatreader<-function(file, format=NULL, class=NULL) {
+  if(!is.null(format)) {
+    # the format should exactly specify what we need
+    ff=fileformats(format = format, class=class, read = TRUE, rval = 'all')
+    if(length(ff)>1) {
+      if(is.null(class))
+        stop("Please specificy a class to fully identify the reader for format:", format)
+      warning("there are multiple readers for format:", format)
+      ff=ff[length(ff)]
+    }
+    return(ff[[1]])
+  }
+  
   formatsforclass<-fileformats(class=class, read = TRUE)
   if(!length(formatsforclass)) return(NULL)
   
@@ -639,10 +653,10 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param dir Path to directory (this will replace \code{dirname(file)} if
 #'   specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
-#'   (neuron meshes). If no format can be extracted from the filename or the
-#'   \code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
-#'   meshes.
+#'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply',
+#'   'obj', 'ngmesh' (neuron meshes). If no format can be extracted from the
+#'   filename or the \code{ext} parameter, then it defaults to 'swc' for
+#'   skeletons and 'ply' for meshes.
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -677,6 +691,13 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' write.neuron(MBL.surf, file = 'MBL.surf.ply')
 #' # ... or Wavefront obj format
 #' write.neuron(MBL.surf, file = 'MBL.surf.obj')
+#' # ... or Neuroglancer precomputed (legacy) mesh format
+#' write.neuron(MBL.surf, file = 'MBL.surf.ngmesh')
+#' # ... same if you really don't want to use (or add) the default extension
+#' write.neuron(MBL.surf, file = 'MBL', format='ngmesh', ext=NA)
+#' # but you'll need to specify the extension
+#' read.neuron('MBL', format='ngmesh')
+#' 
 #' # specify the format directly if not evident from file suffix
 #' # not recommended though as will probably just cause trouble when reading
 #' write.neuron(MBL.surf, file = 'MBL.surf', format='obj')
