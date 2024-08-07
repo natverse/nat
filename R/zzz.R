@@ -30,7 +30,9 @@ update_igraph <- FALSE
                  read=read.neuron.mesh, write=write.neuron.obj, class='neuron')
   registerformat('neuron.ply', ext='.ply', magic=is.ply, magiclen = 3,
                  read=read.neuron.mesh, write=write.neuron.ply, class='neuron')
-
+  registerformat('neuron.ngmesh', ext='.ngmesh', 
+                 read=read.neuron.ngmesh, write=write.neuron.ngmesh, class='neuron')
+  
   # image formats
   registerformat('nrrd', ext=c('.nrrd','.nhdr'), read=read.im3d.nrrd, 
                  write=write.nrrd, magic=is.nrrd,
