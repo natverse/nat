@@ -162,7 +162,11 @@ dotprops.neuron<-function(x, Labels=NULL, resample=NA, topo=FALSE, ...) {
   if(is.null(Labels) || isTRUE(Labels)) Labels=x$d$Label
   else if(is.logical(labels) && labels==FALSE) Labels=NULL
   topo_features <- NULL
-  if (isTRUE(topo)) topo_features <- get_topo_features(x)
+  if (isTRUE(topo)) {
+    topo_features <- get_topo_features(x)
+    topo_features$Parent <- x$d$Parent
+    topo_features$PointNo <- x$d$PointNo
+  }
   dotprops(xyzmatrix(x), Labels=Labels, topo_features=topo_features, ...)
 }
 
@@ -261,15 +265,31 @@ dotprops.default<-function(x, k=NULL, Labels=NULL, na.rm=FALSE, topo_features=NU
     vect[i,]=v1d1$vectors[,1]
   }
   rlist=list(points=x,alpha=alpha,vect=vect)
-  
   rlist$labels=Labels
-  
+
   if (!is.null(topo_features)) {
+    # orient vectors so they look at their parent
+    vect_orientations <- rep(TRUE, npoints)
+    for (i in 1:npoints) {
+      par_id = topo_features$Parent[[i]]
+      if (par_id == -1) next
+      pnt_idx = which(topo_features$PointNo == par_id)
+      vect_orientations[[i]] <- is_pointing_towards(x[pnt_idx,], x[i,], vect[i])
+    }
+    vect[!vect_orientations,] <- -vect[!vect_orientations,]
+    rlist$vect = vect
+    topo_features$Parent <- NULL
+    topo_features$PointNo <- NULL
     rlist$topo <- topo_features
   }
   
   attr(rlist,'k')=k
   return(as.dotprops(rlist))
+}
+
+is_pointing_towards <- function(soma_position, point_pos, vects) {
+  to_point <- soma_position - point_pos
+  dotprod(to_point, vects) > 0
 }
 
 # internal function to convert a dotprops object to SWC
