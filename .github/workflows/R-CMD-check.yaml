@@ -22,9 +22,9 @@ jobs:
         config:
           - {os: macos-latest,    r: 'release'}
           - {os: windows-latest,  r: 'release'}
-          - {os: ubuntu-latest, cc: clang, r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest, cc: clang, r: 'release', codecov: 'true'}
-          - {os: ubuntu-latest, cc: clang, r: 'oldrel-1'}
+          - {os: ubuntu-latest, r: 'devel', http-user-agent: 'release'}
+          - {os: ubuntu-latest, r: 'release', codecov: 'true'}
+          - {os: ubuntu-latest, r: 'oldrel-1'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -51,7 +51,8 @@ jobs:
         if: ${{matrix.config.os != 'windows-latest'}}
         run: sh ./build-cmtk.sh
         env:
-          CC: ${{ matrix.config.cc }}
+          CC: clang
+          CXX: clang++
           MAKEFLAGS: "-j2"
 
       - uses: r-lib/actions/check-r-package@v2
