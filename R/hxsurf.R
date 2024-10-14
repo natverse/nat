@@ -738,12 +738,14 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance',
 
 contains_points <- function(obj, points, ...) UseMethod("contains_points")
 
+#' @export
 contains_points.boundingbox <- function(obj, points,  ...) {
   xyz=xyzmatrix(points)
   xyz[,1] >= obj[1,1] & xyz[,2] >= obj[1,2] & xyz[,3] >= obj[1,3] &
     xyz[,1] <= obj[2,1] & xyz[,2] <= obj[2,2] & xyz[,3] <= obj[2,3]
 }
 
+#' @export
 contains_points.mesh3d <- function(obj, points,  ...) {
   xyz=xyzmatrix(points)
   inbb=contains_points(boundingbox(obj), xyz, ...)
@@ -754,8 +756,10 @@ contains_points.mesh3d <- function(obj, points,  ...) {
   res
 }
 
+#' @export
 contains_points.hxsurf<-contains_points.mesh3d
 
+#' @export
 contains_points.ashape3d<-function(obj, points,  ...) {
   alphashape3d::inashape3d(obj, points=xyzmatrix(points), ...)
 }
