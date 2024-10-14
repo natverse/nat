@@ -67,7 +67,7 @@
 #' 
 #' # converting back and forth between neurons and graphs
 #' g=as.ngraph(Cell07PNs[[1]])
-#' gstem=igraph::induced.subgraph(g, 1:10)
+#' gstem=igraph::induced_subgraph(g, 1:10)
 #' # this is fine
 #' plot(gstem)
 #' plot(as.neuron(gstem))
@@ -206,9 +206,9 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #'   (NumPoints,StartPoint,BranchPoints,EndPoints,nTrees,NumSegs,SegList, 
 #'   [SubTrees]) NB SubTrees will only be present when nTrees>1.
 #' @export
-#' @importFrom igraph V V<- vcount decompose.graph
+#' @importFrom igraph V V<- vcount decompose
 #' @rdname neuron
-#' @seealso \code{\link{graph.dfs}, \link{as.seglist}}
+#' @seealso \code{\link{dfs}, \link{as.seglist}}
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(length(origin)){
@@ -221,11 +221,11 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # save original vertex ids
   igraph::V(x)$vid=seq.int(igraph::vcount(x))
   # check if we have multiple subgraphs
-  if(igraph::no.clusters(x)>1){
+  if(igraph::count_components(x)>1){
     if(!length(origin)){
       # no origin specified, will pick the biggest subtree
       # decompose into list of subgraphs
-      gg=igraph::decompose.graph(x)
+      gg=igraph::decompose(x)
       # reorder by descending number of vertices
       gg=gg[order(sapply(gg,igraph::vcount), decreasing=TRUE)]
       subtrees=lapply(gg, as.seglist, Verbose=Verbose)
@@ -233,15 +233,15 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
       masterg=gg[[1]]
     } else {
       # origin specified, subtree containing origin will be the master
-      cg=igraph::clusters(x)
+      cg=igraph::components(x)
       master_tree_num=cg$membership[origin]
       # make a master graph with the vertices from subgraph including origin
-      masterg=igraph::induced.subgraph(x, which(cg$membership==master_tree_num))
+      masterg=igraph::induced_subgraph(x, which(cg$membership==master_tree_num))
       # ... and then corresponding seglist
       sl=as.seglist(masterg, origin=origin)
       # now deal with remaining vertices
-      remainderg=igraph::induced.subgraph(x, which(cg$membership!=master_tree_num))
-      gg=igraph::decompose.graph(remainderg)
+      remainderg=igraph::induced_subgraph(x, which(cg$membership!=master_tree_num))
+      gg=igraph::decompose(remainderg)
       # reorder by descending number of vertices
       gg=gg[order(sapply(gg,igraph::vcount), decreasing=TRUE)]
       subtrees=c(list(sl),lapply(gg, as.seglist, Verbose=Verbose))
@@ -262,7 +262,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # sort out the vertex information
   # TODO refactor this into a separate function e.g. normalise.swc since
   # we need to do something similar in as.neuron.dataframe and seglist2swc etc
-  d=data.frame(PointNo=get.vertex.attribute(x,'name'))
+  d=data.frame(PointNo=vertex_attr(x,'name'))
   if(is.null(vertexData)){
     # get vertex information from graph object
     xyz=xyzmatrix(x)
@@ -290,7 +290,7 @@ as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   
   d=seglist2swc(x=subtrees,d=d)
   d=normalise_swc(d)
-  n=list(d=d,NumPoints=igraph::vcount(masterg),
+  n=list(d=d,NumPoints=nvertices(masterg),
          StartPoint=StartPoint,
          BranchPoints=branchpoints(masterg, original.ids='vid'),
          EndPoints=endpoints(masterg, original.ids='vid'),
@@ -776,7 +776,7 @@ smooth_segment_spline <- function(xyz, ...) {
 #' # now find the points downstream (distal) of that with respect to the root
 #' ng=as.ngraph(n)
 #' # use a depth first search
-#' distal_points=igraph::graph.dfs(ng, root=n$AxonLHEP, unreachable=FALSE,
+#' distal_points=igraph::dfs(ng, root=n$AxonLHEP, unreachable=FALSE,
 #'   mode='out')$order
 #' distal_tree=subset(n, distal_points)
 #' plot(distal_tree, add=TRUE, col='red', lwd=2)
@@ -945,7 +945,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
       # there will be warnings because most branch points will not be reachable
       # from the selected leaf
       res=suppressWarnings(
-        igraph::get.shortest.paths(ng, from = farthest_leaf, 
+        igraph::shortest_paths(ng, from = farthest_leaf, 
                                    to = bps[bps_available], 
                                    mode = "in", weights = NA))
       pathlengths=sapply(res$vpath, length)
@@ -973,7 +973,7 @@ simplify_neuron <- function(x, n=1, invert=FALSE, ...) {
 }
 
 leafpath <- function(ng, from, to) {
-  res=igraph::get.shortest.paths(ng,from = from,to = to,mode = "out", weights=NA)
+  res=igraph::shortest_paths(ng,from = from,to = to,mode = "out", weights=NA)
   as.integer(res$vpath[[1]])
 }
 
@@ -1169,7 +1169,7 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
   mod_graph <- igraph::add_edges(ng,edge_list,"weight"= weights)
   
   #Step 7: Find the minimum spanning tree of the new graph..
-  mst <- igraph::minimum.spanning.tree(mod_graph)
+  mst <- igraph::mst(mod_graph)
   
   #Step 8: Find the new edges added by the mst..
   new_edges <- igraph::difference(igraph::E(mst),igraph::E(masterng))
@@ -1208,7 +1208,7 @@ stitch_neurons_mst <- function(x, threshold = Inf, k=10L) {
     warning("The root node doesn't belong to the largest fragment")
   }
   
-  stitchedng=igraph::delete.vertices(stitchedng, verticestoprune)
+  stitchedng=igraph::delete_vertices(stitchedng, verticestoprune)
   
   #Step 11: Set the root of the stitched graph now..
   stitchedneuron <- as.neuron(stitchedng, origin = master_root)
@@ -1411,7 +1411,7 @@ distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,
     g=as.directed.usingroot(gorig, root = root.idx)
   }
   
-  #Step3: For each node id, travese the graph from the given node using depth first search and return the visited
+  #Step3: For each node id, traverse the graph from the given node using depth first search and return the visited
   #nodes..
   l=sapply(node.idx, dfs_traversal, g, simplify = FALSE)
   if(length(node.idx)==1) l[[1]] else l
@@ -1419,7 +1419,8 @@ distal_to <- function(x, node.idx=NULL, node.pointno=NULL, root.idx=NULL,
 
 dfs_traversal <- function(x, g) {
   gdfs=igraph::dfs(g, root = x, unreachable = FALSE)
-  as.integer(gdfs$order)[!is.na(gdfs$order)]
+  # nb igraph 2.0 may change signalling for unreached nodes
+  as.integer(gdfs$order)[!(is.na(gdfs$order) | gdfs$order<1)]
 }
 
 

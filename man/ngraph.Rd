@@ -45,7 +45,7 @@ when 4th column is assumed to be diameter)}
 \item{vertex.attributes, graph.attributes}{List of named attributes to be
 added to the graph. The elements of \code{vertex.attributes} must be
 vectors whose length is compatible with the number of elements in the
-graph. See \code{\link[igraph]{set.vertex.attribute}} for details.}
+graph. See \code{\link[igraph]{set_vertex_attr}} for details.}
 
 \item{x}{Object to convert (see method descriptions)}
 
@@ -126,16 +126,16 @@ gw=as.ngraph(n, weights=TRUE)
 # find longest path across graph
 d=get.diameter(gw)
 # make a new neuron using the longest path
-gw_spine=as.neuron(induced.subgraph(gw, d))
+gw_spine=as.neuron(induced_subgraph(gw, d))
 # make a new neuron containing all nodes except those in longest path
-gw_antispine=as.neuron(delete.vertices(gw, d))
+gw_antispine=as.neuron(delete_vertices(gw, d))
 
 # note use of bounding box of original neuron to set plot axes
 plot(gw_spine, col='red', boundingbox=boundingbox(n))
 plot(gw_antispine, col='blue', add=TRUE)
 }
 \seealso{
-\code{\link{igraph}}, \code{\link[igraph]{set.vertex.attribute}},
+\code{\link{igraph}}, \code{\link[igraph]{set_vertex_attr}},
   \code{\link{subset.neuron}} for example of graph-based manipulation of a
   neuron, \code{\link{plot3d.ngraph}}
 

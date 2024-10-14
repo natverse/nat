@@ -27,7 +27,7 @@ Depends:
     rgl (>= 0.98.1)
 Imports:
     nabor,
-    igraph (>= 0.7.1),
+    igraph (>= 1.0),
     methods,
     filehash (>= 2.3),
     digest,

@@ -8,7 +8,7 @@
 [![DOI](https://img.shields.io/badge/doi-10.5281%2Fzenodo.10171-blue.svg)](http://dx.doi.org/10.5281/zenodo.10171) 
 [![Release Version](https://img.shields.io/github/release/natverse/nat.svg)](https://github.com/natverse/nat/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nat)](https://cran.r-project.org/package=nat) 
-[![Build status](https://github.com/natverse/nat/workflows/R-CMD-check/badge.svg)](https://github.com/natverse/nat/actions)
+[![R-CMD-check](https://github.com/natverse/nat/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/natverse/nat/actions/workflows/R-CMD-check.yaml)
 [![Coverage Status](https://codecov.io/gh/natverse/nat/branch/master/graph/badge.svg)](https://app.codecov.io/gh/natverse/nat)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://natverse.org//nat/reference/)
 [![Downloads](http://cranlogs.r-pkg.org/badges/nat?color=brightgreen)](https://www.r-pkg.org:443/pkg/nat)

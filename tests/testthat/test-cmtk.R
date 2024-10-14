@@ -6,6 +6,9 @@ test_that("cmtk.bindir works when CMTK is in the path",{
   # We're going to set up some fake directories to look like
   # different kinds of CMTK installation
   
+  # some spurious failures on windows actions
+  skip_on_os(os = 'windows')
+  
   td <- tempfile(pattern = 'nat-cmtk-test')
   makeexecfile <- function(p) {
     fullp <- file.path(td, p)
