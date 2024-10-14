@@ -368,8 +368,7 @@ test_that("we can write neuron/dotprops to rds file",{
   
 })
 
-url_ok<-function(x) identical(httr::status_code(httr::HEAD(x)), 200L)
-
+url_ok<-function(x) identical(try(httr::status_code(httr::HEAD(x)), silent = T), 200L)
 
 test_that("we can write neuron to swc file",{
   y=Cell07PNs[[1]]
