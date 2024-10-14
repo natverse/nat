@@ -158,7 +158,7 @@ a \code{neuronlistfh} object which is a character \code{vector} with
   \item{\code{attr(x,"df")}}{ The data.frame of metadata which can be used to
   select and plot neurons. See \code{\link{neuronlist}} for examples.}
 
-  \item{code{attr(x,"hashmap")}}{ (Optional) a hashed environment which can
+  \item{\code{attr(x,"hashmap")}}{ (Optional) a hashed environment which can
   be used for rapid lookup using key names (rather than numeric/logical
   indices). There is a space potential to pay for this redundant lookup
   method, but it is normally worth while given that the dataframe object is
@@ -256,9 +256,9 @@ Other neuronlistfh:
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
+\code{\link{neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistz}()},
-\code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},
 \code{\link{write.neurons}()}

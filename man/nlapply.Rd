@@ -206,10 +206,10 @@ sl=nlapply(Cell07PNs, FUN = seglengths)
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
+\code{\link{neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
 \code{\link{neuronlistz}()},
-\code{\link{neuronlist}()},
 \code{\link{read.neurons}()},
 \code{\link{write.neurons}()}
 }

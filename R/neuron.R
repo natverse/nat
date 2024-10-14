@@ -148,7 +148,7 @@ as.neuron.data.frame<-function(x, ...) {
 #' @param requiredColumns Character vector naming columns we should have
 #' @param ifMissing What to do if \code{x} is missing a required column
 #' @param includeExtraCols Whether to include any extra columns include in 
-#'   code{x}
+#'   \code{x}
 #' @param defaultValue A list containing default values to use for any missing 
 #'   columns
 #' @return A data.frame containing the normalised block of SWC data with 

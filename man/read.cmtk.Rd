@@ -30,7 +30,7 @@ Note that if an open connection is passed to read.cmtk the version
 Other cmtk-io: 
 \code{\link{cmtk.extract_affine}()},
 \code{\link{read.cmtkreg}()},
-\code{\link{write.cmtkreg}()},
-\code{\link{write.cmtk}()}
+\code{\link{write.cmtk}()},
+\code{\link{write.cmtkreg}()}
 }
 \concept{cmtk-io}

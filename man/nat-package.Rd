@@ -193,4 +193,19 @@ neuroanatomical data, especially representations of neurons.
   \code{\link{rgl}} which is used for visualisation,
   \code{\link{fileformats}}, \code{\link{read.neurons}}, \code{\link{cmtk}}.
 }
+\author{
+\strong{Maintainer}: Gregory Jefferis \email{jefferis@gmail.com} (\href{https://orcid.org/0000-0002-0587-9355}{ORCID})
+
+Authors:
+\itemize{
+  \item James Manton (\href{https://orcid.org/0000-0001-9260-3156}{ORCID})
+  \item Sridhar Jagannathan (\href{https://orcid.org/0000-0002-2078-1145}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Dominik Krzeminski (\href{https://orcid.org/0000-0003-4568-0583}{ORCID}) [contributor]
+}
+
+}
 \keyword{package}

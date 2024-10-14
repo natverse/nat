@@ -117,10 +117,10 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
+\code{\link{neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
 \code{\link{neuronlistz}()},
-\code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()}
 }

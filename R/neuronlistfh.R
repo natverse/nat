@@ -76,7 +76,7 @@
 #'   \item{\code{attr(x,"df")}}{ The data.frame of metadata which can be used to
 #'   select and plot neurons. See \code{\link{neuronlist}} for examples.}
 #'
-#'   \item{code{attr(x,"hashmap")}}{ (Optional) a hashed environment which can
+#'   \item{\code{attr(x,"hashmap")}}{ (Optional) a hashed environment which can
 #'   be used for rapid lookup using key names (rather than numeric/logical
 #'   indices). There is a space potential to pay for this redundant lookup
 #'   method, but it is normally worth while given that the dataframe object is

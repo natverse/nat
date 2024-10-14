@@ -1012,7 +1012,7 @@ threshold.im3d<-function(x, threshold=0,
 #' @param xmin,xmax clamping range. If xmax is missing xmin should be a vector 
 #'   of length 2.
 #' @param replace.infinite The value with which to replace non-finite values 
-#'   \emph{in the input vector}. When code{replace.infinite=FALSE} no action is 
+#'   \emph{in the input vector}. When \code{replace.infinite=FALSE} no action is 
 #'   taken. The default value of \code{NA} will result in e.g. \code{Inf} being 
 #'   mapped to \code{NA}.
 #' @return A function with signature \code{f(x, ..., na.rm)}

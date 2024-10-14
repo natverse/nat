@@ -21,7 +21,7 @@ normalise_swc(
 \item{ifMissing}{What to do if \code{x} is missing a required column}
 
 \item{includeExtraCols}{Whether to include any extra columns include in 
-code{x}}
+\code{x}}
 
 \item{defaultValue}{A list containing default values to use for any missing 
 columns}

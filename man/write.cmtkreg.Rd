@@ -34,8 +34,8 @@ CMTK v2.4 fixed a long-standing bug in affine (de)composition to
 \seealso{
 Other cmtk-io: 
 \code{\link{cmtk.extract_affine}()},
-\code{\link{read.cmtkreg}()},
 \code{\link{read.cmtk}()},
+\code{\link{read.cmtkreg}()},
 \code{\link{write.cmtk}()}
 }
 \concept{cmtk-io}

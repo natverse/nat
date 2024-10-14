@@ -11,7 +11,7 @@ clampmax(xmin, xmax, replace.infinite = NA_real_)
 of length 2.}
 
 \item{replace.infinite}{The value with which to replace non-finite values 
-\emph{in the input vector}. When code{replace.infinite=FALSE} no action is 
+\emph{in the input vector}. When \code{replace.infinite=FALSE} no action is 
 taken. The default value of \code{NA} will result in e.g. \code{Inf} being 
 mapped to \code{NA}.}
 }

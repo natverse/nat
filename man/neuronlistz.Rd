@@ -55,9 +55,9 @@ all.equal(nz2[1:3], nz[1:3])
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
+\code{\link{neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
-\code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},
 \code{\link{write.neurons}()}

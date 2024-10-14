@@ -167,7 +167,6 @@
 #'   \code{\link{xform}}, \code{\link{im3d}}, \code{\link{read.hxsurf}},
 #'   \code{\link{rgl}} which is used for visualisation,
 #'   \code{\link{fileformats}}, \code{\link{read.neurons}}, \code{\link{cmtk}}.
-#' @docType package
 #' @keywords package
 #' @import rgl graphics grDevices utils
-NULL
+"_PACKAGE"
