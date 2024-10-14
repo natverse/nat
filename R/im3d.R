@@ -1240,10 +1240,12 @@ materials.hxsurf<-function(x, ...) {
 
 `materials<-`<-function(x, value) UseMethod("materials<-")
 
+#' @export
 `materials<-.hxsurf`<-function(x, value) {
   stop("materials<-.hxsurf is not implemented")
 }
 
+#' @export
 `materials<-.default`<-function(x, value) {
   if(!is.data.frame(value))
     stop("materials<- expects a data.frame")
