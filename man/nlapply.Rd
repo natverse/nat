@@ -12,6 +12,7 @@ nlapply(
   ...,
   subset = NULL,
   OmitFailures = NA,
+  withMeta = FALSE,
   .progress = getOption("nat.progress", default = "auto")
 )
 
@@ -44,6 +45,9 @@ subset are passed through unmodified.}
 error. The default value (\code{NA}) will result in nlapply stopping with
 an error message the moment there is an error. For other values, see
 details.}
+
+\item{withMeta}{whether or not to include the metadata from the neuronlist
+data.frame}
 
 \item{.progress}{Character vector specifying the type of progress bar (see
 Progress bar section for details) The default value of \code{"auto"} shows

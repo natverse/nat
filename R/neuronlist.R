@@ -390,6 +390,8 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   error. The default value (\code{NA}) will result in nlapply stopping with
 #'   an error message the moment there is an error. For other values, see
 #'   details.
+#' @param withMeta whether or not to include the metadata from the neuronlist
+#'   data.frame
 #' @param .progress Character vector specifying the type of progress bar (see
 #'   Progress bar section for details) The default value of \code{"auto"} shows
 #'   a progress bar in interactive use after 2s. The default value can be
@@ -481,7 +483,7 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' options(nat.progress=NULL)
 #' sl=nlapply(Cell07PNs, FUN = seglengths)
 #' }
-nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, 
+nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, withMeta=FALSE,
                    .progress=getOption('nat.progress', default='auto')){
   if(isTRUE(.progress=='auto')) {
     .progress = ifelse(interactive(), "natprogress", "none")
@@ -496,6 +498,12 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
   cl=if(is.neuronlist(X) && !inherits(X, c('neuronlistfh','neuronlistz')))
     class(X) 
   else c("neuronlist", 'list')
+  
+  if (withMeta && ncol(X[,]) > 0) {
+    meta_list <- split(X[,], seq(nrow(X[,])))
+    Xlist = mapply(append, X, meta_list, SIMPLIFY = FALSE)
+    X = as.neuronlist(lapply(Xlist, as.neuron))
+  }
   
   if(!is.null(subset)){
     if(!is.character(subset)) subset=names(X)[subset]
