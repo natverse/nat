@@ -897,7 +897,7 @@ write.dotprops.swc<-function(x, file, ...) {
 #' }
 write.neurons<-function(nl, dir, format=NULL, subdir=NULL, 
                         INDICES=names(nl), files=NULL, 
-                        include.data.frame=FALSE,
+                        include.data.frame=TRUE,
                         metadata=FALSE,
                         Force=FALSE, cl=NULL, ...) {
   if(!inherits(nl, 'neuronlist')) {
