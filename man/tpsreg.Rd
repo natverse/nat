@@ -7,7 +7,14 @@
 \usage{
 tpsreg(sample, reference, ...)
 
-\method{xformpoints}{tpsreg}(reg, points, swap = NULL, ...)
+\method{xformpoints}{tpsreg}(
+  reg,
+  points,
+  swap = NULL,
+  FallBackToAffine = NULL,
+  na.action = NULL,
+  ...
+)
 }
 \arguments{
 \item{sample, reference}{Matrices defining the sample (or floating) and
@@ -21,6 +28,8 @@ reference (desired target after transformation) spaces. See details.}
 
 \item{swap}{Whether to change the direction of registration (default of
 \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise}
+
+\item{FallBackToAffine, na.action}{Not applicable to this function}
 }
 \description{
 \code{tpsreg} creates an object encapsulating a thin plate spine

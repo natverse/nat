@@ -430,8 +430,12 @@ mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
 #' plot(da2pns.R.L, col='blue', add=TRUE)
 #' }
 tpsreg<-function(sample, reference, ...){
-  structure(list(refmat=data.matrix(sample), tarmat=data.matrix(reference), ...),
+  reg=structure(list(refmat=data.matrix(sample), tarmat=data.matrix(reference), ...),
             class='tpsreg')
+  # precompute forward and reverse
+  attr(reg,'fwd')=Morpho::computeTransform(x=reg$tarmat, y=reg$refmat, type = "tps", ...)
+  attr(reg,'rev')=Morpho::computeTransform(x=reg$refmat, y=reg$tarmat, type = "tps", ...)
+  reg
 }
 
 #' @description \code{xformpoints.tpsreg} enables \code{\link[nat]{xform}} and
@@ -443,12 +447,21 @@ tpsreg<-function(sample, reference, ...){
 #' @param points The 3D points to transform
 #' @param swap Whether to change the direction of registration (default of
 #'   \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise
+#' @param FallBackToAffine,na.action Not applicable to this function
 #' @export
-xformpoints.tpsreg <- function(reg, points, swap=NULL, ...){
-  if(isTRUE(swap) || isTRUE(attr(reg, 'swap'))) {
-    tmp=reg$refmat
-    reg$refmat=reg$tarmat
-    reg$tarmat=tmp
+xformpoints.tpsreg <- function(reg, points, swap=NULL, FallBackToAffine = NULL, na.action = NULL, ...){
+  
+  dir <- ifelse(isTRUE(swap) || isTRUE(attr(reg, 'swap')), 'rev', 'fwd')
+  trafo <- attr(reg, dir)
+  if(is.null(trafo)) {
+    warning("Incomplete thin plate splines registration!\n", 
+            "I am recomputing, but please use `tpsreg()` to make a new registration")
+    trafo <- if(dir=='fwd') Morpho::computeTransform(x=reg$tarmat, y=reg$refmat, type = "tps", ...) 
+    else 
+      Morpho::computeTransform(x=reg$refmat, y=reg$tarmat, type = "tps", ...)
   }
-  do.call(Morpho::tps3d, c(list(x=points), reg,  list(...)))
+  
+  Morpho::applyTransform(points, trafo, ...)
 }
+
+
