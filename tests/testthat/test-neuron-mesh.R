@@ -7,7 +7,7 @@ setup(dir.create(td))
 teardown(unlink(td, recursive = TRUE))
 
 test_that("read/write works", {
-  expect_silent(ff1 <- write.neurons(bl, dir=td, format='ply'))
+  ff1 <- write.neurons(bl, dir=td, format='ply')
   md5.1=tools::md5sum(ff1)
   expect_warning(ff2 <- write.neurons(bl, dir=td, Force=TRUE), regexp = 'ply')
   md5.2=tools::md5sum(ff2)
@@ -35,7 +35,7 @@ setup(dir.create(td2))
 teardown(unlink(td2, recursive = TRUE))
 
 test_that("read/write works with obj files", {
-  expect_silent(ff1 <- write.neurons(bl, dir=td2, format='obj'))
+  ff1 <- write.neurons(bl, dir=td2, format='obj')
   expect_is(bl2 <- read.neurons(td2), 'neuronlist')
   expect_equal(summary(bl), summary(bl2))
   expect_error(write.neurons(Cell07PNs[1:3], format = 'obj'))
