@@ -1,21 +1,22 @@
 #' Find neurons within a 3D selection box (usually drawn in rgl window)
-#' 
-#' @details Uses \code{\link{subset.neuronlist}}, so can work on dotprops or 
+#'
+#' @details Uses \code{\link{subset.neuronlist}}, so can work on dotprops or
 #'   neuron lists.
-#' @param sel3dfun A \code{\link{select3d}} style function to indicate if points
-#'   are within region
+#' @param sel3dfun A \code{\link[rgl]{select3d}} style function to indicate if
+#'   points are within region
 #' @param indices Names of neurons to search (defaults to all neurons in list)
-#' @param db \code{neuronlist} to search. Can also be a character vector naming 
+#' @param db \code{neuronlist} to search. Can also be a character vector naming
 #'   the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.
 #' @param threshold More than this many points must be present in region
-#' @param invert Whether to return neurons outside the selection box (default 
+#' @param invert Whether to return neurons outside the selection box (default
 #'   \code{FALSE})
 #' @param rval What to return (character vector, default='names')
-#'   
-#' @return Character vector of names of selected neurons, neuronlist, or 
+#'
+#' @return Character vector of names of selected neurons, neuronlist, or
 #'   data.frame of attached metadata according to the value of \code{rval}.
 #' @export
-#' @seealso \code{\link{select3d}, \link{find.soma}, \link{subset.neuronlist}}
+#' @seealso \code{\link[rgl]{select3d}, \link{find.soma},
+#'   \link{subset.neuronlist}}
 #' @examples
 #' \dontrun{
 #' plot3d(kcs20)
@@ -25,7 +26,7 @@
 #' # make a standalone selection function
 #' vertical_lobe=select3d()
 #' find.neuron(vertical_lobe, db=kcs20)
-#' # use base::Negate function to invert the selection function 
+#' # use base::Negate function to invert the selection function
 #' # i.e. choose neurons that do not overlap the selection region
 #' find.neuron(Negate(vertical_lobe), db=kcs20)
 #' }
@@ -49,14 +50,15 @@ find.neuron<-function(sel3dfun=select3d(), indices=names(db),
 }
 
 #' Find neurons with soma inside 3D selection box (usually drawn in rgl window)
-#' 
-#' @details Can work on \code{neuronlist}s containing \code{neuron} objects 
-#'   \emph{or} \code{neuronlist}s whose attached data.frame contains soma 
+#'
+#' @details Can work on \code{neuronlist}s containing \code{neuron} objects
+#'   \emph{or} \code{neuronlist}s whose attached data.frame contains soma
 #'   positions specified in columns called X,Y,Z  .
 #' @inheritParams find.neuron
 #' @return Character vector of names of selected neurons
 #' @export
-#' @seealso \code{\link{select3d}, \link{subset.neuronlist}, \link{find.neuron}}
+#' @seealso \code{\link[rgl]{select3d}, \link{subset.neuronlist},
+#'   \link{find.neuron}}
 find.soma <- function (sel3dfun = select3d(), indices = names(db), 
                        db = getOption("nat.default.neuronlist"),
                        invert=FALSE,

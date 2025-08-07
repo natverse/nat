@@ -70,7 +70,7 @@ as.seglist.default<-function(x, ...) stop("Not yet implemented!")
 #' @param origin The origin of the tree (see details)
 #' @param Verbose Whether to print progress updates to console (default FALSE)
 #' @return a \code{list} with one entry for each unbranched segment.
-#' @seealso \code{\link{ngraph},\link{igraph}}
+#' @seealso \code{\link{ngraph},\link[igraph]{igraph}}
 #' @export
 #' @method as.seglist igraph
 #' @importFrom igraph is_directed is_connected dfs degree

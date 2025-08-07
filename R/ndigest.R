@@ -7,12 +7,12 @@
 #'   machine on which the digest is being computed.
 #' @param x Object for which a normalised digest will be computed.
 #' @param ... Additional arguments passed to methods and then on to 
-#'   \code{\link{digest}}
+#'   \code{\link[digest]{digest}}
 #' @return A character string containing the digest of the supplied object 
-#'   computed by \code{\link{digest}}.
+#'   computed by \code{\link[digest]{digest}}.
 #' @export
 #' @importFrom digest digest
-#' @seealso \code{\link{digest}}
+#' @seealso \code{\link[digest]{digest}}
 ndigest<-function(x, ...) UseMethod('ndigest')
 
 #' @details \code{ndigest.neuronlistfh} only considers the \code{keyfilemap} and

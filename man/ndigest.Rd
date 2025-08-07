@@ -24,7 +24,7 @@ ndigest(x, ...)
 \item{x}{Object for which a normalised digest will be computed.}
 
 \item{...}{Additional arguments passed to methods and then on to 
-\code{\link{digest}}}
+\code{\link[digest]{digest}}}
 
 \item{absoluteVectors}{Whether to check only the absolute value of
 eigenvectors for equality (default TRUE, see details)}
@@ -33,7 +33,7 @@ eigenvectors for equality (default TRUE, see details)}
 }
 \value{
 A character string containing the digest of the supplied object 
-  computed by \code{\link{digest}}.
+  computed by \code{\link[digest]{digest}}.
 }
 \description{
 The \emph{normalised} digest should exclude any fields or 
@@ -74,7 +74,7 @@ The \emph{normalised} digest should exclude any fields or
 stopifnot(all.equal(ndigest(kcs20[[1]]), "4c045b0343938259cd9986494fc1c2b0"))
 }
 \seealso{
-\code{\link{digest}}
+\code{\link[digest]{digest}}
 
 \code{\link{all.equal.dotprops}}
 

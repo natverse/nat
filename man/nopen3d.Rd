@@ -25,5 +25,5 @@ Note that sometimes (parts of) objects seem to disappear after panning and
 zooming. See help for \code{\link{pan3d}}.
 }
 \seealso{
-\code{\link{open3d},\link{pan3d}}
+\code{\link[rgl]{open3d},\link{pan3d}}
 }

@@ -25,9 +25,9 @@ expand.grid
 Other im3d: 
 \code{\link{as.im3d}()},
 \code{\link{boundingbox}()},
+\code{\link{im3d}()},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{im3d}()},
 \code{\link{imslice}()},
 \code{\link{is.im3d}()},
 \code{\link{mask}()},

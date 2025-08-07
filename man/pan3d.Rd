@@ -17,7 +17,7 @@ Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892 Mouse
 button 2 is right and button 3 is middle (accessed by meta/alt key)
 
 Note that sometimes (parts of) objects seem to disappear after panning and 
-zooming. The example in \code{\link{rgl.setMouseCallbacks}} from which this
+zooming. The example in \code{\link[rgl]{rgl.setMouseCallbacks}} from which this
 is copied includes a note that "this doesn't play well with rescaling"
 }
 \examples{
@@ -27,7 +27,7 @@ is copied includes a note that "this doesn't play well with rescaling"
 }
 }
 \seealso{
-\code{\link{rgl.setMouseCallbacks}}
+\code{\link[rgl]{rgl.setMouseCallbacks}}
 }
 \author{
 Duncan Murdoch

@@ -153,7 +153,7 @@ NULL
 #' @param ... additional options passed to open3d
 #' @return current rgl device
 #' @export
-#' @seealso \code{\link{open3d},\link{pan3d}}
+#' @seealso \code{\link[rgl]{open3d},\link{pan3d}}
 nopen3d<- function(bgcol='white', FOV=0, ...){
   res=open3d(mouseMode=c("trackball","user","zoom"), FOV=FOV, ...)
   bg3d(col=bgcol)
@@ -169,7 +169,7 @@ nopen3d<- function(bgcol='white', FOV=0, ...){
 #' @param extramat An optional extra transformation matrix to be applied after
 #'   the one implied by the viewpoint argument.
 #' @param ... additional arguments passed to \code{\link[rgl]{par3d}}
-#' @seealso \code{\link{nopen3d}}, \code{\link{view3d}}
+#' @seealso \code{\link{nopen3d}}, \code{\link[rgl]{view3d}}
 #' @export
 #' @importFrom rgl rotationMatrix scaleMatrix par3d
 #' @examples 
@@ -213,10 +213,10 @@ nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral",
 #' button 2 is right and button 3 is middle (accessed by meta/alt key)
 #' 
 #' Note that sometimes (parts of) objects seem to disappear after panning and 
-#' zooming. The example in \code{\link{rgl.setMouseCallbacks}} from which this
+#' zooming. The example in \code{\link[rgl]{rgl.setMouseCallbacks}} from which this
 #' is copied includes a note that "this doesn't play well with rescaling"
 #' @param button Integer from 1 to 3 indicating mouse button
-#' @seealso \code{\link{rgl.setMouseCallbacks}}
+#' @seealso \code{\link[rgl]{rgl.setMouseCallbacks}}
 #' @author Duncan Murdoch
 #' @examples
 #' \dontrun{

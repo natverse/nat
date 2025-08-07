@@ -22,9 +22,9 @@ Extract affine registration from CMTK registration file or in-memory list
 \code{\link{cmtkreglist}}
 
 Other cmtk-io: 
-\code{\link{read.cmtkreg}()},
 \code{\link{read.cmtk}()},
-\code{\link{write.cmtkreg}()},
-\code{\link{write.cmtk}()}
+\code{\link{read.cmtkreg}()},
+\code{\link{write.cmtk}()},
+\code{\link{write.cmtkreg}()}
 }
 \concept{cmtk-io}

@@ -103,9 +103,9 @@ plot3d(vdnl, grepl("P[1-6].app", Lineage))
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
+\code{\link{neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
-\code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{write.neurons}()}
 }

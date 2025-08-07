@@ -32,14 +32,14 @@ cmtk.reformatx(
 \code{im3d} object (or an object that can be coerced to im3d) or a 6-or
 9-vector defining a grid in the form Nx,Ny,Nz,dX,dY,dZ,[Ox,Oy,Oz].}
 
-\item{mask}{Whether to treat target as a binary mask (only reformatting 
+\item{mask}{Whether to treat target as a binary mask (only reformatting
 positive voxels)}
 
 \item{direction}{Whether to transform image from sample space to reference
 space (called \strong{forward} by CMTK) or from reference to sample space
 (called \strong{inverse} by CMTK). Default (when \code{NULL} is forward).}
 
-\item{interpolation}{What interpolation scheme to use for output image 
+\item{interpolation}{What interpolation scheme to use for output image
 (defaults to linear - see details)}
 
 \item{dryrun}{Just print command}
@@ -47,32 +47,32 @@ space (called \strong{forward} by CMTK) or from reference to sample space
 \item{Verbose}{Whether to show cmtk status messages and be verbose about file
 update checks. Sets command line \code{--verbose} option.}
 
-\item{MakeLock}{Whether to use a lock file to allow simple parallelisation 
-(see \code{makelock})}
+\item{MakeLock}{Whether to use a lock file to allow simple parallelisation
+(see \code{\link[nat.utils]{makelock}})}
 
-\item{OverWrite}{Whether to OverWrite an existing output file. One of 
-c("no","update","yes"). When OverWrite='update' 
-\code{\link{RunCmdForNewerInput}} is used to determine if the output is 
-older than any of the input files.}
+\item{OverWrite}{Whether to OverWrite an existing output file. One of
+c("no","update","yes"). When OverWrite='update'
+\code{\link[nat.utils]{RunCmdForNewerInput}} is used to determine if the
+output is older than any of the input files.}
 
-\item{filesToIgnoreModTimes}{Input files whose modification time should not 
+\item{filesToIgnoreModTimes}{Input files whose modification time should not
 be checked when determining if new output is required.}
 
-\item{...}{additional arguments passed to CMTK \code{reformatx} after 
+\item{...}{additional arguments passed to CMTK \code{reformatx} after
 processing by \code{\link{cmtk.call}}.}
 }
 \value{
-the path to the ouput image (whether or not it was re-created afresh)
-  or \code{NA_character_} if no output was possible.
+the path to the output image (whether or not it was re-created
+  afresh) or \code{NA_character_} if no output was possible.
 }
 \description{
 Reformat an image with a CMTK registration using the reformatx tool
 }
 \details{
-Note that if you are reformatting a mask then you will need to 
-  change the interpolation to "nn", since interpolating between e.g. mask 
-  levels 72 and 74 with 73 may have unintened consequences. Presently we have
-  no way of knowing whether an image should be treated as a mask, so the 
+Note that if you are reformatting a mask then you will need to
+  change the interpolation to "nn", since interpolating between e.g. mask
+  levels 72 and 74 with 73 may have unintended consequences. Presently we
+  have no way of knowing whether an image should be treated as a mask, so the
   \code{interpolation} must be handled manually.
 }
 \examples{
@@ -80,11 +80,12 @@ Note that if you are reformatting a mask then you will need to
 cmtk.reformatx('myimage.nrrd', target='template.nrrd',
   registrations='template_myimage.list')
 
-# get full listing of command line options  
+# get full listing of command line options
 system(cmtk.call('reformatx', help=TRUE))
 }
 }
 \seealso{
-\code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
-  \link{RunCmdForNewerInput}}
+\code{\link{cmtk.bindir}}, \code{\link{cmtk.call}},
+  \code{\link[nat.utils]{makelock}},
+  \code{\link[nat.utils]{RunCmdForNewerInput}}
 }

@@ -15,7 +15,7 @@
 #'   \code{triang} entry in \bold{Value} section of
 #'   \code{\link[alphashape3d]{ashape3d}} docs for details.)
 #' @return a \code{\link[rgl]{mesh3d}} object which can be plotted and
-#'   manipulated using \code{\link{rgl}} and \code{nat} packages.
+#'   manipulated using \code{rgl} and \code{nat} packages.
 #' @export
 #' 
 #' @name as.mesh3d

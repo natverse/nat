@@ -21,7 +21,7 @@ Read a CMTK format registration
 Other cmtk-io: 
 \code{\link{cmtk.extract_affine}()},
 \code{\link{read.cmtk}()},
-\code{\link{write.cmtkreg}()},
-\code{\link{write.cmtk}()}
+\code{\link{write.cmtk}()},
+\code{\link{write.cmtkreg}()}
 }
 \concept{cmtk-io}

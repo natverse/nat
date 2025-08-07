@@ -34,9 +34,9 @@ mn2<-Cell07PNs[1:10]*2
 \seealso{
 Other neuronlist: 
 \code{\link{is.neuronlist}()},
+\code{\link{neuronlist}()},
 \code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlistfh}()},
-\code{\link{neuronlist}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},
 \code{\link{write.neurons}()}

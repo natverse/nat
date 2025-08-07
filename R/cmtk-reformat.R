@@ -86,47 +86,48 @@ cmtk.targetvolume.default <- function(target, ...) {
 }
 
 #' Reformat an image with a CMTK registration using the reformatx tool
-#' 
-#' @details Note that if you are reformatting a mask then you will need to 
-#'   change the interpolation to "nn", since interpolating between e.g. mask 
-#'   levels 72 and 74 with 73 may have unintened consequences. Presently we have
-#'   no way of knowing whether an image should be treated as a mask, so the 
+#'
+#' @details Note that if you are reformatting a mask then you will need to
+#'   change the interpolation to "nn", since interpolating between e.g. mask
+#'   levels 72 and 74 with 73 may have unintended consequences. Presently we
+#'   have no way of knowing whether an image should be treated as a mask, so the
 #'   \code{interpolation} must be handled manually.
 #' @param floating The floating image to be reformatted
 #' @param registrations One or more CMTK format registrations on disk
 #' @param output The path to the output image (defaults to
 #'   \code{"<targetstem>_<floatingstem>.nrrd"})
-#' @param mask Whether to treat target as a binary mask (only reformatting 
+#' @param mask Whether to treat target as a binary mask (only reformatting
 #'   positive voxels)
-#' @param interpolation What interpolation scheme to use for output image 
+#' @param interpolation What interpolation scheme to use for output image
 #'   (defaults to linear - see details)
 #' @param dryrun Just print command
 #' @param Verbose Whether to show cmtk status messages and be verbose about file
 #'   update checks. Sets command line \code{--verbose} option.
-#' @param MakeLock Whether to use a lock file to allow simple parallelisation 
-#'   (see \code{makelock})
-#' @param OverWrite Whether to OverWrite an existing output file. One of 
-#'   c("no","update","yes"). When OverWrite='update' 
-#'   \code{\link{RunCmdForNewerInput}} is used to determine if the output is 
-#'   older than any of the input files.
-#' @param filesToIgnoreModTimes Input files whose modification time should not 
+#' @param MakeLock Whether to use a lock file to allow simple parallelisation
+#'   (see \code{\link[nat.utils]{makelock}})
+#' @param OverWrite Whether to OverWrite an existing output file. One of
+#'   c("no","update","yes"). When OverWrite='update'
+#'   \code{\link[nat.utils]{RunCmdForNewerInput}} is used to determine if the
+#'   output is older than any of the input files.
+#' @param filesToIgnoreModTimes Input files whose modification time should not
 #'   be checked when determining if new output is required.
-#' @param ... additional arguments passed to CMTK \code{reformatx} after 
+#' @param ... additional arguments passed to CMTK \code{reformatx} after
 #'   processing by \code{\link{cmtk.call}}.
 #' @inheritParams cmtk.targetvolume
 #' @inheritParams xformimage.cmtkreg
 #' @importFrom nat.utils makelock removelock RunCmdForNewerInput
-#' @seealso \code{\link{cmtk.bindir}, \link{cmtk.call}, \link{makelock}, 
-#'   \link{RunCmdForNewerInput}}
+#' @seealso \code{\link{cmtk.bindir}}, \code{\link{cmtk.call}},
+#'   \code{\link[nat.utils]{makelock}},
+#'   \code{\link[nat.utils]{RunCmdForNewerInput}}
 #' @export
-#' @return the path to the ouput image (whether or not it was re-created afresh)
-#'   or \code{NA_character_} if no output was possible.
+#' @return the path to the output image (whether or not it was re-created
+#'   afresh) or \code{NA_character_} if no output was possible.
 #' @examples
 #' \dontrun{
 #' cmtk.reformatx('myimage.nrrd', target='template.nrrd',
 #'   registrations='template_myimage.list')
-#' 
-#' # get full listing of command line options  
+#'
+#' # get full listing of command line options
 #' system(cmtk.call('reformatx', help=TRUE))
 #' }
 cmtk.reformatx<-function(floating, registrations, output, target, mask=FALSE,

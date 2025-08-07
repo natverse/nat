@@ -28,8 +28,8 @@ NB a version specified on the command line overrides one encoded as
 \seealso{
 Other cmtk-io: 
 \code{\link{cmtk.extract_affine}()},
-\code{\link{read.cmtkreg}()},
 \code{\link{read.cmtk}()},
+\code{\link{read.cmtkreg}()},
 \code{\link{write.cmtkreg}()}
 }
 \concept{cmtk-io}

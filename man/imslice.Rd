@@ -28,9 +28,9 @@ Note the sample locations stored in the x,y,z attributes will be
 Other im3d: 
 \code{\link{as.im3d}()},
 \code{\link{boundingbox}()},
+\code{\link{im3d}()},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{im3d}()},
 \code{\link{imexpand.grid}()},
 \code{\link{is.im3d}()},
 \code{\link{mask}()},

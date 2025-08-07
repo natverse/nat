@@ -189,8 +189,8 @@ Other neuronlistfh:
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
-\code{\link{neuronlist-dataframe-methods}},
 \code{\link{neuronlist}()},
+\code{\link{neuronlist-dataframe-methods}},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},
 \code{\link{write.neurons}()}

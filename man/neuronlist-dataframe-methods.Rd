@@ -37,12 +37,12 @@ only, empty. Numeric values are coerced to integer as if by
     lowest possible dimension.  The default is to drop if only one
     column is left, but \bold{not} to drop if only one row is left.}
 
-\item{value}{A suitable replacement value: it will be repeated a whole
+\item{value}{a suitable replacement value: it will be repeated a whole
     number of times if necessary and it may be coerced: see the
     Coercion section.  If \code{NULL}, deletes the column if a single
     column is selected.}
 
-\item{except}{indices of columns from which \emph{not} to drop levels}
+\item{except}{indices of columns from which \emph{not} to drop levels.}
 
 \item{...}{Further arguments passed to default methods (and usually ignored)}
 
@@ -115,8 +115,8 @@ colnames(kcs20)
 Other neuronlist: 
 \code{\link{*.neuronlist}()},
 \code{\link{is.neuronlist}()},
-\code{\link{neuronlistfh}()},
 \code{\link{neuronlist}()},
+\code{\link{neuronlistfh}()},
 \code{\link{nlapply}()},
 \code{\link{read.neurons}()},
 \code{\link{write.neurons}()}

@@ -32,7 +32,7 @@ neuroanatomical data, especially representations of neurons.
 
   \code{neuron} objects containing connected trees can be converted to
   \code{\link{ngraph}} objects, a lightweight wrapper around the
-  \code{\link{igraph}} library's \code{\link[igraph]{graph}} class that
+  \code{\link[igraph]{igraph}} library's \code{\link[igraph]{graph}} class that
   preserves 3D coordinate information. This allows neurons to be manipulated
   based on their graph structure, e.g. by finding all nodes upstream (closer
   to the root) or downstream of a given node. The \code{\link{as.neuron}}
@@ -56,8 +56,8 @@ neuroanatomical data, especially representations of neurons.
   Metadata can be used to colour or subset the neurons during plotting (see
   \code{\link{plot3d.neuronlist}} and \code{\link{subset.neuronlist}}).
   Interactive 3D selection of neurons in a neuronlist is also possible using
-  \code{\link{find.neuron}} (which makes use of rgl's \code{\link{select3d}}
-  function.
+  \code{\link{find.neuron}} (which makes use of \code{rgl}'s
+  \code{\link[rgl]{select3d}} function.
 
   \code{neuronlist} objects also provide additional functionality to
   streamline arithmetic (e.g. scaling all the points in all neurons see
@@ -174,7 +174,21 @@ neuroanatomical data, especially representations of neurons.
 \code{\link{neuron}}, \code{\link{dotprops}},
   \code{\link{neuronlist}}, \code{\link{nlapply}}, \code{\link[nat]{plot3d}},
   \code{\link{xform}}, \code{\link{im3d}}, \code{\link{read.hxsurf}},
-  \code{\link{rgl}} which is used for visualisation,
+  \code{\link[rgl]{rgl}} which is used for visualisation,
   \code{\link{fileformats}}, \code{\link{read.neurons}}, \code{\link{cmtk}}.
+}
+\author{
+\strong{Maintainer}: Gregory Jefferis \email{jefferis@gmail.com} (\href{https://orcid.org/0000-0002-0587-9355}{ORCID})
+
+Authors:
+\itemize{
+  \item James Manton (\href{https://orcid.org/0000-0001-9260-3156}{ORCID})
+}
+
+Other contributors:
+\itemize{
+  \item Dominik Krzeminski (\href{https://orcid.org/0000-0003-4568-0583}{ORCID}) [contributor]
+}
+
 }
 \keyword{package}

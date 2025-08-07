@@ -205,7 +205,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #' @method as.neuron ngraph
 #' @importFrom igraph V V<- vcount decompose
 #' @rdname neuron
-#' @seealso \code{\link{dfs}, \link{as.seglist}}
+#' @seealso \code{\link[igraph]{dfs}, \link{as.seglist}}
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(length(origin)){

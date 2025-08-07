@@ -49,7 +49,7 @@
 #'   vertex for each entry in vertexlabels, each vertex having a \code{label} 
 #'   attribute. All vertices are included whether connected or not.
 #' @family neuron
-#' @seealso \code{\link{igraph}}, \code{\link[igraph]{set_vertex_attr}},
+#' @seealso \code{\link[igraph]{igraph}}, \code{\link[igraph]{set_vertex_attr}},
 #'   \code{\link{subset.neuron}} for example of graph-based manipulation of a
 #'   neuron.
 #' @export

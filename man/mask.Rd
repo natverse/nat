@@ -50,9 +50,9 @@ image(mask(x, mask=m, levels=1:2)[,,1])
 Other im3d: 
 \code{\link{as.im3d}()},
 \code{\link{boundingbox}()},
+\code{\link{im3d}()},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{im3d}()},
 \code{\link{imexpand.grid}()},
 \code{\link{imslice}()},
 \code{\link{is.im3d}()},
