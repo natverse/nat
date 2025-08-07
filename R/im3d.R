@@ -419,7 +419,7 @@ boundingbox.character<-function(x, ...) {
 #'   \code{\link{xyzmatrix}} method is defined including \code{matrix} or
 #'   \code{data.frame} objects describing 3D points as well as specialised
 #'   classes such as \code{\link{neuron}}, \code{\link{neuronlist}}, \code{rgl}
-#'   \code{\link{mesh3d}} objects.
+#'   \code{\link[rgl]{mesh3d}} objects.
 #'
 #' @export
 #' @rdname boundingbox

@@ -117,7 +117,7 @@
 #'   occupying only a few GB) on NFS network file systems or Google Drive,
 #'   neither of which are keen on having many files especially in the same
 #'   folder. It does not allow updates from a remote location. See
-#'   \code{\link{filehashDB1-class}} for more details.
+#'   \code{\link[filehash]{filehashDB1-class}} for more details.
 #'
 #'   Note that objects are stored in a filehash, which by definition does not
 #'   have any ordering of its elements. However neuronlist objects (like lists)

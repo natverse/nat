@@ -17,7 +17,7 @@ nclear3d(..., plotengine = getOption("nat.plotengine"))
 Clear the rgl or plotly 3D scene
 }
 \details{
-\code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
+\code{\link[rgl]{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
   quite different models for how to handle the active plot. \code{nclear3d}
   and \code{\link{nopen3d}} allow you to treat them more similarly. Use them
   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your

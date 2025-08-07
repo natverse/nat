@@ -39,5 +39,5 @@ nview3d('frontal', extramat=rotationMatrix(pi/10, 1, 1, 0))
 }
 }
 \seealso{
-\code{\link{nopen3d}}, \code{\link{view3d}}
+\code{\link{nopen3d}}, \code{\link[rgl]{view3d}}
 }

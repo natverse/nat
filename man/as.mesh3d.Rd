@@ -31,7 +31,7 @@ object}
 }
 \value{
 a \code{\link[rgl]{mesh3d}} object which can be plotted and
-  manipulated using \code{\link{rgl}} and \code{nat} packages.
+  manipulated using \code{rgl} and \code{nat} packages.
 }
 \description{
 \code{as.mesh3d.ashape3d} converts an 

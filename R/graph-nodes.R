@@ -4,10 +4,10 @@
 #'   friends. It is conceived of as slightly lower level and end users would
 #'   normally use the \code{rootpoints} methods.
 #'
-#'   \code{graph.nodes} should work for any \code{\link{igraph}} object
+#'   \code{graph.nodes} should work for any \code{\link[igraph]{igraph}} object
 #'   (including \code{\link{ngraph}} objects, which inherit from \code{igraph}).
 #'   However the graph must be directed in order to return a root point
-#' @param x An \code{\link{ngraph}} or raw \code{\link{igraph}} object
+#' @param x An \code{\link{ngraph}} or raw \code{\link[igraph]{igraph}} object
 #' @param type one of root, end (which includes root) or branch
 #' @param original.ids Use named attribute to return original vertex ids (when
 #'   available). Set to FALSE when this is not desired.

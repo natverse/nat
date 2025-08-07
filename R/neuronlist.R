@@ -396,13 +396,14 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   overridden for the current session by setting the value of
 #'   \code{options(nat.progressbar)} (see examples). Values of \code{T} and
 #'   \code{F} are aliases for 'text' and 'none', respectively.
-#'   
+#'
 #' @section Progress bar: There are currently two supported approaches to
 #'   defining progress bars for \code{nlapply}. The default (when
 #'   \code{progress="auto"}) now uses a progress bar built using
-#'   \code{\link{progress_bar}} from the progress package, which can be highly
-#'   customised. The alternative is to use the progress bars distributed
-#'   directly with the \code{plyr} package such as \code{\link{progress_text}}.
+#'   \code{\link[progress]{progress_bar}} from the progress package, which can
+#'   be highly customised. The alternative is to use the progress bars
+#'   distributed directly with the \code{plyr} package such as
+#'   \code{\link[plyr]{progress_text}}.
 #'
 #'   In either case the value of the \code{.progress} argument must be a
 #'   character vector which names a function. According to \code{plyr}'s
@@ -526,7 +527,7 @@ nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
 #' @export
 #' @rdname nlapply
 #' @description \code{progress_natprogress} provides a progress bar compatible
-#'   with the \code{progress::\link{progress_bar}}.
+#'   with the \code{progress::\link[progress]{progress_bar}}.
 progress_natprogress <- function(...) {
   pb <- NULL
   list(

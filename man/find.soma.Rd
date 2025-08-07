@@ -13,15 +13,15 @@ find.soma(
 )
 }
 \arguments{
-\item{sel3dfun}{A \code{\link{select3d}} style function to indicate if points
-are within region}
+\item{sel3dfun}{A \code{\link[rgl]{select3d}} style function to indicate if
+points are within region}
 
 \item{indices}{Names of neurons to search (defaults to all neurons in list)}
 
-\item{db}{\code{neuronlist} to search. Can also be a character vector naming 
+\item{db}{\code{neuronlist} to search. Can also be a character vector naming
 the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.}
 
-\item{invert}{Whether to return neurons outside the selection box (default 
+\item{invert}{Whether to return neurons outside the selection box (default
 \code{FALSE})}
 
 \item{rval}{What to return (character vector, default='names')}
@@ -33,10 +33,11 @@ Character vector of names of selected neurons
 Find neurons with soma inside 3D selection box (usually drawn in rgl window)
 }
 \details{
-Can work on \code{neuronlist}s containing \code{neuron} objects 
-  \emph{or} \code{neuronlist}s whose attached data.frame contains soma 
+Can work on \code{neuronlist}s containing \code{neuron} objects
+  \emph{or} \code{neuronlist}s whose attached data.frame contains soma
   positions specified in columns called X,Y,Z  .
 }
 \seealso{
-\code{\link{select3d}, \link{subset.neuronlist}, \link{find.neuron}}
+\code{\link[rgl]{select3d}, \link{subset.neuronlist},
+  \link{find.neuron}}
 }

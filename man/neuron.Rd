@@ -178,7 +178,7 @@ plot(as.neuron(gstem2))
 \seealso{
 \code{\link{neuronlist}}
 
-\code{\link{dfs}, \link{as.seglist}}
+\code{\link[igraph]{dfs}, \link{as.seglist}}
 
 Other neuron: 
 \code{\link{ngraph}()},

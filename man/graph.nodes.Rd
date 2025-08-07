@@ -12,7 +12,7 @@ graph.nodes(
 )
 }
 \arguments{
-\item{x}{An \code{\link{ngraph}} or raw \code{\link{igraph}} object}
+\item{x}{An \code{\link{ngraph}} or raw \code{\link[igraph]{igraph}} object}
 
 \item{type}{one of root, end (which includes root) or branch}
 
@@ -30,7 +30,7 @@ This function underlies \code{\link{rootpoints.igraph}} methods and
   friends. It is conceived of as slightly lower level and end users would
   normally use the \code{rootpoints} methods.
 
-  \code{graph.nodes} should work for any \code{\link{igraph}} object
+  \code{graph.nodes} should work for any \code{\link[igraph]{igraph}} object
   (including \code{\link{ngraph}} objects, which inherit from \code{igraph}).
   However the graph must be directed in order to return a root point
 }
