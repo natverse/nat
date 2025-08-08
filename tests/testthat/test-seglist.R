@@ -7,7 +7,7 @@ test_that("make a seglist directly",{
 
 test_that("convert graph to seglist",{
   # simple linear graph
-  g=graph(c(1, 2, 2, 3))
+  g=make_graph_nat(c(1, 2, 2, 3))
   sl=seglist(c(1, 2, 3))
   expect_is(sl,'seglist')
   expect_equal(as.seglist(g), sl)
