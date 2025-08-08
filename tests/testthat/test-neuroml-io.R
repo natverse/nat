@@ -46,7 +46,9 @@ test_that("parse neuroml files", {
 })
 
 test_that("is.neuroml", {
-  ff=dir(c("testdata/neuroml","testdata/neuroml2"), full.names = T, recursive = T)
+  ff=dir(c("testdata/neuroml","testdata/neuroml2"), 
+         full.names = T, recursive = T, pattern = '\\.(swc|xml)$')
+  
   notswc=tools::file_ext(ff)!="swc"
   expect_equivalent(is.neuroml(ff), notswc)
 })
