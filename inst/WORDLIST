@@ -6,6 +6,7 @@ AxisDirections
 BoundingBox
 BranchPoints
 CATMAID
+CMD
 CMTK
 CMTK's
 Cachero
@@ -72,6 +73,7 @@ Nx
 Ny
 Nz
 OO
+ORCID
 Obermayer
 OmitFailures
 OuterRegion
@@ -87,13 +89,12 @@ RLE
 RStudio
 RegionChoice
 RegionChoices
-RegionColourList
-RegionList
 Reroot
 Rmd
 Rohlfing
 Rtools
 Rvcg
+SNT
 SWC
 SWCData
 SWCs
@@ -129,7 +130,6 @@ amiramesh
 arg
 args
 ashape
-attr
 autonames
 bindir
 boundingbox
@@ -142,7 +142,6 @@ cmtkreg
 color
 colors
 colpal
-com
 commandline
 connectomics
 coord
@@ -159,9 +158,7 @@ devtools
 df
 dfc
 dfs
-dir
 dof
-doi
 donttest
 dotprops
 dplyr
@@ -185,7 +182,6 @@ filetype
 flybrain
 flybrains
 flycircuit
-fninf
 frulhns
 getformatreader
 getformatwriter
@@ -240,7 +236,6 @@ ndigest
 neurite
 neurodebian
 neuroglancer
-neuroimage
 neuroml
 neuronformats
 neuronlist
@@ -249,10 +244,8 @@ neuronlistfh
 neuronlists
 ngraph
 nhdr
-nitrc
 nl
 nlapply
-nlevels
 nlscan
 nmapply
 nn
@@ -266,7 +259,6 @@ nrrds
 nvertices
 nview
 obj
-org
 outfile
 params
 plotengine
@@ -286,6 +278,7 @@ reglist
 reglists
 regs
 remotesync
+rerooting
 rgl
 rgl's
 rm
@@ -316,7 +309,6 @@ subarray
 subdir
 subdirs
 subgraphs
-sumsegment
 swc
 targetvolume
 tarmat
@@ -345,7 +337,6 @@ warpfile
 webGL
 webgl
 winbuilder
-www
 xform
 xform's
 xformimage
@@ -359,5 +350,4 @@ xyzmatrix
 xyzpos
 yml
 zenodo
-zlim
 µm
