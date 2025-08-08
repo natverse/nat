@@ -59,7 +59,7 @@ test_that("convert graph to seglist",{
   sl=seglist(c(1,2),c(2,3),c(2,4),c(2,5,6,7))
   expect_equal(as.seglist(g),sl)
   # undirected equivalent - nb origin must be specified
-  expect_equal(as.seglist(as.undirected(g),origin=1),sl)
+  expect_equal(as.seglist(as_undirected_nat(g),origin=1),sl)
   
   # rapid branching
   g=graph(c(1,2, 2,3, 2,4, 4,5, 4,6))

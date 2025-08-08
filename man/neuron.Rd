@@ -162,7 +162,8 @@ plot(gstem)
 plot(as.neuron(gstem))
 
 # but if you had an undirected graph 
-ug=igraph::as.undirected(gstem)
+if(utils::packageVersion('igraph')>='2.1.0') {
+ug=igraph::as_undirected(gstem)
 # you get a warning because there is no explicit origin for the graph
 as.neuron(ug)
 
@@ -170,6 +171,7 @@ as.neuron(ug)
 gstem2=as.ngraph(ug, root = 10)
 plot(gstem2)
 plot(as.neuron(gstem2))
+}
 }
 \seealso{
 \code{\link{neuronlist}}
