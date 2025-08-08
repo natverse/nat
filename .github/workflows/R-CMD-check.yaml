@@ -48,7 +48,7 @@ jobs:
           needs: check
 
       - name: Build CMTK
-        if: ${{matrix.config.os != 'windows-latest'}}
+        if: ${{matrix.config.os == 'macos-latest'}}
         run: sh ./build-cmtk.sh
         env:
           CC: clang
