@@ -1,3 +1,19 @@
+# local functions to handle deprecated functions in igraph >= 2.1.0
+make_graph_nat <- function(...) {
+  pvi <- packageVersion('igraph')
+  if(pvi>='2.1.0') igraph::make_graph(...) else igraph::graph(...)
+}
+
+as_directed_nat <- function(...) {
+  pvi <- packageVersion('igraph')
+  if(pvi>='2.1.0') igraph::as_directed(...) else igraph::as.directed(...)
+} 
+
+as_undirected_nat <- function(...) {
+  pvi <- packageVersion('igraph')
+  if(pvi>='2.1.0') igraph::as_undirected(...) else igraph::as.undirected(...)
+} 
+
 #' ngraph: a graph to encode a neuron's connectivity
 #'
 #' @description the \code{ngraph} class contains a (completely general) graph
@@ -97,7 +113,7 @@ ngraph<-function(el, vertexnames, xyz=NULL, diam=NULL, directed=TRUE,
     vecs=xyz[stops, , drop=FALSE] - xyz[starts, , drop=FALSE]
     weights=sqrt(rowSums(vecs*vecs))
   }
-  g=igraph::graph(rawel, n=length(vertexnames), directed=directed)
+  g=make_graph_nat(rawel, n=length(vertexnames), directed=directed)
   igraph::V(g)$name=vertexnames
   if(is.numeric(weights))
     igraph::E(g)$weight=weights
@@ -155,13 +171,12 @@ as.ngraph.neuron<-function(x, directed=TRUE, method=c('swc','seglist'), ...){
   }
 }
 
-#' @importFrom igraph as.undirected as.directed
 #' @export
 as.ngraph.igraph<-function(x, directed=TRUE, root, mode=c('out','in'), ...){
   if(inherits(x,'ngraph'))
     if(igraph::is_directed(x)==directed) return(x)
   
-  if(igraph::is_directed(x) && !directed) x=as.undirected(x, ...)
+  if(igraph::is_directed(x) && !directed) x=as_undirected_nat(x, ...)
   else if(!igraph::is_directed(x) && directed) x=as.directed.usingroot(x, root, mode=mode, ...)
   
   if(!inherits(x,'ngraph')){
@@ -174,7 +189,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   mode=match.arg(mode)
   # make a directed graph _keeping any attributes_
   if(!igraph::is_directed(g))
-    dg=igraph::as.directed(g, mode='arbitrary')
+    dg=as_directed_nat(g, mode='arbitrary')
   else dg=g
   dfs=igraph::dfs(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
   el=igraph::as_edgelist(dg)
