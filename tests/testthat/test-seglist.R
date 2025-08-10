@@ -20,34 +20,34 @@ test_that("convert graph to seglist",{
   expect_warning(sl<-as.seglist(igraph::make_empty_graph(), Verbose = T))
   
   # simple linear graph with different vids
-  g=graph(c(1, 2, 2, 3))
+  g=make_graph_nat(c(1, 2, 2, 3))
   igraph::V(g)$vid=3:5
   sl=seglist(3:5)
   expect_equal(as.seglist(g), sl)
   
   # simple linear graph with different vids and different origin
-  g=graph(c(1, 2, 2, 3))
+  g=make_graph_nat(c(1, 2, 2, 3))
   igraph::V(g)$vid=3:5
   sl=seglist(5:3)
   expect_equal(as.seglist(g, origin=5), sl)
   
   # simple linear graph with different vids and origin at centre, resulting
   # in a branched seglist
-  g=graph(c(1, 2, 2, 3))
+  g=make_graph_nat(c(1, 2, 2, 3))
   igraph::V(g)$vid=3:5
   sl=seglist(4:3,4:5)
   expect_equal(as.seglist(g, origin=4), sl)
   
   # multiple subtrees -> exception since seglist only defined for 1 subtree
-  g=graph(c(1,2,2,3,3,4,5,6))
+  g=make_graph_nat(c(1,2,2,3,3,4,5,6))
   expect_error(as.seglist(g))
   
   # cyclic graph -> exception since seglist is undefined
-  g=graph(c(1, 2, 2, 3, 3, 1))
+  g=make_graph_nat(c(1, 2, 2, 3, 3, 1))
   expect_error(as.seglist(g))
   
   # single floating point
-  g=graph(NULL,n=1)
+  g=make_graph_nat(NULL,n=1)
   expect_equal(as.seglist(g),seglist(1))
   
   # single floating point with different vid
@@ -55,24 +55,24 @@ test_that("convert graph to seglist",{
   expect_equal(as.seglist(g),seglist(4))
   
   # trifurcation
-  g=graph(c(1,2, 2,3, 2,4, 2,5, 5,6, 6,7))
+  g=make_graph_nat(c(1,2, 2,3, 2,4, 2,5, 5,6, 6,7))
   sl=seglist(c(1,2),c(2,3),c(2,4),c(2,5,6,7))
   expect_equal(as.seglist(g),sl)
   # undirected equivalent - nb origin must be specified
   expect_equal(as.seglist(as_undirected_nat(g),origin=1),sl)
   
   # rapid branching
-  g=graph(c(1,2, 2,3, 2,4, 4,5, 4,6))
+  g=make_graph_nat(c(1,2, 2,3, 2,4, 4,5, 4,6))
   sl=seglist( c(1,2),c(2,3),c(2,4),c(4,5),c(4,6) )
   expect_equal(as.seglist(g),sl)
   
   # different root
-  g=graph(c(1,2, 2,3, 2,4, 4,5, 4,6))
+  g=make_graph_nat(c(1,2, 2,3, 2,4, 4,5, 4,6))
   sl=seglist( c(6,4),c(4,2),c(2,1),c(2,3),c(4,5) )
   expect_equal(as.seglist(g,origin=6),sl)
   
   # non-sequential numbering
-  g=graph(c(1,2, 2,6, 2,4, 4,5, 4,3))
+  g=make_graph_nat(c(1,2, 2,6, 2,4, 4,5, 4,3))
   sl<-seglist( c(1,2),c(2,4),c(4,3),c(4,5),c(2,6) )
   expect_equal(as.seglist(g,origin=1),sl)
   
