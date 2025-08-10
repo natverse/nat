@@ -135,7 +135,7 @@ plot(gw_spine, col='red', boundingbox=boundingbox(n))
 plot(gw_antispine, col='blue', add=TRUE)
 }
 \seealso{
-\code{\link{igraph}}, \code{\link[igraph]{set_vertex_attr}},
+\code{\link[igraph]{igraph}}, \code{\link[igraph]{set_vertex_attr}},
   \code{\link{subset.neuron}} for example of graph-based manipulation of a
   neuron, \code{\link{plot3d.ngraph}}
 

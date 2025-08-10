@@ -254,11 +254,12 @@ NULL
 #'   Note that sometimes (parts of) objects seem to disappear after panning and
 #'   zooming. See help for \code{\link{pan3d}}.
 #'
-#'   \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
+#'   \code{\link[rgl]{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
 #'   different models for how to handle the active plot. \code{nopen3d} and
 #'   \code{\link{nclear3d}} allow you to treat them more similarly. Use them
-#'   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
-#'   could she be able to run with both \bold{plotly} or \bold{rgl} as the
+#'   wherever you use the rgl \code{\link[rgl]{clear3d}} and
+#'   \code{\link[rgl]{open3d}} commands and your
+#'   code should be able to run with both \bold{plotly} or \bold{rgl} as the
 #'   \code{plotengine}.
 #'
 #' @param bgcol background colour
@@ -266,7 +267,7 @@ NULL
 #' @param ... additional options passed to open3d
 #' @return current rgl device
 #' @export
-#' @seealso \code{\link{open3d},\link{pan3d}}, \code{\link{nclear3d}}
+#' @seealso \code{\link[rgl]{open3d}, \link{pan3d}}, \code{\link{nclear3d}}
 nopen3d<- function(bgcol='white', FOV=0, ...){
   res=open3d(mouseMode=c("trackball", "user", "zoom", "pull"), FOV=FOV, ...)
   bg3d(col=bgcol)
@@ -282,7 +283,7 @@ nopen3d<- function(bgcol='white', FOV=0, ...){
 #' @param extramat An optional extra transformation matrix to be applied after
 #'   the one implied by the viewpoint argument.
 #' @param ... additional arguments passed to \code{\link[rgl]{par3d}}
-#' @seealso \code{\link{nopen3d}}, \code{\link{view3d}}
+#' @seealso \code{\link{nopen3d}}, \code{\link[rgl]{view3d}}
 #' @export
 #' @importFrom rgl rotationMatrix scaleMatrix par3d
 #' @examples 
@@ -319,17 +320,17 @@ nview3d <- function(viewpoint=c("frontal", "anterior", "dorsal", "ventral",
 }
 
 #' Some useful extensions / changes to rgl defaults
-#' 
+#'
 #' Set up pan call back for current rgl device
-#' 
+#'
 #' Copied verbatim from ?rgl.setMouseCallbacks for rgl version 0.92.892 Mouse
 #' button 2 is right and button 3 is middle (accessed by Meta/Alt key)
-#' 
-#' Note that sometimes (parts of) objects seem to disappear after panning and 
-#' zooming. The example in \code{\link{rgl.setMouseCallbacks}} from which this
-#' is copied includes a note that "this doesn't play well with rescaling"
+#'
+#' Note that sometimes (parts of) objects seem to disappear after panning and
+#' zooming. The example in \code{\link[rgl]{rgl.setMouseCallbacks}} from which
+#' this is copied includes a note that "this doesn't play well with rescaling"
 #' @param button Integer from 1 to 3 indicating mouse button
-#' @seealso \code{\link{rgl.setMouseCallbacks}}
+#' @seealso \code{\link[rgl]{rgl.setMouseCallbacks}}
 #' @author Duncan Murdoch
 #' @export
 #' @examples
@@ -599,7 +600,7 @@ plot3d.boundingbox <- function(x, col='black',
 
 #' Clear the rgl or plotly 3D scene
 #'
-#' @details \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
+#' @details \code{\link[rgl]{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have
 #'   quite different models for how to handle the active plot. \code{nclear3d}
 #'   and \code{\link{nopen3d}} allow you to treat them more similarly. Use them
 #'   wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
@@ -649,12 +650,11 @@ check_plotengine <- function(plotengine) {
 #' Plot 3d representation of neuron (ngraph) with directed edges
 #'
 #' @param x A \code{\link{ngraph}} object
-#' @param type They type of arrows (lines by default, see \code{\link{arrow3d}}
-#'   for details).
+#' @param type They type of arrows (lines by default, see
+#'   \code{\link[rgl]{arrow3d}} for details).
 #' @param soma radius of soma (or \code{FALSE} to suppress plotting)
-#' @param labels Whether to label nodes/all points with their raw index (not
-#'   id)
-#' @param ... Additional arguments passed to \code{\link{arrow3d}}
+#' @param labels Whether to label nodes/all points with their raw index (not id)
+#' @param ... Additional arguments passed to \code{\link[rgl]{arrow3d}}
 #'
 #' @export
 #'

@@ -73,7 +73,8 @@
 #' plot(as.neuron(gstem))
 #' 
 #' # but if you had an undirected graph 
-#' ug=igraph::as.undirected(gstem)
+#' if(utils::packageVersion('igraph')>='2.1.0') {
+#' ug=igraph::as_undirected(gstem)
 #' # you get a warning because there is no explicit origin for the graph
 #' as.neuron(ug)
 #' 
@@ -81,6 +82,7 @@
 #' gstem2=as.ngraph(ug, root = 10)
 #' plot(gstem2)
 #' plot(as.neuron(gstem2))
+#' }
 neuron<-function(d, NumPoints=nrow(d), StartPoint, BranchPoints=integer(), EndPoints,
                  SegList, SubTrees=NULL, InputFileName=NULL, NeuronName=NULL, ...,
                  MD5=TRUE){get
@@ -208,7 +210,7 @@ normalise_swc<-function(x, requiredColumns=c('PointNo','Label','X','Y','Z','W','
 #' @export
 #' @importFrom igraph V V<- vcount decompose
 #' @rdname neuron
-#' @seealso \code{\link{dfs}, \link{as.seglist}}
+#' @seealso \code{\link[igraph]{dfs}, \link{as.seglist}}
 as.neuron.ngraph<-function(x, vertexData=NULL, origin=NULL, Verbose=FALSE, ...){
   # translate origin into raw vertex id if necessary 
   if(length(origin)){

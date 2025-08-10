@@ -14,30 +14,30 @@ find.neuron(
 )
 }
 \arguments{
-\item{sel3dfun}{A \code{\link{select3d}} style function to indicate if points
-are within region}
+\item{sel3dfun}{A \code{\link[rgl]{select3d}} style function to indicate if
+points are within region}
 
 \item{indices}{Names of neurons to search (defaults to all neurons in list)}
 
-\item{db}{\code{neuronlist} to search. Can also be a character vector naming 
+\item{db}{\code{neuronlist} to search. Can also be a character vector naming
 the neuronlist. Defaults to \code{options('nat.default.neuronlist')}.}
 
 \item{threshold}{More than this many points must be present in region}
 
-\item{invert}{Whether to return neurons outside the selection box (default 
+\item{invert}{Whether to return neurons outside the selection box (default
 \code{FALSE})}
 
 \item{rval}{What to return (character vector, default='names')}
 }
 \value{
-Character vector of names of selected neurons, neuronlist, or 
+Character vector of names of selected neurons, neuronlist, or
   data.frame of attached metadata according to the value of \code{rval}.
 }
 \description{
 Find neurons within a 3D selection box (usually drawn in rgl window)
 }
 \details{
-Uses \code{\link{subset.neuronlist}}, so can work on dotprops or 
+Uses \code{\link{subset.neuronlist}}, so can work on dotprops or
   neuron lists.
 }
 \examples{
@@ -49,11 +49,12 @@ find.neuron(db=kcs20)
 # make a standalone selection function
 vertical_lobe=select3d()
 find.neuron(vertical_lobe, db=kcs20)
-# use base::Negate function to invert the selection function 
+# use base::Negate function to invert the selection function
 # i.e. choose neurons that do not overlap the selection region
 find.neuron(Negate(vertical_lobe), db=kcs20)
 }
 }
 \seealso{
-\code{\link{select3d}, \link{find.soma}, \link{subset.neuronlist}}
+\code{\link[rgl]{select3d}, \link{find.soma},
+  \link{subset.neuronlist}}
 }

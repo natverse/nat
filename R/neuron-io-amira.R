@@ -1,5 +1,4 @@
 # read neurons in the format produced by Amira skeletonize plugin
-#' @importFrom igraph as.undirected
 read.neuron.hxskel<-function(file, ...){
   ndata=read.amiramesh(file)
   required_fields=c("Coordinates", "NeighbourCount", "Radii", "NeighbourList")
@@ -40,7 +39,7 @@ read.neuron.hxskel<-function(file, ...){
   doubleg=ngraph(el, d$PointNo, directed=TRUE)
   # TODO see if we can make appropriate directed graph rather than converting
   # to undirected.
-  ug=as.undirected(doubleg, mode='collapse')
+  ug=as_undirected_nat(doubleg, mode='collapse')
   if(!inherits(ug,'ngraph')) class(ug)=c("ngraph",class(ug))
   n=as.neuron(ug, vertexData=d, origin=Origin, InputFileName=file, ... )
   n

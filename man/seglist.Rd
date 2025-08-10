@@ -66,5 +66,5 @@ sl=seglist(c(1:2),c(2:6))
 \seealso{
 \code{\link{neuron}}
 
-\code{\link{ngraph},\link{igraph}}
+\code{\link{ngraph},\link[igraph]{igraph}}
 }

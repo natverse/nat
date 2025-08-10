@@ -12,17 +12,19 @@ make_model(
 )
 }
 \arguments{
-\item{x}{a neuronlist or neuron object, or another object that consists of 3D points}
+\item{x}{a neuronlist or neuron object, or another object that consists of 3D
+points}
 
 \item{substrate}{whether to make the model based on the 3D location of
-connectors, neuron cable or both. Connectors are pre-synapse locations, 
-e.g. the pre-synapses of a \code{catmaidneuron} from the R package \code{catmaid})}
+connectors, neuron cable or both. Connectors are pre-synapse locations,
+e.g. the pre-synapses of a \code{catmaidneuron} from the R package
+\code{catmaid})}
 
 \item{alpha}{a single value or vector of values for alpha, fed to
 \code{alphashape3d::ashape3d}. Selection is subsequently interactive.}
 
-\item{auto.selection}{logical, whether or not to try and remove points based on interactively
-choosing simple values for clustering.}
+\item{auto.selection}{logical, whether or not to try and remove points based
+on interactively choosing simple values for clustering.}
 }
 \value{
 A mesh3d object
@@ -32,12 +34,16 @@ Generate a mesh3d model based on points contained in a
   neuronlist or neuron object, or another object that consists of 3D points.
 }
 \details{
-Interactive function that allows a users to select points in 3D space from neuronlist/neuron objects,
-or another object that is coercible in 3D points using \code{\link{xyzmatrix}}. Points can first be automatically chosen, by
-selecting an integer number of nearest neighbours to find for each point using \code{nabor::\link{knn}}, and then a 
-maximum distance at which nodes can be part of a cluster. Next, \code{\link{select_points}} is used to manually pick desired 3D
-points. Lastly, \code{alphashape3d::ashape3d} is used to create an alphashape around these points. The user can trial different values for
-alpha until they get their desired result.
+Interactive function that allows a users to select points in 3D
+  space from neuronlist/neuron objects, or another object that is coercible
+  in 3D points using \code{\link{xyzmatrix}}. Points can first be
+  automatically chosen, by selecting an integer number of nearest neighbours
+  to find for each point using \code{nabor::\link[nabor]{knn}}, and then a
+  maximum distance at which nodes can be part of a cluster. Next,
+  \code{\link{select_points}} is used to manually pick desired 3D points.
+  Lastly, \code{alphashape3d::ashape3d} is used to create an alphashape
+  around these points. The user can trial different values for alpha until
+  they get their desired result.
 }
 \examples{
 \dontrun{

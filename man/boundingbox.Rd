@@ -71,7 +71,7 @@ The bounding box is defined as the position of the voxels at the two
   \code{\link{xyzmatrix}} method is defined including \code{matrix} or
   \code{data.frame} objects describing 3D points as well as specialised
   classes such as \code{\link{neuron}}, \code{\link{neuronlist}}, \code{rgl}
-  \code{\link{mesh3d}} objects.
+  \code{\link[rgl]{mesh3d}} objects.
 }
 \examples{
 # bounding box for a neuron

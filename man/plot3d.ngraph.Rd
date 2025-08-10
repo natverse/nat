@@ -9,15 +9,14 @@
 \arguments{
 \item{x}{A \code{\link{ngraph}} object}
 
-\item{type}{They type of arrows (lines by default, see \code{\link{arrow3d}}
-for details).}
+\item{type}{They type of arrows (lines by default, see
+\code{\link[rgl]{arrow3d}} for details).}
 
 \item{soma}{radius of soma (or \code{FALSE} to suppress plotting)}
 
-\item{labels}{Whether to label nodes/all points with their raw index (not
-id)}
+\item{labels}{Whether to label nodes/all points with their raw index (not id)}
 
-\item{...}{Additional arguments passed to \code{\link{arrow3d}}}
+\item{...}{Additional arguments passed to \code{\link[rgl]{arrow3d}}}
 }
 \description{
 Plot 3d representation of neuron (ngraph) with directed edges

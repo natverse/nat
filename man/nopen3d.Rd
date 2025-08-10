@@ -28,13 +28,14 @@ Pan with right button (Ctrl+click), zoom with middle
   Note that sometimes (parts of) objects seem to disappear after panning and
   zooming. See help for \code{\link{pan3d}}.
 
-  \code{\link{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
+  \code{\link[rgl]{rgl}} and \code{\link[plotly:plot_ly]{plotly}} have quite
   different models for how to handle the active plot. \code{nopen3d} and
   \code{\link{nclear3d}} allow you to treat them more similarly. Use them
-  wherever you use the rgl \code{clear3d} and \code{open3d} commands and your
-  could she be able to run with both \bold{plotly} or \bold{rgl} as the
+  wherever you use the rgl \code{\link[rgl]{clear3d}} and
+  \code{\link[rgl]{open3d}} commands and your
+  code should be able to run with both \bold{plotly} or \bold{rgl} as the
   \code{plotengine}.
 }
 \seealso{
-\code{\link{open3d},\link{pan3d}}, \code{\link{nclear3d}}
+\code{\link[rgl]{open3d}, \link{pan3d}}, \code{\link{nclear3d}}
 }
