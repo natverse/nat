@@ -58,7 +58,7 @@ a \code{matrix} with 2 rows and 3 columns with
 \code{boundingbox.shape3d} is designed to be used on objects 
   that contain 3D point information and inherit from \code{rgl}'s 
   \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
-  this applies to \code{\link{mesh3d}} objects.
+  this applies to \code{\link[rgl]{mesh3d}} objects.
 
 Set the bounding box of an im3d object
 }

@@ -433,7 +433,7 @@ boundingbox.neuron<-boundingbox.list
 #' @description \code{boundingbox.shape3d} is designed to be used on objects 
 #'   that contain 3D point information and inherit from \code{rgl}'s 
 #'   \code{shape3d} class and for which \code{xyzmatrix} is defined. Presently
-#'   this applies to \code{\link{mesh3d}} objects.
+#'   this applies to \code{\link[rgl]{mesh3d}} objects.
 #'   
 #' @rdname boundingbox
 boundingbox.shape3d<-boundingbox.list
