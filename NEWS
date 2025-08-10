@@ -1,3 +1,10 @@
+nat 1.8.25
+==========
+
+* docs: fix links to external packages as requested by CRAN
+* workaround for renamed igraph functions (in v2.1.0)
+* workaround for swc files being omitted from tar during check
+
 nat 1.8.24
 ==========
 
