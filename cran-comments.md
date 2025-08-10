@@ -1,10 +1,7 @@
-# nat 1.8.24
+# nat 1.8.25
 
-This submission fixes a test failure noted by Prof Brian Ripley. This was 
-occasioned by a minor bug in the the recent igraph 2.0 release. 
-Although an igraph update is expected soon, this nat release
-should work around the current issue. I have also addressed a few NOTES
-relating to Rd formatting issues.
+This submission fixes Rd link targets missing package anchors as requested by
+Kurt Hornik on behalf of CRAN on 2025-07-23.
 
 With many thanks,
 
