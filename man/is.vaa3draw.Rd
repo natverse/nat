@@ -14,7 +14,7 @@ is.vaa3draw(f, bytes = NULL)
 single file (used in preference to reading file \code{f}).}
 }
 \description{
-See \url{http://www.vaa3d.org/} and
+See \url{https://github.com/Vaa3D} and
   \url{https://github.com/fiji/Vaa3d_Reader/blob/master/src/main/java/org/janelia/vaa3d/reader/V3dRawImageStream.java}
 }
 \details{

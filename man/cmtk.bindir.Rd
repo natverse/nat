@@ -38,7 +38,7 @@ Character vector giving path to CMTK binary directory or NULL when
   this cannot be found.
 }
 \description{
-The \href{www.nitrc.org/projects/cmtk}{Computational Morphometry
+The \href{https://www.nitrc.org/projects/cmtk}{Computational Morphometry
   Toolkit} (CMTK) is the default image registration toolkit supported by nat.
   An external CMTK installation is required in order to apply CMTK 
   registrations. This function attempts to locate the full path to the CMTK 
@@ -59,7 +59,7 @@ Queries options('nat.cmtk.bindir') if \code{firstdir} is not
 }
 \section{Installation}{
  It is recommended to install released CMTK versions
-  available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A
+  available from the \href{https://www.nitrc.org/projects/cmtk}{NITRC website}. A
   bug in composition of affine transformations from CMTK parameters in the
   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended.
   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTK

@@ -37,7 +37,8 @@ install.packages("nat")
 library(nat)
 
 # plot some test data (?kcs20 for details)
-# Drosophila Kenyon cells processed from raw data at http://flycircuit.tw
+# Drosophila Kenyon cells processed from raw data formerly available at
+# flycircuit.tw
 head(kcs20)
 open3d()
 plot3d(kcs20, col=type)
@@ -71,7 +72,7 @@ To get an idea of what **nat** can do:
 
 * Skim through the Articles listed at https://natverse.org//nat/
 * Take a look at the [R Markdown](https://rmarkdown.rstudio.com/) reports used 
-  to generate the [figures for our NBLAST paper](http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/).
+  to generate the [figures for our NBLAST paper](https://flybrain.mrc-lmb.cam.ac.uk/si/nblast/www/paper/).
 
 When you're ready to learn more:
 

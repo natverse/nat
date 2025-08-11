@@ -77,7 +77,7 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 
 #' Return path to directory containing CMTK binaries
 #' 
-#' @description The \href{www.nitrc.org/projects/cmtk}{Computational Morphometry
+#' @description The \href{https://www.nitrc.org/projects/cmtk}{Computational Morphometry
 #'   Toolkit} (CMTK) is the default image registration toolkit supported by nat.
 #'   An external CMTK installation is required in order to apply CMTK 
 #'   registrations. This function attempts to locate the full path to the CMTK 
@@ -109,7 +109,7 @@ cmtk.mat2dof<-function(m, f=NULL, centre=NULL, Transpose=TRUE, version=FALSE){
 #' @export
 #' @aliases cmtk
 #' @section Installation: It is recommended to install released CMTK versions
-#'   available from the \href{www.nitrc.org/projects/cmtk/}{NITRC website}. A
+#'   available from the \href{https://www.nitrc.org/projects/cmtk}{NITRC website}. A
 #'   bug in composition of affine transformations from CMTK parameters in the
 #'   CMTK versions <2.4 series means that CMTK>=3.0 is strongly recommended.
 #'   CMTK v3 registrations are not backwards compatible with CMTK v2, but CMTK
@@ -176,7 +176,7 @@ cmtk.bindir<-function(firstdir=getOption('nat.cmtk.bindir'),
   }
   if(check && is.null(bindir))
     stop("Cannot find CMTK. Please install from ",
-         "http://www.nitrc.org/projects/cmtk and make sure that it is your path!")
+         "https://www.nitrc.org/projects/cmtk and make sure that it is your path!")
   
   if(set) {
     options(nat.cmtk.bindir=bindir)

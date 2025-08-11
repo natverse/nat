@@ -32,13 +32,13 @@ neuroanatomical data, especially representations of neurons.
 
   \code{neuron} objects containing connected trees can be converted to
   \code{\link{ngraph}} objects, a lightweight wrapper around the
-  \code{\link[igraph]{igraph}} library's \code{\link[igraph]{graph}} class that
-  preserves 3D coordinate information. This allows neurons to be manipulated
-  based on their graph structure, e.g. by finding all nodes upstream (closer
-  to the root) or downstream of a given node. The \code{\link{as.neuron}}
-  function can convert \code{ngraph} objects back to \code{neuron}s or
-  selected vertex indices can be used to subset a neuron with
-  \code{\link{subset.neuron}}.
+  \code{\link[igraph]{igraph}} library's \code{\link[igraph]{graph}} class
+  that preserves 3D coordinate information. This allows neurons to be
+  manipulated based on their graph structure, e.g. by finding all nodes
+  upstream (closer to the root) or downstream of a given node. The
+  \code{\link{as.neuron}} function can convert \code{ngraph} objects back to
+  \code{neuron}s or selected vertex indices can be used to subset a neuron
+  with \code{\link{subset.neuron}}.
 }
 
 \section{Collections of Neurons}{
@@ -72,9 +72,9 @@ neuroanatomical data, especially representations of neurons.
   objects can be transformed from e.g. sample to template brain space using
   affine or non-rigid registrations. \bold{nat} has built in support for
   registrations calculated with the open source CMTK package available at
-  \url{www.nitrc.org/projects/cmtk}. See ?\link{cmtk} for installation
-  details. The function \code{\link{xform}} has methods to deal with a
-  variety of types of interest.
+  \url{https://www.nitrc.org/projects/cmtk}. See ?\link{cmtk} for
+  installation details. The function \code{\link{xform}} has methods to deal
+  with a variety of types of interest.
 }
 
 \section{3D Image Data}{
@@ -84,8 +84,8 @@ neuroanatomical data, especially representations of neurons.
   \code{\link{im3d}} class to handle image/density data on a regular grid.
   I/O is handled by \code{\link{read.im3d}} and \code{\link{write.im3d}},
   which are currently implemented for the AmiraMesh and NRRD file formats;
-  there is also read only access to the \href{www.vaa3d.org/}{vaa3d} raw
-  format.
+  there is also read only access to the
+  \href{https://github.com/Vaa3D}{vaa3d} raw format.
 
   Spatial information can be queried with \code{\link{voxdims}},
   \code{\link{boundingbox}} and \code{\link{ijkpos}}, \code{\link{xyzpos}}
