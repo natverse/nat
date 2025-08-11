@@ -1,26 +1,17 @@
-# nat 1.8.11
+# nat 1.11.0
 
-* minor updates and fixes
-* includes fix for upcoming testthat v2 at request of Hadley Wickham
-* fixes error on Solaris test suite due to network connectivity issue
-  https://www.r-project.org/nosvn/R.check/r-patched-solaris-x86/nat-00check.html
+* This represents a major update compared with previous versions on CRAN 
+  (most recently 1.8.25). I have tested extensively (see below) but there is an 
+  increased chance of issues given that this is a major new release.
 
 ## Test environments
-* local OS X install, R 3.4.2
-* ubuntu 12.04 (on travis-ci), R 3.4.2
-* win-builder (devel)
+* local OS X install, R 4.5.1
+* ubuntu 24.04 (on github actions), R 4.5.1
+* win-builder (release and devel)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
-https://win-builder.r-project.org/2x7Txk57YxtD/00check.log
-
 Please note that previous versions of R reported possible spelling errors in 
 the DESCRIPTION file, but these were all false positives.
-
-## Tests
-Note that some tests have been marked as donttest to reduce the standard test
-time including on CRAN. I have succesfully run all tests using 
-
-  R CMD CHECK --run-donttest --as-cran
