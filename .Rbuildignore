@@ -17,3 +17,4 @@ travisbuildchildren.sh
 ^codecov\.yml$
 ^CODE_OF_CONDUCT\.md$
 ^CRAN-SUBMISSION$
+^data-raw$

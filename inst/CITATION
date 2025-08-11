@@ -1,11 +1,33 @@
-citHeader("To cite nat in publications, please use:")
+citHeader(
+  "If you use nat or other natverse packages, please cite our paper ",
+  "(Bates, Manton et al, eLife 2020).",
+  "You may need to cite additional publications if you use specific packages",
+  "that implement specialised algorithms or provide datasets for reanalysis.",
+  "Use a command like:",
+  "citation(package=\"flycircuit\")",
+  "to see if there is a specific citation to use for a given package",
+  "in addition to the general natverse paper.")
 
-citEntry(entry = 'article',
-  Title = "{NeuroAnatomy Toolbox}",
-	Author = c(person("Jefferis, Gregory S X E"), person("Manton, James D")),
-	Doi = "10.5281/zenodo.598047",
-  Journal = "ZENODO",
-#	Month = "May",
-  Year = "2017",
-	textVersion = "Gregory S X E Jefferis and James D Manton (2017). NeuroAnatomy Toolbox. ZENODO. DOI: 10.5281/zenodo.598047"
-)
+bibentry(bibtype = "Article",
+         key = "Bates:2020aa",
+         author = c(person(given = c("Alexander", "Shakeel"),
+                           family = "Bates"),
+                    person(given = c("James", "D"),
+                           family = "Manton"),
+                    person(given = c("Sridhar", "R"),
+                           family = "Jagannathan"),
+                    person(given = "Marta",
+                           family = "Costa"),
+                    person(given = "Philipp",
+                           family = "Schlegel"),
+                    person(given = "Torsten",
+                           family = "Rohlfing"),
+                    person(given = c("Gregory", "S", "X", "E"),
+                           family = "Jefferis")),
+         title = "The natverse, a versatile toolbox for combining and analysing neuroanatomical data",
+         journal = "Elife",
+         year = "2020",
+         month = "Apr",
+         volume = "9",
+         doi = "10.7554/eLife.53350",
+         url = "https://doi.org/10.7554/eLife.53350")
