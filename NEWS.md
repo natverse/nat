@@ -1,3 +1,30 @@
+# nat 1.11.0
+
+This release bundles together a large number of changes and is targeting a CRAN
+release i.e. for the first time in many years bringing CRAN up to date with the 
+master branch of nat development.
+
+* Fix handling of null elements in xyzmatrix.list by @jefferis in https://github.com/natverse/nat/pull/488
+* Minor edit of stitch_neurons edge cases by @dokato in https://github.com/natverse/nat/pull/493
+* Making as.seglist compatible with R/igraph 1.3.0 by @dokato in https://github.com/natverse/nat/pull/492
+* Changed neimode argument to mode by @dokato in https://github.com/natverse/nat/pull/496
+* Neurons matched by first column in case of generic row names in… by @dokato in https://github.com/natverse/nat/pull/467
+* Switching off patch in codecov by @dokato in https://github.com/natverse/nat/pull/507
+* ngraph operations inform when not a neuron is passed as an argument by @dokato in https://github.com/natverse/nat/pull/506
+* Fix/matching by col numeric by @jefferis in https://github.com/natverse/nat/pull/504
+* Fix test of attribute length mismatch for new igraph by @jefferis in https://github.com/natverse/nat/pull/512
+* Change rgl.* calls to *3d by @dmurdoch in https://github.com/natverse/nat/pull/508
+* Feature/write mesh fixes by @jefferis in https://github.com/natverse/nat/pull/514
+* Create CODE_OF_CONDUCT.md by @schlegelp in https://github.com/natverse/nat/pull/516
+* igraph dfs may signal unreachable nodes with 0 by @jefferis in https://github.com/natverse/nat/pull/518
+* Fixes for CRAN + R-4.5.1 by @jefferis in https://github.com/natverse/nat/pull/520
+
+## New Contributors
+* @dmurdoch made their first contribution in https://github.com/natverse/nat/pull/508
+* @schlegelp made their first contribution in https://github.com/natverse/nat/pull/516
+
+**Full Changelog**: https://github.com/natverse/nat/compare/v1.10.4...v1.11.0
+
 # nat 1.10.4
 
 * `xyzmatrix<-` can now set list columns containing coordinates in forms like
