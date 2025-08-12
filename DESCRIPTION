@@ -7,7 +7,9 @@ Authors@R: c(
     role = c("aut", "cre"), comment = c(ORCID = "0000-0002-0587-9355")),
     person("James", "Manton", role = c("aut"), comment = c(ORCID = "0000-0001-9260-3156")),
     person("Sridhar", "Jagannathan", role = c("aut"), comment = c(ORCID = "0000-0002-2078-1145")),
-    person("Dominik", "Krzeminski", role = c("ctb"), comment = c(ORCID = "0000-0003-4568-0583"))
+    person("Dominik", "Krzeminski", role = c("ctb"), comment = c(ORCID = "0000-0003-4568-0583")),
+    person("Philipp", "Schlegel", role = c("ctb"), comment = c(ORCID = "0000-0002-5633-1314")),
+    person("Duncan", "Murdoch", role = c("ctb"), email = 'murdoch.duncan@gmail.com')
     )
 URL: https://github.com/natverse/nat, https://natverse.org/
 BugReports: https://github.com/natverse/nat/issues

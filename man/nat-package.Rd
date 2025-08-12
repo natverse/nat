@@ -205,6 +205,8 @@ Authors:
 Other contributors:
 \itemize{
   \item Dominik Krzeminski (\href{https://orcid.org/0000-0003-4568-0583}{ORCID}) [contributor]
+  \item Philipp Schlegel (\href{https://orcid.org/0000-0002-5633-1314}{ORCID}) [contributor]
+  \item Duncan Murdoch \email{murdoch.duncan@gmail.com} [contributor]
 }
 
 }
