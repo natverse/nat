@@ -9,11 +9,11 @@ Greg Jefferis.
 
 ## Test environments
 
-* local OS X install, R 4.3.2.
+* local OS X install, R 4.5.1.
 * win-builder (r-devel)
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
-https://win-builder.r-project.org/AuvjIM1EH5rb
+https://win-builder.r-project.org/T27GG01jiPjz
