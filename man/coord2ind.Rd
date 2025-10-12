@@ -46,15 +46,15 @@ Find 1D or 3D voxel indices into a 3D image given spatial coordinates
 }
 \details{
 \code{coord2ind} is designed to cope with any user-defined class for
-  which an as.im3d method exists. Presently the only example in the nat.* 
-  ecosystem is \code{nat.templatebrains::as.im3d.templatebrain}. The 
-  existence of an \code{as.im3d} method implies that 
+  which an as.im3d method exists. Presently the only example in the nat.*
+  ecosystem is \code{nat.templatebrains::as.im3d.templatebrain}. The
+  existence of an \code{as.im3d} method implies that
   \code{voxdims},\code{origin}, and \code{dim} functions can be called. This
   is the necessary information required to convert i,j,k logical indices into
   x,y,z spatial indices.
 }
 \examples{
-coord2ind(cbind(1,2,3), imdims = c(1024,512,218), 
+coord2ind(cbind(1,2,3), imdims = c(1024,512,218),
   voxdims = c(0.622088, 0.622088, 0.622088), origin = c(0,0,0))
 \dontrun{
 ## repeat but using a templatebrain object to specify the coordinate system
