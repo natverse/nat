@@ -20,7 +20,9 @@ coord2ind(coords, ...)
 )
 }
 \arguments{
-\item{coords}{spatial coordinates of image voxels.}
+\item{coords}{spatial coordinates of image voxels. Must be an Nx3 matrix or
+data.frame or an object for which \code{ncol} and column subscripting
+`[,1]` work.}
 
 \item{...}{extra arguments passed to methods.}
 

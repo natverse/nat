@@ -90,7 +90,9 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 #'   \code{voxdims},\code{origin}, and \code{dim} functions can be called. This
 #'   is the necessary information required to convert i,j,k logical indices into
 #'   x,y,z spatial indices.
-#' @param coords spatial coordinates of image voxels.
+#' @param coords spatial coordinates of image voxels. Must be an Nx3 matrix or
+#'   data.frame or an object for which \code{ncol} and column subscripting
+#'   `[,1]` work.
 #' @param ... extra arguments passed to methods.
 #' @export
 #' @examples
@@ -137,10 +139,13 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
   if(length(imdims) != 3)
     stop('coord2ind only handles 3D data')
   
-  if(!is.matrix(coords))
-    coords=matrix(coords,byrow=TRUE,ncol=length(coords))
-  if(!missing(origin))
-    coords=t(t(coords)-origin)
+  if(is.null(dim(coords))) {
+    if(length(coords)==3) coords=xyzmatrix(coords)
+    else stop("coordinates should be an N x 3 matrix")
+  } else {
+    if(ncol(coords)!=3)
+      stop("coordinates should be an N x 3 matrix-like object")
+  }
   
   pixcoords=t(round(t(coords)/voxdims))+1
   
