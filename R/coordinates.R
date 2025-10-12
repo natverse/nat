@@ -112,6 +112,7 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @param origin the origin of the 3D image.
 #' @param linear.indices Whether or not to convert the voxel indices into a 
 #'   linear 1D form (the default) or to keep as 3D indices.
+#' @param use.scale For testing an alternative algorithm
 #' @param aperm permutation order for axes.
 #' @param Clamp Whether or not to map out of range coordinates to the nearest 
 #'   in range index (default \code{FALSE})
@@ -120,7 +121,7 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
-                            linear.indices=TRUE, aperm=NULL,
+                            linear.indices=TRUE, aperm=NULL, use.scale=FALSE,
                             Clamp=FALSE, CheckRanges=!Clamp, ...){
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
@@ -147,7 +148,15 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
       stop("coordinates should be an N x 3 matrix-like object")
   }
   
-  pixcoords=t(round(t(coords)/voxdims))+1
+  if(use.scale) {
+    if(missing(origin) || is.null(origin) || all(origin==0))
+      origin=FALSE
+    pixcoords=round(scale(coords, center = origin, scale = voxdims))+1L
+  } else {
+    if(!missing(origin))
+      coords=t(t(coords)-origin)
+    pixcoords=t(round(t(coords)/voxdims))+1
+  }
   
   # make sure no points are out of range
   if(Clamp){
