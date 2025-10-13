@@ -14,7 +14,7 @@ coord2ind(coords, ...)
   origin = NULL,
   linear.indices = TRUE,
   aperm = NULL,
-  version = 1L,
+  version = 4L,
   Clamp = FALSE,
   CheckRanges = !Clamp,
   ...
@@ -27,22 +27,23 @@ data.frame or an object for which \code{ncol} and column subscripting
 
 \item{...}{extra arguments passed to methods.}
 
-\item{imdims}{array dimensions of 3D image \emph{OR} an object for which a 
+\item{imdims}{array dimensions of 3D image \emph{OR} an object for which a
 \code{\link{as.im3d}} object has been defined (see Details).}
 
 \item{voxdims}{vector of 3 voxels dimensions (width, height, depth).}
 
 \item{origin}{the origin of the 3D image.}
 
-\item{linear.indices}{Whether or not to convert the voxel indices into a 
+\item{linear.indices}{Whether or not to convert the voxel indices into a
 linear 1D form (the default) or to keep as 3D indices.}
 
 \item{aperm}{permutation order for axes.}
 
-\item{version}{For testing alternative algorithms}
+\item{version}{For testing alternative algorithms. Currently 1-4 where 1 is
+the original version and 4 seems to be the best so far.}
 
-\item{Clamp}{Whether or not to map out of range coordinates to the nearest 
-in range index (default \code{FALSE})}
+\item{Clamp}{Whether or not to map out of range coordinates to the nearest in
+range index (default \code{FALSE})}
 
 \item{CheckRanges}{whether to check if coordinates are out of range.}
 }

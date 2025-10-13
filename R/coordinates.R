@@ -106,23 +106,25 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 coord2ind <- function(coords, ...) UseMethod("coord2ind")
 
 
-#' @param imdims array dimensions of 3D image \emph{OR} an object for which a 
+#' @param imdims array dimensions of 3D image \emph{OR} an object for which a
 #'   \code{\link{as.im3d}} object has been defined (see Details).
 #' @param voxdims vector of 3 voxels dimensions (width, height, depth).
 #' @param origin the origin of the 3D image.
-#' @param linear.indices Whether or not to convert the voxel indices into a 
+#' @param linear.indices Whether or not to convert the voxel indices into a
 #'   linear 1D form (the default) or to keep as 3D indices.
-#' @param version For testing alternative algorithms
+#' @param version For testing alternative algorithms. Currently 1-4 where 1 is
+#'   the original version and 4 seems to be the best so far.
 #' @param aperm permutation order for axes.
-#' @param Clamp Whether or not to map out of range coordinates to the nearest 
-#'   in range index (default \code{FALSE})
+#' @param Clamp Whether or not to map out of range coordinates to the nearest in
+#'   range index (default \code{FALSE})
 #' @param CheckRanges whether to check if coordinates are out of range.
 #' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
-                            linear.indices=TRUE, aperm=NULL, version=1L,
-                            Clamp=FALSE, CheckRanges=!Clamp, ...){
+                            linear.indices=TRUE, aperm=NULL, version=4L,
+                            Clamp=FALSE, CheckRanges=!Clamp, ...) {
+  checkmate::assertIntegerish(version, lower = 1L, upper = 4L)
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
       imdims=as.im3d(imdims)
@@ -148,10 +150,18 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
       stop("coordinates should be an N x 3 matrix-like object")
   }
   
-  if(version>=2) {
-    if(missing(origin) || is.null(origin) || all(origin==0))
-      origin=FALSE
-    pixcoords=round(scale(coords, center = origin, scale = voxdims))+1L
+  if(version>=4) {
+    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    origin=origin-voxdims
+    coords=matrixStats::t_tx_OP_y(as.matrix(coords), origin, OP = '-')
+    coords=matrixStats::t_tx_OP_y(coords, voxdims, OP = '/')
+    pixcoords=round(coords)
+  } else if(version>=2) {
+    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    origin=origin-voxdims
+    # if(missing(origin) || is.null(origin) || all(origin==0))
+    #   origin=FALSE
+    pixcoords=round(scale(coords, center = origin, scale = voxdims))
   } else {
     if(!missing(origin))
       coords=t(t(coords)-origin)
