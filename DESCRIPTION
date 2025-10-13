@@ -56,7 +56,8 @@ Suggests:
     readobj,
     brotli,
     qs,
-    jsonlite
+    jsonlite,
+    matrixStats
 Enhances:
     natcpp
 License: GPL-3

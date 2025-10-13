@@ -14,7 +14,7 @@ coord2ind(coords, ...)
   origin = NULL,
   linear.indices = TRUE,
   aperm = NULL,
-  use.scale = FALSE,
+  version = 1L,
   Clamp = FALSE,
   CheckRanges = !Clamp,
   ...
@@ -39,7 +39,7 @@ linear 1D form (the default) or to keep as 3D indices.}
 
 \item{aperm}{permutation order for axes.}
 
-\item{use.scale}{For testing an alternative algorithm}
+\item{version}{For testing alternative algorithms}
 
 \item{Clamp}{Whether or not to map out of range coordinates to the nearest 
 in range index (default \code{FALSE})}
