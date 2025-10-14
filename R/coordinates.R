@@ -122,7 +122,6 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
                             linear.indices=TRUE, aperm=NULL,
                             Clamp=FALSE, CheckRanges=!Clamp, ...) {
-  checkmate::assertIntegerish(version, lower = 1L, upper = 7L)
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
       imdims=as.im3d(imdims)
@@ -174,11 +173,7 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
     pixcoords[,2]=pmin(imdims[2],pmax(1,pixcoords[,2]))
     pixcoords[,3]=pmin(imdims[3],pmax(1,pixcoords[,3]))
   } else if(CheckRanges){
-    if(version>=3 && requireNamespace('matrixStats', quietly = T))
-      ranges=t(matrixStats::colRanges(pixcoords))
-    else {
-      ranges=apply(pixcoords,2,range)
-    }
+    ranges=t(matrixStats::colRanges(pixcoords))
     if(any(ranges[2,]>imdims) || any(ranges[1,]<1))
       stop("pixcoords out of range")
   }
