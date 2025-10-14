@@ -200,13 +200,22 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
 #' @param dims vector of dimensions of object to index into.
 #' @param indices vector of n-dimensional indices.
 #' @export
-sub2ind<-function(dims,indices){  
+#' @details
+#' There is a *much* more efficient version implemented in natcpp > 0.1.1
+#' @examples
+#' dims <- 3:5
+#' ijk <- matrix(c(1L, 1L, 1L, 3L, 4L, 5L), ncol = 3, byrow = TRUE)
+#' sub2ind(dims, ijk)
+sub2ind<-function(dims, indices){  
   # convert vector containing 1 coordinate into matrix
   if(!is.matrix(indices))
     indices=matrix(indices,byrow=TRUE,ncol=length(indices))
-  if(length(dims)!=ncol(indices)){
+  if(length(dims)!=ncol(indices))
     stop("indices must have the same number of columns as dimensions in dims")
-  }
+  dims <- as.integer(checkmate::assert_integerish(dims))
+  if(use_natcpp(version = '0.1.1.9000'))
+    return(nat::c_sub2ind(dims, indices))
+  
   k=cumprod(c(1,dims[-length(dims)]))
   ndx=1
   for(i in 1:length(dims)){
