@@ -149,19 +149,11 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
     if(ncol(coords)!=3)
       stop("coordinates should be an N x 3 matrix-like object")
   }
-  if(version>=7 && use_natcpp(version='0.1.1') && linear.indices && is.null(aperm)) {
+  if(version>=7 && use_natcpp(version='0.1.1.9000') && linear.indices && is.null(aperm)) {
     if(missing(origin) || is.null(origin)) origin=c(0,0,0)
     res=natcpp::c_coords21dindex(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
     return(res)
-  } else if(version>=6 && use_natcpp(version='0.1.1')) {
-    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
-    pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
-    if (!is.null(aperm))
-      imdims=imdims[aperm]
-    res=if(isTRUE(linear.indices)) natcpp::c_sub2ind(imdims, pixcoords) else pixcoords
-    return(res)
-  } else if(version>=5 && use_natcpp(version='0.1.1')) {
-    coords=as.matrix(coords)
+  } else if(version>=6 && use_natcpp(version='0.1.1.9000')) {
     if(missing(origin) || is.null(origin)) origin=c(0,0,0)
     pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
     if (!is.null(aperm))
@@ -174,12 +166,6 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
     coords=matrixStats::t_tx_OP_y(as.matrix(coords), origin, OP = '-')
     coords=matrixStats::t_tx_OP_y(coords, voxdims, OP = '/')
     pixcoords=round(coords)
-  } else if(version>=2) {
-    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
-    origin=origin-voxdims
-    # if(missing(origin) || is.null(origin) || all(origin==0))
-    #   origin=FALSE
-    pixcoords=round(scale(coords, center = origin, scale = voxdims))
   } else {
     if(!missing(origin))
       coords=t(t(coords)-origin)
