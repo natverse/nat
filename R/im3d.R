@@ -1166,6 +1166,8 @@ xyzpos<-function(d, ijk)
 #' @param xyz Nx3 matrix of physical coordinates
 #' @param roundToNearestPixel Whether to round calculated pixel coordinates to
 #'   nearest integer value (i.e. nearest pixel). default: \code{TRUE}
+#' @param clamp Whether to clamp any pixel coordinates to the dimensions of the
+#'   image
 #' @return Nx3 matrix of physical or pixel coordinates
 #' @rdname im3d-coords
 #' @aliases ijkpos
@@ -1175,7 +1177,7 @@ xyzpos<-function(d, ijk)
 #' d=im3d(,dim=c(20,30,40),origin=c(10,20,30),voxdims=c(1,2,3))
 #' # check round trip for origin
 #' stopifnot(all.equal(ijkpos(d,xyzpos(d,c(1,1,1))), c(1,1,1)))
-ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
+ijkpos<-function(d, xyz, roundToNearestPixel=TRUE, clamp=TRUE)
 {
   # return the ijk position for a physical location (x,y,z)
   # This will be the pixel centre based on the bounding box
@@ -1183,9 +1185,19 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE)
   
   # transpose if we have received a matrix (with 3 cols x,y,z) so that
   # multiplication below doesn not need to be changed
+  
+  od=origin(d)
+  checkmate::assert_numeric(od, len = 3)
+  vd=voxdims(d)
+  checkmate::assert_numeric(vd, len = 3)
+  dims=dim(d)
+  checkmate::assert_integer(dims, len = 3)
+  if(!is.null(dim(xyz)) && roundToNearestPixel && use_natcpp(version = '0.1.1.9000')) {
+    res=natcpp::c_ijkpos(xyz, dims = dims, origin = od, voxdims = vd, clamp = clamp)
+    return(res)
+  }
   if(is.matrix(xyz)) xyz=t(xyz)
-    
-  ijk=(xyz-origin(d))/voxdims(d)+1
+  ijk=(xyz-od)/voxdims(d)+1
   if(roundToNearestPixel) {
     ijk=round(ijk)
     if(any(ijk<1) || any(ijk>dim(d))) warning("pixel coordinates outside image data")

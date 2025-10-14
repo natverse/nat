@@ -8,7 +8,7 @@
 \usage{
 xyzpos(d, ijk)
 
-ijkpos(d, xyz, roundToNearestPixel = TRUE)
+ijkpos(d, xyz, roundToNearestPixel = TRUE, clamp = TRUE)
 }
 \arguments{
 \item{d}{An \code{im3d} object defining a physical space}
@@ -19,6 +19,9 @@ ijkpos(d, xyz, roundToNearestPixel = TRUE)
 
 \item{roundToNearestPixel}{Whether to round calculated pixel coordinates to
 nearest integer value (i.e. nearest pixel). default: \code{TRUE}}
+
+\item{clamp}{Whether to clamp any pixel coordinates to the dimensions of the
+image}
 }
 \value{
 Nx3 matrix of physical or pixel coordinates
