@@ -122,9 +122,9 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
-                            linear.indices=TRUE, aperm=NULL, version=4L,
+                            linear.indices=TRUE, aperm=NULL, version=7L,
                             Clamp=FALSE, CheckRanges=!Clamp, ...) {
-  checkmate::assertIntegerish(version, lower = 1L, upper = 4L)
+  checkmate::assertIntegerish(version, lower = 1L, upper = 7L)
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
       imdims=as.im3d(imdims)
@@ -149,8 +149,26 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
     if(ncol(coords)!=3)
       stop("coordinates should be an N x 3 matrix-like object")
   }
-  
-  if(version>=4) {
+  if(version>=7 && use_natcpp(version='0.1.1') && linear.indices && is.null(aperm)) {
+    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    res=natcpp::c_coords21dindex(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
+    return(res)
+  } else if(version>=6 && use_natcpp(version='0.1.1')) {
+    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
+    if (!is.null(aperm))
+      imdims=imdims[aperm]
+    res=if(isTRUE(linear.indices)) natcpp::c_sub2ind(imdims, pixcoords) else pixcoords
+    return(res)
+  } else if(version>=5 && use_natcpp(version='0.1.1')) {
+    coords=as.matrix(coords)
+    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
+    if (!is.null(aperm))
+      imdims=imdims[aperm]
+    res=if(isTRUE(linear.indices)) natcpp::c_sub2ind(imdims, pixcoords) else pixcoords
+    return(res)
+  } else if(version>=4) {
     if(missing(origin) || is.null(origin)) origin=c(0,0,0)
     origin=origin-voxdims
     coords=matrixStats::t_tx_OP_y(as.matrix(coords), origin, OP = '-')
