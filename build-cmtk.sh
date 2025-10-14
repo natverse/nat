@@ -5,7 +5,7 @@ if [ ! -d "$HOME/usr/local/bin" ]; then
   mkdir -p $HOME/src && cd $HOME/src
   git clone --depth 10 --branch natdev https://github.com/jefferis/cmtk
   cd cmtk && git checkout natdev
-  cd core && mkdir build && cd build && cmake .. && make DESTDIR=$HOME/ all install
+  cd core && mkdir build && cd build && cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .. && make DESTDIR=$HOME/ all install
 else
   echo 'Using cached $HOME/usr/local directory.';
 fi
