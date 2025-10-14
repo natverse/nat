@@ -1192,7 +1192,7 @@ ijkpos<-function(d, xyz, roundToNearestPixel=TRUE, clamp=TRUE)
   checkmate::assert_numeric(vd, len = 3)
   dims=dim(d)
   checkmate::assert_integer(dims, len = 3)
-  if(!is.null(dim(xyz)) && roundToNearestPixel && use_natcpp(version = '0.1.1.9000')) {
+  if(!is.null(dim(xyz)) && roundToNearestPixel && use_natcpp(version = '0.2')) {
     res=natcpp::c_ijkpos(xyz, dims = dims, origin = od, voxdims = vd, clamp = clamp)
     return(res)
   }

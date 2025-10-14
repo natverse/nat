@@ -146,7 +146,7 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
     if(ncol(coords)!=3)
       stop("coordinates should be an N x 3 matrix-like object")
   }
-  if(use_natcpp(version='0.1.1.9000')) {
+  if(use_natcpp(version='0.2')) {
     if(missing(origin) || is.null(origin)) origin=c(0,0,0)
     if(linear.indices && is.null(aperm))
       res=natcpp::c_coords21dindex(coords, dims = imdims, origin = origin, 
@@ -204,8 +204,8 @@ sub2ind<-function(dims, indices){
   if(length(dims)!=ncol(indices))
     stop("indices must have the same number of columns as dimensions in dims")
   dims <- as.integer(checkmate::assert_integerish(dims))
-  if(use_natcpp(version = '0.1.1.9000'))
-    return(nat::c_sub2ind(dims, indices))
+  if(use_natcpp(version = '0.2'))
+    return(natcpp::c_sub2ind(dims, indices))
   
   k=cumprod(c(1,dims[-length(dims)]))
   ndx=1
