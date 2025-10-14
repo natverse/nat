@@ -14,7 +14,7 @@ coord2ind(coords, ...)
   origin = NULL,
   linear.indices = TRUE,
   aperm = NULL,
-  version = 4L,
+  version = 7L,
   Clamp = FALSE,
   CheckRanges = !Clamp,
   ...
