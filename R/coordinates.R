@@ -112,8 +112,6 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @param origin the origin of the 3D image.
 #' @param linear.indices Whether or not to convert the voxel indices into a
 #'   linear 1D form (the default) or to keep as 3D indices.
-#' @param version For testing alternative algorithms. Currently 1-4 where 1 is
-#'   the original version and 4 seems to be the best so far.
 #' @param aperm permutation order for axes.
 #' @param Clamp Whether or not to map out of range coordinates to the nearest in
 #'   range index (default \code{FALSE})
@@ -122,7 +120,7 @@ coord2ind <- function(coords, ...) UseMethod("coord2ind")
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
-                            linear.indices=TRUE, aperm=NULL, version=7L,
+                            linear.indices=TRUE, aperm=NULL,
                             Clamp=FALSE, CheckRanges=!Clamp, ...) {
   checkmate::assertIntegerish(version, lower = 1L, upper = 7L)
   if(is.object(imdims)){
@@ -149,29 +147,27 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
     if(ncol(coords)!=3)
       stop("coordinates should be an N x 3 matrix-like object")
   }
-  if(version>=7 && use_natcpp(version='0.1.1.9000') && linear.indices && is.null(aperm)) {
+  if(use_natcpp(version='0.1.1.9000')) {
     if(missing(origin) || is.null(origin)) origin=c(0,0,0)
-    res=natcpp::c_coords21dindex(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
+    if(linear.indices && is.null(aperm))
+      res=natcpp::c_coords21dindex(coords, dims = imdims, origin = origin, 
+                               voxdims = voxdims, clamp = Clamp)
+    else {
+      pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin,
+                                 voxdims = voxdims, clamp = Clamp)
+      if (!is.null(aperm))
+        imdims=imdims[aperm]
+      res=if(linear.indices) natcpp::c_sub2ind(imdims, pixcoords) else pixcoords
+    }
     return(res)
-  } else if(version>=6 && use_natcpp(version='0.1.1.9000')) {
-    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
-    pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin, voxdims = voxdims, clamp = Clamp)
-    if (!is.null(aperm))
-      imdims=imdims[aperm]
-    res=if(isTRUE(linear.indices)) natcpp::c_sub2ind(imdims, pixcoords) else pixcoords
-    return(res)
-  } else if(version>=4) {
-    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
-    origin=origin-voxdims
-    coords=matrixStats::t_tx_OP_y(as.matrix(coords), origin, OP = '-')
-    coords=matrixStats::t_tx_OP_y(coords, voxdims, OP = '/')
-    pixcoords=round(coords)
-  } else {
-    if(!missing(origin))
-      coords=t(t(coords)-origin)
-    pixcoords=t(round(t(coords)/voxdims))+1
-  }
-  
+  } 
+  # base R / favoured package implementation 
+  if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+  origin=origin-voxdims
+  coords=matrixStats::t_tx_OP_y(as.matrix(coords), origin, OP = '-')
+  coords=matrixStats::t_tx_OP_y(coords, voxdims, OP = '/')
+  pixcoords=round(coords)
+
   # make sure no points are out of range
   if(Clamp){
     pixcoords[,1]=pmin(imdims[1],pmax(1,pixcoords[,1]))
