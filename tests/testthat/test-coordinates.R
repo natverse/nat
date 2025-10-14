@@ -9,7 +9,7 @@ test_that("sub2ind returns correct indices", {
 })
 
 test_that("ind2coord returns correct coordinates when given an im3d", {
-  testImage <- read.im3d("testdata/nrrd/LHMask.nrrd")
+  testImage <- read.im3d(test_path("testdata/nrrd/LHMask.nrrd"))
   coord <- ind2coord(testImage)
   coord <- coord[1:10]
   coord.expected <- c(40.6, 42, 36.4, 37.8, 39.2, 40.6, 42, 36.4, 37.8, 39.2)
@@ -17,7 +17,7 @@ test_that("ind2coord returns correct coordinates when given an im3d", {
 })
 
 test_that("coord2ind returns correct coordinates", {
-  testImage <- read.im3d("testdata/nrrd/LHMask.nrrd", ReadData = F)
+  testImage <- read.im3d(test_path("testdata/nrrd/LHMask.nrrd"), ReadData = F)
   ind <- coord2ind(matrix(c(10, 20, 30, 11, 20, 30), nrow=2, byrow=TRUE), testImage)
   ind.expected <- c(53208, 53209)
   expect_equal(ind, ind.expected)
