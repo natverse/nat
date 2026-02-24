@@ -148,9 +148,22 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
   }
   if(use_natcpp(version='0.2')) {
     if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    has_check="check" %in% names(formals(natcpp::c_coords21dindex))
     if(linear.indices && is.null(aperm))
-      res=natcpp::c_coords21dindex(coords, dims = imdims, origin = origin, 
-                               voxdims = voxdims, clamp = Clamp)
+      res=if(Clamp) {
+        natcpp::c_coords21dindex(coords, dims = imdims, origin = origin,
+                                 voxdims = voxdims, clamp = TRUE)
+      } else if(has_check) {
+        natcpp::c_coords21dindex(coords, dims = imdims, origin = origin,
+                                 voxdims = voxdims, clamp = FALSE, check = TRUE)
+      } else {
+        pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin,
+                                   voxdims = voxdims, clamp = FALSE)
+        ranges=t(matrixStats::colRanges(pixcoords))
+        if(any(ranges[2,]>imdims) || any(ranges[1,]<1))
+          stop("pixcoords out of range")
+        natcpp::c_sub2ind(imdims, pixcoords)
+      }
     else {
       pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin,
                                  voxdims = voxdims, clamp = Clamp)

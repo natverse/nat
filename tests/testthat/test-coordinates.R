@@ -27,3 +27,20 @@ test_that("coord2ind returns correct coordinates", {
       testImage, linear.indices = F),
     structure(c(8, 9, 15, 15, 22, 22), .Dim = 2:3))
 })
+
+test_that("coord2ind with natcpp preserves Clamp FALSE range errors", {
+  skip_if_not(use_natcpp(version = "0.2", always = TRUE))
+  testImage <- read.im3d(test_path("testdata/nrrd/LHMask.nrrd"), ReadData = F)
+  oldopt <- getOption("nat.use_natcpp")
+  options(nat.use_natcpp = TRUE)
+  on.exit(options(nat.use_natcpp = oldopt), add = TRUE)
+
+  expect_error(
+    coord2ind(matrix(c(1e6, 1e6, 1e6), nrow = 1), testImage, Clamp = FALSE),
+    "pixcoords out of range"
+  )
+  expect_warning(expect_equal(
+    coord2ind(matrix(c(1e6, 1e6, 1e6), nrow = 1), testImage, Clamp = TRUE),
+    prod(dim(testImage))
+  ))
+})
