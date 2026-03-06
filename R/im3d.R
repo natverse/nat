@@ -158,11 +158,18 @@ as.im3d.matrix<-function(x, voxdims, origin=NULL, BoundingBox=NULL, ...) {
     emptyim=im3d(dims = dims, voxdims = voxdims, origin=origin)
   }
   
-  breaks=mapply(function(ps, delta) c(ps[1]-delta/2, ps+delta/2), 
-                attributes(emptyim)[c("x","y","z")], voxdims(emptyim))
-  i=cut(x[,1], breaks = breaks[[1]], labels = F)
-  j=cut(x[,2], breaks = breaks[[2]], labels = F)
-  k=cut(x[,3], breaks = breaks[[3]], labels = F)
+  breaks=mapply(function(ps, delta) c(ps[1]-delta/2, ps+delta/2),
+                attributes(emptyim)[c("x","y","z")], voxdims(emptyim),
+                SIMPLIFY = FALSE)
+  # Right-open bins are consistent with coord->index mapping, but include
+  # the global upper boundary by nudging the last break outward.
+  breaks=lapply(breaks, function(b) {
+    b[length(b)]=b[length(b)] + .Machine$double.eps * max(1, abs(b[length(b)]))
+    b
+  })
+  i=cut(x[,1], breaks = breaks[[1]], labels = F, include.lowest = T, right = F)
+  j=cut(x[,2], breaks = breaks[[2]], labels = F, include.lowest = T, right = F)
+  k=cut(x[,3], breaks = breaks[[3]], labels = F, include.lowest = T, right = F)
   t3d=fast3dintegertable(i, j, k, dims[1], dims[2], dims[3])
   im3d(t3d, emptyim, ...)
 }
