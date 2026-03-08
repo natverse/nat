@@ -31,7 +31,8 @@ A \code{\link{neuronlist}} object with additional class
 }
 \details{
 \code{\link{neuronlistz}} is designed to wrap zip files containing
-  neurons saved in the RDS or faster/smaller qs format for rapid access. You
+  neurons saved in RDS (or optional brotli-compressed RDS) format for rapid
+  access. You
   should be able to read typical files in <20 ms. For files of ~3 GB there is
   a fixed cost of the order of 10-15ms per read.
 }
@@ -43,7 +44,7 @@ nz[[1]]
 nz[1:5]
 }
 \dontrun{
-write.neurons(Cell07PNs[1:5], tf <- tempfile(fileext = '.zip'), format='qs')
+write.neurons(Cell07PNs[1:5], tf <- tempfile(fileext = '.zip'), format='rdsb')
 nz2=neuronlistz(tf)
 all.equal(nz2[1:3], nz[1:3])
 }

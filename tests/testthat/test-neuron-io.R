@@ -43,20 +43,6 @@ test_that("we can use optional brotli format", {
   expect_equal(read.neurons(tf), read.neurons(tf2))
 })
 
-test_that("we can use optional qs format", {
-  expect_is(fw<-getformatwriter(file='test.qs', class='neuron'),'list')
-  expect_equal(fw$ext,'.qs')
-  expect_equal(fw$read, readqs)
-  expect_equal(fw$write, saveqs)
-  skip_if_not_installed('qs')
-  tf <- tempfile(fileext = ".zip")
-  tf2 <- tempfile(fileext = ".zip")
-  write.neurons(Cell07PNs[1:5], dir = tf, format='qs', include.data.frame = T)
-  expect_equal(read.neurons(tf), Cell07PNs[1:5])
-  expect_equal(read.neurons(tf, nl = Cell07PNs[6:10]), Cell07PNs[c(6:10,1:5)])
-})
-
-
 test_that("we can set new fileformats",{
   expect_error(registerformat('rhubarb'), 'provide.*read or write')
   # returns null on success

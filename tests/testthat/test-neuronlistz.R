@@ -12,8 +12,8 @@ test_that("neuronlistz works", {
   
   tf2=tempfile(fileext = '.zip')
   on.exit(unlink(tf2), add = T)
-  skip_if_not_installed('qs')
-  write.neurons(Cell07PNs, tf2, format='qs', include.data.frame = T)
+  skip_if_not_installed('brotli')
+  write.neurons(Cell07PNs, tf2, format='rdsb', include.data.frame = T)
   nz <- neuronlistz(tf2)
   
   expect_equal(nz[seq_along(nz)], Cell07PNs)

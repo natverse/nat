@@ -1,7 +1,8 @@
 #' A neuronlist object that will read neurons from a zip file on demand
 #'
 #' @details \code{\link{neuronlistz}} is designed to wrap zip files containing
-#'   neurons saved in the RDS or faster/smaller qs format for rapid access. You
+#'   neurons saved in RDS (or optional brotli-compressed RDS) format for rapid
+#'   access. You
 #'   should be able to read typical files in <20 ms. For files of ~3 GB there is
 #'   a fixed cost of the order of 10-15ms per read.
 #'
@@ -26,7 +27,7 @@
 #' nz[1:5]
 #' }
 #' \dontrun{
-#' write.neurons(Cell07PNs[1:5], tf <- tempfile(fileext = '.zip'), format='qs')
+#' write.neurons(Cell07PNs[1:5], tf <- tempfile(fileext = '.zip'), format='rdsb')
 #' nz2=neuronlistz(tf)
 #' all.equal(nz2[1:3], nz[1:3])
 #' }
@@ -51,7 +52,7 @@ neuronlistz <- function(zip, patt=NULL, df=NULL, ...) {
   } else ff
   
   exts=unique(tools::file_ext(keyfilemap))
-  known_exts = c("rds", "qs", "rdsb")
+  known_exts = c("rds", "rdsb")
   if(!all(exts %in% known_exts))
     stop("Unrecognised extensions in zipfile:", 
          paste(setdiff(exts, known_exts), collapse = ", "))

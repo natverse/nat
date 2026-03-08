@@ -685,7 +685,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
                        Force=FALSE, MakeDir=TRUE, metadata=NULL, ...){
   if(is.dotprops(n)){
     # we only know how to save dotprops objects in R's internal format
-    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds", "rdsb", "qs"))
+    format=if(is.null(format)) 'rds' else match.arg(format, c("swc", "rds", "rdsb"))
     if(is.null(file)) {
       file=basename(attr(n,"file"))
       if(is.null(file))
@@ -997,7 +997,7 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
       files=c(files, f)
     }
     # rds is already compressed so just store
-    zipflags=ifelse(format%in%c("rds", "rdsb", "qs"), "-qr0X", "-qr9X")
+    zipflags=ifelse(format%in%c("rds", "rdsb"), "-qr0X", "-qr9X")
     zip(zip_file, flags = zipflags, 
         files=if(getRversion()<"3.6.0") dir else dir(dir, recursive = TRUE))
     unlink(dir, recursive=TRUE)
