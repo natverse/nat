@@ -24,6 +24,26 @@ as_undirected_nat <- function(...) {
     igraph::as_undirected(...) else igraph::as.undirected(...)
 } 
 
+dfs_nat <- function(graph, root, ..., parent=FALSE) {
+  if(igraph_version_at_least('2.2.0')) {
+    igraph::dfs(graph, root, ..., parent=parent)
+  } else {
+    res <- igraph::dfs(graph, root, ..., father=parent)
+    names(res)[names(res) == 'father'] <- 'parent'
+    res
+  }
+}
+
+bfs_nat <- function(graph, root, ..., parent=FALSE) {
+  if(igraph_version_at_least('2.2.0')) {
+    igraph::bfs(graph, root, ..., parent=parent)
+  } else {
+    res <- igraph::bfs(graph, root, ..., father=parent)
+    names(res)[names(res) == 'father'] <- 'parent'
+    res
+  }
+}
+
 #' ngraph: a graph to encode a neuron's connectivity
 #'
 #' @description the \code{ngraph} class contains a (completely general) graph
@@ -201,7 +221,7 @@ as.directed.usingroot<-function(g, root, mode=c('out','in')){
   if(!igraph::is_directed(g))
     dg=as_directed_nat(g, mode='arbitrary')
   else dg=g
-  dfs=igraph::dfs(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
+  dfs=dfs_nat(dg, root, unreachable=FALSE, dist=TRUE, mode='all')
   el=igraph::as_edgelist(dg)
   
   connected_vertices=which(is.finite(dfs$order))
@@ -425,7 +445,7 @@ strahler_order<-function(x){
     return(list(points=rep(1L, nrow(x$d)),
                 segments=rep(1L, length(x$SegList))))
   
-  b=bfs(s, root=roots, mode = 'out', unreachable=F, father=T)
+  b=bfs_nat(s, root=roots, mode = 'out', unreachable=FALSE, parent=TRUE)
   
   # find neighbours for each node
   n=neighborhood(s, 1, mode='out')
