@@ -1,17 +1,27 @@
 # local functions to handle deprecated functions in igraph >= 2.1.0
+igraph_version_at_least <- local({
+  igraph_version <- NULL
+
+  function(version) {
+    if(is.null(igraph_version))
+      igraph_version <<- packageVersion('igraph')
+    igraph_version >= version
+  }
+})
+
 make_graph_nat <- function(...) {
-  pvi <- packageVersion('igraph')
-  if(pvi>='2.1.0') igraph::make_graph(...) else igraph::graph(...)
+  if(igraph_version_at_least('2.1.0')) 
+    igraph::make_graph(...) else igraph::graph(...)
 }
 
 as_directed_nat <- function(...) {
-  pvi <- packageVersion('igraph')
-  if(pvi>='2.1.0') igraph::as_directed(...) else igraph::as.directed(...)
+  if(igraph_version_at_least('2.1.0')) 
+    igraph::as_directed(...) else igraph::as.directed(...)
 } 
 
 as_undirected_nat <- function(...) {
-  pvi <- packageVersion('igraph')
-  if(pvi>='2.1.0') igraph::as_undirected(...) else igraph::as.undirected(...)
+  if(igraph_version_at_least('2.1.0')) 
+    igraph::as_undirected(...) else igraph::as.undirected(...)
 } 
 
 #' ngraph: a graph to encode a neuron's connectivity
