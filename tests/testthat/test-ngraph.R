@@ -61,7 +61,7 @@ test_that("equivalence of seglist and swc methods for as.ngraph.neuron",{
   expect_true(graph.isomorphic(g1s,g3s))
   
   myidentical_graph<-function(target, current, ...){
-    old_igraph = package_version(igraph::igraph.version())<'1.0'
+    old_igraph = utils::packageVersion('igraph')<'1.0'
     if(old_igraph) isTRUE(all.equal(target, current, ...))
     else igraph::identical_graphs(target, current)
   }
@@ -209,8 +209,10 @@ test_that("as.ngraph can convert undirected graph into an ngraph object",{
 test_that("Strahler order", {
   expect_error(strahler_order(list(a=1, b=2)))
   n = as.neuron(testd)
-  expect_equal(son <- strahler_order(n), list(points = c(2L, 2L, 
-    2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
+  expect_no_warning(
+    expect_equal(son <- strahler_order(n), list(points = c(2L, 2L, 
+      2L, 1L, 1L, 1L), segments = c(2L, 1L, 1L)))
+  )
   
   ns=structure(list(NumPoints = 3L, StartPoint = 1L, BranchPoints = integer(0), 
     EndPoints = c(1L, 3L), nTrees = 1, NumSegs = 1L, 

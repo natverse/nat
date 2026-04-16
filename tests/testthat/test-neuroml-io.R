@@ -35,7 +35,7 @@ test_that("parse neuroml files", {
     )
   }
   myidentical_graph<-function(target, current, ...){
-    old_igraph = package_version(igraph::igraph.version())<'1.0'
+    old_igraph = utils::packageVersion('igraph')<'1.0'
     if(old_igraph) isTRUE(all.equal(target, current, ...))
     else igraph::identical_graphs(target, current)
   }

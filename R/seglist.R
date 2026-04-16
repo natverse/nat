@@ -140,7 +140,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   }
   
   # Now do a depth first search to ensure that ordering is correct
-  dfs=dfs(x, root=origin, father=TRUE, mode='all')
+  dfs=dfs_nat(x, root=origin, parent=TRUE, mode='all')
   # cache orders for speed: dfs$order[i] is slooooow in igraph>=1.0
   orders=as.integer(dfs$order)
   ncount=degree(x)
@@ -151,7 +151,7 @@ as.seglist.igraph<-function(x, origin=NULL, Verbose=FALSE, ...){
   if(length(ncount)==1) stop("Unexpected singleton point found!")
   sl=list()
   # we have more than 1 point in graph and some work to do!
-  fathers=as.integer(dfs$father)
+  fathers=as.integer(dfs$parent)
   for(i in seq.int(from=2,to=length(dfs$order))){
     curpoint=orders[i]
     if(length(curseg)==0){

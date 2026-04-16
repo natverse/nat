@@ -60,10 +60,9 @@ update_igraph <- FALSE
                  class='hxsurf', magiclen=14L)
   
   # deal with slow vertex sequences in igraph
-  pvi <- packageVersion('igraph')
-  if (pvi < "1.0.0") {
+  if (!igraph_version_at_least("1.0.0")) {
     # this is fast by default
-  } else if (pvi > "1.0.1") {
+  } else if (igraph_version_at_least("1.0.2")) {
     # we can turn off expensive vs.es return sequences
     igraph::igraph_options(return.vs.es = FALSE)
   } else {
