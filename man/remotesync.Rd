@@ -49,7 +49,7 @@ Synchronise a remote object
 }
 \examples{
 \dontrun{
-kcs20=read.neuronlistfh('http://flybrain.mrc-lmb.cam.ac.uk/si/nblast/flycircuit/kcs20.rds')
+kcs20=read.neuronlistfh('http://virtualflybrain.org/data/nblast/flycircuit/kcs20.rds')
 # update object from the web
 kcs20=remotesync(kcs20)
 # download all neurons with significant innervation of the vertical lobe
