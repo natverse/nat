@@ -20,7 +20,9 @@ test_that("read/write works", {
   expect_equal(sbl <- summary(bl), summary(bl2))
   
   expect_is(sbl, 'data.frame')
-  expect_known_value(sbl, file = 'testdata/summary_bl.rds')
+  # tolerance loosened from testthat default (~1.5e-8) to absorb FP drift in
+  # Rvcg::vcgArea on arm64 macOS vs. the x86_64-recorded snapshot
+  expect_known_value(sbl, file = 'testdata/summary_bl.rds', tolerance = 1e-6)
   
   expect_error(write.neurons(Cell07PNs[1:3], format = 'ply'))
   
