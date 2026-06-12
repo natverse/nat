@@ -98,6 +98,10 @@ update_igraph <- FALSE
 
 # Will store stack of plotted plotly objects, ready for popping
 .plotly3d <- new.env()
+
+# Session cache of Morpho thin plate spline coefficients, keyed by a digest
+# of (refmat, tarmat, lambda) plus direction. See xformpoints.tpsreg.
+.tpsreg_cache <- new.env(parent = emptyenv())
 .plotly3d$camera = list(up=list(x=0, y=0, z=1),
               center=list(x=0, y=0, z=0),
               eye=list(x=-0.1, y=-2.5, z=0.1))
