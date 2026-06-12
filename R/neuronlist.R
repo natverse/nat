@@ -335,13 +335,36 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
   x
 }
 
+resolve_parallel <- function(.parallel) {
+  if(isFALSE(.parallel) || is.null(.parallel))
+    return(NULL)
+  if(inherits(.parallel, "cluster"))
+    return(.parallel)
+  if(isTRUE(.parallel)) {
+    # honour a registered foreach backend (e.g. doMC::registerDoMC(6)) by
+    # reusing its worker count; on Unix pbapply will fork via mclapply, which
+    # matches doMC semantics. foreach is in Suggests — fall back silently.
+    n <- if(requireNamespace("foreach", quietly = TRUE))
+      tryCatch(foreach::getDoParWorkers(), error = function(e) NA_integer_)
+    else NA_integer_
+    if(is.na(n) || n < 2L) n <- getOption("mc.cores", 2L)
+    return(as.integer(n))
+  }
+  if(is.numeric(.parallel) && length(.parallel) == 1L && !is.na(.parallel)) {
+    n <- as.integer(.parallel)
+    if(n < 2L) return(NULL)
+    return(n)
+  }
+  stop(".parallel must be FALSE, TRUE, a single integer, or a cluster object")
+}
+
 #' lapply and mapply for neuronlists (with optional parallelisation)
 #'
 #' @description Versions of lapply and mapply that look after the class and
 #'   attached dataframe of neuronlist objects. \code{nlapply} can apply a
 #'   function to only a \code{subset} of elements in the input neuronlist.
-#'   Internally \code{nlapply} uses \code{plyr::llply} thereby enabling progress
-#'   bars and simple parallelisation (see plyr section and examples).
+#'   Internally \code{nlapply} uses \code{pbapply::pblapply}, which supports
+#'   progress bars in both sequential and parallel execution.
 #'
 #' @details When \code{OmitFailures} is not \code{NA}, \code{FUN} will be
 #'   wrapped in a call to \code{try} to ensure that failure for any single
@@ -352,33 +375,48 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   either of the last 2 cases error messages will not be printed because the
 #'   call is wrapped as \code{try(expr, silent=TRUE)}.
 #'
-#' @section plyr: The arguments of most interest from plyr are:
+#'   \strong{Note on \code{doMC}/\code{foreach} backends.} Prior to nat 1.11.1
+#'   the parallel implementation was provided by \code{plyr::llply}, which
+#'   relied on a \code{foreach} backend being registered first — most commonly
+#'   via \code{doMC::registerDoMC(n)} on macOS/Linux. That call is no longer
+#'   required: \code{nlapply} now drives \code{\link[pbapply]{pblapply}}
+#'   directly, which on Unix uses \code{\link[parallel]{mclapply}} (the same
+#'   forking mechanism \code{doMC} used) and on Windows builds a PSOCK cluster
+#'   automatically. The major benefit is that progress bars now work
+#'   transparently in parallel mode, which was not possible under the previous
+#'   \code{plyr}/\code{foreach} arrangement.
+#'
+#'   For backward compatibility, if \code{doMC::registerDoMC(n)} (or any other
+#'   \code{foreach} backend) has already been registered when \code{nlapply}
+#'   is called with \code{.parallel=TRUE}, the registered worker count is
+#'   reused so existing scripts continue to behave as before. We recommend
+#'   migrating to the explicit \code{.parallel=n} form, which avoids the
+#'   dependence on the global \code{foreach} state and does not require
+#'   \code{doMC}/\code{foreach} to be installed.
+#'
+#' @section Parallel execution: \code{.parallel} accepts:
 #'
 #'   \itemize{
 #'
-#'   \item \code{.inform} set to \code{TRUE} to give more informative error
-#'   messages that should indicate which neurons are failing for a given applied
-#'   function.
+#'   \item \code{FALSE} (default) for sequential execution.
 #'
-#'   \item \code{.progress} set to \code{"text"} for a basic progress bar
+#'   \item \code{TRUE} to use a default worker count. If a \code{foreach}
+#'   parallel backend has been registered (e.g. via
+#'   \code{doMC::registerDoMC(6)}), its worker count is reused; otherwise
+#'   \code{getOption("mc.cores", 2L)} is used. Unlike older versions of
+#'   \code{nlapply}, no \code{foreach} backend is required: the registered
+#'   worker count is used purely to size \code{pbapply}'s own parallel call.
 #'
-#'   \item \code{.parallel} set to \code{TRUE} for parallelisation after
-#'   registering a parallel backend (see below).
+#'   \item A single integer specifying the number of workers.
 #'
-#'   \item \code{.paropts} Additional arguments for parallel computation. See
-#'   \code{\link[plyr]{llply}} for details.
+#'   \item A cluster object created by \code{\link[parallel]{makeCluster}}.
 #'
 #'   }
 #'
-#'   Before using parallel code within an R session you must register a suitable
-#'   parallel backend. The simplest example is the multicore option provided by
-#'   the \code{doMC} package that is suitable for a spreading computational load
-#'   across multiple cores on a single machine. An example is provided below.
-#'
-#'   Note that the progress bar and parallel options cannot be used at the same
-#'   time. You may want to start a potentially long-running job with the
-#'   progress bar option and then abort and re-run with \code{.parallel=TRUE} if
-#'   it looks likely to take a very long time.
+#'   On Unix-like systems an integer worker count uses forking via
+#'   \code{\link[parallel]{mclapply}}; on Windows \code{pbapply} creates a
+#'   PSOCK cluster automatically. Progress bars work in both sequential and
+#'   parallel modes.
 #'
 #' @param X A neuronlist
 #' @param FUN Function to be applied to each element of X
@@ -396,26 +434,27 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #'   overridden for the current session by setting the value of
 #'   \code{options(nat.progressbar)} (see examples). Values of \code{T} and
 #'   \code{F} are aliases for 'text' and 'none', respectively.
+#' @param .parallel Whether and how to parallelise \code{nlapply}. See
+#'   Parallel execution section for details.
 #'
-#' @section Progress bar: There are currently two supported approaches to
-#'   defining progress bars for \code{nlapply}. The default (when
-#'   \code{progress="auto"}) now uses a progress bar built using
-#'   \code{\link[progress]{progress_bar}} from the progress package, which can
-#'   be highly customised. The alternative is to use the progress bars
-#'   distributed directly with the \code{plyr} package such as
-#'   \code{\link[plyr]{progress_text}}.
+#' @section Progress bar: \code{nlapply} drives \code{\link[pbapply]{pblapply}}
+#'   to display a progress bar. The \code{.progress} argument accepts:
 #'
-#'   In either case the value of the \code{.progress} argument must be a
-#'   character vector which names a function. According to \code{plyr}'s
-#'   convention an external function called \code{progress_myprogressbar} will
-#'   be identified by setting the argument to \code{.progress="myprogressbar"}.
-#'   By default the supplied \code{progress_natprogress} function will be used
-#'   when \code{.progress="auto"}; this function will probably not be used
-#'   directly by end users; however it must be exported for \code{nlapply} with
-#'   progress to work properly in other functions.
+#'   \itemize{
+#'   \item \code{"auto"} (default): a progress bar is shown in interactive use
+#'   if the computation runs for more than ~2 seconds.
+#'   \item \code{"text"} or \code{TRUE}: always show a text progress bar.
+#'   \item \code{"none"} or \code{FALSE}: never show a progress bar.
+#'   \item \code{"traditional"}: shows a text bar only for lists of length
+#'   >= 10 in interactive sessions (the pre-1.9.1 default).
+#'   }
 #'
-#'   For \code{nmapply} only the default \code{nat_progress} bar can be shown
-#'   for architectural reasons. It will be shown in interactive mode when
+#'   The default can be overridden for the session via
+#'   \code{options(nat.progress=)}. Progress bars work in both sequential and
+#'   parallel execution.
+#'
+#'   For \code{nmapply} only the default progress bar can be shown for
+#'   architectural reasons. It will be shown in interactive mode when
 #'   \code{.progress='auto'} (the default). The progress bar can be suppressed
 #'   by setting \code{.progress='none'}. Any other value will result in a
 #'   progress bar being shown in both interactive and batch modes.
@@ -432,24 +471,22 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' close3d()
 #'
 #' \dontrun{
-#' # example of using plyr's .inform argument for debugging error conditions
-#' xx=nlapply(Cell07PNs, prune_strahler)
-#' # oh dear there was an error, let's get some details about the neuron
-#' # that caused the problem
-#' xx=nlapply(Cell07PNs, prune_strahler, .inform=TRUE)
-#' }
-#'
-#' \dontrun{
-#' ## nlapply example with plyr
+#' ## nlapply example with parallel + progress
 #' ## dotprops.neuronlist uses nlapply under the hood
-#' ## the .progress and .parallel arguments are passed straight to
 #' system.time(d1<-dotprops(kcs20,resample=1,k=5,.progress='text'))
-#' ## plyr+parallel
+#'
+#' ## Old style (nat < 1.11.1): register a foreach backend, then .parallel=TRUE.
+#' ## This still works, but doMC is no longer required and no progress bar
+#' ## was available in this mode.
 #' library(doMC)
-#' # can also specify cores e.g. registerDoMC(cores=4)
-#' registerDoMC()
+#' registerDoMC(6)
 #' system.time(d2<-dotprops(kcs20,resample=1,k=5,.parallel=TRUE))
-#' stopifnot(all.equal(d1,d2))
+#'
+#' ## New style: pass the worker count directly. No doMC/foreach needed,
+#' ## and the progress bar works alongside parallel execution.
+#' system.time(d3<-dotprops(kcs20,resample=1,k=5,.parallel=6,.progress='text'))
+#'
+#' stopifnot(all.equal(d1,d2), all.equal(d1,d3))
 #' }
 #'
 #' ## nmapply example
@@ -482,30 +519,44 @@ as.data.frame.neuronlist<-function(x, row.names = names(x), optional = FALSE, ..
 #' options(nat.progress=NULL)
 #' sl=nlapply(Cell07PNs, FUN = seglengths)
 #' }
-nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA, 
-                   .progress=getOption('nat.progress', default='auto')){
+nlapply<-function (X, FUN, ..., subset=NULL, OmitFailures=NA,
+                   .progress=getOption('nat.progress', default='auto'),
+                   .parallel=FALSE){
+  # Only "auto" defers progress until the loop has been running for a while;
+  # an explicit TRUE / "text" forces the bar to show immediately.
+  defer_progress <- FALSE
   if(isTRUE(.progress=='auto')) {
-    .progress = ifelse(interactive(), "natprogress", "none")
+    .progress = ifelse(interactive(), "timer", "none")
+    defer_progress <- TRUE
   } else if(isTRUE(.progress=='traditional')) {
-    .progress = ifelse(length(X)>=10 && interactive(), "text", "none")
-  } else if(isTRUE(.progress)) {
-    .progress <- 'text'
+    .progress = ifelse(length(X)>=10 && interactive(), "timer", "none")
+  } else if(isTRUE(.progress) || identical(.progress, "text") ||
+            identical(.progress, "natprogress")) {
+    .progress <- 'timer'
   } else if(isFALSE(.progress)) {
     .progress <- 'none'
   }
   checkmate::assert_character(.progress, any.missing = F, len = 1L)
-  cl=if(is.neuronlist(X) && !inherits(X, c('neuronlistfh','neuronlistz')))
-    class(X) 
+  outcl=if(is.neuronlist(X) && !inherits(X, c('neuronlistfh','neuronlistz')))
+    class(X)
   else c("neuronlist", 'list')
-  
+
   if(!is.null(subset)){
     if(!is.character(subset)) subset=names(X)[subset]
     Y=X
     X=X[subset]
   }
-  TFUN = if(is.na(OmitFailures)) FUN 
+  TFUN = if(is.na(OmitFailures)) FUN
   else function(...) try(FUN(...), silent=TRUE)
-  rval=structure(plyr::llply(X, TFUN, ..., .progress=.progress), class=cl, df=attr(X, 'df'))
+
+  parcl <- resolve_parallel(.parallel)
+  old_pboptions <- pbapply::pboptions(
+    type = if(.progress == 'none') 'none' else .progress,
+    min_time = if(defer_progress) 2 else 0)
+  on.exit(pbapply::pboptions(old_pboptions), add = TRUE)
+  results <- pbapply::pblapply(X, TFUN, ..., cl = parcl)
+
+  rval=structure(results, class=outcl, df=attr(X, 'df'))
   
   if(isTRUE(OmitFailures))
     failures=sapply(rval, inherits, 'try-error')

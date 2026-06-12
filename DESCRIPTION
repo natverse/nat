@@ -45,6 +45,7 @@ Suggests:
     spelling,
     Rvcg (>= 0.17),
     testthat,
+    foreach,
     httr,
     XML,
     knitr,
@@ -110,7 +111,7 @@ Collate:
     'xformpoints.R'
     'xyzmatrix.R'
     'zzz.R'
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 VignetteBuilder: knitr
 Language: en-GB

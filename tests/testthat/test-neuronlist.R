@@ -114,6 +114,12 @@ test_that("nlapply can omit failures",{
   expect_error(dotprops(kcs3, k=5, OmitFailures=TRUE, .progress=NA))
 })
 
+test_that("nlapply can use an explicit parallel backend",{
+  skip_on_os("windows")
+  kcs3=kcs20[1:3]
+  expect_equal(nlapply(kcs3, function(x) x, .parallel=2L, .progress=FALSE), kcs3)
+})
+
 test_that("nmapply with identity function returns its arguments",{
   kcs3=kcs20[1:3]
   expect_equal(nmapply(function(x) x, kcs3), kcs3)
