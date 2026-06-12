@@ -380,6 +380,8 @@ mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
 #'   transform mapping a paired landmark set.
 #' @param sample,reference Matrices defining the sample (or floating) and
 #'   reference (desired target after transformation) spaces. See details.
+#' @param lambda Regularisation parameter passed to
+#'   \code{Morpho::\link[Morpho]{computeTransform}} (default \code{1e-8}).
 #' @param ... additional arguments passed to \code{\link{xformpoints.tpsreg}}
 #' @details  Note that we use the \bold{nat} convention for naming the
 #'   sample/reference space arguments but these actually clash with the
@@ -391,6 +393,13 @@ mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
 #'   \item tarmat (Morpho3d) == reference (nat)
 #'
 #'   }
+#'
+#'   The underlying \code{Morpho::\link[Morpho]{computeTransform}} solve can
+#'   be slow (~1s for a couple of thousand landmarks). To avoid repeating it
+#'   on every call — e.g. when transforming many neurons via
+#'   \code{\link{nlapply}} — the resulting coefficients are cached for the
+#'   session, keyed by the contents of the landmarks plus \code{lambda}, so
+#'   the solve cost is paid only once per direction.
 #' @export
 #' @seealso \code{\link[nat]{reglist}}, \code{\link[nat]{read.landmarks}}
 #' @examples
@@ -429,26 +438,40 @@ mirror.neuronlist<-function(x, subset=NULL, OmitFailures=NA, ...){
 #' plot(da2pns.L, col='red')
 #' plot(da2pns.R.L, col='blue', add=TRUE)
 #' }
-tpsreg<-function(sample, reference, ...){
-  structure(list(refmat=data.matrix(sample), tarmat=data.matrix(reference), ...),
-            class='tpsreg')
+tpsreg <- function(sample, reference, lambda=1e-8, ...){
+  refmat <- data.matrix(sample)
+  tarmat <- data.matrix(reference)
+  reg <- structure(
+    list(refmat=refmat, tarmat=tarmat, lambda=lambda, ...),
+    class='tpsreg')
+  reg$hash <- digest::digest(list(refmat, tarmat, lambda))
+  reg
 }
 
 #' @description \code{xformpoints.tpsreg} enables \code{\link[nat]{xform}} and
 #'   friends to transform 3d vertices (or more complex objects containing 3d
-#'   vertices) using a thin plate spline mapping stored in a \code{tpsreg}
-#'   object.
+#'   vertices) using a thin plate spline mapping defined by a \code{tpsreg}
+#'   object (see details).
 #' @rdname tpsreg
 #' @param reg The \code{tpsreg} registration object
 #' @param points The 3D points to transform
 #' @param swap Whether to change the direction of registration (default of
 #'   \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise
+#' @param threads Number of threads passed to Morpho (\code{0} = default).
 #' @export
-xformpoints.tpsreg <- function(reg, points, swap=NULL, ...){
-  if(isTRUE(swap) || isTRUE(attr(reg, 'swap'))) {
-    tmp=reg$refmat
-    reg$refmat=reg$tarmat
-    reg$tarmat=tmp
+xformpoints.tpsreg <- function(reg, points, swap=NULL, threads=0, ...){
+  lambda <- if(is.null(reg$lambda)) 1e-8 else reg$lambda
+  dir <- if(isTRUE(swap) || isTRUE(attr(reg, 'swap'))) 'rev' else 'fwd'
+  hash <- if(is.null(reg$hash))
+    digest::digest(list(reg$refmat, reg$tarmat, lambda)) else reg$hash
+  key <- paste0(hash, '_', dir)
+  trafo <- .tpsreg_cache[[key]]
+  if(is.null(trafo)) {
+    src <- if(dir=='fwd') reg$tarmat else reg$refmat
+    dst <- if(dir=='fwd') reg$refmat else reg$tarmat
+    trafo <- Morpho::computeTransform(x=src, y=dst, type='tps',
+                                      lambda=lambda, threads=threads)
+    .tpsreg_cache[[key]] <- trafo
   }
-  do.call(Morpho::tps3d, c(list(x=points), reg,  list(...)))
+  Morpho::applyTransform(points, trafo, threads=threads)
 }

@@ -5,13 +5,16 @@
 \alias{xformpoints.tpsreg}
 \title{Thin plate spline registrations via xform and friends}
 \usage{
-tpsreg(sample, reference, ...)
+tpsreg(sample, reference, lambda = 1e-08, ...)
 
-\method{xformpoints}{tpsreg}(reg, points, swap = NULL, ...)
+\method{xformpoints}{tpsreg}(reg, points, swap = NULL, threads = 0, ...)
 }
 \arguments{
 \item{sample, reference}{Matrices defining the sample (or floating) and
 reference (desired target after transformation) spaces. See details.}
+
+\item{lambda}{Regularisation parameter passed to
+\code{Morpho::\link[Morpho]{computeTransform}} (default \code{1e-8}).}
 
 \item{...}{additional arguments passed to \code{\link{xformpoints.tpsreg}}}
 
@@ -21,6 +24,8 @@ reference (desired target after transformation) spaces. See details.}
 
 \item{swap}{Whether to change the direction of registration (default of
 \code{NULL} checks if reg has a \code{attr('swap'=TRUE)}) otherwise}
+
+\item{threads}{Number of threads passed to Morpho (\code{0} = default).}
 }
 \description{
 \code{tpsreg} creates an object encapsulating a thin plate spine
@@ -28,8 +33,8 @@ reference (desired target after transformation) spaces. See details.}
 
 \code{xformpoints.tpsreg} enables \code{\link[nat]{xform}} and
   friends to transform 3d vertices (or more complex objects containing 3d
-  vertices) using a thin plate spline mapping stored in a \code{tpsreg}
-  object.
+  vertices) using a thin plate spline mapping defined by a \code{tpsreg}
+  object (see details).
 }
 \details{
 Note that we use the \bold{nat} convention for naming the
@@ -42,6 +47,13 @@ Note that we use the \bold{nat} convention for naming the
   \item tarmat (Morpho3d) == reference (nat)
 
   }
+
+  The underlying \code{Morpho::\link[Morpho]{computeTransform}} solve can
+  be slow (~1s for a couple of thousand landmarks). To avoid repeating it
+  on every call — e.g. when transforming many neurons via
+  \code{\link{nlapply}} — the resulting coefficients are cached for the
+  session, keyed by the contents of the landmarks plus \code{lambda}, so
+  the solve cost is paid only once per direction.
 }
 \examples{
 \dontrun{
