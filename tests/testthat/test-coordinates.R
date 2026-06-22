@@ -9,7 +9,7 @@ test_that("sub2ind returns correct indices", {
 })
 
 test_that("ind2coord returns correct coordinates when given an im3d", {
-  testImage <- read.im3d("testdata/nrrd/LHMask.nrrd")
+  testImage <- read.im3d(test_path("testdata/nrrd/LHMask.nrrd"))
   coord <- ind2coord(testImage)
   coord <- coord[1:10]
   coord.expected <- c(40.6, 42, 36.4, 37.8, 39.2, 40.6, 42, 36.4, 37.8, 39.2)
@@ -17,7 +17,7 @@ test_that("ind2coord returns correct coordinates when given an im3d", {
 })
 
 test_that("coord2ind returns correct coordinates", {
-  testImage <- read.im3d("testdata/nrrd/LHMask.nrrd", ReadData = F)
+  testImage <- read.im3d(test_path("testdata/nrrd/LHMask.nrrd"), ReadData = F)
   ind <- coord2ind(matrix(c(10, 20, 30, 11, 20, 30), nrow=2, byrow=TRUE), testImage)
   ind.expected <- c(53208, 53209)
   expect_equal(ind, ind.expected)
@@ -26,4 +26,21 @@ test_that("coord2ind returns correct coordinates", {
       matrix(c(10, 20, 30, 11, 20, 30), nrow = 2, byrow = TRUE),
       testImage, linear.indices = F),
     structure(c(8, 9, 15, 15, 22, 22), .Dim = 2:3))
+})
+
+test_that("coord2ind with natcpp preserves Clamp FALSE range errors", {
+  skip_if_not(use_natcpp(version = "0.2", always = TRUE))
+  testImage <- read.im3d(test_path("testdata/nrrd/LHMask.nrrd"), ReadData = F)
+  oldopt <- getOption("nat.use_natcpp")
+  options(nat.use_natcpp = TRUE)
+  on.exit(options(nat.use_natcpp = oldopt), add = TRUE)
+
+  expect_error(
+    coord2ind(matrix(c(1e6, 1e6, 1e6), nrow = 1), testImage, Clamp = FALSE),
+    "pixcoords out of range"
+  )
+  expect_warning(expect_equal(
+    coord2ind(matrix(c(1e6, 1e6, 1e6), nrow = 1), testImage, Clamp = TRUE),
+    prod(dim(testImage))
+  ))
 })

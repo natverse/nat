@@ -40,7 +40,8 @@ Imports:
     checkmate,
     stringr,
     pbapply,
-    zip
+    zip,
+    matrixStats
 Suggests:
     spelling,
     Rvcg (>= 0.17),

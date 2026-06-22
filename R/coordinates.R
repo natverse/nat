@@ -82,19 +82,21 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 
 
 #' Find 1D or 3D voxel indices into a 3D image given spatial coordinates
-#' 
+#'
 #' @details \code{coord2ind} is designed to cope with any user-defined class for
-#'   which an as.im3d method exists. Presently the only example in the nat.* 
-#'   ecosystem is \code{nat.templatebrains::as.im3d.templatebrain}. The 
-#'   existence of an \code{as.im3d} method implies that 
+#'   which an as.im3d method exists. Presently the only example in the nat.*
+#'   ecosystem is \code{nat.templatebrains::as.im3d.templatebrain}. The
+#'   existence of an \code{as.im3d} method implies that
 #'   \code{voxdims},\code{origin}, and \code{dim} functions can be called. This
 #'   is the necessary information required to convert i,j,k logical indices into
 #'   x,y,z spatial indices.
-#' @param coords spatial coordinates of image voxels.
+#' @param coords spatial coordinates of image voxels. Must be an Nx3 matrix or
+#'   data.frame or an object for which \code{ncol} and column subscripting
+#'   `[,1]` work.
 #' @param ... extra arguments passed to methods.
 #' @export
-#' @examples 
-#' coord2ind(cbind(1,2,3), imdims = c(1024,512,218), 
+#' @examples
+#' coord2ind(cbind(1,2,3), imdims = c(1024,512,218),
 #'   voxdims = c(0.622088, 0.622088, 0.622088), origin = c(0,0,0))
 #' \dontrun{
 #' ## repeat but using a templatebrain object to specify the coordinate system
@@ -104,22 +106,22 @@ ind2coord.im3d<-function(inds, voxdims=NULL, origin=NULL, ...){
 coord2ind <- function(coords, ...) UseMethod("coord2ind")
 
 
-#' @param imdims array dimensions of 3D image \emph{OR} an object for which a 
+#' @param imdims array dimensions of 3D image \emph{OR} an object for which a
 #'   \code{\link{as.im3d}} object has been defined (see Details).
 #' @param voxdims vector of 3 voxels dimensions (width, height, depth).
 #' @param origin the origin of the 3D image.
-#' @param linear.indices Whether or not to convert the voxel indices into a 
+#' @param linear.indices Whether or not to convert the voxel indices into a
 #'   linear 1D form (the default) or to keep as 3D indices.
 #' @param aperm permutation order for axes.
-#' @param Clamp Whether or not to map out of range coordinates to the nearest 
-#'   in range index (default \code{FALSE})
+#' @param Clamp Whether or not to map out of range coordinates to the nearest in
+#'   range index (default \code{FALSE})
 #' @param CheckRanges whether to check if coordinates are out of range.
 #' @seealso \code{\link{ind2coord}}, \code{\link{sub2ind}}, \code{\link{ijkpos}}
 #' @export
 #' @rdname coord2ind
 coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL, 
                             linear.indices=TRUE, aperm=NULL,
-                            Clamp=FALSE, CheckRanges=!Clamp, ...){
+                            Clamp=FALSE, CheckRanges=!Clamp, ...) {
   if(is.object(imdims)){
     if(!inherits(imdims, "im3d"))
       imdims=as.im3d(imdims)
@@ -137,20 +139,54 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
   if(length(imdims) != 3)
     stop('coord2ind only handles 3D data')
   
-  if(!is.matrix(coords))
-    coords=matrix(coords,byrow=TRUE,ncol=length(coords))
-  if(!missing(origin))
-    coords=t(t(coords)-origin)
-  
-  pixcoords=t(round(t(coords)/voxdims))+1
-  
+  if(is.null(dim(coords))) {
+    if(length(coords)==3) coords=xyzmatrix(coords)
+    else stop("coordinates should be an N x 3 matrix")
+  } else {
+    if(ncol(coords)!=3)
+      stop("coordinates should be an N x 3 matrix-like object")
+  }
+  if(use_natcpp(version='0.2')) {
+    if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+    has_check="check" %in% names(formals(natcpp::c_coords21dindex))
+    if(linear.indices && is.null(aperm))
+      res=if(Clamp) {
+        natcpp::c_coords21dindex(coords, dims = imdims, origin = origin,
+                                 voxdims = voxdims, clamp = TRUE)
+      } else if(has_check) {
+        natcpp::c_coords21dindex(coords, dims = imdims, origin = origin,
+                                 voxdims = voxdims, clamp = FALSE, check = TRUE)
+      } else {
+        pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin,
+                                   voxdims = voxdims, clamp = FALSE)
+        ranges=t(matrixStats::colRanges(pixcoords))
+        if(any(ranges[2,]>imdims) || any(ranges[1,]<1))
+          stop("pixcoords out of range")
+        natcpp::c_sub2ind(imdims, pixcoords)
+      }
+    else {
+      pixcoords=natcpp::c_ijkpos(coords, dims = imdims, origin = origin,
+                                 voxdims = voxdims, clamp = Clamp)
+      if (!is.null(aperm))
+        imdims=imdims[aperm]
+      res=if(linear.indices) natcpp::c_sub2ind(imdims, pixcoords) else pixcoords
+    }
+    return(res)
+  } 
+  # base R / favoured package implementation 
+  if(missing(origin) || is.null(origin)) origin=c(0,0,0)
+  origin=origin-voxdims
+  coords=matrixStats::t_tx_OP_y(as.matrix(coords), origin, OP = '-')
+  coords=matrixStats::t_tx_OP_y(coords, voxdims, OP = '/')
+  pixcoords=round(coords)
+
   # make sure no points are out of range
   if(Clamp){
     pixcoords[,1]=pmin(imdims[1],pmax(1,pixcoords[,1]))
     pixcoords[,2]=pmin(imdims[2],pmax(1,pixcoords[,2]))
     pixcoords[,3]=pmin(imdims[3],pmax(1,pixcoords[,3]))
   } else if(CheckRanges){
-    ranges=apply(pixcoords,2,range)
+    ranges=t(matrixStats::colRanges(pixcoords))
     if(any(ranges[2,]>imdims) || any(ranges[1,]<1))
       stop("pixcoords out of range")
   }
@@ -168,13 +204,22 @@ coord2ind.default<-function(coords, imdims, voxdims=NULL, origin=NULL,
 #' @param dims vector of dimensions of object to index into.
 #' @param indices vector of n-dimensional indices.
 #' @export
-sub2ind<-function(dims,indices){  
+#' @details
+#' There is a *much* more efficient version implemented in natcpp > 0.1.1
+#' @examples
+#' dims <- 3:5
+#' ijk <- matrix(c(1L, 1L, 1L, 3L, 4L, 5L), ncol = 3, byrow = TRUE)
+#' sub2ind(dims, ijk)
+sub2ind<-function(dims, indices){  
   # convert vector containing 1 coordinate into matrix
   if(!is.matrix(indices))
     indices=matrix(indices,byrow=TRUE,ncol=length(indices))
-  if(length(dims)!=ncol(indices)){
+  if(length(dims)!=ncol(indices))
     stop("indices must have the same number of columns as dimensions in dims")
-  }
+  dims <- as.integer(checkmate::assert_integerish(dims))
+  if(use_natcpp(version = '0.2'))
+    return(natcpp::c_sub2ind(dims, indices))
+  
   k=cumprod(c(1,dims[-length(dims)]))
   ndx=1
   for(i in 1:length(dims)){

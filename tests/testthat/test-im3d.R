@@ -160,6 +160,20 @@ test_that("we can construct an im3d from a set of points",{
   expect_warning(as.im3d(xyzmatrix(kcs20), testim, origin = c(3,4,5)))
 })
 
+test_that("as.im3d.matrix uses stable right-open boundary assignment", {
+  pts <- rbind(
+    c(0, 0, 0),         # min boundary -> first voxel
+    c(0.5, 0.5, 0.5),   # internal boundary -> upper voxel (right-open)
+    c(2.5, 2.5, 2.5)    # max outer boundary -> final voxel
+  )
+  im <- as.im3d(pts, voxdims = c(1, 1, 1), BoundingBox = c(0, 2, 0, 2, 0, 2))
+  expect_equal(dim(im), c(3L, 3L, 3L))
+  expect_equal(sum(im), 3)
+  expect_equal(im[1, 1, 1], 1)
+  expect_equal(im[2, 2, 2], 1)
+  expect_equal(im[3, 3, 3], 1)
+})
+
 context("im3d boundingbox and friends")
 
 test_that("dim, voxdims and boundingbox work",{

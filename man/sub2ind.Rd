@@ -14,3 +14,11 @@ sub2ind(dims, indices)
 \description{
 Emulates the MATLAB function \code{sub2ind}.
 }
+\details{
+There is a *much* more efficient version implemented in natcpp > 0.1.1
+}
+\examples{
+dims <- 3:5
+ijk <- matrix(c(1L, 1L, 1L, 3L, 4L, 5L), ncol = 3, byrow = TRUE)
+sub2ind(dims, ijk)
+}
