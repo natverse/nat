@@ -267,6 +267,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
                                    total = length(paths),
                                    show_after=2)
   
+  mdl=list()
   for(n in nn){
     if(interactive())
       pb$tick()
@@ -286,6 +287,11 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
       nl=x
       break
     }
+    md <- attr(x, 'metadata')
+    if(!is.null(md)) {
+      mdl[[n]]=md
+      attr(x, 'metadata')=NULL
+    }
     nl[[n]]=x
   }
   
@@ -304,6 +310,10 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
   }
   # nb only keep dataframe rows for neurons that were successfully read in
   # Look after the attached dataframe
+  if(is.null(df) && length(mdl)>0) {
+    df <- do.call(rbind, mdl)
+    rownames(df) <- names(mdl)
+  }
   if(!is.null(df)){
     data.frame(nl)=df
   }
@@ -547,7 +557,11 @@ read.neuron.swc<-function(f, ...){
   d=read.swc(f)
   # multiply by 2 to get diam which is what I work with internally
   d$W=d$W*2
-  as.neuron(d, InputFileName=f, ...)
+  d=as.neuron(d, InputFileName=f, ...)
+  metadata=read_swc_meta(f)
+  if(!is.null(metadata))
+    attr(d, 'metadata')=metadata
+  d
 }
 
 # internal function that just reads a table of SWC format data
@@ -563,6 +577,27 @@ read.swc<-function(f){
     d$Parent[badpids]=-1
   }
   d
+}
+
+read_swc_comments <- function(f) {
+  con=file(f, open='r')
+  on.exit(close(con))
+  header=character()
+  while(TRUE) {
+    l=try(readLines(con = con, n=1), silent = T)
+    if(inherits(l, 'try-error') || nchar(l)<1 || substr(l,1,1)!="#")
+      break;
+    header=c(header, l)
+  }
+  header
+}
+
+read_swc_meta <- function(f, parse=TRUE) {
+  h=read_swc_comments(f)
+  if(!isTRUE(any(nchar(metal <- grep("^# Meta: ", h, value = TRUE))>0)))
+    return(NULL)
+  meta=substr(metal, nchar("# Meta: ")+1, nchar(metal))
+  if(isTRUE(parse)) jsonlite::fromJSON(meta, simplifyVector = F) else meta
 }
 
 #' @rdname read.neuron.swc
