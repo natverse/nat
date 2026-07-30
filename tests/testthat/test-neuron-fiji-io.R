@@ -18,9 +18,9 @@ test_that("read Simple Neurite Tracer files", {
         46, 47, 48, 49), W = c(NA_real_, NA_real_, NA_real_, 
         NA_real_, NA_real_, NA_real_, NA_real_, NA_real_, NA_real_, 
         NA_real_, NA_real_), Parent = c(-1L, 1L, 2L, 3L, 4L, 
-        5L, 6L, 7L, 8L, 9L, 10L)), .Names = c("PointNo", "Label", 
+        5L, 6L, 7L, 8L, 9L, 10L)), names = c("PointNo", "Label", 
     "X", "Y", "Z", "W", "Parent"), class = "data.frame", row.names = c(NA, 
-    -11L))), .Names = c("NeuronName", "NumPoints", 
+    -11L))), names = c("NeuronName", "NumPoints", 
 "StartPoint", "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
 "SegList", "d"), class = c("neuron", "list"))
 

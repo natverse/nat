@@ -78,13 +78,13 @@ test_that("we can subset hxsurf object",{
                                                       LH_R = data.frame(V1=1,V2=2,V3=3))),
                              RegionList = c("LH_L", "LH_R"),
                              RegionColourList = c("red",'green')), 
-                        .Names = c("Vertices", "Regions", "RegionList", "RegionColourList"), 
+                        names = c("Vertices", "Regions", "RegionList", "RegionColourList"), 
                         class = c("hxsurf", "list"))
   simple_surf.subset=structure(list(Vertices = data.frame(X = 10, Y = 10, Z = 1, PointNo= 1:3), 
                                     Regions = structure(list(LH_L = data.frame(V1=1,V2=2,V3=3))),
                                     RegionList = c("LH_L"),
                                     RegionColourList = c("red")),
-                               .Names = c("Vertices", "Regions", "RegionList", "RegionColourList"), 
+                               names = c("Vertices", "Regions", "RegionList", "RegionColourList"), 
                                class = c("hxsurf", "list"))
   
   expect_equal(subset(simple_surf,"LH_L"), simple_surf.subset)

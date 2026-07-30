@@ -33,7 +33,7 @@ test_that("read cmtk warping registration", {
                  scale = c(1.10115207, 1.112225643, 1.398342945),
                  shear = c(0, 0, 0),
                  center = c(318.1980197, 158.9434879, 67.49654964)),
-            .Names = c("xlate", "rotate", "scale", "shear", "center"))
+            names = c("xlate", "rotate", "scale", "shear", "center"))
   r=read.cmtkreg(reg)
   expect_equal(aff_base,r$registration$affine_xform)
 })

@@ -51,7 +51,7 @@ test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (no shears)", {
 test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (with shears)", {
   m=structure(c(0.911236, 0.00295678, 0.00483363, 0, -0.045134, 1.105, 
                 -0.104863, 0, -0.0475781, 0.0580714, 0.997261, 0, -88.3912, -56.1266, 
-                -5.21284, 1), .Dim = c(4L, 4L))
+                -5.21284, 1), dim = c(4L, 4L))
   tf<-tempfile(fileext='.list')
   dir.create(tf)
   on.exit(unlink(tf,recursive=TRUE))
@@ -63,7 +63,7 @@ test_that("round trip tests for cmtk.dof2mat/cmtk.mat2dof (with shears)", {
 test_that("test cmtk.mat2dof with shears", {
   m=structure(c(0.993768, -0.0869434, -0.0697565, 0, 0.199117, 1.08527, 
                 0.0504537, 0, 0.303757, 0.211115, 1.19715, 0, 100, 50, 50, 1),
-              .Dim = c(4L, 4L))
+              dim = c(4L, 4L))
   params_base=matrix(c(100,50,50, 3,4,5, 1,1.1,1.2, 0.1,0.2,0.3, 0,0,0), ncol=3,
                      byrow=T)
   rownames(params_base) <- c("xlate", "rotate", "scale", "shear", "center")
@@ -77,7 +77,7 @@ test_that("test cmtk.dof2mat with v2.4 registration or in memory parameters", {
                 byrow=T)
   m_base=structure(c(0.993768, -0.0869434, -0.0697565, 0, 0.199117, 1.08527, 
                      0.0504537, 0, 0.303757, 0.211115, 1.19715, 0, 100, 50, 50, 1),
-                   .Dim = c(4L, 4L))
+                   dim = c(4L, 4L))
   expect_equal(cmtk.dof2mat(reg),m_base,tolerance=1e-4)
   expect_equal(cmtk.dof2mat(params),m_base,tolerance=1e-4)
   expect_equal(cmtk.dof2mat(params,Transpose=FALSE),t(m_base),tolerance=1e-4)
@@ -116,11 +116,11 @@ test_that("cmtk.statistics",{
   statsnrrd="testdata/nrrd/dataforstats.nrrd"
   baseline_a=structure(list(min = 0, max = 1, mean = 0.22935, sdev = 0.42042, 
                             n = 125000L, Entropy = 0.53849, sum = 28669), 
-                       .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"),
+                       names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"),
                        class = "data.frame", row.names = c(NA, -1L))
   baseline_b=structure(list(min = 0, max = 100, mean = 8e-04, sdev = 0.28284, 
                             n = 125000L, Entropy = 1e-04, sum = 100), 
-                       .Names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
+                       names = c("min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
                        class = "data.frame", row.names = c(NA, -1L))
   
   expect_equal(cmtk.statistics(lhmaskfile), baseline_a)
@@ -134,14 +134,14 @@ test_that("cmtk.statistics",{
                               mean = c(0, 0.00349), sdev = c(0, 0.5906), 
                               n = c(96331L, 28669L), nnz = 0:1, 
                               Entropy = c(0, 0.00039), sum = c(0, 100)), 
-                         .Names = c("X.M", "min", "max", "mean", "sdev", "n", "nnz", "Entropy", "sum"), 
+                         names = c("X.M", "min", "max", "mean", "sdev", "n", "nnz", "Entropy", "sum"), 
                          class = "data.frame", row.names = c(NA, -2L))
   } else {
     baseline_c = structure(list(MaskLevel = 0:1, min = c(0, 0), max = c(0, 100), 
                                 mean = c(0, 0.00349), sdev = c(0, 0.5906), 
                                 n = c(96331L, 28669L), Entropy = c(0, 0.00039), 
                                 sum = c(0, 100)), 
-                           .Names = c("MaskLevel", "min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
+                           names = c("MaskLevel", "min", "max", "mean", "sdev", "n", "Entropy", "sum"), 
                            class = "data.frame", row.names = c(NA, -2L))
   }
   expect_equal(c,baseline_c)

@@ -122,7 +122,7 @@ neuronlistfh<-function(db, df, keyfilemap, hashmap=1000L){
     stop("keyfilemap must have as many unique names as elements")
   }
   
-  nlfh=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
+  nlfh=structure(rep(F,length(keyfilemap)),names=names(keyfilemap))
   attr(nlfh,'keyfilemap')=keyfilemap
   class(nlfh)=c('neuronlistfh','neuronlist',class(nlfh))
   attr(nlfh,'db')=db

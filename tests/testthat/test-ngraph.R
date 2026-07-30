@@ -202,9 +202,9 @@ test_that("Strahler order", {
       "list")), d = structure(list(PointNo = 1:3, Label = c(2, 
       2, 2), X = c(1, 2, 3), Y = c(1, 1, 1), Z = c(0, 
       0, 0), W = c(NA, NA, NA), Parent = c(-1L, 1L, 
-      2L)), .Names = c("PointNo", "Label", "X", "Y", 
+      2L)), names = c("PointNo", "Label", "X", "Y", 
       "Z", "W", "Parent"), class = "data.frame", row.names = c(NA, 
-      -3L))), .Names = c("NumPoints", "StartPoint", 
+      -3L))), names = c("NumPoints", "StartPoint", 
     "BranchPoints", "EndPoints", "nTrees", "NumSegs", 
     "SegList", "d"), class = c("neuron", "list"))
   expect_equal(prune_strahler(n, orderstoprune = 1L), ns)

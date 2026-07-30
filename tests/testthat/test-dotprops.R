@@ -33,7 +33,7 @@ test_that("a dotprops object can be made from a nrrd, via im3d", {
   points.expected <- structure(c(188.493801707317, 188.493801707317, 191.402656585366, 
                                  194.893282439024, 189.075572682927, 102.391696778523, 102.391696778523, 
                                  101.228154765101, 101.228154765101, 101.809925771812, 31, 32, 
-                                 33, 33, 33), .Dim = c(5L, 3L), .Dimnames = list(NULL, c("X", "Y", "Z")))
+                                 33, 33, 33), dim = c(5L, 3L), dimnames = list(NULL, c("X", "Y", "Z")))
   expect_equal(dp$points[1:5, ], points.expected, tol=1e-4)
 })
 

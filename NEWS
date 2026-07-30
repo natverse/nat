@@ -1,3 +1,8 @@
+nat 1.8.26
+==========
+
+* replace deprecated structure() special names (.Names/.Dim/.Dimnames) flagged by CRAN
+
 nat 1.8.25
 ==========
 
