@@ -192,7 +192,7 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
     nlfh=paths
     dbdir=attr(nlfh,'db')@dir
     kfm=attr(nlfh,'keyfilemap')
-    paths=structure(file.path(dbdir,kfm),.Names=names(kfm))
+    paths=structure(file.path(dbdir,kfm),names=names(kfm))
     if(OmitFailures) {
       fep=file.exists(paths)
       if(!all(fep)) 
@@ -947,7 +947,7 @@ write.neurons<-function(nl, dir, format=NULL, subdir=NULL,
       files=eval(ff, df, parent.frame())
     if(is.null(names(files))) names(files)=INDICES
   }
-  written=structure(rep("",length(INDICES)), .Names = INDICES)
+  written=structure(rep("",length(INDICES)), names = INDICES)
   
   if(isTRUE(metadata)) metadata=df
   else if(isFALSE(metadata)) metadata=NULL

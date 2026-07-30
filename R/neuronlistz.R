@@ -69,7 +69,7 @@ neuronlistz <- function(zip, patt=NULL, df=NULL, ...) {
     rownames(df)=df[['id']]
   }
   
-  nlf=structure(rep(F,length(keyfilemap)),.Names=names(keyfilemap))
+  nlf=structure(rep(F,length(keyfilemap)),names=names(keyfilemap))
   attr(nlf,'keyfilemap')=keyfilemap
   attr(nlf,'db')=zip
   class(nlf)=c('neuronlistz','neuronlist',class(nlf))

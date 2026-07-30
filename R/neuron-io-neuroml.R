@@ -205,7 +205,7 @@ as.data.frame.morphml_cell<-function(x, ...){
     in_names=c("NewPointNo",'x','y','z','diameter','NewParent')
     out_names=c("PointNo", "X", "Y", "Z", "W", "Parent")
   }
-  structure(r[in_names], .Names=out_names)
+  structure(r[in_names], names=out_names)
 }
 
 #' @export

@@ -4,6 +4,7 @@ This release bundles together a large number of changes and is targeting a CRAN
 release i.e. for the first time in many years bringing CRAN up to date with the 
 master branch of nat development.
 
+* Replace deprecated structure() special names (.Names/.Dim/.Dimnames) flagged by CRAN
 * Fix handling of null elements in xyzmatrix.list by @jefferis in https://github.com/natverse/nat/pull/488
 * Minor edit of stitch_neurons edge cases by @dokato in https://github.com/natverse/nat/pull/493
 * Making as.seglist compatible with R/igraph 1.3.0 by @dokato in https://github.com/natverse/nat/pull/492

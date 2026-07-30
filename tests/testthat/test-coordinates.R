@@ -25,5 +25,5 @@ test_that("coord2ind returns correct coordinates", {
   expect_equal(coord2ind(
       matrix(c(10, 20, 30, 11, 20, 30), nrow = 2, byrow = TRUE),
       testImage, linear.indices = F),
-    structure(c(8, 9, 15, 15, 22, 22), .Dim = 2:3))
+    structure(c(8, 9, 15, 15, 22, 22), dim = 2:3))
 })

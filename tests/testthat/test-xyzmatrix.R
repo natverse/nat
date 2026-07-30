@@ -107,8 +107,8 @@ test_that("can extract xyz coords from a matrix and other objects",{
       109880L,
       119080L
     ),
-    .Dim = c(10L, 3L),
-    .Dimnames = list(NULL,
+    dim = c(10L, 3L),
+    dimnames = list(NULL,
                      c("X", "Y", "Z"))
   )
   expect_equal(

@@ -6,8 +6,8 @@ quicktable<-function(x) {
   levels=seq.int(from=0, length.out = length(tt))
   nz=tt!=0L
   
-  structure(tt[nz], .Dim = sum(nz), 
-            .Dimnames = structure(list(as.character(levels[nz])), .Names = xname),
+  structure(tt[nz], dim = sum(nz), 
+            dimnames = structure(list(as.character(levels[nz])), names = xname),
             class = "table")
 }
 
@@ -24,11 +24,11 @@ if(!is.null(cmtk.bindir())){
     expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask_JFRC2-444_mask.nrrd")
     # check that we reformatted as expected
     imout=read.im3d(out)
-    baseline=structure(c(1904662L, 592730L), .Dim = 2L, .Dimnames = structure(list(
-      imout = c("0", "255")), .Names = "imout"), class = "table")
+    baseline=structure(c(1904662L, 592730L), dim = 2L, dimnames = structure(list(
+      imout = c("0", "255")), names = "imout"), class = "table")
     expect_equal(quicktable(imout), baseline)
     # verify bounding box of output
-    bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
+    bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), dim = 2:3, class = "boundingbox")
     expect_equal(boundingbox(imout), bb_out)
     expect_output(xform("testdata/nrrd/JFRC2-444_mask.nrrd", 
                        reg = 'testdata/cmtk/FCWB_JFRC2_01_warp_level-01.list/',
@@ -54,11 +54,11 @@ if(!is.null(cmtk.bindir())){
     expect_equal(basename(out<-eval(xformt)), "FCWB_2um_mask_JFRC2-444_mask.nrrd")
     # check that we reformatted as expected
     imout=read.im3d(out)
-    baseline=structure(c(1566120L, 931272L), .Dim = 2L, .Dimnames = structure(list(
-      imout = c("0", "255")), .Names = "imout"), class = "table")
+    baseline=structure(c(1566120L, 931272L), dim = 2L, dimnames = structure(list(
+      imout = c("0", "255")), names = "imout"), class = "table")
     expect_equal(quicktable(imout), baseline)
     # verify bounding box of output
-    bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), .Dim = 2:3, class = "boundingbox")
+    bb_out=structure(c(0, 561.9999, 0, 326.0003, 0, 106), dim = 2:3, class = "boundingbox")
     expect_equal(boundingbox(imout), bb_out)
     md5.1=tools::md5sum(files = out)
     

@@ -18,10 +18,10 @@ test_that("intersect_plane works", {
 test_that("intersect plane works with neurons with unsual node numbering", {
   # LH Entry point
   p = structure(c(250.498678796513, 95.7356097950324, 140.205235323248),
-                .Names = c("X", "Y", "Z"))
+                names = c("X", "Y", "Z"))
   n = structure(
     c(0.770958060160371, 0.0341727609563214, -0.411977026375333),
-    .Names = c("X", "Y", "Z")
+    names = c("X", "Y", "Z")
   )
   lhe.is2 = plane_coefficients(p, n)
   
@@ -40,8 +40,8 @@ test_that("intersect plane works with neurons with unsual node numbering", {
       95.764983404868,
       138.778253574627
     ),
-    .Dim = c(3L, 3L),
-    .Dimnames = list(NULL, c("EBH11R", "EBH20L", "EBH20R"))
+    dim = c(3L, 3L),
+    dimnames = list(NULL, c("EBH11R", "EBH20L", "EBH20R"))
   )
   expect_equal(sapply(Cell07PNs[1:3], intersect_plane, lhe.is2, closestpoint = p),
                baseline)

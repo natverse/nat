@@ -25,7 +25,7 @@ test_that("we can read Fiji landmarks", {
   baseline=structure(c(256.922344, 200.312336, 441.060392,
                        11.819672, 92.691112, 127.52804, 
                        66.563416, 84.603968, 46.034512),
-                     .Dim = c(3L, 3L), .Dimnames = list(
+                     dim = c(3L, 3L), dimnames = list(
                          c("right_alpha_tip", "right_tract_cross_vLH", 
                            "left_vlpr_tract_crossing"),
                          c("X", "Y", "Z")))
