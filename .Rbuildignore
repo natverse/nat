@@ -18,3 +18,4 @@ travisbuildchildren.sh
 ^CODE_OF_CONDUCT\.md$
 ^CRAN-SUBMISSION$
 ^data-raw$
+^\.claude$
