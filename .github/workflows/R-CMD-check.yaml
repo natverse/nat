@@ -40,7 +40,11 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
           http-user-agent: ${{ matrix.config.http-user-agent }}
-          use-public-rspm: true
+          # Public RSPM (Posit Package Manager) binaries only on Linux, where
+          # they are the big win. macOS/Windows fall back to CRAN binaries:
+          # P3M's macOS arm64 Rvcg build currently fails to load with a missing
+          # libomp symbol (___kmpc_dispatch_init_4u), and CRAN's build is clean.
+          use-public-rspm: ${{ startsWith(matrix.config.os, 'ubuntu') }}
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
