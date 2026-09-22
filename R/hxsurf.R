@@ -613,9 +613,18 @@ NULL
 #'   testing repeatedly against the same surface, it may make sense to
 #'   pre-convert.
 #'
-#'   \code{pointsinside} depends on the face normals for each face pointing out
-#'   of the object (see example). The face normals are defined by the order of
-#'   the three vertices making up a triangular face. You can flip the face
+#'   When the \href{https://natverse.org/natcpp/}{natcpp} package (>= 0.3.2) is
+#'   installed, logical results (\code{rval="logical"} or
+#'   \code{"consistent_logical"}) use its generalised (solid-angle)
+#'   winding-number test. This does not depend on face normals and is therefore
+#'   robust to inconsistently oriented faces, so the face-normal caveats below
+#'   apply only to the \code{Rvcg} fallback (used when natcpp is unavailable and
+#'   for \code{rval="distance"} or \code{"mesh3d"}). Set
+#'   \code{options(nat.use_natcpp=FALSE)} to force the \code{Rvcg} path.
+#'
+#'   The \code{Rvcg} fallback depends on the face normals for each face pointing
+#'   out of the object (see example). The face normals are defined by the order
+#'   of the three vertices making up a triangular face. You can flip the face
 #'   normal for a face by permuting the vertices (i.e. 1,2,3 -> 1,3,2). If you
 #'   find for a given surface that points are outside when you expect them to be
 #'   inside then the face normals are probably all the wrong way round. You can
@@ -719,13 +728,22 @@ pointsinside.default<-function(x, surf, ..., rval=c('logical','distance',
       stop("Only logical return values are currently possible ",
            "with boundingbox objects!")
   }
-  
-  if(!requireNamespace('Rvcg', quietly = TRUE))
-    stop("Please install suggested library Rvcg to use pointsinside")
-  
+
   if(!inherits(surf,'mesh3d')) {
     surf=as.mesh3d(surf, ...)
   }
+
+  # Fast, normal-independent path for logical results: natcpp's generalised
+  # winding-number test (>= 0.3.2, method="auto"). Unlike the Rvcg signed
+  # distance it does not depend on face normals, so it avoids spurious results
+  # near thin/sharp features. distance and mesh3d still require Rvcg below.
+  if(rval=='consistent_logical' && !is.null(surf$it) &&
+     use_natcpp(version='0.3.2')) {
+    return(natcpp::c_pointsinside(xyzmatrix(x), xyzmatrix(surf), t(surf$it)))
+  }
+
+  if(!requireNamespace('Rvcg', quietly = TRUE))
+    stop("Please install suggested library Rvcg to use pointsinside")
 
   pts=xyzmatrix(x)
   rmesh=Rvcg::vcgClostKD(pts, surf, sign = TRUE)
