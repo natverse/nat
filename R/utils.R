@@ -19,7 +19,12 @@ nat_progress <- function (x, max = 100, message = NULL) {
 
 # to check if we should use natcpp
 # always=TRUE => use if installed even if option says otherwise
-use_natcpp <- function(always=FALSE) {
+# version => optional minimum natcpp version required (character or numeric_version)
+use_natcpp <- function(always=FALSE, version=NULL) {
   opcheck <- isTRUE(always) || !isFALSE(getOption('nat.use_natcpp'))
-  opcheck && requireNamespace('natcpp', quietly = TRUE)
+  if(!opcheck || !requireNamespace('natcpp', quietly = TRUE))
+    return(FALSE)
+  if(!is.null(version) && utils::packageVersion('natcpp') < version)
+    return(FALSE)
+  TRUE
 }

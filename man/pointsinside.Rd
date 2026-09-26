@@ -40,9 +40,18 @@ Note that \code{hxsurf} surface objects will be converted to
   testing repeatedly against the same surface, it may make sense to
   pre-convert.
 
-  \code{pointsinside} depends on the face normals for each face pointing out
-  of the object (see example). The face normals are defined by the order of
-  the three vertices making up a triangular face. You can flip the face
+  When the \href{https://natverse.org/natcpp/}{natcpp} package (>= 0.3.2) is
+  installed, logical results (\code{rval="logical"} or
+  \code{"consistent_logical"}) use its generalised (solid-angle)
+  winding-number test. This does not depend on face normals and is therefore
+  robust to inconsistently oriented faces, so the face-normal caveats below
+  apply only to the \code{Rvcg} fallback (used when natcpp is unavailable and
+  for \code{rval="distance"} or \code{"mesh3d"}). Set
+  \code{options(nat.use_natcpp=FALSE)} to force the \code{Rvcg} path.
+
+  The \code{Rvcg} fallback depends on the face normals for each face pointing
+  out of the object (see example). The face normals are defined by the order
+  of the three vertices making up a triangular face. You can flip the face
   normal for a face by permuting the vertices (i.e. 1,2,3 -> 1,3,2). If you
   find for a given surface that points are outside when you expect them to be
   inside then the face normals are probably all the wrong way round. You can
