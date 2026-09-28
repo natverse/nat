@@ -14,7 +14,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})${{ matrix.config.natcpp == 'false' && ' no natcpp' || '' }}
 
     strategy:
       fail-fast: false
@@ -25,6 +25,8 @@ jobs:
           - {os: ubuntu-latest, r: 'devel', http-user-agent: 'release'}
           - {os: ubuntu-latest, r: 'release', codecov: 'true'}
           - {os: ubuntu-latest, r: 'oldrel-1'}
+          # natcpp is only in Enhances; check the pure R fallback paths
+          - {os: ubuntu-latest, r: 'release', natcpp: 'false'}
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -50,6 +52,12 @@ jobs:
         with:
           extra-packages: any::rcmdcheck, natverse/natcpp
           needs: check
+
+      - name: Remove natcpp (Enhances) to test fallback paths
+        if: ${{ matrix.config.natcpp == 'false' }}
+        run: |
+          Rscript -e 'remove.packages("natcpp", lib=dirname(find.package("natcpp")))'
+          Rscript -e 'stopifnot(!requireNamespace("natcpp", quietly=TRUE))'
 
       - name: Build CMTK
         if: ${{matrix.config.os == 'macos-latest'}}
