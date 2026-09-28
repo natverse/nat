@@ -12,6 +12,9 @@
 \item{i, j}{elements to extract or replace. Numeric, logical  or character or,
 for the [ get method, empty. See details and the help for 
 \code{\link{[.data.frame}}.}
+
+\item{drop}{logical. If \code{TRUE} the result is coerced to the lowest
+possible dimension. See \code{\link{[.data.frame}} for details.}
 }
 \value{
 A new in-memory \code{neuronlist} or when using two subscripts, a 

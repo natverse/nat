@@ -33,6 +33,12 @@
 only, empty. Numeric values are coerced to integer as if by 
 \code{as.integer}. See \code{\link{[.data.frame}} for details.}
 
+\item{drop}{logical. If \code{TRUE} the result is coerced to the lowest
+possible dimension. See \code{\link{[.data.frame}} for details.}
+
+\item{value}{A suitable replacement value. See \code{\link{[<-.data.frame}}
+for details.}
+
 \item{except}{indices of columns from which \emph{not} to drop levels.}
 
 \item{...}{Further arguments passed to default methods (and usually ignored)}

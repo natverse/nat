@@ -388,7 +388,8 @@ as.list.neuronlistfh<-function(x, ...) x
 #' @param i,j elements to extract or replace. Numeric, logical  or character or,
 #'   for the [ get method, empty. See details and the help for 
 #'   \code{\link{[.data.frame}}.
-#' @inheritParams base::`[.data.frame`
+#' @param drop logical. If \code{TRUE} the result is coerced to the lowest
+#'   possible dimension. See \code{\link{[.data.frame}} for details.
 #' @return A new in-memory \code{neuronlist} or when using two subscripts, a 
 #'   \code{data.frame} - see examples.
 #' @export

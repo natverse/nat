@@ -107,7 +107,10 @@ as.neuronlist.default<-function(l, df=NULL, AddClassToNeurons=TRUE, ...){
 #' @param i,j elements to extract or replace. Numeric or character or, for [ 
 #'   only, empty. Numeric values are coerced to integer as if by 
 #'   \code{as.integer}. See \code{\link{[.data.frame}} for details.
-#' @inheritParams base::`[.data.frame`
+#' @param drop logical. If \code{TRUE} the result is coerced to the lowest
+#'   possible dimension. See \code{\link{[.data.frame}} for details.
+#' @param value A suitable replacement value. See \code{\link{[<-.data.frame}}
+#'   for details.
 #' @name neuronlist-dataframe-methods
 #' @seealso \code{\link{[.data.frame}}, @seealso \code{\link{[<-.data.frame}}
 #' @family neuronlist
