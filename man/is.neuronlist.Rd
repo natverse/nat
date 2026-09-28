@@ -20,14 +20,14 @@ Tests if object is a neuronlist.
   lists of neurons that do not have a class attribute of neuronlist.
 }
 \seealso{
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{neuronlist}()},
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistfh}()},
-\code{\link{neuronlistz}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}

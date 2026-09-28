@@ -79,14 +79,14 @@ endpoints(Cell07PNs[[1]])
 \seealso{
 \code{\link{graph.nodes}}, \code{\link{ngraph}}
 
-Other neuron: 
-\code{\link{neuron}()},
-\code{\link{ngraph}()},
-\code{\link{plot.dotprops}()},
-\code{\link{potential_synapses}()},
-\code{\link{prune}()},
-\code{\link{resample}()},
-\code{\link{spine}()},
-\code{\link{subset.neuron}()}
+Other neuron:
+\code{\link[=neuron]{neuron()}},
+\code{\link[=ngraph]{ngraph()}},
+\code{\link[=plot.dotprops]{plot.dotprops()}},
+\code{\link[=potential_synapses]{potential_synapses()}},
+\code{\link[=prune]{prune()}},
+\code{\link[=resample]{resample()}},
+\code{\link[=spine]{spine()}},
+\code{\link[=subset.neuron]{subset.neuron()}}
 }
 \concept{neuron}

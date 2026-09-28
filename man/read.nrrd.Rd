@@ -61,9 +61,9 @@ A list with elements for the key nrrd header fields
 \seealso{
 \code{\link{write.nrrd}}, \code{\link{read.im3d}}
 
-Other nrrd: 
-\code{\link{is.nrrd}()},
-\code{\link{nrrd.voxdims}()},
-\code{\link{write.nrrd}()}
+Other nrrd:
+\code{\link[=is.nrrd]{is.nrrd()}},
+\code{\link[=nrrd.voxdims]{nrrd.voxdims()}},
+\code{\link[=write.nrrd]{write.nrrd()}}
 }
 \concept{nrrd}

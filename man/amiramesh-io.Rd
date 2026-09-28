@@ -56,10 +56,10 @@ reading byte data as raw arrays requires 1/4 memory but complicates
 \seealso{
 \code{\link{readBin}, \link{.Platform}}
 
-Other amira: 
-\code{\link{amiratype}()},
-\code{\link{is.amiramesh}()},
-\code{\link{read.hxsurf}()},
-\code{\link{write.hxsurf}()}
+Other amira:
+\code{\link[=amiratype]{amiratype()}},
+\code{\link[=is.amiramesh]{is.amiramesh()}},
+\code{\link[=read.hxsurf]{read.hxsurf()}},
+\code{\link[=write.hxsurf]{write.hxsurf()}}
 }
 \concept{amira}

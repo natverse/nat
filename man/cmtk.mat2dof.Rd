@@ -33,13 +33,13 @@ Transpose is true by default since this results in an R matrix with
   the transpose in the fourth column being correctly interpreted by cmtk.
 }
 \seealso{
-Other cmtk-commandline: 
-\code{\link{cmtk.dof2mat}()}
+Other cmtk-commandline:
+\code{\link[=cmtk.dof2mat]{cmtk.dof2mat()}}
 
-Other cmtk-geometry: 
-\code{\link{affmat2cmtkparams}()},
-\code{\link{cmtk.dof2mat}()},
-\code{\link{cmtkparams2affmat}()}
+Other cmtk-geometry:
+\code{\link[=affmat2cmtkparams]{affmat2cmtkparams()}},
+\code{\link[=cmtk.dof2mat]{cmtk.dof2mat()}},
+\code{\link[=cmtkparams2affmat]{cmtkparams2affmat()}}
 }
 \concept{cmtk-commandline}
 \concept{cmtk-geometry}

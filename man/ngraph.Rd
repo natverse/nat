@@ -139,14 +139,14 @@ plot(gw_antispine, col='blue', add=TRUE)
   \code{\link{subset.neuron}} for example of graph-based manipulation of a
   neuron, \code{\link{plot3d.ngraph}}
 
-Other neuron: 
-\code{\link{neuron}()},
-\code{\link{plot.dotprops}()},
-\code{\link{potential_synapses}()},
-\code{\link{prune}()},
-\code{\link{resample}()},
-\code{\link{rootpoints}()},
-\code{\link{spine}()},
-\code{\link{subset.neuron}()}
+Other neuron:
+\code{\link[=neuron]{neuron()}},
+\code{\link[=plot.dotprops]{plot.dotprops()}},
+\code{\link[=potential_synapses]{potential_synapses()}},
+\code{\link[=prune]{prune()}},
+\code{\link[=resample]{resample()}},
+\code{\link[=rootpoints]{rootpoints()}},
+\code{\link[=spine]{spine()}},
+\code{\link[=subset.neuron]{subset.neuron()}}
 }
 \concept{neuron}

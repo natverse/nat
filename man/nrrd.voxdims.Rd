@@ -26,9 +26,9 @@ NB Can handle off diagonal terms in space directions matrix, BUT
   Will produce a warning if no valid dimensions can be found.
 }
 \seealso{
-Other nrrd: 
-\code{\link{is.nrrd}()},
-\code{\link{read.nrrd}()},
-\code{\link{write.nrrd}()}
+Other nrrd:
+\code{\link[=is.nrrd]{is.nrrd()}},
+\code{\link[=read.nrrd]{read.nrrd()}},
+\code{\link[=write.nrrd]{write.nrrd()}}
 }
 \concept{nrrd}

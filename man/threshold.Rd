@@ -44,19 +44,19 @@ x=im3d(rnorm(1000),dims=c(10,10,10), BoundingBox=c(20,200,100,200,200,300))
 stopifnot(all.equal(threshold(x, 0), threshold(x, x>0)))
 }
 \seealso{
-Other im3d: 
-\code{\link{as.im3d}()},
-\code{\link{boundingbox}()},
-\code{\link{im3d}()},
+Other im3d:
+\code{\link[=as.im3d]{as.im3d()}},
+\code{\link[=boundingbox]{boundingbox()}},
+\code{\link[=im3d]{im3d()}},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{imexpand.grid}()},
-\code{\link{imslice}()},
-\code{\link{is.im3d}()},
-\code{\link{mask}()},
-\code{\link{origin}()},
-\code{\link{projection}()},
-\code{\link{unmask}()},
-\code{\link{voxdims}()}
+\code{\link[=imexpand.grid]{imexpand.grid()}},
+\code{\link[=imslice]{imslice()}},
+\code{\link[=is.im3d]{is.im3d()}},
+\code{\link[=mask]{mask()}},
+\code{\link[=origin]{origin()}},
+\code{\link[=projection]{projection()}},
+\code{\link[=unmask]{unmask()}},
+\code{\link[=voxdims]{voxdims()}}
 }
 \concept{im3d}

@@ -32,10 +32,10 @@ CMTK v2.4 fixed a long-standing bug in affine (de)composition to
   by default.
 }
 \seealso{
-Other cmtk-io: 
-\code{\link{cmtk.extract_affine}()},
-\code{\link{read.cmtk}()},
-\code{\link{read.cmtkreg}()},
-\code{\link{write.cmtk}()}
+Other cmtk-io:
+\code{\link[=cmtk.extract_affine]{cmtk.extract_affine()}},
+\code{\link[=read.cmtk]{read.cmtk()}},
+\code{\link[=read.cmtkreg]{read.cmtkreg()}},
+\code{\link[=write.cmtk]{write.cmtk()}}
 }
 \concept{cmtk-io}

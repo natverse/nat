@@ -220,14 +220,14 @@ sl=nlapply(Cell07PNs, FUN = seglengths)
 
 \code{\link{mapply}}
 
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{is.neuronlist}()},
-\code{\link{neuronlist}()},
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=is.neuronlist]{is.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistfh}()},
-\code{\link{neuronlistz}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}

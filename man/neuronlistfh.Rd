@@ -247,21 +247,21 @@ kcs20fh2 <- read.neuronlistfh("/path/to/my/kcdb/kcs20fh.rds")
 \seealso{
 \code{\link[filehash]{filehash-class}}
 
-Other neuronlistfh: 
-\code{\link{[.neuronlistfh}()},
-\code{\link{read.neuronlistfh}()},
-\code{\link{remotesync}()},
-\code{\link{write.neuronlistfh}()}
+Other neuronlistfh:
+\code{\link[=[.neuronlistfh]{[.neuronlistfh()}},
+\code{\link[=read.neuronlistfh]{read.neuronlistfh()}},
+\code{\link[=remotesync]{remotesync()}},
+\code{\link[=write.neuronlistfh]{write.neuronlistfh()}}
 
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{is.neuronlist}()},
-\code{\link{neuronlist}()},
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=is.neuronlist]{is.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistz}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}
 \concept{neuronlistfh}

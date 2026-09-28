@@ -198,6 +198,7 @@ neuroanatomical data, especially representations of neurons.
 
 Authors:
 \itemize{
+  \item Gregory Jefferis \email{jefferis@gmail.com} (\href{https://orcid.org/0000-0002-0587-9355}{ORCID})
   \item James Manton (\href{https://orcid.org/0000-0001-9260-3156}{ORCID})
   \item Sridhar Jagannathan (\href{https://orcid.org/0000-0002-2078-1145}{ORCID})
 }

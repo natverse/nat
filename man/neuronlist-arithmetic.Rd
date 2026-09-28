@@ -32,14 +32,14 @@ TODO Figure out how to document arithmetic functions in one go
 mn2<-Cell07PNs[1:10]*2
 }
 \seealso{
-Other neuronlist: 
-\code{\link{is.neuronlist}()},
-\code{\link{neuronlist}()},
+Other neuronlist:
+\code{\link[=is.neuronlist]{is.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistfh}()},
-\code{\link{neuronlistz}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}

@@ -114,15 +114,15 @@ write.neurons(subset(Cell07PNs, Scored.By="ACH"),dir="testwn4",
 \code{\link{write.neuron}}, \code{\link{read.neurons}},
   \code{\link{fileformats}}
 
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{is.neuronlist}()},
-\code{\link{neuronlist}()},
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=is.neuronlist]{is.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistfh}()},
-\code{\link{neuronlistz}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()}
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}}
 }
 \author{
 jefferis

@@ -118,14 +118,14 @@ plot3d(y, col='red', lwd=2)
 \code{\link{prune.neuron}}, \code{\link{prune_vertices}},
   \code{\link{subset.dotprops}}
 
-Other neuron: 
-\code{\link{neuron}()},
-\code{\link{ngraph}()},
-\code{\link{plot.dotprops}()},
-\code{\link{potential_synapses}()},
-\code{\link{prune}()},
-\code{\link{resample}()},
-\code{\link{rootpoints}()},
-\code{\link{spine}()}
+Other neuron:
+\code{\link[=neuron]{neuron()}},
+\code{\link[=ngraph]{ngraph()}},
+\code{\link[=plot.dotprops]{plot.dotprops()}},
+\code{\link[=potential_synapses]{potential_synapses()}},
+\code{\link[=prune]{prune()}},
+\code{\link[=resample]{resample()}},
+\code{\link[=rootpoints]{rootpoints()}},
+\code{\link[=spine]{spine()}}
 }
 \concept{neuron}

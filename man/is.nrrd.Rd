@@ -28,9 +28,9 @@ Note that multiple files can be checked when a character vector of
   array is provided.
 }
 \seealso{
-Other nrrd: 
-\code{\link{nrrd.voxdims}()},
-\code{\link{read.nrrd}()},
-\code{\link{write.nrrd}()}
+Other nrrd:
+\code{\link[=nrrd.voxdims]{nrrd.voxdims()}},
+\code{\link[=read.nrrd]{read.nrrd()}},
+\code{\link[=write.nrrd]{write.nrrd()}}
 }
 \concept{nrrd}

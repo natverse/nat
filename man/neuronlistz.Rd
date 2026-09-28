@@ -53,14 +53,14 @@ all.equal(nz2[1:3], nz[1:3])
 \code{\link{neuronlist}}, \code{\link{neuronlistfh}},
   \code{\link{write.neurons}}
 
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{is.neuronlist}()},
-\code{\link{neuronlist}()},
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=is.neuronlist]{is.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistfh}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}

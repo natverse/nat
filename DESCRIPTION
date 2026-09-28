@@ -111,7 +111,7 @@ Collate:
     'xformpoints.R'
     'xyzmatrix.R'
     'zzz.R'
-RoxygenNote: 7.3.3
 Encoding: UTF-8
 VignetteBuilder: knitr
 Language: en-GB
+Config/roxygen2/version: 8.1.0

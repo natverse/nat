@@ -77,14 +77,14 @@ Neurogeometry and potential synaptic connectivity. Stepanyants A,
   \doi{10.1016/j.tins.2005.05.006}
 }
 \seealso{
-Other neuron: 
-\code{\link{neuron}()},
-\code{\link{ngraph}()},
-\code{\link{plot.dotprops}()},
-\code{\link{prune}()},
-\code{\link{resample}()},
-\code{\link{rootpoints}()},
-\code{\link{spine}()},
-\code{\link{subset.neuron}()}
+Other neuron:
+\code{\link[=neuron]{neuron()}},
+\code{\link[=ngraph]{ngraph()}},
+\code{\link[=plot.dotprops]{plot.dotprops()}},
+\code{\link[=prune]{prune()}},
+\code{\link[=resample]{resample()}},
+\code{\link[=rootpoints]{rootpoints()}},
+\code{\link[=spine]{spine()}},
+\code{\link[=subset.neuron]{subset.neuron()}}
 }
 \concept{neuron}

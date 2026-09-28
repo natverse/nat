@@ -12,10 +12,6 @@
 \item{i, j}{elements to extract or replace. Numeric, logical  or character or,
 for the [ get method, empty. See details and the help for 
 \code{\link{[.data.frame}}.}
-
-\item{drop}{logical.  If \code{TRUE} the result is coerced to the
-    lowest possible dimension.  The default is to drop if only one
-    column is left, but \bold{not} to drop if only one row is left.}
 }
 \value{
 A new in-memory \code{neuronlist} or when using two subscripts, a 
@@ -55,10 +51,10 @@ unlink(tf, recursive=TRUE)
 \code{\link{neuronlistfh}}, \code{\link{[.neuronlist}}, 
   \code{\link{[.data.frame}}, \code{\link{[<-.data.frame}},
 
-Other neuronlistfh: 
-\code{\link{neuronlistfh}()},
-\code{\link{read.neuronlistfh}()},
-\code{\link{remotesync}()},
-\code{\link{write.neuronlistfh}()}
+Other neuronlistfh:
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=read.neuronlistfh]{read.neuronlistfh()}},
+\code{\link[=remotesync]{remotesync()}},
+\code{\link[=write.neuronlistfh]{write.neuronlistfh()}}
 }
 \concept{neuronlistfh}

@@ -26,10 +26,10 @@ NB a version specified on the command line overrides one encoded as
   an attribute in the input list.
 }
 \seealso{
-Other cmtk-io: 
-\code{\link{cmtk.extract_affine}()},
-\code{\link{read.cmtk}()},
-\code{\link{read.cmtkreg}()},
-\code{\link{write.cmtkreg}()}
+Other cmtk-io:
+\code{\link[=cmtk.extract_affine]{cmtk.extract_affine()}},
+\code{\link[=read.cmtk]{read.cmtk()}},
+\code{\link[=read.cmtkreg]{read.cmtkreg()}},
+\code{\link[=write.cmtkreg]{write.cmtkreg()}}
 }
 \concept{cmtk-io}

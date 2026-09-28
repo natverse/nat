@@ -51,14 +51,14 @@ methods(class='neuronlist')
   \code{\link{neuronlist-dataframe-methods}}, \code{\link{neuron}}, 
   \code{\link{dotprops}}
 
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{is.neuronlist}()},
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=is.neuronlist]{is.neuronlist()}},
 \code{\link{neuronlist-dataframe-methods}},
-\code{\link{neuronlistfh}()},
-\code{\link{neuronlistz}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}

@@ -48,19 +48,19 @@ We follow Amira's convention of setting the bounding box equal to
   voxel dimension (rather than 0) for any dimension with only 1 voxel.
 }
 \seealso{
-Other im3d: 
-\code{\link{as.im3d}()},
-\code{\link{boundingbox}()},
+Other im3d:
+\code{\link[=as.im3d]{as.im3d()}},
+\code{\link[=boundingbox]{boundingbox()}},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{imexpand.grid}()},
-\code{\link{imslice}()},
-\code{\link{is.im3d}()},
-\code{\link{mask}()},
-\code{\link{origin}()},
-\code{\link{projection}()},
-\code{\link{threshold}()},
-\code{\link{unmask}()},
-\code{\link{voxdims}()}
+\code{\link[=imexpand.grid]{imexpand.grid()}},
+\code{\link[=imslice]{imslice()}},
+\code{\link[=is.im3d]{is.im3d()}},
+\code{\link[=mask]{mask()}},
+\code{\link[=origin]{origin()}},
+\code{\link[=projection]{projection()}},
+\code{\link[=threshold]{threshold()}},
+\code{\link[=unmask]{unmask()}},
+\code{\link[=voxdims]{voxdims()}}
 }
 \concept{im3d}

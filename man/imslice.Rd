@@ -25,19 +25,19 @@ Note the sample locations stored in the x,y,z attributes will be
   updated appropriately. FIXME: Should we also update bounding box?
 }
 \seealso{
-Other im3d: 
-\code{\link{as.im3d}()},
-\code{\link{boundingbox}()},
-\code{\link{im3d}()},
+Other im3d:
+\code{\link[=as.im3d]{as.im3d()}},
+\code{\link[=boundingbox]{boundingbox()}},
+\code{\link[=im3d]{im3d()}},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{imexpand.grid}()},
-\code{\link{is.im3d}()},
-\code{\link{mask}()},
-\code{\link{origin}()},
-\code{\link{projection}()},
-\code{\link{threshold}()},
-\code{\link{unmask}()},
-\code{\link{voxdims}()}
+\code{\link[=imexpand.grid]{imexpand.grid()}},
+\code{\link[=is.im3d]{is.im3d()}},
+\code{\link[=mask]{mask()}},
+\code{\link[=origin]{origin()}},
+\code{\link[=projection]{projection()}},
+\code{\link[=threshold]{threshold()}},
+\code{\link[=unmask]{unmask()}},
+\code{\link[=voxdims]{voxdims()}}
 }
 \concept{im3d}

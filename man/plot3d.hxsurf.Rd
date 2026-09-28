@@ -54,12 +54,12 @@ plot3d(MBL.surf, alpha=0.3,
 \seealso{
 \code{\link{read.hxsurf}}
 
-Other hxsurf: 
-\code{\link{as.hxsurf}()},
-\code{\link{as.mesh3d}()},
-\code{\link{materials}()},
-\code{\link{read.hxsurf}()},
-\code{\link{subset.hxsurf}()},
-\code{\link{write.hxsurf}()}
+Other hxsurf:
+\code{\link[=as.hxsurf]{as.hxsurf()}},
+\code{\link{as.mesh3d}},
+\code{\link[=materials]{materials()}},
+\code{\link[=read.hxsurf]{read.hxsurf()}},
+\code{\link[=subset.hxsurf]{subset.hxsurf()}},
+\code{\link[=write.hxsurf]{write.hxsurf()}}
 }
 \concept{hxsurf}

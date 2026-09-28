@@ -33,15 +33,6 @@
 only, empty. Numeric values are coerced to integer as if by 
 \code{as.integer}. See \code{\link{[.data.frame}} for details.}
 
-\item{drop}{logical.  If \code{TRUE} the result is coerced to the
-    lowest possible dimension.  The default is to drop if only one
-    column is left, but \bold{not} to drop if only one row is left.}
-
-\item{value}{a suitable replacement value: it will be repeated a whole
-    number of times if necessary and it may be coerced: see the
-    Coercion section.  If \code{NULL}, deletes the column if a single
-    column is selected.}
-
 \item{except}{indices of columns from which \emph{not} to drop levels.}
 
 \item{...}{Further arguments passed to default methods (and usually ignored)}
@@ -112,14 +103,14 @@ colnames(kcs20)
 
 \code{\link{tail}}
 
-Other neuronlist: 
-\code{\link{*.neuronlist}()},
-\code{\link{is.neuronlist}()},
-\code{\link{neuronlist}()},
-\code{\link{neuronlistfh}()},
-\code{\link{neuronlistz}()},
-\code{\link{nlapply}()},
-\code{\link{read.neurons}()},
-\code{\link{write.neurons}()}
+Other neuronlist:
+\code{\link[=*.neuronlist]{*.neuronlist()}},
+\code{\link[=is.neuronlist]{is.neuronlist()}},
+\code{\link[=neuronlist]{neuronlist()}},
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=neuronlistz]{neuronlistz()}},
+\code{\link[=nlapply]{nlapply()}},
+\code{\link[=read.neurons]{read.neurons()}},
+\code{\link[=write.neurons]{write.neurons()}}
 }
 \concept{neuronlist}

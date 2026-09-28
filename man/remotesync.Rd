@@ -58,10 +58,10 @@ kcs20=remotesync(kcs20, indices=mbvl_neurons, download.missing=TRUE)
 }
 }
 \seealso{
-Other neuronlistfh: 
-\code{\link{[.neuronlistfh}()},
-\code{\link{neuronlistfh}()},
-\code{\link{read.neuronlistfh}()},
-\code{\link{write.neuronlistfh}()}
+Other neuronlistfh:
+\code{\link[=[.neuronlistfh]{[.neuronlistfh()}},
+\code{\link[=neuronlistfh]{neuronlistfh()}},
+\code{\link[=read.neuronlistfh]{read.neuronlistfh()}},
+\code{\link[=write.neuronlistfh]{write.neuronlistfh()}}
 }
 \concept{neuronlistfh}

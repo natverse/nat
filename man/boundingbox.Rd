@@ -80,19 +80,19 @@ boundingbox(Cell07PNs[[1]])
 \seealso{
 \code{\link{makeboundingbox}}, \code{\link{plot3d.boundingbox}}
 
-Other im3d: 
-\code{\link{as.im3d}()},
-\code{\link{im3d}()},
+Other im3d:
+\code{\link[=as.im3d]{as.im3d()}},
+\code{\link[=im3d]{im3d()}},
 \code{\link{im3d-coords}},
 \code{\link{im3d-io}},
-\code{\link{imexpand.grid}()},
-\code{\link{imslice}()},
-\code{\link{is.im3d}()},
-\code{\link{mask}()},
-\code{\link{origin}()},
-\code{\link{projection}()},
-\code{\link{threshold}()},
-\code{\link{unmask}()},
-\code{\link{voxdims}()}
+\code{\link[=imexpand.grid]{imexpand.grid()}},
+\code{\link[=imslice]{imslice()}},
+\code{\link[=is.im3d]{is.im3d()}},
+\code{\link[=mask]{mask()}},
+\code{\link[=origin]{origin()}},
+\code{\link[=projection]{projection()}},
+\code{\link[=threshold]{threshold()}},
+\code{\link[=unmask]{unmask()}},
+\code{\link[=voxdims]{voxdims()}}
 }
 \concept{im3d}

@@ -55,9 +55,9 @@ translation and centre components are assumed to be in physical
   coordinates.
 }
 \seealso{
-Other cmtk-geometry: 
-\code{\link{affmat2cmtkparams}()},
-\code{\link{cmtk.dof2mat}()},
-\code{\link{cmtk.mat2dof}()}
+Other cmtk-geometry:
+\code{\link[=affmat2cmtkparams]{affmat2cmtkparams()}},
+\code{\link[=cmtk.dof2mat]{cmtk.dof2mat()}},
+\code{\link[=cmtk.mat2dof]{cmtk.mat2dof()}}
 }
 \concept{cmtk-geometry}

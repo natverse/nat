@@ -27,10 +27,10 @@ Note that if an open connection is passed to read.cmtk the version
   number of the CMTK TypedStream will not be checked or recorded.
 }
 \seealso{
-Other cmtk-io: 
-\code{\link{cmtk.extract_affine}()},
-\code{\link{read.cmtkreg}()},
-\code{\link{write.cmtk}()},
-\code{\link{write.cmtkreg}()}
+Other cmtk-io:
+\code{\link[=cmtk.extract_affine]{cmtk.extract_affine()}},
+\code{\link[=read.cmtkreg]{read.cmtkreg()}},
+\code{\link[=write.cmtk]{write.cmtk()}},
+\code{\link[=write.cmtkreg]{write.cmtkreg()}}
 }
 \concept{cmtk-io}

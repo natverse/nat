@@ -89,12 +89,12 @@ shade3d(mbb, col='red', alpha=0.3)
 \code{\link[rgl]{as.mesh3d}}, \code{\link[rgl]{tmesh3d}},
   \code{\link{as.hxsurf}}, \code{\link{read.hxsurf}}
 
-Other hxsurf: 
-\code{\link{as.hxsurf}()},
-\code{\link{materials}()},
-\code{\link{plot3d.hxsurf}()},
-\code{\link{read.hxsurf}()},
-\code{\link{subset.hxsurf}()},
-\code{\link{write.hxsurf}()}
+Other hxsurf:
+\code{\link[=as.hxsurf]{as.hxsurf()}},
+\code{\link[=materials]{materials()}},
+\code{\link[=plot3d.hxsurf]{plot3d.hxsurf()}},
+\code{\link[=read.hxsurf]{read.hxsurf()}},
+\code{\link[=subset.hxsurf]{subset.hxsurf()}},
+\code{\link[=write.hxsurf]{write.hxsurf()}}
 }
 \concept{hxsurf}
