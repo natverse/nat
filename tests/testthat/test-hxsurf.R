@@ -178,15 +178,58 @@ test_that('check if points are inside a surface',{
   # so cheat by using an approximate offset
   n=kcs20[[1]]+c(40,-30,20)
   MB_CA_L=readRDS("testdata/amira/JFRC2_MB_CA_L.rds")
-  expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
   surf2=read.hxsurf(surf_file, RegionChoice="both")
   MB_CA_L2=subset(surf2, "MB_CA_L")
-  expect_equal(sum(pointsinside(n, MB_CA_L2)), 55L)
-  
   # Let's check that we can deal with data with nm scale -
   # actually cheat a bit by scaling by 1e4 because the example Kenyon cell is
   # not that big and problems start with Rvcg <=0.16 at distances >= 1e5
   MB_CA_L.nm=MB_CA_L
   MB_CA_L.nm$vb[1:3,]=MB_CA_L$vb[1:3,]*1e4
-  expect_equal(sum(pointsinside(n*1e4, MB_CA_L.nm)), 55L)
+  with_and_without_natcpp({
+    expect_equal(sum(pointsinside(n, MB_CA_L)), 55L)
+    expect_equal(sum(pointsinside(n, MB_CA_L2)), 55L)
+    expect_equal(sum(pointsinside(n*1e4, MB_CA_L.nm)), 55L)
+  })
+})
+
+test_that('pointsinside distances and logicals are consistent', {
+  skip_if_not_installed("Rvcg")
+  # tetrahedron with outward facing normals
+  V <- rbind(c(0,0,0), c(1,0,0), c(0,1,0), c(0,0,1))
+  F <- rbind(c(1,3,2), c(1,2,4), c(1,4,3), c(2,3,4))
+  tet <- rgl::tmesh3d(t(V), t(F), homogeneous=FALSE)
+  p <- rbind(c(.1,.1,.1), c(.1,.1,-.5), c(2,2,2))
+  pts <- xyzmatrix(kcs20)
+  MBCAL <- as.mesh3d(subset(MBL.surf, "MB_CA_L"))
+  with_and_without_natcpp({
+    expect_equal(pointsinside(p, tet, rval='distance'),
+                 c(0.1, -0.5, -5/sqrt(3)), tolerance=1e-6)
+    expect_equal(pointsinside(p, tet), c(TRUE, FALSE, FALSE))
+    d <- pointsinside(pts, MBCAL, rval='distance')
+    expect_equal(pointsinside(pts, MBCAL, rval='consistent_logical'), d >= 0)
+    expect_equal(pointsinside(pts, MBCAL, rval='mesh3d')$quality, d)
+  })
+})
+
+test_that('pointsinside takes distance sign from natcpp winding number', {
+  skip_if_not_installed("Rvcg")
+  skip_if_not(use_natcpp(version='0.3.2'))
+  pts <- xyzmatrix(kcs20)
+  MBCAL <- as.mesh3d(subset(MBL.surf, "MB_CA_L"))
+  d <- pointsinside(pts, MBCAL, rval='distance')
+  # sign agrees with the (bounding box prefiltered) logical test
+  expect_equal(d >= 0, pointsinside(pts, MBCAL))
+  # so no point outside the bounding box can have a positive distance
+  inbb <- pointsinside(pts, boundingbox(MBCAL))
+  expect_true(all(d[!inbb] < 0))
+  # magnitude is still the Rvcg unsigned closest-point distance
+  expect_equal(abs(d), Rvcg::vcgClostKD(pts, MBCAL, sign = FALSE)$quality)
+
+  # sign does not depend on (consistently inverted) face orientation
+  V <- rbind(c(0,0,0), c(1,0,0), c(0,1,0), c(0,0,1))
+  F <- rbind(c(1,2,3), c(1,4,2), c(1,3,4), c(2,4,3))
+  tet.inv <- rgl::tmesh3d(t(V), t(F), homogeneous=FALSE)
+  p <- rbind(c(.1,.1,.1), c(.1,.1,-.5), c(2,2,2))
+  expect_equal(pointsinside(p, tet.inv, rval='distance'),
+               c(0.1, -0.5, -5/sqrt(3)), tolerance=1e-6)
 })
