@@ -29,7 +29,8 @@ and \code{ashape3d} objects.}
 \value{
 A vector of logical values or distances (positive inside, negative
   outside) equal to the number of points in x or the \code{mesh3d} object
-  returned by \code{Rvcg::vcgClostKD}.
+  returned by \code{Rvcg::vcgClostKD} (whose \code{quality} field contains
+  the signed distances).
 }
 \description{
 Find which points of an object are inside a surface
@@ -41,41 +42,44 @@ Note that \code{hxsurf} surface objects will be converted to
   pre-convert.
 
   When the \href{https://natverse.org/natcpp/}{natcpp} package (>= 0.3.2) is
-  installed, logical results (\code{rval="logical"} or
-  \code{"consistent_logical"}) use its generalised (solid-angle)
-  winding-number test. This does not depend on face normals and is therefore
-  robust to inconsistently oriented faces, so the face-normal caveats below
-  apply only to the \code{Rvcg} fallback (used when natcpp is unavailable and
-  for \code{rval="distance"} or \code{"mesh3d"}). Set
-  \code{options(nat.use_natcpp=FALSE)} to force the \code{Rvcg} path.
+  installed, inside/outside classification uses its generalised
+  (solid-angle) winding-number test. This does not depend on the normal of
+  the closest face, so it avoids the spurious results that the \code{Rvcg}
+  test can give near edges, vertices and thin features; it is also unaffected
+  by a mesh whose faces are all oriented inwards. For \code{rval="distance"}
+  and \code{"mesh3d"} the unsigned distance still comes from
+  \code{Rvcg::vcgClostKD} but its sign comes from the winding-number test.
+  Set \code{options(nat.use_natcpp=FALSE)} to force the pure \code{Rvcg}
+  path.
 
-  The \code{Rvcg} fallback depends on the face normals for each face pointing
-  out of the object (see example). The face normals are defined by the order
-  of the three vertices making up a triangular face. You can flip the face
-  normal for a face by permuting the vertices (i.e. 1,2,3 -> 1,3,2). If you
-  find for a given surface that points are outside when you expect them to be
-  inside then the face normals are probably all the wrong way round. You can
-  invert them yourself or use the \code{Morpho::invertFaces} function to fix
-  this.
+  The pure \code{Rvcg} path depends on the face normals for each face
+  pointing out of the object (see example). The face normals are defined by
+  the order of the three vertices making up a triangular face. You can flip
+  the face normal for a face by permuting the vertices (i.e. 1,2,3 ->
+  1,3,2). If you find for a given surface that points are outside when you
+  expect them to be inside then the face normals are probably all the wrong
+  way round. You can invert them yourself or use the
+  \code{Morpho::invertFaces} function to fix this.
 
   The \code{rval} argument determines the return value. These options should
   be fairly clear, but the difference between \code{logical} and
   \code{consistent_logical} needs some explanation. The \code{logical} method
-  now does a pre-test to remove any points that are not in the 3D bounding
-  box (cuboid) enclosing the surf object. This often results in a significant
-  speed-up by rejecting distant points and has the additional benefit of
-  rejecting distant points that sometimes are erroneously declared inside the
-  mesh (see below). Regrettably it is not yet possible to extend this
-  approach when distances are being returned, which means there will be a
-  discrepancy between the results of \code{rval="logical"} and looking for
-  points with distance >=0. If you want to ensure consistency between these
-  approaches, use \code{rval="consistent_logical"}.
+  does a pre-test to remove any points that are not in the 3D bounding box
+  (cuboid) enclosing the surf object. This often results in a significant
+  speed-up by rejecting distant points. When natcpp is available the same
+  pre-test is used for all return values and the sign of \code{"distance"}
+  agrees with \code{"logical"}. On the pure \code{Rvcg} path the pre-test
+  cannot be applied to distances, and distant points are sometimes
+  erroneously declared inside the mesh, so \code{"logical"} and looking for
+  points with distance >=0 can disagree. Use \code{rval="consistent_logical"}
+  to ensure consistency with the distance in this case.
 
   If you find that some points but not all points are not behaving as you
   would expect, then it may be that some faces are not coherently oriented.
-  The \code{Rvcg::\link[Rvcg]{vcgClean}} function can sometimes be used to
-  correct the orientation of the faces. Fixing more problematic cases may be
-  possible by generating a new surface using
+  This affects both approaches, although the winding-number test degrades
+  more gracefully. The \code{Rvcg::\link[Rvcg]{vcgClean}} function can
+  sometimes be used to correct the orientation of the faces. Fixing more
+  problematic cases may be possible by generating a new surface using
   \code{alphashape3d::\link[alphashape3d]{ashape3d}} (see examples).
 }
 \examples{
@@ -100,8 +104,8 @@ inout5=pointsinside(kcs20, surf=MBCAL, rval='distance') > -5
 table(inout5)
 \donttest{
 # show which points are in or out
-# Hmm seems like there are a few red points in the vertical lobe
-# that are well outside the calyx
+# Without natcpp, the normal-based sign from Rvcg can give a few red points
+# in the vertical lobe that are well outside the calyx
 points3d(xyzmatrix(kcs20), col=ifelse(inout5, 'red', 'black'))
 plot3d(MBL.surf, alpha=.3)
 

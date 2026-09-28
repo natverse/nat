@@ -1,12 +1,14 @@
 # nat 1.11.1
 
 * `pointsinside()` now uses natcpp's (>= 0.3.2) generalised winding-number test
-  for logical results when the natcpp package is installed. This is independent
-  of face normals, so it is robust to inconsistently oriented meshes that could
-  previously give spurious inside/outside classifications with the normal-based
-  `Rvcg` test. The `Rvcg` path remains the fallback and still handles
-  `rval="distance"` and `rval="mesh3d"`; set `options(nat.use_natcpp=FALSE)` to
-  force it.
+  for inside/outside classification when the natcpp package is installed. This
+  does not depend on the normal of the closest face, so it avoids spurious
+  inside/outside results that the normal-based `Rvcg` test can give near edges,
+  vertices and thin features. For `rval="distance"` and `rval="mesh3d"` the
+  unsigned distance still comes from `Rvcg::vcgClostKD()` but the sign now comes
+  from the winding-number test, so `distance >= 0` agrees with
+  `rval="logical"`. Set `options(nat.use_natcpp=FALSE)` to force the pure
+  `Rvcg` path.
 
 # nat 1.11.0
 
