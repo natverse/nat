@@ -74,6 +74,7 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
     f=file.path(tempdir(), basename(f))
     on.exit(unlink(f))
     filecontents=httr::GET(url)
+    httr::stop_for_status(filecontents)
     writeBin(httr::content(filecontents,type = 'raw'), con = f)
   } else url=NULL
   #if(!file.exists(f)) stop("Unable to read file: ",f)

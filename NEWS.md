@@ -3,6 +3,8 @@
 * `read.neuron()` and `write.neuron()` support the legacy neuroglancer
   precomputed mesh format (`format='ngmesh'`), including reading directly from
   a URL. Fragments usually lack an extension, so specify the format explicitly.
+* `read.neuron()` now gives an error when downloading from a URL fails rather
+  than trying to parse the error response.
 * `getformatreader()` gains a `format` argument.
 
 # nat 1.11.1
