@@ -26,7 +26,7 @@ registerformat(
   class = NULL
 )
 
-getformatreader(file, class = NULL)
+getformatreader(file, format = NULL, class = NULL)
 
 getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 }

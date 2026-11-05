@@ -25,10 +25,10 @@ write.neuron(
 specified)}
 
 \item{format}{Unique abbreviation of one of the registered file formats for
-neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
-(neuron meshes). If no format can be extracted from the filename or the
-\code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
-meshes.}
+neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply',
+'obj', 'ngmesh' (neuron meshes). If no format can be extracted from the
+filename or the \code{ext} parameter, then it defaults to 'swc' for
+skeletons and 'ply' for meshes.}
 
 \item{ext}{Will replace the default extension for the filetype and should
 include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
@@ -90,6 +90,13 @@ write.neuron(Cell07PNs[[1]], format = 'hxlineset', file='myneuron')
 write.neuron(MBL.surf, file = 'MBL.surf.ply')
 # ... or Wavefront obj format
 write.neuron(MBL.surf, file = 'MBL.surf.obj')
+# ... or Neuroglancer precomputed (legacy) mesh format
+write.neuron(MBL.surf, file = 'MBL.surf.ngmesh')
+# ... same if you really don't want to use (or add) the default extension
+write.neuron(MBL.surf, file = 'MBL', format='ngmesh', ext=NA)
+# but you'll then need to specify the format when reading
+read.neuron('MBL', format='ngmesh')
+
 # specify the format directly if not evident from file suffix
 # not recommended though as will probably just cause trouble when reading
 write.neuron(MBL.surf, file = 'MBL.surf', format='obj')

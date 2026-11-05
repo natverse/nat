@@ -1,3 +1,10 @@
+# nat (development version)
+
+* `read.neuron()` and `write.neuron()` support the legacy neuroglancer
+  precomputed mesh format (`format='ngmesh'`), including reading directly from
+  a URL. Fragments usually lack an extension, so specify the format explicitly.
+* `getformatreader()` gains a `format` argument.
+
 # nat 1.11.1
 
 * `pointsinside()` now uses natcpp's (>= 0.3.2) generalised winding-number test

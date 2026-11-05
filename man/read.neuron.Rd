@@ -53,6 +53,11 @@ This function will handle \code{neuron} and \code{dotprops} objects
   These depend on the suggested package \code{\link[Rvcg]{Rvcg}} (for 'ply'
   format) and \code{\link[readobj]{readobj}} (for Wavefront 'obj' format).
 
+  \item \bold{ngmesh} The legacy (single resolution) neuroglancer precomputed
+  mesh format. Fragments usually have no file extension, so you must specify
+  \code{format='ngmesh'}. Multi-resolution (e.g. Draco) meshes are not
+  supported.
+
   }
 }
 \examples{
@@ -65,6 +70,10 @@ n3=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",pa
   NeuronName=function(x) sub("\\\\..*","",x))
 # show the currently registered file formats that we can read
 fileformats(class='neuron', read=TRUE)
+
+# read a neuroglancer legacy mesh fragment for a neuropil
+ol=read.neuron(paste0("https://storage.googleapis.com/aedes_whole-brain/",
+  "meshes/ol_meshes_2026_09_29/10000"), format='ngmesh')
 }
 }
 \references{
