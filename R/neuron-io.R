@@ -30,16 +30,25 @@
 #'   These depend on the suggested package \code{\link[Rvcg]{Rvcg}} (for 'ply'
 #'   format) and \code{\link[readobj]{readobj}} (for Wavefront 'obj' format).
 #'
+#'   \item \bold{ngmesh} The legacy (single resolution) neuroglancer precomputed
+#'   mesh format. Fragments usually have no file extension, so you must specify
+#'   \code{format='ngmesh'}. Multi-resolution (e.g. Draco) meshes are not
+#'   supported.
+#'
 #'   }
 #' @export
 #' @param f Path to file. This can be a URL, in which case the file is
-#'   downloaded to a temporary location before reading.
+#'   downloaded to a temporary location before reading, unless \code{format}
+#'   names a reader registered with \code{url=TRUE} (e.g. \code{'ngmesh'}),
+#'   which receives the URL (and \code{...}) directly.
 #' @param format The file format of the neuron. When \code{format=NULL}, the
 #'   default, \code{read.neuron} will infer the file format from the extension
 #'   or file header (aka magic) using the \code{fileformats} registry.
 #' @param class The class of the returned object - presently either
 #'   \code{"neuron"} or \code{"ngraph"}
-#' @param ... additional arguments passed to format-specific readers
+#' @param ... additional arguments passed to format-specific readers. These
+#'   must be named since \code{class} is matched positionally e.g.
+#'   \code{config=httr::timeout(10)} for a URL reader.
 #' @seealso \code{\link{write.neuron}}, \code{\link{read.neurons}},
 #'   \code{\link{fileformats}}
 #' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
@@ -57,28 +66,49 @@
 #'   NeuronName=function(x) sub("\\..*","",x))
 #' # show the currently registered file formats that we can read
 #' fileformats(class='neuron', read=TRUE)
+#'
+#' # read a neuroglancer legacy mesh fragment for a neuropil
+#' ol=read.neuron(paste0("https://storage.googleapis.com/aedes_whole-brain/",
+#'   "meshes/ol_meshes_2026_09_29/10000"), format='ngmesh')
 #' }
 read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
+  class=match.arg(class)
+  if(!is.null(format) && format %in% c("ply", "obj", "ngmesh"))
+    format=paste0("neuron.", format)
   if(grepl("^http[s]{0,1}://", f)) {
     url=f
-    # download remote url to local file in tempdir
-    f=file.path(tempdir(), basename(f))
-    on.exit(unlink(f))
-    filecontents=httr::GET(url)
-    writeBin(httr::content(filecontents,type = 'raw'), con = f)
+    # readers registered with url=TRUE fetch the url themselves (receiving ...
+    # e.g. for auth) so only download for the rest
+    if(!is_url_format(format, class)) {
+      # download remote url to local file in a fresh temporary directory,
+      # keeping the basename (minus any query) for format detection/names
+      td=tempfile("natdl")
+      dir.create(td)
+      on.exit(unlink(td, recursive = TRUE))
+      fn=basename(sub("[?#].*", "", url))
+      # keep a file name carried in the query e.g. download?file=x.swc
+      if(!grepl(".", fn, fixed = TRUE))
+        fn=gsub("[^[:alnum:]._-]", "_", basename(url))
+      f=file.path(td, fn)
+      filecontents=httr::GET(url)
+      httr::stop_for_status(filecontents)
+      writeBin(httr::content(filecontents,type = 'raw'), con = f)
+    }
   } else url=NULL
   #if(!file.exists(f)) stop("Unable to read file: ",f)
-  if(is.null(format))
-    format=tolower(sub(".*\\.([^.]+$)","\\1",basename(f)))
-  if(format=="rds")
+  # use ext as backup if format is missing
+  ext=if(is.null(format))
+    tolower(sub(".*\\.([^.]+$)","\\1",basename(f))) else ""
+  if(isTRUE(format=="rds") || ext=='rds')
     n=readRDS(f)
-  else if(format=="rda"){
-    objname=load(f,envir=environment())
+  else if(isTRUE(format=="rda") || ext=='rda'){
+    # load into a fresh env so the file can't clobber our local variables
+    e=new.env()
+    objname=load(f, envir=e)
     if(length(objname)>1) stop("More than 1 object in file:",f)
-    n=get(objname,envir=environment())
+    n=get(objname,envir=e)
   } else {
-    class=match.arg(class, choices = c("neuron", "ngraph"))
-    ffs=getformatreader(f, class = class)
+    ffs=getformatreader(f, format=format, class = class)
     if(is.null(ffs)) {
       # as a special test, check to see if this looks like an swc file
       # we don't do this by default since is.swc is a little slow
@@ -181,6 +211,8 @@ read.neurons<-function(paths, pattern=NULL, neuronnames=NULL, format=NULL,
       on.exit(unlink(paths))
       download.file(url, destfile = paths)
     }
+    # the neurons inside the zip file will not have format zip
+    if(isTRUE(format=='zip')) format=NULL
     neurons_dir <- file.path(tempfile(pattern = "user_neurons"))
     on.exit(unlink(neurons_dir, recursive=TRUE), add = TRUE)
     unzip(paths, exdir=neurons_dir)
@@ -371,7 +403,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
       fx=fi[[f]]
       data.frame(format=f, class=fx$class, ext=fx$ext, 
                  read=!is.null(fx$read), write=!is.null(fx$write),
-                 magic=!is.null(fx$magic))
+                 magic=!is.null(fx$magic), url=isTRUE(fx$url))
     })
     do.call(rbind, l)
   } else if(rval=='all') {
@@ -388,6 +420,11 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
 #' @param magiclen Optional integer specifying maximum number of bytes required 
 #'   from file header to determine file's type.
 #' @param class The S3 class for the format (character vector e.g. 'neuron')
+#' @param url Whether the \code{read} function accepts a URL as well as a file
+#'   path. When \code{TRUE} and \code{\link{read.neuron}} is given a URL with
+#'   an explicit \code{format}, it passes the URL (and any extra arguments)
+#'   straight to the reader instead of downloading to a temporary file first.
+#'   Local files are still passed as paths, so the reader must handle both.
 #' @rdname fileformats
 #' @examples
 #' \dontrun{
@@ -395,7 +432,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
 #'   class='neuron')
 #' }
 registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
-                         magiclen=NA_integer_,class=NULL){
+                         magiclen=NA_integer_,class=NULL,url=FALSE){
   currentformats=ls(envir=.fileformats)
   if(format%in%currentformats)
     warning("This format has already been registered")
@@ -405,9 +442,17 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
   ext=sub("^([^.])",".\\1",ext)
   
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
-                     class=class),
+                     class=class,url=url),
          envir=.fileformats)
   invisible()
+}
+
+# does format (partially matched as in fileformats) name a url-capable reader?
+is_url_format<-function(format, class=NULL) {
+  if(is.null(format)) return(FALSE)
+  ffs=fileformats(class=class, read=TRUE)
+  m=pmatch(format, ffs)
+  !is.na(m) && isTRUE(get(ffs[m], envir=.fileformats)$url)
 }
 
 #' @description \code{getformatreader} gets the function to read a file
@@ -423,7 +468,19 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
 #' write.neuron(Cell07PNs[[1]], swc)
 #' stopifnot(isTRUE(getformatreader(swc)$format=='swc'))
 #' unlink(swc)
-getformatreader<-function(file, class=NULL){
+getformatreader<-function(file, format=NULL, class=NULL) {
+  if(!is.null(format)) {
+    # the format should exactly specify what we need
+    ff=fileformats(format = format, class=class, read = TRUE, rval = 'all')
+    if(length(ff)>1) {
+      if(is.null(class))
+        stop("Please specificy a class to fully identify the reader for format:", format)
+      warning("there are multiple readers for format:", format)
+      ff=ff[length(ff)]
+    }
+    return(ff[[1]])
+  }
+  
   formatsforclass<-fileformats(class=class, read = TRUE)
   if(!length(formatsforclass)) return(NULL)
   
@@ -639,10 +696,10 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' @param dir Path to directory (this will replace \code{dirname(file)} if
 #'   specified)
 #' @param format Unique abbreviation of one of the registered file formats for
-#'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
-#'   (neuron meshes). If no format can be extracted from the filename or the
-#'   \code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
-#'   meshes.
+#'   neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply',
+#'   'obj', 'ngmesh' (neuron meshes). If no format can be extracted from the
+#'   filename or the \code{ext} parameter, then it defaults to 'swc' for
+#'   skeletons and 'ply' for meshes.
 #' @param ext Will replace the default extension for the filetype and should
 #'   include the period e.g. \code{ext='.amiramesh'} or \code{ext='_reg.swc'}.
 #'   The special value of ext=NA will prevent the extension from being changed
@@ -677,6 +734,13 @@ is.swc<-function(f, TrustSuffix=TRUE) {
 #' write.neuron(MBL.surf, file = 'MBL.surf.ply')
 #' # ... or Wavefront obj format
 #' write.neuron(MBL.surf, file = 'MBL.surf.obj')
+#' # ... or Neuroglancer precomputed (legacy) mesh format
+#' write.neuron(MBL.surf, file = 'MBL.surf.ngmesh')
+#' # ... same if you really don't want to use (or add) the default extension
+#' write.neuron(MBL.surf, file = 'MBL', format='ngmesh', ext=NA)
+#' # but you'll then need to specify the format when reading
+#' read.neuron('MBL', format='ngmesh')
+#' 
 #' # specify the format directly if not evident from file suffix
 #' # not recommended though as will probably just cause trouble when reading
 #' write.neuron(MBL.surf, file = 'MBL.surf', format='obj')
@@ -707,8 +771,7 @@ write.neuron<-function(n, file=NULL, dir=NULL, format=NULL, ext=NULL,
   if(!is.null(format)) {
     # TODO - one day it should be possible to have one file format associated 
     # with different R classes
-    if(format=='obj') format='neuron.obj'
-    else if(format=='ply') format='neuron.ply'
+    if(format%in% c('obj', 'ply', 'ngmesh')) format=paste0('neuron.', format)
   }
   fw=try(getformatwriter(format=format, file=file, ext=ext, class='neuron'), silent = T)
   if(inherits(fw, 'try-error')) {

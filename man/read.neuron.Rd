@@ -8,7 +8,9 @@ read.neuron(f, format = NULL, class = c("neuron", "ngraph"), ...)
 }
 \arguments{
 \item{f}{Path to file. This can be a URL, in which case the file is
-downloaded to a temporary location before reading.}
+downloaded to a temporary location before reading, unless \code{format}
+names a reader registered with \code{url=TRUE} (e.g. \code{'ngmesh'}),
+which receives the URL (and \code{...}) directly.}
 
 \item{format}{The file format of the neuron. When \code{format=NULL}, the
 default, \code{read.neuron} will infer the file format from the extension
@@ -17,7 +19,9 @@ or file header (aka magic) using the \code{fileformats} registry.}
 \item{class}{The class of the returned object - presently either
 \code{"neuron"} or \code{"ngraph"}}
 
-\item{...}{additional arguments passed to format-specific readers}
+\item{...}{additional arguments passed to format-specific readers. These
+must be named since \code{class} is matched positionally e.g.
+\code{config=httr::timeout(10)} for a URL reader.}
 }
 \description{
 Read a single neuron from a file
@@ -53,6 +57,11 @@ This function will handle \code{neuron} and \code{dotprops} objects
   These depend on the suggested package \code{\link[Rvcg]{Rvcg}} (for 'ply'
   format) and \code{\link[readobj]{readobj}} (for Wavefront 'obj' format).
 
+  \item \bold{ngmesh} The legacy (single resolution) neuroglancer precomputed
+  mesh format. Fragments usually have no file extension, so you must specify
+  \code{format='ngmesh'}. Multi-resolution (e.g. Draco) meshes are not
+  supported.
+
   }
 }
 \examples{
@@ -65,6 +74,10 @@ n3=read.neuron(system.file("tests/testthat/testdata","neuron","EBT7R.CNG.swc",pa
   NeuronName=function(x) sub("\\\\..*","",x))
 # show the currently registered file formats that we can read
 fileformats(class='neuron', read=TRUE)
+
+# read a neuroglancer legacy mesh fragment for a neuropil
+ol=read.neuron(paste0("https://storage.googleapis.com/aedes_whole-brain/",
+  "meshes/ol_meshes_2026_09_29/10000"), format='ngmesh')
 }
 }
 \references{

@@ -24,10 +24,10 @@ write.neurons(
 \item{dir}{directory to write neurons, or path to zip archive (see Details).}
 
 \item{format}{Unique abbreviation of one of the registered file formats for
-neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply', 'obj'
-(neuron meshes). If no format can be extracted from the filename or the
-\code{ext} parameter, then it defaults to 'swc' for skeletons and 'ply' for
-meshes.}
+neurons including 'swc', 'hxlineset', 'hxskel' (skeletons) and 'ply',
+'obj', 'ngmesh' (neuron meshes). If no format can be extracted from the
+filename or the \code{ext} parameter, then it defaults to 'swc' for
+skeletons and 'ply' for meshes.}
 
 \item{subdir}{String naming field in neuron that specifies a subdirectory OR
 expression to evaluate in the context of neuronlist's df attribute}

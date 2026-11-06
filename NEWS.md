@@ -1,3 +1,19 @@
+# nat (development version)
+
+* `read.neuron()` and `write.neuron()` support the legacy neuroglancer
+  precomputed mesh format (`format='ngmesh'`), including reading directly from
+  a URL. Fragments usually lack an extension, so specify the format explicitly.
+* `read.neuron()` now gives an error when downloading from a URL fails rather
+  than trying to parse the error response.
+* `getformatreader()` gains a `format` argument.
+* `read.neuron()` downloads remote files into a unique temporary directory,
+  dropping any query string from the file name (unless it carries the only
+  file name), and loads `.rda` files into a separate environment.
+* `registerformat()` gains `url=TRUE` for readers that can fetch a URL
+  themselves. `read.neuron()` then hands the URL (and `...`, e.g.
+  `config=httr::timeout(10)`) straight to the reader rather than downloading
+  to disk; `ngmesh` is the first such format.
+
 # nat 1.11.1
 
 * `pointsinside()` now uses natcpp's (>= 0.3.2) generalised winding-number test

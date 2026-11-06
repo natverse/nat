@@ -23,10 +23,11 @@ registerformat(
   write = NULL,
   magic = NULL,
   magiclen = NA_integer_,
-  class = NULL
+  class = NULL,
+  url = FALSE
 )
 
-getformatreader(file, class = NULL)
+getformatreader(file, format = NULL, class = NULL)
 
 getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 }
@@ -46,6 +47,12 @@ getformatwriter(format = NULL, file = NULL, ext = NULL, class = NULL)
 
 \item{magiclen}{Optional integer specifying maximum number of bytes required 
 from file header to determine file's type.}
+
+\item{url}{Whether the \code{read} function accepts a URL as well as a file
+path. When \code{TRUE} and \code{\link{read.neuron}} is given a URL with
+an explicit \code{format}, it passes the URL (and any extra arguments)
+straight to the reader instead of downloading to a temporary file first.
+Local files are still passed as paths, so the reader must handle both.}
 
 \item{file}{Path to a file}
 }

@@ -50,6 +50,22 @@ test_that("we can set new fileformats",{
   expect_warning(registerformat('rhubarb', class='crumble', read=read.table),
                  'already been registered')
 })
+
+test_that("url-capable readers receive the url and extra arguments", {
+  on.exit(rm('urltest', envir = nat:::.fileformats))
+  registerformat('urltest', class='neuron', url=TRUE, read=function(x, ...) {
+    m=tetrahedron3d()
+    attr(m, 'args')=list(x=x, ...)
+    m
+  })
+  expect_true(subset(fileformats(rval='info'), format=='urltest')$url)
+  u="https://example.org/meshes/1?alt=media"
+  m=read.neuron(u, format='urltest', timeout=5)
+  expect_equal(attr(m, 'args'), list(x=u, timeout=5))
+  expect_equal(attr(m, 'url'), u)
+  # partial format names are matched as for other readers
+  expect_equal(attr(read.neuron(u, format='urltes'), 'args'), list(x=u))
+})
   
 test_that("is.swc works", {
   expect_false(is.swc("testdata/neuron/EBT7R.am"))
@@ -187,14 +203,14 @@ test_that("we can read hxskel format neurons",{
 })
 
 test_that("we can read multiple neurons from a zip archive", {
-  files_to_zip <- c("testdata/neuron/testneuron_am3d.am", "testdata/neuron/testneuron_lineset.am")
+  files_to_zip <- test_path(c("testdata/neuron/testneuron_am3d.am", "testdata/neuron/testneuron_lineset.am"))
   # swallow extraneous warning
   expect_warning(neurons <- read.neurons(files_to_zip,
                                          neuronnames = function(f) tools::file_path_sans_ext(basename(f))),
                  regexp = "specifies radius")
   zip_file <- paste0(tempfile(), ".zip")
   on.exit(unlink(zip_file, recursive=TRUE))
-  zip(zip_file, files_to_zip)
+  zip(zip_file, files_to_zip, flags = "-r9Xq")
   expect_warning(zip_neurons <- read.neurons(zip_file, format="zip",
                                              neuronnames = function(f) tools::file_path_sans_ext(basename(f))),
                  regexp = "specifies radius")
