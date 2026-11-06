@@ -6,6 +6,9 @@
 * `read.neuron()` now gives an error when downloading from a URL fails rather
   than trying to parse the error response.
 * `getformatreader()` gains a `format` argument.
+* `read.neuron()` downloads remote files into a unique temporary directory,
+  dropping any query string from the file name (unless it carries the only
+  file name), and loads `.rda` files into a separate environment.
 
 # nat 1.11.1
 

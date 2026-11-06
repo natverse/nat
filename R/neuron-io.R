@@ -70,9 +70,16 @@
 read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
   if(grepl("^http[s]{0,1}://", f)) {
     url=f
-    # download remote url to local file in tempdir
-    f=file.path(tempdir(), basename(f))
-    on.exit(unlink(f))
+    # download remote url to local file in a fresh temporary directory,
+    # keeping the basename (minus any query) for format detection/names
+    td=tempfile("natdl")
+    dir.create(td)
+    on.exit(unlink(td, recursive = TRUE))
+    fn=basename(sub("[?#].*", "", url))
+    # keep a file name carried in the query e.g. download?file=x.swc
+    if(!grepl(".", fn, fixed = TRUE))
+      fn=gsub("[^[:alnum:]._-]", "_", basename(url))
+    f=file.path(td, fn)
     filecontents=httr::GET(url)
     httr::stop_for_status(filecontents)
     writeBin(httr::content(filecontents,type = 'raw'), con = f)
@@ -86,9 +93,11 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
   if(isTRUE(format=="rds") || ext=='rds')
     n=readRDS(f)
   else if(isTRUE(format=="rda") || ext=='rda'){
-    objname=load(f, envir=environment())
+    # load into a fresh env so the file can't clobber our local variables
+    e=new.env()
+    objname=load(f, envir=e)
     if(length(objname)>1) stop("More than 1 object in file:",f)
-    n=get(objname,envir=environment())
+    n=get(objname,envir=e)
   } else {
     class=match.arg(class, choices = c("neuron", "ngraph"))
     ffs=getformatreader(f, format=format, class = class)
