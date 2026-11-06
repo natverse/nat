@@ -9,6 +9,10 @@
 * `read.neuron()` downloads remote files into a unique temporary directory,
   dropping any query string from the file name (unless it carries the only
   file name), and loads `.rda` files into a separate environment.
+* `registerformat()` gains `url=TRUE` for readers that can fetch a URL
+  themselves. `read.neuron()` then hands the URL (and `...`, e.g.
+  `config=httr::timeout(10)`) straight to the reader rather than downloading
+  to disk; `ngmesh` is the first such format.
 
 # nat 1.11.1
 

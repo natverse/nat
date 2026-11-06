@@ -38,13 +38,17 @@
 #'   }
 #' @export
 #' @param f Path to file. This can be a URL, in which case the file is
-#'   downloaded to a temporary location before reading.
+#'   downloaded to a temporary location before reading, unless \code{format}
+#'   names a reader registered with \code{url=TRUE} (e.g. \code{'ngmesh'}),
+#'   which receives the URL (and \code{...}) directly.
 #' @param format The file format of the neuron. When \code{format=NULL}, the
 #'   default, \code{read.neuron} will infer the file format from the extension
 #'   or file header (aka magic) using the \code{fileformats} registry.
 #' @param class The class of the returned object - presently either
 #'   \code{"neuron"} or \code{"ngraph"}
-#' @param ... additional arguments passed to format-specific readers
+#' @param ... additional arguments passed to format-specific readers. These
+#'   must be named since \code{class} is matched positionally e.g.
+#'   \code{config=httr::timeout(10)} for a URL reader.
 #' @seealso \code{\link{write.neuron}}, \code{\link{read.neurons}},
 #'   \code{\link{fileformats}}
 #' @references Schmitt, S. and Evers, J. F. and Duch, C. and Scholz, M. and
@@ -68,28 +72,33 @@
 #'   "meshes/ol_meshes_2026_09_29/10000"), format='ngmesh')
 #' }
 read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
+  class=match.arg(class)
+  if(!is.null(format) && format %in% c("ply", "obj", "ngmesh"))
+    format=paste0("neuron.", format)
   if(grepl("^http[s]{0,1}://", f)) {
     url=f
-    # download remote url to local file in a fresh temporary directory,
-    # keeping the basename (minus any query) for format detection/names
-    td=tempfile("natdl")
-    dir.create(td)
-    on.exit(unlink(td, recursive = TRUE))
-    fn=basename(sub("[?#].*", "", url))
-    # keep a file name carried in the query e.g. download?file=x.swc
-    if(!grepl(".", fn, fixed = TRUE))
-      fn=gsub("[^[:alnum:]._-]", "_", basename(url))
-    f=file.path(td, fn)
-    filecontents=httr::GET(url)
-    httr::stop_for_status(filecontents)
-    writeBin(httr::content(filecontents,type = 'raw'), con = f)
+    # readers registered with url=TRUE fetch the url themselves (receiving ...
+    # e.g. for auth) so only download for the rest
+    if(!is_url_format(format, class)) {
+      # download remote url to local file in a fresh temporary directory,
+      # keeping the basename (minus any query) for format detection/names
+      td=tempfile("natdl")
+      dir.create(td)
+      on.exit(unlink(td, recursive = TRUE))
+      fn=basename(sub("[?#].*", "", url))
+      # keep a file name carried in the query e.g. download?file=x.swc
+      if(!grepl(".", fn, fixed = TRUE))
+        fn=gsub("[^[:alnum:]._-]", "_", basename(url))
+      f=file.path(td, fn)
+      filecontents=httr::GET(url)
+      httr::stop_for_status(filecontents)
+      writeBin(httr::content(filecontents,type = 'raw'), con = f)
+    }
   } else url=NULL
   #if(!file.exists(f)) stop("Unable to read file: ",f)
   # use ext as backup if format is missing
-  ext=if(is.null(format)) 
+  ext=if(is.null(format))
     tolower(sub(".*\\.([^.]+$)","\\1",basename(f))) else ""
-  if(!is.null(format) && format %in% c("ply", "obj", "ngmesh")) 
-    format=paste0("neuron.", format)
   if(isTRUE(format=="rds") || ext=='rds')
     n=readRDS(f)
   else if(isTRUE(format=="rda") || ext=='rda'){
@@ -99,7 +108,6 @@ read.neuron<-function(f, format=NULL, class=c("neuron", "ngraph"), ...){
     if(length(objname)>1) stop("More than 1 object in file:",f)
     n=get(objname,envir=e)
   } else {
-    class=match.arg(class, choices = c("neuron", "ngraph"))
     ffs=getformatreader(f, format=format, class = class)
     if(is.null(ffs)) {
       # as a special test, check to see if this looks like an swc file
@@ -395,7 +403,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
       fx=fi[[f]]
       data.frame(format=f, class=fx$class, ext=fx$ext, 
                  read=!is.null(fx$read), write=!is.null(fx$write),
-                 magic=!is.null(fx$magic))
+                 magic=!is.null(fx$magic), url=isTRUE(fx$url))
     })
     do.call(rbind, l)
   } else if(rval=='all') {
@@ -412,6 +420,11 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
 #' @param magiclen Optional integer specifying maximum number of bytes required 
 #'   from file header to determine file's type.
 #' @param class The S3 class for the format (character vector e.g. 'neuron')
+#' @param url Whether the \code{read} function accepts a URL as well as a file
+#'   path. When \code{TRUE} and \code{\link{read.neuron}} is given a URL with
+#'   an explicit \code{format}, it passes the URL (and any extra arguments)
+#'   straight to the reader instead of downloading to a temporary file first.
+#'   Local files are still passed as paths, so the reader must handle both.
 #' @rdname fileformats
 #' @examples
 #' \dontrun{
@@ -419,7 +432,7 @@ fileformats<-function(format=NULL,ext=NULL,read=NULL,write=NULL,class=NULL,
 #'   class='neuron')
 #' }
 registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
-                         magiclen=NA_integer_,class=NULL){
+                         magiclen=NA_integer_,class=NULL,url=FALSE){
   currentformats=ls(envir=.fileformats)
   if(format%in%currentformats)
     warning("This format has already been registered")
@@ -429,9 +442,17 @@ registerformat<-function(format=NULL,ext=format,read=NULL,write=NULL,magic=NULL,
   ext=sub("^([^.])",".\\1",ext)
   
   assign(format,list(ext=ext,read=read,write=write,magic=magic,magiclen=magiclen,
-                     class=class),
+                     class=class,url=url),
          envir=.fileformats)
   invisible()
+}
+
+# does format (partially matched as in fileformats) name a url-capable reader?
+is_url_format<-function(format, class=NULL) {
+  if(is.null(format)) return(FALSE)
+  ffs=fileformats(class=class, read=TRUE)
+  m=pmatch(format, ffs)
+  !is.na(m) && isTRUE(get(ffs[m], envir=.fileformats)$url)
 }
 
 #' @description \code{getformatreader} gets the function to read a file

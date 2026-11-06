@@ -8,7 +8,9 @@ read.neuron(f, format = NULL, class = c("neuron", "ngraph"), ...)
 }
 \arguments{
 \item{f}{Path to file. This can be a URL, in which case the file is
-downloaded to a temporary location before reading.}
+downloaded to a temporary location before reading, unless \code{format}
+names a reader registered with \code{url=TRUE} (e.g. \code{'ngmesh'}),
+which receives the URL (and \code{...}) directly.}
 
 \item{format}{The file format of the neuron. When \code{format=NULL}, the
 default, \code{read.neuron} will infer the file format from the extension
@@ -17,7 +19,9 @@ or file header (aka magic) using the \code{fileformats} registry.}
 \item{class}{The class of the returned object - presently either
 \code{"neuron"} or \code{"ngraph"}}
 
-\item{...}{additional arguments passed to format-specific readers}
+\item{...}{additional arguments passed to format-specific readers. These
+must be named since \code{class} is matched positionally e.g.
+\code{config=httr::timeout(10)} for a URL reader.}
 }
 \description{
 Read a single neuron from a file
